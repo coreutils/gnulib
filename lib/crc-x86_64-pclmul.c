@@ -18,12 +18,17 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "crc-x86_64.h"
-#include "x86intrin.h"
-#include "crc.h"
 
 #include <string.h>
+#include <x86intrin.h>
 
+#include "crc.h"
+
+#if defined __GNUC__ || defined __clang__
+__attribute__ ((__target__ ("pclmul,avx")))
+#endif
 uint32_t
 crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
 {

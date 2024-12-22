@@ -1,5 +1,5 @@
 # crc-x86_64.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,14 +8,15 @@ dnl This file is offered as-is, without any warranty.
 
 AC_DEFUN([gl_CRC_X86_64_PCLMUL],
 [
-  ac_save_CFLAGS=$CFLAGS
-  CFLAGS="-mavx -mpclmul $CFLAGS"
   AC_CACHE_CHECK([if pclmul intrinsic exists], [gl_cv_crc_pclmul], [
     AC_LINK_IFELSE(
       [AC_LANG_SOURCE(
         [[
           #include <x86intrin.h>
 
+          #if defined __GNUC__ || defined __clang__
+          __attribute__ ((__target__ ("pclmul,avx")))
+          #endif
           int
           main (void)
           {
@@ -37,5 +38,4 @@ AC_DEFUN([gl_CRC_X86_64_PCLMUL],
   fi
   AM_CONDITIONAL([GL_CRC_X86_64_PCLMUL],
                  [test $gl_cv_crc_pclmul = yes])
-  CFLAGS=$ac_save_CFLAGS
 ])
