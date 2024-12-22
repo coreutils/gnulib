@@ -2,6 +2,7 @@ Files:
 tests/test-update-copyright.sh
 
 Depends-on:
+test-framework-sh
 
 configure.ac:
 abs_aux_dir=`cd "$ac_aux_dir"; pwd`
