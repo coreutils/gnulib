@@ -132,12 +132,19 @@ test (const char *pwd_prog)
   if (!(line_len == 2 && memcmp (line, "/\n", 2) == 0))
 #if defined _WIN32 && !defined __CYGWIN__
     /* If the pwd program is Cygwin's pwd, its output in the root directory is
-       "/cygdrive/N", where N is a lowercase letter.  */
-    if (!(line_len > 11
-          && memcmp (line, "/cygdrive/", 10) == 0
-          && line[10] >= 'a' && line[10] <= 'z'
-          && ((line_len == 12 && line[11] == '\n')
-              || (line_len == 13 && line[11] == '\r' && line[12] == '\n'))))
+       "/cygdrive/N", where N is a lowercase letter.
+       And if the pwd program is MSYS2 pwd, its output in the root directory is
+       "/N", where N is a lowercase letter.  */
+    if (!((line_len > 11
+           && memcmp (line, "/cygdrive/", 10) == 0
+           && line[10] >= 'a' && line[10] <= 'z'
+           && ((line_len == 12 && line[11] == '\n')
+               || (line_len == 13 && line[11] == '\r' && line[12] == '\n')))
+          || (line_len > 2
+              && line[0] == '/'
+              && line[1] >= 'a' && line[1] <= 'z'
+              && ((line_len == 3 && line[2] == '\n')
+                  || (line_len == 4 && line[2] == '\r' && line[3] == '\n')))))
 #endif
       {
         fprintf (stderr, "read output is not the expected output\n");
