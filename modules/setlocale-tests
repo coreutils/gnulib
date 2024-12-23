@@ -4,21 +4,28 @@ tests/test-setlocale1.c
 tests/test-setlocale2.sh
 tests/test-setlocale2.c
 tests/test-setlocale-w32.c
+tests/test-setlocale-w32utf8.sh
+tests/test-setlocale-w32utf8.c
+tests/windows-utf8.rc
+tests/windows-utf8.manifest
 tests/signature.h
 tests/macros.h
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
 m4/codeset.m4
+m4/windows-rc.m4
 
 Depends-on:
 strdup
+test-xfail
 
 configure.ac:
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_JA
 gt_LOCALE_ZH_CN
+gl_WINDOWS_RC
 
 Makefile.am:
 TESTS += test-setlocale1.sh test-setlocale2.sh test-setlocale-w32
@@ -31,3 +38,12 @@ check_PROGRAMS += test-setlocale1 test-setlocale2 test-setlocale-w32
 test_setlocale1_LDADD = $(LDADD) @SETLOCALE_LIB@
 test_setlocale2_LDADD = $(LDADD) @SETLOCALE_LIB@
 test_setlocale_w32_LDADD = $(LDADD) @SETLOCALE_LIB@
+
+if OS_IS_NATIVE_WINDOWS
+TESTS += test-setlocale-w32utf8.sh
+noinst_PROGRAMS += test-setlocale-w32utf8
+test_setlocale_w32utf8_LDADD = $(LDADD) test-setlocale-windows-utf8.res $(SETLOCALE_LIB)
+test-setlocale-windows-utf8.res : $(srcdir)/windows-utf8.rc
+	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-setlocale-windows-utf8.res --output-format=coff
+MOSTLYCLEANFILES += test-setlocale-windows-utf8.res
+endif
