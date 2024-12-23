@@ -47,6 +47,11 @@
 extern void gl_locale_name_canonicalize (char *name);
 #endif
 
+#if defined _WIN32 && !defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#endif
+
 #if 1
 
 # undef setlocale
@@ -672,6 +677,7 @@ search (const struct table_entry *table, size_t table_size, const char *string,
 static char *
 setlocale_unixlike (int category, const char *locale)
 {
+  int is_utf8 = (GetACP () == 65001);
   char *result;
   char llCC_buf[64];
   char ll_buf[64];
@@ -681,6 +687,15 @@ setlocale_unixlike (int category, const char *locale)
      locale name "C", but not "POSIX".  Therefore map "POSIX" to "C".  */
   if (locale != NULL && strcmp (locale, "POSIX") == 0)
     locale = "C";
+
+  /* The native Windows implementation of setlocale, in the UTF-8 environment,
+     does not understand the locale names "C.UTF-8" or "C.utf8" or "C.65001",
+     but it understands "English_United States.65001", which is functionally
+     equivalent.  */
+  if (locale != NULL
+      && ((is_utf8 && strcmp (locale, "C") == 0)
+          || strcmp (locale, "C.UTF-8") == 0))
+    locale = "English_United States.65001";
 
   /* First, try setlocale with the original argument unchanged.  */
   result = setlocale_mtsafe (category, locale);
@@ -714,7 +729,15 @@ setlocale_unixlike (int category, const char *locale)
        */
       if (strcmp (llCC_buf, locale) != 0)
         {
-          result = setlocale (category, llCC_buf);
+          if (is_utf8)
+            {
+              char buf[64+6];
+              strcpy (buf, llCC_buf);
+              strcat (buf, ".65001");
+              result = setlocale (category, buf);
+            }
+          else
+            result = setlocale (category, llCC_buf);
           if (result != NULL)
             return result;
         }
@@ -731,7 +754,15 @@ setlocale_unixlike (int category, const char *locale)
         for (i = range.lo; i < range.hi; i++)
           {
             /* Try the replacement in language_table[i].  */
-            result = setlocale (category, language_table[i].english);
+            if (is_utf8)
+              {
+                char buf[64+6];
+                strcpy (buf, language_table[i].english);
+                strcat (buf, ".65001");
+                result = setlocale (category, buf);
+              }
+            else
+              result = setlocale (category, language_table[i].english);
             if (result != NULL)
               return result;
           }
@@ -785,13 +816,15 @@ setlocale_unixlike (int category, const char *locale)
                             size_t part1_len = strlen (part1);
                             const char *part2 = country_table[j].english;
                             size_t part2_len = strlen (part2) + 1;
-                            char buf[64+64];
+                            char buf[64+64+6];
 
                             if (!(part1_len + 1 + part2_len <= sizeof (buf)))
                               abort ();
                             memcpy (buf, part1, part1_len);
                             buf[part1_len] = '_';
                             memcpy (buf + part1_len + 1, part2, part2_len);
+                            if (is_utf8)
+                              strcat (buf, ".65001");
 
                             /* Try the concatenated replacements.  */
                             result = setlocale (category, buf);
@@ -809,8 +842,16 @@ setlocale_unixlike (int category, const char *locale)
                     for (i = language_range.lo; i < language_range.hi; i++)
                       {
                         /* Try only the language replacement.  */
-                        result =
-                          setlocale (category, language_table[i].english);
+                        if (is_utf8)
+                          {
+                            char buf[64+6];
+                            strcpy (buf, language_table[i].english);
+                            strcat (buf, ".65001");
+                            result = setlocale (category, buf);
+                          }
+                        else
+                          result =
+                            setlocale (category, language_table[i].english);
                         if (result != NULL)
                           return result;
                       }
