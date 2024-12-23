@@ -1,7 +1,12 @@
 Files:
 tests/test-localename.c
+tests/test-localename-w32utf8.sh
+tests/test-localename-w32utf8.c
+tests/windows-utf8.rc
+tests/windows-utf8.manifest
 tests/macros.h
 m4/musl.m4
+m4/windows-rc.m4
 
 Depends-on:
 locale
@@ -9,13 +14,23 @@ setenv
 unsetenv
 setlocale
 strdup
+test-xfail
 
 configure.ac:
 gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
 gl_MUSL_LIBC
+gl_WINDOWS_RC
 
 Makefile.am:
 TESTS += test-localename
 check_PROGRAMS += test-localename
 test_localename_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
 
+if OS_IS_NATIVE_WINDOWS
+TESTS += test-localename-w32utf8.sh
+noinst_PROGRAMS += test-localename-w32utf8
+test_localename_w32utf8_LDADD = $(LDADD) test-localename-windows-utf8.res $(SETLOCALE_LIB)
+test-localename-windows-utf8.res : $(srcdir)/windows-utf8.rc
+	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-localename-windows-utf8.res --output-format=coff
+MOSTLYCLEANFILES += test-localename-windows-utf8.res
+endif
