@@ -56,6 +56,9 @@ main (void)
     return 1;
 #endif
 
+  if (MB_CUR_MAX == 0)
+    return 1;
+
   if (test_sys_wait_macros ())
     return 2;
 
