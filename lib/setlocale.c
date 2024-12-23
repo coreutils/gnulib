@@ -1608,7 +1608,7 @@ setlocale_improved (int category, const char *locale)
 
           /* All steps were successful.  */
           free (saved_locale);
-          return setlocale (LC_ALL, NULL);
+          goto ret_all;
 
         fail:
           if (saved_locale[0] != '\0') /* don't risk an endless recursion */
@@ -1628,44 +1628,152 @@ setlocale_improved (int category, const char *locale)
     }
   else
     {
-#  if defined _WIN32 && ! defined __CYGWIN__
-      if (category == LC_ALL && locale != NULL && strchr (locale, '.') != NULL)
+#  if LC_MESSAGES == 1729
+      if (locale != NULL)
         {
-          char *saved_locale;
+          char truncated_locale[SETLOCALE_NULL_ALL_MAX];
+          const char *native_locale;
+          const char *messages_locale;
 
-          /* Back up the old locale.  */
-          saved_locale = setlocale (LC_ALL, NULL);
-          if (saved_locale == NULL)
-            return NULL;
-          saved_locale = strdup (saved_locale);
-          if (saved_locale == NULL)
-            return NULL;
-
-          if (setlocale_unixlike (LC_ALL, locale) == NULL)
+          if (strncmp (locale, "LC_COLLATE=", 11) == 0)
             {
-              free (saved_locale);
-              return NULL;
+              /* The locale argument indicates a mixed locale.  It must be of
+                 the form
+                 "LC_COLLATE=...;LC_CTYPE=...;LC_MONETARY=...;LC_NUMERIC=...;LC_TIME=...;LC_MESSAGES=..."
+                 since that is what this function returns (see ret_all below).
+                 Decompose it.  */
+              const char *last_semicolon = strrchr (locale, ';');
+              if (!(last_semicolon != NULL
+                    && strncmp (last_semicolon + 1, "LC_MESSAGES=", 12) == 0))
+                return NULL;
+              if (category == LC_MESSAGES)
+                return setlocale_single (category, last_semicolon + 13);
+              size_t truncated_locale_len = last_semicolon - locale;
+              if (truncated_locale_len >= sizeof (truncated_locale))
+                return NULL;
+              memcpy (truncated_locale, locale, truncated_locale_len);
+              truncated_locale[truncated_locale_len] = '\0';
+              native_locale = truncated_locale;
+              messages_locale = last_semicolon + 13;
+            }
+          else
+            {
+              native_locale = locale;
+              messages_locale = locale;
             }
 
-          /* On native Windows, setlocale(LC_ALL,...) may succeed but set the
-             LC_CTYPE category to an invalid value ("C") when it does not
-             support the specified encoding.  Report a failure instead.  */
-          if (strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+          if (category == LC_ALL)
             {
-              if (saved_locale[0] != '\0') /* don't risk an endless recursion */
-                setlocale (LC_ALL, saved_locale);
-              free (saved_locale);
-              return NULL;
-            }
+              /* In the underlying implementation, LC_ALL does not contain
+                 LC_MESSAGES.  Therefore we need to handle LC_MESSAGES
+                 separately.  */
+              char *result;
 
-          /* It was really successful.  */
-          free (saved_locale);
-          return setlocale (LC_ALL, NULL);
+#   if defined _WIN32 && ! defined __CYGWIN__
+              if (strchr (native_locale, '.') != NULL)
+                {
+                  char *saved_locale;
+
+                  /* Back up the old locale.  */
+                  saved_locale = setlocale (LC_ALL, NULL);
+                  if (saved_locale == NULL)
+                    return NULL;
+                  saved_locale = strdup (saved_locale);
+                  if (saved_locale == NULL)
+                    return NULL;
+
+                  if (setlocale_unixlike (LC_ALL, native_locale) == NULL)
+                    {
+                      free (saved_locale);
+                      return NULL;
+                    }
+
+                  /* On native Windows, setlocale(LC_ALL,...) may succeed but
+                     set the LC_CTYPE category to an invalid value ("C") when
+                     it does not support the specified encoding.  Report a
+                     failure instead.  */
+                  if (strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+                    {
+                      /* Don't risk an endless recursion.  */
+                      if (saved_locale[0] != '\0')
+                        setlocale (LC_ALL, saved_locale);
+                      free (saved_locale);
+                      return NULL;
+                    }
+
+                  /* It was really successful.  */
+                  free (saved_locale);
+                  result = setlocale (LC_ALL, NULL);
+                }
+              else
+#   endif
+                result = setlocale_single (LC_ALL, native_locale);
+              if (result == NULL)
+                return NULL;
+
+              setlocale_single (LC_MESSAGES, messages_locale);
+
+              goto ret_all;
+            }
+          else
+            {
+              if (category == LC_MESSAGES)
+                return setlocale_single (category, messages_locale);
+              else
+                return setlocale_single (category, native_locale);
+            }
         }
-      else
+      else /* locale == NULL */
+        {
+          if (category == LC_ALL)
+            goto ret_all;
+          else
+            return setlocale_single (category, NULL);
+        }
+#  else
+      return setlocale_single (category, locale);
 #  endif
-        return setlocale_single (category, locale);
     }
+
+ ret_all:
+  /* Return the name of all categories of the current locale.  */
+#  if LC_MESSAGES == 1729 /* native Windows */
+  /* The locale name for mixed locales looks like this:
+     "LC_COLLATE=...;LC_CTYPE=...;LC_MONETARY=...;LC_NUMERIC=...;LC_TIME=..."
+     If necessary, add ";LC_MESSAGES=..." at the end.  */
+  {
+    char *name1 = setlocale (LC_ALL, NULL);
+    char *name2 = setlocale_single (LC_MESSAGES, NULL);
+    if (strcmp (name1, name2) == 0)
+      /* Not a mixed locale.  */
+      return name1;
+    else
+      {
+        static char resultbuf[SETLOCALE_NULL_ALL_MAX];
+        /* Prepare the result in a stack-allocated buffer, in order to reduce
+           race conditions in a multithreaded situation.  */
+        char stackbuf[SETLOCALE_NULL_ALL_MAX];
+        if (strncmp (name1, "LC_COLLATE=", 11) == 0)
+          {
+            if (strlen (name1) + strlen (name2) + 13 >= sizeof (stackbuf))
+              return NULL;
+            sprintf (stackbuf, "%s;LC_MESSAGES=%s", name1, name2);
+          }
+        else
+          {
+            if (5 * strlen (name1) + strlen (name2) + 68 >= sizeof (stackbuf))
+              return NULL;
+            sprintf (stackbuf,
+                     "LC_COLLATE=%s;LC_CTYPE=%s;LC_MONETARY=%s;LC_NUMERIC=%s;LC_TIME=%s;LC_MESSAGES=%s",
+                     name1, name1, name1, name1, name1, name2);
+          }
+        strcpy (resultbuf, stackbuf);
+        return resultbuf;
+      }
+  }
+#  else
+  return setlocale (LC_ALL, NULL);
+#  endif
 }
 
 # endif /* NEED_SETLOCALE_IMPROVED */
