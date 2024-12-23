@@ -17,6 +17,9 @@ Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0
 @item
+Using the macro @code{MB_CUR_MAX} causes link errors on some platforms:
+Android NDK r16.
+@item
 The value of @code{MB_CUR_MAX} is too small (3 instead of 4) in UTF-8 locales
 on some platforms:
 Solaris 10.
