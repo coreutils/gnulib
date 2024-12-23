@@ -749,7 +749,7 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
 /* Return maximum number of bytes of a multibyte character.  */
 #if @REPLACE_MB_CUR_MAX@
 # if !GNULIB_defined_MB_CUR_MAX
-_GL_STDLIB_INLINE int
+_GL_STDLIB_INLINE size_t
 gl_MB_CUR_MAX (void)
 {
   /* Turn the value 3 to the value 4, as needed for the UTF-8 encoding.  */
