@@ -19,12 +19,12 @@
 /* If the user's config.h happens to include <stdio.h>, let it include only
    the system's <stdio.h> here, so that orig_freopen doesn't recurse to
    rpl_freopen.  */
-#define _GL_ALREADY_INCLUDING_STDIO_H
+#define _GL_SKIP_GNULIB_STDIO_H
 #include <config.h>
 
 /* Get the original definition of freopen.  It might be defined as a macro.  */
 #include <stdio.h>
-#undef _GL_ALREADY_INCLUDING_STDIO_H
+#undef _GL_SKIP_GNULIB_STDIO_H
 
 #include <errno.h>
 
