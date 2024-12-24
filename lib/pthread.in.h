@@ -22,7 +22,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_ALREADY_INCLUDING_PTHREAD_H
+#if defined _@GUARD_PREFIX@_ALREADY_INCLUDING_PTHREAD_H
 /* Special invocation convention:
    On Android, we have a sequence of nested includes
    <pthread.h> -> <time.h> -> <sys/time.h> -> <sys/select.h> ->
@@ -39,12 +39,12 @@
 
 #if @HAVE_PTHREAD_H@
 
-# define _GL_ALREADY_INCLUDING_PTHREAD_H
+# define _@GUARD_PREFIX@_ALREADY_INCLUDING_PTHREAD_H
 
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_PTHREAD_H@
 
-# undef _GL_ALREADY_INCLUDING_PTHREAD_H
+# undef _@GUARD_PREFIX@_ALREADY_INCLUDING_PTHREAD_H
 
 #endif
 
