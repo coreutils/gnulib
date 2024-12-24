@@ -19,7 +19,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_ALREADY_INCLUDING_MALLOC_H
+#if defined _@GUARD_PREFIX@_ALREADY_INCLUDING_MALLOC_H
 /* Special invocation convention:
    - On Android we have a sequence of nested includes
        <malloc.h> -> <stdio.h> -> <sys/stat.h> -> <time.h> -> <sys/time.h> ->
@@ -34,14 +34,14 @@
 
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 
-#define _GL_ALREADY_INCLUDING_MALLOC_H
+#define _@GUARD_PREFIX@_ALREADY_INCLUDING_MALLOC_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_MALLOC_H@
 # @INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MALLOC_H@
 #endif
 
-#undef _GL_ALREADY_INCLUDING_MALLOC_H
+#undef _@GUARD_PREFIX@_ALREADY_INCLUDING_MALLOC_H
 
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
