@@ -19,7 +19,7 @@ glibc 2.8.
 @item
 This functions returns a wrong result for @math{x = 1/2 - 2^-54}
 on some platforms:
-NetBSD 3.0, AIX 7.1.
+NetBSD 3.0, AIX 7.1, mingw with MSVCRT.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{round-ieee}:

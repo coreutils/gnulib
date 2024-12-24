@@ -29,7 +29,7 @@ Portability problems fixed by Gnulib module @code{fopen-gnu}:
 This function does not support the mode character
 @samp{x} (corresponding to @code{O_EXCL}), introduced in ISO C11,
 on some platforms:
-FreeBSD 8.2, NetBSD 6.1, OpenBSD 5.6, Minix 3.2, AIX 6.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.16 (2012), mingw, MSVC 14.
+FreeBSD 8.2, NetBSD 6.1, OpenBSD 5.6, Minix 3.2, AIX 6.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.16 (2012), mingw with MSVCRT, MSVC 14.
 @item
 This function does not support the mode character
 @samp{e} (corresponding to @code{O_CLOEXEC}),

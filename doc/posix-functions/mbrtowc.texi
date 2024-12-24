@@ -23,7 +23,7 @@ This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=16950
 glibc 2.19,
-MSVC 14, Android 11.
+mingw with UCRT, MSVC 14, Android 11.
 @item
 This function returns @code{(size_t) -1} instead of @code{(size_t) -2}
 when the input is empty:
@@ -35,7 +35,7 @@ AIX 7.2.
 @item
 This function stores a wide character when parsing an incomplete multibyte
 character on some platforms:
-MSVC 14.
+mingw with UCRT, MSVC 14.
 @item
 This function returns the total number of bytes that make up the multibyte
 character, not the number of bytes that were needed to complete the multibyte

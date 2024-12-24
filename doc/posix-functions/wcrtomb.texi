@@ -20,7 +20,7 @@ This function returns 0 when the first argument is NULL in some locales on some 
 Solaris 11.3.
 @item
 This function does not ignore the second argument when the first argument is NULL on some platforms:
-MSVC 14.
+mingw with UCRT, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
