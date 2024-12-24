@@ -20,7 +20,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_ALREADY_INCLUDING_SPAWN_H
+#if defined _@GUARD_PREFIX@_ALREADY_INCLUDING_SPAWN_H
 /* Special invocation convention:
    On OS/2 kLIBC, <spawn.h> includes <signal.h>. Then <signal.h> ->
    <pthread.h> -> <sched.h> -> <spawn.h> are included by GNULIB.
@@ -36,11 +36,11 @@
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SPAWN_H@
 
-# define _GL_ALREADY_INCLUDING_SPAWN_H
+# define _@GUARD_PREFIX@_ALREADY_INCLUDING_SPAWN_H
 
 # @INCLUDE_NEXT@ @NEXT_SPAWN_H@
 
-# define _GL_ALREADY_INCLUDING_SPAWN_H
+# define _@GUARD_PREFIX@_ALREADY_INCLUDING_SPAWN_H
 
 #endif
 
