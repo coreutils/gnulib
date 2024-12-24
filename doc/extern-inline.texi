@@ -67,8 +67,8 @@ and @file{aaa.c} can do this:
 
 @example
 /* aaa.c */
-#include <config.h>
 #define AAA_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 #include <aaa.h>
 @end example
 
@@ -83,6 +83,12 @@ inline} so they suffer from code bloat, but they are not mainline
 platforms and will die out eventually.
 
 In this coding idiom,
+the compilation unit should define @code{AAA_INLINE} before
+including the @file{aaa.h} header that conditionally defines it.
+In the unusual and not-recommended case where @file{config.h}
+itself includes @file{aaa.h}, the compilation unit should
+define @code{AAA_INLINE} before including @file{config.h},
+not merely before including @file{aaa.h}.  Also,
 you need one @code{AAA_INLINE}-like macro per compilation unit,
 not one per header file.
 In other words, if the header file @file{aaa.h} defines functions
