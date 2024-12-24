@@ -20,7 +20,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_ALREADY_INCLUDING_THREADS_H
+#if defined _@GUARD_PREFIX@_ALREADY_INCLUDING_THREADS_H
 /* Special invocation convention:
    - On Android we have a sequence of nested includes
      <threads.h> -> <android/legacy_threads_inlines.h>
@@ -35,14 +35,14 @@
 
 #ifndef _@GUARD_PREFIX@_THREADS_H
 
-#define _GL_ALREADY_INCLUDING_THREADS_H
+#define _@GUARD_PREFIX@_ALREADY_INCLUDING_THREADS_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_THREADS_H@
 # @INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_THREADS_H@
 #endif
 
-#undef _GL_ALREADY_INCLUDING_THREADS_H
+#undef _@GUARD_PREFIX@_ALREADY_INCLUDING_THREADS_H
 
 #ifndef _@GUARD_PREFIX@_THREADS_H
 #define _@GUARD_PREFIX@_THREADS_H
@@ -144,6 +144,7 @@ typedef pthread_t thrd_t;
 #endif
 #if @BROKEN_THRD_START_T@ || @BROKEN_THRD_JOIN@
 /* Need to override thrd_t, to make thrd_join work.  */
+# if !defined GNULIB_defined_struct_thrd_with_exitcode
 struct thrd_with_exitcode
 {
   thrd_t volatile tid;
@@ -151,7 +152,9 @@ struct thrd_with_exitcode
   int volatile exitcode;
 };
 typedef struct thrd_with_exitcode *rpl_thrd_t;
-# define thrd_t rpl_thrd_t
+#  define thrd_t rpl_thrd_t
+#  define GNULIB_defined_struct_thrd_with_exitcode 1
+# endif
 #endif
 /* Type of the main function of a thread.  */
 #if !@HAVE_THREADS_H@ || @BROKEN_THRD_START_T@
