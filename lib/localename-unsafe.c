@@ -1529,7 +1529,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
      Windows base (e.g. they have different character conversion facilities
      that produce different results).  */
   /* Use our own table.  */
-  #define N(name) (is_utf8 ? name ".UTF-8" : name)
+  #define N(name)           (is_utf8 ? name ".UTF-8" : name)
+  #define NM(name,modifier) (is_utf8 ? name ".UTF-8" modifier : name modifier)
   {
     int primary, sub;
 
@@ -1604,8 +1605,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           {
           case 0x1e: return N("az");
           case SUBLANG_AZERI_LATIN: return N("az_AZ");
-          case 0x1d: return N("az@cyrillic");
-          case SUBLANG_AZERI_CYRILLIC: return N("az_AZ@cyrillic");
+          case 0x1d: return NM("az","@cyrillic");
+          case SUBLANG_AZERI_CYRILLIC: return NM("az_AZ","@cyrillic");
           }
         return N("az");
       case LANG_BASHKIR:
@@ -1706,17 +1707,17 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case 0x09: return N("sr_RS"); /* latin */
           case 0x0b: return N("sr_ME"); /* latin */
           case 0x06: return N("sr_BA"); /* latin */
-          case 0x1b: return N("sr@cyrillic");
-          case SUBLANG_SERBIAN_CYRILLIC: return N("sr_CS@cyrillic");
-          case 0x0a: return N("sr_RS@cyrillic");
-          case 0x0c: return N("sr_ME@cyrillic");
-          case 0x07: return N("sr_BA@cyrillic");
+          case 0x1b: return NM("sr","@cyrillic");
+          case SUBLANG_SERBIAN_CYRILLIC: return NM("sr_CS","@cyrillic");
+          case 0x0a: return NM("sr_RS","@cyrillic");
+          case 0x0c: return NM("sr_ME","@cyrillic");
+          case 0x07: return NM("sr_BA","@cyrillic");
           /* Bosnian */
           case 0x1e: return N("bs");
           case 0x1a: return N("bs"); /* latin */
           case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN: return N("bs_BA"); /* latin */
-          case 0x19: return N("bs@cyrillic");
-          case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC: return N("bs_BA@cyrillic");
+          case 0x19: return NM("bs","@cyrillic");
+          case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC: return NM("bs_BA","@cyrillic");
           }
         return N("hr");
       case LANG_CZECH:
@@ -1959,8 +1960,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           {
           case 0x1e: return N("iu"); /* syllabic */
           case SUBLANG_INUKTITUT_CANADA: return N("iu_CA"); /* syllabic */
-          case 0x1f: return N("iu@latin");
-          case SUBLANG_INUKTITUT_CANADA_LATIN: return N("iu_CA@latin");
+          case 0x1f: return NM("iu","@latin");
+          case SUBLANG_INUKTITUT_CANADA_LATIN: return NM("iu_CA","@latin");
           }
         return N("iu");
       case LANG_ITALIAN:
@@ -2317,7 +2318,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_SPANISH: return N("es_ES");
           case SUBLANG_SPANISH_MEXICAN: return N("es_MX");
           case SUBLANG_SPANISH_MODERN:
-            return N("es_ES@modern");      /* not seen on Unix */
+            return NM("es_ES","@modern");      /* not seen on Unix */
           case SUBLANG_SPANISH_GUATEMALA: return N("es_GT");
           case SUBLANG_SPANISH_COSTA_RICA: return N("es_CR");
           case SUBLANG_SPANISH_PANAMA: return N("es_PA");
@@ -2381,7 +2382,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
         switch (sub)
           {
           case SUBLANG_TAMAZIGHT_ARABIC: return N("ber_MA");
-          case 0x1f: return N("ber@latin");
+          case 0x1f: return NM("ber","@latin");
           case SUBLANG_TAMAZIGHT_ALGERIA_LATIN: return N("ber_DZ");
           }
         return N("ber");
@@ -2475,8 +2476,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           {
           case 0x1f: return N("uz");
           case SUBLANG_UZBEK_LATIN: return N("uz_UZ");
-          case 0x1e: return N("uz@cyrillic");
-          case SUBLANG_UZBEK_CYRILLIC: return N("uz_UZ@cyrillic");
+          case 0x1e: return NM("uz","@cyrillic");
+          case SUBLANG_UZBEK_CYRILLIC: return NM("uz_UZ","@cyrillic");
           }
         return N("uz");
       case LANG_VENDA:
@@ -2542,6 +2543,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
       default: return N("C");
       }
   }
+  #undef NM
   #undef N
 }
 
