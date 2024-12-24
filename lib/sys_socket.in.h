@@ -27,7 +27,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_ALREADY_INCLUDING_SYS_SOCKET_H
+#if defined _@GUARD_PREFIX@_ALREADY_INCLUDING_SYS_SOCKET_H
 /* Special invocation convention:
    - On Cygwin 1.5.x we have a sequence of nested includes
      <sys/socket.h> -> <cygwin/socket.h> -> <asm/socket.h> -> <cygwin/if.h>,
@@ -43,7 +43,7 @@
 
 #if @HAVE_SYS_SOCKET_H@
 
-# define _GL_ALREADY_INCLUDING_SYS_SOCKET_H
+# define _@GUARD_PREFIX@_ALREADY_INCLUDING_SYS_SOCKET_H
 
 /* On many platforms, <sys/socket.h> assumes prior inclusion of
    <sys/types.h>.  */
@@ -56,7 +56,7 @@
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_SYS_SOCKET_H@
 
-# undef _GL_ALREADY_INCLUDING_SYS_SOCKET_H
+# undef _@GUARD_PREFIX@_ALREADY_INCLUDING_SYS_SOCKET_H
 
 #endif
 
@@ -202,6 +202,7 @@ struct sockaddr_storage
 
 /* Rudimentary 'struct msghdr'; this works as long as you don't try to
    access msg_control or msg_controllen.  */
+# if !defined GNULIB_defined_struct_msghdr
 struct msghdr {
   void *msg_name;
   socklen_t msg_namelen;
@@ -209,6 +210,8 @@ struct msghdr {
   int msg_iovlen;
   int msg_flags;
 };
+#  define GNULIB_defined_struct_msghdr 1
+# endif
 
 #endif
 
