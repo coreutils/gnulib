@@ -20,7 +20,7 @@
 @PRAGMA_COLUMNS@
 
 #if (defined _WIN32 && !defined __CYGWIN__ && defined __need_locale_t) \
-    || defined _GL_ALREADY_INCLUDING_LOCALE_H
+    || defined _@GUARD_PREFIX@_ALREADY_INCLUDING_LOCALE_H
 
 /* Special invocation convention:
    - Inside mingw header files,
@@ -34,12 +34,12 @@
 
 #ifndef _@GUARD_PREFIX@_LOCALE_H
 
-#define _GL_ALREADY_INCLUDING_LOCALE_H
+#define _@GUARD_PREFIX@_ALREADY_INCLUDING_LOCALE_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_LOCALE_H@
 
-#undef _GL_ALREADY_INCLUDING_LOCALE_H
+#undef _@GUARD_PREFIX@_ALREADY_INCLUDING_LOCALE_H
 
 #ifndef _@GUARD_PREFIX@_LOCALE_H
 #define _@GUARD_PREFIX@_LOCALE_H
@@ -83,7 +83,8 @@
 
 /* Bionic libc's 'struct lconv' is just a dummy.  */
 #if @REPLACE_STRUCT_LCONV@
-# define lconv rpl_lconv
+# if !defined GNULIB_defined_struct_lconv
+#  define lconv rpl_lconv
 struct lconv
 {
   /* All 'char *' are actually 'const char *'.  */
@@ -160,6 +161,8 @@ struct lconv
      number.  */
   char int_n_sep_by_space;
 };
+#  define GNULIB_defined_struct_lconv 1
+# endif
 #endif
 
 #if @GNULIB_LOCALECONV@
@@ -309,4 +312,4 @@ _GL_WARN_ON_USE (freelocale, "freelocale is not portable");
 
 #endif /* _@GUARD_PREFIX@_LOCALE_H */
 #endif /* _@GUARD_PREFIX@_LOCALE_H */
-#endif /* !(__need_locale_t || _GL_ALREADY_INCLUDING_LOCALE_H) */
+#endif /* !(__need_locale_t || _@GUARD_PREFIX@_ALREADY_INCLUDING_LOCALE_H) */
