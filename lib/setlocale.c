@@ -818,7 +818,7 @@ setlocale_unixlike (int category, const char *locale)
                             size_t part2_len = strlen (part2) + 1;
                             char buf[64+64+6];
 
-                            if (!(part1_len + 1 + part2_len <= sizeof (buf)))
+                            if (!(part1_len + 1 + part2_len + 6 <= sizeof (buf)))
                               abort ();
                             memcpy (buf, part1, part1_len);
                             buf[part1_len] = '_';
