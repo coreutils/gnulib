@@ -37,7 +37,7 @@
               && !defined _GL_FINISHED_INCLUDING_SYSTEM_INTTYPES_H)     \
              || defined _GL_JUST_INCLUDE_SYSTEM_WCHAR_H))               \
      || (defined __MINGW32__ && defined __STRING_H_SOURCED__)           \
-     || defined _GL_ALREADY_INCLUDING_WCHAR_H)
+     || defined _@GUARD_PREFIX@_ALREADY_INCLUDING_WCHAR_H)
 /* Special invocation convention:
    - Inside glibc and uClibc header files, but not MinGW.
    - On HP-UX 11.00 we have a sequence of nested includes
@@ -59,7 +59,7 @@
 
 #ifndef _@GUARD_PREFIX@_WCHAR_H
 
-#define _GL_ALREADY_INCLUDING_WCHAR_H
+#define _@GUARD_PREFIX@_ALREADY_INCLUDING_WCHAR_H
 
 #if @HAVE_FEATURES_H@
 # include <features.h> /* for __GLIBC__ */
@@ -79,7 +79,7 @@
 # @INCLUDE_NEXT@ @NEXT_WCHAR_H@
 #endif
 
-#undef _GL_ALREADY_INCLUDING_WCHAR_H
+#undef _@GUARD_PREFIX@_ALREADY_INCLUDING_WCHAR_H
 
 #ifndef _@GUARD_PREFIX@_WCHAR_H
 #define _@GUARD_PREFIX@_WCHAR_H
@@ -531,16 +531,19 @@ _GL_WARN_ON_USE (mbsinit, "mbsinit is unportable - "
 #  define _GL_MBSTATE_ZERO_SIZE sizeof (mbstate_t)
 # endif
 _GL_BEGIN_C_LINKAGE
-# if defined IN_MBSZERO
+# if !GNULIB_defined_mbszero
+#  if defined IN_MBSZERO
 _GL_EXTERN_INLINE
-# else
+#  else
 _GL_INLINE
-# endif
+#  endif
 _GL_ARG_NONNULL ((1)) void
 mbszero (mbstate_t *ps)
 {
   memset (ps, 0, _GL_MBSTATE_ZERO_SIZE);
 }
+#  define GNULIB_defined_mbszero 1
+# endif
 _GL_END_C_LINKAGE
 _GL_CXXALIAS_SYS (mbszero, void, (mbstate_t *ps));
 _GL_CXXALIASWARN (mbszero);
