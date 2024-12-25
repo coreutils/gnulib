@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-12-25  xprintf         The functions x[v][f]printf now return an 'off64_t'
+                            instead of an 'int'.
+
 2024-11-05  eealloc         This module is deprecated.  Use malloc-gnu or
                             realloc-posix instead.
 

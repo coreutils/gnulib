@@ -1,6 +1,7 @@
 Description:
-A wrapper around printf with POSIX and GNU compatible format string
-interpretation, that calls error upon ENOMEM or EILSEQ errors.
+Wrappers around printf and fprintf
+with POSIX and GNU compatible format string interpretation,
+that calls error upon ENOMEM, EOVERFLOW, or EILSEQ errors.
 
 Comment:
 This module should not be used as a dependency from a test module,
@@ -12,8 +13,8 @@ Files:
 
 Depends-on:
 xprintf
-vprintf-gnu
-vfprintf-gnu
+vzprintf-gnu
+vfzprintf-gnu
 
 configure.ac:
 

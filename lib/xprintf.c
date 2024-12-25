@@ -14,6 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* written by Jim Meyering */
+
 #include <config.h>
 
 #include "xprintf.h"
@@ -26,15 +28,11 @@
 
 #define _(msgid) dgettext ("gnulib", msgid)
 
-/* written by Jim Meyering */
-
-/* Just like printf, but call error if it fails without setting the
-   stream's error indicator.  */
-int
+off64_t
 xprintf (char const *restrict format, ...)
 {
   va_list args;
-  int retval;
+  off64_t retval;
   va_start (args, format);
   retval = xvprintf (format, args);
   va_end (args);
@@ -42,25 +40,21 @@ xprintf (char const *restrict format, ...)
   return retval;
 }
 
-/* Just like vprintf, but call error if it fails without setting the
-   stream's error indicator.  */
-int
+off64_t
 xvprintf (char const *restrict format, va_list args)
 {
-  int retval = vprintf (format, args);
+  off64_t retval = vzprintf (format, args);
   if (retval < 0 && ! ferror (stdout))
     error (exit_failure, errno, _("cannot perform formatted output"));
 
   return retval;
 }
 
-/* Just like fprintf, but call error if it fails without setting the
-   stream's error indicator.  */
-int
+off64_t
 xfprintf (FILE *restrict stream, char const *restrict format, ...)
 {
   va_list args;
-  int retval;
+  off64_t retval;
   va_start (args, format);
   retval = xvfprintf (stream, format, args);
   va_end (args);
@@ -68,12 +62,10 @@ xfprintf (FILE *restrict stream, char const *restrict format, ...)
   return retval;
 }
 
-/* Just like vfprintf, but call error if it fails without setting the
-   stream's error indicator.  */
-int
+off64_t
 xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
 {
-  int retval = vfprintf (stream, format, args);
+  off64_t retval = vfzprintf (stream, format, args);
   if (retval < 0 && ! ferror (stream))
     error (exit_failure, errno, _("cannot perform formatted output"));
 

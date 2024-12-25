@@ -1,5 +1,6 @@
 Description:
-a wrapper around printf that calls error upon ENOMEM or EILSEQ errors
+Wrappers around printf and fprintf that call error
+upon ENOMEM, EOVERFLOW, or EILSEQ errors.
 
 Files:
 lib/xprintf.h
@@ -12,6 +13,8 @@ exitfail
 gettext-h
 gnulib-i18n
 stdarg
+vzprintf
+vfzprintf
 
 configure.ac:
 m4_ifdef([AM_XGETTEXT_OPTION],
