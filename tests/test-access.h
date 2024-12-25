@@ -19,6 +19,38 @@
 # define geteuid() ROOT_UID
 #endif
 
+#if defined __CYGWIN__
+/* Cygwin uses the security model from Windows.  */
+# include <grp.h>
+# include <string.h>
+# include <unistd.h>
+/* Test whether the current user is in the 'Administrators' group.
+   We cannot use the group name "Administrators", due to internationalization.
+   Therefore test for the SID "S-1-5-32-544" (cf.
+   <https://learn.microsoft.com/en-us/windows/win32/secauthz/well-known-sids>).
+ */
+static int
+is_administrator (void)
+{
+  gid_t list[100];
+  int i;
+  int count = getgroups (sizeof (list) / sizeof (list[0]), list);
+  if (count < 0)
+    return 0;
+  for (i = 0; i < count; i++)
+    {
+      gid_t id = list[i];
+      struct group *details = getgrgid (id);
+      if (details != NULL && strcmp (details->gr_passwd, "S-1-5-32-544") == 0)
+        return 1;
+    }
+  return 0;
+}
+# define is_root() is_administrator ()
+#else
+# define is_root() (geteuid () == ROOT_UID)
+#endif
+
 static void
 test_access (int (*func) (const char * /*file*/, int /*mode*/))
 {
@@ -79,22 +111,27 @@ test_access (int (*func) (const char * /*file*/, int /*mode*/))
 
     /* On Cygwin, for users that are in the 'Administrators' group,
        W_OK is allowed.  */
-#if !defined __CYGWIN__
-    if (geteuid () != ROOT_UID)
+    if (! is_root ())
       {
         errno = 0;
         ASSERT (func (BASE "f2", W_OK) == -1);
         ASSERT (errno == EACCES);
       }
-#endif
 
 #if defined _WIN32 && !defined __CYGWIN__
     /* X_OK works like R_OK.  */
     ASSERT (func (BASE "f2", X_OK) == 0);
 #else
-    errno = 0;
-    ASSERT (func (BASE "f2", X_OK) == -1);
-    ASSERT (errno == EACCES);
+    /* On Cygwin 3.5.5, for users that are in the 'Administrators' group,
+       X_OK is allowed.  */
+# if defined __CYGWIN__
+    if (! is_root ())
+# endif
+      {
+        errno = 0;
+        ASSERT (func (BASE "f2", X_OK) == -1);
+        ASSERT (errno == EACCES);
+      }
 #endif
   }
 
