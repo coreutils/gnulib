@@ -1,0 +1,224 @@
+@node Modernized printf
+@section Modernized printf
+
+@c Copyright (C) 2024 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Bruno Haible.
+
+The @code{*zprintf} family of functions is
+a modernized form of the @code{*printf} family of functions.
+
+@subheading The problem
+
+The @code{*printf} functions have a return type @samp{int}
+and therefore can only produce results that are up to (2 GiB - 1 byte) long.
+
+The problem with this is not so much that it is an arbitrary limitation
+(that persists even in processes that have, say, 50 GiB of RAM available).
+The bigger problem is that in reliable programs,
+it requires handling of an error code @code{EOVERFLOW}
+that indicates a result whose size would be 2 GiB or larger.
+
+@c A symptom of this missing EOVERFLOW handling can be
+@c warnings from static analyzers, see e.g.
+@c https://lists.gnu.org/archive/html/bug-gnulib/2023-06/msg00014.html
+
+How does a reliable program do error handling of @code{*printf} function calls?
+For output to strings and file descriptors
+(such as @code{sprintf} and @code{dprintf}),
+there is no other way than to check each such call.
+
+For output to @code{FILE} streams (such as @code{fprintf}),
+beginners are tempted to ignore the return value of each call
+and instead check @code{ferror (stream)} at the end.
+The problem with this approach is that
+at the moment the error is detected,
+incorrect output has already been sent onto the stream.
+So, in this case as well, the reliable approach is to check each such call.
+
+The @emph{simple format strings} that most programs use in 99% of the places,
+namely with no wide string or wide character arguments,
+nor with widths passed as @code{int} argument,
+can only fail with two possible error codes:
+@itemize
+@item
+@code{ENOMEM}, when
+the result would be too large to allocate in the process' memory.
+@item
+@code{EOVERFLOW}, when
+the result is 2 GiB or larger but still allocatable.
+@end itemize
+
+Many GNU programs use ``checking'' wrappers (functions @code{xvasprintf}, etc.)
+that check for @code{ENOMEM} and call @code{xalloc_die},
+thus aborting the program in that case.
+The problem is that @code{EOVERFLOW} is not handled, even with such wrappers.
+
+Should @code{EOVERFLOW} be handled like @code{ENOMEM}, by aborting the program?
+No, as mentioned above, that would be an arbitrary limitation, which the
+GNU Coding Standards urge us to avoid
+(@pxref{Semantics,,, standards, GNU Coding Standards}).
+
+@subheading The solution
+
+The @code{*zprintf} functions are like the @code{*printf} functions,
+except that the return type is
+@itemize
+@item
+@code{ptrdiff_t} instead of @code{int},
+for output to strings,
+@item
+@code{off64_t} (which is always equivalent to @code{int64_t})
+instead of @code{int},
+for output to file streams and file descriptors.
+@end itemize
+@noindent
+Thus, for these functions, @code{EOVERFLOW} cannot occur
+(except for format strings which take widths as argument,
+which we have excluded above),
+and the ``checking'' wrappers (functions @code{xvasprintf}, etc.)
+are thus sufficient for ensuring an error-free result.
+
+Note:
+In 64-bit processes, @code{ptrdiff_t} is 64 bits wide,
+i.e. equivalent to @code{int64_t}.
+In 32-bit processes, @code{ptrdiff_t} is only 32 bits wide,
+but since in these environments,
+memory regions of 2 GiB or larger cannot be allocated anyway
+(@code{malloc} would fail with @code{ENOMEM}),
+this type is sufficient.
+
+The following Gnulib functions and modules exist:
+
+@mindex szprintf
+@mindex szprintf-posix
+@mindex szprintf-gnu
+@mindex vszprintf
+@mindex vszprintf-posix
+@mindex vszprintf-gnu
+@mindex snzprintf
+@mindex snzprintf-posix
+@mindex snzprintf-gnu
+@mindex vsnzprintf
+@mindex vsnzprintf-posix
+@mindex vsnzprintf-gnu
+@mindex vaszprintf
+@mindex vaszprintf-posix
+@mindex vaszprintf-gnu
+@mindex c-snzprintf
+@mindex c-snzprintf-gnu
+@mindex c-vsnzprintf
+@mindex c-vsnzprintf-gnu
+@mindex c-vaszprintf
+@mindex c-vaszprintf-gnu
+@mindex fzprintf
+@mindex fzprintf-posix
+@mindex fzprintf-gnu
+@mindex vfzprintf
+@mindex vfzprintf-posix
+@mindex vfzprintf-gnu
+@mindex zprintf
+@mindex zprintf-posix
+@mindex zprintf-gnu
+@mindex vzprintf
+@mindex vzprintf-posix
+@mindex vzprintf-gnu
+@mindex dzprintf
+@mindex dzprintf-posix
+@mindex dzprintf-gnu
+@mindex vdzprintf
+@mindex vdzprintf-posix
+@mindex vdzprintf-gnu
+@mindex obstack-zprintf
+@mindex obstack-zprintf-posix
+@mindex obstack-zprintf-gnu
+@multitable @columnfractions .25 .25 .5
+@headitem Original function @tab Modernized function @tab Modules
+@item @code{sprintf} @tab @code{szprintf}
+ @tab @code{szprintf}, @code{szprintf-posix}, @code{szprintf-gnu}
+@item @code{vsprintf} @tab @code{vszprintf}
+ @tab @code{vszprintf}, @code{vszprintf-posix}, @code{vszprintf-gnu}
+@item @code{snprintf} @tab @code{snzprintf}
+ @tab @code{snzprintf}, @code{snzprintf-posix}, @code{snzprintf-gnu}
+@item @code{vsnprintf} @tab @code{vsnzprintf}
+ @tab @code{vsnzprintf}, @code{vsnzprintf-posix}, @code{vsnzprintf-gnu}
+@item @code{asprintf} @tab @code{aszprintf}
+ @tab @code{vaszprintf}, @code{vaszprintf-posix}, @code{vaszprintf-gnu}
+@item @code{vasprintf} @tab @code{vaszprintf}
+ @tab @code{vaszprintf}, @code{vaszprintf-posix}, @code{vaszprintf-gnu}
+@item @code{c_snprintf} @tab @code{c_snzprintf}
+ @tab @code{c-snzprintf}, @code{c-snzprintf-gnu}
+@item @code{c_vsnprintf} @tab @code{c_vsnzprintf}
+ @tab @code{c-vsnzprintf}, @code{c-vsnzprintf-gnu}
+@item @code{c_asprintf} @tab @code{c_aszprintf}
+ @tab @code{c-vaszprintf}, @code{c-vaszprintf-gnu}
+@item @code{c_vasprintf} @tab @code{c_vaszprintf}
+ @tab @code{c-vaszprintf}, @code{c-vaszprintf-gnu}
+@item @code{fprintf} @tab @code{fzprintf}
+ @tab @code{fzprintf}, @code{fzprintf-posix}, @code{fzprintf-gnu}
+@item @code{vfprintf} @tab @code{vfzprintf}
+ @tab @code{vfzprintf}, @code{vfzprintf-posix}, @code{vfzprintf-gnu}
+@item @code{printf} @tab @code{zprintf}
+ @tab @code{zprintf}, @code{zprintf-posix}, @code{zprintf-gnu}
+@item @code{vprintf} @tab @code{vzprintf}
+ @tab @code{vzprintf}, @code{vzprintf-posix}, @code{vzprintf-gnu}
+@item @code{dprintf} @tab @code{dzprintf}
+ @tab @code{dzprintf}, @code{dzprintf-posix}, @code{dzprintf-gnu}
+@item @code{vdprintf} @tab @code{vdzprintf}
+ @tab @code{vdzprintf}, @code{vdzprintf-posix}, @code{vdzprintf-gnu}
+@item @code{obstack_printf} @tab @code{obstack_zprintf}
+ @tab @code{obstack-zprintf},
+      @code{obstack-zprintf-posix}, @code{obstack-zprintf-gnu}
+@item @code{obstack_vprintf} @tab @code{obstack_vzprintf}
+ @tab @code{obstack-zprintf},
+      @code{obstack-zprintf-posix}, @code{obstack-zprintf-gnu}
+@end multitable
+
+The following functions use the @code{*zprintf} functions under the hood
+and thus don't need a @code{*zprintf} variant:
+
+@mindex xvasprintf
+@mindex xvasprintf-posix
+@mindex xvasprintf-gnu
+@mindex c-xvasprintf
+@mindex xprintf
+@mindex xprintf-posix
+@mindex xprintf-gnu
+@multitable @columnfractions .5 .5
+@headitem Function @tab Modules
+@item @code{xasprintf}
+ @tab @code{xvasprintf}, @code{xvasprintf-posix}, @code{xvasprintf-gnu}
+@item @code{xvasprintf}
+ @tab @code{xvasprintf}, @code{xvasprintf-posix}, @code{xvasprintf-gnu}
+@item @code{c_xasprintf}
+ @tab @code{c-xvasprintf}
+@item @code{c_xvasprintf}
+ @tab @code{c-xvasprintf}
+@item @code{xprintf}
+ @tab @code{xprintf}, @code{xprintf-posix}, @code{xprintf-gnu}
+@item @code{xvprintf}
+ @tab @code{xprintf}, @code{xprintf-posix}, @code{xprintf-gnu}
+@item @code{xfprintf}
+ @tab @code{xprintf}, @code{xprintf-posix}, @code{xprintf-gnu}
+@item @code{xvfprintf}
+ @tab @code{xprintf}, @code{xprintf-posix}, @code{xprintf-gnu}
+@end multitable
+
+Note: Even with the @code{*zprintf} functions,
+you need to be prepared to handle specific error codes
+when you use non-simple format strings:
+@itemize
+@item
+@code{EILSEQ} when
+the format string takes wide strings or wide characters as arguments,
+@item
+@code{EOVERFLOW} when
+the format string takes a width as argument
+and you cannot ensure that its value is in the range @code{0}...@code{INT_MAX}.
+@end itemize
