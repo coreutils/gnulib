@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/frexp.html}
 
-Gnulib module: frexp
+Gnulib module: frexp or frexp-ieee
 @mindex frexp
+@mindex frexp-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

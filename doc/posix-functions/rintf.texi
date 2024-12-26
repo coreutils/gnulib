@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rintf.html}
 
-Gnulib module: rintf
+Gnulib module: rintf or rintf-ieee
 @mindex rintf
+@mindex rintf-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmaf.html}
 
-Gnulib module: fmaf
+Gnulib module: fmaf or fmaf-ieee
 @mindex fmaf
+@mindex fmaf-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

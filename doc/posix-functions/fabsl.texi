@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fabsl.html}
 
-Gnulib module: fabsl
+Gnulib module: fabsl or fabsl-ieee
 @mindex fabsl
+@mindex fabsl-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

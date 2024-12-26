@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/exp2.html}
 
-Gnulib module: exp2
+Gnulib module: exp2 or exp2-ieee
 @mindex exp2
+@mindex exp2-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

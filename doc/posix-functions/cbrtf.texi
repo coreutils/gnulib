@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrtf.html}
 
-Gnulib module: cbrtf
+Gnulib module: cbrtf or cbrtf-ieee
 @mindex cbrtf
+@mindex cbrtf-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

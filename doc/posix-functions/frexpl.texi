@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/frexpl.html}
 
-Gnulib module: frexpl
+Gnulib module: frexpl or frexpl-ieee
 @mindex frexpl
+@mindex frexpl-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

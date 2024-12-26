@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sqrtl.html}
 
-Gnulib module: sqrtl
+Gnulib module: sqrtl or sqrtl-ieee
 @mindex sqrtl
+@mindex sqrtl-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

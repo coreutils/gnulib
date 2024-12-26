@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrt.html}
 
-Gnulib module: cbrt
+Gnulib module: cbrt or cbrt-ieee
 @mindex cbrt
+@mindex cbrt-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

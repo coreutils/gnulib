@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/expm1l.html}
 
-Gnulib module: expm1l
+Gnulib module: expm1l or expm1l-ieee
 @mindex expm1l
+@mindex expm1l-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

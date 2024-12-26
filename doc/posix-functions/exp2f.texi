@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/exp2f.html}
 
-Gnulib module: exp2f
+Gnulib module: exp2f or exp2f-ieee
 @mindex exp2f
+@mindex exp2f-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

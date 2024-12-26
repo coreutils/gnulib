@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log2l.html}
 
-Gnulib module: log2l
+Gnulib module: log2l or log2l-ieee
 @mindex log2l
+@mindex log2l-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

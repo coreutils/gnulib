@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rint.html}
 
-Gnulib module: rint
+Gnulib module: rint or rint-ieee
 @mindex rint
+@mindex rint-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/expf.html}
 
-Gnulib module: expf
+Gnulib module: expf or expf-ieee
 @mindex expf
+@mindex expf-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

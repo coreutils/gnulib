@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log10l.html}
 
-Gnulib module: log10l
+Gnulib module: log10l or log10l-ieee
 @mindex log10l
+@mindex log10l-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -4,8 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/logbl.html}
 
-Gnulib module: logbl
+Gnulib module: logbl or logbl-ieee
 @mindex logbl
+@mindex logbl-ieee
 
 Portability problems fixed by Gnulib:
 @itemize
