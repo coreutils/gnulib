@@ -29,10 +29,10 @@ top-level @file{Makefile.am} like this:
 dist-hook: gen-ChangeLog
 .PHONY: gen-ChangeLog
 gen-ChangeLog:
-        $(AM_V_GEN)if test -e .git; then                       \
+        $(AM_V_GEN)if test -e $(srcdir)/.git; then             \
           LC_ALL=en_US.UTF-8 TZ=UTC0                           \
             $(top_srcdir)/build-aux/gitlog-to-changelog        \
-              > $(distdir)/ChangeLog.tmp &&                    \
+              --srcdir=$(srcdir) > $(distdir)/ChangeLog.tmp && \
           mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog; \
         fi
 @end example
@@ -52,9 +52,10 @@ time zone each individual commit was made in you can use the
 dist-hook: gen-ChangeLog
 .PHONY: gen-ChangeLog
 gen-ChangeLog:
-        $(AM_V_GEN)if test -e .git; then                       \
+        $(AM_V_GEN)if test -e $(srcdir)/.git; then             \
           $(top_srcdir)/build-aux/gitlog-to-changelog          \
-            --commit-timezone > $(distdir)/ChangeLog.tmp &&    \
+              --srcdir=$(srcdir) --commit-timezone             \
+              > $(distdir)/ChangeLog.tmp &&                    \
           mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog; \
         fi
 @end example
@@ -89,13 +90,14 @@ use a @code{gen-ChangeLog} rule like the following:
 @example
 gen_start_ver = 8.31
 gen-ChangeLog:
-        $(AM_V_GEN)if test -e .git; then                           \
+        $(AM_V_GEN)if test -e $(srcdir)/.git; then                 \
           log_fix='$(srcdir)/build-aux/git-log-fix';               \
           test -e "$$log_fix"                                      \
             && amend_git_log=--amend=$$log_fix                     \
             || amend_git_log=;                                     \
           @{ LC_ALL=en_US.UTF-8 TZ=UTC0                             \
               $(top_srcdir)/build-aux/gitlog-to-changelog          \
+                --srcdir=$(srcdir)                                 \
                 "$$amend_git_log" -- 'v$(gen_start_ver)~..' &&     \
             printf '\n\nSee the source repo for older entries.\n'; \
           @} > $(distdir)/ChangeLog.tmp &&                          \
