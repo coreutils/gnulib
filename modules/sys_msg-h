@@ -1,0 +1,48 @@
+Description:
+<sys/msg.h> with extra checks.
+
+Files:
+lib/sys_msg.in.h
+m4/sys_msg_h.m4
+
+Depends-on:
+gen-header
+include_next
+
+configure.ac:
+gl_SYS_MSG_H
+gl_CONDITIONAL_HEADER([sys/msg.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(SYS_MSG_H)
+
+# We need the following in order to create <sys/msg.h> when desired.
+if GL_GENERATE_SYS_MSG_H
+sys/msg.h: sys_msg.in.h $(top_builddir)/config.status
+	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_MSG_H''@|$(NEXT_SYS_MSG_H)|g' \
+	      $(srcdir)/sys_msg.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+sys/msg.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += sys/msg.h sys/msg.h-t
+MOSTLYCLEANDIRS += sys
+
+Include:
+#if HAVE_SYS_MSG_H
+<sys/msg.h>
+#endif
+
+License:
+LGPLv2+
+
+Maintainer:
+all

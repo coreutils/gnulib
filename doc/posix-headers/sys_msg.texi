@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_msg.h.html}
 
-Gnulib module: sys_msg
-@mindex sys_msg
+Gnulib module: sys_msg-h
+@mindex sys_msg-h
 
 Portability problems fixed by Gnulib:
 @itemize
