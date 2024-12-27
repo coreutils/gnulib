@@ -1,0 +1,12 @@
+Files:
+tests/test-sys_stat-h.c
+
+Depends-on:
+assert-h
+sys_stat-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_stat-h
+check_PROGRAMS += test-sys_stat-h

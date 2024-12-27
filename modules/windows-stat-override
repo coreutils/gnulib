@@ -9,7 +9,7 @@ have side effects on the compilation of the main modules in lib/.
 Files:
 
 Depends-on:
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_SYS_STAT_H_REQUIRE_DEFAULTS

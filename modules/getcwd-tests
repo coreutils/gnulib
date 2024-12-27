@@ -10,7 +10,7 @@ fcntl-h
 getcwd-lgpl
 pathmax
 stdbool-h
-sys_stat
+sys_stat-h
 test-framework-sh
 
 configure.ac:

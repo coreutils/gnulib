@@ -6,7 +6,7 @@ lib/chmod.c
 m4/chmod.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 lstat           [test $REPLACE_CHMOD = 1]
 
 configure.ac:

@@ -9,7 +9,7 @@ m4/eaccess.m4
 
 Depends-on:
 stdbool-h
-sys_stat
+sys_stat-h
 xalloc
 xconcat-filename
 access

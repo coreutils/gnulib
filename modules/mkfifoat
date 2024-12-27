@@ -9,7 +9,7 @@ lib/at-func.c
 m4/mkfifoat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 extensions
 fcntl-h         [test $HAVE_MKFIFOAT = 0 || test $REPLACE_MKFIFOAT = 1 || test $HAVE_MKNODAT = 0 || test $REPLACE_MKNODAT = 1]
 fstatat         [test $REPLACE_MKFIFOAT = 1 || test $REPLACE_MKNODAT = 1]

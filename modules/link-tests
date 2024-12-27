@@ -8,7 +8,7 @@ Depends-on:
 ignore-value
 errno-h
 stdbool-h
-sys_stat
+sys_stat-h
 
 configure.ac:
 

@@ -15,7 +15,7 @@ malloc-posix
 memset_explicit
 realloc-posix
 stdint-h
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_PREREQ_READ_FILE

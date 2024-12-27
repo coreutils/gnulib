@@ -6,7 +6,7 @@ lib/mknod.c
 m4/mknod.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 extensions
 mkfifo          [test $HAVE_MKNOD = 0 || test $REPLACE_MKNOD = 1]
 stat            [test $HAVE_MKNOD = 0 || test $REPLACE_MKNOD = 1]

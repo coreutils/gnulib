@@ -10,7 +10,7 @@ errno-h
 link
 stdbool-h
 symlink
-sys_stat
+sys_stat-h
 opendir
 readdir
 closedir

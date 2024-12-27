@@ -18,7 +18,7 @@ lstat
 mkdir
 stdbool-h
 stdint-h
-sys_stat
+sys_stat-h
 time-h
 
 configure.ac:

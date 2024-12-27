@@ -8,7 +8,7 @@ lib/filemode.c
 m4/filemode.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_FILEMODE

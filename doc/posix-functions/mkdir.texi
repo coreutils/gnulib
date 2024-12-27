@@ -4,11 +4,11 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkdir.html}
 
-Gnulib module: sys_stat or mkdir
-@mindex sys_stat
+Gnulib module: sys_stat-h or mkdir
+@mindex sys_stat-h
 @mindex mkdir
 
-Portability problems fixed by either Gnulib module @code{sys_stat} or @code{mkdir}:
+Portability problems fixed by either Gnulib module @code{sys_stat-h} or @code{mkdir}:
 @itemize
 @item
 This function is declared in different header files (namely, @code{<io.h>} or

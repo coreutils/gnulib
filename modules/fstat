@@ -8,7 +8,7 @@ lib/stat-w32.c
 m4/fstat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 largefile
 pathmax         [test $REPLACE_FSTAT = 1]
 stat            [test $REPLACE_FSTAT = 1]

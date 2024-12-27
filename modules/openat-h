@@ -8,7 +8,7 @@ Depends-on:
 extern-inline
 fcntl-h
 stdbool-h
-sys_stat
+sys_stat-h
 unistd
 
 configure.ac:

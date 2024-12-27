@@ -6,7 +6,7 @@ lib/mkdir.c
 m4/mkdir.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 dirname-lgpl    [test $REPLACE_MKDIR = 1]
 stat            [test $REPLACE_MKDIR = 1]
 

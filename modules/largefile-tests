@@ -4,7 +4,7 @@ tests/test-largefile.c
 Depends-on:
 intprops
 sys_types
-sys_stat
+sys_stat-h
 
 configure.ac:
 

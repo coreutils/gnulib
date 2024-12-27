@@ -11,7 +11,7 @@ fcntl-h
 filename
 savewd
 stat-macros
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_MKANCESDIRS

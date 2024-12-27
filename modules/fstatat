@@ -8,7 +8,7 @@ m4/fstatat.m4
 m4/lstat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 extensions
 at-internal     [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 errno-h         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]

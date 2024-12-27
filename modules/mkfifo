@@ -6,7 +6,7 @@ lib/mkfifo.c
 m4/mkfifo.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 stat            [test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1]
 
 configure.ac:

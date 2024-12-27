@@ -7,7 +7,7 @@ m4/stat-size.m4
 
 Depends-on:
 fileblocks
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_STAT_SIZE

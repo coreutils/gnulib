@@ -9,7 +9,7 @@ Depends-on:
 c-file-type
 gettext-h
 gnulib-i18n
-sys_stat
+sys_stat-h
 
 configure.ac:
 

@@ -11,7 +11,7 @@ Depends-on:
 stat
 stat-macros
 stdbool-h
-sys_stat
+sys_stat-h
 xalloc
 
 configure.ac:

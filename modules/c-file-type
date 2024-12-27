@@ -6,7 +6,7 @@ lib/file-type.h
 lib/c-file-type.c
 
 Depends-on:
-sys_stat
+sys_stat-h
 
 configure.ac:
 

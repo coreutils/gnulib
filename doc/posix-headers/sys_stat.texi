@@ -3,10 +3,10 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_stat.h.html}
 
-Gnulib module: sys_stat
-@mindex sys_stat
+Gnulib module: sys_stat-h
+@mindex sys_stat-h
 
-Portability problems fixed by Gnulib module @code{sys_stat}:
+Portability problems fixed by Gnulib module @code{sys_stat-h}:
 @itemize
 @item
 The type @code{mode_t} is not defined on some platforms:
@@ -35,7 +35,7 @@ Use the gnulib module
 @end itemize
 
 @mindex windows-stat-inodes
-Portability problems fixed by Gnulib module @code{sys_stat}, together with module @code{windows-stat-inodes}:
+Portability problems fixed by Gnulib module @code{sys_stat-h}, together with module @code{windows-stat-inodes}:
 @itemize
 @item
 On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.

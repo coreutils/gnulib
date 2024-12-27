@@ -10,7 +10,7 @@ errno-h
 fcntl-h
 intprops
 open       [case $host_os in mingw* | windows*) false;; *) :;; esac]
-sys_stat
+sys_stat-h
 unistd
 
 configure.ac:

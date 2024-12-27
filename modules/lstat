@@ -6,7 +6,7 @@ lib/lstat.c
 m4/lstat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 largefile
 stat            [test $REPLACE_LSTAT = 1]
 stat-time       [test $REPLACE_LSTAT = 1]

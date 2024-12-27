@@ -13,7 +13,7 @@ fcntl-h       [test $HAVE_LCHMOD = 0]
 intprops      [test $HAVE_LCHMOD = 0]
 lstat         [test $HAVE_LCHMOD = 0]
 readlink      [test $HAVE_LCHMOD = 0]
-sys_stat
+sys_stat-h
 unistd        [test $HAVE_LCHMOD = 0]
 
 configure.ac:

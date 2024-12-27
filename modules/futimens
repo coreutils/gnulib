@@ -6,7 +6,7 @@ lib/futimens.c
 m4/futimens.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 extensions
 utimens         [test $HAVE_FUTIMENS = 0 || test $REPLACE_FUTIMENS = 1]
 

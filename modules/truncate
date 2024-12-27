@@ -9,7 +9,7 @@ Depends-on:
 unistd
 sys_types
 largefile
-sys_stat
+sys_stat-h
 stat            [test $REPLACE_TRUNCATE = 1]
 open            [test $HAVE_DECL_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]
 ftruncate       [test $HAVE_DECL_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]

@@ -23,7 +23,7 @@ savewd
 stat
 stat-macros
 stdbool-h
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_MKDIR_PARENTS

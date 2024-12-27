@@ -10,7 +10,7 @@ Depends-on:
 c99
 fcntl-h
 stdbool-h
-sys_stat
+sys_stat-h
 clean-temp
 tempname
 canonicalize

@@ -10,7 +10,7 @@ m4/eaccess.m4
 
 Depends-on:
 stdbool-h
-sys_stat
+sys_stat-h
 strdup
 concat-filename
 access

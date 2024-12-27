@@ -8,7 +8,7 @@ lib/stat-w32.c
 m4/stat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 largefile
 assert-h        [test $REPLACE_STAT = 1]
 filename        [test $REPLACE_STAT = 1]

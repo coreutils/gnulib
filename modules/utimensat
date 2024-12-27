@@ -7,7 +7,7 @@ lib/at-func.c
 m4/utimensat.m4
 
 Depends-on:
-sys_stat
+sys_stat-h
 extensions
 at-internal     [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 errno-h         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]

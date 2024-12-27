@@ -10,7 +10,7 @@ unistd
 free-posix      [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 stat            [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 strdup-posix    [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
-sys_stat        [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
+sys_stat-h      [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 
 configure.ac:
 gl_FUNC_LINK

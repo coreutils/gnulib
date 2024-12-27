@@ -12,7 +12,7 @@ unistd
 extensions
 fcntl-h         [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
 openat-h        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
-sys_stat        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
+sys_stat-h      [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
 at-internal     [test $HAVE_UNLINKAT = 0]
 errno-h         [test $HAVE_UNLINKAT = 0]
 fchdir          [test $HAVE_UNLINKAT = 0]

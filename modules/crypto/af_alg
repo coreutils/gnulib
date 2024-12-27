@@ -14,7 +14,7 @@ fseeko          [test $USE_AF_ALG = 1]
 ftello          [test $USE_AF_ALG = 1]
 fstat           [test $USE_AF_ALG = 1]
 sys_socket-h
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_AF_ALG

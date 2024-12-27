@@ -15,7 +15,7 @@ snippet/c++defs
 snippet/warn-on-use
 libc-config
 lstat
-sys_stat
+sys_stat-h
 
 configure.ac:
 gl_GLOB_H
