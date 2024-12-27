@@ -4,7 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-netinet_in
+netinet_in-h
 arpa_inet-h
 inet_pton
 errno-h

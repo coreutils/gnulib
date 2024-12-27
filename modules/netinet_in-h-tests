@@ -1,0 +1,11 @@
+Files:
+tests/test-netinet_in-h.c
+
+Depends-on:
+netinet_in-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-netinet_in-h
+check_PROGRAMS += test-netinet_in-h

@@ -4,7 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-netinet_in
+netinet_in-h
 sys_socket
 
 configure.ac:

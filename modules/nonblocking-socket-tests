@@ -18,7 +18,7 @@ nonblocking
 wait-process
 environ
 posix_spawnp
-netinet_in
+netinet_in-h
 arpa_inet-h
 socket
 setsockopt

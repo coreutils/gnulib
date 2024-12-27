@@ -6,7 +6,7 @@ tests/macros.h
 Depends-on:
 stdbool
 sys_socket
-netinet_in
+netinet_in-h
 arpa_inet-h
 sys_ioctl
 extensions

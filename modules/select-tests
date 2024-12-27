@@ -11,7 +11,7 @@ tests/test-select-stdin.c
 Depends-on:
 stdbool
 sys_socket
-netinet_in
+netinet_in-h
 arpa_inet-h
 unistd
 sys_ioctl

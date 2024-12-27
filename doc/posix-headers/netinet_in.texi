@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/netinet_in.h.html}
 
-Gnulib module: netinet_in
-@mindex netinet_in
+Gnulib module: netinet_in-h
+@mindex netinet_in-h
 
 Portability problems fixed by Gnulib:
 @itemize
