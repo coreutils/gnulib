@@ -10,7 +10,7 @@ Depends-on:
 stdbool
 attribute
 string-desc
-stdarg
+stdarg-h
 vsnzprintf-posix
 
 configure.ac:

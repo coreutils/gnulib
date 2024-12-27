@@ -1,0 +1,18 @@
+Files:
+tests/test-stdarg-h-c++.cc
+tests/test-stdarg-h-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdarg-h-c++
+check_PROGRAMS += test-stdarg-h-c++
+test_stdarg_h_c___SOURCES = test-stdarg-h-c++.cc test-stdarg-h-c++2.cc
+endif

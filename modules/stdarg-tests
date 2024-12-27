@@ -1,8 +1,0 @@
-Files:
-
-Depends-on:
-stdarg-c++-tests
-
-configure.ac:
-
-Makefile.am:

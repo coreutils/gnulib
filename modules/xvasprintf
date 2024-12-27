@@ -17,7 +17,7 @@ xalloc
 xalloc-die
 extern-inline
 xsize
-stdarg
+stdarg-h
 errno-h
 
 configure.ac:

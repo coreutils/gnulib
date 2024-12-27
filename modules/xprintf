@@ -12,7 +12,7 @@ error
 exitfail
 gettext-h
 gnulib-i18n
-stdarg
+stdarg-h
 vzprintf
 vfzprintf
 
