@@ -8,7 +8,7 @@ m4/ffsll.m4
 
 Depends-on:
 extensions
-string
+string-h
 ffs             [test $HAVE_FFSLL = 0 || test $REPLACE_FFSLL = 1]
 
 configure.ac:

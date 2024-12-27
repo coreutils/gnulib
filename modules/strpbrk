@@ -12,7 +12,7 @@ lib/strpbrk.c
 m4/strpbrk.m4
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 gl_FUNC_STRPBRK

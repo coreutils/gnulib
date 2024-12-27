@@ -8,7 +8,7 @@ lib/strchrnul.valgrind
 m4/strchrnul.m4
 
 Depends-on:
-string
+string-h
 extensions
 rawmemchr       [test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1]
 

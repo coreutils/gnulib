@@ -4,11 +4,11 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strncpy.html}
 
-Gnulib module: string or strncpy
-@mindex string
+Gnulib module: string-h or strncpy
+@mindex string-h
 @mindex strncpy
 
-Portability problems fixed by Gnulib module @code{string} or Gnulib module @code{strncpy}:
+Portability problems fixed by Gnulib module @code{string-h} or Gnulib module @code{strncpy}:
 @itemize
 @item
 This function cannot be called from plain inline or extern inline functions

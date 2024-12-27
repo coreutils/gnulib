@@ -7,7 +7,7 @@ lib/strstr.c
 m4/strstr.m4
 
 Depends-on:
-string
+string-h
 builtin-expect  [test $REPLACE_STRSTR = 1]
 stdbool-h       [test $REPLACE_STRSTR = 1]
 memchr          [test $REPLACE_STRSTR = 1]

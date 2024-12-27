@@ -11,7 +11,7 @@ Files:
 m4/strdup.m4
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 gl_FUNC_STRDUP

@@ -3,7 +3,7 @@ tests/test-stack.c
 tests/macros.h
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 

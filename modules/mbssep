@@ -6,7 +6,7 @@ lib/mbssep.c
 
 Depends-on:
 mbuiterf
-string
+string-h
 mbspbrk
 strsep
 

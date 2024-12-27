@@ -6,7 +6,7 @@ lib/strsep.c
 m4/strsep.m4
 
 Depends-on:
-string
+string-h
 extensions
 strpbrk         [test $HAVE_STRSEP = 0]
 

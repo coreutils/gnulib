@@ -9,7 +9,7 @@ m4/mmap-anon.m4
 
 Depends-on:
 extensions
-string
+string-h
 
 configure.ac:
 gl_FUNC_MEMCHR

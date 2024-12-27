@@ -10,7 +10,7 @@ Depends-on:
 assert-h
 extensions
 stdint-h
-string
+string-h
 
 configure.ac:
 gl_FUNC_RAWMEMCHR

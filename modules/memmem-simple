@@ -9,7 +9,7 @@ m4/memmem.m4
 Depends-on:
 builtin-expect
 extensions
-string
+string-h
 stdint-h
 memchr
 memcmp

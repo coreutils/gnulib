@@ -1,0 +1,20 @@
+Files:
+tests/test-string-h-c++.cc
+tests/test-string-h-c++2.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-string-h-c++
+check_PROGRAMS += test-string-h-c++
+test_string_h_c___SOURCES = test-string-h-c++.cc test-string-h-c++2.cc
+test_string_h_c___LDADD = $(LDADD) $(LIBUNISTRING) $(LIBINTL) $(LIBC32CONV) $(LIBTHREAD)
+endif

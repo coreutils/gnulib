@@ -6,7 +6,7 @@ lib/mbsspn.c
 
 Depends-on:
 mbuiterf
-string
+string-h
 mbschr
 
 configure.ac:

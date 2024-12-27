@@ -12,7 +12,7 @@ lib/memmove.c
 m4/memmove.m4
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 gl_FUNC_MEMMOVE

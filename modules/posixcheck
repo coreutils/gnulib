@@ -30,7 +30,7 @@ signal-h
 spawn-h
 stdio-h
 stdlib-h
-string
+string-h
 strings
 sys_file
 sys_ioctl

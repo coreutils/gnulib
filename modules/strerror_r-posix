@@ -6,7 +6,7 @@ lib/strerror_r.c
 m4/strerror_r.m4
 
 Depends-on:
-string
+string-h
 extensions
 errno-h         [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 lock            [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]

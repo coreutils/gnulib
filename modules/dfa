@@ -30,7 +30,7 @@ stddef-h
 stdint-h
 stdio-h
 stdlib-h
-string
+string-h
 uchar
 # The lonesome_lower array requires ISO C 23 semantics for char32_t.
 # But uchar-c23 has a global effect, therefore leave it to each package

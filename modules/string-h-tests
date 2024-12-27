@@ -1,0 +1,12 @@
+Files:
+tests/test-string-h.c
+
+Depends-on:
+assert-h
+string-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-string-h
+check_PROGRAMS += test-string-h

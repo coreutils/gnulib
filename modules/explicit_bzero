@@ -8,7 +8,7 @@ m4/explicit_bzero.m4
 Depends-on:
 extensions
 memset_explicit
-string
+string-h
 
 configure.ac:
 gl_FUNC_EXPLICIT_BZERO

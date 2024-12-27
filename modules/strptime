@@ -10,7 +10,7 @@ Depends-on:
 time-h
 extensions
 sys_time        [test $HAVE_STRPTIME = 0]
-string          [test $HAVE_STRPTIME = 0]
+string-h        [test $HAVE_STRPTIME = 0]
 strcase         [test $HAVE_STRPTIME = 0]
 stdbool-h       [test $HAVE_STRPTIME = 0]
 time_r          [test $HAVE_STRPTIME = 0]

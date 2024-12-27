@@ -1,6 +1,6 @@
 Description:
 POSIX compatible vsnprintf() function: print formatted output to a fixed length
-string
+string-h
 
 Comment:
 This module should not be used as a dependency from a test module,

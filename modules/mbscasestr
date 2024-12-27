@@ -9,7 +9,7 @@ Depends-on:
 alignasof
 mbuiter
 stdbool-h
-string
+string-h
 mbslen
 malloca
 c32tolower

@@ -6,7 +6,7 @@ lib/mbscspn.c
 
 Depends-on:
 mbuiterf
-string
+string-h
 mbschr
 strcspn
 

@@ -10,7 +10,7 @@ This module is obsolete.
 Files:
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 

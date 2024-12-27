@@ -7,7 +7,7 @@ lib/mbspcasecmp.c
 Depends-on:
 c32tolower
 mbuiterf
-string
+string-h
 
 configure.ac:
 gl_STRING_MODULE_INDICATOR([mbspcasecmp])

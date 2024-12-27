@@ -7,7 +7,7 @@ m4/sigabbrev_np.m4
 
 Depends-on:
 extensions
-string
+string-h
 
 configure.ac:
 gl_FUNC_SIGABBREV_NP

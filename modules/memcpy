@@ -12,7 +12,7 @@ lib/memcpy.c
 m4/memcpy.m4
 
 Depends-on:
-string
+string-h
 
 configure.ac:
 gl_FUNC_MEMCPY

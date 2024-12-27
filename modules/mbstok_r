@@ -5,7 +5,7 @@ Files:
 lib/mbstok_r.c
 
 Depends-on:
-string
+string-h
 mbsspn
 mbspbrk
 strtok_r

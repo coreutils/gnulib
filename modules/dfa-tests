@@ -8,7 +8,7 @@ Depends-on:
 binary-io
 stdio-h
 stdlib-h
-string
+string-h
 unistd
 regex
 setlocale

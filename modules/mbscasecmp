@@ -8,7 +8,7 @@ Depends-on:
 c32tolower
 mbuiterf            [test "$GNULIB_MCEL_PREFER" != yes]
 stdlib-h
-string
+string-h
 uchar
 
 configure.ac:

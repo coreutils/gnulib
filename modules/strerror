@@ -6,7 +6,7 @@ lib/strerror.c
 m4/strerror.m4
 
 Depends-on:
-string
+string-h
 assert-h         [test $REPLACE_STRERROR = 1]
 errno-h          [test $REPLACE_STRERROR = 1]
 intprops         [test $REPLACE_STRERROR = 1]

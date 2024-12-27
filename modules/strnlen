@@ -6,7 +6,7 @@ lib/strnlen.c
 m4/strnlen.m4
 
 Depends-on:
-string
+string-h
 extensions
 
 configure.ac:

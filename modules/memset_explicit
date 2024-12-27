@@ -6,7 +6,7 @@ lib/memset_explicit.c
 m4/memset_explicit.m4
 
 Depends-on:
-string
+string-h
 extensions
 
 configure.ac:

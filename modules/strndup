@@ -6,7 +6,7 @@ lib/strndup.c
 m4/strndup.m4
 
 Depends-on:
-string
+string-h
 extensions
 strnlen         [test $HAVE_STRNDUP = 0 || test $REPLACE_STRNDUP = 1]
 

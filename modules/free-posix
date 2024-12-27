@@ -7,7 +7,7 @@ m4/free.m4
 
 Depends-on:
 stdlib-h
-string
+string-h
 wchar
 
 configure.ac:

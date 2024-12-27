@@ -4,8 +4,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcpy.html}
 
-Gnulib module: string
-@mindex string
+Gnulib module: string-h
+@mindex string-h
 
 Portability problems fixed by Gnulib:
 @itemize

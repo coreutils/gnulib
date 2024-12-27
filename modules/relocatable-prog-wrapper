@@ -74,7 +74,7 @@ stddef-h
 stdckdint-h
 stdint-h
 stdlib-h
-string
+string-h
 sys_stat
 unistd
 xalloc-oversized
