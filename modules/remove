@@ -6,7 +6,7 @@ lib/remove.c
 m4/remove.m4
 
 Depends-on:
-stdio
+stdio-h
 rmdir           [test $REPLACE_REMOVE = 1]
 unlink          [test $REPLACE_REMOVE = 1]
 

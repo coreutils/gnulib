@@ -7,7 +7,7 @@ lib/fprintftime.c
 lib/strftime.c
 
 Depends-on:
-stdio
+stdio-h
 nstrftime
 time_rz
 

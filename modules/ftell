@@ -6,7 +6,7 @@ lib/ftell.c
 m4/ftell.m4
 
 Depends-on:
-stdio
+stdio-h
 errno-h
 ftello          [test $REPLACE_FTELL = 1]
 

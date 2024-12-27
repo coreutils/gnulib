@@ -7,7 +7,7 @@ lib/asprintf.c
 m4/vasprintf.m4
 
 Depends-on:
-stdio
+stdio-h
 extensions
 vasnprintf      [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 errno-h         [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]

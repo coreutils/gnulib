@@ -9,7 +9,7 @@ Depends-on:
 gen-header
 libtextstyle
 stdbool-h
-stdio
+stdio-h
 unistd
 fsync
 vasprintf-posix

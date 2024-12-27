@@ -6,7 +6,7 @@ Files:
 lib/vfzprintf.c
 
 Depends-on:
-stdio
+stdio-h
 vasnprintf
 intprops
 free-posix

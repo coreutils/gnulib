@@ -20,7 +20,7 @@ This function crashes when invoked with invalid arguments on some platforms:
 MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{nonblocking}:
 @itemize
 @item
 When writing to a non-blocking pipe whose buffer is full, this function fails
@@ -35,7 +35,7 @@ write into the pipe buffer, on some platforms:
 mingw, MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{sigpipe}:
+Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{sigpipe}:
 @itemize
 @item
 When writing to a pipe with no readers, this function fails with error

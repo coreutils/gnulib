@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdio.h.html}
 
-Gnulib module: stdio
-@mindex stdio
+Gnulib module: stdio-h
+@mindex stdio-h
 
 Portability problems fixed by Gnulib:
 @itemize

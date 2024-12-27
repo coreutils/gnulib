@@ -6,7 +6,7 @@ Files:
 lib/vzprintf.c
 
 Depends-on:
-stdio
+stdio-h
 vfzprintf
 
 configure.ac:

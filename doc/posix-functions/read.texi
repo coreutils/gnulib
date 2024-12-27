@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/read.html}
 
-Gnulib module: read, stdio, nonblocking
+Gnulib module: read, stdio-h, nonblocking
 @mindex read
-@mindex stdio
+@mindex stdio-h
 @mindex nonblocking
 
 Portability problems fixed by Gnulib module @code{read}:
@@ -20,7 +20,7 @@ This function crashes when invoked with invalid arguments on some platforms:
 MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{nonblocking}:
 @itemize
 @item
 When reading from a non-blocking pipe whose buffer is empty, this function

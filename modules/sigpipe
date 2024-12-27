@@ -16,7 +16,7 @@ msvc-nothrow
 raise
 signal-h
 sigprocmask
-stdio
+stdio-h
 unistd
 
 configure.ac:

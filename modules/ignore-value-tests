@@ -3,7 +3,7 @@ tests/test-ignore-value.c
 
 Depends-on:
 attribute
-stdio
+stdio-h
 
 configure.ac:
 

@@ -6,7 +6,7 @@ lib/rename.c
 m4/rename.m4
 
 Depends-on:
-stdio
+stdio-h
 canonicalize-lgpl [test $REPLACE_RENAME = 1]
 chdir             [test $REPLACE_RENAME = 1]
 dirname-lgpl      [test $REPLACE_RENAME = 1]

@@ -6,7 +6,7 @@ lib/getline.c
 m4/getline.m4
 
 Depends-on:
-stdio
+stdio-h
 extensions
 getdelim        [test $REPLACE_GETLINE = 1]
 

@@ -6,7 +6,7 @@ lib/fdopen.c
 m4/fdopen.m4
 
 Depends-on:
-stdio
+stdio-h
 msvc-inval      [test $REPLACE_FDOPEN = 1]
 
 configure.ac:

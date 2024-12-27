@@ -11,7 +11,7 @@ m4/strerrorname_np.m4
 
 Depends-on:
 extensions
-stdio
+stdio-h
 vaszprintf
 xalloc
 xalloc-die

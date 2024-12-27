@@ -6,7 +6,7 @@ tests/test-dfa-invalid-merge.sh
 
 Depends-on:
 binary-io
-stdio
+stdio-h
 stdlib
 string
 unistd

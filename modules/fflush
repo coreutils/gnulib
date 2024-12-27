@@ -7,7 +7,7 @@ lib/stdio-impl.h
 m4/fflush.m4
 
 Depends-on:
-stdio
+stdio-h
 fpurge                    [test $REPLACE_FFLUSH = 1]
 ftello                    [test $REPLACE_FFLUSH = 1]
 freading                  [test $REPLACE_FFLUSH = 1]

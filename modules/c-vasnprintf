@@ -25,7 +25,7 @@ assert-h
 attribute
 limits-h
 stdint-h
-stdio
+stdio-h
 mixin/printf-posix
 free-posix
 nocrash

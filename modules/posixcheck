@@ -28,7 +28,7 @@ sched-h
 search-h
 signal-h
 spawn-h
-stdio
+stdio-h
 stdlib
 string
 strings

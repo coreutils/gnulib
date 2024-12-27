@@ -6,7 +6,7 @@ Files:
 lib/szprintf.c
 
 Depends-on:
-stdio
+stdio-h
 vasnprintf
 errno-h
 stdint-h

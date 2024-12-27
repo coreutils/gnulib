@@ -6,7 +6,7 @@ lib/pclose.c
 m4/pclose.m4
 
 Depends-on:
-stdio
+stdio-h
 
 configure.ac:
 gl_FUNC_PCLOSE

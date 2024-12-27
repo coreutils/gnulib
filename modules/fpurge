@@ -7,7 +7,7 @@ lib/stdio-impl.h
 m4/fpurge.m4
 
 Depends-on:
-stdio
+stdio-h
 
 configure.ac:
 gl_FUNC_FPURGE

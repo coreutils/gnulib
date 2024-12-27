@@ -6,7 +6,7 @@ lib/popen.c
 m4/popen.m4
 
 Depends-on:
-stdio
+stdio-h
 open            [test $HAVE_POPEN = 0 || test $REPLACE_POPEN = 1]
 
 configure.ac:

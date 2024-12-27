@@ -20,7 +20,7 @@ m4/math_h.m4
 m4/exponentd.m4
 
 Depends-on:
-stdio
+stdio-h
 alloca-opt
 attribute
 float-h

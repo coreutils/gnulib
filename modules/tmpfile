@@ -6,7 +6,7 @@ lib/tmpfile.c
 m4/tmpfile.m4
 
 Depends-on:
-stdio
+stdio-h
 largefile
 pathmax         [test $REPLACE_TMPFILE = 1]
 stdbool-h       [test $REPLACE_TMPFILE = 1]

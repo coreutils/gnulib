@@ -8,7 +8,7 @@ lib/c-vasprintf.c
 
 Depends-on:
 stdint-h
-stdio
+stdio-h
 c-vasnprintf
 
 configure.ac:

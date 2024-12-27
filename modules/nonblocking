@@ -14,7 +14,7 @@ fcntl-h
 ioctl
 msvc-nothrow
 stdbool-h
-stdio
+stdio-h
 sys_socket
 unistd
 

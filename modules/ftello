@@ -9,7 +9,7 @@ m4/ftello.m4
 m4/ungetc.m4
 
 Depends-on:
-stdio
+stdio-h
 extensions
 largefile
 sys_types

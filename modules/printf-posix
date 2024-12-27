@@ -14,7 +14,7 @@ m4/printf.m4
 m4/asm-underscore.m4
 
 Depends-on:
-stdio
+stdio-h
 printf-safe
 vfprintf-posix  [test $REPLACE_PRINTF = 1]
 

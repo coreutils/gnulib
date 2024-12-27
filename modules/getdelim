@@ -6,7 +6,7 @@ lib/getdelim.c
 m4/getdelim.m4
 
 Depends-on:
-stdio
+stdio-h
 extensions
 limits-h        [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 stdint-h        [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]

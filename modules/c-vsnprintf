@@ -8,7 +8,7 @@ lib/c-vsnprintf.c
 
 Depends-on:
 stdint-h
-stdio
+stdio-h
 c-vsnzprintf
 
 configure.ac:

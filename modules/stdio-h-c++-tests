@@ -1,0 +1,20 @@
+Files:
+tests/test-stdio-h-c++.cc
+tests/test-stdio-h-c++2.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdio-h-c++
+check_PROGRAMS += test-stdio-h-c++
+test_stdio_h_c___SOURCES = test-stdio-h-c++.cc test-stdio-h-c++2.cc
+test_stdio_h_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB) $(EUIDACCESS_LIBGEN) $(GETRANDOM_LIB)
+endif

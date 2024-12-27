@@ -16,7 +16,7 @@ lib/obstack_printf.c
 
 Depends-on:
 obstack
-stdio
+stdio-h
 vasnprintf-posix
 extensions
 

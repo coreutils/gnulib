@@ -8,7 +8,7 @@ lib/renameatu.h
 m4/renameat.m4
 
 Depends-on:
-stdio
+stdio-h
 extensions
 fcntl-h
 filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]

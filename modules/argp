@@ -33,7 +33,7 @@ extensions
 vsnprintf
 sleep
 stdbool-h
-stdio
+stdio-h
 strerror
 memchr
 memmove

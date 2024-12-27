@@ -4,12 +4,12 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/puts.html}
 
-Gnulib module: stdio, nonblocking, sigpipe
-@mindex stdio
+Gnulib module: stdio-h, nonblocking, sigpipe
+@mindex stdio-h
 @mindex nonblocking
 @mindex sigpipe
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{nonblocking}:
 @itemize
 @item
 When writing to a non-blocking pipe whose buffer is full, this function fails
@@ -18,7 +18,7 @@ platforms:
 mingw, MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{sigpipe}:
+Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{sigpipe}:
 @itemize
 @item
 When writing to a pipe with no readers, this function fails, instead of

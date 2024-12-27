@@ -28,7 +28,7 @@ regex
 stdbool-h
 stddef-h
 stdint-h
-stdio
+stdio-h
 stdlib
 string
 uchar

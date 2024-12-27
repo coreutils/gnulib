@@ -10,7 +10,7 @@ Depends-on:
 extensions
 largefile
 lseek
-stdio
+stdio-h
 sys_types
 # Just to guarantee consistency between fseek() and fseeko().
 fseek

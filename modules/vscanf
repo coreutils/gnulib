@@ -4,7 +4,7 @@ vscanf() function: parse formatted text from standard input
 Files:
 
 Depends-on:
-stdio
+stdio-h
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vscanf])

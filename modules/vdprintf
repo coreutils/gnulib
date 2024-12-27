@@ -6,7 +6,7 @@ lib/vdprintf.c
 m4/vdprintf.m4
 
 Depends-on:
-stdio
+stdio-h
 vdzprintf       [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
 intprops        [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
 errno-h         [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]

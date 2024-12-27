@@ -8,7 +8,7 @@ m4/fclose.m4
 m4/fflush.m4
 
 Depends-on:
-stdio
+stdio-h
 largefile
 fcntl-h         [test $REPLACE_FOPEN = 1]
 stdbool-h       [test $REPLACE_FOPEN = 1]

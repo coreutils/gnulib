@@ -13,7 +13,7 @@ m4/vprintf-posix.m4
 m4/printf.m4
 
 Depends-on:
-stdio
+stdio-h
 printf-safe
 vfprintf-posix  [test $REPLACE_VPRINTF = 1]
 

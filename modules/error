@@ -8,7 +8,7 @@ m4/error.m4
 Depends-on:
 error-h
 stddef-h
-stdio
+stdio-h
 getprogname     [test $COMPILE_ERROR_C = 1]
 gettext-h       [test $COMPILE_ERROR_C = 1]
 gnulib-i18n     [test $COMPILE_ERROR_C = 1]

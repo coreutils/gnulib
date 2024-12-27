@@ -4,7 +4,7 @@ vfscanf() function: parse formatted text from a stream
 Files:
 
 Depends-on:
-stdio
+stdio-h
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vfscanf])

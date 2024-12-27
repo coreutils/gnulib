@@ -15,7 +15,7 @@ gettext-h
 gnulib-i18n
 localcharset
 error
-stdio
+stdio-h
 
 configure.ac:
 gl_UNICODEIO
