@@ -9,7 +9,7 @@ Depends-on:
 # All modules that depend on 'snippet/warn-on-use'.
 arpa_inet-h
 ctype
-dirent
+dirent-h
 fcntl-h
 fnmatch-h
 glob-h

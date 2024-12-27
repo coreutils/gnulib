@@ -1,0 +1,11 @@
+Files:
+tests/test-dirent-h.c
+
+Depends-on:
+dirent-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dirent-h
+check_PROGRAMS += test-dirent-h

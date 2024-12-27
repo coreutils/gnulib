@@ -7,7 +7,7 @@ lib/dirent-private.h
 m4/fdopendir.m4
 
 Depends-on:
-dirent
+dirent-h
 extensions
 at-internal     [test $HAVE_FDOPENDIR = 0]
 dirfd           [test $HAVE_FDOPENDIR = 0]

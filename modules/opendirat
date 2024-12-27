@@ -7,7 +7,7 @@ lib/opendirat.h
 
 Depends-on:
 c99
-dirent
+dirent-h
 fcntl-h
 fdopendir
 openat

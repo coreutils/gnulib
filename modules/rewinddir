@@ -8,7 +8,7 @@ lib/dirent-private.h
 m4/rewinddir.m4
 
 Depends-on:
-dirent
+dirent-h
 largefile
 
 configure.ac:

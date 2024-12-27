@@ -7,7 +7,7 @@ lib/dirent-private.h
 m4/closedir.m4
 
 Depends-on:
-dirent
+dirent-h
 dirfd           [test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1]
 
 configure.ac:

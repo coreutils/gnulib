@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/dirent.h.html}
 
-Gnulib module: dirent
-@mindex dirent
+Gnulib module: dirent-h
+@mindex dirent-h
 
 Portability problems fixed by Gnulib:
 @itemize

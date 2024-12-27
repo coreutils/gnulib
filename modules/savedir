@@ -9,7 +9,7 @@ m4/savedir.m4
 Depends-on:
 attribute
 closedir
-dirent
+dirent-h
 fdopendir
 free-posix
 opendir

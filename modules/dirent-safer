@@ -8,7 +8,7 @@ lib/opendir-safer.c
 m4/dirent-safer.m4
 
 Depends-on:
-dirent
+dirent-h
 closedir
 dirfd
 fcntl

@@ -6,7 +6,7 @@ lib/alphasort.c
 m4/alphasort.m4
 
 Depends-on:
-dirent
+dirent-h
 extensions
 
 configure.ac:

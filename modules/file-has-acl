@@ -11,7 +11,7 @@ Depends-on:
 acl-permissions
 assert-h
 attribute
-dirent
+dirent-h
 errno
 extern-inline
 minmax
