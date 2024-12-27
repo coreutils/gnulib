@@ -5,8 +5,8 @@ ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdnoreturn.h.html}
 
-Gnulib module: stdnoreturn
-@mindex stdnoreturn
+Gnulib module: stdnoreturn-h
+@mindex stdnoreturn-h
 
 Portability problems fixed by Gnulib:
 @itemize

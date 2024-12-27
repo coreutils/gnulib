@@ -12,8 +12,8 @@
 @section Non-returning Functions
 
 @cindex @code{_Noreturn}
-@cindex @code{noreturn}
-@cindex @code{stdnoreturn}
+@mindex @code{noreturn}
+@mindex @code{stdnoreturn-h}
 A "non-returning" function is a function which cannot return normally.
 Instead of returning, it can loop forever, or it can transfer control via
 @code{abort}, @code{execvp}, @code{exit}, @code{longjmp}, @code{throw}
@@ -57,6 +57,6 @@ you should use @code{_Noreturn}; otherwise the module
 @code{noreturn} provides for better data-flow analysis and thus for
 better warnings.
 
-@mindex stdnoreturn
-There is also an obsolete @code{stdnoreturn} module, but its use is no
+@mindex stdnoreturn-h
+There is also an obsolete @code{stdnoreturn-h} module, but its use is no
 longer recommended.
