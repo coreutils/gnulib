@@ -1,0 +1,58 @@
+Description:
+<mntent.h> with more declarations.
+
+Files:
+lib/mntent.in.h
+m4/mntent_h.m4
+
+Depends-on:
+gen-header
+include_next
+snippet/arg-nonnull
+snippet/c++defs
+snippet/warn-on-use
+
+configure.ac:
+gl_MNTENT_H
+gl_MNTENT_H_REQUIRE_DEFAULTS
+gl_CONDITIONAL_HEADER([mntent.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(MNTENT_H)
+
+# We need the following in order to create <mntent.h> when desired.
+if GL_GENERATE_MNTENT_H
+mntent.h: mntent.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_MNTENT_H''@|$(NEXT_MNTENT_H)|g' \
+	      -e 's/@''GNULIB_HASMNTOPT''@/$(GNULIB_HASMNTOPT)/g' \
+	      -e 's|@''HAVE_HASMNTOPT''@|$(HAVE_HASMNTOPT)|g' \
+	      -e 's|@''HAVE_SETMNTENT''@|$(HAVE_SETMNTENT)|g' \
+	      -e 's|@''REPLACE_HASMNTOPT''@|$(REPLACE_HASMNTOPT)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      $(srcdir)/mntent.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+mntent.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += mntent.h mntent.h-t
+
+Include:
+#if HAVE_MNTENT_H
+<mntent.h>
+#endif
+
+License:
+LGPLv2+
+
+Maintainer:
+all

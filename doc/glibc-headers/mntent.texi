@@ -19,8 +19,8 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}.
 @end itemize
 
-Gnulib module: mntent
-@mindex mntent
+Gnulib module: mntent-h
+@mindex mntent-h
 
 Portability problems fixed by Gnulib:
 @itemize

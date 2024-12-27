@@ -6,7 +6,7 @@ lib/hasmntopt.c
 m4/hasmntopt.m4
 
 Depends-on:
-mntent
+mntent-h
 
 configure.ac:
 gl_FUNC_HASMNTOPT
