@@ -8,7 +8,7 @@ m4/login_tty.m4
 m4/pty.m4
 
 Depends-on:
-utmp
+utmp-h
 sys_ioctl-h
 open            [test $HAVE_LOGIN_TTY = 0]
 

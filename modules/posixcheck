@@ -49,7 +49,7 @@ time-h
 uchar-h
 unistd-h
 utime-h
-utmp
+utmp-h
 wchar
 wctype-h
 

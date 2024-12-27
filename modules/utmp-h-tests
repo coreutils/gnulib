@@ -1,0 +1,11 @@
+Files:
+tests/test-utmp-h.c
+
+Depends-on:
+utmp-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-utmp-h
+check_PROGRAMS += test-utmp-h

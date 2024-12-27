@@ -17,8 +17,8 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man5/utmp.5.html,,man utmp}.
 @end itemize
 
-Gnulib module: utmp
-@mindex utmp
+Gnulib module: utmp-h
+@mindex utmp-h
 
 Portability problems fixed by Gnulib:
 @itemize
