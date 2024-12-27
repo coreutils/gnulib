@@ -1,0 +1,11 @@
+Files:
+tests/test-spawn-h.c
+
+Depends-on:
+spawn-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-spawn-h
+check_PROGRAMS += test-spawn-h

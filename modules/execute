@@ -18,7 +18,7 @@ free-posix
 msvc-nothrow
 gettext-h
 gnulib-i18n
-spawn
+spawn-h
 posix_spawn
 posix_spawnp
 posix_spawn_file_actions_init

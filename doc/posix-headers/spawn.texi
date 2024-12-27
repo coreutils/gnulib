@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/spawn.h.html}
 
-Gnulib module: spawn
-@mindex spawn
+Gnulib module: spawn-h
+@mindex spawn-h
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -8,7 +8,7 @@ lib/spawn_int.h
 m4/posix_spawn_faction_addchdir.m4
 
 Depends-on:
-spawn
+spawn-h
 posix_spawn_file_actions_init [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR = 0 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR = 1]
 
 configure.ac:

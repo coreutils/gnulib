@@ -27,7 +27,7 @@ pty-h
 sched-h
 search-h
 signal-h
-spawn
+spawn-h
 stdio
 stdlib
 string

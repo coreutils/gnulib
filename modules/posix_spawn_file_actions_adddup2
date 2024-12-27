@@ -8,7 +8,7 @@ lib/spawn_int.h
 m4/posix_spawn.m4
 
 Depends-on:
-spawn
+spawn-h
 getdtablesize                 [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = 1]
 posix_spawn_file_actions_init [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = 1]
 

@@ -23,7 +23,7 @@ msvc-nothrow
 open
 pipe2
 pipe2-safer
-spawn
+spawn-h
 posix_spawn
 posix_spawnp
 posix_spawn_file_actions_init

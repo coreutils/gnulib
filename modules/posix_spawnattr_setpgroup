@@ -6,7 +6,7 @@ lib/spawnattr_setpgroup.c
 m4/posix_spawn.m4
 
 Depends-on:
-spawn
+spawn-h
 
 configure.ac:
 gl_POSIX_SPAWN
