@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/strings.h.html}
 
-Gnulib module: strings
-@mindex strings
+Gnulib module: strings-h
+@mindex strings-h
 
 Portability problems fixed by Gnulib:
 @itemize

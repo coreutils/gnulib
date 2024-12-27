@@ -7,7 +7,7 @@ lib/strncasecmp.c
 m4/strcase.m4
 
 Depends-on:
-strings
+strings-h
 
 configure.ac:
 gl_STRCASE

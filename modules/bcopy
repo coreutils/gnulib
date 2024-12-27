@@ -11,7 +11,7 @@ Files:
 lib/bcopy.c
 
 Depends-on:
-strings
+strings-h
 
 configure.ac:
 AC_REPLACE_FUNCS(bcopy)
