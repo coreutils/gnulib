@@ -15,7 +15,7 @@ fnmatch-h
 glob-h
 iconv-h
 inttypes-h-incomplete
-langinfo
+langinfo-h
 locale
 malloc-h
 math

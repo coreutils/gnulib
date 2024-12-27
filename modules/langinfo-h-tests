@@ -1,0 +1,11 @@
+Files:
+tests/test-langinfo-h.c
+
+Depends-on:
+langinfo-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-langinfo-h
+check_PROGRAMS += test-langinfo-h

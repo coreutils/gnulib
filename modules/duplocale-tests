@@ -5,7 +5,7 @@ tests/macros.h
 m4/intl-thread-locale.m4
 
 Depends-on:
-langinfo
+langinfo-h
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([strfmon_l snprintf_l])

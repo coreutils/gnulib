@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/langinfo.h.html}
 
-Gnulib module: langinfo
-@mindex langinfo
+Gnulib module: langinfo-h
+@mindex langinfo-h
 
 Portability problems fixed by Gnulib:
 @itemize

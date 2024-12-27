@@ -23,7 +23,7 @@ flexmember
 free-posix
 strdup
 lock
-langinfo
+langinfo-h
 setlocale-null
 setlocale-null-unlocked
 thread-optim

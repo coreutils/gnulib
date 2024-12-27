@@ -1,0 +1,18 @@
+Files:
+tests/test-langinfo-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-langinfo-h-c++
+check_PROGRAMS += test-langinfo-h-c++
+test_langinfo_h_c___SOURCES = test-langinfo-h-c++.cc
+endif
