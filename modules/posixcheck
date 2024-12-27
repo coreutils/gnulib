@@ -32,7 +32,7 @@ stdio-h
 stdlib-h
 string-h
 strings-h
-sys_file
+sys_file-h
 sys_ioctl
 sys_random
 sys_resource

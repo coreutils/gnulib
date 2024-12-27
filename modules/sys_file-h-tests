@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_file-h.c
+
+Depends-on:
+sys_file-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_file-h
+check_PROGRAMS += test-sys_file-h

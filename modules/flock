@@ -6,7 +6,7 @@ lib/flock.c
 m4/flock.m4
 
 Depends-on:
-sys_file
+sys_file-h
 msvc-nothrow    [test $HAVE_FLOCK = 0]
 
 configure.ac:

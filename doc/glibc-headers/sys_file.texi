@@ -3,8 +3,8 @@
 
 Declares the function @code{flock}.
 
-Gnulib module: sys_file
-@mindex sys_file
+Gnulib module: sys_file-h
+@mindex sys_file-h
 
 Portability problems fixed by Gnulib:
 @itemize
