@@ -8,7 +8,7 @@ m4/getdomainname.m4
 Depends-on:
 unistd
 extensions
-netdb           [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
+netdb-h         [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
 sys_socket      [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
 
 configure.ac:

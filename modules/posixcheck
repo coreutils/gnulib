@@ -20,7 +20,7 @@ locale-h
 malloc-h
 math-h
 monetary-h
-netdb
+netdb-h
 poll-h
 pthread-h
 pty

@@ -7,7 +7,7 @@ lib/gai_strerror.c
 m4/getaddrinfo.m4
 
 Depends-on:
-netdb
+netdb-h
 sys_socket
 extensions
 gettext-h       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]

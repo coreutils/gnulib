@@ -1,0 +1,12 @@
+Files:
+tests/test-netdb-h.c
+
+Depends-on:
+netdb-h-c++-tests
+assert-h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-netdb-h
+check_PROGRAMS += test-netdb-h

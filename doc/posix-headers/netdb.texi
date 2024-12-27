@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/netdb.h.html}
 
-Gnulib module: netdb
-@mindex netdb
+Gnulib module: netdb-h
+@mindex netdb-h
 
 Portability problems fixed by Gnulib:
 @itemize
