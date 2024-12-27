@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_sem.h.html}
 
-Gnulib module: sys_sem
-@mindex sys_sem
+Gnulib module: sys_sem-h
+@mindex sys_sem-h
 
 Portability problems fixed by Gnulib:
 @itemize
