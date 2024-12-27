@@ -9,7 +9,7 @@ lib/unictype/bitmap.h
 
 Depends-on:
 unitypes
-stdbool
+stdbool-h
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

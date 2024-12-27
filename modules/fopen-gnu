@@ -8,7 +8,7 @@ Depends-on:
 fopen
 open            [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
 fcntl-h         [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
-stdbool         [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+stdbool-h       [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
 unistd          [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
 close           [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
 fstat           [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]

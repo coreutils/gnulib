@@ -6,7 +6,7 @@ lib/csharpcomp.h
 lib/csharpcomp.c
 
 Depends-on:
-stdbool
+stdbool-h
 error
 xconcat-filename
 cygpath

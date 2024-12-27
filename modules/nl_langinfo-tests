@@ -17,7 +17,7 @@ c-strcasestr
 setlocale
 thread
 nanosleep
-stdbool
+stdbool-h
 
 configure.ac:
 gt_LOCALE_FR

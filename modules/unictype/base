@@ -9,7 +9,7 @@ m4/unictype_h.m4
 Depends-on:
 gen-header
 unitypes
-stdbool
+stdbool-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([1.3], [unictype.h])

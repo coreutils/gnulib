@@ -9,7 +9,7 @@ Depends-on:
 stdio
 largefile
 pathmax         [test $REPLACE_TMPFILE = 1]
-stdbool         [test $REPLACE_TMPFILE = 1]
+stdbool-h       [test $REPLACE_TMPFILE = 1]
 tempname        [test $REPLACE_TMPFILE = 1]
 tmpdir          [test $REPLACE_TMPFILE = 1]
 

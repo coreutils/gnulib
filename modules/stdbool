@@ -1,14 +1,18 @@
 Description:
 A bool that is like C23.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'stdbool-h' instead.
+
 Files:
-m4/c-bool.m4
 
 Depends-on:
-c99
+stdbool-h
 
 configure.ac:
-gl_C_BOOL
 
 Makefile.am:
 
@@ -18,4 +22,3 @@ License:
 LGPLv2+
 
 Maintainer:
-all

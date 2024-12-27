@@ -9,7 +9,7 @@ Depends-on:
 assert-h
 c-ctype
 idx
-stdbool
+stdbool-h
 
 configure.ac:
 

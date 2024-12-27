@@ -5,7 +5,7 @@ Files:
 lib/strcasestr.c
 
 Depends-on:
-stdbool
+stdbool-h
 strcasestr-simple
 
 configure.ac:

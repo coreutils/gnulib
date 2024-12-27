@@ -7,7 +7,7 @@ lib/string-desc.c
 lib/string-desc-contains.c
 
 Depends-on:
-stdbool
+stdbool-h
 idx
 c-ctype
 ialloc

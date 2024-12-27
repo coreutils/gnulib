@@ -7,7 +7,7 @@ lib/system-quote.c
 
 Depends-on:
 sh-quote
-stdbool
+stdbool-h
 xalloc
 
 configure.ac:

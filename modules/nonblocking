@@ -13,7 +13,7 @@ Depends-on:
 fcntl-h
 ioctl
 msvc-nothrow
-stdbool
+stdbool-h
 stdio
 sys_socket
 unistd

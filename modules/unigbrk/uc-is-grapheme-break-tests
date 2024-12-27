@@ -6,7 +6,7 @@ tests/unigbrk/GraphemeBreakTest.txt
 Depends-on:
 unictype/incb-of
 unictype/property-extended-pictographic
-stdbool
+stdbool-h
 
 configure.ac:
 

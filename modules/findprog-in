@@ -8,7 +8,7 @@ m4/findprog-in.m4
 m4/eaccess.m4
 
 Depends-on:
-stdbool
+stdbool-h
 sys_stat
 filename
 concat-filename

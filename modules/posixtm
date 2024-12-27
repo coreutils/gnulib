@@ -10,7 +10,7 @@ Depends-on:
 c-ctype
 idx
 mktime
-stdbool
+stdbool-h
 stdckdint
 time
 verify

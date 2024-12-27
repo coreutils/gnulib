@@ -24,7 +24,7 @@ malloc-posix     [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 open             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 realloc-posix    [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 stat             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-stdbool          [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
+stdbool-h        [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 strdup-posix     [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 sys_stat         [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 

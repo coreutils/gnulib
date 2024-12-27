@@ -11,7 +11,7 @@ freadahead
 fflush
 gettext-h
 gnulib-i18n
-stdbool
+stdbool-h
 unistd
 
 configure.ac:

@@ -6,7 +6,7 @@ tests/unistdio/test-ulc-asnprintf-big.c
 tests/macros.h
 
 Depends-on:
-stdbool
+stdbool-h
 stdint
 physmem
 

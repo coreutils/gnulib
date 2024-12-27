@@ -9,7 +9,7 @@ m4/stdbit_h.m4
 Depends-on:
 gen-header
 extern-inline           [$GL_GENERATE_STDBIT_H]
-stdbool                 [$GL_GENERATE_STDBIT_H]
+stdbool-h               [$GL_GENERATE_STDBIT_H]
 
 configure.ac:
 gl_STDBIT_H

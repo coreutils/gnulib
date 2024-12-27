@@ -9,7 +9,7 @@ Depends-on:
 posix_spawn_file_actions_init
 posix_spawn_file_actions_destroy
 posix_spawnp-tests
-stdbool
+stdbool-h
 findprog
 xvasprintf
 

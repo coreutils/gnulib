@@ -11,7 +11,7 @@ m4/locale-tr.m4
 m4/codeset.m4
 
 Depends-on:
-stdbool
+stdbool-h
 setlocale
 mbrtowc
 wctype-h

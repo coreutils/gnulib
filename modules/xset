@@ -8,7 +8,7 @@ lib/gl_xset.c
 Depends-on:
 set
 extern-inline
-stdbool
+stdbool-h
 xalloc-die
 
 configure.ac:

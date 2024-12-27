@@ -8,7 +8,7 @@ lib/gl_xomap.c
 Depends-on:
 omap
 extern-inline
-stdbool
+stdbool-h
 xalloc-die
 
 configure.ac:

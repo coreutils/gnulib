@@ -9,7 +9,7 @@ tests/test-select-out.sh
 tests/test-select-stdin.c
 
 Depends-on:
-stdbool
+stdbool-h
 sys_socket
 netinet_in-h
 arpa_inet-h

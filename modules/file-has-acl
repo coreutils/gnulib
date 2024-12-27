@@ -20,7 +20,7 @@ limits-h
 malloc-posix
 ssize_t
 stat
-stdbool
+stdbool-h
 stdckdint
 
 configure.ac:

@@ -12,7 +12,7 @@ gnulib-i18n
 error
 quotearg
 exitfail
-stdbool
+stdbool-h
 unistd
 
 configure.ac:

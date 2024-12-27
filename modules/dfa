@@ -25,7 +25,7 @@ locale-h
 mbrtoc32-regular
 mbszero
 regex
-stdbool
+stdbool-h
 stddef
 stdint
 stdio

@@ -16,7 +16,7 @@ getrandom
 libc-config
 lstat
 mkdir
-stdbool
+stdbool-h
 stdint
 sys_stat
 time-h

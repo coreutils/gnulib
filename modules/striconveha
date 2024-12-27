@@ -7,7 +7,7 @@ lib/striconveha.h
 lib/striconveha.c
 
 Depends-on:
-stdbool
+stdbool-h
 striconveh
 malloca
 strdup

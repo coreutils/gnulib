@@ -8,7 +8,7 @@ Depends-on:
 ignore-value
 errno-h
 link
-stdbool
+stdbool-h
 symlink
 sys_stat
 opendir

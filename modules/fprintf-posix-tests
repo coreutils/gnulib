@@ -13,7 +13,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-stdbool
+stdbool-h
 stdint
 get-rusage-as
 

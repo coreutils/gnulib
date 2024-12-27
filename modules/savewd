@@ -16,7 +16,7 @@ fchdir
 fcntl-h
 filename
 raise
-stdbool
+stdbool-h
 stdlib
 sys_wait
 unistd

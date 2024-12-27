@@ -22,7 +22,7 @@ quote
 savewd
 stat
 stat-macros
-stdbool
+stdbool-h
 sys_stat
 
 configure.ac:

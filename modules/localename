@@ -11,7 +11,7 @@ locale-h
 localename-unsafe
 flexmember
 lock
-stdbool
+stdbool-h
 thread-optim
 
 configure.ac:

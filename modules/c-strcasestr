@@ -9,7 +9,7 @@ lib/str-two-way.h
 Depends-on:
 c-ctype
 c-strcase
-stdbool
+stdbool-h
 memchr
 memcmp
 

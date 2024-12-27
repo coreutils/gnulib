@@ -4,7 +4,7 @@ tests/qemu.h
 tests/macros.h
 
 Depends-on:
-stdbool
+stdbool-h
 
 configure.ac:
 

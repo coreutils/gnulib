@@ -7,7 +7,7 @@ lib/windows-cond.c
 lib/windows-initguard.h
 
 Depends-on:
-stdbool
+stdbool-h
 errno-h
 time-h
 gettimeofday

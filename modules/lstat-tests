@@ -8,7 +8,7 @@ Depends-on:
 ignore-value
 errno-h
 same-inode
-stdbool
+stdbool-h
 symlink
 
 configure.ac:

@@ -7,7 +7,7 @@ lib/unlinkdir.c
 m4/unlinkdir.m4
 
 Depends-on:
-stdbool
+stdbool-h
 priv-set
 root-uid
 

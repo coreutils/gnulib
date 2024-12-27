@@ -22,7 +22,7 @@ canonicalize-lgpl
 xalloc
 xreadlink
 open
-stdbool
+stdbool-h
 unistd
 memcmp
 strdup

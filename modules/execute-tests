@@ -15,7 +15,7 @@ fcntl
 mkdir
 msvc-inval
 read-file
-stdbool
+stdbool-h
 stdint
 unistd
 

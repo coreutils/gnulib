@@ -6,7 +6,7 @@ lib/bcp47.h
 lib/bcp47.c
 
 Depends-on:
-stdbool
+stdbool-h
 c-ctype
 
 configure.ac:

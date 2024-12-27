@@ -17,7 +17,7 @@ extensions
 intprops
 libc-config
 locale-h
-stdbool
+stdbool-h
 stdckdint
 time_rz
 

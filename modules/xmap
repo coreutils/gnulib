@@ -8,7 +8,7 @@ lib/gl_xmap.c
 Depends-on:
 map
 extern-inline
-stdbool
+stdbool-h
 xalloc-die
 
 configure.ac:

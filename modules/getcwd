@@ -25,7 +25,7 @@ opendir         [test $REPLACE_GETCWD = 1]
 readdir         [test $REPLACE_GETCWD = 1]
 rewinddir       [test $REPLACE_GETCWD = 1]
 closedir        [test $REPLACE_GETCWD = 1]
-stdbool         [test $REPLACE_GETCWD = 1]
+stdbool-h       [test $REPLACE_GETCWD = 1]
 malloc-posix    [test $REPLACE_GETCWD = 1]
 strdup-posix    [test $REPLACE_GETCWD = 1]
 

@@ -10,7 +10,7 @@ Depends-on:
 float-h
 isnanf-nolibm
 nan
-stdbool
+stdbool-h
 stdint
 
 configure.ac:

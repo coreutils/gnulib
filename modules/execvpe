@@ -9,7 +9,7 @@ Depends-on:
 unistd
 extensions
 free-posix      [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
-stdbool         [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
+stdbool-h       [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 findprog-in     [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 execve          [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 

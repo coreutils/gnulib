@@ -18,7 +18,7 @@ unistr/u8-mbtouc-unsafe
 unistr/u8-uctomb
 unistr/u8-cpy
 uninorm/u8-normalize
-stdbool
+stdbool-h
 
 configure.ac:
 

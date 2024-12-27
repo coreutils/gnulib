@@ -9,7 +9,7 @@ errno-h
 fcntl-h
 getcwd-lgpl
 pathmax
-stdbool
+stdbool-h
 sys_stat
 test-framework-sh
 

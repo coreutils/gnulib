@@ -1,0 +1,18 @@
+Files:
+tests/test-stdbool-h-c++.cc
+tests/test-stdbool-h-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdbool-h-c++
+check_PROGRAMS += test-stdbool-h-c++
+test_stdbool_h_c___SOURCES = test-stdbool-h-c++.cc test-stdbool-h-c++2.cc
+endif

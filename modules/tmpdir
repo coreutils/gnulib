@@ -9,7 +9,7 @@ m4/tmpdir.m4
 Depends-on:
 secure_getenv
 stat
-stdbool
+stdbool-h
 sys_stat
 pathmax
 

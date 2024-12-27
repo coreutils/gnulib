@@ -9,7 +9,7 @@ m4/priv-set.m4
 Depends-on:
 errno-h
 extern-inline
-stdbool
+stdbool-h
 
 configure.ac:
 gl_PRIV_SET

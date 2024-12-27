@@ -15,7 +15,7 @@ lstat             [test $REPLACE_RENAME = 1]
 rmdir             [test $REPLACE_RENAME = 1]
 same-inode        [test $REPLACE_RENAME = 1]
 stat              [test $REPLACE_RENAME = 1]
-stdbool           [test $REPLACE_RENAME = 1]
+stdbool-h         [test $REPLACE_RENAME = 1]
 strdup            [test $REPLACE_RENAME = 1]
 
 configure.ac:

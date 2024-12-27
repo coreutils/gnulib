@@ -8,7 +8,7 @@ lib/cloexec.h
 Depends-on:
 dup2
 fcntl
-stdbool
+stdbool-h
 
 configure.ac:
 gl_MODULE_INDICATOR_FOR_TESTS([cloexec])

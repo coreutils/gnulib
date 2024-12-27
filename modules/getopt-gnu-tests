@@ -9,7 +9,7 @@ tests/test-getopt_long.h
 Depends-on:
 dup2
 setenv
-stdbool
+stdbool-h
 unistd
 unsetenv
 

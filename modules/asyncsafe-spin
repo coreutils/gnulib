@@ -8,7 +8,7 @@ m4/atomic-cas.m4
 
 Depends-on:
 signal-h
-stdbool
+stdbool-h
 sigprocmask
 windows-spin
 sparcv8+

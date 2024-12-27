@@ -8,7 +8,7 @@ lib/gl_xoset.c
 Depends-on:
 oset
 extern-inline
-stdbool
+stdbool-h
 xalloc-die
 
 configure.ac:

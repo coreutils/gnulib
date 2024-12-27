@@ -8,7 +8,7 @@ tests/test-getopt.h
 Depends-on:
 dup2
 setenv
-stdbool
+stdbool-h
 unistd
 unsetenv
 

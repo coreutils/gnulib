@@ -7,7 +7,7 @@ tests/macros.h
 Depends-on:
 getcwd-lgpl
 same-inode
-stdbool
+stdbool-h
 symlink
 
 configure.ac:

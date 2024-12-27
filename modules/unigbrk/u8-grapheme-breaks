@@ -11,7 +11,7 @@ unigbrk/uc-gbrk-prop
 unictype/incb-of
 unictype/property-extended-pictographic
 unistr/u8-mbtouc
-stdbool
+stdbool-h
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u8-grapheme-breaks])

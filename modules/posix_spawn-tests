@@ -14,7 +14,7 @@ Depends-on:
 posix_spawn_file_actions_init
 posix_spawn_file_actions_addopen
 posix_spawn_file_actions_destroy
-stdbool
+stdbool-h
 unistd
 sys_wait
 environ

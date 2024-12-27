@@ -18,7 +18,7 @@ unistr/u32-mbtouc-unsafe
 unistr/u32-uctomb
 unistr/u32-cpy
 uninorm/u32-normalize
-stdbool
+stdbool-h
 
 configure.ac:
 

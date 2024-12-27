@@ -8,7 +8,7 @@ lib/str-kmp.h
 Depends-on:
 alignasof
 mbuiter
-stdbool
+stdbool-h
 string
 mbslen
 malloca

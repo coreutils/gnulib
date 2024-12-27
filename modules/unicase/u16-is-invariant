@@ -12,7 +12,7 @@ uninorm/base
 uninorm/u16-normalize
 uninorm/nfd
 unistr/u16-cmp
-stdbool
+stdbool-h
 
 configure.ac:
 

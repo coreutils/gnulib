@@ -14,7 +14,7 @@ mbrtoc32
 mbsinit
 mbszero
 uchar
-stdbool
+stdbool-h
 strnlen1
 
 configure.ac:

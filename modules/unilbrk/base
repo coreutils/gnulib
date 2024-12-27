@@ -9,7 +9,7 @@ Depends-on:
 gen-header
 unitypes
 localcharset
-stdbool
+stdbool-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.11], [unilbrk.h])

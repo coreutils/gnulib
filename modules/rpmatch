@@ -8,7 +8,7 @@ m4/rpmatch.m4
 Depends-on:
 stdlib
 extensions
-stdbool         [test $HAVE_RPMATCH = 0]
+stdbool-h       [test $HAVE_RPMATCH = 0]
 gettext-h       [test $HAVE_RPMATCH = 0]
 gnulib-i18n     [test $HAVE_RPMATCH = 0]
 regex           [test $HAVE_RPMATCH = 0]

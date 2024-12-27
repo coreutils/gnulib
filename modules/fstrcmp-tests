@@ -3,7 +3,7 @@ tests/test-fstrcmp.c
 tests/macros.h
 
 Depends-on:
-stdbool
+stdbool-h
 
 configure.ac:
 

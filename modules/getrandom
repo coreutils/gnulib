@@ -9,7 +9,7 @@ Depends-on:
 sys_random
 fcntl-h             [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
 minmax              [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
-stdbool             [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
+stdbool-h           [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
 open                [case $host_os in mingw* | windows*) false;; *) test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1;; esac]
 
 configure.ac:

@@ -11,7 +11,7 @@ tests/socket-client.h
 tests/macros.h
 
 Depends-on:
-stdbool
+stdbool-h
 unistd
 sys_socket
 nonblocking

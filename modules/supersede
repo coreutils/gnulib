@@ -9,7 +9,7 @@ m4/supersede.m4
 Depends-on:
 c99
 fcntl-h
-stdbool
+stdbool-h
 sys_stat
 clean-temp
 tempname

@@ -10,7 +10,7 @@ unistd
 readlink        [test $HAVE_LCHOWN = 0]
 chown           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 errno-h         [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
-stdbool         [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+stdbool-h       [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 sys_stat        [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 lstat           [test $REPLACE_LCHOWN = 1]
 

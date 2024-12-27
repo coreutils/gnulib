@@ -12,7 +12,7 @@ multiarch
 assert-h        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 intprops        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 pselect         [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
-stdbool         [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+stdbool-h       [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 sys_select      [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 
 configure.ac:

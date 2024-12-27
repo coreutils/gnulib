@@ -16,7 +16,7 @@ gnulib-i18n
 memcmp
 quote
 quotearg
-stdbool
+stdbool-h
 stdlib
 
 configure.ac:

@@ -8,7 +8,7 @@ lib/gl_xlist.c
 Depends-on:
 list
 extern-inline
-stdbool
+stdbool-h
 xalloc-die
 
 configure.ac:

@@ -7,7 +7,7 @@ lib/write-any-file.c
 m4/write-any-file.m4
 
 Depends-on:
-stdbool
+stdbool-h
 priv-set
 root-uid
 

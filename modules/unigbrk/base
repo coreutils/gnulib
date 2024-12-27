@@ -8,7 +8,7 @@ m4/libunistring-base.m4
 Depends-on:
 gen-header
 unitypes
-stdbool
+stdbool-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([1.2], [unigbrk.h])

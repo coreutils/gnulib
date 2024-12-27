@@ -10,7 +10,7 @@ count-one-bits
 extern-inline
 flexmember
 inttypes-h-incomplete
-stdbool
+stdbool-h
 stdint
 verify
 xalloc

@@ -10,7 +10,7 @@ Depends-on:
 assure
 dev-ino
 same-inode
-stdbool
+stdbool-h
 stdint
 
 configure.ac:

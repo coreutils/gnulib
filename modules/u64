@@ -8,7 +8,7 @@ lib/u64.c
 Depends-on:
 byteswap
 extern-inline
-stdbool
+stdbool-h
 stdint
 
 configure.ac:

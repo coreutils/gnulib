@@ -8,7 +8,7 @@ lib/basename-lgpl.c
 Depends-on:
 double-slash-root
 filename
-stdbool
+stdbool-h
 
 configure.ac:
 

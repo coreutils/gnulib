@@ -5,7 +5,7 @@ tests/macros.h
 tests/signature.h
 
 Depends-on:
-stdbool
+stdbool-h
 netinet_in-h
 arpa_inet-h
 unistd

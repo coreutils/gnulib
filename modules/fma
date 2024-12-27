@@ -11,7 +11,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 float-h         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
-stdbool         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
+stdbool-h       [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 assert-h        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 isfinite        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 integer_length  [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
