@@ -7,7 +7,7 @@ m4/ftruncate.m4
 
 Depends-on:
 unistd
-sys_types
+sys_types-h
 largefile
 msvc-nothrow    [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]
 msvc-inval      [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]

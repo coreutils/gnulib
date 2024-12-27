@@ -14,7 +14,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-sys_types
+sys_types-h
 unistd
 
 configure.ac:

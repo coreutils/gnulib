@@ -11,7 +11,7 @@ extensions
 largefile
 lseek
 stdio-h
-sys_types
+sys_types-h
 # Just to guarantee consistency between fseek() and fseeko().
 fseek
 

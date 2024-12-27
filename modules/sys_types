@@ -1,46 +1,20 @@
 Description:
 A <sys/types.h> that conforms better to POSIX.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'sys_types-h' instead.
+
 Files:
-lib/sys_types.in.h
-m4/sys_types_h.m4
-m4/off_t.m4
-m4/off64_t.m4
-m4/pid_t.m4
 
 Depends-on:
-gen-header
-include_next
-ssize_t
-
-configure.ac-early:
-AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+sys_types-h
 
 configure.ac:
-gl_SYS_TYPES_H
-gl_SYS_TYPES_H_REQUIRE_DEFAULTS
-AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += sys/types.h
-
-# We need the following in order to create <sys/types.h> when the system
-# doesn't have one that works with the given compiler.
-sys/types.h: sys_types.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
-	$(AM_V_at)$(SED_HEADER_STDOUT) \
-	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_SYS_TYPES_H''@|$(NEXT_SYS_TYPES_H)|g' \
-	      -e 's|@''WINDOWS_64_BIT_OFF_T''@|$(WINDOWS_64_BIT_OFF_T)|g' \
-	      -e 's|@''HAVE_OFF64_T''@|$(HAVE_OFF64_T)|g' \
-	      -e 's|@''WINDOWS_STAT_INODES''@|$(WINDOWS_STAT_INODES)|g' \
-	      $(srcdir)/sys_types.in.h > $@-t
-	$(AM_V_at)mv $@-t $@
-MOSTLYCLEANFILES += sys/types.h sys/types.h-t
-MOSTLYCLEANDIRS += sys
 
 Include:
 <sys/types.h>
@@ -49,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-all

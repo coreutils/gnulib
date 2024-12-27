@@ -17,7 +17,7 @@ gen-header
 include_next
 limits-h
 multiarch
-sys_types
+sys_types-h
 
 configure.ac:
 gl_STDINT_H

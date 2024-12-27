@@ -12,7 +12,7 @@ Depends-on:
 stdio-h
 extensions
 largefile
-sys_types
+sys_types-h
 lseek           [test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1]
 stdckdint-h     [test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1]
 # Just to guarantee consistency between ftell() and ftello().

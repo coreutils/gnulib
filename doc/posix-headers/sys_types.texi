@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_types.h.html}
 
-Gnulib module: sys_types
-@mindex sys_types
+Gnulib module: sys_types-h
+@mindex sys_types-h
 
 Portability problems fixed by Gnulib:
 @itemize

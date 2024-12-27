@@ -7,7 +7,7 @@ m4/lseek.m4
 
 Depends-on:
 unistd
-sys_types
+sys_types-h
 largefile
 msvc-nothrow    [test $REPLACE_LSEEK = 1]
 fstat           [test "$gl_cv_func_lseek_pipe" = no]

@@ -17,7 +17,7 @@ snippet/c++defs
 snippet/warn-on-use
 ssize_t
 stddef-h
-sys_types
+sys_types-h
 
 configure.ac:
 gl_UNISTD_H

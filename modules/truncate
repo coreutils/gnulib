@@ -7,7 +7,7 @@ m4/truncate.m4
 
 Depends-on:
 unistd
-sys_types
+sys_types-h
 largefile
 sys_stat-h
 stat            [test $REPLACE_TRUNCATE = 1]

@@ -9,7 +9,7 @@ Depends-on:
 gen-header
 include_next
 ssize_t
-sys_types
+sys_types-h
 
 configure.ac:
 gl_SYS_UIO_H
