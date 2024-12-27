@@ -1,0 +1,12 @@
+Files:
+tests/test-sys_un-h.c
+
+Depends-on:
+assert-h
+sys_un-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_un-h
+check_PROGRAMS += test-sys_un-h

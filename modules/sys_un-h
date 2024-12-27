@@ -1,0 +1,51 @@
+Description:
+A POSIX-like <sys/un.h>.
+
+Files:
+lib/sys_un.in.h
+m4/sys_un_h.m4
+
+Depends-on:
+gen-header
+include_next
+sys_socket-h
+
+configure.ac:
+gl_SYS_UN_H
+gl_CONDITIONAL_HEADER([sys/un.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(SYS_UN_H)
+
+# We need the following in order to create <sys/un.h> when the system
+# doesn't have one.
+if GL_GENERATE_SYS_UN_H
+sys/un.h: sys_un.in.h $(top_builddir)/config.status
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_UN_H''@|$(NEXT_SYS_UN_H)|g' \
+	      -e 's|@''HAVE_SYS_UN_H''@|$(HAVE_SYS_UN_H)|g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
+	      -e 's|@''HAVE_AFUNIX_H''@|$(HAVE_AFUNIX_H)|g' \
+	      $(srcdir)/sys_un.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+sys/un.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += sys/un.h sys/un.h-t
+MOSTLYCLEANDIRS += sys
+
+Include:
+<sys/un.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
