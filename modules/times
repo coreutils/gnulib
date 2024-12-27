@@ -6,7 +6,7 @@ lib/times.c
 m4/times.m4
 
 Depends-on:
-sys_times
+sys_times-h
 
 configure.ac:
 gl_FUNC_TIMES

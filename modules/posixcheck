@@ -40,7 +40,7 @@ sys_select-h
 sys_socket-h
 sys_stat-h
 sys_time-h
-sys_times
+sys_times-h
 sys_utsname
 sys_wait
 termios

@@ -17,7 +17,7 @@ gettext-h
 gnulib-i18n
 stdlib-h
 sys_time-h
-sys_times
+sys_times-h
 xalloc
 
 Makefile.am:

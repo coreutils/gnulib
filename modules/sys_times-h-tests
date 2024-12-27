@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_times-h.c
+
+Depends-on:
+sys_times-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_times-h
+check_PROGRAMS += test-sys_times-h
