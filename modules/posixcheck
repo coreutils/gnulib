@@ -25,7 +25,7 @@ poll-h
 pthread-h
 pty-h
 sched-h
-search
+search-h
 signal-h
 spawn
 stdio

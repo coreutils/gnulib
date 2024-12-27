@@ -6,7 +6,7 @@ lib/tsearch.c
 m4/tsearch.m4
 
 Depends-on:
-search
+search-h
 
 configure.ac:
 gl_FUNC_TSEARCH

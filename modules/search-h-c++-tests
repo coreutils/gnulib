@@ -1,0 +1,19 @@
+Files:
+tests/test-search-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-search-h-c++
+check_PROGRAMS += test-search-h-c++
+test_search_h_c___SOURCES = test-search-h-c++.cc
+test_search_h_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB)
+endif
