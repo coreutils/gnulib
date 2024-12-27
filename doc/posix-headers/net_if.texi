@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/net_if.h.html}
 
-Gnulib module: net_if
-@mindex net_if
+Gnulib module: net_if-h
+@mindex net_if-h
 
 Portability problems fixed by Gnulib:
 @itemize
