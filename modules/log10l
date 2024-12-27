@@ -6,7 +6,7 @@ lib/log10l.c
 m4/log10l.m4
 
 Depends-on:
-math
+math-h
 extensions
 log10           [{ test $HAVE_LOG10L = 0 || test $REPLACE_LOG10L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_LOG10L = 0 || test $REPLACE_LOG10L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

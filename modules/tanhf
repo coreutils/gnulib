@@ -6,7 +6,7 @@ lib/tanhf.c
 m4/tanhf.m4
 
 Depends-on:
-math
+math-h
 extensions
 tanh            [test $HAVE_TANHF = 0]
 

@@ -7,7 +7,7 @@ m4/copysign.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 signbit         [test $HAVE_COPYSIGN = 0]
 
 configure.ac:

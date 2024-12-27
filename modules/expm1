@@ -7,7 +7,7 @@ m4/expm1.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isnand          [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]
 exp             [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]

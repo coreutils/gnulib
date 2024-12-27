@@ -8,7 +8,7 @@ m4/check-math-lib.m4
 m4/exponentl.m4
 
 Depends-on:
-math
+math-h
 extensions
 isnanf-nolibm   [test $REPLACE_ISFINITE = 1]
 isnand-nolibm   [test $REPLACE_ISFINITE = 1]

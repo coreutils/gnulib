@@ -6,7 +6,7 @@ lib/trunc.c
 m4/trunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_DECL_TRUNC = 0 || test $REPLACE_TRUNC = 1]
 

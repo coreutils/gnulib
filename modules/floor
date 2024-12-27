@@ -6,7 +6,7 @@ lib/floor.c
 m4/floor.m4
 
 Depends-on:
-math
+math-h
 float-h         [test $REPLACE_FLOOR = 1]
 
 configure.ac:

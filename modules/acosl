@@ -6,7 +6,7 @@ lib/acosl.c
 m4/acosl.m4
 
 Depends-on:
-math
+math-h
 extensions
 acos            [test $HAVE_ACOSL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 asinl           [test $HAVE_ACOSL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

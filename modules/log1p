@@ -7,7 +7,7 @@ m4/log1p.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isnand          [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]
 log             [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]

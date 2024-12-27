@@ -8,7 +8,7 @@ Depends-on:
 isnanf
 isnand
 isnanl
-math
+math-h
 extensions
 
 configure.ac:

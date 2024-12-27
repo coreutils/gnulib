@@ -7,7 +7,7 @@ m4/log2.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isnand          [test $HAVE_LOG2 = 0 || test $REPLACE_LOG2 = 1]
 frexp           [test $HAVE_LOG2 = 0 || test $REPLACE_LOG2 = 1]

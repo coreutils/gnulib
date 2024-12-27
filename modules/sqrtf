@@ -6,7 +6,7 @@ lib/sqrtf.c
 m4/sqrtf.m4
 
 Depends-on:
-math
+math-h
 extensions
 sqrt            [test $HAVE_SQRTF = 0]
 

@@ -7,7 +7,7 @@ m4/mathfunc.m4
 m4/getpayload.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
 stdint          [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]

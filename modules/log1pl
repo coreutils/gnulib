@@ -6,7 +6,7 @@ lib/log1pl.c
 m4/log1pl.m4
 
 Depends-on:
-math
+math-h
 extensions
 log1p           [{ test $HAVE_LOG1PL = 0 || test $REPLACE_LOG1PL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isnanl          [{ test $HAVE_LOG1PL = 0 || test $REPLACE_LOG1PL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

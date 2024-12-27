@@ -8,7 +8,7 @@ m4/logbf.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isfinite        [test $HAVE_LOGBF = 0 || test $REPLACE_LOGBF = 1]
 frexpf          [test $HAVE_LOGBF = 0 || test $REPLACE_LOGBF = 1]

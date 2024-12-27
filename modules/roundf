@@ -10,7 +10,7 @@ m4/floorf.m4
 m4/ceilf.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
 

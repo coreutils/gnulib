@@ -6,7 +6,7 @@ lib/sinhf.c
 m4/sinhf.m4
 
 Depends-on:
-math
+math-h
 extensions
 sinh            [test $HAVE_SINHF = 0]
 

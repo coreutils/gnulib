@@ -8,7 +8,7 @@ m4/getpayload.m4
 m4/exponentl.m4
 
 Depends-on:
-math
+math-h
 extensions
 getpayload      [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

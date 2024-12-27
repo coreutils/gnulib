@@ -9,7 +9,7 @@ m4/exponentf.m4
 m4/isnanf.m4
 
 Depends-on:
-math
+math-h
 fpieee
 memcmp
 

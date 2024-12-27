@@ -8,7 +8,7 @@ m4/cbrt.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isfinite        [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 fabsf           [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]

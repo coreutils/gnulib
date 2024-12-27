@@ -7,7 +7,7 @@ m4/hypot.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 isfinite        [test $REPLACE_HYPOT = 1]
 fabs            [test $REPLACE_HYPOT = 1]

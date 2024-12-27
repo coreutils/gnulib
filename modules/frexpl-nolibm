@@ -8,7 +8,7 @@ lib/frexp.c
 m4/frexpl.m4
 
 Depends-on:
-math
+math-h
 frexp-nolibm    [{ test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isnanl-nolibm   [{ test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 fpucw           [{ test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

@@ -6,7 +6,7 @@ lib/tanf.c
 m4/tanf.m4
 
 Depends-on:
-math
+math-h
 extensions
 tan             [test $HAVE_TANF = 0]
 

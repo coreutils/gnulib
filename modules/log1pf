@@ -6,7 +6,7 @@ lib/log1pf.c
 m4/log1pf.m4
 
 Depends-on:
-math
+math-h
 extensions
 log1p           [test $HAVE_LOG1PF = 0 || test $REPLACE_LOG1PF = 1]
 

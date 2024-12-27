@@ -7,7 +7,7 @@ m4/modf.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 isfinite        [test $REPLACE_MODF = 1]
 trunc           [test $REPLACE_MODF = 1]
 isinf           [test $REPLACE_MODF = 1]

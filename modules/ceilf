@@ -7,7 +7,7 @@ lib/ceil.c
 m4/ceilf.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_DECL_CEILF = 0 || test $REPLACE_CEILF = 1]
 

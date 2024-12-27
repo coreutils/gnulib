@@ -8,7 +8,7 @@ m4/totalorder.m4
 m4/nan-mips.m4
 
 Depends-on:
-math
+math-h
 extensions
 isnand          [test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1]
 signbit         [test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1]

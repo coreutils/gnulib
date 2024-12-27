@@ -7,7 +7,7 @@ m4/ilogb.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 isfinite        [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
 frexp           [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
 isnand          [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]

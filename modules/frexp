@@ -6,7 +6,7 @@ lib/frexp.c
 m4/frexp.m4
 
 Depends-on:
-math
+math-h
 isnand-nolibm   [test $gl_func_frexp != yes]
 
 configure.ac:

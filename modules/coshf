@@ -6,7 +6,7 @@ lib/coshf.c
 m4/coshf.m4
 
 Depends-on:
-math
+math-h
 extensions
 cosh            [test $HAVE_COSHF = 0]
 

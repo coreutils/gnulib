@@ -6,7 +6,7 @@ lib/ceil.c
 m4/ceil.m4
 
 Depends-on:
-math
+math-h
 float-h         [test $REPLACE_CEIL = 1]
 
 configure.ac:

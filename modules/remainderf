@@ -8,7 +8,7 @@ m4/remainderf.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 remainder       [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 isfinite        [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]

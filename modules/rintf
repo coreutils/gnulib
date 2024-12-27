@@ -8,7 +8,7 @@ m4/rintf.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 
 configure.ac:

@@ -13,7 +13,7 @@ m4/ceil.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 log1pl          [test $HAVE_LOGP1L = 0]
 
 configure.ac:

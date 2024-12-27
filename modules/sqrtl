@@ -6,7 +6,7 @@ lib/sqrtl.c
 m4/sqrtl.m4
 
 Depends-on:
-math
+math-h
 extensions
 sqrt            [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; }]
 float-h         [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

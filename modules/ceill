@@ -7,7 +7,7 @@ lib/ceil.c
 m4/ceill.m4
 
 Depends-on:
-math
+math-h
 extensions
 ceil            [{ test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

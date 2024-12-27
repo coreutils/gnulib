@@ -7,7 +7,7 @@ lib/floor.c
 m4/floorf.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_DECL_FLOORF = 0 || test $REPLACE_FLOORF = 1]
 

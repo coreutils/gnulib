@@ -7,7 +7,7 @@ m4/frexpf.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 frexp           [test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1]
 

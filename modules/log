@@ -7,7 +7,7 @@ m4/log.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_LOG])

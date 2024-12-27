@@ -9,7 +9,7 @@ lib/trigl.c
 m4/cosl.m4
 
 Depends-on:
-math
+math-h
 extensions
 cos             [test $HAVE_COSL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [test $HAVE_COSL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

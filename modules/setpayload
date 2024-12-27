@@ -8,7 +8,7 @@ m4/setpayload.m4
 m4/nan-mips.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $HAVE_SETPAYLOAD = 0]
 stdint          [test $HAVE_SETPAYLOAD = 0]

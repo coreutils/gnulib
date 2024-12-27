@@ -6,7 +6,7 @@ lib/atan2f.c
 m4/atan2f.m4
 
 Depends-on:
-math
+math-h
 extensions
 atan2           [test $HAVE_ATAN2F = 0]
 

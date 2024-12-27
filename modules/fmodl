@@ -8,7 +8,7 @@ m4/fmodl.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 fmod            [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

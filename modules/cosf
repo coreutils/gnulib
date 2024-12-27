@@ -6,7 +6,7 @@ lib/cosf.c
 m4/cosf.m4
 
 Depends-on:
-math
+math-h
 extensions
 cos             [test $HAVE_COSF = 0]
 

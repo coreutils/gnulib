@@ -6,7 +6,7 @@ lib/log10f.c
 m4/log10f.m4
 
 Depends-on:
-math
+math-h
 extensions
 log10           [test $HAVE_LOG10F = 0 || test $REPLACE_LOG10F = 1]
 

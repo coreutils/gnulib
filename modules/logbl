@@ -8,7 +8,7 @@ m4/logbl.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 logb            [{ test $HAVE_LOGBL = 0 || test $REPLACE_LOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isfinite        [{ test $HAVE_LOGBL = 0 || test $REPLACE_LOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

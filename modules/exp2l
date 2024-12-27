@@ -7,7 +7,7 @@ lib/expl-table.c
 m4/exp2l.m4
 
 Depends-on:
-math
+math-h
 extensions
 exp2            [{ test $HAVE_EXP2L = 0 || test $REPLACE_EXP2L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_EXP2L = 0 || test $REPLACE_EXP2L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

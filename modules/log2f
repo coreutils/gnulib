@@ -6,7 +6,7 @@ lib/log2f.c
 m4/log2f.m4
 
 Depends-on:
-math
+math-h
 extensions
 log2            [test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1]
 isnanf          [test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1]

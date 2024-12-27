@@ -7,7 +7,7 @@ lib/ldexp.c
 m4/ldexpl.m4
 
 Depends-on:
-math
+math-h
 extensions
 ldexp           [{ test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isnanl          [{ test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

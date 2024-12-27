@@ -7,7 +7,7 @@ m4/modff.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 modf            [test $HAVE_MODFF = 0 || test $REPLACE_MODFF = 1]
 

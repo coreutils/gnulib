@@ -6,7 +6,7 @@ lib/asinl.c
 m4/asinl.m4
 
 Depends-on:
-math
+math-h
 extensions
 asin            [test $HAVE_ASINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 sqrtl           [test $HAVE_ASINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

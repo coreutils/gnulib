@@ -6,7 +6,7 @@ lib/expm1l.c
 m4/expm1l.m4
 
 Depends-on:
-math
+math-h
 extensions
 expm1           [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

@@ -7,7 +7,7 @@ m4/remainder.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 isfinite        [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 signbit         [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 fabs            [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]

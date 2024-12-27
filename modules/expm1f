@@ -6,7 +6,7 @@ lib/expm1f.c
 m4/expm1f.m4
 
 Depends-on:
-math
+math-h
 extensions
 expm1           [test $HAVE_EXPM1F = 0 || test $REPLACE_EXPM1F = 1]
 

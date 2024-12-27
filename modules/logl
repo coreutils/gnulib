@@ -6,7 +6,7 @@ lib/logl.c
 m4/logl.m4
 
 Depends-on:
-math
+math-h
 extensions
 log             [{ test $HAVE_LOGL = 0 || test $REPLACE_LOGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 frexpl          [{ test $HAVE_LOGL = 0 || test $REPLACE_LOGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

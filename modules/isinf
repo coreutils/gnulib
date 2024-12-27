@@ -7,7 +7,7 @@ m4/isinf.m4
 m4/check-math-lib.m4
 
 Depends-on:
-math
+math-h
 extensions
 float-h         [test $REPLACE_ISINF = 1]
 

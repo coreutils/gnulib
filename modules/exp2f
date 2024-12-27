@@ -6,7 +6,7 @@ lib/exp2f.c
 m4/exp2f.m4
 
 Depends-on:
-math
+math-h
 extensions
 exp2            [test $HAVE_EXP2F = 0]
 

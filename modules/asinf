@@ -6,7 +6,7 @@ lib/asinf.c
 m4/asinf.m4
 
 Depends-on:
-math
+math-h
 extensions
 asin            [test $HAVE_ASINF = 0]
 

@@ -6,7 +6,7 @@ lib/log2l.c
 m4/log2l.m4
 
 Depends-on:
-math
+math-h
 extensions
 log2            [{ test $HAVE_LOG2L = 0 || test $REPLACE_LOG2L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isnanl          [{ test $HAVE_LOG2L = 0 || test $REPLACE_LOG2L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

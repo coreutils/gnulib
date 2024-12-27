@@ -6,7 +6,7 @@ lib/acosf.c
 m4/acosf.m4
 
 Depends-on:
-math
+math-h
 extensions
 acos            [test $HAVE_ACOSF = 0]
 

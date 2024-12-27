@@ -9,7 +9,7 @@ m4/nan-mips.m4
 m4/signbit.m4
 
 Depends-on:
-math
+math-h
 extensions
 verify          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
 isnanf          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]

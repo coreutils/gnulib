@@ -10,7 +10,7 @@ m4/ldexpf.m4
 Depends-on:
 stdlib
 c-ctype         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
-math            [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
+math-h          [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 stdbool         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 
 configure.ac:

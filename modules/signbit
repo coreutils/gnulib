@@ -9,7 +9,7 @@ lib/float+.h
 m4/signbit.m4
 
 Depends-on:
-math
+math-h
 float-h         [test $REPLACE_SIGNBIT = 1]
 isnanf-nolibm   [test $REPLACE_SIGNBIT = 1]
 isnand-nolibm   [test $REPLACE_SIGNBIT = 1]

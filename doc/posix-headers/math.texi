@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/math.h.html}
 
-Gnulib module: math
-@mindex math
+Gnulib module: math-h
+@mindex math-h
 
 Portability problems fixed by Gnulib:
 @itemize

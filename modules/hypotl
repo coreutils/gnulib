@@ -7,7 +7,7 @@ m4/hypotl.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 hypot           [{ test $HAVE_HYPOTL = 0 || test $REPLACE_HYPOTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isfinite        [{ test $HAVE_HYPOTL = 0 || test $REPLACE_HYPOTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

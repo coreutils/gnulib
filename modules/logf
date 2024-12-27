@@ -6,7 +6,7 @@ lib/logf.c
 m4/logf.m4
 
 Depends-on:
-math
+math-h
 extensions
 log             [test $HAVE_LOGF = 0 || test $REPLACE_LOGF = 1]
 

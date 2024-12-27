@@ -6,7 +6,7 @@ lib/ldexp.c
 m4/ldexp.m4
 
 Depends-on:
-math
+math-h
 isnand          [test $REPLACE_LDEXP = 1]
 stdbool         [test $REPLACE_LDEXP = 1]
 

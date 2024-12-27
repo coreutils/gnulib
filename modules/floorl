@@ -7,7 +7,7 @@ lib/floor.c
 m4/floorl.m4
 
 Depends-on:
-math
+math-h
 extensions
 floor           [{ test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

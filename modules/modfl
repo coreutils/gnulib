@@ -7,7 +7,7 @@ m4/modfl.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 extensions
 modf            [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 isfinite        [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

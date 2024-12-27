@@ -7,7 +7,7 @@ m4/log10.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 
 configure.ac:
 gl_FUNC_LOG10

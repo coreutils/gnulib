@@ -9,7 +9,7 @@ m4/fegetround.m4
 m4/mathfunc.m4
 
 Depends-on:
-math
+math-h
 float-h         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 stdbool         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 assert-h        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
