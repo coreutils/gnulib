@@ -11,7 +11,7 @@ m4/locale-zh.m4
 m4/codeset.m4
 
 Depends-on:
-wchar
+wchar-h
 extensions
 mbrtowc         [test $HAVE_MBRLEN = 0 || test $REPLACE_MBRLEN = 1]
 

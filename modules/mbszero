@@ -11,7 +11,7 @@ m4/codeset.m4
 m4/musl.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 AC_REQUIRE([AC_TYPE_MBSTATE_T])

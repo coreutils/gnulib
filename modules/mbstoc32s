@@ -6,7 +6,7 @@ lib/mbstoc32s.c
 
 Depends-on:
 uchar-h
-wchar
+wchar-h
 mbszero
 mbsrtoc32s
 

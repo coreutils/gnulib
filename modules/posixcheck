@@ -50,7 +50,7 @@ uchar-h
 unistd-h
 utime-h
 utmp-h
-wchar
+wchar-h
 wctype-h
 
 configure.ac:

@@ -9,7 +9,7 @@ m4/locale-fr.m4
 m4/codeset.m4
 
 Depends-on:
-wchar
+wchar-h
 wctomb          [test $HAVE_WCTOB = 0 || test $REPLACE_WCTOB = 1]
 
 configure.ac:

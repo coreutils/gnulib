@@ -7,7 +7,7 @@ lib/wmemchr-impl.h
 m4/wmemchr.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WMEMCHR

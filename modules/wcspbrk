@@ -13,7 +13,7 @@ lib/wcspbrk-impl.h
 m4/wcspbrk.m4
 
 Depends-on:
-wchar
+wchar-h
 wcschr          [test $HAVE_WCSPBRK = 0]
 
 configure.ac:

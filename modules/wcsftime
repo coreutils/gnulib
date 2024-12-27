@@ -6,7 +6,7 @@ lib/wcsftime.c
 m4/wcsftime.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSFTIME

@@ -13,7 +13,7 @@ lib/wcsncpy-impl.h
 m4/wcsncpy.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSNCPY

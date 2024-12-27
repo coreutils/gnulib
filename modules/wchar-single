@@ -5,7 +5,7 @@ the locale charset will not change between calls.
 Files:
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 AC_DEFINE([GNULIB_WCHAR_SINGLE_LOCALE], [1],

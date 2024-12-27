@@ -8,7 +8,7 @@ m4/mbtowc.m4
 
 Depends-on:
 stdlib-h
-wchar           [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
+wchar-h         [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 mbszero         [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 mbrtowc         [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 

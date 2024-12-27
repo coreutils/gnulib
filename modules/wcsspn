@@ -13,7 +13,7 @@ lib/wcsspn-impl.h
 m4/wcsspn.m4
 
 Depends-on:
-wchar
+wchar-h
 wcschr          [test $HAVE_WCSSPN = 0]
 
 configure.ac:

@@ -8,7 +8,7 @@ lib/mbsrtoc32s-state.c
 
 Depends-on:
 uchar-h
-wchar
+wchar-h
 assert-h
 mbrtoc32
 minmax

@@ -6,7 +6,7 @@ Depends-on:
 extensions
 verify
 intprops
-wchar
+wchar-h
 stdint-h-c++-tests
 
 configure.ac:

@@ -9,7 +9,7 @@ m4/mbrtowc.m4
 m4/mbswidth.m4
 
 Depends-on:
-wchar
+wchar-h
 uchar-h
 mbrtoc32
 mbsinit

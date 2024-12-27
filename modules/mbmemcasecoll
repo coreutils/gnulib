@@ -8,7 +8,7 @@ lib/mbmemcasecoll.c
 
 Depends-on:
 stdbool-h
-wchar
+wchar-h
 uchar-h
 malloca
 mbszero

@@ -20,7 +20,7 @@ m4/threadlib.m4
 m4/visibility.m4
 
 Depends-on:
-wchar
+wchar-h
 extensions
 attribute       [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 stdint-h        [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]

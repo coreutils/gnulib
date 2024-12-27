@@ -7,7 +7,7 @@ lib/wmemcpy-impl.h
 m4/wmemcpy.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WMEMCPY

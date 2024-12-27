@@ -13,7 +13,7 @@ m4/locale-fr.m4
 m4/codeset.m4
 
 Depends-on:
-wchar
+wchar-h
 extensions
 mbrtowc         [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
 minmax          [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]

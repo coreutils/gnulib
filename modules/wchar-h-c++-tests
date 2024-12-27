@@ -1,0 +1,21 @@
+Files:
+tests/test-wchar-h-c++.cc
+tests/test-wchar-h-c++2.cc
+tests/test-wchar-h-c++3.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-wchar-h-c++
+check_PROGRAMS += test-wchar-h-c++
+test_wchar_h_c___SOURCES = test-wchar-h-c++.cc test-wchar-h-c++2.cc test-wchar-h-c++3.cc
+test_wchar_h_c___LDADD = $(LDADD) $(LIBUNISTRING) $(LIBINTL) $(NANOSLEEP_LIB) $(EUIDACCESS_LIBGEN) $(LIBTHREAD)
+endif

@@ -15,7 +15,7 @@ Depends-on:
 stdint-h
 limits-h
 unitypes-h
-wchar
+wchar-h
 
 configure.ac:
 gl_PREREQ_PRINTF_ARGS

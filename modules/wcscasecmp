@@ -7,7 +7,7 @@ lib/wcscasecmp-impl.h
 m4/wcscasecmp.m4
 
 Depends-on:
-wchar
+wchar-h
 wctype-h        [test $HAVE_WCSCASECMP = 0]
 
 configure.ac:

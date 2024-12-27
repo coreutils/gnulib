@@ -9,7 +9,7 @@ m4/wcsxfrm.m4
 
 Depends-on:
 free-posix
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSXFRM

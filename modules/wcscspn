@@ -13,7 +13,7 @@ lib/wcscspn-impl.h
 m4/wcscspn.m4
 
 Depends-on:
-wchar
+wchar-h
 wcslen          [test $HAVE_WCSCSPN = 0]
 wcschr          [test $HAVE_WCSCSPN = 0]
 

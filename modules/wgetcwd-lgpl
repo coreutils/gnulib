@@ -6,7 +6,7 @@ Files:
 lib/wgetcwd-lgpl.c
 
 Depends-on:
-wchar
+wchar-h
 free-posix
 
 configure.ac:

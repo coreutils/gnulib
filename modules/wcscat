@@ -13,7 +13,7 @@ lib/wcscat-impl.h
 m4/wcscat.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSCAT

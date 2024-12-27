@@ -13,7 +13,7 @@ mbchar
 mbrtowc
 mbsinit
 mbszero
-wchar
+wchar-h
 stdbool-h
 
 configure.ac:

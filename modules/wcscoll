@@ -14,7 +14,7 @@ m4/wcscoll.m4
 
 Depends-on:
 free-posix
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSCOLL

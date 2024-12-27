@@ -15,7 +15,7 @@ snippet/warn-on-use
 extern-inline
 assert-h
 stdint-h
-wchar
+wchar-h
 wctype-h
 
 configure.ac:

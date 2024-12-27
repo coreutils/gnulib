@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/wchar.h.html}
 
-Gnulib module: wchar
-@mindex wchar
+Gnulib module: wchar-h
+@mindex wchar-h
 
 Portability problems fixed by Gnulib:
 @itemize

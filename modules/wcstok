@@ -7,7 +7,7 @@ lib/wcstok-impl.h
 m4/wcstok.m4
 
 Depends-on:
-wchar
+wchar-h
 wcsspn          [test $HAVE_WCSTOK = 0 || test $REPLACE_WCSTOK = 1]
 wcspbrk         [test $HAVE_WCSTOK = 0 || test $REPLACE_WCSTOK = 1]
 

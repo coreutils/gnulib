@@ -16,7 +16,7 @@ m4/codeset.m4
 
 Depends-on:
 uchar-h
-wchar
+wchar-h
 wctype-h
 iswxdigit
 localcharset    [test $REPLACE_MBSTATE_T = 1]

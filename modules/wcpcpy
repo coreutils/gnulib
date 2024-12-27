@@ -14,7 +14,7 @@ m4/wcpcpy.m4
 
 Depends-on:
 extensions
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCPCPY

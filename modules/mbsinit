@@ -8,7 +8,7 @@ m4/mbstate_t.m4
 m4/mbrtowc.m4
 
 Depends-on:
-wchar
+wchar-h
 extensions
 assert-h        [test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1]
 mbrtowc         [test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1]

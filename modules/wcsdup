@@ -7,7 +7,7 @@ lib/wcsdup-impl.h
 m4/wcsdup.m4
 
 Depends-on:
-wchar
+wchar-h
 wcslen          [test $HAVE_WCSDUP = 0]
 wmemcpy         [test $HAVE_WCSDUP = 0]
 

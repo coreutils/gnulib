@@ -7,7 +7,7 @@ lib/lc-charset-unicode.c
 
 Depends-on:
 uchar-h
-wchar
+wchar-h
 iconv
 localcharset
 streq

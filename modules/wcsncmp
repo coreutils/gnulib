@@ -7,7 +7,7 @@ lib/wcsncmp-impl.h
 m4/wcsncmp.m4
 
 Depends-on:
-wchar
+wchar-h
 
 configure.ac:
 gl_FUNC_WCSNCMP
