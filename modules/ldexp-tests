@@ -10,7 +10,7 @@ tests/randomd.c
 Depends-on:
 isnand-nolibm
 signbit
-float
+float-h
 nan
 
 configure.ac:

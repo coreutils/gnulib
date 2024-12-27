@@ -11,7 +11,7 @@ Depends-on:
 math
 extensions
 setpayloadsig   [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-float           [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+float-h         [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 stdint          [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 signed-snan     [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 

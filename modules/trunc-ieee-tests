@@ -6,7 +6,7 @@ tests/macros.h
 
 Depends-on:
 isnand-nolibm
-float
+float-h
 nan
 signbit
 

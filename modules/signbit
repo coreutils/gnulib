@@ -10,7 +10,7 @@ m4/signbit.m4
 
 Depends-on:
 math
-float           [test $REPLACE_SIGNBIT = 1]
+float-h         [test $REPLACE_SIGNBIT = 1]
 isnanf-nolibm   [test $REPLACE_SIGNBIT = 1]
 isnand-nolibm   [test $REPLACE_SIGNBIT = 1]
 isnanl-nolibm   [test $REPLACE_SIGNBIT = 1]

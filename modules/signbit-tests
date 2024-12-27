@@ -5,7 +5,7 @@ tests/infinity.h
 tests/macros.h
 
 Depends-on:
-float
+float-h
 signed-nan
 signed-snan
 

@@ -5,7 +5,7 @@ tests/macros.h
 
 Depends-on:
 strtod
-float
+float-h
 isnand-nolibm
 signbit
 

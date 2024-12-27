@@ -9,7 +9,7 @@ m4/getpayload.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
+float-h         [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
 stdint          [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
 isnanf          [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
 

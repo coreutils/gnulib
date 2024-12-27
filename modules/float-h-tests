@@ -1,0 +1,17 @@
+Files:
+tests/test-float-h.c
+tests/macros.h
+
+Depends-on:
+fpieee
+fpucw
+isnanf-nolibm
+isnand-nolibm
+isnanl-nolibm
+float-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-float-h
+check_PROGRAMS += test-float-h

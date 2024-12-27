@@ -9,7 +9,7 @@ tests/macros.h
 Depends-on:
 c99
 stdint
-float
+float-h
 nan
 snan
 

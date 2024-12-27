@@ -9,7 +9,7 @@ m4/setpayloadsig.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_SETPAYLOADSIGF = 0]
+float-h         [test $HAVE_SETPAYLOADSIGF = 0]
 stdint          [test $HAVE_SETPAYLOADSIGF = 0]
 signed-snan     [test $HAVE_SETPAYLOADSIGF = 0]
 

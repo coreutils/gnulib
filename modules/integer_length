@@ -8,7 +8,7 @@ lib/float+.h
 m4/exponentd.m4
 
 Depends-on:
-float
+float-h
 
 configure.ac:
 AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])

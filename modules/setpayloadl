@@ -12,7 +12,7 @@ Depends-on:
 math
 extensions
 setpayload      [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-float           [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+float-h         [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 stdint          [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 signed-nan      [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 snan            [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

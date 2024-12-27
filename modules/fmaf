@@ -12,7 +12,7 @@ m4/mathfunc.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
+float-h         [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 stdbool         [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 assert-h         [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 isfinite        [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]

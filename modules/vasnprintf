@@ -23,7 +23,7 @@ Depends-on:
 stdio
 alloca-opt
 attribute
-float
+float-h
 free-posix
 limits-h
 stdint

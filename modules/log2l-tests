@@ -8,7 +8,7 @@ tests/randoml.c
 
 Depends-on:
 fpucw
-float
+float-h
 
 configure.ac:
 

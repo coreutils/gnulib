@@ -9,7 +9,7 @@ Depends-on:
 math
 extensions
 sqrt            [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; }]
-float           [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+float-h         [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isnanl          [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 frexpl          [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 ldexpl          [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

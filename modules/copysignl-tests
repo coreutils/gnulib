@@ -5,7 +5,7 @@ tests/minus-zero.h
 tests/macros.h
 
 Depends-on:
-float
+float-h
 
 configure.ac:
 

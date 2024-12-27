@@ -13,7 +13,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-float
+float-h
 
 configure.ac:
 gl_MATH_H

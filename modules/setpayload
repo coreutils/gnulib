@@ -10,7 +10,7 @@ m4/nan-mips.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_SETPAYLOAD = 0]
+float-h         [test $HAVE_SETPAYLOAD = 0]
 stdint          [test $HAVE_SETPAYLOAD = 0]
 signed-nan      [test $HAVE_SETPAYLOAD = 0]
 

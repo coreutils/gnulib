@@ -11,7 +11,7 @@ Depends-on:
 fpucw
 isnanl-nolibm
 signbit
-float
+float-h
 nan
 
 configure.ac:

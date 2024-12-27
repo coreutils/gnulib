@@ -11,7 +11,7 @@ m4/ceil.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
+float-h         [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
 floor           [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
 
 configure.ac:

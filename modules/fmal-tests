@@ -9,7 +9,7 @@ tests/macros.h
 lib/float+.h
 
 Depends-on:
-float
+float-h
 fpucw
 isnanl-nolibm
 ldexpl

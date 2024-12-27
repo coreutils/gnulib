@@ -8,7 +8,7 @@ tests/macros.h
 Depends-on:
 fpucw
 isnanl-nolibm
-float
+float-h
 nan
 
 configure.ac:

@@ -6,7 +6,7 @@ tests/macros.h
 tests/randoml.c
 
 Depends-on:
-float
+float-h
 
 configure.ac:
 

@@ -11,7 +11,7 @@ m4/isnanl.m4
 m4/math_h.m4
 
 Depends-on:
-float
+float-h
 fpieee
 memcmp
 

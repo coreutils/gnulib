@@ -7,7 +7,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-float
+float-h
 isnand-nolibm
 nan
 stdbool

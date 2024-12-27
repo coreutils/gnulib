@@ -11,7 +11,7 @@ Depends-on:
 math
 extensions
 remainder       [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-float           [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+float-h         [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isfinite        [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 signbit         [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 fabsl           [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

@@ -7,7 +7,7 @@ m4/floor.m4
 
 Depends-on:
 math
-float           [test $REPLACE_FLOOR = 1]
+float-h         [test $REPLACE_FLOOR = 1]
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_FLOOR])

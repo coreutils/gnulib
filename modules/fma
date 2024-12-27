@@ -10,7 +10,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
-float           [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
+float-h         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 stdbool         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 assert-h        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 isfinite        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]

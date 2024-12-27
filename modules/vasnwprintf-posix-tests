@@ -13,7 +13,7 @@ m4/codeset.m4
 Depends-on:
 c99
 stdint
-float
+float-h
 nan
 snan
 setlocale
