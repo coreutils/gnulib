@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_resource.h.html}
 
-Gnulib module: sys_resource
-@mindex sys_resource
+Gnulib module: sys_resource-h
+@mindex sys_resource-h
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_resource-h.c
+
+Depends-on:
+sys_resource-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_resource-h
+check_PROGRAMS += test-sys_resource-h
