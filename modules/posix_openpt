@@ -7,7 +7,7 @@ m4/posix_openpt.m4
 
 Depends-on:
 extensions
-stdlib
+stdlib-h
 
 configure.ac:
 gl_FUNC_POSIX_OPENPT

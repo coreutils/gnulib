@@ -8,7 +8,7 @@ m4/qsort_r.m4
 
 Depends-on:
 extensions
-stdlib
+stdlib-h
 
 configure.ac:
 gl_FUNC_QSORT_R

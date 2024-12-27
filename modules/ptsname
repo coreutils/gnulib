@@ -6,7 +6,7 @@ lib/ptsname.c
 m4/ptsname.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 ptsname_r       [test $HAVE_PTSNAME = 0]
 

@@ -7,7 +7,7 @@ m4/mbstowcs.m4
 m4/mbrtowc.m4
 
 Depends-on:
-stdlib
+stdlib-h
 mbszero         [test $REPLACE_MBSTOWCS = 1]
 mbsrtowcs       [test $REPLACE_MBSTOWCS = 1]
 

@@ -6,7 +6,7 @@ lib/_Exit.c
 m4/_Exit.m4
 
 Depends-on:
-stdlib
+stdlib-h
 unistd
 
 configure.ac:

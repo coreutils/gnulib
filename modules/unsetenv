@@ -6,7 +6,7 @@ lib/unsetenv.c
 m4/setenv.m4
 
 Depends-on:
-stdlib
+stdlib-h
 unistd          [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
 environ         [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
 free-posix      [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]

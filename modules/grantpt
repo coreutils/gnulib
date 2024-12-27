@@ -7,7 +7,7 @@ lib/pty-private.h
 m4/grantpt.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 pt_chown        [test $HAVE_GRANTPT = 0]
 waitpid         [test $HAVE_GRANTPT = 0]

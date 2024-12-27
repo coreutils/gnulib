@@ -8,7 +8,7 @@ m4/sysexits.m4
 Depends-on:
 gen-header
 include_next
-stdlib
+stdlib-h
 
 configure.ac:
 gl_SYSEXITS

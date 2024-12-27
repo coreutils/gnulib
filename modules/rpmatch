@@ -6,7 +6,7 @@ lib/rpmatch.c
 m4/rpmatch.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 stdbool-h       [test $HAVE_RPMATCH = 0]
 gettext-h       [test $HAVE_RPMATCH = 0]

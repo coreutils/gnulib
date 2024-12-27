@@ -7,7 +7,7 @@ lib/stack.h
 Depends-on:
 assure
 stdbool-h
-stdlib
+stdlib-h
 xalloc
 
 configure.ac:

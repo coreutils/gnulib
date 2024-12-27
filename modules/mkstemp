@@ -6,7 +6,7 @@ lib/mkstemp.c
 m4/mkstemp.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 largefile
 tempname        [test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1]

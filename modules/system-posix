@@ -4,7 +4,7 @@ system() function: execute a shell command
 Files:
 
 Depends-on:
-stdlib
+stdlib-h
 sys_wait
 
 configure.ac:

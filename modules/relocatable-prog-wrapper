@@ -73,7 +73,7 @@ stdbool-h
 stddef-h
 stdckdint-h
 stdint-h
-stdlib
+stdlib-h
 string
 sys_stat
 unistd

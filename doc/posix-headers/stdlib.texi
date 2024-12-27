@@ -3,11 +3,11 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdlib.h.html}
 
-Gnulib module: stdlib, system-posix
-@mindex stdlib
+Gnulib module: stdlib-h, system-posix
+@mindex stdlib-h
 @mindex system-posix
 
-Portability problems fixed by the Gnulib module @code{stdlib}:
+Portability problems fixed by the Gnulib module @code{stdlib-h}:
 @itemize
 @item
 The macros @code{EXIT_SUCCESS} and @code{EXIT_FAILURE} are not defined on

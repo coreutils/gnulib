@@ -12,7 +12,7 @@ lib/rand.c
 m4/rand.m4
 
 Depends-on:
-stdlib
+stdlib-h
 random          [test $REPLACE_RAND = 1]
 
 configure.ac:

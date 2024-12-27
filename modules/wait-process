@@ -15,7 +15,7 @@ xalloc-die
 gettext-h
 gnulib-i18n
 stdbool-h
-stdlib
+stdlib-h
 sys_wait
 unistd
 atexit

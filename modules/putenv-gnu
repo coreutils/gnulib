@@ -6,7 +6,7 @@ lib/putenv.c
 m4/putenv.m4
 
 Depends-on:
-stdlib
+stdlib-h
 environ         [test $REPLACE_PUTENV = 1]
 free-posix      [test $REPLACE_PUTENV = 1]
 malloc-posix    [test $REPLACE_PUTENV = 1]

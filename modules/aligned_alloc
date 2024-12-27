@@ -7,7 +7,7 @@ m4/aligned_alloc.m4
 
 Depends-on:
 extensions
-stdlib
+stdlib-h
 malloc-posix    [test $REPLACE_ALIGNED_ALLOC = 1]
 
 configure.ac:

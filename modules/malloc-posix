@@ -7,7 +7,7 @@ m4/malloc.m4
 
 Depends-on:
 stdckdint-h          [test $REPLACE_CALLOC_FOR_MALLOC_POSIX = 1]
-stdlib
+stdlib-h
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_MALLOC_POSIX])

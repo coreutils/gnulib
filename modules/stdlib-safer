@@ -9,7 +9,7 @@ lib/mkstemp-safer.c
 Depends-on:
 fd-safer-flag
 mkstemp
-stdlib
+stdlib-h
 unistd-safer
 
 configure.ac:

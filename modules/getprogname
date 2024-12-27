@@ -7,7 +7,7 @@ lib/getprogname.c
 m4/getprogname.m4
 
 Depends-on:
-stdlib
+stdlib-h
 basename-lgpl   [test $HAVE_GETPROGNAME = 0]
 extensions      [test $HAVE_GETPROGNAME = 0]
 open            [test $HAVE_GETPROGNAME = 0 && case "$host_os" in irix* | osf* | sco* | unixware*) true;; *) false;; esac]

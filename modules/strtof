@@ -8,7 +8,7 @@ m4/strtof.m4
 m4/ldexpf.m4
 
 Depends-on:
-stdlib
+stdlib-h
 c-ctype         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 math-h          [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 stdbool-h       [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]

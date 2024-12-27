@@ -7,7 +7,7 @@ lib/mbtowc-impl.h
 m4/mbtowc.m4
 
 Depends-on:
-stdlib
+stdlib-h
 wchar           [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 mbszero         [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 mbrtowc         [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]

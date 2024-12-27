@@ -29,7 +29,7 @@ search-h
 signal-h
 spawn-h
 stdio-h
-stdlib
+stdlib-h
 string
 strings
 sys_file

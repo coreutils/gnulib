@@ -7,7 +7,7 @@ lib/mbscasecmp.c
 Depends-on:
 c32tolower
 mbuiterf            [test "$GNULIB_MCEL_PREFER" != yes]
-stdlib
+stdlib-h
 string
 uchar
 

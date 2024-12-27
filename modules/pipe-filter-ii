@@ -17,7 +17,7 @@ gettext-h
 gnulib-i18n
 stdbool-h
 stdint-h
-stdlib
+stdlib-h
 sys_select
 unistd
 

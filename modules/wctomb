@@ -7,7 +7,7 @@ lib/wctomb-impl.h
 m4/wctomb.m4
 
 Depends-on:
-stdlib
+stdlib-h
 wchar           [test $REPLACE_WCTOMB = 1]
 mbszero         [test $REPLACE_WCTOMB = 1]
 wcrtomb         [test $REPLACE_WCTOMB = 1]

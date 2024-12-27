@@ -16,7 +16,7 @@ snippet/warn-on-use
 extern-inline
 inttypes-h-incomplete
 stddef-h
-stdlib
+stdlib-h
 
 configure.ac:
 gl_WCHAR_H

@@ -11,7 +11,7 @@ Depends-on:
 extensions
 realloc-posix  [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
 stdckdint-h    [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
-stdlib
+stdlib-h
 
 configure.ac:
 gl_FUNC_REALLOCARRAY

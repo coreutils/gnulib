@@ -29,7 +29,7 @@ stdbool-h
 stddef-h
 stdint-h
 stdio-h
-stdlib
+stdlib-h
 string
 uchar
 # The lonesome_lower array requires ISO C 23 semantics for char32_t.

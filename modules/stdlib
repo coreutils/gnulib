@@ -1,196 +1,20 @@
 Description:
 A GNU-like <stdlib.h>.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'stdlib-h' instead.
+
 Files:
-lib/stdlib.c
-lib/stdlib.in.h
-m4/stdlib_h.m4
-m4/locale-en.m4
-m4/codeset.m4
 
 Depends-on:
-gen-header
-extern-inline
-include_next
-snippet/arg-nonnull
-snippet/c++defs
-snippet/warn-on-use
-snippet/_Noreturn
-stddef-h
-unistd
+stdlib-h
 
 configure.ac:
-gl_STDLIB_H
-gl_STDLIB_H_REQUIRE_DEFAULTS
-AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += stdlib.h
-lib_SOURCES += stdlib.c
-
-stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
-  $(_NORETURN_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
-@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_STDOUT) \
-	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_STDLIB_H''@|$(NEXT_STDLIB_H)|g' \
-	      -e 's/@''GNULIB__EXIT''@/$(GNULIB__EXIT)/g' \
-	      -e 's/@''GNULIB_ABORT_DEBUG''@/$(GNULIB_ABORT_DEBUG)/g' \
-	      -e 's/@''GNULIB_ALIGNED_ALLOC''@/$(GNULIB_ALIGNED_ALLOC)/g' \
-	      -e 's/@''GNULIB_ATOLL''@/$(GNULIB_ATOLL)/g' \
-	      -e 's/@''GNULIB_CALLOC_GNU''@/$(GNULIB_CALLOC_GNU)/g' \
-	      -e 's/@''GNULIB_CALLOC_POSIX''@/$(GNULIB_CALLOC_POSIX)/g' \
-	      -e 's/@''GNULIB_CANONICALIZE_FILE_NAME''@/$(GNULIB_CANONICALIZE_FILE_NAME)/g' \
-	      -e 's/@''GNULIB_FREE_POSIX''@/$(GNULIB_FREE_POSIX)/g' \
-	      -e 's/@''GNULIB_GETLOADAVG''@/$(GNULIB_GETLOADAVG)/g' \
-	      -e 's/@''GNULIB_GETPROGNAME''@/$(GNULIB_GETPROGNAME)/g' \
-	      -e 's/@''GNULIB_GETSUBOPT''@/$(GNULIB_GETSUBOPT)/g' \
-	      -e 's/@''GNULIB_GRANTPT''@/$(GNULIB_GRANTPT)/g' \
-	      -e 's/@''GNULIB_MALLOC_GNU''@/$(GNULIB_MALLOC_GNU)/g' \
-	      -e 's/@''GNULIB_MALLOC_POSIX''@/$(GNULIB_MALLOC_POSIX)/g' \
-	      -e 's/@''GNULIB_MBSTOWCS''@/$(GNULIB_MBSTOWCS)/g' \
-	      -e 's/@''GNULIB_MBTOWC''@/$(GNULIB_MBTOWC)/g' \
-	      -e 's/@''GNULIB_MKDTEMP''@/$(GNULIB_MKDTEMP)/g' \
-	      -e 's/@''GNULIB_MKOSTEMP''@/$(GNULIB_MKOSTEMP)/g' \
-	      -e 's/@''GNULIB_MKOSTEMPS''@/$(GNULIB_MKOSTEMPS)/g' \
-	      -e 's/@''GNULIB_MKSTEMP''@/$(GNULIB_MKSTEMP)/g' \
-	      -e 's/@''GNULIB_MKSTEMPS''@/$(GNULIB_MKSTEMPS)/g' \
-	      -e 's/@''GNULIB_POSIX_MEMALIGN''@/$(GNULIB_POSIX_MEMALIGN)/g' \
-	      -e 's/@''GNULIB_POSIX_OPENPT''@/$(GNULIB_POSIX_OPENPT)/g' \
-	      -e 's/@''GNULIB_PTSNAME''@/$(GNULIB_PTSNAME)/g' \
-	      -e 's/@''GNULIB_PTSNAME_R''@/$(GNULIB_PTSNAME_R)/g' \
-	      -e 's/@''GNULIB_PUTENV''@/$(GNULIB_PUTENV)/g' \
-	      -e 's/@''GNULIB_QSORT_R''@/$(GNULIB_QSORT_R)/g' \
-	      -e 's/@''GNULIB_RAND''@/$(GNULIB_RAND)/g' \
-	      -e 's/@''GNULIB_RANDOM''@/$(GNULIB_RANDOM)/g' \
-	      -e 's/@''GNULIB_RANDOM_R''@/$(GNULIB_RANDOM_R)/g' \
-	      -e 's/@''GNULIB_REALLOC_POSIX''@/$(GNULIB_REALLOC_POSIX)/g' \
-	      -e 's/@''GNULIB_REALLOCARRAY''@/$(GNULIB_REALLOCARRAY)/g' \
-	      -e 's/@''GNULIB_REALPATH''@/$(GNULIB_REALPATH)/g' \
-	      -e 's/@''GNULIB_RPMATCH''@/$(GNULIB_RPMATCH)/g' \
-	      -e 's/@''GNULIB_SECURE_GETENV''@/$(GNULIB_SECURE_GETENV)/g' \
-	      -e 's/@''GNULIB_SETENV''@/$(GNULIB_SETENV)/g' \
-	      -e 's/@''GNULIB_STACK_TRACE''@/$(GNULIB_STACK_TRACE)/g' \
-	      -e 's/@''GNULIB_STRTOD''@/$(GNULIB_STRTOD)/g' \
-	      -e 's/@''GNULIB_STRTOF''@/$(GNULIB_STRTOF)/g' \
-	      -e 's/@''GNULIB_STRTOL''@/$(GNULIB_STRTOL)/g' \
-	      -e 's/@''GNULIB_STRTOLD''@/$(GNULIB_STRTOLD)/g' \
-	      -e 's/@''GNULIB_STRTOLL''@/$(GNULIB_STRTOLL)/g' \
-	      -e 's/@''GNULIB_STRTOUL''@/$(GNULIB_STRTOUL)/g' \
-	      -e 's/@''GNULIB_STRTOULL''@/$(GNULIB_STRTOULL)/g' \
-	      -e 's/@''GNULIB_SYSTEM_POSIX''@/$(GNULIB_SYSTEM_POSIX)/g' \
-	      -e 's/@''GNULIB_UNLOCKPT''@/$(GNULIB_UNLOCKPT)/g' \
-	      -e 's/@''GNULIB_UNSETENV''@/$(GNULIB_UNSETENV)/g' \
-	      -e 's/@''GNULIB_WCTOMB''@/$(GNULIB_WCTOMB)/g' \
-	      -e 's/@''GNULIB_MDA_ECVT''@/$(GNULIB_MDA_ECVT)/g' \
-	      -e 's/@''GNULIB_MDA_FCVT''@/$(GNULIB_MDA_FCVT)/g' \
-	      -e 's/@''GNULIB_MDA_GCVT''@/$(GNULIB_MDA_GCVT)/g' \
-	      -e 's/@''GNULIB_MDA_MKTEMP''@/$(GNULIB_MDA_MKTEMP)/g' \
-	      -e 's/@''GNULIB_MDA_PUTENV''@/$(GNULIB_MDA_PUTENV)/g' \
-	      < $(srcdir)/stdlib.in.h > $@-t1
-	$(AM_V_at)sed \
-	      -e 's|@''HAVE__EXIT''@|$(HAVE__EXIT)|g' \
-	      -e 's|@''HAVE_ALIGNED_ALLOC''@|$(HAVE_ALIGNED_ALLOC)|g' \
-	      -e 's|@''HAVE_ATOLL''@|$(HAVE_ATOLL)|g' \
-	      -e 's|@''HAVE_CANONICALIZE_FILE_NAME''@|$(HAVE_CANONICALIZE_FILE_NAME)|g' \
-	      -e 's|@''HAVE_DECL_ECVT''@|$(HAVE_DECL_ECVT)|g' \
-	      -e 's|@''HAVE_DECL_FCVT''@|$(HAVE_DECL_FCVT)|g' \
-	      -e 's|@''HAVE_DECL_GCVT''@|$(HAVE_DECL_GCVT)|g' \
-	      -e 's|@''HAVE_DECL_GETLOADAVG''@|$(HAVE_DECL_GETLOADAVG)|g' \
-	      -e 's|@''HAVE_DECL_PROGRAM_INVOCATION_NAME''@|$(HAVE_DECL_PROGRAM_INVOCATION_NAME)|g' \
-	      -e 's|@''HAVE_GETPROGNAME''@|$(HAVE_GETPROGNAME)|g' \
-	      -e 's|@''HAVE_GETSUBOPT''@|$(HAVE_GETSUBOPT)|g' \
-	      -e 's|@''HAVE_GRANTPT''@|$(HAVE_GRANTPT)|g' \
-	      -e 's|@''HAVE_INITSTATE''@|$(HAVE_INITSTATE)|g' \
-	      -e 's|@''HAVE_DECL_INITSTATE''@|$(HAVE_DECL_INITSTATE)|g' \
-	      -e 's|@''HAVE_MBTOWC''@|$(HAVE_MBTOWC)|g' \
-	      -e 's|@''HAVE_MKDTEMP''@|$(HAVE_MKDTEMP)|g' \
-	      -e 's|@''HAVE_MKOSTEMP''@|$(HAVE_MKOSTEMP)|g' \
-	      -e 's|@''HAVE_MKOSTEMPS''@|$(HAVE_MKOSTEMPS)|g' \
-	      -e 's|@''HAVE_MKSTEMP''@|$(HAVE_MKSTEMP)|g' \
-	      -e 's|@''HAVE_MKSTEMPS''@|$(HAVE_MKSTEMPS)|g' \
-	      -e 's|@''HAVE_POSIX_MEMALIGN''@|$(HAVE_POSIX_MEMALIGN)|g' \
-	      -e 's|@''HAVE_POSIX_OPENPT''@|$(HAVE_POSIX_OPENPT)|g' \
-	      -e 's|@''HAVE_PTSNAME''@|$(HAVE_PTSNAME)|g' \
-	      -e 's|@''HAVE_PTSNAME_R''@|$(HAVE_PTSNAME_R)|g' \
-	      -e 's|@''HAVE_QSORT_R''@|$(HAVE_QSORT_R)|g' \
-	      -e 's|@''HAVE_RANDOM''@|$(HAVE_RANDOM)|g' \
-	      -e 's|@''HAVE_RANDOM_H''@|$(HAVE_RANDOM_H)|g' \
-	      -e 's|@''HAVE_RANDOM_R''@|$(HAVE_RANDOM_R)|g' \
-	      -e 's|@''HAVE_REALLOCARRAY''@|$(HAVE_REALLOCARRAY)|g' \
-	      -e 's|@''HAVE_REALPATH''@|$(HAVE_REALPATH)|g' \
-	      -e 's|@''HAVE_RPMATCH''@|$(HAVE_RPMATCH)|g' \
-	      -e 's|@''HAVE_SECURE_GETENV''@|$(HAVE_SECURE_GETENV)|g' \
-	      -e 's|@''HAVE_DECL_SETENV''@|$(HAVE_DECL_SETENV)|g' \
-	      -e 's|@''HAVE_SETSTATE''@|$(HAVE_SETSTATE)|g' \
-	      -e 's|@''HAVE_DECL_SETSTATE''@|$(HAVE_DECL_SETSTATE)|g' \
-	      -e 's|@''HAVE_STRTOD''@|$(HAVE_STRTOD)|g' \
-	      -e 's|@''HAVE_STRTOF''@|$(HAVE_STRTOF)|g' \
-	      -e 's|@''HAVE_STRTOL''@|$(HAVE_STRTOL)|g' \
-	      -e 's|@''HAVE_STRTOLD''@|$(HAVE_STRTOLD)|g' \
-	      -e 's|@''HAVE_STRTOLL''@|$(HAVE_STRTOLL)|g' \
-	      -e 's|@''HAVE_STRTOUL''@|$(HAVE_STRTOUL)|g' \
-	      -e 's|@''HAVE_STRTOULL''@|$(HAVE_STRTOULL)|g' \
-	      -e 's|@''HAVE_STRUCT_RANDOM_DATA''@|$(HAVE_STRUCT_RANDOM_DATA)|g' \
-	      -e 's|@''HAVE_SYS_LOADAVG_H''@|$(HAVE_SYS_LOADAVG_H)|g' \
-	      -e 's|@''HAVE_UNLOCKPT''@|$(HAVE_UNLOCKPT)|g' \
-	      -e 's|@''HAVE_DECL_UNSETENV''@|$(HAVE_DECL_UNSETENV)|g' \
-	      < $@-t1 > $@-t2
-	$(AM_V_at)sed \
-	      -e 's|@''REPLACE__EXIT''@|$(REPLACE__EXIT)|g' \
-	      -e 's|@''REPLACE_ABORT''@|$(REPLACE_ABORT)|g' \
-	      -e 's|@''REPLACE_ALIGNED_ALLOC''@|$(REPLACE_ALIGNED_ALLOC)|g' \
-	      -e 's|@''REPLACE_CALLOC_FOR_CALLOC_GNU''@|$(REPLACE_CALLOC_FOR_CALLOC_GNU)|g' \
-	      -e 's|@''REPLACE_CALLOC_FOR_CALLOC_POSIX''@|$(REPLACE_CALLOC_FOR_CALLOC_POSIX)|g' \
-	      -e 's|@''REPLACE_CANONICALIZE_FILE_NAME''@|$(REPLACE_CANONICALIZE_FILE_NAME)|g' \
-	      -e 's|@''REPLACE_FREE''@|$(REPLACE_FREE)|g' \
-	      -e 's|@''REPLACE_GETLOADAVG''@|$(REPLACE_GETLOADAVG)|g' \
-	      -e 's|@''REPLACE_GETPROGNAME''@|$(REPLACE_GETPROGNAME)|g' \
-	      -e 's|@''REPLACE_GETSUBOPT''@|$(REPLACE_GETSUBOPT)|g' \
-	      -e 's|@''REPLACE_INITSTATE''@|$(REPLACE_INITSTATE)|g' \
-	      -e 's|@''REPLACE_MALLOC_FOR_MALLOC_GNU''@|$(REPLACE_MALLOC_FOR_MALLOC_GNU)|g' \
-	      -e 's|@''REPLACE_MALLOC_FOR_MALLOC_POSIX''@|$(REPLACE_MALLOC_FOR_MALLOC_POSIX)|g' \
-	      -e 's|@''REPLACE_MB_CUR_MAX''@|$(REPLACE_MB_CUR_MAX)|g' \
-	      -e 's|@''REPLACE_MBSTOWCS''@|$(REPLACE_MBSTOWCS)|g' \
-	      -e 's|@''REPLACE_MBTOWC''@|$(REPLACE_MBTOWC)|g' \
-	      -e 's|@''REPLACE_MKOSTEMP''@|$(REPLACE_MKOSTEMP)|g' \
-	      -e 's|@''REPLACE_MKOSTEMPS''@|$(REPLACE_MKOSTEMPS)|g' \
-	      -e 's|@''REPLACE_MKSTEMP''@|$(REPLACE_MKSTEMP)|g' \
-	      -e 's|@''REPLACE_POSIX_MEMALIGN''@|$(REPLACE_POSIX_MEMALIGN)|g' \
-	      -e 's|@''REPLACE_POSIX_OPENPT''@|$(REPLACE_POSIX_OPENPT)|g' \
-	      -e 's|@''REPLACE_PTSNAME''@|$(REPLACE_PTSNAME)|g' \
-	      -e 's|@''REPLACE_PTSNAME_R''@|$(REPLACE_PTSNAME_R)|g' \
-	      -e 's|@''REPLACE_PUTENV''@|$(REPLACE_PUTENV)|g' \
-	      -e 's|@''REPLACE_QSORT_R''@|$(REPLACE_QSORT_R)|g' \
-	      -e 's|@''REPLACE_RAND''@|$(REPLACE_RAND)|g' \
-	      -e 's|@''REPLACE_RANDOM''@|$(REPLACE_RANDOM)|g' \
-	      -e 's|@''REPLACE_RANDOM_R''@|$(REPLACE_RANDOM_R)|g' \
-	      -e 's|@''REPLACE_REALLOC_FOR_REALLOC_POSIX''@|$(REPLACE_REALLOC_FOR_REALLOC_POSIX)|g' \
-	      -e 's|@''REPLACE_REALLOCARRAY''@|$(REPLACE_REALLOCARRAY)|g' \
-	      -e 's|@''REPLACE_REALPATH''@|$(REPLACE_REALPATH)|g' \
-	      -e 's|@''REPLACE_SETENV''@|$(REPLACE_SETENV)|g' \
-	      -e 's|@''REPLACE_SETSTATE''@|$(REPLACE_SETSTATE)|g' \
-	      -e 's|@''REPLACE_STRTOD''@|$(REPLACE_STRTOD)|g' \
-	      -e 's|@''REPLACE_STRTOF''@|$(REPLACE_STRTOF)|g' \
-	      -e 's|@''REPLACE_STRTOL''@|$(REPLACE_STRTOL)|g' \
-	      -e 's|@''REPLACE_STRTOLD''@|$(REPLACE_STRTOLD)|g' \
-	      -e 's|@''REPLACE_STRTOLL''@|$(REPLACE_STRTOLL)|g' \
-	      -e 's|@''REPLACE_STRTOUL''@|$(REPLACE_STRTOUL)|g' \
-	      -e 's|@''REPLACE_STRTOULL''@|$(REPLACE_STRTOULL)|g' \
-	      -e 's|@''REPLACE_UNSETENV''@|$(REPLACE_UNSETENV)|g' \
-	      -e 's|@''REPLACE_WCTOMB''@|$(REPLACE_WCTOMB)|g' \
-	      -e 's|@''CAN_PRINT_STACK_TRACE''@|$(CAN_PRINT_STACK_TRACE)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _Noreturn/r $(_NORETURN_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $@-t2 > $@-t3
-	$(AM_V_at)rm -f $@-t1 $@-t2
-	$(AM_V_at)mv $@-t3 $@
-MOSTLYCLEANFILES += stdlib.h stdlib.h-t1 stdlib.h-t2 stdlib.h-t3
 
 Include:
 <stdlib.h>
@@ -199,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-all

@@ -10,7 +10,7 @@ getopt-gnu
 idx
 stdbool-h
 stdint-h
-stdlib
+stdlib-h
 error
 read-file
 xlist

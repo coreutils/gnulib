@@ -38,7 +38,7 @@ posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy
 stdbool-h
-stdlib
+stdlib-h
 unistd
 unistd-safer
 wait-process

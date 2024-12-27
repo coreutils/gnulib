@@ -14,7 +14,7 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 stddef-h
-stdlib
+stdlib-h
 
 configure.ac:
 gl_STRING_H

@@ -20,7 +20,7 @@ memchr          [test $gl_cv_have_unlimited_file_name_length = no]
 mempcpy         [test $gl_cv_have_unlimited_file_name_length = no]
 memrchr         [test $gl_cv_have_unlimited_file_name_length = no]
 stdbool-h       [test $gl_cv_have_unlimited_file_name_length = no]
-stdlib          [test $gl_cv_have_unlimited_file_name_length = no]
+stdlib-h        [test $gl_cv_have_unlimited_file_name_length = no]
 
 configure.ac:
 gl_FUNC_CHDIR_LONG

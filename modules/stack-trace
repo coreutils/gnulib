@@ -7,7 +7,7 @@ lib/stack-trace.c
 m4/stack-trace.m4
 
 Depends-on:
-stdlib
+stdlib-h
 execinfo
 
 configure.ac-early:

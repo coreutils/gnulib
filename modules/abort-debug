@@ -6,7 +6,7 @@ lib/abort-debug.c
 m4/abort-debug.m4
 
 Depends-on:
-stdlib
+stdlib-h
 stack-trace
 
 configure.ac:

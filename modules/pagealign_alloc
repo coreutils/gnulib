@@ -14,7 +14,7 @@ getpagesize
 gettext-h
 gnulib-i18n
 open
-stdlib
+stdlib-h
 xalloc
 unistd
 

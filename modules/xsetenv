@@ -12,7 +12,7 @@ unsetenv
 error
 gettext-h
 gnulib-i18n
-stdlib
+stdlib-h
 
 configure.ac:
 

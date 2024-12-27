@@ -6,7 +6,7 @@ lib/getsubopt.c
 m4/getsubopt.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 strchrnul       [test $HAVE_GETSUBOPT = 0 || test $REPLACE_GETSUBOPT = 1]
 memchr          [test $HAVE_GETSUBOPT = 0 || test $REPLACE_GETSUBOPT = 1]

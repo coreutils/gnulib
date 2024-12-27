@@ -17,7 +17,7 @@ memcmp
 quote
 quotearg
 stdbool-h
-stdlib
+stdlib-h
 
 configure.ac:
 

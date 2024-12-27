@@ -13,7 +13,7 @@ findprog-in
 msvc-nothrow
 stdbool-h
 stdint-h
-stdlib
+stdlib-h
 strpbrk
 unistd
 malloc-posix

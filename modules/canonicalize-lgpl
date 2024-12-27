@@ -9,7 +9,7 @@ m4/lstat.m4
 
 Depends-on:
 extensions
-stdlib
+stdlib-h
 nocrash
 double-slash-root             [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
 eloop-threshold               [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]

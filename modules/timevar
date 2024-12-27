@@ -15,7 +15,7 @@ gethrxtime
 getrusage
 gettext-h
 gnulib-i18n
-stdlib
+stdlib-h
 sys_time
 sys_times
 xalloc

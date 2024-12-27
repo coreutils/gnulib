@@ -6,7 +6,7 @@ lib/setenv.c
 m4/setenv.m4
 
 Depends-on:
-stdlib
+stdlib-h
 malloca         [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 alloca-opt      [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 malloc-posix    [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]

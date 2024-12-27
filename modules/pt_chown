@@ -8,7 +8,7 @@ lib/pty-private.h
 Depends-on:
 ptsname
 root-uid
-stdlib
+stdlib-h
 configmake
 stat
 

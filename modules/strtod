@@ -7,7 +7,7 @@ m4/strtod.m4
 m4/ldexp.m4
 
 Depends-on:
-stdlib
+stdlib-h
 strtod-obsolete
 c-ctype         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 math-h          [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]

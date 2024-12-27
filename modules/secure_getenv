@@ -6,7 +6,7 @@ lib/secure_getenv.c
 m4/secure_getenv.m4
 
 Depends-on:
-stdlib
+stdlib-h
 extensions
 
 configure.ac:

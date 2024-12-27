@@ -6,7 +6,7 @@ lib/free.c
 m4/free.m4
 
 Depends-on:
-stdlib
+stdlib-h
 string
 wchar
 

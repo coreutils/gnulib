@@ -17,7 +17,7 @@ fcntl-h
 filename
 raise
 stdbool-h
-stdlib
+stdlib-h
 sys_wait
 unistd
 xalloc

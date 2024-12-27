@@ -10,7 +10,7 @@ c99
 exitfail
 getopt-gnu
 stdbool-h
-stdlib
+stdlib-h
 version-etc
 
 configure.ac:

@@ -11,7 +11,7 @@ include_next
 snippet/c++defs
 snippet/warn-on-use
 stddef-h
-stdlib
+stdlib-h
 
 configure.ac:
 gl_MALLOC_H

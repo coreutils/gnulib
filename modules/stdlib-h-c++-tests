@@ -1,0 +1,20 @@
+Files:
+tests/test-stdlib-h-c++.cc
+tests/test-stdlib-h-c++2.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdlib-h-c++
+check_PROGRAMS += test-stdlib-h-c++
+test_stdlib_h_c___SOURCES = test-stdlib-h-c++.cc test-stdlib-h-c++2.cc
+test_stdlib_h_c___LDADD = $(LDADD) $(LIBINTL) $(GETLOADAVG_LIBS) $(CLOCK_TIME_LIB) $(EUIDACCESS_LIBGEN) $(GETRANDOM_LIB)
+endif
