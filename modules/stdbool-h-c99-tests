@@ -1,0 +1,12 @@
+Files:
+tests/test-stdbool-h-c99.c
+tests/test-stdbool.c
+
+Depends-on:
+stdbool-h-c99-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdbool-h-c99
+check_PROGRAMS += test-stdbool-h-c99
