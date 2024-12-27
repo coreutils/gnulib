@@ -11,7 +11,7 @@ m4/fenv-exceptions.m4
 m4/mathfunc.m4
 
 Depends-on:
-fenv
+fenv-h
 
 configure.ac:
 gl_FENV_EXCEPTIONS_STATE

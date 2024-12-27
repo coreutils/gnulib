@@ -12,7 +12,7 @@ m4/mathfunc.m4
 m4/musl.m4
 
 Depends-on:
-fenv
+fenv-h
 extensions
 verify
 fenv-exceptions-tracking-c99

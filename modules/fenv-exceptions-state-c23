@@ -8,7 +8,7 @@ m4/fenv-exceptions-state-c23.m4
 m4/mathfunc.m4
 
 Depends-on:
-fenv
+fenv-h
 fenv-exceptions-state-c99
 
 configure.ac:

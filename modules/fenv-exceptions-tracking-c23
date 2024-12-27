@@ -9,7 +9,7 @@ m4/fenv-exceptions-tracking-c23.m4
 m4/mathfunc.m4
 
 Depends-on:
-fenv
+fenv-h
 fenv-exceptions-tracking-c99
 
 configure.ac:

@@ -1,0 +1,19 @@
+Files:
+tests/test-fenv-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-fenv-h-c++
+check_PROGRAMS += test-fenv-h-c++
+test_fenv_h_c___SOURCES = test-fenv-h-c++.cc
+test_fenv_h_c___LDADD = $(LDADD) $(FENV_ENVIRONMENT_LIBM) $(FENV_ROUNDING_LIBM) $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_EXCEPTIONS_TRAPPING_LIBM)
+endif

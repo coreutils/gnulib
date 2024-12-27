@@ -10,7 +10,7 @@ m4/mathfunc.m4
 m4/musl.m4
 
 Depends-on:
-fenv
+fenv-h
 extensions
 
 configure.ac:

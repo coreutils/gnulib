@@ -1,0 +1,12 @@
+Files:
+tests/test-fenv-h.c
+
+Depends-on:
+verify
+fenv-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fenv-h
+check_PROGRAMS += test-fenv-h
