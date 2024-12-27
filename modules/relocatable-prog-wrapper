@@ -76,7 +76,7 @@ stdint-h
 stdlib-h
 string-h
 sys_stat-h
-unistd
+unistd-h
 xalloc-oversized
 
 configure.ac-early:

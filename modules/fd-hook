@@ -6,7 +6,7 @@ lib/fd-hook.h
 lib/fd-hook.c
 
 Depends-on:
-unistd
+unistd-h
 
 configure.ac:
 

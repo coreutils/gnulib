@@ -6,7 +6,7 @@ lib/euidaccess.c
 m4/euidaccess.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 root-uid
 fcntl-h

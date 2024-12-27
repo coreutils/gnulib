@@ -17,7 +17,7 @@ filename
 openat-die
 openat-h
 save-cwd
-unistd
+unistd-h
 
 configure.ac:
 AC_CHECK_HEADERS([selinux/flask.h])

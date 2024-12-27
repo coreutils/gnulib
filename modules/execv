@@ -6,7 +6,7 @@ lib/execv.c
 m4/execv.m4
 
 Depends-on:
-unistd
+unistd-h
 environ         [test $REPLACE_EXECV = 1]
 execve          [test $REPLACE_EXECV = 1]
 

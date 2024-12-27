@@ -12,7 +12,7 @@ fflush
 gettext-h
 gnulib-i18n
 stdbool-h
-unistd
+unistd-h
 
 configure.ac:
 

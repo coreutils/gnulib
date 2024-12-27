@@ -10,7 +10,7 @@ gen-header
 libtextstyle
 stdbool-h
 stdio-h
-unistd
+unistd-h
 fsync
 vasprintf-posix
 

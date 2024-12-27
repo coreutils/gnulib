@@ -28,7 +28,7 @@ glibc-internal/scratch_buffer [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $RE
 stat                          [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
 stdbool-h                     [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
 sys_stat-h                    [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
-unistd                        [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
+unistd-h                      [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1]
 
 configure.ac:
 gl_CANONICALIZE_LGPL

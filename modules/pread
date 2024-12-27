@@ -6,7 +6,7 @@ lib/pread.c
 m4/pread.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 largefile
 lseek           [test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1]

@@ -9,7 +9,7 @@ m4/isapipe.m4
 Depends-on:
 stdbool-h       [test $HAVE_ISAPIPE = 0]
 sys_stat-h      [test $HAVE_ISAPIPE = 0]
-unistd          [test $HAVE_ISAPIPE = 0]
+unistd-h        [test $HAVE_ISAPIPE = 0]
 msvc-nothrow    [test $HAVE_ISAPIPE = 0]
 fstat           [test $HAVE_ISAPIPE = 0]
 

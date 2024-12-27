@@ -7,7 +7,7 @@ m4/copy-file-range.m4
 
 Depends-on:
 largefile
-unistd
+unistd-h
 
 configure.ac:
 gl_FUNC_COPY_FILE_RANGE

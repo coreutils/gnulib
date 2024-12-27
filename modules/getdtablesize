@@ -6,7 +6,7 @@ lib/getdtablesize.c
 m4/getdtablesize.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 msvc-inval      [test $HAVE_GETDTABLESIZE = 0]
 

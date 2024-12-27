@@ -8,7 +8,7 @@ Depends-on:
 stdbool-h
 netinet_in-h
 arpa_inet-h
-unistd
+unistd-h
 sys_ioctl-h
 extensions
 inet_pton

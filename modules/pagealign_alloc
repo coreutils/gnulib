@@ -16,7 +16,7 @@ gnulib-i18n
 open
 stdlib-h
 xalloc
-unistd
+unistd-h
 
 configure.ac:
 gl_PAGEALIGN_ALLOC

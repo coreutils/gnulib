@@ -7,7 +7,7 @@ m4/getlogin_r.m4
 m4/getlogin.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 malloca         [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
 memchr          [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]

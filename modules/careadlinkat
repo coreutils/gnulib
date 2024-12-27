@@ -11,7 +11,7 @@ idx
 limits-h
 minmax
 ssize_t
-unistd
+unistd-h
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

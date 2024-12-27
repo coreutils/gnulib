@@ -6,7 +6,7 @@ lib/getpagesize.c
 m4/getpagesize.m4
 
 Depends-on:
-unistd
+unistd-h
 
 configure.ac:
 gl_FUNC_GETPAGESIZE

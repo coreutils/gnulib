@@ -7,7 +7,7 @@ m4/fdatasync.m4
 
 Depends-on:
 fsync         [test $HAVE_FDATASYNC = 0 || test $REPLACE_FDATASYNC = 1]
-unistd
+unistd-h
 
 configure.ac:
 gl_FUNC_FDATASYNC

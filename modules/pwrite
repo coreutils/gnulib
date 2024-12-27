@@ -6,7 +6,7 @@ lib/pwrite.c
 m4/pwrite.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 largefile
 lseek           [test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1]

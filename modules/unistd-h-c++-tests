@@ -1,0 +1,19 @@
+Files:
+tests/test-unistd-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-unistd-h-c++
+check_PROGRAMS += test-unistd-h-c++
+test_unistd_h_c___SOURCES = test-unistd-h-c++.cc
+test_unistd_h_c___LDADD = $(LDADD) $(LIBINTL) $(CLOCK_TIME_LIB) $(EUIDACCESS_LIBGEN) $(LIBSOCKET) $(GETLOGIN_LIB) $(GETRANDOM_LIB)
+endif

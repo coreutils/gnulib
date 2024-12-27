@@ -14,7 +14,7 @@ errno-h
 open
 sh-filename
 strchrnul
-unistd
+unistd-h
 filename        [test $HAVE_POSIX_SPAWN = 0]
 concat-filename [test $HAVE_POSIX_SPAWN = 0]
 findprog-in     [test $HAVE_POSIX_SPAWN = 0]

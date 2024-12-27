@@ -7,7 +7,7 @@ tests/macros.h
 
 Depends-on:
 lseek
-unistd
+unistd-h
 
 configure.ac:
 

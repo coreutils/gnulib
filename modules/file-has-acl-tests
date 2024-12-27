@@ -6,7 +6,7 @@ tests/test-file-has-acl.c
 tests/macros.h
 
 Depends-on:
-unistd
+unistd-h
 test-framework-sh
 
 configure.ac:

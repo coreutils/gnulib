@@ -6,7 +6,7 @@ lib/getusershell.c
 m4/getusershell.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 fopen                [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
 getline              [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]

@@ -6,7 +6,7 @@ lib/ttyname_r.c
 m4/ttyname_r.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 
 configure.ac:

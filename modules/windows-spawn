@@ -15,7 +15,7 @@ stdbool-h
 stdint-h
 stdlib-h
 strpbrk
-unistd
+unistd-h
 malloc-posix
 
 configure.ac:

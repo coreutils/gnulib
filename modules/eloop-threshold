@@ -6,7 +6,7 @@ lib/eloop-threshold.h
 
 Depends-on:
 minmax
-unistd
+unistd-h
 
 configure.ac:
 

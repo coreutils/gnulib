@@ -17,7 +17,7 @@ msvc-inval
 read-file
 stdbool-h
 stdint-h
-unistd
+unistd-h
 
 configure.ac:
 dnl Test for Linux system call close_range(), declared in <unistd.h>.

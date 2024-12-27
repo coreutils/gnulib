@@ -6,7 +6,7 @@ lib/usleep.c
 m4/usleep.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 sleep           [test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1]
 

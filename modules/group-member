@@ -6,7 +6,7 @@ lib/group-member.c
 m4/group-member.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 getgroups        [test $HAVE_GROUP_MEMBER = 0]
 malloc-gnu       [test $HAVE_GROUP_MEMBER = 0]

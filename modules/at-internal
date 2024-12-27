@@ -11,7 +11,7 @@ fcntl-h
 intprops
 open       [case $host_os in mingw* | windows*) false;; *) :;; esac]
 sys_stat-h
-unistd
+unistd-h
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])

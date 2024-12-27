@@ -6,7 +6,7 @@ lib/rmdir.c
 m4/rmdir.m4
 
 Depends-on:
-unistd
+unistd-h
 filename        [test $REPLACE_RMDIR = 1]
 sys_stat-h      [test $REPLACE_RMDIR = 1]
 

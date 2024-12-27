@@ -19,7 +19,7 @@ stdbool-h
 stdint-h
 stdlib-h
 sys_select-h
-unistd
+unistd-h
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([select])

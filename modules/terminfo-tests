@@ -3,7 +3,7 @@ tests/test-terminfo.c
 
 Depends-on:
 terminfo-h
-unistd
+unistd-h
 
 configure.ac:
 

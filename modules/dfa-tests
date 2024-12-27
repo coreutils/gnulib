@@ -9,7 +9,7 @@ binary-io
 stdio-h
 stdlib-h
 string-h
-unistd
+unistd-h
 regex
 setlocale
 test-framework-sh

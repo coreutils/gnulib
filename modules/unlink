@@ -6,7 +6,7 @@ lib/unlink.c
 m4/unlink.m4
 
 Depends-on:
-unistd
+unistd-h
 filename        [test $REPLACE_UNLINK = 1]
 lstat           [test $REPLACE_UNLINK = 1]
 malloc-posix    [test $REPLACE_UNLINK = 1]

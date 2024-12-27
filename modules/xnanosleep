@@ -12,7 +12,7 @@ dtotimespec
 intprops
 nanosleep
 time-h
-unistd
+unistd-h
 
 configure.ac:
 gl_XNANOSLEEP

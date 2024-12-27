@@ -6,7 +6,7 @@ lib/truncate.c
 m4/truncate.m4
 
 Depends-on:
-unistd
+unistd-h
 sys_types-h
 largefile
 sys_stat-h

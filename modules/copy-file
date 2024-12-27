@@ -24,7 +24,7 @@ quote
 safe-read
 stat-time
 stdlib-h
-unistd
+unistd-h
 utimens
 
 configure.ac:

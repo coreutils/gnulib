@@ -6,7 +6,7 @@ lib/lseek.c
 m4/lseek.m4
 
 Depends-on:
-unistd
+unistd-h
 sys_types-h
 largefile
 msvc-nothrow    [test $REPLACE_LSEEK = 1]

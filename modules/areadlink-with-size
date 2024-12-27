@@ -11,7 +11,7 @@ limits-h
 readlink
 ssize_t
 stdint-h
-unistd
+unistd-h
 
 configure.ac:
 

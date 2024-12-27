@@ -17,7 +17,7 @@ raise
 signal-h
 sigprocmask
 stdio-h
-unistd
+unistd-h
 
 configure.ac:
 gl_SIGNAL_SIGPIPE

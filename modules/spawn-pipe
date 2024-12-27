@@ -39,7 +39,7 @@ posix_spawnattr_setflags
 posix_spawnattr_destroy
 stdbool-h
 stdlib-h
-unistd
+unistd-h
 unistd-safer
 wait-process
 windows-spawn

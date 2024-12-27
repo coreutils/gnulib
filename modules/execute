@@ -32,7 +32,7 @@ posix_spawnattr_destroy
 stdbool-h
 stdlib-h
 sys_wait-h
-unistd
+unistd-h
 wait-process
 windows-spawn
 xalloc-die

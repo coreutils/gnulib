@@ -47,7 +47,7 @@ termios-h
 threads-h
 time-h
 uchar-h
-unistd
+unistd-h
 utime-h
 utmp
 wchar

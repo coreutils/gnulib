@@ -7,7 +7,7 @@ Depends-on:
 nanosleep
 stdckdint-h
 time-h
-unistd
+unistd-h
 xconcat-filename
 xgetcwd
 

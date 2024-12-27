@@ -3,7 +3,7 @@ tests/test-free.c
 tests/macros.h
 
 Depends-on:
-unistd
+unistd-h
 
 configure.ac:
 

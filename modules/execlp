@@ -6,7 +6,7 @@ lib/execlp.c
 m4/execlp.m4
 
 Depends-on:
-unistd
+unistd-h
 execvp          [test $REPLACE_EXECLP = 1]
 malloca         [test $REPLACE_EXECLP = 1]
 

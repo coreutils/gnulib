@@ -7,7 +7,7 @@ lib/physmem.c
 m4/physmem.m4
 
 Depends-on:
-unistd
+unistd-h
 full-read
 
 configure.ac:

@@ -9,7 +9,7 @@ Depends-on:
 sys_stat-h
 extensions
 c99             [test $HAVE_GETUMASK = 0]
-unistd          [test $HAVE_GETUMASK = 0]
+unistd-h        [test $HAVE_GETUMASK = 0]
 clean-temp      [test $HAVE_GETUMASK = 0]
 tempname        [test $HAVE_GETUMASK = 0]
 

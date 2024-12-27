@@ -21,7 +21,7 @@ limits-h
 openat-die
 openat-h
 save-cwd
-unistd
+unistd-h
 
 configure.ac:
 gl_MODULE_INDICATOR([areadlinkat-with-size])

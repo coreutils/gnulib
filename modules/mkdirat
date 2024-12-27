@@ -18,7 +18,7 @@ mkdir           [test $HAVE_MKDIRAT = 0]
 openat-die      [test $HAVE_MKDIRAT = 0]
 openat-h        [test $HAVE_MKDIRAT = 0]
 save-cwd        [test $HAVE_MKDIRAT = 0]
-unistd          [test $HAVE_MKDIRAT = 0]
+unistd-h        [test $HAVE_MKDIRAT = 0]
 
 configure.ac:
 gl_FUNC_MKDIRAT

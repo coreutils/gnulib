@@ -15,7 +15,7 @@ posix_spawn_file_actions_init
 posix_spawn_file_actions_addopen
 posix_spawn_file_actions_destroy
 stdbool-h
-unistd
+unistd-h
 sys_wait-h
 environ
 fflush

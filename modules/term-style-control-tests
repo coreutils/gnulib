@@ -4,7 +4,7 @@ tests/test-term-style-control-yes.c
 
 Depends-on:
 stdbool-h
-unistd
+unistd-h
 full-write
 
 configure.ac:

@@ -11,7 +11,7 @@ sys_stat-h
 extensions
 errno-h         [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
 fcntl-h         [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
-unistd          [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
+unistd-h        [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
 intprops        [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
 c99             [test $REPLACE_FCHMODAT = 1]
 at-internal     [test $HAVE_FCHMODAT = 0]

@@ -9,7 +9,7 @@ tests/macros.h
 
 Depends-on:
 stdbool-h
-unistd
+unistd-h
 popen
 pclose
 

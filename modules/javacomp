@@ -7,7 +7,7 @@ lib/javacomp.c
 
 Depends-on:
 stdbool-h
-unistd
+unistd-h
 javaversion
 execute
 spawn-pipe

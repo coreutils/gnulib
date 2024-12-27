@@ -28,7 +28,7 @@ glibc-internal/scratch_buffer
 stat
 stdbool-h
 sys_stat-h
-unistd
+unistd-h
 xalloc-die
 
 configure.ac:

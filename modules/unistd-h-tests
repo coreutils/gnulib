@@ -1,0 +1,12 @@
+Files:
+tests/test-unistd-h.c
+
+Depends-on:
+assert-h
+unistd-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unistd-h
+check_PROGRAMS += test-unistd-h

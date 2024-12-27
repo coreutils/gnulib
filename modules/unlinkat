@@ -8,7 +8,7 @@ m4/unlinkat.m4
 m4/lstat.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 fcntl-h         [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
 openat-h        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]

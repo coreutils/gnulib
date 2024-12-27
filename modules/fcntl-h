@@ -15,7 +15,7 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 sys_types-h
-unistd
+unistd-h
 
 configure.ac:
 gl_FCNTL_H

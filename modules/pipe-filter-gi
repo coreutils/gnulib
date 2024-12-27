@@ -20,7 +20,7 @@ stdbool-h
 stdint-h
 stdlib-h
 sys_select-h
-unistd
+unistd-h
 xalloc
 
 configure.ac:

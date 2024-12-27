@@ -4,7 +4,7 @@ chdir() function: switch to another current directory
 Files:
 
 Depends-on:
-unistd
+unistd-h
 
 configure.ac:
 gl_UNISTD_MODULE_INDICATOR([chdir])

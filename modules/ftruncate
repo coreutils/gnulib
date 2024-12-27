@@ -6,7 +6,7 @@ lib/ftruncate.c
 m4/ftruncate.m4
 
 Depends-on:
-unistd
+unistd-h
 sys_types-h
 largefile
 msvc-nothrow    [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]

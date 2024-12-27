@@ -7,7 +7,7 @@ lib/at-func.c
 m4/symlinkat.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 fcntl-h         [test $HAVE_SYMLINKAT = 0 || test $REPLACE_SYMLINKAT = 1]
 at-internal     [test $HAVE_SYMLINKAT = 0]

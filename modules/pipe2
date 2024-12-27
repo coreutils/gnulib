@@ -6,7 +6,7 @@ lib/pipe2.c
 m4/pipe2.m4
 
 Depends-on:
-unistd
+unistd-h
 fcntl-h
 binary-io
 extensions

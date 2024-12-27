@@ -6,7 +6,7 @@ lib/dup2.c
 m4/dup2.m4
 
 Depends-on:
-unistd
+unistd-h
 msvc-inval      [test $REPLACE_DUP2 = 1]
 msvc-nothrow    [test $REPLACE_DUP2 = 1]
 

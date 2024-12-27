@@ -6,7 +6,7 @@ lib/link.c
 m4/link.m4
 
 Depends-on:
-unistd
+unistd-h
 free-posix      [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 stat            [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 strdup-posix    [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]

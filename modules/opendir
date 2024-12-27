@@ -10,7 +10,7 @@ Depends-on:
 dirent-h
 largefile
 filename        [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
-unistd          [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
+unistd-h        [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
 closedir        [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
 dirfd           [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
 

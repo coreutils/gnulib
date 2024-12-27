@@ -7,7 +7,7 @@ m4/gethostname.m4
 lib/w32sock.h
 
 Depends-on:
-unistd
+unistd-h
 sys_socket-h    [test $HAVE_GETHOSTNAME = 0]
 errno-h         [test $HAVE_GETHOSTNAME = 0]
 sockets         [test $HAVE_GETHOSTNAME = 0]

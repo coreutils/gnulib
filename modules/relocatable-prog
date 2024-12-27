@@ -23,7 +23,7 @@ xalloc
 xreadlink
 open
 stdbool-h
-unistd
+unistd-h
 memcmp
 strdup
 

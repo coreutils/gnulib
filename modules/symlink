@@ -6,7 +6,7 @@ lib/symlink.c
 m4/symlink.m4
 
 Depends-on:
-unistd
+unistd-h
 lstat           [test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1]
 
 configure.ac:

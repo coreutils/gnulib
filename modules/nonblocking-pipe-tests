@@ -10,7 +10,7 @@ tests/macros.h
 
 Depends-on:
 stdbool-h
-unistd
+unistd-h
 nonblocking
 wait-process
 pipe-posix

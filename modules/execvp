@@ -6,7 +6,7 @@ lib/execvp.c
 m4/execvp.m4
 
 Depends-on:
-unistd
+unistd-h
 environ         [test $REPLACE_EXECVP = 1]
 execvpe         [test $REPLACE_EXECVP = 1]
 

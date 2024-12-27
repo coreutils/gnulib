@@ -8,7 +8,7 @@ m4/chdir-long.m4
 m4/pathmax.m4
 
 Depends-on:
-unistd
+unistd-h
 pathmax
 chdir
 assure          [test $gl_cv_have_unlimited_file_name_length = no]

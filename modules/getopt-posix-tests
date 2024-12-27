@@ -9,7 +9,7 @@ Depends-on:
 dup2
 setenv
 stdbool-h
-unistd
+unistd-h
 unsetenv
 
 configure.ac:

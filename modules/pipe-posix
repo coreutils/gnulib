@@ -6,7 +6,7 @@ lib/pipe.c
 m4/pipe.m4
 
 Depends-on:
-unistd
+unistd-h
 
 configure.ac:
 gl_FUNC_PIPE

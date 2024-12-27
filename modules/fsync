@@ -6,7 +6,7 @@ lib/fsync.c
 m4/fsync.m4
 
 Depends-on:
-unistd
+unistd-h
 msvc-nothrow    [test $HAVE_FSYNC = 0]
 
 configure.ac:

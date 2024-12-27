@@ -7,7 +7,7 @@ m4/sethostname.m4
 m4/gethostname.m4
 
 Depends-on:
-unistd
+unistd-h
 errno-h         [test $HAVE_SETHOSTNAME = 0 || test $REPLACE_SETHOSTNAME = 1]
 fopen-gnu       [test $HAVE_SETHOSTNAME = 0 || test $REPLACE_SETHOSTNAME = 1]
 

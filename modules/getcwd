@@ -9,7 +9,7 @@ m4/getcwd.m4
 m4/pathmax.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 pathmax         [test $REPLACE_GETCWD = 1]
 msvc-inval      [test $REPLACE_GETCWD = 1]

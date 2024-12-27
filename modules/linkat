@@ -7,7 +7,7 @@ lib/linkat.c
 m4/linkat.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 areadlink        [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 at-internal      [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]

@@ -7,7 +7,7 @@ lib/stdopen.h
 
 Depends-on:
 fcntl
-unistd
+unistd-h
 
 configure.ac:
 

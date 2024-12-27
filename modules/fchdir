@@ -7,7 +7,7 @@ m4/fchdir.m4
 
 Depends-on:
 dirent-h
-unistd
+unistd-h
 assure           [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 chdir            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 close            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]

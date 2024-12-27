@@ -6,7 +6,7 @@ lib/dup.c
 m4/dup.m4
 
 Depends-on:
-unistd
+unistd-h
 msvc-inval      [test $REPLACE_DUP = 1]
 
 configure.ac:

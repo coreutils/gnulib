@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/unistd.h.html}
 
-Gnulib module: unistd
-@mindex unistd
+Gnulib module: unistd-h
+@mindex unistd-h
 
 Portability problems fixed by Gnulib:
 @itemize

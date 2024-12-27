@@ -6,7 +6,7 @@ lib/execve.c
 m4/execve.m4
 
 Depends-on:
-unistd
+unistd-h
 posix_spawn     [test $REPLACE_EXECVE = 1]
 close           [test $REPLACE_EXECVE = 1]
 sys_wait-h      [test $REPLACE_EXECVE = 1]

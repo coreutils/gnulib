@@ -10,7 +10,7 @@ gen-header
 include_next
 snippet/c++defs
 snippet/warn-on-use
-unistd
+unistd-h
 
 configure.ac:
 gl_SYS_IOCTL_H

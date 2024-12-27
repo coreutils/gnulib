@@ -6,7 +6,7 @@ lib/execle.c
 m4/execle.m4
 
 Depends-on:
-unistd
+unistd-h
 execve          [test $REPLACE_EXECLE = 1]
 malloca         [test $REPLACE_EXECLE = 1]
 

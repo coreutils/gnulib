@@ -6,7 +6,7 @@ lib/getgroups.c
 m4/getgroups.m4
 
 Depends-on:
-unistd
+unistd-h
 free-posix      [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 malloc-posix    [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 stdint-h        [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]

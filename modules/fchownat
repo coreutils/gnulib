@@ -7,7 +7,7 @@ lib/at-func.c
 m4/fchownat.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 at-internal     [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 errno-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]

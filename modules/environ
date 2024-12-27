@@ -5,7 +5,7 @@ Files:
 m4/environ.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 
 configure.ac:

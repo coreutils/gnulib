@@ -9,7 +9,7 @@ extern-inline
 fcntl-h
 stdbool-h
 sys_stat-h
-unistd
+unistd-h
 
 configure.ac:
 

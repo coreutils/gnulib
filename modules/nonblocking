@@ -16,7 +16,7 @@ msvc-nothrow
 stdbool-h
 stdio-h
 sys_socket-h
-unistd
+unistd-h
 
 configure.ac:
 gl_NONBLOCKING_IO

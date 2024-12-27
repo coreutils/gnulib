@@ -17,7 +17,7 @@ gnulib-i18n
 stdbool-h
 stdlib-h
 sys_wait-h
-unistd
+unistd-h
 atexit
 waitpid
 

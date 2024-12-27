@@ -6,7 +6,7 @@ lib/read.c
 m4/read.m4
 
 Depends-on:
-unistd
+unistd-h
 msvc-inval      [test $REPLACE_READ = 1]
 msvc-nothrow    [test $REPLACE_READ = 1]
 

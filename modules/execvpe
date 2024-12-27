@@ -6,7 +6,7 @@ lib/execvpe.c
 m4/execvpe.m4
 
 Depends-on:
-unistd
+unistd-h
 extensions
 free-posix      [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 stdbool-h       [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]

@@ -6,7 +6,7 @@ lib/lchown.c
 m4/lchown.m4
 
 Depends-on:
-unistd
+unistd-h
 readlink        [test $HAVE_LCHOWN = 0]
 chown           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 errno-h         [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]

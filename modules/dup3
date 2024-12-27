@@ -6,7 +6,7 @@ lib/dup3.c
 m4/dup3.m4
 
 Depends-on:
-unistd
+unistd-h
 fcntl
 binary-io
 getdtablesize

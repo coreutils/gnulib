@@ -5,7 +5,7 @@ tests/test-atexit.c
 
 Depends-on:
 test-framework-sh
-unistd
+unistd-h
 
 configure.ac:
 

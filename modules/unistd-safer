@@ -11,7 +11,7 @@ m4/unistd-safer.m4
 
 Depends-on:
 fcntl
-unistd
+unistd-h
 pipe-posix
 
 configure.ac:

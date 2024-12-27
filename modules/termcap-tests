@@ -3,7 +3,7 @@ tests/test-termcap.c
 
 Depends-on:
 termcap-h
-unistd
+unistd-h
 
 configure.ac:
 

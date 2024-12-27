@@ -16,7 +16,7 @@ access
 stat
 strdup-posix
 malloc-posix
-unistd
+unistd-h
 
 configure.ac:
 gl_FINDPROG_IN

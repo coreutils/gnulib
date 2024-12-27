@@ -6,7 +6,7 @@ lib/write.c
 m4/write.m4
 
 Depends-on:
-unistd
+unistd-h
 raise           [test $REPLACE_WRITE = 1]
 msvc-inval      [test $REPLACE_WRITE = 1]
 msvc-nothrow    [test $REPLACE_WRITE = 1]

@@ -17,7 +17,7 @@ snippet/c++defs
 snippet/warn-on-use
 snippet/_Noreturn
 stddef-h
-unistd
+unistd-h
 
 configure.ac:
 gl_STDLIB_H
