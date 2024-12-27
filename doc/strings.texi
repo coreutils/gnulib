@@ -857,14 +857,14 @@ values already always were 32-bit and Unicode code points.
 @code{*c32*} functions are optimized so that on glibc systems they
 immediately redirect to the corresponding @code{*wc*} functions.
 
-@mindex uchar-c23
+@mindex uchar-h-c23
 Gnulib implements the ISO C 23 semantics of @code{char32_t} when you
-import the @samp{uchar-c23} module.  Without this module, it implements
+import the @samp{uchar-h-c23} module.  Without this module, it implements
 only the ISO C 11 semantics; the effect is that on some platforms
 (macOS, FreeBSD, NetBSD, Solaris) a @code{char32_t} value is the same
 as a @code{wchar_t} value, not a Unicode code point.  Thus, when you
 want to pass @code{char32_t} values to GNU libunistring or to some Unicode
-centric Gnulib functions, you need the @samp{uchar-c23} module in order
+centric Gnulib functions, you need the @samp{uchar-h-c23} module in order
 to do so without portability problems.
 
 @node The mbchar_t type

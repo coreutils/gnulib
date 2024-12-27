@@ -1,0 +1,58 @@
+Description:
+A <uchar.h> in which the char32_t values are always Unicode code points.
+
+Files:
+lib/lc-charset-unicode.h
+lib/lc-charset-unicode.c
+
+Depends-on:
+uchar-h
+wchar
+iconv
+localcharset
+streq
+once
+tls
+mbszero
+wcrtomb
+unistr/u8-mbtouc
+unistr/u8-uctomb
+mbrtowc
+
+configure.ac:
+AC_REQUIRE([AC_CANONICAL_HOST])
+AC_REQUIRE([AM_ICONV])
+AC_DEFINE([GL_CHAR32_T_IS_UNICODE], [1],
+  [Define if gnulib's char32_t values are always Unicode code points.])
+dnl On macOS, FreeBSD, NetBSD, Solaris, the functions mbrtoc32 and c32rtomb
+dnl need to convert between the wchar_t encoding and Unicode.
+case "$host_os" in
+  darwin* | freebsd* | dragonfly* | netbsd* | solaris*)
+    AC_DEFINE([GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION], [1],
+      [Define if gnulib needs to convert between the wchar_t encoding and Unicode.])
+    LIBC32CONV="$LIBICONV"
+    LTLIBC32CONV="$LTLIBICONV"
+    ;;
+  *)
+    LIBC32CONV=
+    LTLIBC32CONV=
+    ;;
+esac
+AC_SUBST([LIBC32CONV])
+AC_SUBST([LTLIBC32CONV])
+
+Makefile.am:
+lib_SOURCES += lc-charset-unicode.c
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+all

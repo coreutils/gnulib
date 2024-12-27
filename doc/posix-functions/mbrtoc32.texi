@@ -71,7 +71,7 @@ This function is only defined as an inline function on some platforms:
 Haiku 2020.
 @end itemize
 
-@mindex uchar-c23
+@mindex uchar-h-c23
 Note: If you want the guarantee that the @code{char32_t} values returned
 by this function are Unicode code points, you also need to request the
-@code{uchar-c23} module.
+@code{uchar-h-c23} module.

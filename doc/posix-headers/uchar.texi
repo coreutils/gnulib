@@ -9,11 +9,11 @@ Defines the types @code{char16_t}, @code{char32_t} and declares the
 functions @code{mbrtoc16}, @code{c16rtomb}, @code{mbrtoc32},
 @code{c32rtomb}.
 
-Gnulib module: uchar-h or uchar-c23
+Gnulib module: uchar-h or uchar-h-c23
 @mindex uchar-h
-@mindex uchar-c23
+@mindex uchar-h-c23
 
-Portability problems fixed by either Gnulib module @code{uchar-h} or @code{uchar-c23}:
+Portability problems fixed by either Gnulib module @code{uchar-h} or @code{uchar-h-c23}:
 @itemize
 @item
 This header file is missing on many non-glibc platforms:
@@ -27,7 +27,7 @@ This file produces compilation errors in C++ mode on some platforms:
 AIX 7.2 with xlclang++.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{uchar-c23}:
+Portability problems fixed by Gnulib module @code{uchar-h-c23}:
 @itemize
 @item
 @code{char32_t} values may not be Unicode code points.
