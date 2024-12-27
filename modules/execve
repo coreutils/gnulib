@@ -9,7 +9,7 @@ Depends-on:
 unistd
 posix_spawn     [test $REPLACE_EXECVE = 1]
 close           [test $REPLACE_EXECVE = 1]
-sys_wait        [test $REPLACE_EXECVE = 1]
+sys_wait-h      [test $REPLACE_EXECVE = 1]
 waitpid         [test $REPLACE_EXECVE = 1]
 
 configure.ac:

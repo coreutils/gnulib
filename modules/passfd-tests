@@ -3,7 +3,7 @@ tests/test-passfd.c
 tests/macros.h
 
 Depends-on:
-sys_wait
+sys_wait-h
 test-xfail
 
 configure.ac:

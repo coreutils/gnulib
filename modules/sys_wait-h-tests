@@ -1,0 +1,12 @@
+Files:
+tests/test-sys_wait-h.c
+tests/test-sys_wait-h.h
+
+Depends-on:
+sys_wait-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_wait-h
+check_PROGRAMS += test-sys_wait-h

@@ -37,7 +37,7 @@ static int exitcode = EXIT_SUCCESS;
 static_assert (sizeof NULL == sizeof (void *));
 
 #if GNULIB_TEST_SYSTEM_POSIX
-# include "test-sys_wait.h"
+# include "test-sys_wait-h.h"
 #else
 # define test_sys_wait_macros() 0
 #endif

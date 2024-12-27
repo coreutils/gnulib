@@ -6,7 +6,7 @@ lib/waitpid.c
 m4/waitpid.m4
 
 Depends-on:
-sys_wait
+sys_wait-h
 
 configure.ac:
 gl_FUNC_WAITPID

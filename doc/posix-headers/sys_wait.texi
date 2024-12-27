@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_wait.h.html}
 
-Gnulib module: sys_wait
-@mindex sys_wait
+Gnulib module: sys_wait-h
+@mindex sys_wait-h
 
 Portability problems fixed by Gnulib:
 @itemize

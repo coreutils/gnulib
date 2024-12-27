@@ -5,7 +5,7 @@ Files:
 
 Depends-on:
 stdlib-h
-sys_wait
+sys_wait-h
 
 configure.ac:
 gl_STDLIB_MODULE_INDICATOR([system-posix])

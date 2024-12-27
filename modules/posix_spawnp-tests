@@ -22,7 +22,7 @@ posix_spawnattr_setflags
 posix_spawnattr_destroy
 stdbool-h
 unistd
-sys_wait
+sys_wait-h
 dup
 environ
 sh-filename

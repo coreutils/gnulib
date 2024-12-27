@@ -1,6 +1,6 @@
 Files:
 tests/test-stdlib-h.c
-tests/test-sys_wait.h
+tests/test-sys_wait-h.h
 
 Depends-on:
 assert-h

@@ -16,7 +16,7 @@ posix_spawn_file_actions_addopen
 posix_spawn_file_actions_destroy
 stdbool-h
 unistd
-sys_wait
+sys_wait-h
 environ
 fflush
 freopen

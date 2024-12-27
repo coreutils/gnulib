@@ -16,7 +16,7 @@ gettext-h
 gnulib-i18n
 stdbool-h
 stdlib-h
-sys_wait
+sys_wait-h
 unistd
 atexit
 waitpid
