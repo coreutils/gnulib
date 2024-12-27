@@ -8,7 +8,7 @@ lib/szprintf.c
 Depends-on:
 stdio
 vasnprintf
-errno
+errno-h
 stdint
 
 configure.ac:

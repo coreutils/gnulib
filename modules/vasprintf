@@ -10,7 +10,7 @@ Depends-on:
 stdio
 extensions
 vasnprintf      [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
-errno           [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
+errno-h         [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 stdint          [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 
 configure.ac:

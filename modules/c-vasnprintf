@@ -32,7 +32,7 @@ nocrash
 printf-safe
 alloca-opt
 xsize
-errno
+errno-h
 memchr
 multiarch
 mbszero

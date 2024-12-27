@@ -11,7 +11,7 @@ areadlink-with-size
 stdint
 readlinkat
 at-internal
-errno
+errno-h
 extensions
 fchdir
 fcntl-h

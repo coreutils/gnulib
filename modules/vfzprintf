@@ -11,7 +11,7 @@ vasnprintf
 intprops
 free-posix
 fseterr
-errno
+errno-h
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vfzprintf])

@@ -6,7 +6,7 @@ lib/openat-priv.h
 lib/openat-proc.c
 
 Depends-on:
-errno
+errno-h
 fcntl-h
 intprops
 open       [case $host_os in mingw* | windows*) false;; *) :;; esac]

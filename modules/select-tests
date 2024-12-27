@@ -17,7 +17,7 @@ unistd
 sys_ioctl
 extensions
 inet_pton
-errno
+errno-h
 perror
 pipe-posix
 socket

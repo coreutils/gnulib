@@ -11,7 +11,7 @@ Depends-on:
 sys_stat
 extensions
 at-internal     [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
-errno           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+errno-h         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 extern-inline   [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 fchdir          [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 fcntl-h         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]

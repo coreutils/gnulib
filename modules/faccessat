@@ -10,7 +10,7 @@ Depends-on:
 unistd
 extensions
 at-internal     [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
-errno           [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+errno-h         [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
 fchdir          [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
 fcntl-h         [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
 filename        [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]

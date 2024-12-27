@@ -28,7 +28,7 @@ free-posix
 limits-h
 stdint
 xsize
-errno
+errno-h
 memchr
 assert-h
 wchar

@@ -8,7 +8,7 @@ m4/utimens.m4
 m4/utimes.m4
 
 Depends-on:
-errno
+errno-h
 extern-inline
 fcntl-h
 fstat

@@ -18,7 +18,7 @@ xalloc-die
 extern-inline
 xsize
 stdarg
-errno
+errno-h
 
 configure.ac:
 gl_XVASPRINTF

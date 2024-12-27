@@ -8,7 +8,7 @@ lib/vsnzprintf.c
 Depends-on:
 stdio
 vasnprintf
-errno
+errno-h
 stdint
 
 configure.ac:

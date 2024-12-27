@@ -9,7 +9,7 @@ m4/sockpfaf.m4
 
 Depends-on:
 alignasof
-errno
+errno-h
 extern-inline
 gen-header
 include_next

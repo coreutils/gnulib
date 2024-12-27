@@ -10,7 +10,7 @@ Depends-on:
 sys_stat
 extensions
 at-internal     [test $HAVE_MKDIRAT = 0]
-errno           [test $HAVE_MKDIRAT = 0]
+errno-h         [test $HAVE_MKDIRAT = 0]
 fchdir          [test $HAVE_MKDIRAT = 0]
 fcntl-h         [test $HAVE_MKDIRAT = 0]
 filename        [test $HAVE_MKDIRAT = 0]

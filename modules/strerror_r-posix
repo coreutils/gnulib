@@ -8,7 +8,7 @@ m4/strerror_r.m4
 Depends-on:
 string
 extensions
-errno           [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
+errno-h         [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 lock            [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 strerror-override [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 

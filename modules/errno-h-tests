@@ -1,0 +1,13 @@
+Files:
+tests/test-errno-h.c
+
+Depends-on:
+assert-h
+c99
+errno-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-errno-h
+check_PROGRAMS += test-errno-h

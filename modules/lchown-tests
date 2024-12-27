@@ -6,7 +6,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-errno
+errno-h
 ignore-value
 mgetgroups
 nanosleep

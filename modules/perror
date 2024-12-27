@@ -7,7 +7,7 @@ m4/perror.m4
 
 Depends-on:
 stdio
-errno            [test $REPLACE_PERROR = 1]
+errno-h          [test $REPLACE_PERROR = 1]
 strerror-override [test $REPLACE_PERROR = 1]
 strerror_r-posix [test $REPLACE_PERROR = 1]
 

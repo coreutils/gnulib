@@ -5,7 +5,7 @@ tests/qemu.h
 tests/macros.h
 
 Depends-on:
-errno
+errno-h
 fcntl-h
 getcwd-lgpl
 pathmax

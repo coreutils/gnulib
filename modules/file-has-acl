@@ -12,7 +12,7 @@ acl-permissions
 assert-h
 attribute
 dirent-h
-errno
+errno-h
 extern-inline
 minmax
 free-posix

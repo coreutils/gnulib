@@ -9,7 +9,7 @@ lib/at-func.c
 Depends-on:
 selinux-h
 at-internal
-errno
+errno-h
 extensions
 fchdir
 fcntl-h

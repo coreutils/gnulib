@@ -8,7 +8,7 @@ m4/gethostname.m4
 
 Depends-on:
 unistd
-errno           [test $HAVE_SETHOSTNAME = 0 || test $REPLACE_SETHOSTNAME = 1]
+errno-h         [test $HAVE_SETHOSTNAME = 0 || test $REPLACE_SETHOSTNAME = 1]
 fopen-gnu       [test $HAVE_SETHOSTNAME = 0 || test $REPLACE_SETHOSTNAME = 1]
 
 configure.ac:

@@ -12,7 +12,7 @@ Depends-on:
 attribute
 c-ctype
 c99
-errno
+errno-h
 extensions
 intprops
 libc-config

@@ -17,7 +17,7 @@ Depends-on:
 stdio
 nocrash
 printf-safe
-errno
+errno-h
 multiarch
 vfzprintf          [test $REPLACE_FPRINTF = 1]
 mixin/printf-posix [test $REPLACE_FPRINTF = 1]

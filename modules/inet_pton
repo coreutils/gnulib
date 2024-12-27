@@ -10,7 +10,7 @@ arpa_inet-h
 extensions
 c-ctype         [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
 sys_socket      [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
-errno           [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
+errno-h         [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
 netinet_in      [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
 
 configure.ac:

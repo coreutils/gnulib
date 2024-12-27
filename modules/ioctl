@@ -9,7 +9,7 @@ m4/ioctl.m4
 Depends-on:
 sys_ioctl
 sys_socket      [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
-errno           [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
+errno-h         [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 fd-hook         [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 msvc-nothrow    [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 

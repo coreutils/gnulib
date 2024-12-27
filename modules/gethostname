@@ -9,7 +9,7 @@ lib/w32sock.h
 Depends-on:
 unistd
 sys_socket      [test $HAVE_GETHOSTNAME = 0]
-errno           [test $HAVE_GETHOSTNAME = 0]
+errno-h         [test $HAVE_GETHOSTNAME = 0]
 sockets         [test $HAVE_GETHOSTNAME = 0]
 msvc-nothrow    [test $HAVE_GETHOSTNAME = 0]
 

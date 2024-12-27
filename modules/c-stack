@@ -8,7 +8,7 @@ m4/c-stack.m4
 
 Depends-on:
 c99
-errno
+errno-h
 exitfail
 getprogname
 gettext-h

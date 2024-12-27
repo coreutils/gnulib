@@ -11,7 +11,7 @@ vasnprintf
 intprops
 free-posix
 full-write
-errno
+errno-h
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vdzprintf])

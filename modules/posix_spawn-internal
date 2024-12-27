@@ -10,7 +10,7 @@ Depends-on:
 spawn
 alloca-opt
 dup2
-errno
+errno-h
 open
 sh-filename
 strchrnul

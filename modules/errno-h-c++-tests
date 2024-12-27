@@ -1,0 +1,18 @@
+Files:
+tests/test-errno-h-c++.cc
+tests/test-errno-h-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-errno-h-c++
+check_PROGRAMS += test-errno-h-c++
+test_errno_h_c___SOURCES = test-errno-h-c++.cc test-errno-h-c++2.cc
+endif

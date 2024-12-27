@@ -7,7 +7,7 @@ Depends-on:
 netinet_in
 arpa_inet-h
 inet_pton
-errno
+errno-h
 perror
 sockets
 socket

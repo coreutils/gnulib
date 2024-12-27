@@ -8,7 +8,7 @@ m4/stat-time.m4
 
 Depends-on:
 time-h
-errno
+errno-h
 extensions
 extern-inline
 stdckdint

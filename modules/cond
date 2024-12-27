@@ -9,7 +9,7 @@ m4/cond.m4
 Depends-on:
 threadlib
 lock
-errno
+errno-h
 extern-inline
 stdbool
 time-h

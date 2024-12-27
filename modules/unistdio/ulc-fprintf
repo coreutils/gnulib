@@ -8,7 +8,7 @@ Depends-on:
 unistdio/base
 unistdio/ulc-vasnprintf
 fseterr
-errno
+errno-h
 
 configure.ac:
 gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.3]), [unistdio/ulc-fprintf])

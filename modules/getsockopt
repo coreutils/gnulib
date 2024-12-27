@@ -10,7 +10,7 @@ extensions
 sys_socket
 socketlib
 sys_time        [test "$ac_cv_header_winsock2_h" = yes]
-errno           [test "$ac_cv_header_winsock2_h" = yes]
+errno-h         [test "$ac_cv_header_winsock2_h" = yes]
 msvc-nothrow    [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:

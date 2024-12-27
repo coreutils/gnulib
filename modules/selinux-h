@@ -14,7 +14,7 @@ m4/selinux-label-h.m4
 m4/selinux-selinux-h.m4
 
 Depends-on:
-errno
+errno-h
 extern-inline
 gen-header
 

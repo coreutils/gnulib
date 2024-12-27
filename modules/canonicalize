@@ -10,7 +10,7 @@ m4/lstat.m4
 Depends-on:
 attribute
 double-slash-root
-errno
+errno-h
 extensions
 fcntl-h
 file-set

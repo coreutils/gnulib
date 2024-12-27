@@ -9,7 +9,7 @@ m4/printf.m4
 
 Depends-on:
 stdio
-errno           [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
+errno-h         [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
 stdint          [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
 vsnzprintf      [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
 

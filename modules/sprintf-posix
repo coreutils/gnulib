@@ -21,7 +21,7 @@ multiarch
 vszprintf          [test $REPLACE_SPRINTF = 1]
 mixin/printf-posix [test $REPLACE_SPRINTF = 1]
 stdint             [test $REPLACE_SPRINTF = 1]
-errno              [test $REPLACE_SPRINTF = 1]
+errno-h            [test $REPLACE_SPRINTF = 1]
 
 configure.ac:
 gl_FUNC_SPRINTF_POSIX

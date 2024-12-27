@@ -10,7 +10,7 @@ Depends-on:
 assure
 attribute
 chdir
-errno
+errno-h
 extern-inline
 fchdir
 fcntl-h

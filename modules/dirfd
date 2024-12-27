@@ -9,7 +9,7 @@ m4/dirfd.m4
 Depends-on:
 dirent-h
 extensions
-errno           [test $HAVE_DIRFD = 0 || test $REPLACE_DIRFD = 1]
+errno-h         [test $HAVE_DIRFD = 0 || test $REPLACE_DIRFD = 1]
 
 configure.ac:
 gl_FUNC_DIRFD

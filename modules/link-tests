@@ -6,7 +6,7 @@ tests/macros.h
 
 Depends-on:
 ignore-value
-errno
+errno-h
 stdbool
 sys_stat
 

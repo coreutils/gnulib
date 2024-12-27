@@ -14,7 +14,7 @@ sockets         [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_select      [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_socket      [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_time        [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
-errno           [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+errno-h         [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 msvc-nothrow    [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 
 configure.ac:

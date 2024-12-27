@@ -10,7 +10,7 @@ Depends-on:
 unistd
 extensions
 at-internal     [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
-errno           [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+errno-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 extern-inline   [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fchdir          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fcntl-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]

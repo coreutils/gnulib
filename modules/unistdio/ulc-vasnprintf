@@ -35,7 +35,7 @@ printf-safe
 alloca-opt
 localcharset
 xsize
-errno
+errno-h
 free-posix
 memchr
 multiarch

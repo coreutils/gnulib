@@ -9,7 +9,7 @@ Depends-on:
 unistdio/base
 unistdio/u8-vasnprintf
 stdint
-errno
+errno-h
 
 configure.ac:
 gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.2]), [unistdio/u8-vsprintf])

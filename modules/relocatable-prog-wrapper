@@ -58,7 +58,7 @@ c99
 double-slash-root
 eloop-threshold
 environ
-errno
+errno-h
 extern-inline
 fcntl-h
 filename

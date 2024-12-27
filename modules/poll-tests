@@ -11,7 +11,7 @@ arpa_inet-h
 sys_ioctl
 extensions
 inet_pton
-errno
+errno-h
 perror
 sockets
 socket

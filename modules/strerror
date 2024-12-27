@@ -8,7 +8,7 @@ m4/strerror.m4
 Depends-on:
 string
 assert-h         [test $REPLACE_STRERROR = 1]
-errno            [test $REPLACE_STRERROR = 1]
+errno-h          [test $REPLACE_STRERROR = 1]
 intprops         [test $REPLACE_STRERROR = 1]
 strerror-override [test $REPLACE_STRERROR = 1]
 

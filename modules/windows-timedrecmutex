@@ -7,7 +7,7 @@ lib/windows-timedrecmutex.c
 lib/windows-initguard.h
 
 Depends-on:
-errno
+errno-h
 time-h
 gettimeofday
 
