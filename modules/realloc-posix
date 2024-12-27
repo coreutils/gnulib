@@ -8,7 +8,7 @@ m4/malloc.m4
 
 Depends-on:
 extensions-aix
-stdckdint            [test $REPLACE_REALLOC_FOR_REALLOC_POSIX != 0]
+stdckdint-h          [test $REPLACE_REALLOC_FOR_REALLOC_POSIX != 0]
 stdlib
 
 configure.ac:

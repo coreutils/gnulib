@@ -11,7 +11,7 @@ gettext-h
 fcntl-h
 ignore-value
 nanosleep
-stdckdint
+stdckdint-h
 timespec
 dup
 utimecmp

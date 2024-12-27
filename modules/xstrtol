@@ -9,7 +9,7 @@ m4/xstrtol.m4
 
 Depends-on:
 intprops
-stdckdint
+stdckdint-h
 stdint
 
 configure.ac:

@@ -22,7 +22,7 @@ opendirat
 readdir
 renameatu
 stdbool-h
-stdckdint
+stdckdint-h
 stdint
 xalloc-die
 

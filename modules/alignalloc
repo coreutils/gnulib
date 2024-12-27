@@ -13,7 +13,7 @@ extensions
 extern-inline
 idx
 posix_memalign
-stdckdint
+stdckdint-h
 stdint
 
 configure.ac:

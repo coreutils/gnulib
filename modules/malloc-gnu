@@ -7,7 +7,7 @@ lib/malloc.c
 Depends-on:
 malloc-posix
 extensions-aix
-stdckdint            [test $REPLACE_CALLOC_FOR_MALLOC_GNU = 1]
+stdckdint-h          [test $REPLACE_CALLOC_FOR_MALLOC_GNU = 1]
 
 configure.ac:
 gl_FUNC_MALLOC_GNU

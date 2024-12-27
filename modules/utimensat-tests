@@ -10,7 +10,7 @@ tests/macros.h
 Depends-on:
 ignore-value
 nanosleep
-stdckdint
+stdckdint-h
 timespec
 utimecmp
 xconcat-filename

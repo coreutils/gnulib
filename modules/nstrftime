@@ -17,7 +17,7 @@ intprops
 libc-config
 localename-unsafe-limited
 stdbool-h
-stdckdint
+stdckdint-h
 time_rz
 
 configure.ac:

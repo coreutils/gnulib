@@ -21,7 +21,7 @@ idx
 intprops
 inttypes-h
 mktime
-stdckdint
+stdckdint-h
 time-h
 time_r
 time_rz

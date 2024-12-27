@@ -6,8 +6,8 @@ ISO draft C23
 (@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf})
 section 7.20.
 
-Gnulib module: stdckdint
-@mindex stdckdint
+Gnulib module: stdckdint-h
+@mindex stdckdint-h
 
 Portability problems fixed by Gnulib:
 @itemize

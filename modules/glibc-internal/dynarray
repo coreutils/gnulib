@@ -17,7 +17,7 @@ builtin-expect
 gen-header
 libc-config
 stdbool-h
-stdckdint
+stdckdint-h
 stddef
 
 configure.ac:

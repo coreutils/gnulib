@@ -21,7 +21,7 @@ malloc-posix
 ssize_t
 stat
 stdbool-h
-stdckdint
+stdckdint-h
 
 configure.ac:
 gl_FILE_HAS_ACL

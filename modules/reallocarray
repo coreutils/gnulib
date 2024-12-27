@@ -10,7 +10,7 @@ m4/reallocarray.m4
 Depends-on:
 extensions
 realloc-posix  [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
-stdckdint      [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
+stdckdint-h    [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
 stdlib
 
 configure.ac:

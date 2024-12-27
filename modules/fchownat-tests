@@ -13,7 +13,7 @@ mgetgroups
 nanosleep
 openat-h
 stat-time
-stdckdint
+stdckdint-h
 symlink
 xconcat-filename
 xgetcwd

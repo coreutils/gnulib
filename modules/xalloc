@@ -16,7 +16,7 @@ malloc-gnu
 minmax
 realloc-posix
 reallocarray
-stdckdint
+stdckdint-h
 stdint
 xalloc-die
 

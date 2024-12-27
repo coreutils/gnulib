@@ -71,7 +71,7 @@ pathmax
 ssize_t
 stdbool-h
 stddef
-stdckdint
+stdckdint-h
 stdint
 stdlib
 string

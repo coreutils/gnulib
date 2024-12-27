@@ -8,7 +8,7 @@ Depends-on:
 c99
 intprops
 stdbool-h
-stdckdint
+stdckdint-h
 timespec
 
 configure.ac:

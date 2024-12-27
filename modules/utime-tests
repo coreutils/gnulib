@@ -9,7 +9,7 @@ dup
 gettext-h
 ignore-value
 nanosleep
-stdckdint
+stdckdint-h
 symlink
 timespec
 utimecmp

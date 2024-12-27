@@ -12,7 +12,7 @@ fcntl-h
 ignore-value
 nanosleep
 openat
-stdckdint
+stdckdint-h
 timespec
 dup
 utimecmp

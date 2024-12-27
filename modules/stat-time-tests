@@ -5,7 +5,7 @@ tests/nap.h
 
 Depends-on:
 nanosleep
-stdckdint
+stdckdint-h
 time-h
 unistd
 xconcat-filename

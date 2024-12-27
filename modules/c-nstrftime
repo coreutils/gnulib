@@ -18,7 +18,7 @@ intprops
 libc-config
 locale-h
 stdbool-h
-stdckdint
+stdckdint-h
 time_rz
 
 configure.ac:

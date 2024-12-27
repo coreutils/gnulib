@@ -8,7 +8,7 @@ m4/calloc.m4
 Depends-on:
 calloc-posix
 extensions-aix
-stdckdint            [test $REPLACE_CALLOC_FOR_CALLOC_GNU = 1]
+stdckdint-h          [test $REPLACE_CALLOC_FOR_CALLOC_GNU = 1]
 
 configure.ac:
 gl_FUNC_CALLOC_GNU

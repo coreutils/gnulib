@@ -12,7 +12,7 @@ alloca-opt
 assert-h
 extensions-aix
 idx
-stdckdint
+stdckdint-h
 stdint
 xalloc-oversized
 

@@ -341,9 +341,9 @@ low-order bits are the mathematically-correct product.  See above for
 restrictions.
 @end table
 
-@mindex stdckdint
+@mindex stdckdint-h
 If your code includes @code{<intprops.h>} only for these @code{_WRAPV}
-macros, you may prefer to use Gnulib's @code{stdckdint} module
+macros, you may prefer to use Gnulib's @code{stdckdint-h} module
 instead, as it supports similar macros that were standardized in C23
 and are therefore independent of Gnulib if your code can assume C23 or
 later.  @xref{stdckdint.h}.

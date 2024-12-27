@@ -1,40 +1,20 @@
 Description:
 An <stdckdint.h> that is like C23.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'stdckdint-h' instead.
+
 Files:
-lib/stdckdint.in.h
-lib/intprops-internal.h
 
 Depends-on:
-gen-header
-stdbool-h
+stdckdint-h
 
 configure.ac:
-AC_CHECK_HEADERS_ONCE([stdckdint.h])
-if test $ac_cv_header_stdckdint_h = yes; then
-  GL_GENERATE_STDCKDINT_H=false
-else
-  GL_GENERATE_STDCKDINT_H=true
-fi
-gl_CONDITIONAL_HEADER([stdckdint.h])
-AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(STDCKDINT_H)
-
-# We need the following in order to create <stdckdint.h> when the system
-# doesn't have one that works with the given compiler.
-if GL_GENERATE_STDCKDINT_H
-stdckdint.h: stdckdint.in.h $(top_builddir)/config.status
-@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_STDOUT) \
-	  $(srcdir)/stdckdint.in.h > $@-t
-	$(AM_V_at)mv $@-t $@
-else
-stdckdint.h: $(top_builddir)/config.status
-	rm -f $@
-endif
-MOSTLYCLEANFILES += stdckdint.h stdckdint.h-t
 
 Include:
 <stdckdint.h>
@@ -43,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-Paul Eggert

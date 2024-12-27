@@ -11,7 +11,7 @@ c-ctype
 idx
 mktime
 stdbool-h
-stdckdint
+stdckdint-h
 time
 verify
 

@@ -10,7 +10,7 @@ errno-h
 ignore-value
 mgetgroups
 nanosleep
-stdckdint
+stdckdint-h
 stat-time
 stdbool-h
 symlink
