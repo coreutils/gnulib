@@ -9,7 +9,7 @@ stdbool-h
 netinet_in-h
 arpa_inet-h
 unistd
-sys_ioctl
+sys_ioctl-h
 extensions
 inet_pton
 errno-h

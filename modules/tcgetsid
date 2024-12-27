@@ -9,7 +9,7 @@ m4/tcgetsid.m4
 Depends-on:
 termios
 extensions
-sys_ioctl       [test $HAVE_TCGETSID = 0]
+sys_ioctl-h     [test $HAVE_TCGETSID = 0]
 
 configure.ac:
 gl_FUNC_TCGETSID

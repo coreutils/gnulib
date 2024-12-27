@@ -16,8 +16,8 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/ioctl.2.html,,man ioctl}.
 @end itemize
 
-Gnulib module: sys_ioctl
-@mindex sys_ioctl
+Gnulib module: sys_ioctl-h
+@mindex sys_ioctl-h
 
 Portability problems fixed by Gnulib:
 @itemize

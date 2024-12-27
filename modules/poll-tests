@@ -8,7 +8,7 @@ stdbool-h
 sys_socket
 netinet_in-h
 arpa_inet-h
-sys_ioctl
+sys_ioctl-h
 extensions
 inet_pton
 errno-h

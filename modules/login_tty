@@ -9,7 +9,7 @@ m4/pty.m4
 
 Depends-on:
 utmp
-sys_ioctl
+sys_ioctl-h
 open            [test $HAVE_LOGIN_TTY = 0]
 
 configure.ac:
