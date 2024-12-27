@@ -10,7 +10,7 @@ m4/mbswidth.m4
 
 Depends-on:
 wchar
-uchar
+uchar-h
 mbrtoc32
 mbsinit
 mbszero

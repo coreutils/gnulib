@@ -10,7 +10,7 @@ Depends-on:
 extensions
 extern-inline
 stdbool-h
-uchar
+uchar-h
 c32isalnum
 c32isalpha
 c32isblank

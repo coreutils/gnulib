@@ -12,7 +12,7 @@ m4/mbrtowc.m4
 m4/mbstate_t.m4
 
 Depends-on:
-uchar
+uchar-h
 uchar-c23       [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
 mbrtoc32        [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
 mbsinit         [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]

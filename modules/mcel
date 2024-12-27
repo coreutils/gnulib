@@ -12,7 +12,7 @@ extern-inline
 limits-h
 mbrtoc32
 stdbool-h
-uchar
+uchar-h
 verify
 
 configure.ac:

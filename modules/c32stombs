@@ -5,7 +5,7 @@ Files:
 lib/c32stombs.c
 
 Depends-on:
-uchar
+uchar-h
 wchar
 mbszero
 c32srtombs

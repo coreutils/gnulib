@@ -1,0 +1,12 @@
+Files:
+tests/test-uchar-h.c
+
+Depends-on:
+assert-h
+uchar-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uchar-h
+check_PROGRAMS += test-uchar-h

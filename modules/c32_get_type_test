@@ -6,7 +6,7 @@ Files:
 lib/c32_get_type_test.c
 
 Depends-on:
-uchar
+uchar-h
 wctype
 c32isalnum
 c32isalpha

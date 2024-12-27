@@ -6,7 +6,7 @@ lib/lc-charset-unicode.h
 lib/lc-charset-unicode.c
 
 Depends-on:
-uchar
+uchar-h
 wchar
 iconv
 localcharset

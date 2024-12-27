@@ -23,7 +23,7 @@ quotearg-simple
 localcharset
 stdbool-h
 stdint-h
-uchar
+uchar-h
 xalloc
 
 configure.ac:

@@ -46,7 +46,7 @@ sys_wait-h
 termios-h
 threads-h
 time-h
-uchar
+uchar-h
 unistd
 utime-h
 utmp

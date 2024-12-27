@@ -5,7 +5,7 @@ Files:
 lib/btoc32.c
 
 Depends-on:
-uchar
+uchar-h
 mbszero
 mbrtoc32
 btowc

@@ -7,7 +7,7 @@ lib/wcsrtombs-impl.h
 lib/c32srtombs-state.c
 
 Depends-on:
-uchar
+uchar-h
 wchar
 assert-h
 c32rtomb

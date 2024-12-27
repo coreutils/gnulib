@@ -22,7 +22,7 @@ m4/threadlib.m4
 m4/visibility.m4
 
 Depends-on:
-uchar
+uchar-h
 attribute       [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 c99             [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
 hard-locale     [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]

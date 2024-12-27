@@ -14,7 +14,7 @@ m4/locale-zh.m4
 m4/codeset.m4
 
 Depends-on:
-uchar
+uchar-h
 wchar
 wctype-h
 iswdigit

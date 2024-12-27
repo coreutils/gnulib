@@ -6,7 +6,7 @@ Files:
 lib/c32_apply_type_test.c
 
 Depends-on:
-uchar
+uchar-h
 iswctype
 
 configure.ac:

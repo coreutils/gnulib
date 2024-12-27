@@ -1,103 +1,20 @@
 Description:
 A GNU-like <uchar.h>.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'uchar-h' instead.
+
 Files:
-lib/uchar.in.h
-m4/uchar_h.m4
-m4/stdint.m4
 
 Depends-on:
-gen-header
-include_next
-snippet/arg-nonnull
-snippet/c++defs
-snippet/warn-on-use
-extern-inline
-assert-h
-stdint-h
-wchar
-wctype-h
+uchar-h
 
 configure.ac:
-gl_UCHAR_H
-gl_UCHAR_H_REQUIRE_DEFAULTS
-AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += uchar.h
-
-uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
-@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_STDOUT) \
-	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
-	      -e 's/@''HAVE_UCHAR_H''@/$(HAVE_UCHAR_H)/g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_UCHAR_H''@|$(NEXT_UCHAR_H)|g' \
-	      -e 's|@''CXX_HAS_CHAR8_TYPE''@|$(CXX_HAS_CHAR8_TYPE)|g' \
-	      -e 's|@''CXX_HAS_UCHAR_TYPES''@|$(CXX_HAS_UCHAR_TYPES)|g' \
-	      -e 's|@''SMALL_WCHAR_T''@|$(SMALL_WCHAR_T)|g' \
-	      -e 's|@''GNULIBHEADERS_OVERRIDE_CHAR8_T''@|$(GNULIBHEADERS_OVERRIDE_CHAR8_T)|g' \
-	      -e 's|@''GNULIBHEADERS_OVERRIDE_CHAR16_T''@|$(GNULIBHEADERS_OVERRIDE_CHAR16_T)|g' \
-	      -e 's|@''GNULIBHEADERS_OVERRIDE_CHAR32_T''@|$(GNULIBHEADERS_OVERRIDE_CHAR32_T)|g' \
-	      -e 's/@''GNULIB_BTOC32''@/$(GNULIB_BTOC32)/g' \
-	      -e 's/@''GNULIB_BTOWC''@/$(GNULIB_BTOWC)/g' \
-	      -e 's/@''GNULIB_C32ISALNUM''@/$(GNULIB_C32ISALNUM)/g' \
-	      -e 's/@''GNULIB_C32ISALPHA''@/$(GNULIB_C32ISALPHA)/g' \
-	      -e 's/@''GNULIB_C32ISBLANK''@/$(GNULIB_C32ISBLANK)/g' \
-	      -e 's/@''GNULIB_C32ISCNTRL''@/$(GNULIB_C32ISCNTRL)/g' \
-	      -e 's/@''GNULIB_C32ISDIGIT''@/$(GNULIB_C32ISDIGIT)/g' \
-	      -e 's/@''GNULIB_C32ISGRAPH''@/$(GNULIB_C32ISGRAPH)/g' \
-	      -e 's/@''GNULIB_C32ISLOWER''@/$(GNULIB_C32ISLOWER)/g' \
-	      -e 's/@''GNULIB_C32ISPRINT''@/$(GNULIB_C32ISPRINT)/g' \
-	      -e 's/@''GNULIB_C32ISPUNCT''@/$(GNULIB_C32ISPUNCT)/g' \
-	      -e 's/@''GNULIB_C32ISSPACE''@/$(GNULIB_C32ISSPACE)/g' \
-	      -e 's/@''GNULIB_C32ISUPPER''@/$(GNULIB_C32ISUPPER)/g' \
-	      -e 's/@''GNULIB_C32ISXDIGIT''@/$(GNULIB_C32ISXDIGIT)/g' \
-	      -e 's/@''GNULIB_C32TOLOWER''@/$(GNULIB_C32TOLOWER)/g' \
-	      -e 's/@''GNULIB_C32TOUPPER''@/$(GNULIB_C32TOUPPER)/g' \
-	      -e 's/@''GNULIB_C32WIDTH''@/$(GNULIB_C32WIDTH)/g' \
-	      -e 's/@''GNULIB_C32RTOMB''@/$(GNULIB_C32RTOMB)/g' \
-	      -e 's/@''GNULIB_C32SNRTOMBS''@/$(GNULIB_C32SNRTOMBS)/g' \
-	      -e 's/@''GNULIB_C32SRTOMBS''@/$(GNULIB_C32SRTOMBS)/g' \
-	      -e 's/@''GNULIB_C32STOMBS''@/$(GNULIB_C32STOMBS)/g' \
-	      -e 's/@''GNULIB_C32SWIDTH''@/$(GNULIB_C32SWIDTH)/g' \
-	      -e 's/@''GNULIB_C32TOB''@/$(GNULIB_C32TOB)/g' \
-	      -e 's/@''GNULIB_C32_APPLY_MAPPING''@/$(GNULIB_C32_APPLY_MAPPING)/g' \
-	      -e 's/@''GNULIB_C32_APPLY_TYPE_TEST''@/$(GNULIB_C32_APPLY_TYPE_TEST)/g' \
-	      -e 's/@''GNULIB_C32_GET_MAPPING''@/$(GNULIB_C32_GET_MAPPING)/g' \
-	      -e 's/@''GNULIB_C32_GET_TYPE_TEST''@/$(GNULIB_C32_GET_TYPE_TEST)/g' \
-	      -e 's/@''GNULIB_ISWCTYPE''@/$(GNULIB_ISWCTYPE)/g' \
-	      -e 's/@''GNULIB_ISWDIGIT''@/$(GNULIB_ISWDIGIT)/g' \
-	      -e 's/@''GNULIB_ISWXDIGIT''@/$(GNULIB_ISWXDIGIT)/g' \
-	      -e 's/@''GNULIB_MBRTOC16''@/$(GNULIB_MBRTOC16)/g' \
-	      -e 's/@''GNULIB_MBRTOC32''@/$(GNULIB_MBRTOC32)/g' \
-	      -e 's/@''GNULIB_MBSNRTOC32S''@/$(GNULIB_MBSNRTOC32S)/g' \
-	      -e 's/@''GNULIB_MBSNRTOWCS''@/$(GNULIB_MBSNRTOWCS)/g' \
-	      -e 's/@''GNULIB_MBSRTOC32S''@/$(GNULIB_MBSRTOC32S)/g' \
-	      -e 's/@''GNULIB_MBSRTOWCS''@/$(GNULIB_MBSRTOWCS)/g' \
-	      -e 's/@''GNULIB_MBSTOC32S''@/$(GNULIB_MBSTOC32S)/g' \
-	      -e 's/@''GNULIB_TOWCTRANS''@/$(GNULIB_TOWCTRANS)/g' \
-	      -e 's/@''GNULIB_WCSNRTOMBS''@/$(GNULIB_WCSNRTOMBS)/g' \
-	      -e 's/@''GNULIB_WCSRTOMBS''@/$(GNULIB_WCSRTOMBS)/g' \
-	      -e 's/@''GNULIB_WCSWIDTH''@/$(GNULIB_WCSWIDTH)/g' \
-	      -e 's/@''GNULIB_WCTOB''@/$(GNULIB_WCTOB)/g' \
-	      -e 's/@''GNULIB_WCTRANS''@/$(GNULIB_WCTRANS)/g' \
-	      -e 's/@''GNULIB_WCTYPE''@/$(GNULIB_WCTYPE)/g' \
-	      -e 's/@''GNULIB_WCWIDTH''@/$(GNULIB_WCWIDTH)/g' \
-	      -e 's|@''HAVE_C32RTOMB''@|$(HAVE_C32RTOMB)|g' \
-	      -e 's|@''HAVE_MBRTOC16''@|$(HAVE_MBRTOC16)|g' \
-	      -e 's|@''HAVE_MBRTOC32''@|$(HAVE_MBRTOC32)|g' \
-	      -e 's|@''REPLACE_C32RTOMB''@|$(REPLACE_C32RTOMB)|g' \
-	      -e 's|@''REPLACE_MBRTOC16''@|$(REPLACE_MBRTOC16)|g' \
-	      -e 's|@''REPLACE_MBRTOC32''@|$(REPLACE_MBRTOC32)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      $(srcdir)/uchar.in.h > $@-t
-	$(AM_V_at)mv $@-t $@
-MOSTLYCLEANFILES += uchar.h uchar.h-t
 
 Include:
 <uchar.h>
@@ -106,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-all
