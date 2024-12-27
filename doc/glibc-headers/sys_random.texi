@@ -16,8 +16,8 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getrandom.2.html,,man getrandom}.
 @end itemize
 
-Gnulib module: sys_random
-@mindex sys_random
+Gnulib module: sys_random-h
+@mindex sys_random-h
 
 Portability problems fixed by Gnulib:
 @itemize

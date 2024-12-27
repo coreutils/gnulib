@@ -34,7 +34,7 @@ string-h
 strings-h
 sys_file-h
 sys_ioctl-h
-sys_random
+sys_random-h
 sys_resource
 sys_select
 sys_socket

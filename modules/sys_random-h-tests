@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_random-h.c
+
+Depends-on:
+sys_random-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_random-h
+check_PROGRAMS += test-sys_random-h
