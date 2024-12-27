@@ -16,8 +16,8 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/openpty.3.html,,man openpty}.
 @end itemize
 
-Gnulib module: pty
-@mindex pty
+Gnulib module: pty-h
+@mindex pty-h
 
 Portability problems fixed by Gnulib:
 @itemize

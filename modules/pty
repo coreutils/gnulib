@@ -1,49 +1,20 @@
 Description:
 A <pty.h> for systems that lacks it.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'pty-h' instead.
+
 Files:
-lib/pty.in.h
-m4/pty_h.m4
 
 Depends-on:
-gen-header
-include_next
-snippet/c++defs
-snippet/warn-on-use
-termios
+pty-h
 
 configure.ac:
-gl_PTY_H
-gl_PTY_H_REQUIRE_DEFAULTS
-AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += pty.h
-
-# We need the following in order to create <pty.h> when the system
-# doesn't have one that works with the given compiler.
-pty.h: pty.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
-@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_STDOUT) \
-	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
-	      -e 's|@''HAVE_PTY_H''@|$(HAVE_PTY_H)|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_PTY_H''@|$(NEXT_PTY_H)|g' \
-	      -e 's/@''GNULIB_FORKPTY''@/$(GNULIB_FORKPTY)/g' \
-	      -e 's/@''GNULIB_OPENPTY''@/$(GNULIB_OPENPTY)/g' \
-	      -e 's|@''HAVE_UTIL_H''@|$(HAVE_UTIL_H)|g' \
-	      -e 's|@''HAVE_LIBUTIL_H''@|$(HAVE_LIBUTIL_H)|g' \
-	      -e 's|@''HAVE_FORKPTY''@|$(HAVE_FORKPTY)|g' \
-	      -e 's|@''HAVE_OPENPTY''@|$(HAVE_OPENPTY)|g' \
-	      -e 's|@''REPLACE_FORKPTY''@|$(REPLACE_FORKPTY)|g' \
-	      -e 's|@''REPLACE_OPENPTY''@|$(REPLACE_OPENPTY)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      $(srcdir)/pty.in.h > $@-t
-	$(AM_V_at)mv $@-t $@
-MOSTLYCLEANFILES += pty.h pty.h-t
 
 Include:
 <pty.h>
@@ -55,4 +26,3 @@ License:
 LGPLv2+
 
 Maintainer:
-Simon Josefsson

@@ -1,0 +1,19 @@
+Files:
+tests/test-pty-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-pty-h-c++
+check_PROGRAMS += test-pty-h-c++
+test_pty_h_c___SOURCES = test-pty-h-c++.cc
+test_pty_h_c___LDADD = $(LDADD) $(PTY_LIB) $(LIBINTL)
+endif

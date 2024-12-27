@@ -6,7 +6,7 @@ lib/openpty.c
 m4/pty.m4
 
 Depends-on:
-pty
+pty-h
 extensions
 fcntl-h         [test $HAVE_OPENPTY = 0 || test $REPLACE_OPENPTY = 1]
 posix_openpt    [test $HAVE_OPENPTY = 0 || test $REPLACE_OPENPTY = 1]

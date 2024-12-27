@@ -23,7 +23,7 @@ monetary-h
 netdb-h
 poll-h
 pthread-h
-pty
+pty-h
 sched
 search
 signal-h

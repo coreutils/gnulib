@@ -1,0 +1,11 @@
+Files:
+tests/test-pty-h.c
+
+Depends-on:
+pty-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pty-h
+check_PROGRAMS += test-pty-h
