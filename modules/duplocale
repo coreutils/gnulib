@@ -6,7 +6,7 @@ lib/duplocale.c
 m4/duplocale.m4
 
 Depends-on:
-locale
+locale-h
 setlocale-null  [test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1]
 
 configure.ac:

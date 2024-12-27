@@ -18,7 +18,7 @@ Depends-on:
 localename-unsafe-limited
 extensions
 stdbool
-locale
+locale-h
 flexmember
 free-posix
 strdup

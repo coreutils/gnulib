@@ -7,7 +7,7 @@ lib/localeconv.c
 m4/localeconv.m4
 
 Depends-on:
-locale
+locale-h
 
 configure.ac:
 gl_FUNC_LOCALECONV

@@ -11,7 +11,7 @@ m4/threadlib.m4
 m4/visibility.m4
 
 Depends-on:
-locale
+locale-h
 snippet/arg-nonnull
 setlocale-null-unlocked
 

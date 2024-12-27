@@ -16,7 +16,7 @@ glob-h
 iconv-h
 inttypes-h-incomplete
 langinfo-h
-locale
+locale-h
 malloc-h
 math
 monetary

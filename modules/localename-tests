@@ -9,7 +9,7 @@ m4/musl.m4
 m4/windows-rc.m4
 
 Depends-on:
-locale
+locale-h
 setenv
 unsetenv
 setlocale

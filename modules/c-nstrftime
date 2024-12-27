@@ -16,7 +16,7 @@ errno-h
 extensions
 intprops
 libc-config
-locale
+locale-h
 stdbool
 stdckdint
 time_rz

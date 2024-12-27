@@ -11,7 +11,7 @@ m4/intl-thread-locale.m4
 Depends-on:
 c99
 extensions
-locale
+locale-h
 c-ctype
 strtold
 

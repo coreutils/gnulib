@@ -6,7 +6,7 @@ lib/setlocale.c
 m4/setlocale.m4
 
 Depends-on:
-locale
+locale-h
 localename      [test $NEED_SETLOCALE_IMPROVED = 1]
 setlocale-null  [test $NEED_SETLOCALE_MTSAFE = 1]
 

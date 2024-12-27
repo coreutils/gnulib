@@ -1,0 +1,13 @@
+Files:
+tests/test-locale-h.c
+
+Depends-on:
+assert-h
+locale-h-c++-tests
+
+configure.ac:
+gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
+
+Makefile.am:
+TESTS += test-locale-h
+check_PROGRAMS += test-locale-h

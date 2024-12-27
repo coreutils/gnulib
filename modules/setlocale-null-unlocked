@@ -7,7 +7,7 @@ lib/setlocale_null.h
 lib/setlocale_null-unlocked.c
 
 Depends-on:
-locale
+locale-h
 snippet/arg-nonnull
 
 configure.ac:

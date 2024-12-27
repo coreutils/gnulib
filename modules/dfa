@@ -21,7 +21,7 @@ flexmember
 gettext-h
 gnulib-i18n
 idx
-locale
+locale-h
 mbrtoc32-regular
 mbszero
 regex
