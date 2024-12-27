@@ -6,7 +6,7 @@ tests/test-xstrtoll.sh
 tests/macros.h
 
 Depends-on:
-inttypes
+inttypes-h
 test-framework-sh
 
 configure.ac:

@@ -1,14 +1,18 @@
 Description:
 An <inttypes.h> that nearly conforms to C99.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'inttypes-h' instead.
+
 Files:
 
 Depends-on:
-inttypes-h-incomplete
-extensions
+inttypes-h
 
 configure.ac:
-gl_INTTYPES_H
 
 Makefile.am:
 
@@ -19,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-all

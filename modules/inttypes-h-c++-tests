@@ -1,0 +1,19 @@
+Files:
+tests/test-inttypes-h-c++.cc
+tests/test-inttypes-h-c++2.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-inttypes-h-c++
+check_PROGRAMS += test-inttypes-h-c++
+test_inttypes_h_c___SOURCES = test-inttypes-h-c++.cc test-inttypes-h-c++2.cc
+endif

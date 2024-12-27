@@ -5,7 +5,7 @@ tests/test-xstrtol.sh
 tests/macros.h
 
 Depends-on:
-inttypes
+inttypes-h
 test-framework-sh
 xstrtol-error
 

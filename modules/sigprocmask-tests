@@ -5,7 +5,7 @@ tests/virtualbox.h
 tests/macros.h
 
 Depends-on:
-inttypes
+inttypes-h
 sleep
 test-xfail
 

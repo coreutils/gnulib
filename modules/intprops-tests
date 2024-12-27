@@ -4,7 +4,7 @@ tests/macros.h
 
 Depends-on:
 assert-h
-inttypes
+inttypes-h
 stdbool
 
 configure.ac:

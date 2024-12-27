@@ -19,7 +19,7 @@ gettext-h
 gnulib-i18n
 idx
 intprops
-inttypes
+inttypes-h
 mktime
 stdckdint
 time-h

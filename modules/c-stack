@@ -15,7 +15,7 @@ gettext-h
 gnulib-i18n
 idx
 ignore-value
-inttypes
+inttypes-h
 mempcpy
 raise
 sigsegv

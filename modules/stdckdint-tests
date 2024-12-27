@@ -5,7 +5,7 @@ tests/test-stdckdint.c
 
 Depends-on:
 assert-h
-inttypes
+inttypes-h
 stdbool
 stdckdint-c++-tests
 
