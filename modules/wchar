@@ -14,7 +14,7 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 extern-inline
-inttypes-incomplete
+inttypes-h-incomplete
 stddef
 stdlib
 

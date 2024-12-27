@@ -6,7 +6,7 @@ lib/strtoimax.c
 m4/strtoimax.m4
 
 Depends-on:
-inttypes-incomplete
+inttypes-h-incomplete
 assert-h        [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
 stdint          [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
 strtoll         [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]

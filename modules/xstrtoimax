@@ -6,7 +6,7 @@ lib/xstrtoimax.c
 
 Depends-on:
 xstrtol
-inttypes-incomplete
+inttypes-h-incomplete
 strtoimax
 
 configure.ac:

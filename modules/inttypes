@@ -4,7 +4,7 @@ An <inttypes.h> that nearly conforms to C99.
 Files:
 
 Depends-on:
-inttypes-incomplete
+inttypes-h-incomplete
 extensions
 
 configure.ac:

@@ -14,7 +14,7 @@ fcntl-h
 fnmatch-h
 glob-h
 iconv-h
-inttypes-incomplete
+inttypes-h-incomplete
 langinfo
 locale
 malloc-h

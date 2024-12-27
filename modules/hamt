@@ -9,7 +9,7 @@ Depends-on:
 count-one-bits
 extern-inline
 flexmember
-inttypes-incomplete
+inttypes-h-incomplete
 stdbool
 stdint
 verify
