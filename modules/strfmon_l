@@ -8,7 +8,7 @@ m4/locale-fr.m4
 m4/codeset.m4
 
 Depends-on:
-monetary
+monetary-h
 extensions
 stdbool         [test $REPLACE_STRFMON_L = 1]
 

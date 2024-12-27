@@ -1,0 +1,18 @@
+Files:
+tests/test-monetary-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-monetary-h-c++
+check_PROGRAMS += test-monetary-h-c++
+test_monetary_h_c___SOURCES = test-monetary-h-c++.cc
+endif

@@ -19,7 +19,7 @@ langinfo-h
 locale-h
 malloc-h
 math-h
-monetary
+monetary-h
 netdb
 poll-h
 pthread-h
