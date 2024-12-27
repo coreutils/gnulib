@@ -8,7 +8,7 @@ m4/uninorm_h.m4
 
 Depends-on:
 gen-header
-unitypes
+unitypes-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([1.2], [uninorm.h])

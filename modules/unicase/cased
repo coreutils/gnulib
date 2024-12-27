@@ -8,7 +8,7 @@ lib/unicase/cased.h
 lib/unictype/bitmap.h
 
 Depends-on:
-unitypes
+unitypes-h
 stdbool-h
 
 configure.ac:

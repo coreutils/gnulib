@@ -8,7 +8,7 @@ m4/unictype_h.m4
 
 Depends-on:
 gen-header
-unitypes
+unitypes-h
 stdbool-h
 
 configure.ac:

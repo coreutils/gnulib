@@ -83,8 +83,8 @@ GNU libunistring documentation
 @node <unitypes.h> modules
 @subsubsection Declarations in <unitypes.h>
 
-@mindex unitypes
-The @code{<unitypes.h>} header file is provided by the module @code{unitypes}.
+@mindex unitypes-h
+The @code{<unitypes.h>} header file is provided by the module @code{unitypes-h}.
 
 @node <unistr.h> modules
 @subsubsection Declarations in <unistr.h>

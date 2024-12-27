@@ -1,0 +1,48 @@
+Description:
+Base types for Unicode string functions.
+
+Files:
+lib/unitypes.in.h
+m4/libunistring-base.m4
+
+Depends-on:
+gen-header
+stdint-h
+
+configure.ac:
+gl_LIBUNISTRING_LIBHEADER([0.9.11], [unitypes.h])
+AC_PROG_MKDIR_P
+
+AH_VERBATIM([unitypes_restrict], [
+/* This definition is a duplicate of the one in unitypes.h.
+   It is here so that we can cope with an older version of unitypes.h
+   that does not contain this definition and that is pre-installed among
+   the public header files.  */
+# if defined __restrict \
+     || 2 < __GNUC__ + (95 <= __GNUC_MINOR__) \
+     || __clang_major__ >= 3
+#  define _UC_RESTRICT __restrict
+# elif 199901L <= __STDC_VERSION__ || defined restrict
+#  define _UC_RESTRICT restrict
+# else
+#  define _UC_RESTRICT
+# endif
+])
+
+Makefile.am:
+BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
+
+unitypes.h: unitypes.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unitypes.in.h
+	$(AM_V_at)mv $@-t $@
+MOSTLYCLEANFILES += unitypes.h unitypes.h-t
+
+Include:
+"unitypes.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

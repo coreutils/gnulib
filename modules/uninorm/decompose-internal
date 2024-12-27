@@ -6,7 +6,7 @@ lib/uninorm/decompose-internal.h
 lib/uninorm/decompose-internal.c
 
 Depends-on:
-unitypes
+unitypes-h
 array-mergesort
 
 configure.ac:

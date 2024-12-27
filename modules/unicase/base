@@ -8,7 +8,7 @@ m4/unicase_h.m4
 
 Depends-on:
 gen-header
-unitypes
+unitypes-h
 uninorm/base
 stdbool-h
 

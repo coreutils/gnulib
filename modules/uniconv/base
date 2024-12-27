@@ -11,7 +11,7 @@ m4/libunistring-base.m4
 Depends-on:
 gen-header
 stdbool-h
-unitypes
+unitypes-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.11], [uniconv.h])

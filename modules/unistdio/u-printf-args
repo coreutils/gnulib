@@ -14,7 +14,7 @@ m4/inttypes_h.m4
 Depends-on:
 stdint-h
 limits-h
-unitypes
+unitypes-h
 wchar
 
 configure.ac:
