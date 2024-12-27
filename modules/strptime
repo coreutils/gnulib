@@ -9,7 +9,7 @@ m4/tm_gmtoff.m4
 Depends-on:
 time-h
 extensions
-sys_time        [test $HAVE_STRPTIME = 0]
+sys_time-h      [test $HAVE_STRPTIME = 0]
 string-h        [test $HAVE_STRPTIME = 0]
 strcase         [test $HAVE_STRPTIME = 0]
 stdbool-h       [test $HAVE_STRPTIME = 0]

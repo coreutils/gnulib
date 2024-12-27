@@ -11,7 +11,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-sys_time
+sys_time-h
 
 configure.ac:
 gl_SYS_RESOURCE_H

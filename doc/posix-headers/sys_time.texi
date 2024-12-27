@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_time.h.html}
 
-Gnulib module: sys_time
-@mindex sys_time
+Gnulib module: sys_time-h
+@mindex sys_time-h
 
 Portability problems fixed by Gnulib:
 @itemize

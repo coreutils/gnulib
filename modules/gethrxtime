@@ -13,7 +13,7 @@ clock-time
 extensions
 extern-inline
 gettime
-sys_time
+sys_time-h
 
 configure.ac:
 gl_GETHRXTIME

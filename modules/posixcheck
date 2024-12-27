@@ -39,7 +39,7 @@ sys_resource-h
 sys_select-h
 sys_socket-h
 sys_stat-h
-sys_time
+sys_time-h
 sys_times
 sys_utsname
 sys_wait

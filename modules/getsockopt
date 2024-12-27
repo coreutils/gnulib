@@ -9,7 +9,7 @@ Depends-on:
 extensions
 sys_socket-h
 socketlib
-sys_time        [test "$ac_cv_header_winsock2_h" = yes]
+sys_time-h      [test "$ac_cv_header_winsock2_h" = yes]
 errno-h         [test "$ac_cv_header_winsock2_h" = yes]
 msvc-nothrow    [test "$ac_cv_header_winsock2_h" = yes]
 

@@ -10,7 +10,7 @@ sys_select-h
 alloca          [test $REPLACE_SELECT = 1]
 dup2            [test $REPLACE_SELECT = 1]
 sockets         [test $REPLACE_SELECT = 1]
-sys_time        [test $REPLACE_SELECT = 1]
+sys_time-h      [test $REPLACE_SELECT = 1]
 msvc-nothrow    [test $REPLACE_SELECT = 1]
 
 configure.ac:

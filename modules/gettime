@@ -8,7 +8,7 @@ m4/gettime.m4
 Depends-on:
 clock-time
 gettimeofday
-sys_time
+sys_time-h
 timespec
 extensions
 

@@ -19,7 +19,7 @@ stat
 stat-time
 stdbool-h
 sys_stat-h
-sys_time
+sys_time-h
 time-h
 utime
 utime-h

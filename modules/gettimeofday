@@ -6,7 +6,7 @@ lib/gettimeofday.c
 m4/gettimeofday.m4
 
 Depends-on:
-sys_time
+sys_time-h
 
 configure.ac:
 gl_FUNC_GETTIMEOFDAY

@@ -9,7 +9,7 @@ Depends-on:
 clock-time
 errno-h
 extensions
-sys_time
+sys_time-h
 timespec
 
 configure.ac:
