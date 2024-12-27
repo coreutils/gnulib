@@ -18,10 +18,10 @@ On older C platforms @code{<stdalign.h>} must be included before using
 support these keywords, which were standardized by C23.
 On C23 and later platforms, @code{<stdalign.h>} has no effect and need
 not be included.
-@mindex stdalign
+@mindex stdalign-h
 (Gnulib-using code should not include
 @code{<stdalign.h>} without also employing Gnulib's now-deprecated
-@code{stdalign} module.)
+@code{stdalign-h} module.)
 @item
 This header file is missing on many platforms:
 FreeBSD 6.4, NetBSD 7.1, OpenBSD 7.5, Minix 3.3.0, AIX 7.1, HP-UX 11.31, Solaris 11.3, mingw, MSVC 14, Android 9.0.
@@ -43,7 +43,7 @@ In C23, these macros are not defined.
 This portability problem should not matter with code using Gnulib's
 @code{alignasof} module, as such code should use @code{alignas} and
 @code{alignof} without checking these two macros.  (Gnulib's
-now-deprecated @code{stdalign} module defines these two macros.)
+now-deprecated @code{stdalign-h} module defines these two macros.)
 @item
 @c https://github.com/llvm/llvm-project/issues/81472
 Clang 17 does not support an @code{alignas} attribute in the

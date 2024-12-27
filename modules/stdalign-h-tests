@@ -1,0 +1,9 @@
+Files:
+
+Depends-on:
+alignasof-tests
+stdalign-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
