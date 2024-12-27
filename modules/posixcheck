@@ -37,7 +37,7 @@ sys_ioctl-h
 sys_random-h
 sys_resource-h
 sys_select-h
-sys_socket
+sys_socket-h
 sys_stat
 sys_time
 sys_times

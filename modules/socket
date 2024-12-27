@@ -6,7 +6,7 @@ lib/socket.c
 lib/w32sock.h
 
 Depends-on:
-sys_socket
+sys_socket-h
 socketlib
 errno-h         [test "$ac_cv_header_winsock2_h" = yes]
 sockets         [test "$ac_cv_header_winsock2_h" = yes]

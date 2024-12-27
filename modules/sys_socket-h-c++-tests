@@ -1,0 +1,19 @@
+Files:
+tests/test-sys_socket-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sys_socket-h-c++
+check_PROGRAMS += test-sys_socket-h-c++
+test_sys_socket_h_c___SOURCES = test-sys_socket-h-c++.cc
+test_sys_socket_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET) $(NANOSLEEP_LIB)
+endif

@@ -6,7 +6,7 @@ lib/setsockopt.c
 lib/w32sock.h
 
 Depends-on:
-sys_socket
+sys_socket-h
 socketlib
 sys_time        [test "$ac_cv_header_winsock2_h" = yes]
 errno-h         [test "$ac_cv_header_winsock2_h" = yes]

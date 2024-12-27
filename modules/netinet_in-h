@@ -8,7 +8,7 @@ m4/netinet_in_h.m4
 Depends-on:
 gen-header
 include_next
-sys_socket
+sys_socket-h
 
 configure.ac:
 gl_HEADER_NETINET_IN

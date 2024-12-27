@@ -9,7 +9,7 @@ m4/sockets.m4
 
 Depends-on:
 socketlib
-sys_socket
+sys_socket-h
 fd-hook
 msvc-nothrow
 

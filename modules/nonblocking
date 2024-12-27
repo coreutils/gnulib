@@ -15,7 +15,7 @@ ioctl
 msvc-nothrow
 stdbool-h
 stdio-h
-sys_socket
+sys_socket-h
 unistd
 
 configure.ac:

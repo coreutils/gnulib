@@ -11,7 +11,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-sys_socket
+sys_socket-h
 
 configure.ac:
 gl_NETDB_H

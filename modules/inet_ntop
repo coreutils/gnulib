@@ -9,7 +9,7 @@ m4/sys_socket_h.m4
 Depends-on:
 arpa_inet-h
 extensions
-sys_socket      [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1]
+sys_socket-h    [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1]
 errno-h         [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1]
 netinet_in-h    [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1]
 

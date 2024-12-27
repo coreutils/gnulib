@@ -1,0 +1,16 @@
+Files:
+tests/test-sys_socket-h.c
+
+Depends-on:
+assert-h
+intprops
+sys_socket-h-c++-tests
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([shutdown])
+gl_SOCKET_FAMILIES
+gl_SOCKET_FAMILY_UNIX
+
+Makefile.am:
+TESTS += test-sys_socket-h
+check_PROGRAMS += test-sys_socket-h

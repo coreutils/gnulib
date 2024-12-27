@@ -9,7 +9,7 @@ Depends-on:
 unistd
 extensions
 netdb-h         [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
-sys_socket      [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
+sys_socket-h    [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1]
 
 configure.ac:
 gl_FUNC_GETDOMAINNAME

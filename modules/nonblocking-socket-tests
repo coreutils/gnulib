@@ -13,7 +13,7 @@ tests/macros.h
 Depends-on:
 stdbool-h
 unistd
-sys_socket
+sys_socket-h
 nonblocking
 wait-process
 environ

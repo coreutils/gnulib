@@ -5,7 +5,7 @@ tests/macros.h
 
 Depends-on:
 stdbool-h
-sys_socket
+sys_socket-h
 netinet_in-h
 arpa_inet-h
 sys_ioctl-h

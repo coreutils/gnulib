@@ -8,7 +8,7 @@ m4/passfd.m4
 
 Depends-on:
 cloexec
-sys_socket
+sys_socket-h
 socketlib
 
 configure.ac:

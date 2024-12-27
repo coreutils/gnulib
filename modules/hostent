@@ -7,7 +7,7 @@ Files:
 m4/hostent.m4
 
 Depends-on:
-sys_socket
+sys_socket-h
 
 configure.ac:
 gl_HOSTENT

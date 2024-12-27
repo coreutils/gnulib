@@ -8,7 +8,7 @@ m4/getaddrinfo.m4
 
 Depends-on:
 netdb-h
-sys_socket
+sys_socket-h
 extensions
 gettext-h       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
 gnulib-i18n     [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]

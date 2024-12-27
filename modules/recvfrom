@@ -7,7 +7,7 @@ lib/w32sock.h
 
 Depends-on:
 extensions
-sys_socket
+sys_socket-h
 socketlib
 errno-h         [test "$ac_cv_header_winsock2_h" = yes]
 getpeername     [test "$ac_cv_header_winsock2_h" = yes]

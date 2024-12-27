@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_socket.h.html}
 
-Gnulib module: sys_socket
-@mindex sys_socket
+Gnulib module: sys_socket-h
+@mindex sys_socket-h
 
 Portability problems fixed by Gnulib:
 @itemize

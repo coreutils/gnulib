@@ -7,7 +7,7 @@ lib/accept4.c
 m4/accept4.m4
 
 Depends-on:
-sys_socket
+sys_socket-h
 accept
 fcntl-h
 binary-io
