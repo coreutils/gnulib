@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sched.h.html}
 
-Gnulib module: sched
-@mindex sched
+Gnulib module: sched-h
+@mindex sched-h
 
 Portability problems fixed by Gnulib:
 @itemize

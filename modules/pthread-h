@@ -11,7 +11,7 @@ Depends-on:
 extensions
 extern-inline
 gen-header
-sched
+sched-h
 time-h
 snippet/c++defs
 snippet/_Noreturn

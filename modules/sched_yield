@@ -7,7 +7,7 @@ m4/sched_yield.m4
 m4/threadlib.m4
 
 Depends-on:
-sched
+sched-h
 
 configure.ac:
 gl_FUNC_SCHED_YIELD

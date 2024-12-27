@@ -9,7 +9,7 @@ m4/pid_t.m4
 Depends-on:
 gen-header
 include_next
-sched
+sched-h
 signal-h
 snippet/arg-nonnull
 snippet/c++defs

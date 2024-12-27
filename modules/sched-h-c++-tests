@@ -1,0 +1,19 @@
+Files:
+tests/test-sched-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sched-h-c++
+check_PROGRAMS += test-sched-h-c++
+test_sched_h_c___SOURCES = test-sched-h-c++.cc
+test_sched_h_c___LDADD = $(LDADD) $(SCHED_YIELD_LIB)
+endif

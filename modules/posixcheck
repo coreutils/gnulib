@@ -24,7 +24,7 @@ netdb-h
 poll-h
 pthread-h
 pty-h
-sched
+sched-h
 search
 signal-h
 spawn

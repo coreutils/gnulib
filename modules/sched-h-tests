@@ -1,0 +1,11 @@
+Files:
+tests/test-sched-h.c
+
+Depends-on:
+sched-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sched-h
+check_PROGRAMS += test-sched-h
