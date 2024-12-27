@@ -1,0 +1,1314 @@
+@node libunistring
+@section libunistring
+
+@c Copyright (C) 2024 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Bruno Haible.
+
+GNU libunistring provides functions for manipulating Unicode strings
+and for manipulating C strings according to the Unicode standard.
+
+It consists of the following parts:
+
+@multitable @columnfractions .25 .75
+@item @code{<unistr.h>} @tab elementary string functions
+@item @code{<uniconv.h>} @tab conversion from/to legacy encodings
+@item @code{<unistdio.h>} @tab formatted output to strings
+@item @code{<uniname.h>} @tab character names
+@item @code{<unictype.h>} @tab character classification and properties
+@item @code{<uniwidth.h>} @tab string width when using nonproportional fonts
+@item @code{<unigbrk.h>} @tab grapheme cluster breaks
+@item @code{<uniwbrk.h>} @tab word breaks
+@item @code{<unilbrk.h>} @tab line breaking algorithm
+@item @code{<uninorm.h>} @tab normalization (composition and decomposition)
+@item @code{<unicase.h>} @tab case folding
+@end multitable
+
+Nearly all of the source code of GNU libunistring resides in Gnulib.
+
+@node How to use libunistring
+@subsection How to use libunistring
+
+There are three ways to use GNU libunistring:
+
+@itemize
+@item
+@mindex libunistring
+You can declare GNU libunistring as a prerequisite of your package
+and then, at build time, link with the installed libunistring.
+To achieve this, use the Gnulib module @code{libunistring}.
+@item
+You can include the source code of specific libunistring modules
+in your package, through the usual Gnulib mechanism.
+Then, there is no prerequisite.
+@item
+@mindex libunistring-optional
+A combination of both:
+You can declare GNU libunistring as an optional prerequisite of your package
+and include the source code of specific libunistring modules in your package.
+At configure time, when the user
+has specified the @code{configure} option @code{--with-included-libunistring},
+the included modules will be used
+and the package will not link against an installed libunistring.
+Otherwise, the package will link against an installed libunistring if found,
+and only those modules will be built
+that are not contained or that are too old in the found libunistring.
+To achieve this, request from Gnulib the specific modules
+and the Gnulib module @code{libunistring-optional}.
+@end itemize
+
+@node The libunistring modules
+@subsection The libunistring modules
+
+Every function or variable that is part of the GNU libunistring API
+is available through a specific Gnulib module.
+For the documentation, refer to the
+@ifinfo
+GNU libunistring documentation
+(@pxref{Top,,, libunistring}).
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libunistring/manual/html_node/,,GNU libunistring documentation}.
+@end ifnotinfo
+
+@c The declarations are listed in the order in the GNU libunistring
+@c documentation.
+
+@node <unitypes.h> modules
+@subsubsection Declarations in <unitypes.h>
+
+@mindex unitypes
+The @code{<unitypes.h>} header file is provided by the module @code{unitypes}.
+
+@node <unistr.h> modules
+@subsubsection Declarations in <unistr.h>
+
+@mindex unistr/u8-check
+@mindex unistr/u16-check
+@mindex unistr/u32-check
+@mindex unistr/u8-to-u16
+@mindex unistr/u8-to-u32
+@mindex unistr/u16-to-u8
+@mindex unistr/u16-to-u32
+@mindex unistr/u32-to-u8
+@mindex unistr/u32-to-u16
+@mindex unistr/u8-mblen
+@mindex unistr/u16-mblen
+@mindex unistr/u32-mblen
+@mindex unistr/u8-mbtouc
+@mindex unistr/u16-mbtouc
+@mindex unistr/u32-mbtouc
+@mindex unistr/u8-mbtouc-unsafe
+@mindex unistr/u16-mbtouc-unsafe
+@mindex unistr/u32-mbtouc-unsafe
+@mindex unistr/u8-mbtoucr
+@mindex unistr/u16-mbtoucr
+@mindex unistr/u32-mbtoucr
+@mindex unistr/u8-uctomb
+@mindex unistr/u16-uctomb
+@mindex unistr/u32-uctomb
+@mindex unistr/u8-cpy
+@mindex unistr/u16-cpy
+@mindex unistr/u32-cpy
+@mindex unistr/u8-pcpy
+@mindex unistr/u16-pcpy
+@mindex unistr/u32-pcpy
+@mindex unistr/u8-move
+@mindex unistr/u16-move
+@mindex unistr/u32-move
+@mindex unistr/u8-set
+@mindex unistr/u16-set
+@mindex unistr/u32-set
+@mindex unistr/u8-cmp
+@mindex unistr/u16-cmp
+@mindex unistr/u32-cmp
+@mindex unistr/u8-cmp2
+@mindex unistr/u16-cmp2
+@mindex unistr/u32-cmp2
+@mindex unistr/u8-chr
+@mindex unistr/u16-chr
+@mindex unistr/u32-chr
+@mindex unistr/u8-mbsnlen
+@mindex unistr/u16-mbsnlen
+@mindex unistr/u32-mbsnlen
+@mindex unistr/u8-cpy-alloc
+@mindex unistr/u16-cpy-alloc
+@mindex unistr/u32-cpy-alloc
+@mindex unistr/u8-strmblen
+@mindex unistr/u16-strmblen
+@mindex unistr/u32-strmblen
+@mindex unistr/u8-strmbtouc
+@mindex unistr/u16-strmbtouc
+@mindex unistr/u32-strmbtouc
+@mindex unistr/u8-next
+@mindex unistr/u16-next
+@mindex unistr/u32-next
+@mindex unistr/u8-prev
+@mindex unistr/u16-prev
+@mindex unistr/u32-prev
+@mindex unistr/u8-strlen
+@mindex unistr/u16-strlen
+@mindex unistr/u32-strlen
+@mindex unistr/u8-strnlen
+@mindex unistr/u16-strnlen
+@mindex unistr/u32-strnlen
+@mindex unistr/u8-strcpy
+@mindex unistr/u16-strcpy
+@mindex unistr/u32-strcpy
+@mindex unistr/u8-stpcpy
+@mindex unistr/u16-stpcpy
+@mindex unistr/u32-stpcpy
+@mindex unistr/u8-strncpy
+@mindex unistr/u16-strncpy
+@mindex unistr/u32-strncpy
+@mindex unistr/u8-stpncpy
+@mindex unistr/u16-stpncpy
+@mindex unistr/u32-stpncpy
+@mindex unistr/u8-strcat
+@mindex unistr/u16-strcat
+@mindex unistr/u32-strcat
+@mindex unistr/u8-strncat
+@mindex unistr/u16-strncat
+@mindex unistr/u32-strncat
+@mindex unistr/u8-strcmp
+@mindex unistr/u16-strcmp
+@mindex unistr/u32-strcmp
+@mindex unistr/u8-strcoll
+@mindex unistr/u16-strcoll
+@mindex unistr/u32-strcoll
+@mindex unistr/u8-strncmp
+@mindex unistr/u16-strncmp
+@mindex unistr/u32-strncmp
+@mindex unistr/u8-strdup
+@mindex unistr/u16-strdup
+@mindex unistr/u32-strdup
+@mindex unistr/u8-strchr
+@mindex unistr/u16-strchr
+@mindex unistr/u32-strchr
+@mindex unistr/u8-strrchr
+@mindex unistr/u16-strrchr
+@mindex unistr/u32-strrchr
+@mindex unistr/u8-strcspn
+@mindex unistr/u16-strcspn
+@mindex unistr/u32-strcspn
+@mindex unistr/u8-strspn
+@mindex unistr/u16-strspn
+@mindex unistr/u32-strspn
+@mindex unistr/u8-strpbrk
+@mindex unistr/u16-strpbrk
+@mindex unistr/u32-strpbrk
+@mindex unistr/u8-strstr
+@mindex unistr/u16-strstr
+@mindex unistr/u32-strstr
+@mindex unistr/u8-startswith
+@mindex unistr/u16-startswith
+@mindex unistr/u32-startswith
+@mindex unistr/u8-endswith
+@mindex unistr/u16-endswith
+@mindex unistr/u32-endswith
+@mindex unistr/u8-strtok
+@mindex unistr/u16-strtok
+@mindex unistr/u32-strtok
+@multitable @columnfractions .4 .6
+@headitem Function @tab Module
+@item @code{u8_check} @tab @code{unistr/u8-check}
+@item @code{u16_check} @tab @code{unistr/u16-check}
+@item @code{u32_check} @tab @code{unistr/u32-check}
+@item @code{u8_to_u16} @tab @code{unistr/u8-to-u16}
+@item @code{u8_to_u32} @tab @code{unistr/u8-to-u32}
+@item @code{u16_to_u8} @tab @code{unistr/u16-to-u8}
+@item @code{u16_to_u32} @tab @code{unistr/u16-to-u32}
+@item @code{u32_to_u8} @tab @code{unistr/u32-to-u8}
+@item @code{u32_to_u16} @tab @code{unistr/u32-to-u16}
+@item @code{u8_mblen} @tab @code{unistr/u8-mblen}
+@item @code{u16_mblen} @tab @code{unistr/u16-mblen}
+@item @code{u32_mblen} @tab @code{unistr/u32-mblen}
+@item @code{u8_mbtouc} @tab @code{unistr/u8-mbtouc}
+@item @code{u16_mbtouc} @tab @code{unistr/u16-mbtouc}
+@item @code{u32_mbtouc} @tab @code{unistr/u32-mbtouc}
+@item @code{u8_mbtouc_unsafe} @tab @code{unistr/u8-mbtouc-unsafe}
+@item @code{u16_mbtouc_unsafe} @tab @code{unistr/u16-mbtouc-unsafe}
+@item @code{u32_mbtouc_unsafe} @tab @code{unistr/u32-mbtouc-unsafe}
+@item @code{u8_mbtoucr} @tab @code{unistr/u8-mbtoucr}
+@item @code{u16_mbtoucr} @tab @code{unistr/u16-mbtoucr}
+@item @code{u32_mbtoucr} @tab @code{unistr/u32-mbtoucr}
+@item @code{u8_uctomb} @tab @code{unistr/u8-uctomb}
+@item @code{u16_uctomb} @tab @code{unistr/u16-uctomb}
+@item @code{u32_uctomb} @tab @code{unistr/u32-uctomb}
+@item @code{u8_cpy} @tab @code{unistr/u8-cpy}
+@item @code{u16_cpy} @tab @code{unistr/u16-cpy}
+@item @code{u32_cpy} @tab @code{unistr/u32-cpy}
+@item @code{u8_pcpy} @tab @code{unistr/u8-pcpy}
+@item @code{u16_pcpy} @tab @code{unistr/u16-pcpy}
+@item @code{u32_pcpy} @tab @code{unistr/u32-pcpy}
+@item @code{u8_move} @tab @code{unistr/u8-move}
+@item @code{u16_move} @tab @code{unistr/u16-move}
+@item @code{u32_move} @tab @code{unistr/u32-move}
+@item @code{u8_set} @tab @code{unistr/u8-set}
+@item @code{u16_set} @tab @code{unistr/u16-set}
+@item @code{u32_set} @tab @code{unistr/u32-set}
+@item @code{u8_cmp} @tab @code{unistr/u8-cmp}
+@item @code{u16_cmp} @tab @code{unistr/u16-cmp}
+@item @code{u32_cmp} @tab @code{unistr/u32-cmp}
+@item @code{u8_cmp2} @tab @code{unistr/u8-cmp2}
+@item @code{u16_cmp2} @tab @code{unistr/u16-cmp2}
+@item @code{u32_cmp2} @tab @code{unistr/u32-cmp2}
+@item @code{u8_chr} @tab @code{unistr/u8-chr}
+@item @code{u16_chr} @tab @code{unistr/u16-chr}
+@item @code{u32_chr} @tab @code{unistr/u32-chr}
+@item @code{u8_mbsnlen} @tab @code{unistr/u8-mbsnlen}
+@item @code{u16_mbsnlen} @tab @code{unistr/u16-mbsnlen}
+@item @code{u32_mbsnlen} @tab @code{unistr/u32-mbsnlen}
+@item @code{u8_cpy_alloc} @tab @code{unistr/u8-cpy-alloc}
+@item @code{u16_cpy_alloc} @tab @code{unistr/u16-cpy-alloc}
+@item @code{u32_cpy_alloc} @tab @code{unistr/u32-cpy-alloc}
+@item @code{u8_strmblen} @tab @code{unistr/u8-strmblen}
+@item @code{u16_strmblen} @tab @code{unistr/u16-strmblen}
+@item @code{u32_strmblen} @tab @code{unistr/u32-strmblen}
+@item @code{u8_strmbtouc} @tab @code{unistr/u8-strmbtouc}
+@item @code{u16_strmbtouc} @tab @code{unistr/u16-strmbtouc}
+@item @code{u32_strmbtouc} @tab @code{unistr/u32-strmbtouc}
+@item @code{u8_next} @tab @code{unistr/u8-next}
+@item @code{u16_next} @tab @code{unistr/u16-next}
+@item @code{u32_next} @tab @code{unistr/u32-next}
+@item @code{u8_prev} @tab @code{unistr/u8-prev}
+@item @code{u16_prev} @tab @code{unistr/u16-prev}
+@item @code{u32_prev} @tab @code{unistr/u32-prev}
+@item @code{u8_strlen} @tab @code{unistr/u8-strlen}
+@item @code{u16_strlen} @tab @code{unistr/u16-strlen}
+@item @code{u32_strlen} @tab @code{unistr/u32-strlen}
+@item @code{u8_strnlen} @tab @code{unistr/u8-strnlen}
+@item @code{u16_strnlen} @tab @code{unistr/u16-strnlen}
+@item @code{u32_strnlen} @tab @code{unistr/u32-strnlen}
+@item @code{u8_strcpy} @tab @code{unistr/u8-strcpy}
+@item @code{u16_strcpy} @tab @code{unistr/u16-strcpy}
+@item @code{u32_strcpy} @tab @code{unistr/u32-strcpy}
+@item @code{u8_stpcpy} @tab @code{unistr/u8-stpcpy}
+@item @code{u16_stpcpy} @tab @code{unistr/u16-stpcpy}
+@item @code{u32_stpcpy} @tab @code{unistr/u32-stpcpy}
+@item @code{u8_strncpy} @tab @code{unistr/u8-strncpy}
+@item @code{u16_strncpy} @tab @code{unistr/u16-strncpy}
+@item @code{u32_strncpy} @tab @code{unistr/u32-strncpy}
+@item @code{u8_stpncpy} @tab @code{unistr/u8-stpncpy}
+@item @code{u16_stpncpy} @tab @code{unistr/u16-stpncpy}
+@item @code{u32_stpncpy} @tab @code{unistr/u32-stpncpy}
+@item @code{u8_strcat} @tab @code{unistr/u8-strcat}
+@item @code{u16_strcat} @tab @code{unistr/u16-strcat}
+@item @code{u32_strcat} @tab @code{unistr/u32-strcat}
+@item @code{u8_strncat} @tab @code{unistr/u8-strncat}
+@item @code{u16_strncat} @tab @code{unistr/u16-strncat}
+@item @code{u32_strncat} @tab @code{unistr/u32-strncat}
+@item @code{u8_strcmp} @tab @code{unistr/u8-strcmp}
+@item @code{u16_strcmp} @tab @code{unistr/u16-strcmp}
+@item @code{u32_strcmp} @tab @code{unistr/u32-strcmp}
+@item @code{u8_strcoll} @tab @code{unistr/u8-strcoll}
+@item @code{u16_strcoll} @tab @code{unistr/u16-strcoll}
+@item @code{u32_strcoll} @tab @code{unistr/u32-strcoll}
+@item @code{u8_strncmp} @tab @code{unistr/u8-strncmp}
+@item @code{u16_strncmp} @tab @code{unistr/u16-strncmp}
+@item @code{u32_strncmp} @tab @code{unistr/u32-strncmp}
+@item @code{u8_strdup} @tab @code{unistr/u8-strdup}
+@item @code{u16_strdup} @tab @code{unistr/u16-strdup}
+@item @code{u32_strdup} @tab @code{unistr/u32-strdup}
+@item @code{u8_strchr} @tab @code{unistr/u8-strchr}
+@item @code{u16_strchr} @tab @code{unistr/u16-strchr}
+@item @code{u32_strchr} @tab @code{unistr/u32-strchr}
+@item @code{u8_strrchr} @tab @code{unistr/u8-strrchr}
+@item @code{u16_strrchr} @tab @code{unistr/u16-strrchr}
+@item @code{u32_strrchr} @tab @code{unistr/u32-strrchr}
+@item @code{u8_strcspn} @tab @code{unistr/u8-strcspn}
+@item @code{u16_strcspn} @tab @code{unistr/u16-strcspn}
+@item @code{u32_strcspn} @tab @code{unistr/u32-strcspn}
+@item @code{u8_strspn} @tab @code{unistr/u8-strspn}
+@item @code{u16_strspn} @tab @code{unistr/u16-strspn}
+@item @code{u32_strspn} @tab @code{unistr/u32-strspn}
+@item @code{u8_strpbrk} @tab @code{unistr/u8-strpbrk}
+@item @code{u16_strpbrk} @tab @code{unistr/u16-strpbrk}
+@item @code{u32_strpbrk} @tab @code{unistr/u32-strpbrk}
+@item @code{u8_strstr} @tab @code{unistr/u8-strstr}
+@item @code{u16_strstr} @tab @code{unistr/u16-strstr}
+@item @code{u32_strstr} @tab @code{unistr/u32-strstr}
+@item @code{u8_startswith} @tab @code{unistr/u8-startswith}
+@item @code{u16_startswith} @tab @code{unistr/u16-startswith}
+@item @code{u32_startswith} @tab @code{unistr/u32-startswith}
+@item @code{u8_endswith} @tab @code{unistr/u8-endswith}
+@item @code{u16_endswith} @tab @code{unistr/u16-endswith}
+@item @code{u32_endswith} @tab @code{unistr/u32-endswith}
+@item @code{u8_strtok} @tab @code{unistr/u8-strtok}
+@item @code{u16_strtok} @tab @code{unistr/u16-strtok}
+@item @code{u32_strtok} @tab @code{unistr/u32-strtok}
+@end multitable
+
+@node <uniconv.h> modules
+@subsubsection Declarations in <uniconv.h>
+
+@mindex localcharset
+@mindex uniconv/u8-conv-from-enc
+@mindex uniconv/u16-conv-from-enc
+@mindex uniconv/u32-conv-from-enc
+@mindex uniconv/u8-conv-to-enc
+@mindex uniconv/u16-conv-to-enc
+@mindex uniconv/u32-conv-to-enc
+@mindex uniconv/u8-strconv-from-enc
+@mindex uniconv/u16-strconv-from-enc
+@mindex uniconv/u32-strconv-from-enc
+@mindex uniconv/u8-strconv-to-enc
+@mindex uniconv/u16-strconv-to-enc
+@mindex uniconv/u32-strconv-to-enc
+@mindex uniconv/u8-strconv-from-locale
+@mindex uniconv/u16-strconv-from-locale
+@mindex uniconv/u32-strconv-from-locale
+@mindex uniconv/u8-strconv-to-locale
+@mindex uniconv/u16-strconv-to-locale
+@mindex uniconv/u32-strconv-to-locale
+@multitable @columnfractions .4 .6
+@headitem Function @tab Module
+@item @code{locale_charset} @tab @code{localcharset}
+@item @code{u8_conv_from_encoding} @tab @code{uniconv/u8-conv-from-enc}
+@item @code{u16_conv_from_encoding} @tab @code{uniconv/u16-conv-from-enc}
+@item @code{u32_conv_from_encoding} @tab @code{uniconv/u32-conv-from-enc}
+@item @code{u8_conv_to_encoding} @tab @code{uniconv/u8-conv-to-enc}
+@item @code{u16_conv_to_encoding} @tab @code{uniconv/u16-conv-to-enc}
+@item @code{u32_conv_to_encoding} @tab @code{uniconv/u32-conv-to-enc}
+@item @code{u8_strconv_from_encoding} @tab @code{uniconv/u8-strconv-from-enc}
+@item @code{u16_strconv_from_encoding} @tab @code{uniconv/u16-strconv-from-enc}
+@item @code{u32_strconv_from_encoding} @tab @code{uniconv/u32-strconv-from-enc}
+@item @code{u8_strconv_to_encoding} @tab @code{uniconv/u8-strconv-to-enc}
+@item @code{u16_strconv_to_encoding} @tab @code{uniconv/u16-strconv-to-enc}
+@item @code{u32_strconv_to_encoding} @tab @code{uniconv/u32-strconv-to-enc}
+@item @code{u8_strconv_from_locale} @tab @code{uniconv/u8-strconv-from-locale}
+@item @code{u16_strconv_from_locale} @tab @code{uniconv/u16-strconv-from-locale}
+@item @code{u32_strconv_from_locale} @tab @code{uniconv/u32-strconv-from-locale}
+@item @code{u8_strconv_to_locale} @tab @code{uniconv/u8-strconv-to-locale}
+@item @code{u16_strconv_to_locale} @tab @code{uniconv/u16-strconv-to-locale}
+@item @code{u32_strconv_to_locale} @tab @code{uniconv/u32-strconv-to-locale}
+@end multitable
+
+@node <unistdio.h> modules
+@subsubsection Declarations in <unistdio.h>
+
+@mindex unistdio/ulc-sprintf
+@mindex unistdio/ulc-snprintf
+@mindex unistdio/ulc-asprintf
+@mindex unistdio/ulc-asnprintf
+@mindex unistdio/ulc-vsprintf
+@mindex unistdio/ulc-vsnprintf
+@mindex unistdio/ulc-vasprintf
+@mindex unistdio/ulc-vasnprintf
+@mindex unistdio/u8-sprintf
+@mindex unistdio/u8-snprintf
+@mindex unistdio/u8-asprintf
+@mindex unistdio/u8-asnprintf
+@mindex unistdio/u8-vsprintf
+@mindex unistdio/u8-vsnprintf
+@mindex unistdio/u8-vasprintf
+@mindex unistdio/u8-vasnprintf
+@mindex unistdio/u8-u8-sprintf
+@mindex unistdio/u8-u8-snprintf
+@mindex unistdio/u8-u8-asprintf
+@mindex unistdio/u8-u8-asnprintf
+@mindex unistdio/u8-u8-vsprintf
+@mindex unistdio/u8-u8-vsnprintf
+@mindex unistdio/u8-u8-vasprintf
+@mindex unistdio/u8-u8-vasnprintf
+@mindex unistdio/u16-sprintf
+@mindex unistdio/u16-snprintf
+@mindex unistdio/u16-asprintf
+@mindex unistdio/u16-asnprintf
+@mindex unistdio/u16-vsprintf
+@mindex unistdio/u16-vsnprintf
+@mindex unistdio/u16-vasprintf
+@mindex unistdio/u16-vasnprintf
+@mindex unistdio/u16-u16-sprintf
+@mindex unistdio/u16-u16-snprintf
+@mindex unistdio/u16-u16-asprintf
+@mindex unistdio/u16-u16-asnprintf
+@mindex unistdio/u16-u16-vsprintf
+@mindex unistdio/u16-u16-vsnprintf
+@mindex unistdio/u16-u16-vasprintf
+@mindex unistdio/u16-u16-vasnprintf
+@mindex unistdio/u32-sprintf
+@mindex unistdio/u32-snprintf
+@mindex unistdio/u32-asprintf
+@mindex unistdio/u32-asnprintf
+@mindex unistdio/u32-vsprintf
+@mindex unistdio/u32-vsnprintf
+@mindex unistdio/u32-vasprintf
+@mindex unistdio/u32-vasnprintf
+@mindex unistdio/u32-u32-sprintf
+@mindex unistdio/u32-u32-snprintf
+@mindex unistdio/u32-u32-asprintf
+@mindex unistdio/u32-u32-asnprintf
+@mindex unistdio/u32-u32-vsprintf
+@mindex unistdio/u32-u32-vsnprintf
+@mindex unistdio/u32-u32-vasprintf
+@mindex unistdio/u32-u32-vasnprintf
+@mindex unistdio/ulc-fprintf
+@mindex unistdio/ulc-vfprintf
+@multitable @columnfractions .4 .6
+@headitem Function @tab Module
+@item @code{ulc_sprintf} @tab @code{unistdio/ulc-sprintf}
+@item @code{ulc_snprintf} @tab @code{unistdio/ulc-snprintf}
+@item @code{ulc_asprintf} @tab @code{unistdio/ulc-asprintf}
+@item @code{ulc_asnprintf} @tab @code{unistdio/ulc-asnprintf}
+@item @code{ulc_vsprintf} @tab @code{unistdio/ulc-vsprintf}
+@item @code{ulc_vsnprintf} @tab @code{unistdio/ulc-vsnprintf}
+@item @code{ulc_vasprintf} @tab @code{unistdio/ulc-vasprintf}
+@item @code{ulc_vasnprintf} @tab @code{unistdio/ulc-vasnprintf}
+@item @code{u8_sprintf} @tab @code{unistdio/u8-sprintf}
+@item @code{u8_snprintf} @tab @code{unistdio/u8-snprintf}
+@item @code{u8_asprintf} @tab @code{unistdio/u8-asprintf}
+@item @code{u8_asnprintf} @tab @code{unistdio/u8-asnprintf}
+@item @code{u8_vsprintf} @tab @code{unistdio/u8-vsprintf}
+@item @code{u8_vsnprintf} @tab @code{unistdio/u8-vsnprintf}
+@item @code{u8_vasprintf} @tab @code{unistdio/u8-vasprintf}
+@item @code{u8_vasnprintf} @tab @code{unistdio/u8-vasnprintf}
+@item @code{u8_u8_sprintf} @tab @code{unistdio/u8-u8-sprintf}
+@item @code{u8_u8_snprintf} @tab @code{unistdio/u8-u8-snprintf}
+@item @code{u8_u8_asprintf} @tab @code{unistdio/u8-u8-asprintf}
+@item @code{u8_u8_asnprintf} @tab @code{unistdio/u8-u8-asnprintf}
+@item @code{u8_u8_vsprintf} @tab @code{unistdio/u8-u8-vsprintf}
+@item @code{u8_u8_vsnprintf} @tab @code{unistdio/u8-u8-vsnprintf}
+@item @code{u8_u8_vasprintf} @tab @code{unistdio/u8-u8-vasprintf}
+@item @code{u8_u8_vasnprintf} @tab @code{unistdio/u8-u8-vasnprintf}
+@item @code{u16_sprintf} @tab @code{unistdio/u16-sprintf}
+@item @code{u16_snprintf} @tab @code{unistdio/u16-snprintf}
+@item @code{u16_asprintf} @tab @code{unistdio/u16-asprintf}
+@item @code{u16_asnprintf} @tab @code{unistdio/u16-asnprintf}
+@item @code{u16_vsprintf} @tab @code{unistdio/u16-vsprintf}
+@item @code{u16_vsnprintf} @tab @code{unistdio/u16-vsnprintf}
+@item @code{u16_vasprintf} @tab @code{unistdio/u16-vasprintf}
+@item @code{u16_vasnprintf} @tab @code{unistdio/u16-vasnprintf}
+@item @code{u16_u16_sprintf} @tab @code{unistdio/u16-u16-sprintf}
+@item @code{u16_u16_snprintf} @tab @code{unistdio/u16-u16-snprintf}
+@item @code{u16_u16_asprintf} @tab @code{unistdio/u16-u16-asprintf}
+@item @code{u16_u16_asnprintf} @tab @code{unistdio/u16-u16-asnprintf}
+@item @code{u16_u16_vsprintf} @tab @code{unistdio/u16-u16-vsprintf}
+@item @code{u16_u16_vsnprintf} @tab @code{unistdio/u16-u16-vsnprintf}
+@item @code{u16_u16_vasprintf} @tab @code{unistdio/u16-u16-vasprintf}
+@item @code{u16_u16_vasnprintf} @tab @code{unistdio/u16-u16-vasnprintf}
+@item @code{u32_sprintf} @tab @code{unistdio/u32-sprintf}
+@item @code{u32_snprintf} @tab @code{unistdio/u32-snprintf}
+@item @code{u32_asprintf} @tab @code{unistdio/u32-asprintf}
+@item @code{u32_asnprintf} @tab @code{unistdio/u32-asnprintf}
+@item @code{u32_vsprintf} @tab @code{unistdio/u32-vsprintf}
+@item @code{u32_vsnprintf} @tab @code{unistdio/u32-vsnprintf}
+@item @code{u32_vasprintf} @tab @code{unistdio/u32-vasprintf}
+@item @code{u32_vasnprintf} @tab @code{unistdio/u32-vasnprintf}
+@item @code{u32_u32_sprintf} @tab @code{unistdio/u32-u32-sprintf}
+@item @code{u32_u32_snprintf} @tab @code{unistdio/u32-u32-snprintf}
+@item @code{u32_u32_asprintf} @tab @code{unistdio/u32-u32-asprintf}
+@item @code{u32_u32_asnprintf} @tab @code{unistdio/u32-u32-asnprintf}
+@item @code{u32_u32_vsprintf} @tab @code{unistdio/u32-u32-vsprintf}
+@item @code{u32_u32_vsnprintf} @tab @code{unistdio/u32-u32-vsnprintf}
+@item @code{u32_u32_vasprintf} @tab @code{unistdio/u32-u32-vasprintf}
+@item @code{u32_u32_vasnprintf} @tab @code{unistdio/u32-u32-vasnprintf}
+@item @code{ulc_fprintf} @tab @code{unistdio/ulc-fprintf}
+@item @code{ulc_vfprintf} @tab @code{unistdio/ulc-vfprintf}
+@end multitable
+
+@node <uniname.h> modules
+@subsubsection Declarations in <uniname.h>
+
+@mindex uniname/uniname
+@multitable @columnfractions .4 .6
+@headitem Function @tab Module
+@item @code{unicode_character_name} @tab @code{uniname/uniname}
+@item @code{unicode_name_character} @tab @code{uniname/uniname}
+@end multitable
+
+@node <unictype.h> modules
+@subsubsection Declarations in <unictype.h>
+
+@mindex unictype/category-L
+@mindex unictype/category-LC
+@mindex unictype/category-Lu
+@mindex unictype/category-Ll
+@mindex unictype/category-Lt
+@mindex unictype/category-Lm
+@mindex unictype/category-Lo
+@mindex unictype/category-M
+@mindex unictype/category-Mn
+@mindex unictype/category-Mc
+@mindex unictype/category-Me
+@mindex unictype/category-N
+@mindex unictype/category-Nd
+@mindex unictype/category-Nl
+@mindex unictype/category-No
+@mindex unictype/category-P
+@mindex unictype/category-Pc
+@mindex unictype/category-Pd
+@mindex unictype/category-Ps
+@mindex unictype/category-Pe
+@mindex unictype/category-Pi
+@mindex unictype/category-Pf
+@mindex unictype/category-Po
+@mindex unictype/category-S
+@mindex unictype/category-Sm
+@mindex unictype/category-Sc
+@mindex unictype/category-Sk
+@mindex unictype/category-So
+@mindex unictype/category-Z
+@mindex unictype/category-Zs
+@mindex unictype/category-Zl
+@mindex unictype/category-Zp
+@mindex unictype/category-C
+@mindex unictype/category-Cc
+@mindex unictype/category-Cf
+@mindex unictype/category-Cs
+@mindex unictype/category-Co
+@mindex unictype/category-Cn
+@mindex unictype/category-or
+@mindex unictype/category-and
+@mindex unictype/category-and-not
+@mindex unictype/category-name
+@mindex unictype/category-longname
+@mindex unictype/category-byname
+@mindex unictype/category-of
+@mindex unictype/category-test
+@mindex unictype/category-test-withtable
+@mindex unictype/combining-class-name
+@mindex unictype/combining-class-longname
+@mindex unictype/combining-class-byname
+@mindex unictype/combining-class
+@mindex unictype/bidiclass-name
+@mindex unictype/bidiclass-name
+@mindex unictype/bidiclass-longname
+@mindex unictype/bidiclass-byname
+@mindex unictype/bidiclass-byname
+@mindex unictype/bidiclass-of
+@mindex unictype/bidiclass-of
+@mindex unictype/bidiclass-test
+@mindex unictype/bidiclass-test
+@mindex unictype/decimal-digit
+@mindex unictype/digit
+@mindex unictype/numeric
+@mindex unictype/mirror
+@mindex unictype/joiningtype-name
+@mindex unictype/joiningtype-longname
+@mindex unictype/joiningtype-byname
+@mindex unictype/joiningtype-of
+@mindex unictype/joininggroup-name
+@mindex unictype/joininggroup-byname
+@mindex unictype/joininggroup-of
+@mindex unictype/property-white-space
+@mindex unictype/property-alphabetic
+@mindex unictype/property-other-alphabetic
+@mindex unictype/property-not-a-character
+@mindex unictype/property-default-ignorable-code-point
+@mindex unictype/property-other-default-ignorable-code-point
+@mindex unictype/property-deprecated
+@mindex unictype/property-logical-order-exception
+@mindex unictype/property-variation-selector
+@mindex unictype/property-private-use
+@mindex unictype/property-unassigned-code-value
+@mindex unictype/property-uppercase
+@mindex unictype/property-other-uppercase
+@mindex unictype/property-lowercase
+@mindex unictype/property-other-lowercase
+@mindex unictype/property-titlecase
+@mindex unictype/property-cased
+@mindex unictype/property-case-ignorable
+@mindex unictype/property-changes-when-lowercased
+@mindex unictype/property-changes-when-uppercased
+@mindex unictype/property-changes-when-titlecased
+@mindex unictype/property-changes-when-casefolded
+@mindex unictype/property-changes-when-casemapped
+@mindex unictype/property-soft-dotted
+@mindex unictype/property-id-start
+@mindex unictype/property-other-id-start
+@mindex unictype/property-id-continue
+@mindex unictype/property-other-id-continue
+@mindex unictype/property-xid-start
+@mindex unictype/property-xid-continue
+@mindex unictype/property-id-compat-math-start
+@mindex unictype/property-id-compat-math-continue
+@mindex unictype/property-pattern-white-space
+@mindex unictype/property-pattern-syntax
+@mindex unictype/property-join-control
+@mindex unictype/property-grapheme-base
+@mindex unictype/property-grapheme-extend
+@mindex unictype/property-other-grapheme-extend
+@mindex unictype/property-grapheme-link
+@mindex unictype/property-modifier-combining-mark
+@mindex unictype/property-bidi-control
+@mindex unictype/property-bidi-left-to-right
+@mindex unictype/property-bidi-hebrew-right-to-left
+@mindex unictype/property-bidi-arabic-right-to-left
+@mindex unictype/property-bidi-european-digit
+@mindex unictype/property-bidi-eur-num-separator
+@mindex unictype/property-bidi-eur-num-terminator
+@mindex unictype/property-bidi-arabic-digit
+@mindex unictype/property-bidi-common-separator
+@mindex unictype/property-bidi-block-separator
+@mindex unictype/property-bidi-segment-separator
+@mindex unictype/property-bidi-whitespace
+@mindex unictype/property-bidi-non-spacing-mark
+@mindex unictype/property-bidi-boundary-neutral
+@mindex unictype/property-bidi-pdf
+@mindex unictype/property-bidi-embedding-or-override
+@mindex unictype/property-bidi-other-neutral
+@mindex unictype/property-hex-digit
+@mindex unictype/property-ascii-hex-digit
+@mindex unictype/property-ideographic
+@mindex unictype/property-unified-ideograph
+@mindex unictype/property-radical
+@mindex unictype/property-ids-unary-operator
+@mindex unictype/property-ids-binary-operator
+@mindex unictype/property-ids-trinary-operator
+@mindex unictype/property-emoji
+@mindex unictype/property-emoji-presentation
+@mindex unictype/property-emoji-modifier
+@mindex unictype/property-emoji-modifier-base
+@mindex unictype/property-emoji-component
+@mindex unictype/property-extended-pictographic
+@mindex unictype/property-zero-width
+@mindex unictype/property-space
+@mindex unictype/property-non-break
+@mindex unictype/property-iso-control
+@mindex unictype/property-format-control
+@mindex unictype/property-prepended-concatenation-mark
+@mindex unictype/property-dash
+@mindex unictype/property-hyphen
+@mindex unictype/property-punctuation
+@mindex unictype/property-line-separator
+@mindex unictype/property-paragraph-separator
+@mindex unictype/property-quotation-mark
+@mindex unictype/property-sentence-terminal
+@mindex unictype/property-terminal-punctuation
+@mindex unictype/property-currency-symbol
+@mindex unictype/property-math
+@mindex unictype/property-other-math
+@mindex unictype/property-paired-punctuation
+@mindex unictype/property-left-of-pair
+@mindex unictype/property-combining
+@mindex unictype/property-composite
+@mindex unictype/property-decimal-digit
+@mindex unictype/property-numeric
+@mindex unictype/property-diacritic
+@mindex unictype/property-extender
+@mindex unictype/property-ignorable-control
+@mindex unictype/property-regional-indicator
+@mindex unictype/property-byname
+@mindex unictype/base
+@mindex unictype/property-test
+@mindex unictype/incb-name
+@mindex unictype/incb-byname
+@mindex unictype/incb-of
+@mindex unictype/scripts
+@mindex unictype/scripts
+@mindex unictype/scripts
+@mindex unictype/scripts
+@mindex unictype/block-of
+@mindex unictype/block-test
+@mindex unictype/block-list
+@mindex unictype/syntax-c-whitespace
+@mindex unictype/syntax-java-whitespace
+@mindex unictype/syntax-c-ident
+@mindex unictype/syntax-java-ident
+@mindex unictype/ctype-alnum
+@mindex unictype/ctype-alpha
+@mindex unictype/ctype-cntrl
+@mindex unictype/ctype-digit
+@mindex unictype/ctype-graph
+@mindex unictype/ctype-lower
+@mindex unictype/ctype-print
+@mindex unictype/ctype-punct
+@mindex unictype/ctype-space
+@mindex unictype/ctype-upper
+@mindex unictype/ctype-xdigit
+@mindex unictype/ctype-blank
+@multitable @columnfractions .5 .5
+@headitem Function or constant @tab Module
+@item @code{UC_CATEGORY_L} @tab @code{unictype/category-L}
+@item @code{UC_CATEGORY_LC} @tab @code{unictype/category-LC}
+@item @code{UC_CATEGORY_Lu} @tab @code{unictype/category-Lu}
+@item @code{UC_CATEGORY_Ll} @tab @code{unictype/category-Ll}
+@item @code{UC_CATEGORY_Lt} @tab @code{unictype/category-Lt}
+@item @code{UC_CATEGORY_Lm} @tab @code{unictype/category-Lm}
+@item @code{UC_CATEGORY_Lo} @tab @code{unictype/category-Lo}
+@item @code{UC_CATEGORY_M} @tab @code{unictype/category-M}
+@item @code{UC_CATEGORY_Mn} @tab @code{unictype/category-Mn}
+@item @code{UC_CATEGORY_Mc} @tab @code{unictype/category-Mc}
+@item @code{UC_CATEGORY_Me} @tab @code{unictype/category-Me}
+@item @code{UC_CATEGORY_N} @tab @code{unictype/category-N}
+@item @code{UC_CATEGORY_Nd} @tab @code{unictype/category-Nd}
+@item @code{UC_CATEGORY_Nl} @tab @code{unictype/category-Nl}
+@item @code{UC_CATEGORY_No} @tab @code{unictype/category-No}
+@item @code{UC_CATEGORY_P} @tab @code{unictype/category-P}
+@item @code{UC_CATEGORY_Pc} @tab @code{unictype/category-Pc}
+@item @code{UC_CATEGORY_Pd} @tab @code{unictype/category-Pd}
+@item @code{UC_CATEGORY_Ps} @tab @code{unictype/category-Ps}
+@item @code{UC_CATEGORY_Pe} @tab @code{unictype/category-Pe}
+@item @code{UC_CATEGORY_Pi} @tab @code{unictype/category-Pi}
+@item @code{UC_CATEGORY_Pf} @tab @code{unictype/category-Pf}
+@item @code{UC_CATEGORY_Po} @tab @code{unictype/category-Po}
+@item @code{UC_CATEGORY_S} @tab @code{unictype/category-S}
+@item @code{UC_CATEGORY_Sm} @tab @code{unictype/category-Sm}
+@item @code{UC_CATEGORY_Sc} @tab @code{unictype/category-Sc}
+@item @code{UC_CATEGORY_Sk} @tab @code{unictype/category-Sk}
+@item @code{UC_CATEGORY_So} @tab @code{unictype/category-So}
+@item @code{UC_CATEGORY_Z} @tab @code{unictype/category-Z}
+@item @code{UC_CATEGORY_Zs} @tab @code{unictype/category-Zs}
+@item @code{UC_CATEGORY_Zl} @tab @code{unictype/category-Zl}
+@item @code{UC_CATEGORY_Zp} @tab @code{unictype/category-Zp}
+@item @code{UC_CATEGORY_C} @tab @code{unictype/category-C}
+@item @code{UC_CATEGORY_Cc} @tab @code{unictype/category-Cc}
+@item @code{UC_CATEGORY_Cf} @tab @code{unictype/category-Cf}
+@item @code{UC_CATEGORY_Cs} @tab @code{unictype/category-Cs}
+@item @code{UC_CATEGORY_Co} @tab @code{unictype/category-Co}
+@item @code{UC_CATEGORY_Cn} @tab @code{unictype/category-Cn}
+@item @code{uc_general_category_or} @tab @code{unictype/category-or}
+@item @code{uc_general_category_and} @tab @code{unictype/category-and}
+@item @code{uc_general_category_and_not} @tab @code{unictype/category-and-not}
+@item @code{uc_general_category_name} @tab @code{unictype/category-name}
+@item @code{uc_general_category_long_name} @tab @code{unictype/category-longname}
+@item @code{uc_general_category_byname} @tab @code{unictype/category-byname}
+@item @code{uc_general_category} @tab @code{unictype/category-of}
+@item @code{uc_is_general_category} @tab @code{unictype/category-test}
+@item @code{uc_is_general_category_withtable} @tab @code{unictype/category-test-withtable}
+@item @code{uc_combining_class_name} @tab @code{unictype/combining-class-name}
+@item @code{uc_combining_class_long_name} @tab @code{unictype/combining-class-longname}
+@item @code{uc_combining_class_byname} @tab @code{unictype/combining-class-byname}
+@item @code{uc_combining_class} @tab @code{unictype/combining-class}
+@item @code{uc_bidi_class_name} @tab @code{unictype/bidiclass-name}
+@item @code{uc_bidi_category_name} @tab @code{unictype/bidiclass-name}
+@item @code{uc_bidi_class_long_name} @tab @code{unictype/bidiclass-longname}
+@item @code{uc_bidi_class_byname} @tab @code{unictype/bidiclass-byname}
+@item @code{uc_bidi_category_byname} @tab @code{unictype/bidiclass-byname}
+@item @code{uc_bidi_class} @tab @code{unictype/bidiclass-of}
+@item @code{uc_bidi_category} @tab @code{unictype/bidiclass-of}
+@item @code{uc_is_bidi_class} @tab @code{unictype/bidiclass-test}
+@item @code{uc_is_bidi_category} @tab @code{unictype/bidiclass-test}
+@item @code{uc_decimal_value} @tab @code{unictype/decimal-digit}
+@item @code{uc_digit_value} @tab @code{unictype/digit}
+@item @code{uc_numeric_value} @tab @code{unictype/numeric}
+@item @code{uc_mirror_char} @tab @code{unictype/mirror}
+@item @code{uc_joining_type_name} @tab @code{unictype/joiningtype-name}
+@item @code{uc_joining_type_long_name} @tab @code{unictype/joiningtype-longname}
+@item @code{uc_joining_type_byname} @tab @code{unictype/joiningtype-byname}
+@item @code{uc_joining_type} @tab @code{unictype/joiningtype-of}
+@item @code{uc_joining_group_name} @tab @code{unictype/joininggroup-name}
+@item @code{uc_joining_group_byname} @tab @code{unictype/joininggroup-byname}
+@item @code{uc_joining_group} @tab @code{unictype/joininggroup-of}
+@item @code{UC_PROPERTY_WHITE_SPACE} @tab @code{unictype/property-white-space}
+@item @code{UC_PROPERTY_ALPHABETIC} @tab @code{unictype/property-alphabetic}
+@item @code{UC_PROPERTY_OTHER_ALPHABETIC} @tab @code{unictype/property-other-alphabetic}
+@item @code{UC_PROPERTY_NOT_A_CHARACTER} @tab @code{unictype/property-not-a-character}
+@item @code{UC_PROPERTY_DEFAULT_IGNORABLE_CODE_POINT} @tab @code{unictype/property-default-ignorable-code-point}
+@item @code{UC_PROPERTY_OTHER_DEFAULT_IGNORABLE_CODE_POINT} @tab @code{unictype/property-other-default-ignorable-code-point}
+@item @code{UC_PROPERTY_DEPRECATED} @tab @code{unictype/property-deprecated}
+@item @code{UC_PROPERTY_LOGICAL_ORDER_EXCEPTION} @tab @code{unictype/property-logical-order-exception}
+@item @code{UC_PROPERTY_VARIATION_SELECTOR} @tab @code{unictype/property-variation-selector}
+@item @code{UC_PROPERTY_PRIVATE_USE} @tab @code{unictype/property-private-use}
+@item @code{UC_PROPERTY_UNASSIGNED_CODE_VALUE} @tab @code{unictype/property-unassigned-code-value}
+@item @code{UC_PROPERTY_UPPERCASE} @tab @code{unictype/property-uppercase}
+@item @code{UC_PROPERTY_OTHER_UPPERCASE} @tab @code{unictype/property-other-uppercase}
+@item @code{UC_PROPERTY_LOWERCASE} @tab @code{unictype/property-lowercase}
+@item @code{UC_PROPERTY_OTHER_LOWERCASE} @tab @code{unictype/property-other-lowercase}
+@item @code{UC_PROPERTY_TITLECASE} @tab @code{unictype/property-titlecase}
+@item @code{UC_PROPERTY_CASED} @tab @code{unictype/property-cased}
+@item @code{UC_PROPERTY_CASE_IGNORABLE} @tab @code{unictype/property-case-ignorable}
+@item @code{UC_PROPERTY_CHANGES_WHEN_LOWERCASED} @tab @code{unictype/property-changes-when-lowercased}
+@item @code{UC_PROPERTY_CHANGES_WHEN_UPPERCASED} @tab @code{unictype/property-changes-when-uppercased}
+@item @code{UC_PROPERTY_CHANGES_WHEN_TITLECASED} @tab @code{unictype/property-changes-when-titlecased}
+@item @code{UC_PROPERTY_CHANGES_WHEN_CASEFOLDED} @tab @code{unictype/property-changes-when-casefolded}
+@item @code{UC_PROPERTY_CHANGES_WHEN_CASEMAPPED} @tab @code{unictype/property-changes-when-casemapped}
+@item @code{UC_PROPERTY_SOFT_DOTTED} @tab @code{unictype/property-soft-dotted}
+@item @code{UC_PROPERTY_ID_START} @tab @code{unictype/property-id-start}
+@item @code{UC_PROPERTY_OTHER_ID_START} @tab @code{unictype/property-other-id-start}
+@item @code{UC_PROPERTY_ID_CONTINUE} @tab @code{unictype/property-id-continue}
+@item @code{UC_PROPERTY_OTHER_ID_CONTINUE} @tab @code{unictype/property-other-id-continue}
+@item @code{UC_PROPERTY_XID_START} @tab @code{unictype/property-xid-start}
+@item @code{UC_PROPERTY_XID_CONTINUE} @tab @code{unictype/property-xid-continue}
+@item @code{UC_PROPERTY_ID_COMPAT_MATH_START} @tab @code{unictype/property-id-compat-math-start}
+@item @code{UC_PROPERTY_ID_COMPAT_MATH_CONTINUE} @tab @code{unictype/property-id-compat-math-continue}
+@item @code{UC_PROPERTY_PATTERN_WHITE_SPACE} @tab @code{unictype/property-pattern-white-space}
+@item @code{UC_PROPERTY_PATTERN_SYNTAX} @tab @code{unictype/property-pattern-syntax}
+@item @code{UC_PROPERTY_JOIN_CONTROL} @tab @code{unictype/property-join-control}
+@item @code{UC_PROPERTY_GRAPHEME_BASE} @tab @code{unictype/property-grapheme-base}
+@item @code{UC_PROPERTY_GRAPHEME_EXTEND} @tab @code{unictype/property-grapheme-extend}
+@item @code{UC_PROPERTY_OTHER_GRAPHEME_EXTEND} @tab @code{unictype/property-other-grapheme-extend}
+@item @code{UC_PROPERTY_GRAPHEME_LINK} @tab @code{unictype/property-grapheme-link}
+@item @code{UC_PROPERTY_MODIFIER_COMBINING_MARK} @tab @code{unictype/property-modifier-combining-mark}
+@item @code{UC_PROPERTY_BIDI_CONTROL} @tab @code{unictype/property-bidi-control}
+@item @code{UC_PROPERTY_BIDI_LEFT_TO_RIGHT} @tab @code{unictype/property-bidi-left-to-right}
+@item @code{UC_PROPERTY_BIDI_HEBREW_RIGHT_TO_LEFT} @tab @code{unictype/property-bidi-hebrew-right-to-left}
+@item @code{UC_PROPERTY_BIDI_ARABIC_RIGHT_TO_LEFT} @tab @code{unictype/property-bidi-arabic-right-to-left}
+@item @code{UC_PROPERTY_BIDI_EUROPEAN_DIGIT} @tab @code{unictype/property-bidi-european-digit}
+@item @code{UC_PROPERTY_BIDI_EUR_NUM_SEPARATOR} @tab @code{unictype/property-bidi-eur-num-separator}
+@item @code{UC_PROPERTY_BIDI_EUR_NUM_TERMINATOR} @tab @code{unictype/property-bidi-eur-num-terminator}
+@item @code{UC_PROPERTY_BIDI_ARABIC_DIGIT} @tab @code{unictype/property-bidi-arabic-digit}
+@item @code{UC_PROPERTY_BIDI_COMMON_SEPARATOR} @tab @code{unictype/property-bidi-common-separator}
+@item @code{UC_PROPERTY_BIDI_BLOCK_SEPARATOR} @tab @code{unictype/property-bidi-block-separator}
+@item @code{UC_PROPERTY_BIDI_SEGMENT_SEPARATOR} @tab @code{unictype/property-bidi-segment-separator}
+@item @code{UC_PROPERTY_BIDI_WHITESPACE} @tab @code{unictype/property-bidi-whitespace}
+@item @code{UC_PROPERTY_BIDI_NON_SPACING_MARK} @tab @code{unictype/property-bidi-non-spacing-mark}
+@item @code{UC_PROPERTY_BIDI_BOUNDARY_NEUTRAL} @tab @code{unictype/property-bidi-boundary-neutral}
+@item @code{UC_PROPERTY_BIDI_PDF} @tab @code{unictype/property-bidi-pdf}
+@item @code{UC_PROPERTY_BIDI_EMBEDDING_OR_OVERRIDE} @tab @code{unictype/property-bidi-embedding-or-override}
+@item @code{UC_PROPERTY_BIDI_OTHER_NEUTRAL} @tab @code{unictype/property-bidi-other-neutral}
+@item @code{UC_PROPERTY_HEX_DIGIT} @tab @code{unictype/property-hex-digit}
+@item @code{UC_PROPERTY_ASCII_HEX_DIGIT} @tab @code{unictype/property-ascii-hex-digit}
+@item @code{UC_PROPERTY_IDEOGRAPHIC} @tab @code{unictype/property-ideographic}
+@item @code{UC_PROPERTY_UNIFIED_IDEOGRAPH} @tab @code{unictype/property-unified-ideograph}
+@item @code{UC_PROPERTY_RADICAL} @tab @code{unictype/property-radical}
+@item @code{UC_PROPERTY_IDS_UNARY_OPERATOR} @tab @code{unictype/property-ids-unary-operator}
+@item @code{UC_PROPERTY_IDS_BINARY_OPERATOR} @tab @code{unictype/property-ids-binary-operator}
+@item @code{UC_PROPERTY_IDS_TRINARY_OPERATOR} @tab @code{unictype/property-ids-trinary-operator}
+@item @code{UC_PROPERTY_EMOJI} @tab @code{unictype/property-emoji}
+@item @code{UC_PROPERTY_EMOJI_PRESENTATION} @tab @code{unictype/property-emoji-presentation}
+@item @code{UC_PROPERTY_EMOJI_MODIFIER} @tab @code{unictype/property-emoji-modifier}
+@item @code{UC_PROPERTY_EMOJI_MODIFIER_BASE} @tab @code{unictype/property-emoji-modifier-base}
+@item @code{UC_PROPERTY_EMOJI_COMPONENT} @tab @code{unictype/property-emoji-component}
+@item @code{UC_PROPERTY_EXTENDED_PICTOGRAPHIC} @tab @code{unictype/property-extended-pictographic}
+@item @code{UC_PROPERTY_ZERO_WIDTH} @tab @code{unictype/property-zero-width}
+@item @code{UC_PROPERTY_SPACE} @tab @code{unictype/property-space}
+@item @code{UC_PROPERTY_NON_BREAK} @tab @code{unictype/property-non-break}
+@item @code{UC_PROPERTY_ISO_CONTROL} @tab @code{unictype/property-iso-control}
+@item @code{UC_PROPERTY_FORMAT_CONTROL} @tab @code{unictype/property-format-control}
+@item @code{UC_PROPERTY_PREPENDED_CONCATENATION_MARK} @tab @code{unictype/property-prepended-concatenation-mark}
+@item @code{UC_PROPERTY_DASH} @tab @code{unictype/property-dash}
+@item @code{UC_PROPERTY_HYPHEN} @tab @code{unictype/property-hyphen}
+@item @code{UC_PROPERTY_PUNCTUATION} @tab @code{unictype/property-punctuation}
+@item @code{UC_PROPERTY_LINE_SEPARATOR} @tab @code{unictype/property-line-separator}
+@item @code{UC_PROPERTY_PARAGRAPH_SEPARATOR} @tab @code{unictype/property-paragraph-separator}
+@item @code{UC_PROPERTY_QUOTATION_MARK} @tab @code{unictype/property-quotation-mark}
+@item @code{UC_PROPERTY_SENTENCE_TERMINAL} @tab @code{unictype/property-sentence-terminal}
+@item @code{UC_PROPERTY_TERMINAL_PUNCTUATION} @tab @code{unictype/property-terminal-punctuation}
+@item @code{UC_PROPERTY_CURRENCY_SYMBOL} @tab @code{unictype/property-currency-symbol}
+@item @code{UC_PROPERTY_MATH} @tab @code{unictype/property-math}
+@item @code{UC_PROPERTY_OTHER_MATH} @tab @code{unictype/property-other-math}
+@item @code{UC_PROPERTY_PAIRED_PUNCTUATION} @tab @code{unictype/property-paired-punctuation}
+@item @code{UC_PROPERTY_LEFT_OF_PAIR} @tab @code{unictype/property-left-of-pair}
+@item @code{UC_PROPERTY_COMBINING} @tab @code{unictype/property-combining}
+@item @code{UC_PROPERTY_COMPOSITE} @tab @code{unictype/property-composite}
+@item @code{UC_PROPERTY_DECIMAL_DIGIT} @tab @code{unictype/property-decimal-digit}
+@item @code{UC_PROPERTY_NUMERIC} @tab @code{unictype/property-numeric}
+@item @code{UC_PROPERTY_DIACRITIC} @tab @code{unictype/property-diacritic}
+@item @code{UC_PROPERTY_EXTENDER} @tab @code{unictype/property-extender}
+@item @code{UC_PROPERTY_IGNORABLE_CONTROL} @tab @code{unictype/property-ignorable-control}
+@item @code{UC_PROPERTY_REGIONAL_INDICATOR} @tab @code{unictype/property-regional-indicator}
+@item @code{uc_property_byname} @tab @code{unictype/property-byname}
+@item @code{uc_property_is_valid} @tab @code{unictype/base}
+@item @code{uc_is_property} @tab @code{unictype/property-test}
+@item @code{uc_is_property_white_space} @tab @code{unictype/property-white-space}
+@item @code{uc_is_property_alphabetic} @tab @code{unictype/property-alphabetic}
+@item @code{uc_is_property_other_alphabetic} @tab @code{unictype/property-other-alphabetic}
+@item @code{uc_is_property_not_a_character} @tab @code{unictype/property-not-a-character}
+@item @code{uc_is_property_default_ignorable_code_point} @tab @code{unictype/property-default-ignorable-code-point}
+@item @code{uc_is_property_other_default_ignorable_code_point} @tab @code{unictype/property-other-default-ignorable-code-point}
+@item @code{uc_is_property_deprecated} @tab @code{unictype/property-deprecated}
+@item @code{uc_is_property_logical_order_exception} @tab @code{unictype/property-logical-order-exception}
+@item @code{uc_is_property_variation_selector} @tab @code{unictype/property-variation-selector}
+@item @code{uc_is_property_private_use} @tab @code{unictype/property-private-use}
+@item @code{uc_is_property_unassigned_code_value} @tab @code{unictype/property-unassigned-code-value}
+@item @code{uc_is_property_uppercase} @tab @code{unictype/property-uppercase}
+@item @code{uc_is_property_other_uppercase} @tab @code{unictype/property-other-uppercase}
+@item @code{uc_is_property_lowercase} @tab @code{unictype/property-lowercase}
+@item @code{uc_is_property_other_lowercase} @tab @code{unictype/property-other-lowercase}
+@item @code{uc_is_property_titlecase} @tab @code{unictype/property-titlecase}
+@item @code{uc_is_property_cased} @tab @code{unictype/property-cased}
+@item @code{uc_is_property_case_ignorable} @tab @code{unictype/property-case-ignorable}
+@item @code{uc_is_property_changes_when_lowercased} @tab @code{unictype/property-changes-when-lowercased}
+@item @code{uc_is_property_changes_when_uppercased} @tab @code{unictype/property-changes-when-uppercased}
+@item @code{uc_is_property_changes_when_titlecased} @tab @code{unictype/property-changes-when-titlecased}
+@item @code{uc_is_property_changes_when_casefolded} @tab @code{unictype/property-changes-when-casefolded}
+@item @code{uc_is_property_changes_when_casemapped} @tab @code{unictype/property-changes-when-casemapped}
+@item @code{uc_is_property_soft_dotted} @tab @code{unictype/property-soft-dotted}
+@item @code{uc_is_property_id_start} @tab @code{unictype/property-id-start}
+@item @code{uc_is_property_other_id_start} @tab @code{unictype/property-other-id-start}
+@item @code{uc_is_property_id_continue} @tab @code{unictype/property-id-continue}
+@item @code{uc_is_property_other_id_continue} @tab @code{unictype/property-other-id-continue}
+@item @code{uc_is_property_xid_start} @tab @code{unictype/property-xid-start}
+@item @code{uc_is_property_xid_continue} @tab @code{unictype/property-xid-continue}
+@item @code{uc_is_property_id_compat_math_start} @tab @code{unictype/property-id-compat-math-start}
+@item @code{uc_is_property_id_compat_math_continue} @tab @code{unictype/property-id-compat-math-continue}
+@item @code{uc_is_property_pattern_white_space} @tab @code{unictype/property-pattern-white-space}
+@item @code{uc_is_property_pattern_syntax} @tab @code{unictype/property-pattern-syntax}
+@item @code{uc_is_property_join_control} @tab @code{unictype/property-join-control}
+@item @code{uc_is_property_grapheme_base} @tab @code{unictype/property-grapheme-base}
+@item @code{uc_is_property_grapheme_extend} @tab @code{unictype/property-grapheme-extend}
+@item @code{uc_is_property_other_grapheme_extend} @tab @code{unictype/property-other-grapheme-extend}
+@item @code{uc_is_property_grapheme_link} @tab @code{unictype/property-grapheme-link}
+@item @code{uc_is_property_modifier_combining_mark} @tab @code{unictype/property-modifier-combining-mark}
+@item @code{uc_is_property_bidi_control} @tab @code{unictype/property-bidi-control}
+@item @code{uc_is_property_bidi_left_to_right} @tab @code{unictype/property-bidi-left-to-right}
+@item @code{uc_is_property_bidi_hebrew_right_to_left} @tab @code{unictype/property-bidi-hebrew-right-to-left}
+@item @code{uc_is_property_bidi_arabic_right_to_left} @tab @code{unictype/property-bidi-arabic-right-to-left}
+@item @code{uc_is_property_bidi_european_digit} @tab @code{unictype/property-bidi-european-digit}
+@item @code{uc_is_property_bidi_eur_num_separator} @tab @code{unictype/property-bidi-eur-num-separator}
+@item @code{uc_is_property_bidi_eur_num_terminator} @tab @code{unictype/property-bidi-eur-num-terminator}
+@item @code{uc_is_property_bidi_arabic_digit} @tab @code{unictype/property-bidi-arabic-digit}
+@item @code{uc_is_property_bidi_common_separator} @tab @code{unictype/property-bidi-common-separator}
+@item @code{uc_is_property_bidi_block_separator} @tab @code{unictype/property-bidi-block-separator}
+@item @code{uc_is_property_bidi_segment_separator} @tab @code{unictype/property-bidi-segment-separator}
+@item @code{uc_is_property_bidi_whitespace} @tab @code{unictype/property-bidi-whitespace}
+@item @code{uc_is_property_bidi_non_spacing_mark} @tab @code{unictype/property-bidi-non-spacing-mark}
+@item @code{uc_is_property_bidi_boundary_neutral} @tab @code{unictype/property-bidi-boundary-neutral}
+@item @code{uc_is_property_bidi_pdf} @tab @code{unictype/property-bidi-pdf}
+@item @code{uc_is_property_bidi_embedding_or_override} @tab @code{unictype/property-bidi-embedding-or-override}
+@item @code{uc_is_property_bidi_other_neutral} @tab @code{unictype/property-bidi-other-neutral}
+@item @code{uc_is_property_hex_digit} @tab @code{unictype/property-hex-digit}
+@item @code{uc_is_property_ascii_hex_digit} @tab @code{unictype/property-ascii-hex-digit}
+@item @code{uc_is_property_ideographic} @tab @code{unictype/property-ideographic}
+@item @code{uc_is_property_unified_ideograph} @tab @code{unictype/property-unified-ideograph}
+@item @code{uc_is_property_radical} @tab @code{unictype/property-radical}
+@item @code{uc_is_property_ids_unary_operator} @tab @code{unictype/property-ids-unary-operator}
+@item @code{uc_is_property_ids_binary_operator} @tab @code{unictype/property-ids-binary-operator}
+@item @code{uc_is_property_ids_trinary_operator} @tab @code{unictype/property-ids-trinary-operator}
+@item @code{uc_is_property_emoji} @tab @code{unictype/property-emoji}
+@item @code{uc_is_property_emoji_presentation} @tab @code{unictype/property-emoji-presentation}
+@item @code{uc_is_property_emoji_modifier} @tab @code{unictype/property-emoji-modifier}
+@item @code{uc_is_property_emoji_modifier_base} @tab @code{unictype/property-emoji-modifier-base}
+@item @code{uc_is_property_emoji_component} @tab @code{unictype/property-emoji-component}
+@item @code{uc_is_property_extended_pictographic} @tab @code{unictype/property-extended-pictographic}
+@item @code{uc_is_property_zero_width} @tab @code{unictype/property-zero-width}
+@item @code{uc_is_property_space} @tab @code{unictype/property-space}
+@item @code{uc_is_property_non_break} @tab @code{unictype/property-non-break}
+@item @code{uc_is_property_iso_control} @tab @code{unictype/property-iso-control}
+@item @code{uc_is_property_format_control} @tab @code{unictype/property-format-control}
+@item @code{uc_is_property_prepended_concatenation_mark} @tab @code{unictype/property-prepended-concatenation-mark}
+@item @code{uc_is_property_dash} @tab @code{unictype/property-dash}
+@item @code{uc_is_property_hyphen} @tab @code{unictype/property-hyphen}
+@item @code{uc_is_property_punctuation} @tab @code{unictype/property-punctuation}
+@item @code{uc_is_property_line_separator} @tab @code{unictype/property-line-separator}
+@item @code{uc_is_property_paragraph_separator} @tab @code{unictype/property-paragraph-separator}
+@item @code{uc_is_property_quotation_mark} @tab @code{unictype/property-quotation-mark}
+@item @code{uc_is_property_sentence_terminal} @tab @code{unictype/property-sentence-terminal}
+@item @code{uc_is_property_terminal_punctuation} @tab @code{unictype/property-terminal-punctuation}
+@item @code{uc_is_property_currency_symbol} @tab @code{unictype/property-currency-symbol}
+@item @code{uc_is_property_math} @tab @code{unictype/property-math}
+@item @code{uc_is_property_other_math} @tab @code{unictype/property-other-math}
+@item @code{uc_is_property_paired_punctuation} @tab @code{unictype/property-paired-punctuation}
+@item @code{uc_is_property_left_of_pair} @tab @code{unictype/property-left-of-pair}
+@item @code{uc_is_property_combining} @tab @code{unictype/property-combining}
+@item @code{uc_is_property_composite} @tab @code{unictype/property-composite}
+@item @code{uc_is_property_decimal_digit} @tab @code{unictype/property-decimal-digit}
+@item @code{uc_is_property_numeric} @tab @code{unictype/property-numeric}
+@item @code{uc_is_property_diacritic} @tab @code{unictype/property-diacritic}
+@item @code{uc_is_property_extender} @tab @code{unictype/property-extender}
+@item @code{uc_is_property_ignorable_control} @tab @code{unictype/property-ignorable-control}
+@item @code{uc_is_property_regional_indicator} @tab @code{unictype/property-regional-indicator}
+@item @code{uc_indic_conjunct_break_name} @tab @code{unictype/incb-name}
+@item @code{uc_indic_conjunct_break_byname} @tab @code{unictype/incb-byname}
+@item @code{uc_indic_conjunct_break} @tab @code{unictype/incb-of}
+@item @code{uc_script} @tab @code{unictype/scripts}
+@item @code{uc_script_byname} @tab @code{unictype/scripts}
+@item @code{uc_is_script} @tab @code{unictype/scripts}
+@item @code{uc_all_scripts} @tab @code{unictype/scripts}
+@item @code{uc_block} @tab @code{unictype/block-of}
+@item @code{uc_is_block} @tab @code{unictype/block-test}
+@item @code{uc_all_blocks} @tab @code{unictype/block-list}
+@item @code{uc_is_c_whitespace} @tab @code{unictype/syntax-c-whitespace}
+@item @code{uc_is_java_whitespace} @tab @code{unictype/syntax-java-whitespace}
+@item @code{uc_c_ident_category} @tab @code{unictype/syntax-c-ident}
+@item @code{uc_java_ident_category} @tab @code{unictype/syntax-java-ident}
+@item @code{uc_is_alnum} @tab @code{unictype/ctype-alnum}
+@item @code{uc_is_alpha} @tab @code{unictype/ctype-alpha}
+@item @code{uc_is_cntrl} @tab @code{unictype/ctype-cntrl}
+@item @code{uc_is_digit} @tab @code{unictype/ctype-digit}
+@item @code{uc_is_graph} @tab @code{unictype/ctype-graph}
+@item @code{uc_is_lower} @tab @code{unictype/ctype-lower}
+@item @code{uc_is_print} @tab @code{unictype/ctype-print}
+@item @code{uc_is_punct} @tab @code{unictype/ctype-punct}
+@item @code{uc_is_space} @tab @code{unictype/ctype-space}
+@item @code{uc_is_upper} @tab @code{unictype/ctype-upper}
+@item @code{uc_is_xdigit} @tab @code{unictype/ctype-xdigit}
+@item @code{uc_is_blank} @tab @code{unictype/ctype-blank}
+@end multitable
+
+@node <uniwidth.h> modules
+@subsubsection Declarations in <uniwidth.h>
+
+@mindex uniwidth/width
+@mindex uniwidth/u8-width
+@mindex uniwidth/u16-width
+@mindex uniwidth/u32-width
+@mindex uniwidth/u8-strwidth
+@mindex uniwidth/u16-strwidth
+@mindex uniwidth/u32-strwidth
+@multitable @columnfractions .4 .6
+@headitem Function @tab Module
+@item @code{uc_width} @tab @code{uniwidth/width}
+@item @code{u8_width} @tab @code{uniwidth/u8-width}
+@item @code{u16_width} @tab @code{uniwidth/u16-width}
+@item @code{u32_width} @tab @code{uniwidth/u32-width}
+@item @code{u8_strwidth} @tab @code{uniwidth/u8-strwidth}
+@item @code{u16_strwidth} @tab @code{uniwidth/u16-strwidth}
+@item @code{u32_strwidth} @tab @code{uniwidth/u32-strwidth}
+@end multitable
+
+@node <unigbrk.h> modules
+@subsubsection Declarations in <unigbrk.h>
+
+@mindex unigbrk/u8-grapheme-next
+@mindex unigbrk/u16-grapheme-next
+@mindex unigbrk/u32-grapheme-next
+@mindex unigbrk/u8-grapheme-prev
+@mindex unigbrk/u16-grapheme-prev
+@mindex unigbrk/u32-grapheme-prev
+@mindex unigbrk/u8-grapheme-breaks
+@mindex unigbrk/u16-grapheme-breaks
+@mindex unigbrk/u32-grapheme-breaks
+@mindex unigbrk/ulc-grapheme-breaks
+@mindex unigbrk/uc-grapheme-breaks
+@mindex unigbrk/uc-gbrk-prop
+@mindex unigbrk/uc-is-grapheme-break
+@multitable @columnfractions .5 .5
+@headitem Function @tab Module
+@item @code{u8_grapheme_next} @tab @code{unigbrk/u8-grapheme-next}
+@item @code{u16_grapheme_next} @tab @code{unigbrk/u16-grapheme-next}
+@item @code{u32_grapheme_next} @tab @code{unigbrk/u32-grapheme-next}
+@item @code{u8_grapheme_prev} @tab @code{unigbrk/u8-grapheme-prev}
+@item @code{u16_grapheme_prev} @tab @code{unigbrk/u16-grapheme-prev}
+@item @code{u32_grapheme_prev} @tab @code{unigbrk/u32-grapheme-prev}
+@item @code{u8_grapheme_breaks} @tab @code{unigbrk/u8-grapheme-breaks}
+@item @code{u16_grapheme_breaks} @tab @code{unigbrk/u16-grapheme-breaks}
+@item @code{u32_grapheme_breaks} @tab @code{unigbrk/u32-grapheme-breaks}
+@item @code{ulc_grapheme_breaks} @tab @code{unigbrk/ulc-grapheme-breaks}
+@item @code{uc_grapheme_breaks} @tab @code{unigbrk/uc-grapheme-breaks}
+@item @code{uc_graphemeclusterbreak_property} @tab @code{unigbrk/uc-gbrk-prop}
+@item @code{uc_is_grapheme_break} @tab @code{unigbrk/uc-is-grapheme-break}
+@end multitable
+
+@node <uniwbrk.h> modules
+@subsubsection Declarations in <uniwbrk.h>
+
+@mindex uniwbrk/u8-wordbreaks
+@mindex uniwbrk/u16-wordbreaks
+@mindex uniwbrk/u32-wordbreaks
+@mindex uniwbrk/ulc-wordbreaks
+@mindex uniwbrk/wordbreak-property
+@multitable @columnfractions .5 .5
+@headitem Function @tab Module
+@item @code{u8_wordbreaks} @tab @code{uniwbrk/u8-wordbreaks}
+@item @code{u16_wordbreaks} @tab @code{uniwbrk/u16-wordbreaks}
+@item @code{u32_wordbreaks} @tab @code{uniwbrk/u32-wordbreaks}
+@item @code{ulc_wordbreaks} @tab @code{uniwbrk/ulc-wordbreaks}
+@item @code{uc_wordbreak_property} @tab @code{uniwbrk/wordbreak-property}
+@end multitable
+
+@node <unilbrk.h> modules
+@subsubsection Declarations in <unilbrk.h>
+
+@mindex unilbrk/u8-possible-linebreaks
+@mindex unilbrk/u16-possible-linebreaks
+@mindex unilbrk/u32-possible-linebreaks
+@mindex unilbrk/ulc-possible-linebreaks
+@mindex unilbrk/u8-width-linebreaks
+@mindex unilbrk/u16-width-linebreaks
+@mindex unilbrk/u32-width-linebreaks
+@mindex unilbrk/ulc-width-linebreaks
+@multitable @columnfractions .5 .5
+@headitem Function @tab Module
+@item @code{u8_possible_linebreaks} @tab @code{unilbrk/u8-possible-linebreaks}
+@item @code{u16_possible_linebreaks} @tab @code{unilbrk/u16-possible-linebreaks}
+@item @code{u32_possible_linebreaks} @tab @code{unilbrk/u32-possible-linebreaks}
+@item @code{ulc_possible_linebreaks} @tab @code{unilbrk/ulc-possible-linebreaks}
+@item @code{u8_width_linebreaks} @tab @code{unilbrk/u8-width-linebreaks}
+@item @code{u16_width_linebreaks} @tab @code{unilbrk/u16-width-linebreaks}
+@item @code{u32_width_linebreaks} @tab @code{unilbrk/u32-width-linebreaks}
+@item @code{ulc_width_linebreaks} @tab @code{unilbrk/ulc-width-linebreaks}
+@end multitable
+
+@node <uninorm.h> modules
+@subsubsection Declarations in <uninorm.h>
+
+@mindex uninorm/decomposition
+@mindex uninorm/canonical-decomposition
+@mindex uninorm/composition
+@mindex uninorm/nfd
+@mindex uninorm/nfc
+@mindex uninorm/nfkd
+@mindex uninorm/nfkc
+@mindex uninorm/base
+@mindex uninorm/base
+@mindex uninorm/decomposing-form
+@mindex uninorm/u8-normalize
+@mindex uninorm/u16-normalize
+@mindex uninorm/u32-normalize
+@mindex uninorm/u8-normcmp
+@mindex uninorm/u16-normcmp
+@mindex uninorm/u32-normcmp
+@mindex uninorm/u8-normxfrm
+@mindex uninorm/u16-normxfrm
+@mindex uninorm/u32-normxfrm
+@mindex uninorm/u8-normcoll
+@mindex uninorm/u16-normcoll
+@mindex uninorm/u32-normcoll
+@mindex uninorm/filter
+@multitable @columnfractions .5 .5
+@headitem Function or macro @tab Module
+@item @code{uc_decomposition} @tab @code{uninorm/decomposition}
+@item @code{uc_canonical_decomposition} @tab @code{uninorm/canonical-decomposition}
+@item @code{uc_composition} @tab @code{uninorm/composition}
+@item @code{UNINORM_NFD} @tab @code{uninorm/nfd}
+@item @code{UNINORM_NFC} @tab @code{uninorm/nfc}
+@item @code{UNINORM_NFKD} @tab @code{uninorm/nfkd}
+@item @code{UNINORM_NFKC} @tab @code{uninorm/nfkc}
+@item @code{uninorm_is_compat_decomposing} @tab @code{uninorm/base}
+@item @code{uninorm_is_composing} @tab @code{uninorm/base}
+@item @code{uninorm_decomposing_form} @tab @code{uninorm/decomposing-form}
+@item @code{u8_normalize} @tab @code{uninorm/u8-normalize}
+@item @code{u16_normalize} @tab @code{uninorm/u16-normalize}
+@item @code{u32_normalize} @tab @code{uninorm/u32-normalize}
+@item @code{u8_normcmp} @tab @code{uninorm/u8-normcmp}
+@item @code{u16_normcmp} @tab @code{uninorm/u16-normcmp}
+@item @code{u32_normcmp} @tab @code{uninorm/u32-normcmp}
+@item @code{u8_normxfrm} @tab @code{uninorm/u8-normxfrm}
+@item @code{u16_normxfrm} @tab @code{uninorm/u16-normxfrm}
+@item @code{u32_normxfrm} @tab @code{uninorm/u32-normxfrm}
+@item @code{u8_normcoll} @tab @code{uninorm/u8-normcoll}
+@item @code{u16_normcoll} @tab @code{uninorm/u16-normcoll}
+@item @code{u32_normcoll} @tab @code{uninorm/u32-normcoll}
+@item @code{uninorm_filter_create} @tab @code{uninorm/filter}
+@item @code{uninorm_filter_write} @tab @code{uninorm/filter}
+@item @code{uninorm_filter_flush} @tab @code{uninorm/filter}
+@item @code{uninorm_filter_free} @tab @code{uninorm/filter}
+@end multitable
+
+@node <unicase.h> modules
+@subsubsection Declarations in <unicase.h>
+
+@mindex unicase/toupper
+@mindex unicase/tolower
+@mindex unicase/totitle
+@mindex unicase/locale-language
+@mindex unicase/u8-toupper
+@mindex unicase/u16-toupper
+@mindex unicase/u32-toupper
+@mindex unicase/u8-tolower
+@mindex unicase/u16-tolower
+@mindex unicase/u32-tolower
+@mindex unicase/u8-totitle
+@mindex unicase/u16-totitle
+@mindex unicase/u32-totitle
+@mindex unicase/empty-prefix-context
+@mindex unicase/u8-prefix-context
+@mindex unicase/u16-prefix-context
+@mindex unicase/u32-prefix-context
+@mindex unicase/empty-suffix-context
+@mindex unicase/u8-suffix-context
+@mindex unicase/u16-suffix-context
+@mindex unicase/u32-suffix-context
+@mindex unicase/u8-ct-toupper
+@mindex unicase/u16-ct-toupper
+@mindex unicase/u32-ct-toupper
+@mindex unicase/u8-ct-tolower
+@mindex unicase/u16-ct-tolower
+@mindex unicase/u32-ct-tolower
+@mindex unicase/u8-ct-totitle
+@mindex unicase/u16-ct-totitle
+@mindex unicase/u32-ct-totitle
+@mindex unicase/u8-casefold
+@mindex unicase/u16-casefold
+@mindex unicase/u32-casefold
+@mindex unicase/u8-ct-casefold
+@mindex unicase/u16-ct-casefold
+@mindex unicase/u32-ct-casefold
+@mindex unicase/u8-casecmp
+@mindex unicase/u16-casecmp
+@mindex unicase/u32-casecmp
+@mindex unicase/ulc-casecmp
+@mindex unicase/u8-casexfrm
+@mindex unicase/u16-casexfrm
+@mindex unicase/u32-casexfrm
+@mindex unicase/ulc-casexfrm
+@mindex unicase/u8-casecoll
+@mindex unicase/u16-casecoll
+@mindex unicase/u32-casecoll
+@mindex unicase/ulc-casecoll
+@mindex unicase/u8-is-uppercase
+@mindex unicase/u16-is-uppercase
+@mindex unicase/u32-is-uppercase
+@mindex unicase/u8-is-lowercase
+@mindex unicase/u16-is-lowercase
+@mindex unicase/u32-is-lowercase
+@mindex unicase/u8-is-titlecase
+@mindex unicase/u16-is-titlecase
+@mindex unicase/u32-is-titlecase
+@mindex unicase/u8-is-casefolded
+@mindex unicase/u16-is-casefolded
+@mindex unicase/u32-is-casefolded
+@mindex unicase/u8-is-cased
+@mindex unicase/u16-is-cased
+@mindex unicase/u32-is-cased
+@multitable @columnfractions .5 .5
+@headitem Function or constant @tab Module
+@item @code{uc_toupper} @tab @code{unicase/toupper}
+@item @code{uc_tolower} @tab @code{unicase/tolower}
+@item @code{uc_totitle} @tab @code{unicase/totitle}
+@item @code{uc_locale_language} @tab @code{unicase/locale-language}
+@item @code{u8_toupper} @tab @code{unicase/u8-toupper}
+@item @code{u16_toupper} @tab @code{unicase/u16-toupper}
+@item @code{u32_toupper} @tab @code{unicase/u32-toupper}
+@item @code{u8_tolower} @tab @code{unicase/u8-tolower}
+@item @code{u16_tolower} @tab @code{unicase/u16-tolower}
+@item @code{u32_tolower} @tab @code{unicase/u32-tolower}
+@item @code{u8_totitle} @tab @code{unicase/u8-totitle}
+@item @code{u16_totitle} @tab @code{unicase/u16-totitle}
+@item @code{u32_totitle} @tab @code{unicase/u32-totitle}
+@item @code{unicase_empty_prefix_context} @tab @code{unicase/empty-prefix-context}
+@item @code{u8_casing_prefix_context} @tab @code{unicase/u8-prefix-context}
+@item @code{u16_casing_prefix_context} @tab @code{unicase/u16-prefix-context}
+@item @code{u32_casing_prefix_context} @tab @code{unicase/u32-prefix-context}
+@item @code{u8_casing_prefixes_context} @tab @code{unicase/u8-prefix-context}
+@item @code{u16_casing_prefixes_context} @tab @code{unicase/u16-prefix-context}
+@item @code{u32_casing_prefixes_context} @tab @code{unicase/u32-prefix-context}
+@item @code{unicase_empty_suffix_context} @tab @code{unicase/empty-suffix-context}
+@item @code{u8_casing_suffix_context} @tab @code{unicase/u8-suffix-context}
+@item @code{u16_casing_suffix_context} @tab @code{unicase/u16-suffix-context}
+@item @code{u32_casing_suffix_context} @tab @code{unicase/u32-suffix-context}
+@item @code{u8_casing_suffixes_context} @tab @code{unicase/u8-suffix-context}
+@item @code{u16_casing_suffixes_context} @tab @code{unicase/u16-suffix-context}
+@item @code{u32_casing_suffixes_context} @tab @code{unicase/u32-suffix-context}
+@item @code{u8_ct_toupper} @tab @code{unicase/u8-ct-toupper}
+@item @code{u16_ct_toupper} @tab @code{unicase/u16-ct-toupper}
+@item @code{u32_ct_toupper} @tab @code{unicase/u32-ct-toupper}
+@item @code{u8_ct_tolower} @tab @code{unicase/u8-ct-tolower}
+@item @code{u16_ct_tolower} @tab @code{unicase/u16-ct-tolower}
+@item @code{u32_ct_tolower} @tab @code{unicase/u32-ct-tolower}
+@item @code{u8_ct_totitle} @tab @code{unicase/u8-ct-totitle}
+@item @code{u16_ct_totitle} @tab @code{unicase/u16-ct-totitle}
+@item @code{u32_ct_totitle} @tab @code{unicase/u32-ct-totitle}
+@item @code{u8_casefold} @tab @code{unicase/u8-casefold}
+@item @code{u16_casefold} @tab @code{unicase/u16-casefold}
+@item @code{u32_casefold} @tab @code{unicase/u32-casefold}
+@item @code{u8_ct_casefold} @tab @code{unicase/u8-ct-casefold}
+@item @code{u16_ct_casefold} @tab @code{unicase/u16-ct-casefold}
+@item @code{u32_ct_casefold} @tab @code{unicase/u32-ct-casefold}
+@item @code{u8_casecmp} @tab @code{unicase/u8-casecmp}
+@item @code{u16_casecmp} @tab @code{unicase/u16-casecmp}
+@item @code{u32_casecmp} @tab @code{unicase/u32-casecmp}
+@item @code{ulc_casecmp} @tab @code{unicase/ulc-casecmp}
+@item @code{u8_casexfrm} @tab @code{unicase/u8-casexfrm}
+@item @code{u16_casexfrm} @tab @code{unicase/u16-casexfrm}
+@item @code{u32_casexfrm} @tab @code{unicase/u32-casexfrm}
+@item @code{ulc_casexfrm} @tab @code{unicase/ulc-casexfrm}
+@item @code{u8_casecoll} @tab @code{unicase/u8-casecoll}
+@item @code{u16_casecoll} @tab @code{unicase/u16-casecoll}
+@item @code{u32_casecoll} @tab @code{unicase/u32-casecoll}
+@item @code{ulc_casecoll} @tab @code{unicase/ulc-casecoll}
+@item @code{u8_is_uppercase} @tab @code{unicase/u8-is-uppercase}
+@item @code{u16_is_uppercase} @tab @code{unicase/u16-is-uppercase}
+@item @code{u32_is_uppercase} @tab @code{unicase/u32-is-uppercase}
+@item @code{u8_is_lowercase} @tab @code{unicase/u8-is-lowercase}
+@item @code{u16_is_lowercase} @tab @code{unicase/u16-is-lowercase}
+@item @code{u32_is_lowercase} @tab @code{unicase/u32-is-lowercase}
+@item @code{u8_is_titlecase} @tab @code{unicase/u8-is-titlecase}
+@item @code{u16_is_titlecase} @tab @code{unicase/u16-is-titlecase}
+@item @code{u32_is_titlecase} @tab @code{unicase/u32-is-titlecase}
+@item @code{u8_is_casefolded} @tab @code{unicase/u8-is-casefolded}
+@item @code{u16_is_casefolded} @tab @code{unicase/u16-is-casefolded}
+@item @code{u32_is_casefolded} @tab @code{unicase/u32-is-casefolded}
+@item @code{u8_is_cased} @tab @code{unicase/u8-is-cased}
+@item @code{u16_is_cased} @tab @code{unicase/u16-is-cased}
+@item @code{u32_is_cased} @tab @code{unicase/u32-is-cased}
+@end multitable
