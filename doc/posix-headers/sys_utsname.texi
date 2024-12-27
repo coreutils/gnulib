@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_utsname.h.html}
 
-Gnulib module: sys_utsname
-@mindex sys_utsname
+Gnulib module: sys_utsname-h
+@mindex sys_utsname-h
 
 Portability problems fixed by Gnulib:
 @itemize

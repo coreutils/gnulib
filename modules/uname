@@ -6,7 +6,7 @@ lib/uname.c
 m4/uname.m4
 
 Depends-on:
-sys_utsname
+sys_utsname-h
 gethostname     [test $HAVE_UNAME = 0]
 
 configure.ac:

@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_utsname-h.c
+
+Depends-on:
+sys_utsname-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_utsname-h
+check_PROGRAMS += test-sys_utsname-h
