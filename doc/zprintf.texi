@@ -62,8 +62,15 @@ The problem is that @code{EOVERFLOW} is not handled, even with such wrappers.
 
 Should @code{EOVERFLOW} be handled like @code{ENOMEM}, by aborting the program?
 No, as mentioned above, that would be an arbitrary limitation, which the
-GNU Coding Standards urge us to avoid
-(@pxref{Semantics,,, standards, GNU Coding Standards}).
+@ifinfo
+GNU Coding Standards
+urge us to avoid
+(@pxref{Semantics,,, standards}).
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/prep/standards/html_node/Semantics.html,,GNU Coding Standards}
+urge us to avoid.
+@end ifnotinfo
 
 @subheading The solution
 
