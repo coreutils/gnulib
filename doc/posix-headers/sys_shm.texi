@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_shm.h.html}
 
-Gnulib module: sys_shm
-@mindex sys_shm
+Gnulib module: sys_shm-h
+@mindex sys_shm-h
 
 Portability problems fixed by Gnulib:
 @itemize
