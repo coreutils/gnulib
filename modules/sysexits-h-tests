@@ -1,0 +1,11 @@
+Files:
+tests/test-sysexits-h.c
+
+Depends-on:
+sysexits-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sysexits-h
+check_PROGRAMS += test-sysexits-h

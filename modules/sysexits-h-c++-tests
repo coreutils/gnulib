@@ -1,0 +1,17 @@
+Files:
+tests/test-sysexits-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sysexits-h-c++
+check_PROGRAMS += test-sysexits-h-c++
+test_sysexits_h_c___SOURCES = test-sysexits-h-c++.cc
+endif
