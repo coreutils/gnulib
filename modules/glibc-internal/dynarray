@@ -18,7 +18,7 @@ gen-header
 libc-config
 stdbool-h
 stdckdint-h
-stddef
+stddef-h
 
 configure.ac:
 AC_PROG_MKDIR_P

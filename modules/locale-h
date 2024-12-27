@@ -12,7 +12,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-stddef
+stddef-h
 
 configure.ac:
 gl_LOCALE_H

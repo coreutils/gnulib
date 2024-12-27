@@ -19,7 +19,7 @@ inttypes-h
 mempcpy
 raise
 sigsegv
-stddef
+stddef-h
 unistd
 
 configure.ac:

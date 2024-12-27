@@ -1,0 +1,13 @@
+Files:
+tests/test-stddef-h.c
+
+Depends-on:
+alignasof
+assert-h
+stddef-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stddef-h
+check_PROGRAMS += test-stddef-h

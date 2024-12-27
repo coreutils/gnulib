@@ -16,7 +16,7 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 ssize_t
-stddef
+stddef-h
 sys_types
 
 configure.ac-early:

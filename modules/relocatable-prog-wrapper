@@ -70,7 +70,7 @@ limits-h
 pathmax
 ssize_t
 stdbool-h
-stddef
+stddef-h
 stdckdint-h
 stdint
 stdlib

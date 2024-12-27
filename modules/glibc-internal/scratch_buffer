@@ -14,7 +14,7 @@ builtin-expect
 gen-header
 libc-config
 stdbool-h
-stddef
+stddef-h
 malloc-posix
 realloc-posix
 free-posix

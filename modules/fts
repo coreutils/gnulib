@@ -35,7 +35,7 @@ opendirat
 readdir
 realloc-posix
 stdbool-h
-stddef
+stddef-h
 stdint
 
 configure.ac:

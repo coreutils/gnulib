@@ -16,7 +16,7 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 snippet/_Noreturn
-stddef
+stddef-h
 unistd
 
 configure.ac:

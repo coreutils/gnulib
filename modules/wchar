@@ -15,7 +15,7 @@ snippet/c++defs
 snippet/warn-on-use
 extern-inline
 inttypes-h-incomplete
-stddef
+stddef-h
 stdlib
 
 configure.ac:

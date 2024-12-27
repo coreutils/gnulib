@@ -10,7 +10,7 @@ gen-header
 include_next
 snippet/c++defs
 snippet/warn-on-use
-stddef
+stddef-h
 stdlib
 
 configure.ac:

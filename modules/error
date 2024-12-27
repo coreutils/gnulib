@@ -7,7 +7,7 @@ m4/error.m4
 
 Depends-on:
 error-h
-stddef
+stddef-h
 stdio
 getprogname     [test $COMPILE_ERROR_C = 1]
 gettext-h       [test $COMPILE_ERROR_C = 1]
