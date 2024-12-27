@@ -18,7 +18,7 @@ snippet/c++defs
 snippet/warn-on-use
 socklen
 ssize_t
-sys_uio
+sys_uio-h
 
 configure.ac:
 gl_SYS_SOCKET_H

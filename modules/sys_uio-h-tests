@@ -1,0 +1,11 @@
+Files:
+tests/test-sys_uio-h.c
+
+Depends-on:
+sys_uio-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_uio-h
+check_PROGRAMS += test-sys_uio-h

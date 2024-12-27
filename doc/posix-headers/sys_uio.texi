@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_uio.h.html}
 
-Gnulib module: sys_uio
-@mindex sys_uio
+Gnulib module: sys_uio-h
+@mindex sys_uio-h
 
 Portability problems fixed by Gnulib:
 @itemize
