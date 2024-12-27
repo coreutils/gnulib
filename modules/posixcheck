@@ -43,7 +43,7 @@ sys_time-h
 sys_times-h
 sys_utsname-h
 sys_wait-h
-termios
+termios-h
 threads-h
 time-h
 uchar

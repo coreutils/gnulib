@@ -10,7 +10,7 @@ gen-header
 include_next
 snippet/c++defs
 snippet/warn-on-use
-termios
+termios-h
 
 configure.ac:
 gl_PTY_H

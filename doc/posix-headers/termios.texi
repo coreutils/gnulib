@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/termios.h.html}
 
-Gnulib module: termios
-@mindex termios
+Gnulib module: termios-h
+@mindex termios-h
 
 Portability problems fixed by Gnulib:
 @itemize

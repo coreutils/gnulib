@@ -7,7 +7,7 @@ lib/tcgetsid.c
 m4/tcgetsid.m4
 
 Depends-on:
-termios
+termios-h
 extensions
 sys_ioctl-h     [test $HAVE_TCGETSID = 0]
 
