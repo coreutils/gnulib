@@ -2532,7 +2532,7 @@ func_all_modules ()
   func_begin_table
   func_module accept
   func_module alphasort
-  func_module arpa_inet
+  func_module arpa_inet-h
   func_module bind
   func_module calloc-posix
   func_module chmod

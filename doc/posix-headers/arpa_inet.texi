@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/arpa_inet.h.html}
 
-Gnulib module: arpa_inet
-@mindex arpa_inet
+Gnulib module: arpa_inet-h
+@mindex arpa_inet-h
 
 Portability problems fixed by Gnulib:
 @itemize

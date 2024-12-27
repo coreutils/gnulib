@@ -7,7 +7,7 @@ m4/htonl.m4
 m4/sys_socket_h.m4
 
 Depends-on:
-arpa_inet
+arpa_inet-h
 endian
 
 configure.ac:

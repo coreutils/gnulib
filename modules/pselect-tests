@@ -7,7 +7,7 @@ tests/signature.h
 Depends-on:
 stdbool
 netinet_in
-arpa_inet
+arpa_inet-h
 unistd
 sys_ioctl
 extensions

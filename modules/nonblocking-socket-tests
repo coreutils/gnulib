@@ -19,7 +19,7 @@ wait-process
 environ
 posix_spawnp
 netinet_in
-arpa_inet
+arpa_inet-h
 socket
 setsockopt
 bind

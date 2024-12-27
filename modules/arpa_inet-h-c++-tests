@@ -1,0 +1,19 @@
+Files:
+tests/test-arpa_inet-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-arpa_inet-h-c++
+check_PROGRAMS += test-arpa_inet-h-c++
+test_arpa_inet_h_c___SOURCES = test-arpa_inet-h-c++.cc
+test_arpa_inet_h_c___LDADD = $(LDADD) $(INET_NTOP_LIB) $(INET_PTON_LIB) $(LIBSOCKET)
+endif

@@ -12,7 +12,7 @@ Depends-on:
 stdbool
 sys_socket
 netinet_in
-arpa_inet
+arpa_inet-h
 unistd
 sys_ioctl
 extensions

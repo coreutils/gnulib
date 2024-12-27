@@ -7,7 +7,7 @@ Depends-on:
 stdbool
 sys_socket
 netinet_in
-arpa_inet
+arpa_inet-h
 sys_ioctl
 extensions
 inet_pton

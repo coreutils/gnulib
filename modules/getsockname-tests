@@ -5,7 +5,7 @@ tests/macros.h
 
 Depends-on:
 netinet_in
-arpa_inet
+arpa_inet-h
 inet_pton
 errno
 perror
