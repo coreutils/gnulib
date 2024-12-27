@@ -9,7 +9,7 @@ Depends-on:
 byteswap
 extern-inline
 stdbool-h
-stdint
+stdint-h
 
 configure.ac:
 

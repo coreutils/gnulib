@@ -4,7 +4,7 @@ tests/macros.h
 
 Depends-on:
 assert-h
-stdint
+stdint-h
 
 configure.ac:
 

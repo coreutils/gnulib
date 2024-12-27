@@ -15,7 +15,7 @@ localeconv
 memmove
 xstrtoumax
 stdbool-h
-stdint
+stdint-h
 
 configure.ac:
 gl_HUMAN

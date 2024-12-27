@@ -13,7 +13,7 @@ m4/inttostr.m4
 
 Depends-on:
 intprops
-stdint
+stdint-h
 
 configure.ac:
 gl_INTTOSTR

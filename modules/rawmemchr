@@ -9,7 +9,7 @@ m4/rawmemchr.m4
 Depends-on:
 assert-h
 extensions
-stdint
+stdint-h
 string
 
 configure.ac:

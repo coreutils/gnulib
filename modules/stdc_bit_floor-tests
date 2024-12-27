@@ -7,7 +7,7 @@ tests/macros.h
 Depends-on:
 libc-config
 stdbool-h
-stdint
+stdint-h
 assert-h
 
 configure.ac:

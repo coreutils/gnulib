@@ -7,7 +7,7 @@ Depends-on:
 thrd
 lock
 mtx
-stdint
+stdint-h
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

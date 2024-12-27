@@ -24,7 +24,7 @@ Depends-on:
 assert-h
 attribute
 limits-h
-stdint
+stdint-h
 stdio
 mixin/printf-posix
 free-posix

@@ -17,7 +17,7 @@ minmax
 realloc-posix
 reallocarray
 stdckdint-h
-stdint
+stdint-h
 xalloc-die
 
 configure.ac:

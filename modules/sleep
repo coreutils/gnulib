@@ -8,7 +8,7 @@ m4/sleep.m4
 Depends-on:
 unistd
 assert-h        [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1]
-stdint          [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1]
+stdint-h        [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1]
 
 configure.ac:
 gl_FUNC_SLEEP

@@ -9,7 +9,7 @@ m4/md4.m4
 Depends-on:
 alignasof
 byteswap
-stdint
+stdint-h
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

@@ -27,7 +27,7 @@ Depends-on:
 gen-header
 havelib
 host-cpu-c-abi
-stdint
+stdint-h
 getpagesize
 
 configure.ac:

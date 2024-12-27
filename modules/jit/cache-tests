@@ -12,7 +12,7 @@ Depends-on:
 clean-temp-simple
 getpagesize
 host-cpu-c-abi
-stdint
+stdint-h
 xalloc
 
 configure.ac:

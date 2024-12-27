@@ -10,7 +10,7 @@ Depends-on:
 c99
 largefile
 stdbool-h
-stdint
+stdint-h
 
 configure.ac:
 gl_FSUSAGE

@@ -15,7 +15,7 @@ time-h
 utimensat
 intprops
 stdbool-h
-stdint
+stdint-h
 assert-h
 
 configure.ac:

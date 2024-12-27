@@ -12,7 +12,7 @@ idx
 malloc-gnu
 realloc-posix
 reallocarray
-stdint
+stdint-h
 
 configure.ac:
 

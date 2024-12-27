@@ -13,7 +13,7 @@ m4/inttypes_h.m4
 
 Depends-on:
 unistdio/u-printf-args
-stdint
+stdint-h
 xsize
 c-ctype
 

@@ -7,7 +7,7 @@ lib/arctwo.c
 m4/arctwo.m4
 
 Depends-on:
-stdint
+stdint-h
 bitrotate
 
 configure.ac:

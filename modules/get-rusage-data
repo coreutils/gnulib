@@ -7,7 +7,7 @@ lib/get-rusage-data.c
 m4/mmap-anon.m4
 
 Depends-on:
-stdint
+stdint-h
 unistd
 extensions
 getpagesize

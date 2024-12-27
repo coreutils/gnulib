@@ -7,7 +7,7 @@ lib/crc-x86_64-pclmul.c
 m4/crc-x86_64.m4
 
 Depends-on:
-stdint
+stdint-h
 crc
 
 configure.ac:

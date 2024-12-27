@@ -1,0 +1,18 @@
+Files:
+tests/test-stdint-h-c++.cc
+tests/test-stdint-h-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdint-h-c++
+check_PROGRAMS += test-stdint-h-c++
+test_stdint_h_c___SOURCES = test-stdint-h-c++.cc test-stdint-h-c++2.cc
+endif

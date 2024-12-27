@@ -17,7 +17,7 @@ libc-config
 lstat
 mkdir
 stdbool-h
-stdint
+stdint-h
 sys_stat
 time-h
 

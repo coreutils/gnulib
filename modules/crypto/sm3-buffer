@@ -11,7 +11,7 @@ alignasof
 byteswap
 c99
 extern-inline
-stdint
+stdint-h
 
 configure.ac:
 gl_SM3

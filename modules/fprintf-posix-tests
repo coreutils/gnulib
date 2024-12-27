@@ -14,7 +14,7 @@ tests/macros.h
 
 Depends-on:
 stdbool-h
-stdint
+stdint-h
 get-rusage-as
 
 configure.ac:

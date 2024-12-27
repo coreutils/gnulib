@@ -5,7 +5,7 @@ Files:
 lib/idx.h
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 

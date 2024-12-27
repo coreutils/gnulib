@@ -22,7 +22,7 @@ minmax
 quotearg-simple
 localcharset
 stdbool-h
-stdint
+stdint-h
 uchar
 xalloc
 

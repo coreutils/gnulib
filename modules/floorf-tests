@@ -11,7 +11,7 @@ float-h
 isnanf-nolibm
 nan
 stdbool-h
-stdint
+stdint-h
 
 configure.ac:
 

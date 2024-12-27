@@ -12,7 +12,7 @@ m4/codeset.m4
 
 Depends-on:
 c99
-stdint
+stdint-h
 float-h
 nan
 snan

@@ -12,7 +12,7 @@ alignof         [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 gettext-h       [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 gnulib-i18n     [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 exitfail        [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
-stdint          [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
+stdint-h        [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 stdlib          [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 
 configure.ac:

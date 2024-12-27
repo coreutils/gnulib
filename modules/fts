@@ -36,7 +36,7 @@ readdir
 realloc-posix
 stdbool-h
 stddef-h
-stdint
+stdint-h
 
 configure.ac:
 gl_FUNC_FTS

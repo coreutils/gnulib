@@ -828,7 +828,7 @@ Git, however, doesn't address the distribution issue.  When a package
 either has to put a comment into @file{foobar/autogen.sh} saying
 ``Attention! This doesn't work with a pristine Gnulib, you need this
 and that patch after checking out Gnulib,'' or it has to use the
-@samp{--avoid=stdint} option and provide the modified @code{stdint}
+@samp{--avoid=stdint-h} option and provide the modified @code{stdint-h}
 module in a different directory.
 
 The @option{--local-dir} option to @command{gnulib-tool} solves this

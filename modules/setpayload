@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 float-h         [test $HAVE_SETPAYLOAD = 0]
-stdint          [test $HAVE_SETPAYLOAD = 0]
+stdint-h        [test $HAVE_SETPAYLOAD = 0]
 signed-nan      [test $HAVE_SETPAYLOAD = 0]
 
 configure.ac:

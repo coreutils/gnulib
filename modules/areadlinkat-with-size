@@ -8,7 +8,7 @@ lib/at-func.c
 
 Depends-on:
 areadlink-with-size
-stdint
+stdint-h
 readlinkat
 at-internal
 errno-h

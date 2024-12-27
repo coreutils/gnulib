@@ -7,7 +7,7 @@ lib/gl_array_set.c
 
 Depends-on:
 set
-stdint
+stdint-h
 xsize
 
 configure.ac:

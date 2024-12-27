@@ -12,7 +12,7 @@ math-h
 extensions
 getpayload      [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-stdint          [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+stdint-h        [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isnanl          [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 snan            [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 

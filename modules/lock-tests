@@ -7,7 +7,7 @@ m4/semaphore.m4
 
 Depends-on:
 thread
-stdint
+stdint-h
 once
 usleep
 yield

@@ -7,7 +7,7 @@ lib/bitrotate.c
 
 Depends-on:
 extern-inline
-stdint
+stdint-h
 
 configure.ac:
 

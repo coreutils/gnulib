@@ -8,7 +8,7 @@ tests/macros.h
 
 Depends-on:
 c99
-stdint
+stdint-h
 float-h
 nan
 snan

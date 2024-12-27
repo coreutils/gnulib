@@ -6,7 +6,7 @@ lib/aligned-malloc.h
 m4/malloc-align.m4
 
 Depends-on:
-stdint
+stdint-h
 posix_memalign
 aligned_alloc
 memalign

@@ -374,8 +374,8 @@ it directly, preferring plain @code{bool} via the
 
 @item
 @code{<stdint.h>},
-@mindex stdint
-assuming the @code{stdint} module is used.
+@mindex stdint-h
+assuming the @code{stdint-h} module is used.
 @xref{stdint.h}.
 
 @item

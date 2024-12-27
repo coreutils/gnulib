@@ -6,7 +6,7 @@ tests/test-printf-gnu.output
 tests/macros.h
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 

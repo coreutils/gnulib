@@ -14,7 +14,7 @@ ftello
 malloc-posix
 memset_explicit
 realloc-posix
-stdint
+stdint-h
 sys_stat
 
 configure.ac:

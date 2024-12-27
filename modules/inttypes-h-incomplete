@@ -12,7 +12,7 @@ multiarch
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-stdint
+stdint-h
 
 configure.ac:
 gl_INTTYPES_INCOMPLETE

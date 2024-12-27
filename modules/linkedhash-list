@@ -12,7 +12,7 @@ lib/gl_anylinked_list2.h
 
 Depends-on:
 list
-stdint
+stdint-h
 xsize
 
 configure.ac:

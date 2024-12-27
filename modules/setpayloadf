@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 float-h         [test $HAVE_SETPAYLOADF = 0]
-stdint          [test $HAVE_SETPAYLOADF = 0]
+stdint-h        [test $HAVE_SETPAYLOADF = 0]
 signed-nan      [test $HAVE_SETPAYLOADF = 0]
 
 configure.ac:

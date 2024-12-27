@@ -11,7 +11,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])

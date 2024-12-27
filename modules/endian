@@ -11,7 +11,7 @@ gen-header
 include_next
 extern-inline           [$GL_GENERATE_ENDIAN_H && test $ENDIAN_H_JUST_MISSING_STDINT = 0]
 byteswap                [$GL_GENERATE_ENDIAN_H && test $ENDIAN_H_JUST_MISSING_STDINT = 0]
-stdint                  [$GL_GENERATE_ENDIAN_H]
+stdint-h                [$GL_GENERATE_ENDIAN_H]
 
 configure.ac:
 gl_ENDIAN_H

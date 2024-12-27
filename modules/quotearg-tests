@@ -13,7 +13,7 @@ m4/codeset.m4
 
 Depends-on:
 gettext
-stdint
+stdint-h
 setenv
 unsetenv
 setlocale

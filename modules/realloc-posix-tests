@@ -3,7 +3,7 @@ tests/test-realloc-posix.c
 tests/macros.h
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 

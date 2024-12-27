@@ -11,7 +11,7 @@ Depends-on:
 limits-h
 ssize_t
 stdbool-h
-stdint
+stdint-h
 freadptr
 freadseek
 memchr2

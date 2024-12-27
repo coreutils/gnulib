@@ -9,7 +9,7 @@ Depends-on:
 stdio
 extensions
 limits-h        [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
-stdint          [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
+stdint-h        [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 errno-h         [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 
 configure.ac:

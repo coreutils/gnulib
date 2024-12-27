@@ -9,7 +9,7 @@ c99
 getopt-gnu
 idx
 stdbool-h
-stdint
+stdint-h
 stdlib
 error
 read-file

@@ -23,7 +23,7 @@ Depends-on:
 wchar
 extensions
 attribute       [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
-stdint          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+stdint-h        [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 hard-locale     [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && test $REPLACE_MBSTATE_T = 0]
 mbsinit         [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && test $REPLACE_MBSTATE_T = 0]
 assert-h        [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]

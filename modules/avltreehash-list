@@ -18,7 +18,7 @@ Depends-on:
 builtin-expect
 list
 avltree-oset
-stdint
+stdint-h
 xsize
 
 configure.ac:

@@ -10,7 +10,7 @@ lib/gl_anyhash_primes.h
 
 Depends-on:
 set
-stdint
+stdint-h
 xsize
 c99
 

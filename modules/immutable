@@ -10,7 +10,7 @@ m4/mmap-anon.m4
 m4/nocrash.m4
 
 Depends-on:
-stdint
+stdint-h
 pathmax
 open
 once

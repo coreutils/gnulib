@@ -10,7 +10,7 @@ Depends-on:
 builtin-expect
 extensions
 string
-stdint
+stdint-h
 memchr
 memcmp
 

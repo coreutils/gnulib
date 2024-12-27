@@ -6,7 +6,7 @@ lib/jit/cache.h
 m4/valgrind-helper.m4
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 gl_VALGRIND_HELPER

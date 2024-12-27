@@ -7,7 +7,7 @@ m4/libunistring-base.m4
 
 Depends-on:
 gen-header
-stdint
+stdint-h
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.11], [unitypes.h])

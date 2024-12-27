@@ -23,7 +23,7 @@ readdir
 renameatu
 stdbool-h
 stdckdint-h
-stdint
+stdint-h
 xalloc-oversized
 
 configure.ac:

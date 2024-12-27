@@ -9,7 +9,7 @@ Depends-on:
 unistd
 free-posix      [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 malloc-posix    [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
-stdint          [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
+stdint-h        [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 
 configure.ac:
 gl_FUNC_GETGROUPS

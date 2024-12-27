@@ -8,7 +8,7 @@ lib/unistdio/u-vsprintf.h
 Depends-on:
 unistdio/base
 unistdio/u8-vasnprintf
-stdint
+stdint-h
 errno-h
 
 configure.ac:

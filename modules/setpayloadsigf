@@ -10,7 +10,7 @@ Depends-on:
 math-h
 extensions
 float-h         [test $HAVE_SETPAYLOADSIGF = 0]
-stdint          [test $HAVE_SETPAYLOADSIGF = 0]
+stdint-h        [test $HAVE_SETPAYLOADSIGF = 0]
 signed-snan     [test $HAVE_SETPAYLOADSIGF = 0]
 
 configure.ac:

@@ -72,7 +72,7 @@ ssize_t
 stdbool-h
 stddef-h
 stdckdint-h
-stdint
+stdint-h
 stdlib
 string
 sys_stat

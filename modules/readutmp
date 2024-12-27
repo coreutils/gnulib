@@ -14,7 +14,7 @@ idx
 stat-time
 gettimeofday
 stdbool-h
-stdint
+stdint-h
 strnlen
 time-h
 unlocked-io-internal

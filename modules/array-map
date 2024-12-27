@@ -7,7 +7,7 @@ lib/gl_array_map.c
 
 Depends-on:
 map
-stdint
+stdint-h
 xsize
 
 configure.ac:

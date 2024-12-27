@@ -16,7 +16,7 @@ mkdir
 msvc-inval
 read-file
 stdbool-h
-stdint
+stdint-h
 unistd
 
 configure.ac:

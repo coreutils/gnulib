@@ -20,7 +20,7 @@ printf-safe
 multiarch
 vszprintf          [test $REPLACE_SPRINTF = 1]
 mixin/printf-posix [test $REPLACE_SPRINTF = 1]
-stdint             [test $REPLACE_SPRINTF = 1]
+stdint-h           [test $REPLACE_SPRINTF = 1]
 errno-h            [test $REPLACE_SPRINTF = 1]
 
 configure.ac:

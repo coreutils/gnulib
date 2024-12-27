@@ -11,7 +11,7 @@ extern-inline
 flexmember
 inttypes-h-incomplete
 stdbool-h
-stdint
+stdint-h
 verify
 xalloc
 

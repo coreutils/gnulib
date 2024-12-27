@@ -11,7 +11,7 @@ calloc-posix
 free-posix
 malloc-posix
 stdbool-h
-stdint
+stdint-h
 xalloc-oversized
 
 configure.ac:

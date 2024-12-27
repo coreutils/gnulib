@@ -8,7 +8,7 @@ m4/strverscmp.m4
 Depends-on:
 extensions
 libc-config  [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1]
-stdint       [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1]
+stdint-h     [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1]
 string
 
 configure.ac:

@@ -16,7 +16,7 @@ fcntl-h
 gettext-h
 gnulib-i18n
 stdbool-h
-stdint
+stdint-h
 stdlib
 sys_select
 unistd

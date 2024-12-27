@@ -14,7 +14,7 @@ snippet/c++defs
 snippet/warn-on-use
 extern-inline
 assert-h
-stdint
+stdint-h
 wchar
 wctype-h
 

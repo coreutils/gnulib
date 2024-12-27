@@ -27,7 +27,7 @@ mbszero
 regex
 stdbool-h
 stddef-h
-stdint
+stdint-h
 stdio
 stdlib
 string

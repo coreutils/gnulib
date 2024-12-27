@@ -6,7 +6,7 @@ lib/c-snprintf.h
 lib/c-snprintf.c
 
 Depends-on:
-stdint
+stdint-h
 stdio
 c-vsnzprintf
 

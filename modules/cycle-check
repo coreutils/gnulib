@@ -11,7 +11,7 @@ assure
 dev-ino
 same-inode
 stdbool-h
-stdint
+stdint-h
 
 configure.ac:
 gl_CYCLE_CHECK

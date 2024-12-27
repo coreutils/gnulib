@@ -4,7 +4,7 @@ tests/test-tls.c
 Depends-on:
 thread
 lock
-stdint
+stdint-h
 yield
 random
 

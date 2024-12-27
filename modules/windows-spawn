@@ -12,7 +12,7 @@ environ
 findprog-in
 msvc-nothrow
 stdbool-h
-stdint
+stdint-h
 stdlib
 strpbrk
 unistd

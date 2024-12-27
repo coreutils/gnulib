@@ -6,7 +6,7 @@ lib/vma-prot.h
 lib/vma-prot.c
 
 Depends-on:
-stdint
+stdint-h
 vma-iter
 
 configure.ac:

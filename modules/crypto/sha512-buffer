@@ -13,7 +13,7 @@ alignasof
 byteswap
 c99
 extern-inline
-stdint
+stdint-h
 u64
 
 configure.ac:

@@ -10,7 +10,7 @@ Depends-on:
 math-h
 extensions
 float-h         [test $HAVE_GETPAYLOAD = 0 || test $REPLACE_GETPAYLOAD = 1]
-stdint          [test $HAVE_GETPAYLOAD = 0 || test $REPLACE_GETPAYLOAD = 1]
+stdint-h        [test $HAVE_GETPAYLOAD = 0 || test $REPLACE_GETPAYLOAD = 1]
 isnand          [test $HAVE_GETPAYLOAD = 0 || test $REPLACE_GETPAYLOAD = 1]
 
 configure.ac:

@@ -5,7 +5,7 @@ tests/macros.h
 Depends-on:
 intprops
 setenv
-stdint
+stdint-h
 stpcpy
 strftime-fixes
 

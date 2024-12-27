@@ -9,7 +9,7 @@ m4/crc.m4
 m4/build-cc.m4
 
 Depends-on:
-stdint
+stdint-h
 endian
 
 configure.ac:

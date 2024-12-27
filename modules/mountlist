@@ -18,7 +18,7 @@ getline
 open
 unlocked-io-internal
 stdbool-h
-stdint
+stdint-h
 strstr-simple
 xalloc
 

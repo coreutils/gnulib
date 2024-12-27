@@ -6,7 +6,7 @@ lib/des.c
 lib/des.h
 
 Depends-on:
-stdint
+stdint-h
 stdbool-h
 memcmp
 

@@ -10,7 +10,7 @@ free-posix
 limits-h
 readlink
 ssize_t
-stdint
+stdint-h
 unistd
 
 configure.ac:

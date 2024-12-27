@@ -9,7 +9,7 @@ Depends-on:
 stdio
 vasnprintf
 errno-h
-stdint
+stdint-h
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vszprintf])

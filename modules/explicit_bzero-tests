@@ -4,7 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-stdint
+stdint-h
 vma-iter
 
 configure.ac:

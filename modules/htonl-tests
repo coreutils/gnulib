@@ -4,7 +4,7 @@ tests/macros.h
 
 Depends-on:
 endian
-stdint
+stdint-h
 
 configure.ac:
 

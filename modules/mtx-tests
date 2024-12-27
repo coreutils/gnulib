@@ -7,7 +7,7 @@ m4/semaphore.m4
 
 Depends-on:
 thrd
-stdint
+stdint-h
 random
 
 configure.ac:

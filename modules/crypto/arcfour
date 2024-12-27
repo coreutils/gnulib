@@ -6,7 +6,7 @@ lib/arcfour.h
 lib/arcfour.c
 
 Depends-on:
-stdint
+stdint-h
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

@@ -5,7 +5,7 @@ tests/macros.h
 
 Depends-on:
 intprops
-stdint
+stdint-h
 
 configure.ac:
 

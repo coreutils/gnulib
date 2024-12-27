@@ -10,7 +10,7 @@ m4/xstrtol.m4
 Depends-on:
 intprops
 stdckdint-h
-stdint
+stdint-h
 
 configure.ac:
 gl_XSTRTOL

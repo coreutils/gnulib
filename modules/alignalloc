@@ -14,7 +14,7 @@ extern-inline
 idx
 posix_memalign
 stdckdint-h
-stdint
+stdint-h
 
 configure.ac:
 gl_ALIGNALLOC

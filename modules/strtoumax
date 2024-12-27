@@ -9,7 +9,7 @@ m4/strtoumax.m4
 Depends-on:
 inttypes-h-incomplete
 assert-h        [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
-stdint          [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
+stdint-h        [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
 strtoull        [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
 
 configure.ac:

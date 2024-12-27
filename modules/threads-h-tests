@@ -6,7 +6,7 @@ tests/macros.h
 Depends-on:
 threads-h-c++-tests
 thrd
-stdint
+stdint-h
 random
 
 configure.ac:

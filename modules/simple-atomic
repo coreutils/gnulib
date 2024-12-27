@@ -7,7 +7,7 @@ lib/simple-atomic.c
 m4/atomic-cas.m4
 
 Depends-on:
-stdint
+stdint-h
 sparcv8+
 
 configure.ac:

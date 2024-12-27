@@ -8,7 +8,7 @@ m4/thread.m4
 
 Depends-on:
 threadlib
-stdint
+stdint-h
 extern-inline
 windows-thread  [test $gl_threads_api = windows]
 pthread_sigmask [test $gl_threads_api = posix]

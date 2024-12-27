@@ -18,7 +18,7 @@ Depends-on:
 builtin-expect
 list
 rbtree-oset
-stdint
+stdint-h
 xsize
 
 configure.ac:
