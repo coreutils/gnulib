@@ -19,7 +19,7 @@ gnulib-i18n
 stdbool-h
 stdint-h
 stdlib-h
-sys_select
+sys_select-h
 unistd
 xalloc
 

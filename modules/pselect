@@ -6,7 +6,7 @@ lib/pselect.c
 m4/pselect.m4
 
 Depends-on:
-sys_select
+sys_select-h
 pthread_sigmask [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1]
 select          [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1]
 dup2            [test $REPLACE_PSELECT = 1]

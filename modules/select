@@ -6,7 +6,7 @@ lib/select.c
 m4/select.m4
 
 Depends-on:
-sys_select
+sys_select-h
 alloca          [test $REPLACE_SELECT = 1]
 dup2            [test $REPLACE_SELECT = 1]
 sockets         [test $REPLACE_SELECT = 1]

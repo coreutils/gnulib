@@ -1,0 +1,19 @@
+Files:
+tests/test-sys_select-h-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sys_select-h-c++
+check_PROGRAMS += test-sys_select-h-c++
+test_sys_select_h_c___SOURCES = test-sys_select-h-c++.cc
+test_sys_select_h_c___LDADD = $(LDADD) $(LIBINTL) $(SELECT_LIB) $(NANOSLEEP_LIB)
+endif

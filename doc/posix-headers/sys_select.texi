@@ -3,8 +3,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_select.h.html}
 
-Gnulib module: sys_select
-@mindex sys_select
+Gnulib module: sys_select-h
+@mindex sys_select-h
 
 Portability problems fixed by Gnulib:
 @itemize
