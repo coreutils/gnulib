@@ -8,7 +8,7 @@ m4/i-ring.m4
 
 Depends-on:
 assert-h
-stdbool-h
+bool
 
 configure.ac:
 gl_I_RING

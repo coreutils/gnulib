@@ -8,7 +8,7 @@ m4/libunistring-base.m4
 Depends-on:
 gen-header
 unitypes-h
-stdbool-h
+bool
 inline
 
 configure.ac:

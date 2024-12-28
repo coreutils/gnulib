@@ -6,7 +6,7 @@ lib/javaexec.h
 lib/javaexec.c
 
 Depends-on:
-stdbool-h
+bool
 execute
 classpath
 xsetenv

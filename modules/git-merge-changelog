@@ -8,7 +8,7 @@ Depends-on:
 c99
 getopt-gnu
 idx
-stdbool-h
+bool
 stdint-h
 stdlib-h
 error

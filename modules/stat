@@ -15,7 +15,7 @@ filename        [test $REPLACE_STAT = 1]
 malloca         [test $REPLACE_STAT = 1]
 pathmax         [test $REPLACE_STAT = 1]
 stat-time       [test $REPLACE_STAT = 1]
-stdbool-h       [test $REPLACE_STAT = 1]
+bool            [test $REPLACE_STAT = 1]
 
 configure.ac:
 gl_FUNC_STAT

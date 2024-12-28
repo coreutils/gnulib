@@ -7,7 +7,7 @@ lib/openat.h
 Depends-on:
 extern-inline
 fcntl-h
-stdbool-h
+bool
 sys_stat-h
 unistd-h
 

@@ -9,7 +9,7 @@ m4/base64.m4
 Depends-on:
 extern-inline
 ialloc
-stdbool-h
+bool
 memchr
 stdckdint-h
 

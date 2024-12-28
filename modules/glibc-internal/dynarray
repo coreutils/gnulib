@@ -16,7 +16,7 @@ c99
 builtin-expect
 gen-header
 libc-config
-stdbool-h
+bool
 stdckdint-h
 stddef-h
 

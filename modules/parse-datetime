@@ -13,7 +13,7 @@ assert-h
 bison
 c99
 c-ctype
-stdbool-h
+bool
 gettime
 gettext-h
 gnulib-i18n

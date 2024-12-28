@@ -11,7 +11,7 @@ basename-lgpl
 double-slash-root
 filename
 malloc-posix
-stdbool-h
+bool
 
 configure.ac:
 

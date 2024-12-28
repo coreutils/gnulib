@@ -9,7 +9,7 @@ Depends-on:
 extensions
 pthread-thread
 nanosleep
-stdbool-h
+bool
 
 configure.ac:
 

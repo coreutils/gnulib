@@ -7,7 +7,7 @@ lib/striconveh.c
 lib/iconveh.h
 
 Depends-on:
-stdbool-h
+bool
 iconv
 iconv_open
 unistr/u8-prev

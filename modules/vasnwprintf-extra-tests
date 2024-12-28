@@ -6,7 +6,7 @@ tests/test-vasnwprintf-big.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 stdint-h
 physmem
 

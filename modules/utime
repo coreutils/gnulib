@@ -11,7 +11,7 @@ time-h
 filename        [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
 malloca         [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
 stat            [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
-stdbool-h       [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
+bool            [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
 
 configure.ac:
 gl_FUNC_UTIME

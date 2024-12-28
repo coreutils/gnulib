@@ -1,0 +1,21 @@
+Description:
+A bool that is like C23.
+
+Files:
+m4/c-bool.m4
+
+Depends-on:
+c99
+
+configure.ac:
+gl_C_BOOL
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

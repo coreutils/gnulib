@@ -11,7 +11,7 @@ unistd-h
 fstat           [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 open            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 stat            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
-stdbool-h       [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
+bool            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 sys_stat-h      [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 
 configure.ac:

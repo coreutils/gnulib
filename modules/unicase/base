@@ -10,7 +10,7 @@ Depends-on:
 gen-header
 unitypes-h
 uninorm/base
-stdbool-h
+bool
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([1.2], [unicase.h])

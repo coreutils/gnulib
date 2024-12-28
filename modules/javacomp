@@ -6,7 +6,7 @@ lib/javacomp.h
 lib/javacomp.c
 
 Depends-on:
-stdbool-h
+bool
 unistd-h
 javaversion
 execute

@@ -7,7 +7,7 @@ lib/readtokens0.c
 
 Depends-on:
 obstack
-stdbool-h
+bool
 
 configure.ac:
 

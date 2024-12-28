@@ -11,7 +11,7 @@ Depends-on:
 stdio-h
 largefile
 fcntl-h         [test $REPLACE_FOPEN = 1]
-stdbool-h       [test $REPLACE_FOPEN = 1]
+bool            [test $REPLACE_FOPEN = 1]
 unistd-h        [test $REPLACE_FOPEN = 1]
 close           [test $REPLACE_FOPEN = 1]
 fstat           [test $REPLACE_FOPEN = 1]

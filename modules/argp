@@ -32,7 +32,7 @@ strcase
 extensions
 vsnprintf
 sleep
-stdbool-h
+bool
 stdio-h
 strerror
 memchr

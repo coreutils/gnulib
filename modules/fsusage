@@ -9,7 +9,7 @@ m4/fsusage.m4
 Depends-on:
 c99
 largefile
-stdbool-h
+bool
 stdint-h
 
 configure.ac:

@@ -5,12 +5,12 @@ Status:
 deprecated
 
 Notice:
-This module is deprecated. Use the module 'stdbool-h' instead.
+This module is deprecated. Use the module 'bool' instead.
 
 Files:
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 

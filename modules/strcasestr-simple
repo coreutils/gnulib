@@ -8,7 +8,7 @@ m4/strcasestr.m4
 
 Depends-on:
 string-h
-stdbool-h
+bool
 strcase
 memchr
 memcmp

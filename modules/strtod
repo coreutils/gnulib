@@ -11,7 +11,7 @@ stdlib-h
 strtod-obsolete
 c-ctype         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 math-h          [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
-stdbool-h       [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
+bool            [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 
 configure.ac:
 gl_FUNC_STRTOD

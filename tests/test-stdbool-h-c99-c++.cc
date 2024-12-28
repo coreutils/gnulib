@@ -1,2 +1,2 @@
 #define TEST_STDBOOL_H
-#include "test-stdbool-h-c++.cc"
+#include "test-bool-c++.cc"

@@ -8,7 +8,7 @@ m4/atomic-cas.m4
 
 Depends-on:
 pthread-h
-stdbool-h       [test $HAVE_PTHREAD_SPIN_INIT = 0 || test $REPLACE_PTHREAD_SPIN_INIT = 1]
+bool            [test $HAVE_PTHREAD_SPIN_INIT = 0 || test $REPLACE_PTHREAD_SPIN_INIT = 1]
 windows-spin    [test $gl_threads_api = windows]
 
 configure.ac:

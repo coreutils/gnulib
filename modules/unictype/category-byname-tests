@@ -3,7 +3,7 @@ tests/unictype/test-categ_byname.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 unictype/category-test
 
 configure.ac:

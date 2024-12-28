@@ -1,7 +1,7 @@
 Files:
 tests/test-stdbool-h-c99-c++.cc
-tests/test-stdbool-h-c++.cc
-tests/test-stdbool-h-c++2.cc
+tests/test-bool-c++.cc
+tests/test-bool-c++2.cc
 
 Status:
 c++-test
@@ -15,5 +15,5 @@ Makefile.am:
 if ANSICXX
 TESTS += test-stdbool-h-c99-c++
 check_PROGRAMS += test-stdbool-h-c99-c++
-test_stdbool_h_c99_c___SOURCES = test-stdbool-h-c99-c++.cc test-stdbool-h-c++2.cc
+test_stdbool_h_c99_c___SOURCES = test-stdbool-h-c99-c++.cc test-bool-c++2.cc
 endif

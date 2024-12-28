@@ -11,7 +11,7 @@ Depends-on:
 environ
 findprog-in
 msvc-nothrow
-stdbool-h
+bool
 stdint-h
 stdlib-h
 strpbrk

@@ -14,7 +14,7 @@ mbrtowc
 mbsinit
 mbszero
 wchar-h
-stdbool-h
+bool
 
 configure.ac:
 gl_MBFILE

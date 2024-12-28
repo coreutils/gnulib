@@ -4,7 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 sys_socket-h
 netinet_in-h
 arpa_inet-h

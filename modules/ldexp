@@ -8,7 +8,7 @@ m4/ldexp.m4
 Depends-on:
 math-h
 isnand          [test $REPLACE_LDEXP = 1]
-stdbool-h       [test $REPLACE_LDEXP = 1]
+bool            [test $REPLACE_LDEXP = 1]
 
 configure.ac:
 gl_FUNC_LDEXP

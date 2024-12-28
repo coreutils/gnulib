@@ -7,7 +7,7 @@ lib/des.h
 
 Depends-on:
 stdint-h
-stdbool-h
+bool
 memcmp
 
 configure.ac:

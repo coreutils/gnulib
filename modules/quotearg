@@ -21,7 +21,7 @@ memcmp
 minmax
 quotearg-simple
 localcharset
-stdbool-h
+bool
 stdint-h
 uchar-h
 xalloc

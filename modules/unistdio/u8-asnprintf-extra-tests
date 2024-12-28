@@ -6,7 +6,7 @@ tests/unistdio/test-u8-asnprintf-big.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 stdint-h
 physmem
 unistr/u8-strlen

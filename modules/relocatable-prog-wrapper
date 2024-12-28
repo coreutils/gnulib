@@ -69,7 +69,7 @@ libc-config
 limits-h
 pathmax
 ssize_t
-stdbool-h
+bool
 stddef-h
 stdckdint-h
 stdint-h

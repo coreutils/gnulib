@@ -13,7 +13,7 @@ extensions
 fopen-gnu
 fseeko
 getline
-stdbool-h
+bool
 strdup-posix
 
 configure.ac:

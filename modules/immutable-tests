@@ -4,7 +4,7 @@ tests/test-immutable.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 _Exit
 
 configure.ac:

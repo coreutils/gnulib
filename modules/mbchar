@@ -9,7 +9,7 @@ m4/mbchar.m4
 Depends-on:
 extensions
 extern-inline
-stdbool-h
+bool
 uchar-h
 c32isalnum
 c32isalpha

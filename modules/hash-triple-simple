@@ -8,7 +8,7 @@ lib/hash-triple.h
 Depends-on:
 hash-pjw
 same-inode
-stdbool-h
+bool
 
 configure.ac:
 

@@ -5,7 +5,7 @@ tests/macros.h
 m4/musl.m4
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 gl_MUSL_LIBC

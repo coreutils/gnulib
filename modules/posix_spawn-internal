@@ -20,7 +20,7 @@ concat-filename [test $HAVE_POSIX_SPAWN = 0]
 findprog-in     [test $HAVE_POSIX_SPAWN = 0]
 free-posix      [test $HAVE_POSIX_SPAWN = 0]
 malloca         [test $HAVE_POSIX_SPAWN = 0]
-stdbool-h       [test $HAVE_POSIX_SPAWN = 0]
+bool            [test $HAVE_POSIX_SPAWN = 0]
 windows-spawn   [test $HAVE_POSIX_SPAWN = 0]
 
 configure.ac:

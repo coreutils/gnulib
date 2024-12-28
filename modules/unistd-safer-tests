@@ -10,7 +10,7 @@ dup
 fd-safer-flag
 getdtablesize
 msvc-nothrow
-stdbool-h
+bool
 
 configure.ac:
 

@@ -29,7 +29,7 @@ posix_spawnattr_init
 posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy
-stdbool-h
+bool
 stdlib-h
 sys_wait-h
 unistd-h

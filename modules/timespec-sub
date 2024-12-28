@@ -7,7 +7,7 @@ lib/timespec-sub.c
 Depends-on:
 c99
 intprops
-stdbool-h
+bool
 stdckdint-h
 timespec
 

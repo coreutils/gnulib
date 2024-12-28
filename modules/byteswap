@@ -9,7 +9,7 @@ m4/byteswap.m4
 Depends-on:
 gen-header
 extern-inline           [$GL_GENERATE_BYTESWAP_H]
-stdbool-h               [$GL_GENERATE_BYTESWAP_H]
+bool                    [$GL_GENERATE_BYTESWAP_H]
 stdint-h                [$GL_GENERATE_BYTESWAP_H]
 
 configure.ac:

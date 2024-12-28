@@ -16,7 +16,7 @@ extensions
 intprops
 libc-config
 localename-unsafe-limited
-stdbool-h
+bool
 stdckdint-h
 time_rz
 

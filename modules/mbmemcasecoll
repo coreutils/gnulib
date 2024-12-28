@@ -7,7 +7,7 @@ lib/mbmemcasecoll.h
 lib/mbmemcasecoll.c
 
 Depends-on:
-stdbool-h
+bool
 wchar-h
 uchar-h
 malloca

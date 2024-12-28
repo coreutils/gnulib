@@ -7,7 +7,7 @@ lib/xstrtod.c
 m4/xstrtod.m4
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 gl_XSTRTOD

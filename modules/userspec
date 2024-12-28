@@ -15,7 +15,7 @@ gettext-h
 gnulib-i18n
 intprops
 inttostr
-stdbool-h
+bool
 
 configure.ac:
 gl_USERSPEC

@@ -9,7 +9,7 @@ tests/test-nonblocking-misc.h
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 unistd-h
 nonblocking
 wait-process

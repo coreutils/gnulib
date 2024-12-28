@@ -366,10 +366,10 @@ A declaration after a statement, or as the first clause in a
 
 @item
 @code{<stdbool.h>},
-@mindex stdbool-h
+@mindex bool
 although Gnulib code no longer uses
 it directly, preferring plain @code{bool} via the
-@code{stdbool-h} module instead.
+@code{bool} module instead.
 @xref{stdbool.h}.
 
 @item

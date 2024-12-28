@@ -7,7 +7,7 @@ lib/intprops-internal.h
 
 Depends-on:
 gen-header
-stdbool-h
+bool
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([stdckdint.h])

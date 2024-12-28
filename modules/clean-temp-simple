@@ -8,7 +8,7 @@ lib/clean-temp-simple.c
 
 Depends-on:
 c99
-stdbool-h
+bool
 list
 asyncsafe-spin
 unistd-h

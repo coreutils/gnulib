@@ -37,7 +37,7 @@ posix_spawnattr_setpgroup
 posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy
-stdbool-h
+bool
 stdlib-h
 unistd-h
 unistd-safer

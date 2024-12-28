@@ -12,7 +12,7 @@ Depends-on:
 stdlib-h
 c-ctype         [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
 math-h          [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
-stdbool-h       [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
+bool            [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
 strtod          [{ test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 
 configure.ac:

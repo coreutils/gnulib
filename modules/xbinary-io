@@ -12,7 +12,7 @@ exitfail
 extern-inline
 gettext-h
 gnulib-i18n
-stdbool-h
+bool
 verify
 
 configure.ac:

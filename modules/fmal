@@ -14,7 +14,7 @@ math-h
 extensions
 fma             [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-stdbool-h       [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+bool            [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 assert-h        [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isfinite        [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 integer_length  [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

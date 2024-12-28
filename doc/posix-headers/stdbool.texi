@@ -5,11 +5,11 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/bas
 
 Gnulib module: stdbool-h-c99
 @mindex stdbool-h-c99
-@mindex stdbool-h
+@mindex bool
 
 The @code{stdbool-h-c99} module is present only for programs that
 formerly used the old @code{stdbool} module for C99 compatibility,
-and that for some reason cannot use the current @code{stdbool-h} module
+and that for some reason cannot use the current @code{bool} module
 for C23 compatibility.
 
 Portability problems fixed by Gnulib:

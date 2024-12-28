@@ -13,7 +13,7 @@ tests/test-idpriv-drop.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 

@@ -17,7 +17,7 @@ m4/musl.m4
 Depends-on:
 localename-unsafe-limited
 extensions
-stdbool-h
+bool
 locale-h
 flexmember
 free-posix

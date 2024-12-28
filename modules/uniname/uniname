@@ -10,7 +10,7 @@ Depends-on:
 uniname/base
 attribute
 memcmp
-stdbool-h
+bool
 c99
 
 configure.ac:

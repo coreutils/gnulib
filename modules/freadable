@@ -8,7 +8,7 @@ lib/stdio-impl.h
 m4/freadable.m4
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 gl_FUNC_FREADABLE

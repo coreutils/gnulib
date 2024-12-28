@@ -17,7 +17,7 @@ gettime
 msvc-nothrow
 stat
 stat-time
-stdbool-h
+bool
 sys_stat-h
 sys_time-h
 time-h

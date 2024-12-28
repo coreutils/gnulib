@@ -10,7 +10,7 @@ m4/getndelim2.m4
 Depends-on:
 limits-h
 ssize_t
-stdbool-h
+bool
 stdint-h
 freadptr
 freadseek

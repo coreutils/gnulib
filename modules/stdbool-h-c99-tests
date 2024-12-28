@@ -1,6 +1,6 @@
 Files:
 tests/test-stdbool-h-c99.c
-tests/test-stdbool-h.c
+tests/test-bool.c
 
 Depends-on:
 stdbool-h-c99-c++-tests

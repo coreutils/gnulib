@@ -13,7 +13,7 @@ extensions
 idx
 stat-time
 gettimeofday
-stdbool-h
+bool
 stdint-h
 strnlen
 time-h

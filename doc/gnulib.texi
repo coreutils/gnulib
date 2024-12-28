@@ -988,8 +988,8 @@ On pre-C23 platforms, @code{alignas} and @code{alignof} are macros.
 @node bool
 @section @code{bool}
 
-Gnulib module: stdbool-h
-@mindex stdbool-h
+Gnulib module: bool
+@mindex bool
 
 Portability problems fixed by Gnulib:
 @itemize

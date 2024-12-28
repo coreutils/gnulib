@@ -6,7 +6,7 @@ lib/diffseq.h
 
 Depends-on:
 c99
-stdbool-h
+bool
 
 configure.ac:
 

@@ -6,7 +6,7 @@ tests/test-stdckdint-h.c
 Depends-on:
 assert-h
 inttypes-h
-stdbool-h
+bool
 stdckdint-h-c++-tests
 
 configure.ac:

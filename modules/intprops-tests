@@ -5,7 +5,7 @@ tests/macros.h
 Depends-on:
 assert-h
 inttypes-h
-stdbool-h
+bool
 
 configure.ac:
 

@@ -9,7 +9,7 @@ m4/sig_atomic_t.m4
 
 Depends-on:
 c99
-stdbool-h
+bool
 unistd-h
 sigaction
 lock

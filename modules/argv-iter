@@ -8,7 +8,7 @@ lib/argv-iter.h
 Depends-on:
 getdelim
 snippet/arg-nonnull
-stdbool-h
+bool
 
 configure.ac:
 

@@ -34,7 +34,7 @@ opendir
 opendirat
 readdir
 realloc-posix
-stdbool-h
+bool
 stddef-h
 stdint-h
 

@@ -13,7 +13,7 @@ fcntl-h
 extensions
 largefile
 openat-h        [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
-stdbool-h       [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
+bool            [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
 sys_stat-h      [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
 cloexec         [test $REPLACE_OPENAT = 1]
 fstat           [test $REPLACE_OPENAT = 1]

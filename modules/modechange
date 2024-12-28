@@ -10,7 +10,7 @@ m4/modechange.m4
 Depends-on:
 stat
 stat-macros
-stdbool-h
+bool
 sys_stat-h
 xalloc
 

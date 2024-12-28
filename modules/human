@@ -14,7 +14,7 @@ intprops
 localeconv
 memmove
 xstrtoumax
-stdbool-h
+bool
 stdint-h
 
 configure.ac:

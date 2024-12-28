@@ -9,7 +9,7 @@ lib/unictype/3levelbit.h
 
 Depends-on:
 memcmp
-stdbool-h
+bool
 strdup
 strstr-simple
 

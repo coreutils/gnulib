@@ -8,7 +8,7 @@ lib/stdio-impl.h
 m4/fwritable.m4
 
 Depends-on:
-stdbool-h
+bool
 
 configure.ac:
 gl_FUNC_FWRITABLE

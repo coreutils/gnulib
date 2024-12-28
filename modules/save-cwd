@@ -11,7 +11,7 @@ chdir-long
 fchdir
 getcwd-lgpl
 open
-stdbool-h
+bool
 
 configure.ac:
 gl_SAVE_CWD

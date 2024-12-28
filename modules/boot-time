@@ -13,7 +13,7 @@ extensions
 idx
 stat-time
 gettimeofday
-stdbool-h
+bool
 time-h
 unlocked-io-internal
 

@@ -8,7 +8,7 @@ lib/classpath.h
 lib/classpath.c
 
 Depends-on:
-stdbool-h
+bool
 stat
 error
 dirname

@@ -17,7 +17,7 @@ free-posix
 getline
 open
 unlocked-io-internal
-stdbool-h
+bool
 stdint-h
 strstr-simple
 xalloc

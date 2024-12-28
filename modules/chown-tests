@@ -11,7 +11,7 @@ lstat
 mgetgroups
 nanosleep
 stat-time
-stdbool-h
+bool
 stdckdint-h
 symlink
 xconcat-filename

@@ -9,7 +9,7 @@ m4/strstr.m4
 Depends-on:
 string-h
 builtin-expect  [test $REPLACE_STRSTR = 1]
-stdbool-h       [test $REPLACE_STRSTR = 1]
+bool            [test $REPLACE_STRSTR = 1]
 memchr          [test $REPLACE_STRSTR = 1]
 memcmp          [test $REPLACE_STRSTR = 1]
 

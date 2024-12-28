@@ -4,7 +4,7 @@ tests/test-fcntl-safer.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 fcntl
 symlink
 

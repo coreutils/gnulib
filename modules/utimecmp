@@ -14,7 +14,7 @@ stat-time
 time-h
 utimensat
 intprops
-stdbool-h
+bool
 stdint-h
 assert-h
 

@@ -8,7 +8,7 @@ m4/libtextstyle-optional.m4
 Depends-on:
 gen-header
 libtextstyle
-stdbool-h
+bool
 stdio-h
 unistd-h
 fsync

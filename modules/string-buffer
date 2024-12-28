@@ -7,7 +7,7 @@ lib/string-buffer.c
 lib/string-buffer-printf.c
 
 Depends-on:
-stdbool-h
+bool
 attribute
 string-desc
 stdarg-h

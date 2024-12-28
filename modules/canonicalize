@@ -26,7 +26,7 @@ rawmemchr
 readlink
 glibc-internal/scratch_buffer
 stat
-stdbool-h
+bool
 sys_stat-h
 unistd-h
 xalloc-die

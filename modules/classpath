@@ -6,7 +6,7 @@ lib/classpath.h
 lib/classpath.c
 
 Depends-on:
-stdbool-h
+bool
 xsetenv
 xalloc
 

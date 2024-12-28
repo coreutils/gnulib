@@ -1,0 +1,18 @@
+Files:
+tests/test-bool-c++.cc
+tests/test-bool-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-bool-c++
+check_PROGRAMS += test-bool-c++
+test_bool_c___SOURCES = test-bool-c++.cc test-bool-c++2.cc
+endif

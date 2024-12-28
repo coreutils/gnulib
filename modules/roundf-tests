@@ -13,7 +13,7 @@ ceilf
 floorf
 isnanf-nolibm
 nan
-stdbool-h
+bool
 stdint-h
 
 configure.ac:

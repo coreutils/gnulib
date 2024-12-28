@@ -11,7 +11,7 @@ threadlib
 lock
 errno-h
 extern-inline
-stdbool-h
+bool
 time-h
 windows-cond    [test $gl_threads_api = windows]
 

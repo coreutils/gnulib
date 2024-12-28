@@ -16,7 +16,7 @@ fcntl-h
 free-posix
 gettext-h
 gnulib-i18n
-stdbool-h
+bool
 stdint-h
 stdlib-h
 sys_select-h

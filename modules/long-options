@@ -9,7 +9,7 @@ Depends-on:
 c99
 exitfail
 getopt-gnu
-stdbool-h
+bool
 stdlib-h
 version-etc
 

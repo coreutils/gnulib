@@ -6,7 +6,7 @@ tests/macros.h
 
 Depends-on:
 libc-config
-stdbool-h
+bool
 stdint-h
 assert-h
 

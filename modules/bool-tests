@@ -1,0 +1,11 @@
+Files:
+tests/test-bool.c
+
+Depends-on:
+bool-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-bool
+check_PROGRAMS += test-bool

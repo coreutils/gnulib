@@ -3,7 +3,7 @@ tests/test-filenamecat.c
 
 Depends-on:
 idx
-stdbool-h
+bool
 
 configure.ac:
 

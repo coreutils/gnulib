@@ -6,7 +6,7 @@ lib/regex-quote.h
 lib/regex-quote.c
 
 Depends-on:
-stdbool-h
+bool
 xalloc
 mbuiter
 mempcpy

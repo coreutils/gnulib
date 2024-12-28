@@ -11,7 +11,7 @@ builtin-expect
 extern-inline
 limits-h
 mbrtoc32
-stdbool-h
+bool
 uchar-h
 verify
 

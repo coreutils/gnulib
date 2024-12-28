@@ -7,7 +7,7 @@ lib/same-inode.h
 
 Depends-on:
 extern-inline
-stdbool-h
+bool
 sys_types-h
 
 configure.ac:

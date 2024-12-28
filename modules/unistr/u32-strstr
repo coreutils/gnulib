@@ -11,7 +11,7 @@ unistr/base
 unistr/u32-chr
 unistr/u32-strchr
 unistr/u32-cmp
-stdbool-h
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u32-strstr])

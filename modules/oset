@@ -7,7 +7,7 @@ lib/gl_oset.c
 
 Depends-on:
 extern-inline
-stdbool-h
+bool
 
 configure.ac:
 

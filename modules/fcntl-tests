@@ -8,7 +8,7 @@ binary-io
 close
 getdtablesize
 msvc-nothrow
-stdbool-h
+bool
 
 configure.ac:
 

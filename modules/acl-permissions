@@ -16,7 +16,7 @@ extern-inline
 fstat
 minmax
 stat
-stdbool-h
+bool
 sys_stat-h
 
 configure.ac:

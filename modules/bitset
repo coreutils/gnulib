@@ -25,7 +25,7 @@ gettext-h
 gnulib-i18n
 integer_length_l
 obstack
-stdbool-h
+bool
 xalloc
 
 configure.ac:

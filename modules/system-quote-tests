@@ -8,7 +8,7 @@ tests/test-system-quote-child.c
 tests/macros.h
 
 Depends-on:
-stdbool-h
+bool
 unistd-h
 popen
 pclose

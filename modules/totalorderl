@@ -13,7 +13,7 @@ math-h
 extensions
 totalorder      [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-stdbool-h       [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+bool            [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isnanl          [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 signbit         [{ test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 

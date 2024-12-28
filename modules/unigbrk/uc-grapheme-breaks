@@ -10,7 +10,7 @@ unigbrk/base
 unigbrk/uc-gbrk-prop
 unictype/incb-of
 unictype/property-extended-pictographic
-stdbool-h
+bool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/uc-grapheme-breaks])
