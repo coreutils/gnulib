@@ -33,6 +33,7 @@ endian.h: endian.in.h $(top_builddir)/config.status
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''HAVE_ENDIAN_H''@|$(HAVE_ENDIAN_H)|g' \
 	      -e 's|@''NEXT_ENDIAN_H''@|$(NEXT_ENDIAN_H)|g' \
+	      -e 's|@''HAVE_SYS_ENDIAN_H''@|$(HAVE_SYS_ENDIAN_H)|g' \
 	      -e 's|@''ENDIAN_H_JUST_MISSING_STDINT''@|$(ENDIAN_H_JUST_MISSING_STDINT)|g' \
 	$(srcdir)/endian.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
