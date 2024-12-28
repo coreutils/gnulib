@@ -24,8 +24,11 @@ tex_opts = -I ../build-aux
 undocumented-modules.texi: force
 	grep -h '^@mindex ' `find . -name '*.texi'` | sed -e 's/@mindex //' | LC_ALL=C sort -u > documented-modules.tmp
 	(cd .. && ./gnulib-tool --list) | LC_ALL=C sort -u > all-modules.tmp
-	LC_ALL=C join -v1 all-modules.tmp documented-modules.tmp | sed -e 's/^/@umindex /' > undocumented-modules.texi
-	rm -f documented-modules.tmp all-modules.tmp
+	LC_ALL=C join -v1 all-modules.tmp documented-modules.tmp > undocumented-modules.tmp
+# For testing whether a module is deprecated, "./gnulib-tool --extract-status <module>" is a bit slow, so use grep instead.
+	modules=`cat undocumented-modules.tmp`; (cd ../modules && grep -l '^deprecated$$' $$modules) > deprecated-undocumented-modules.tmp
+	LC_ALL=C join -v1 undocumented-modules.tmp deprecated-undocumented-modules.tmp | sed -e 's/^/@umindex /' > undocumented-modules.texi
+	rm -f documented-modules.tmp all-modules.tmp undocumented-modules.tmp deprecated-undocumented-modules.tmp
 
 %.info: %.texi undocumented-modules.texi
 	$(MAKEINFO) $(manual_opts) $<
