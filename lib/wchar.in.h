@@ -198,11 +198,12 @@ typedef unsigned int rpl_wint_t;
 /* Override mbstate_t if it is too small.
    On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
    implementing mbrtowc for encodings like UTF-8.
-   On AIX and MSVC, mbrtowc needs to be overridden, but mbstate_t exists and is
-   large enough and overriding it would cause problems in C++ mode.  */
+   On AIX, MSVC, and OpenBSD 6.0, mbrtowc needs to be overridden, but
+   mbstate_t exists and is large enough and overriding it would cause problems
+   in C++ mode.  */
 #if !(((defined _WIN32 && !defined __CYGWIN__) || @HAVE_MBSINIT@) && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
 # if !GNULIB_defined_mbstate_t
-#  if !(defined _AIX || defined _MSC_VER)
+#  if !(defined _AIX || defined _MSC_VER || defined __OpenBSD__)
 typedef int rpl_mbstate_t;
 #   undef mbstate_t
 #   define mbstate_t rpl_mbstate_t
