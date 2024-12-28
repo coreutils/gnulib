@@ -1515,8 +1515,15 @@ vc-diff-check:
 
 rel-files = $(DIST_ARCHIVES)
 
-gnulib-version = $$(cd $(gnulib_dir)				\
-                    && { git describe 2> /dev/null || git rev-parse --short=10 HEAD; } )
+gnulib-version ?= \
+  $$(if test -e $(gnulib_dir)/.git; then				\
+       git -C $(gnulib_dir) rev-parse HEAD;				\
+     elif test -f $(srcdir)/bootstrap.conf; then			\
+       perl -lne '/^\s*GNULIB_REVISION=(\S+)/ and $$d=$$1;'		\
+         -e 'END{defined $$d and print $$d}' $(srcdir)/bootstrap.conf;	\
+     else								\
+       head -1 $(gnulib_dir)/ChangeLog | sed -e 's/ .*//;q ';		\
+     fi)
 bootstrap-tools ?= autoconf,automake,gnulib
 
 gpgv = $$(gpgv2 --version >/dev/null && echo gpgv2 || echo gpgv)
