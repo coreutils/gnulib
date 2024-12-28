@@ -1,5 +1,5 @@
 # stack-trace.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,19 +57,27 @@ AC_DEFUN([gl_STACK_TRACE_EARLY],
         *-gnu* | gnu* | darwin* | freebsd* | dragonfly* | netbsd* | openbsd* | solaris*)
           dnl execinfo might be implemented on this platform.
           CAN_PRINT_STACK_TRACE=1
-          dnl On *BSD system, link all programs with -lexecinfo. Cf. m4/execinfo.m4.
+          dnl On *BSD system, link all programs with -lexecinfo, provided that
+          dnl libexecinfo actually exists. Cf. m4/execinfo.m4.
           case "$host_os" in
             freebsd* | dragonfly* | netbsd* | openbsd*)
-              LIBS="$LIBS -lexecinfo"
+              AC_SEARCH_LIBS([backtrace_symbols_fd], [execinfo],
+                [], [CAN_PRINT_STACK_TRACE=0])
+              if test $CAN_PRINT_STACK_TRACE = 1; then
+                LIBS="$LIBS -lexecinfo"
+              fi
               ;;
           esac
-          dnl Link all programs in such a way that the stack trace includes the
-          dnl function names. '-rdynamic' is equivalent to '-Wl,-export-dynamic'.
-          case "$host_os" in
-            *-gnu* | gnu* | openbsd*)
-              LDFLAGS="$LDFLAGS -rdynamic"
-              ;;
-          esac
+          if test $CAN_PRINT_STACK_TRACE = 1; then
+            dnl Link all programs in such a way that the stack trace includes
+            dnl the function names.
+            dnl '-rdynamic' is equivalent to '-Wl,-export-dynamic'.
+            case "$host_os" in
+              *-gnu* | gnu* | openbsd*)
+                LDFLAGS="$LDFLAGS -rdynamic"
+                ;;
+            esac
+          fi
           ;;
       esac
     fi
