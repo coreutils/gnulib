@@ -1,5 +1,5 @@
 # endian_h.m4
-# serial 5
+# serial 6
 dnl Copyright 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN_ONCE([gl_ENDIAN_H],
     AC_CACHE_CHECK([if endian.h defines functions and macros],
       [gl_cv_header_working_endian_h],
       [gl_cv_header_working_endian_h=no
-       AC_COMPILE_IFELSE(
+       AC_LINK_IFELSE(
          [AC_LANG_PROGRAM(
 [[
 #include <endian.h>
@@ -102,7 +102,7 @@ return !(value16_1 + value32_1 + value64_1
     AC_CACHE_CHECK([if sys/endian.h defines functions and macros],
       [gl_cv_header_working_sys_endian_h],
       [gl_cv_header_working_sys_endian_h=no
-       AC_COMPILE_IFELSE(
+       AC_LINK_IFELSE(
          [AC_LANG_PROGRAM(
 [[
 #include <sys/endian.h>
