@@ -102,6 +102,8 @@ The implementation of each container instance is specified in a single place
 only: in the invocation of the function @code{gl_*_create_empty} that creates
 the instance.
 
+@subsubsection Sequential lists
+
 The implementations and the guaranteed average performance for the operations
 for the ``sequential list'' data type are:
 
@@ -459,6 +461,34 @@ for the ``sequential list'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
+The Gnulib modules for sequential lists are:
+
+@mindex list
+@mindex xlist
+@mindex array-list
+@mindex carray-list
+@mindex linked-list
+@mindex avltree-list
+@mindex rbtree-list
+@mindex linkedhash-list
+@mindex avltreehash-list
+@mindex rbtreehash-list
+@mindex sublist
+@mindex xsublist
+@multitable @columnfractions 0.3 0.7
+@headitem Implementation @tab Modules
+@item Abstract @tab @code{list}, @code{xlist}
+@item ARRAY @tab @code{array-list}
+@item CARRAY @tab @code{carray-list}
+@item LINKED @tab @code{linked-list}
+@item TREE @tab @code{avltree-list}, @code{rbtree-list}
+@item LINKEDHASH @tab @code{linkedhash-list}
+@item TREEHASH @tab @code{avltreehash-list}, @code{rbtreehash-list}
+@item Portion of a list @tab @code{sublist}, @code{xsublist}
+@end multitable
+
+@subsubsection Sets
+
 The implementations and the guaranteed average performance for the operations
 for the ``set'' data type are:
 
@@ -485,6 +515,23 @@ for the ``set'' data type are:
 @tab @math{O(1)}
 @tab @math{O(1)}
 @end multitable
+
+The Gnulib modules for sets are:
+
+@mindex set
+@mindex xset
+@mindex array-set
+@mindex linkedhash-set
+@mindex hash-set
+@multitable @columnfractions 0.3 0.7
+@headitem Implementation @tab Modules
+@item Abstract @tab @code{set}, @code{xset}
+@item ARRAY @tab @code{array-set}
+@item LINKEDHASH @tab @code{linkedhash-set}
+@item HASH @tab @code{hash-set}
+@end multitable
+
+@subsubsection Ordered sets
 
 The implementations and the guaranteed average performance for the operations
 for the ``ordered set'' data type are:
@@ -516,6 +563,22 @@ for the ``ordered set'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
+The Gnulib modules for ordered sets are:
+
+@mindex oset
+@mindex xoset
+@mindex array-oset
+@mindex avltree-oset
+@mindex rbtree-oset
+@multitable @columnfractions 0.3 0.7
+@headitem Implementation @tab Modules
+@item Abstract @tab @code{oset}, @code{xoset}
+@item ARRAY @tab @code{array-oset}
+@item TREE @tab @code{avltree-oset}, @code{rbtree-oset}
+@end multitable
+
+@subsubsection Maps
+
 The implementations and the guaranteed average performance for the operations
 for the ``map'' data type are:
 
@@ -545,6 +608,23 @@ for the ``map'' data type are:
 @tab @math{O(1)}
 @tab @math{O(1)}
 @end multitable
+
+The Gnulib modules for maps are:
+
+@mindex map
+@mindex xmap
+@mindex array-map
+@mindex linkedhash-map
+@mindex hash-map
+@multitable @columnfractions 0.3 0.7
+@headitem Implementation @tab Modules
+@item Abstract @tab @code{map}, @code{xmap}
+@item ARRAY @tab @code{array-map}
+@item LINKEDHASH @tab @code{linkedhash-map}
+@item HASH @tab @code{hash-map}
+@end multitable
+
+@subsubsection Ordered maps
 
 The implementations and the guaranteed average performance for the operations
 for the ``ordered map'' data type are:
@@ -579,6 +659,22 @@ for the ``ordered map'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
+The Gnulib modules for ordered maps are:
+
+@mindex omap
+@mindex xomap
+@mindex array-omap
+@mindex avltree-omap
+@mindex rbtree-omap
+@multitable @columnfractions 0.3 0.7
+@headitem Implementation @tab Modules
+@item Abstract @tab @code{omap}, @code{xomap}
+@item ARRAY @tab @code{array-omap}
+@item TREE @tab @code{avltree-omap}, @code{rbtree-omap}
+@end multitable
+
+@subsubsection C++ classes for container data types
+
 For C++, Gnulib provides a C++ template class for each of these container data types.
 
 @mindex list-c++
@@ -586,7 +682,6 @@ For C++, Gnulib provides a C++ template class for each of these container data t
 @mindex oset-c++
 @mindex map-c++
 @mindex omap-c++
-
 @multitable @columnfractions .30 .20 .25 .25
 @headitem Data type
 @tab C++ class
