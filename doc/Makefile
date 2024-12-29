@@ -27,8 +27,10 @@ undocumented-modules.texi: force
 	LC_ALL=C join -v1 all-modules.tmp documented-modules.tmp > undocumented-modules.tmp
 # For testing whether a module is deprecated, "./gnulib-tool --extract-status <module>" is a bit slow, so use grep instead.
 	modules=`cat undocumented-modules.tmp`; (cd ../modules && grep -l '^deprecated$$' $$modules) > deprecated-undocumented-modules.tmp
-	LC_ALL=C join -v1 undocumented-modules.tmp deprecated-undocumented-modules.tmp | sed -e 's/^/@umindex /' > undocumented-modules.texi
-	rm -f documented-modules.tmp all-modules.tmp undocumented-modules.tmp deprecated-undocumented-modules.tmp
+	LC_ALL=C join -v1 undocumented-modules.tmp deprecated-undocumented-modules.tmp > undocumented-modules-2.tmp
+	LC_ALL=C join -v1 undocumented-modules-2.tmp internal-modules > undocumented-modules-3.tmp
+	sed -e 's/^/@umindex /' < undocumented-modules-3.tmp > undocumented-modules.texi
+	rm -f documented-modules.tmp all-modules.tmp undocumented-modules.tmp deprecated-undocumented-modules.tmp undocumented-modules-2.tmp undocumented-modules-3.tmp
 
 %.info: %.texi undocumented-modules.texi
 	$(MAKEINFO) $(manual_opts) $<
