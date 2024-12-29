@@ -1,5 +1,5 @@
 Description:
-Reentrant sort function with GNU signature
+Reentrant sort function with POSIX signature
 
 Files:
 lib/qsort.c
@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_QSORT_R
 dnl If the function is missing from the system or has an unknown signature:
 gl_CONDITIONAL([GL_COND_OBJ_QSORT], [test $HAVE_QSORT_R = 0])
-dnl If the function exists, but it has the BSD signature:
+dnl If the function exists, but it has the FreeBSD signature:
 gl_CONDITIONAL([GL_COND_OBJ_QSORT_R],
                [test $HAVE_QSORT_R = 1 && test $REPLACE_QSORT_R = 1])
 gl_STDLIB_MODULE_INDICATOR([qsort_r])

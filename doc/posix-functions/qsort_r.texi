@@ -6,7 +6,8 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qsort_r.3.html,,man qsort_r}
 
-Gnulib module: ---
+Gnulib module: qsort_r
+@mindex qsort_r
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -15,7 +16,7 @@ This function is missing on some platforms:
 glibc 2.7, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
 @item
 This function has an incompatible API on some platforms:
-FreeBSD 13.2.
+FreeBSD 13.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:
