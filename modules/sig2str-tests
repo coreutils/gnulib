@@ -1,5 +1,6 @@
 Files:
 tests/test-sig2str.c
+tests/signature.h
 tests/macros.h
 
 Depends-on:

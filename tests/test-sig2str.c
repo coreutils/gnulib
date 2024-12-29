@@ -19,7 +19,11 @@
 #include <config.h>
 
 /* Specification.  */
-#include "sig2str.h"
+#include <signal.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (sig2str, int, (int, char *));
+SIGNATURE_CHECK (str2sig, int, (char const *restrict, int *restrict));
 
 #include <string.h>
 
