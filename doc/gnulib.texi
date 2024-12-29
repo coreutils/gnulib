@@ -8061,6 +8061,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Handling strings with NUL characters::
 * Container data types::
 * Modernized printf::
+* Advanced stdio functions::
 * libunistring::
 * Stack traces::
 * Recognizing Option Arguments::
@@ -8105,6 +8106,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include containers.texi
 
 @include zprintf.texi
+
+@include stdioext.texi
 
 @include libunistring.texi
 

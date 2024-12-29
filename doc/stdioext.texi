@@ -1,0 +1,153 @@
+@node Advanced stdio functions
+@section Advanced functions on FILE streams
+
+@c Copyright (C) 2007-2024 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Bruno Haible.
+
+Gnulib provides a few functions that operate on @code{FILE *} streams
+and that go beyond what ISO C and POSIX specify.
+
+Each such function is provided in a Gnulib module of the same name.
+
+When Gnulib implemented them in 2007, some people considered them
+``unportable'', because they required digging in undocumented internals
+of the @code{FILE} structure.
+But Gnulib made them portable, by providing implementations for all
+platforms, from glibc to native Windows, and from Minix to QNX.
+Nowadays, new platforms already implement them in their libc;
+this has been seen for the Android libc and musl libc.
+
+The stream argument of these functions must not be wide-character oriented.
+But this is not an actual restriction, since
+no programs use wide-character orientation on @code{FILE} streams anyway:
+no one uses the @code{fwide} function.
+
+@node State of a stream
+@subsection Determining the state of a FILE stream
+
+@mindex freadable
+@mindex fwritable
+@mindex freading
+@mindex fwriting
+Gnulib modules: freadable, fwritable, freading, fwriting
+
+The @code{freadable} function returns
+@code{true} if the given stream supports reading,
+@code{false} if it supports only writing,
+i.e. if it was opened write-only or append-only.
+
+The @code{fwritable} function returns
+@code{true} if the given stream supports writing,
+@code{false} if it supports only reading.
+
+The @code{freading} function returns
+@code{true} if the given stream is opened read-only,
+or if the last operation on the stream was a read operation.
+
+The @code{fwriting} function returns
+@code{true} if the given stream is opened write-only or append-only,
+or if the last operation on the stream was a write operation.
+
+@code{freading} and @code{fwriting} will never both be true
+on the same stream at the same time.
+If the stream supports both reads and writes, then
+@itemize
+@item
+both @code{freading} and @code{fwriting} might be false
+when the stream is first opened, after read encounters EOF,
+or after @code{fflush},
+@item
+@code{freading} might be false or true and @code{fwriting} might be false
+after repositioning (such as @code{fseek}, @code{fsetpos}, or @code{rewind}),
+@end itemize
+@noindent
+depending on the underlying implementation.
+
+@node Error in a stream
+@subsection Setting an error in a FILE stream
+
+A @code{FILE *} stream has an error indicator, that can be
+tested through the @code{ferror} function and
+cleared through the @code{clearerr} function.
+The error indicator is set when an I/O operation on the stream fails.
+But ISO C and POSIX don't provide a way to set the error indicator!
+
+@mindex fseterr
+The @code{fseterr} function sets the error indicator in the given stream.
+
+@node Dropping the buffer contents
+@subsection Dropping the contents of the buffers of a FILE stream
+
+@mindex fpurge
+The @code{fpurge} function drops
+the contents of the input and output buffers of the given @code{FILE *} stream:
+@itemize
+@item
+It discards the contents of the output buffer, if the stream is currently
+writing.
+That is the opposite of what the @code{fflush} function does.
+@item
+It discards the contents of the input buffer, if the stream is currently
+reading.
+That is the same as what the @code{fflush} function does.
+@end itemize
+
+@node Accessing the write buffer
+@subsection Accessing the write buffer of a FILE stream
+
+The following two functions provide information about the output buffer
+of a @code{FILE *} stream.
+
+@mindex fpending
+The @code{fpending} function returns
+the number of pending (a.k.a. buffered, unflushed) bytes in the given stream.
+
+@mindex fbufmode
+The @code{fbufmode} function returns the buffering mode of the given stream:
+@multitable @columnfractions 0.5 0.5
+@headitem Result @tab means
+@item @code{_IONBF} @tab unbuffered
+@item @code{_IOLBF} @tab line buffered
+@item @code{_IOFBF} @tab fully buffered
+@end multitable
+@noindent
+Note that on some platforms,
+it is impossible to distinguish @code{_IOFBF} and @code{_IOLBF}.
+
+@node Accessing the read buffer
+@subsection Accessing the read buffer of a FILE stream
+
+The following functions allow code to scan the contents of the input buffer
+of a @code{FILE *} stream, without first copying it into a separate memory
+area via @code{fread}.
+
+@mindex freadahead
+The function @code{freadahead} returns
+the number of bytes waiting in the input buffer of the given stream.
+This includes both
+the bytes that have been read from the underlying input source
+and the bytes that have been pushed back through @code{ungetc}.
+
+@mindex freadptr
+A function call @code{freadptr (@var{stream}, &@var{size})} returns
+a pointer to the input buffer of the given @code{@var{stream}}, or NULL.
+If the returned pointer is non-NULL,
+@code{@var{size}} is set to the (positive) size of the input buffer.
+If the returned pointer is NULL, you should use
+@code{getc (@var{stream})},
+@code{fgetc (@var{stream})},
+or @code{fread (..., @var{stream})}
+to access the input from @code{@var{stream}}.
+
+@mindex freadseek
+A function call @code{freadseek (@var{stream}, @var{offset})}
+is the same as @code{fseek (@var{stream}, @var{offset}, SEEK_CUR)},
+except that the latter does not work
+on non-seekable input streams (such as pipes).
