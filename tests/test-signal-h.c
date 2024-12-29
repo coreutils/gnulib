@@ -20,6 +20,9 @@
 
 #include <signal.h>
 
+/* Check that SIG2STR_MAX is defined to a positive integer.  */
+static_assert (0 < SIG2STR_MAX);
+
 /* Check for required types.  */
 struct
 {

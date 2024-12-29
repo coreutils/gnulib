@@ -2,6 +2,7 @@ Files:
 tests/test-signal-h.c
 
 Depends-on:
+assert-h
 signal-h-c++-tests
 
 configure.ac:
