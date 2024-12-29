@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getservbyname.html}
 
-Gnulib module: ---
+Gnulib module: servent
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -13,7 +13,4 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is declared in @code{<winsock2.h>} instead of @code{<netdb.h>}
-on some platforms:
-mingw, MSVC 14.
 @end itemize
