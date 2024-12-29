@@ -16,4 +16,7 @@ glibc 2.40, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is not declared on some platforms:
+IRIX 6.5.
 @end itemize
