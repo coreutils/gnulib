@@ -1,5 +1,11 @@
 Description:
-Placeholder for eventual signal() replacement.
+A GNU-like <signal.h>.
+
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'signal-h' instead.
 
 Files:
 
@@ -11,9 +17,9 @@ configure.ac:
 Makefile.am:
 
 Include:
+<signal.h>
 
 License:
 LGPLv2+
 
 Maintainer:
-all
