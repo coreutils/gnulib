@@ -1,4 +1,4 @@
-@c GNU noreturn, stdnoreturn modules documentation
+@c GNU noreturn, stdnoreturn-h modules documentation
 
 @c Copyright (C) 2019--2024 Free Software Foundation, Inc.
 
@@ -11,9 +11,6 @@
 @node Non-returning Functions
 @section Non-returning Functions
 
-@cindex @code{_Noreturn}
-@mindex @code{noreturn}
-@mindex @code{stdnoreturn-h}
 A "non-returning" function is a function which cannot return normally.
 Instead of returning, it can loop forever, or it can transfer control via
 @code{abort}, @code{execvp}, @code{exit}, @code{longjmp}, @code{throw}
@@ -29,6 +26,7 @@ Gnulib has multiple ways to support such a declaration:
 
 @itemize @bullet
 @item
+@cindex @code{_Noreturn}
 The @code{_Noreturn} keyword.  No modules are needed, as Gnulib
 arranges for @code{<config.h>} to define @code{_Noreturn} to an
 appropriate replacement on platforms lacking it.

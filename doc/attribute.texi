@@ -13,9 +13,9 @@
 
 @cindex Attributes
 @findex __attribute__
-
-This module provides a header file @file{attribute.h} that defines
-macros related to C and C++ attributes and the GCC
+@mindex attribute
+The module @samp{attribute} provides a header file @file{attribute.h} that
+defines macros related to C and C++ attributes and the GCC
 @code{__attribute__} keyword.
 
 Here is an example of its use:

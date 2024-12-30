@@ -14,8 +14,8 @@
 @cindex assertion
 @findex verify
 @findex verify_expr
-
-This module provides a header file @file{verify.h} that defines
+@mindex verify
+The module @samp{verify} provides a header file @file{verify.h} that defines
 macros related to compile-time verification.
 
 Two of these macros are @code{verify (@var{V})} and @code{verify_expr
