@@ -1,4 +1,4 @@
-@c GNU static-inline module documentation
+@c Documentation of gnulib module 'inline'.
 
 @c Copyright (C) 2019--2024 Free Software Foundation, Inc.
 
@@ -14,6 +14,21 @@
 @cindex static inline
 @cindex inline
 
-In order to mark functions as @code{static inline}, the only
-prerequisite you need is an @code{AC_REQUIRE([AC_C_INLINE])}.
+In order to mark functions as @code{static inline} in @code{.c} files,
+the only prerequisite you need is an @code{AC_REQUIRE([AC_C_INLINE])}.
 No Gnulib module is needed.
+
+@mindex inline
+When marking functions as @code{static inline} in @code{.h} files,
+on the other hand,
+it is useful to avoid the following problem:
+When gcc or clang is not optimizing, it generates the same object code
+for every @code{static inline} function
+that is actually used in the current compilation unit,
+thus bloating the size of the resulting binary.
+(Code of @code{static inline} functions
+that are unused in the current compilation unit gets dropped;
+that is not an issue.)
+To avoid this problem, use the Gnulib module @samp{inline}
+and make the @code{static inline} function definition conditional
+on the value of the C macro @code{HAVE_INLINE}.
