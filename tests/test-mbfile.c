@@ -45,6 +45,7 @@ main ()
   /* The input consists of 4 UTF-8 characters:
      '$', U+00A5, U+20AC, U+0001F403.  */
   mbf_char_t next;
+  mbf_char_t prev;
 
   mbf_getc (next, mbstdin);
   ASSERT (!mb_iseof (next));
@@ -65,9 +66,24 @@ main ()
   ASSERT (!mb_iseof (next));
   ASSERT (mb_len (next) == 4);
   ASSERT (mb_iseq (next, 0x1F403));
+  mb_copy (&prev, &next);
 
   mbf_getc (next, mbstdin);
   ASSERT (mb_iseof (next));
+
+  /* Even at EOF, we need to be able to push back 2 characters.  */
+  mbf_ungetc (next, mbstdin);
+  mbf_ungetc (prev, mbstdin);
+
+  mbf_char_t renext;
+
+  mbf_getc (renext, mbstdin);
+  ASSERT (!mb_iseof (renext));
+  ASSERT (mb_len (renext) == 4);
+  ASSERT (mb_iseq (renext, 0x1F403));
+
+  mbf_getc (renext, mbstdin);
+  ASSERT (mb_iseof (renext));
 
   return test_exit_status;
 }

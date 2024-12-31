@@ -89,11 +89,6 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   unsigned int new_bufcount;
   size_t bytes;
 
-  /* If EOF has already been seen, don't use getc.  This matters if
-     mbf->fp is connected to an interactive tty.  */
-  if (mbf->eof_seen)
-    goto eof;
-
   /* Return character pushed back, if there is one.  */
   if (mbf->pushback_count > 0)
     {
@@ -101,6 +96,11 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
       mbf->pushback_count--;
       return;
     }
+
+  /* If EOF has already been seen, don't use getc.  This matters if
+     mbf->fp is connected to an interactive tty.  */
+  if (mbf->eof_seen)
+    goto eof;
 
   new_bufcount = mbf->bufcount;
 
