@@ -478,6 +478,12 @@ __getcwd_generic (char *buf, size_t size)
             }
           else
             {
+              /* *dirp is already a '/' (see above).  Therefore if the directory
+                 ends in a slash, we can remove that slash.  This happens in
+                 particular if the directory is "/".  */
+              if (linklen > 0 && linkbuf[linklen - 1] == '/')
+                linklen--;
+
               dirroom = dirp - dir;
               if (dirroom < linklen)
                 {
