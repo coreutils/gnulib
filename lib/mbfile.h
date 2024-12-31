@@ -54,6 +54,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
 
@@ -69,14 +70,17 @@ extern "C" {
 #endif
 
 
+/* Guarantee two characters of pushback.  */
+#define MBFILE_MAX_PUSHBACK 2
+
 struct mbfile_multi {
   FILE *fp;
   bool eof_seen;
-  bool have_pushback;
+  unsigned int pushback_count; /* <= MBFILE_MAX_PUSHBACK */
   mbstate_t state;
   unsigned int bufcount;
   char buf[MBCHAR_BUF_SIZE];
-  struct mbchar pushback;
+  struct mbchar pushback[MBFILE_MAX_PUSHBACK];
 };
 
 MBFILE_INLINE void
@@ -91,10 +95,10 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
     goto eof;
 
   /* Return character pushed back, if there is one.  */
-  if (mbf->have_pushback)
+  if (mbf->pushback_count > 0)
     {
-      mb_copy (mbc, &mbf->pushback);
-      mbf->have_pushback = false;
+      mb_copy (mbc, &mbf->pushback[mbf->pushback_count - 1]);
+      mbf->pushback_count--;
       return;
     }
 
@@ -246,8 +250,10 @@ eof:
 MBFILE_INLINE void
 mbfile_multi_ungetc (const struct mbchar *mbc, struct mbfile_multi *mbf)
 {
-  mb_copy (&mbf->pushback, mbc);
-  mbf->have_pushback = true;
+  if (mbf->pushback_count == MBFILE_MAX_PUSHBACK)
+    abort ();
+  mb_copy (&mbf->pushback[mbf->pushback_count], mbc);
+  mbf->pushback_count++;
 }
 
 typedef struct mbfile_multi mb_file_t;
@@ -257,7 +263,7 @@ typedef mbchar_t mbf_char_t;
 #define mbf_init(mbf, stream)                                           \
   ((mbf).fp = (stream),                                                 \
    (mbf).eof_seen = false,                                              \
-   (mbf).have_pushback = false,                                         \
+   (mbf).pushback_count = 0,                                            \
    mbszero (&(mbf).state),                                              \
    (mbf).bufcount = 0)
 
