@@ -141,6 +141,11 @@ main ()
     ASSERT (strcmp (buf, "ber_MA") == 0);
   }
 
+  /* Languages with a regional variant.  */
+
+  test_correspondence ("ca", "ca");
+  test_correspondence ("ca@valencia", "ca-valencia");
+
   /* Test xpg_to_bcp47 with an encoding.  */
   {
     char buf[BCP47_MAX];

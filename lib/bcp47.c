@@ -268,6 +268,8 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
     }
 
   const char *script_subtag = NULL;
+  const char *variant_start = NULL;
+  size_t variant_len = 0;
 
   /* Determine script from the modifier.  */
   if (modifier_len > 0)
@@ -277,6 +279,13 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
         if (strlen (scripts[i].name) == modifier_len
             && memcmp (scripts[i].name, modifier_start, modifier_len) == 0)
           script_subtag = scripts[i].code;
+      if (script_subtag == NULL)
+        {
+          /* If the modifier does not designate a script, assume that it
+             designates a variant.  */
+          variant_start = modifier_start;
+          variant_len = modifier_len;
+        }
     }
 
   /* Determine script from the language and possibly the territory.  */
@@ -319,10 +328,11 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
         }
     }
 
-  /* Construct the result: language[-script][-territory].  */
+  /* Construct the result: language[-script][-territory][-variant].  */
   if (language_len
       + (script_subtag != NULL ? 1 + 4 : 0)
       + (territory_len > 0 ? 1 + territory_len : 0)
+      + (variant_len > 0 ? 1 + variant_len : 0)
       < BCP47_MAX)
     {
       char *q = bcp47;
@@ -339,6 +349,12 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
           *q++ = '-';
           memcpy (q, territory_start, territory_len);
           q += territory_len;
+        }
+      if (variant_len > 0)
+        {
+          *q++ = '-';
+          memcpy (q, variant_start, variant_len);
+          q += variant_len;
         }
       *q = '\0';
       return;
@@ -366,10 +382,13 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
   size_t script_len = 0;
   const char *region_start = NULL;
   size_t region_len = 0;
+  const char *variant_start = NULL;
+  size_t variant_len = 0;
 
   {
     bool past_script = false;
     bool past_region = false;
+    bool past_variant = false;
     const char *p;
 
     p = bcp47;
@@ -419,6 +438,12 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
                     /* It must be -variant or -extension.  */
                     past_script = true;
                     past_region = true;
+                    if (!past_variant)
+                      {
+                        variant_start = subtag_start;
+                        variant_len = subtag_len;
+                        past_variant = true;
+                      }
                   }
               }
           }
@@ -531,12 +556,27 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
         }
     }
 
-  /* The modifier is the script.  */
-  const char *modifier = script;
-
   /* Construct the result: language[_territory][.codeset][@modifier].  */
   size_t codeset_len = (codeset != NULL ? strlen (codeset) : 0);
-  size_t modifier_len = (modifier != NULL ? strlen (modifier) : 0);
+  /* The modifier is the script or, if the script is absent or already handled,
+     the variant.  */
+  const char *modifier;
+  size_t modifier_len;
+  if (script != NULL)
+    {
+      modifier = script;
+      modifier_len = strlen (modifier);
+    }
+  else if (variant_len > 0)
+    {
+      modifier = variant_start;
+      modifier_len = variant_len;
+    }
+  else
+    {
+      modifier = NULL;
+      modifier_len = 0;
+    }
   if (language_len
       + (territory_len > 0 ? 1 + territory_len : 0)
       + (codeset != NULL ? 1 + codeset_len : 0)
