@@ -38,9 +38,9 @@ main (void)
   if (result == NULL)
     fputs ("getservbyname failed\n", stderr);
 
-  result = getservbyport (htons(53), "tcp");
+  result = getservbyport (htons (53), "tcp");
   if (result == NULL)
-    fputs ("getportbyname failed\n", stderr);
+    fputs ("getservbyport failed\n", stderr);
 
   return 0;
 }
