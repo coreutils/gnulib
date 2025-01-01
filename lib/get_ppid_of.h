@@ -1,5 +1,5 @@
 /* Determine the parent process of a given process.
-   Copyright (C) 2019-2024 Free Software Foundation, Inc.
+   Copyright (C) 2019-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2019.
 
    This file is free software: you can redistribute it and/or modify

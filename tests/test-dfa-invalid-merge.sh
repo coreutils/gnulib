@@ -3,7 +3,7 @@
 # a+a+a to a+a, thus possibly reporting a false match.
 # Introduced in v0.1-2111-g4299106ce
 
-# Copyright 2020-2024 Free Software Foundation, Inc.
+# Copyright 2020-2025 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

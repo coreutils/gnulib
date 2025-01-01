@@ -1,5 +1,5 @@
 /* Creating and controlling POSIX threads.
-   Copyright (C) 2010-2024 Free Software Foundation, Inc.
+   Copyright (C) 2010-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

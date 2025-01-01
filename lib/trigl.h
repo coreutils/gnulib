@@ -1,7 +1,7 @@
 /* Declarations for sinl, cosl, tanl internal functions.  -*- coding: utf-8 -*-
    Contributed by Paolo Bonzini
 
-   Copyright 2002-2003, 2009-2024 Free Software Foundation, Inc.
+   Copyright 2002-2003, 2009-2025 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 

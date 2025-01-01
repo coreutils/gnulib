@@ -1,6 +1,6 @@
 # Makefile variables for PO directory in any package using GNU gettext.
 #
-# Copyright (C) 2003-2024 Free Software Foundation, Inc.
+# Copyright (C) 2003-2025 Free Software Foundation, Inc.
 # This file, Makevars, is free software; the Free Software Foundation
 # gives unlimited permission to use, copy, distribute, and modify it.
 

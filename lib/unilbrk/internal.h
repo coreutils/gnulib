@@ -1,5 +1,5 @@
 /* Internal functions for line breaking of Unicode strings.
-   Copyright (C) 2001-2003, 2005-2024 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2021.
 
    This file is free software.

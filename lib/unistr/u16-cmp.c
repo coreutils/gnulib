@@ -1,5 +1,5 @@
 /* Compare pieces of UTF-16 strings.
-   Copyright (C) 1999, 2002, 2006, 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006, 2009-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This file is free software.

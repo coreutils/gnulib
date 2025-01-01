@@ -1,5 +1,5 @@
 /* abort() function that prints a stack trace before aborting.
-   Copyright (C) 2024 Free Software Foundation, Inc.
+   Copyright (C) 2024-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

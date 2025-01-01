@@ -1,7 +1,7 @@
 # Variables for srclist-update and srclist.txt.
 # Will likely change for each user.
 
-# Copyright 2002-2024 Free Software Foundation, Inc.
+# Copyright 2002-2025 Free Software Foundation, Inc.
 
 # This file is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by

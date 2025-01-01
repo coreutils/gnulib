@@ -1,6 +1,6 @@
 /* Generic bitsets.
 
-   Copyright (C) 2002-2004, 2009-2015, 2018-2024 Free Software Foundation, Inc.
+   Copyright (C) 2002-2004, 2009-2015, 2018-2025 Free Software Foundation, Inc.
 
    Contributed by Michael Hayes (m.hayes@elec.canterbury.ac.nz).
 

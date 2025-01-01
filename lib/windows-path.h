@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses on Windows.
-   Copyright (C) 2024 Free Software Foundation, Inc.
+   Copyright (C) 2024-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2024.
 
    This file is free software: you can redistribute it and/or modify

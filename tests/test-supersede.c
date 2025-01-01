@@ -1,6 +1,6 @@
 /* Tests for opening a file without destroying an old file with the same name.
 
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

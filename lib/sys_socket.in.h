@@ -1,6 +1,6 @@
 /* Provide a sys/socket header file for systems lacking it (read: MinGW)
    and for systems where it is incomplete.
-   Copyright (C) 2005-2024 Free Software Foundation, Inc.
+   Copyright (C) 2005-2025 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This file is free software: you can redistribute it and/or modify

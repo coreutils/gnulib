@@ -1,5 +1,5 @@
 /* Grapheme cluster breaks in Unicode strings.
-   Copyright (C) 2010-2024 Free Software Foundation, Inc.
+   Copyright (C) 2010-2025 Free Software Foundation, Inc.
    Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This file is free software.

@@ -1,5 +1,5 @@
 /* read-file.h -- read file contents into a string
-   Copyright (C) 2006, 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This file is free software: you can redistribute it and/or modify

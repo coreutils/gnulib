@@ -1,5 +1,5 @@
 /* Arrange for stdin/stdout/stderr to be open.
-   Copyright (C) 2005-2024 Free Software Foundation, Inc.
+   Copyright (C) 2005-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

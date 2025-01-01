@@ -1,6 +1,6 @@
 /* Calculate the size of physical memory.
 
-   Copyright (C) 2000-2001, 2003, 2005-2006, 2009-2024 Free Software
+   Copyright (C) 2000-2001, 2003, 2005-2006, 2009-2025 Free Software
    Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify

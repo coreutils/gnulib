@@ -1,5 +1,5 @@
 /* Canonical list of all signal names.
-   Copyright (C) 1996-1999, 2008-2024 Free Software Foundation, Inc.
+   Copyright (C) 1996-1999, 2008-2025 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This file is free software: you can redistribute it and/or modify

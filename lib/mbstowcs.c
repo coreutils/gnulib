@@ -1,5 +1,5 @@
 /* Convert string to wide string.
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2020.
 
    This file is free software: you can redistribute it and/or modify

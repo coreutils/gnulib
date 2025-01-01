@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a circular array.
-   Copyright (C) 2006-2024 Free Software Foundation, Inc.
+   Copyright (C) 2006-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This file is free software: you can redistribute it and/or modify

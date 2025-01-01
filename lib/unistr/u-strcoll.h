@@ -1,6 +1,6 @@
 /* Compare UTF-8/UTF-16/UTF-32 strings using the collation rules of the current
    locale.
-   Copyright (C) 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 2009-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This file is free software.
