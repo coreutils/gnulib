@@ -49,7 +49,7 @@ Send patches and bug reports to <bug-gnulib@gnu.org>."
 func_version ()
 {
   echo "config.rpath (GNU gnulib, module havelib)"
-  echo "Copyright (C) 2024 Free Software Foundation, Inc.
+  echo "Copyright (C) 2025 Free Software Foundation, Inc.
 License: All-Permissive.
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."

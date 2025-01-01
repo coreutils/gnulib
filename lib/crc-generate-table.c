@@ -101,7 +101,7 @@ print_copyright_notice (FILE * stream)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* crc.c -- cyclic redundancy checks\n");
   fprintf (stream,
-           "Copyright (C) 2005-2006, 2009-2024 Free Software Foundation, Inc.\n");
+           "Copyright (C) 2005-2006, 2009-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   fprintf (stream,
            "This file is free software: you can redistribute it and/or modify\n");

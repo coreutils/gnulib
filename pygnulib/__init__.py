@@ -30,7 +30,7 @@ coding standards, the GNU maintainer information, the GPL and other licenses (in
 Texinfo), assorted configuration scripts, and more. The goal is to provide all
 the common infrastructure needed by GNU packages.'''
 
-__copyright__ = '2002-2024 Free Software Foundation, Inc.'
+__copyright__ = '2002-2025 Free Software Foundation, Inc.'
 __author__ = \
     [
         'Bruno Haible',

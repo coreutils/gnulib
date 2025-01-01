@@ -708,7 +708,7 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Test the Unicode character type functions.\n");
-  fprintf (stream, "   Copyright (C) 2007-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "   Copyright (C) 2007-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -772,7 +772,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream,
                           strcmp (filename, "unictype/categ_M.h") == 0
@@ -1088,7 +1088,7 @@ output_category (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -1261,7 +1261,7 @@ output_combclass (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -1635,7 +1635,7 @@ output_bidi_category (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -1800,7 +1800,7 @@ output_decimal_digit_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -1852,7 +1852,7 @@ output_decimal_digit (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -1997,7 +1997,7 @@ output_digit_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -2049,7 +2049,7 @@ output_digit (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -2211,7 +2211,7 @@ output_numeric_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -2273,7 +2273,7 @@ output_numeric (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -2665,7 +2665,7 @@ output_mirror (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -4122,7 +4122,7 @@ output_indic_conjunct_break_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -4179,7 +4179,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -4655,7 +4655,7 @@ output_joining_type_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -4713,7 +4713,7 @@ output_joining_type (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -4965,7 +4965,7 @@ output_joining_group_test (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -5023,7 +5023,7 @@ output_joining_group (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -5261,7 +5261,7 @@ output_scripts (const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -5446,7 +5446,7 @@ output_scripts_byname (const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -5593,7 +5593,7 @@ output_blocks (const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -6016,7 +6016,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -6855,7 +6855,7 @@ output_nonspacing_property (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -9167,7 +9167,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
                version);
       fprintf (stream, "\n");
 
-      fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+      fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
       fprintf (stream, "\n");
       output_library_license (stream, false);
       fprintf (stream, "\n");
@@ -9203,7 +9203,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2001-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2001-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -10111,7 +10111,7 @@ output_wbrk_tables (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -10181,7 +10181,7 @@ output_gbp_test (const char *filename)
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Test the Unicode grapheme break property functions.\n");
-  fprintf (stream, "   Copyright (C) 2010-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "   Copyright (C) 2010-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -10258,7 +10258,7 @@ output_gbp_table (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -10744,7 +10744,7 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
                version);
       fprintf (stream, "\n");
 
-      fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+      fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
       fprintf (stream, "\n");
       output_library_license (stream, true);
       fprintf (stream, "\n");
@@ -10888,7 +10888,7 @@ output_composition_tables (const char *filename, const char *filename2,
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2009-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2009-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -10981,7 +10981,7 @@ output_composition_tables (const char *filename, const char *filename2,
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2009-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2009-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, true);
   fprintf (stream, "\n");
@@ -11023,7 +11023,7 @@ output_simple_mapping_test (const char *filename,
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Test the Unicode character mapping functions.\n");
-  fprintf (stream, "   Copyright (C) 2009-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "   Copyright (C) 2009-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_tests_license (stream);
   fprintf (stream, "\n");
@@ -11093,7 +11093,7 @@ output_simple_mapping (const char *filename,
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream,
                           strcmp (filename, "unicase/tolower.h") == 0
@@ -11808,7 +11808,7 @@ output_casing_rules (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
@@ -12039,7 +12039,7 @@ output_version (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream, false);
   fprintf (stream, "\n");
