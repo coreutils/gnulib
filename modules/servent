@@ -10,6 +10,7 @@ m4/servent.m4
 
 Depends-on:
 sys_socket-h
+netdb-h
 
 configure.ac:
 gl_SERVENT
