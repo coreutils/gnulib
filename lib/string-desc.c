@@ -39,14 +39,14 @@
 
 /* Return true if A and B are equal.  */
 bool
-string_desc_equals (string_desc_t a, string_desc_t b)
+sd_equals (string_desc_t a, string_desc_t b)
 {
   return (a._nbytes == b._nbytes
           && (a._nbytes == 0 || memcmp (a._data, b._data, a._nbytes) == 0));
 }
 
 bool
-string_desc_startswith (string_desc_t s, string_desc_t prefix)
+sd_startswith (string_desc_t s, string_desc_t prefix)
 {
   return (s._nbytes >= prefix._nbytes
           && (prefix._nbytes == 0
@@ -54,7 +54,7 @@ string_desc_startswith (string_desc_t s, string_desc_t prefix)
 }
 
 bool
-string_desc_endswith (string_desc_t s, string_desc_t suffix)
+sd_endswith (string_desc_t s, string_desc_t suffix)
 {
   return (s._nbytes >= suffix._nbytes
           && (suffix._nbytes == 0
@@ -63,7 +63,7 @@ string_desc_endswith (string_desc_t s, string_desc_t suffix)
 }
 
 int
-string_desc_cmp (string_desc_t a, string_desc_t b)
+sd_cmp (string_desc_t a, string_desc_t b)
 {
   if (a._nbytes > b._nbytes)
     {
@@ -86,14 +86,14 @@ string_desc_cmp (string_desc_t a, string_desc_t b)
 }
 
 int
-string_desc_c_casecmp (string_desc_t a, string_desc_t b)
+sd_c_casecmp (string_desc_t a, string_desc_t b)
 {
   /* Don't use memcasecmp here, since it uses the current locale, not the
      "C" locale.  */
-  idx_t an = string_desc_length (a);
-  idx_t bn = string_desc_length (b);
-  const char *ap = string_desc_data (a);
-  const char *bp = string_desc_data (b);
+  idx_t an = sd_length (a);
+  idx_t bn = sd_length (b);
+  const char *ap = sd_data (a);
+  const char *bp = sd_data (b);
   idx_t n = (an < bn ? an : bn);
   idx_t i;
   for (i = 0; i < n; i++)
@@ -108,7 +108,7 @@ string_desc_c_casecmp (string_desc_t a, string_desc_t b)
 }
 
 ptrdiff_t
-string_desc_index (string_desc_t s, char c)
+sd_index (string_desc_t s, char c)
 {
   if (s._nbytes > 0)
     {
@@ -120,7 +120,7 @@ string_desc_index (string_desc_t s, char c)
 }
 
 ptrdiff_t
-string_desc_last_index (string_desc_t s, char c)
+sd_last_index (string_desc_t s, char c)
 {
   if (s._nbytes > 0)
     {
@@ -132,7 +132,7 @@ string_desc_last_index (string_desc_t s, char c)
 }
 
 string_desc_t
-string_desc_new_empty (void)
+sd_new_empty (void)
 {
   string_desc_t result;
 
@@ -144,7 +144,7 @@ string_desc_new_empty (void)
 }
 
 string_desc_t
-string_desc_new_addr (idx_t n, char *addr)
+sd_new_addr (idx_t n, char *addr)
 {
   string_desc_t result;
 
@@ -158,7 +158,7 @@ string_desc_new_addr (idx_t n, char *addr)
 }
 
 string_desc_t
-string_desc_from_c (const char *s)
+sd_from_c (const char *s)
 {
   string_desc_t result;
 
@@ -169,7 +169,7 @@ string_desc_from_c (const char *s)
 }
 
 string_desc_t
-string_desc_substring (string_desc_t s, idx_t start, idx_t end)
+sd_substring (string_desc_t s, idx_t start, idx_t end)
 {
   string_desc_t result;
 
@@ -184,7 +184,7 @@ string_desc_substring (string_desc_t s, idx_t start, idx_t end)
 }
 
 int
-string_desc_write (int fd, string_desc_t s)
+sd_write (int fd, string_desc_t s)
 {
   if (s._nbytes > 0)
     if (full_write (fd, s._data, s._nbytes) != s._nbytes)
@@ -194,7 +194,7 @@ string_desc_write (int fd, string_desc_t s)
 }
 
 int
-string_desc_fwrite (FILE *fp, string_desc_t s)
+sd_fwrite (FILE *fp, string_desc_t s)
 {
   if (s._nbytes > 0)
     if (fwrite (s._data, 1, s._nbytes, fp) != s._nbytes)
@@ -206,7 +206,7 @@ string_desc_fwrite (FILE *fp, string_desc_t s)
 /* ==== Memory-allocating operations on string descriptors ==== */
 
 int
-string_desc_new (string_desc_t *resultp, idx_t n)
+sd_new (string_desc_t *resultp, idx_t n)
 {
   string_desc_t result;
 
@@ -230,7 +230,7 @@ string_desc_new (string_desc_t *resultp, idx_t n)
 }
 
 int
-string_desc_new_filled (string_desc_t *resultp, idx_t n, char c)
+sd_new_filled (string_desc_t *resultp, idx_t n, char c)
 {
   string_desc_t result;
 
@@ -251,7 +251,7 @@ string_desc_new_filled (string_desc_t *resultp, idx_t n, char c)
 }
 
 int
-string_desc_copy (string_desc_t *resultp, string_desc_t s)
+sd_copy (string_desc_t *resultp, string_desc_t s)
 {
   string_desc_t result;
   idx_t n = s._nbytes;
@@ -273,7 +273,7 @@ string_desc_copy (string_desc_t *resultp, string_desc_t s)
 }
 
 int
-string_desc_concat (string_desc_t *resultp, idx_t n, string_desc_t string1, ...)
+sd_concat (string_desc_t *resultp, idx_t n, string_desc_t string1, ...)
 {
   if (n <= 0)
     /* Invalid argument.  */
@@ -327,7 +327,7 @@ string_desc_concat (string_desc_t *resultp, idx_t n, string_desc_t string1, ...)
 }
 
 char *
-string_desc_c (string_desc_t s)
+sd_c (string_desc_t s)
 {
   idx_t n = s._nbytes;
   char *result = (char *) imalloc (n + 1);
@@ -345,7 +345,7 @@ string_desc_c (string_desc_t s)
 /* ==== Operations with side effects on string descriptors ==== */
 
 void
-string_desc_set_char_at (string_desc_t s, idx_t i, char c)
+sd_set_char_at (string_desc_t s, idx_t i, char c)
 {
   if (!(i >= 0 && i < s._nbytes))
     /* Invalid argument.  */
@@ -354,7 +354,7 @@ string_desc_set_char_at (string_desc_t s, idx_t i, char c)
 }
 
 void
-string_desc_fill (string_desc_t s, idx_t start, idx_t end, char c)
+sd_fill (string_desc_t s, idx_t start, idx_t end, char c)
 {
   if (!(start >= 0 && start <= end))
     /* Invalid arguments.  */
@@ -365,7 +365,7 @@ string_desc_fill (string_desc_t s, idx_t start, idx_t end, char c)
 }
 
 void
-string_desc_overwrite (string_desc_t s, idx_t start, string_desc_t t)
+sd_overwrite (string_desc_t s, idx_t start, string_desc_t t)
 {
   if (!(start >= 0 && start + t._nbytes <= s._nbytes))
     /* Invalid arguments.  */
@@ -376,7 +376,7 @@ string_desc_overwrite (string_desc_t s, idx_t start, string_desc_t t)
 }
 
 void
-string_desc_free (string_desc_t s)
+sd_free (string_desc_t s)
 {
   free (s._data);
 }

@@ -28,75 +28,75 @@
 int
 main (void)
 {
-  string_desc_t s1 = string_desc_from_c ("Hello world!");
-  string_desc_t s2 = string_desc_new_addr (21, "The\0quick\0brown\0\0fox");
+  string_desc_t s1 = sd_from_c ("Hello world!");
+  string_desc_t s2 = sd_new_addr (21, "The\0quick\0brown\0\0fox");
 
-  /* Test string_desc_quotearg_buffer.  */
+  /* Test sd_quotearg_buffer.  */
   {
     char buf[80];
-    size_t n = string_desc_quotearg_buffer (buf, sizeof (buf), s2, NULL);
+    size_t n = sd_quotearg_buffer (buf, sizeof (buf), s2, NULL);
     ASSERT (n == 21);
     ASSERT (memcmp (buf, "The\0quick\0brown\0\0fox", n) == 0);
   }
 
-  /* Test string_desc_quotearg_alloc.  */
+  /* Test sd_quotearg_alloc.  */
   {
     size_t n;
-    char *ret = string_desc_quotearg_alloc (s2, &n, NULL);
+    char *ret = sd_quotearg_alloc (s2, &n, NULL);
     ASSERT (n == 21);
     ASSERT (memcmp (ret, "The\0quick\0brown\0\0fox", n) == 0);
     free (ret);
   }
 
-  /* Test string_desc_quotearg_n.  */
+  /* Test sd_quotearg_n.  */
   {
-    char *ret = string_desc_quotearg_n (1, s2);
+    char *ret = sd_quotearg_n (1, s2);
     ASSERT (memcmp (ret, "Thequickbrownfox", 16 + 1) == 0);
   }
 
-  /* Test string_desc_quotearg.  */
+  /* Test sd_quotearg.  */
   {
-    char *ret = string_desc_quotearg (s2);
+    char *ret = sd_quotearg (s2);
     ASSERT (memcmp (ret, "Thequickbrownfox", 16 + 1) == 0);
   }
 
-  /* Test string_desc_quotearg_n_style.  */
+  /* Test sd_quotearg_n_style.  */
   {
-    char *ret = string_desc_quotearg_n_style (1, clocale_quoting_style, s2);
+    char *ret = sd_quotearg_n_style (1, clocale_quoting_style, s2);
     ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0
             || /* if the locale has UTF-8 encoding */
                memcmp (ret, "\342\200\230The\\0quick\\0brown\\0\\0fox\\0\342\200\231", 32 + 1) == 0);
   }
 
-  /* Test string_desc_quotearg_style.  */
+  /* Test sd_quotearg_style.  */
   {
-    char *ret = string_desc_quotearg_style (clocale_quoting_style, s2);
+    char *ret = sd_quotearg_style (clocale_quoting_style, s2);
     ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0
             || /* if the locale has UTF-8 encoding */
                memcmp (ret, "\342\200\230The\\0quick\\0brown\\0\\0fox\\0\342\200\231", 32 + 1) == 0);
   }
 
-  /* Test string_desc_quotearg_char.  */
+  /* Test sd_quotearg_char.  */
   {
-    char *ret = string_desc_quotearg_char (s1, ' ');
+    char *ret = sd_quotearg_char (s1, ' ');
     ASSERT (memcmp (ret, "Hello world!", 12 + 1) == 0); /* ' ' not quoted?! */
   }
 
-  /* Test string_desc_quotearg_colon.  */
+  /* Test sd_quotearg_colon.  */
   {
-    char *ret = string_desc_quotearg_colon (string_desc_from_c ("a:b"));
+    char *ret = sd_quotearg_colon (sd_from_c ("a:b"));
     ASSERT (memcmp (ret, "a:b", 3 + 1) == 0); /* ':' not quoted?! */
   }
 
-  /* Test string_desc_quotearg_n_custom.  */
+  /* Test sd_quotearg_n_custom.  */
   {
-    char *ret = string_desc_quotearg_n_custom (2, "<", ">", s1);
+    char *ret = sd_quotearg_n_custom (2, "<", ">", s1);
     ASSERT (memcmp (ret, "<Hello world!>", 14 + 1) == 0);
   }
 
-  /* Test string_desc_quotearg_n_custom.  */
+  /* Test sd_quotearg_n_custom.  */
   {
-    char *ret = string_desc_quotearg_custom ("[[", "]]", s1);
+    char *ret = sd_quotearg_custom ("[[", "]]", s1);
     ASSERT (memcmp (ret, "[[Hello world!]]", 16 + 1) == 0);
   }
 

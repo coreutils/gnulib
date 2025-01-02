@@ -101,13 +101,13 @@ sb_append1 (struct string_buffer *buffer, char c)
 int
 sb_append_desc (struct string_buffer *buffer, string_desc_t s)
 {
-  size_t len = string_desc_length (s);
+  size_t len = sd_length (s);
   if (sb_ensure_more_bytes (buffer, len) < 0)
     {
       buffer->error = true;
       return -1;
     }
-  memcpy (buffer->data + buffer->length, string_desc_data (s), len);
+  memcpy (buffer->data + buffer->length, sd_data (s), len);
   buffer->length += len;
   return 0;
 }
@@ -136,7 +136,7 @@ sb_free (struct string_buffer *buffer)
 string_desc_t
 sb_contents (struct string_buffer *buffer)
 {
-  return string_desc_new_addr (buffer->length, buffer->data);
+  return sd_new_addr (buffer->length, buffer->data);
 }
 
 const char *
@@ -162,7 +162,7 @@ sb_dupfree (struct string_buffer *buffer)
       if (copy == NULL)
         goto fail;
       memcpy (copy, buffer->data, length);
-      return string_desc_new_addr (length, copy);
+      return sd_new_addr (length, copy);
     }
   else
     {
@@ -174,12 +174,12 @@ sb_dupfree (struct string_buffer *buffer)
           if (contents == NULL)
             goto fail;
         }
-      return string_desc_new_addr (length, contents);
+      return sd_new_addr (length, contents);
     }
 
  fail:
   sb_free (buffer);
-  return string_desc_new_addr (0, NULL);
+  return sd_new_addr (0, NULL);
 }
 
 char *

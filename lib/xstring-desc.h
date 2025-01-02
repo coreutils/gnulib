@@ -43,53 +43,53 @@ extern "C" {
 
 /* Return a string of length N, with uninitialized contents.  */
 #if 0 /* Defined inline below.  */
-extern string_desc_t xstring_desc_new (idx_t n);
+extern string_desc_t xsd_new (idx_t n);
 #endif
 
 /* Return a string of length N, filled with C.  */
 #if 0 /* Defined inline below.  */
-extern string_desc_t xstring_desc_new_filled (idx_t n, char c);
+extern string_desc_t xsd_new_filled (idx_t n, char c);
 #endif
 
 /* Return a copy of string S.  */
 #if 0 /* Defined inline below.  */
-extern string_desc_t xstring_desc_copy (string_desc_t s);
+extern string_desc_t xsd_copy (string_desc_t s);
 #endif
 
 /* Return the concatenation of N strings.  N must be > 0.  */
-extern string_desc_t xstring_desc_concat (idx_t n, string_desc_t string1, ...);
+extern string_desc_t xsd_concat (idx_t n, string_desc_t string1, ...);
 
 /* Construct and return a copy of string S, as a NUL-terminated C string.  */
 #if 0 /* Defined inline below.  */
-extern char * xstring_desc_c (string_desc_t s) _GL_ATTRIBUTE_DEALLOC_FREE;
+extern char * xsd_c (string_desc_t s) _GL_ATTRIBUTE_DEALLOC_FREE;
 #endif
 
 
 /* ==== Inline function definitions ==== */
 
 GL_XSTRING_DESC_INLINE string_desc_t
-xstring_desc_new (idx_t n)
+xsd_new (idx_t n)
 {
   string_desc_t result;
-  if (string_desc_new (&result, n) < 0)
+  if (sd_new (&result, n) < 0)
     xalloc_die ();
   return result;
 }
 
 GL_XSTRING_DESC_INLINE string_desc_t
-xstring_desc_new_filled (idx_t n, char c)
+xsd_new_filled (idx_t n, char c)
 {
   string_desc_t result;
-  if (string_desc_new_filled (&result, n, c) < 0)
+  if (sd_new_filled (&result, n, c) < 0)
     xalloc_die ();
   return result;
 }
 
 GL_XSTRING_DESC_INLINE string_desc_t
-xstring_desc_copy (string_desc_t s)
+xsd_copy (string_desc_t s)
 {
   string_desc_t result;
-  if (string_desc_copy (&result, s) < 0)
+  if (sd_copy (&result, s) < 0)
     xalloc_die ();
   return result;
 }
@@ -97,9 +97,9 @@ xstring_desc_copy (string_desc_t s)
 GL_XSTRING_DESC_INLINE
 _GL_ATTRIBUTE_DEALLOC_FREE
 char *
-xstring_desc_c (string_desc_t s)
+xsd_c (string_desc_t s)
 {
-  char *result = string_desc_c (s);
+  char *result = sd_c (s);
   if (result == NULL)
     xalloc_die ();
   return result;

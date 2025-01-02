@@ -31,7 +31,7 @@
    which — depending on platforms — costs up to 2 KB of binary code.  */
 
 ptrdiff_t
-string_desc_contains (string_desc_t haystack, string_desc_t needle)
+sd_contains (string_desc_t haystack, string_desc_t needle)
 {
   if (needle._nbytes == 0)
     return 0;

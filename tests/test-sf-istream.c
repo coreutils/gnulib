@@ -91,8 +91,8 @@ main ()
   {
     sf_istream_t stream;
     sf_istream_init_from_string_desc (&stream,
-                                      string_desc_new_addr (CONTENTS_LEN,
-                                                            (char *) contents));
+                                      sd_new_addr (CONTENTS_LEN,
+                                                   (char *) contents));
     test_open_stream (&stream);
     sf_free (&stream);
   }

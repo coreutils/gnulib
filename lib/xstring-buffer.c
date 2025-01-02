@@ -59,10 +59,10 @@ sb_xdupfree (struct string_buffer *buffer)
   if (buffer->error)
     {
       sb_free (buffer);
-      return string_desc_new_addr (0, NULL);
+      return sd_new_addr (0, NULL);
     }
   string_desc_t contents = sb_dupfree (buffer);
-  if (string_desc_data (contents) == NULL)
+  if (sd_data (contents) == NULL)
     xalloc_die ();
   return contents;
 }

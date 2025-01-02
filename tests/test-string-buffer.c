@@ -63,19 +63,19 @@ main ()
     sb_append1 (&buffer, '\377');
     {
       string_desc_t sd = sb_contents (&buffer);
-      ASSERT (string_desc_length (sd) == 2);
-      ASSERT (string_desc_char_at (sd, 0) == 'x');
-      ASSERT (string_desc_char_at (sd, 1) == '\377');
+      ASSERT (sd_length (sd) == 2);
+      ASSERT (sd_char_at (sd, 0) == 'x');
+      ASSERT (sd_char_at (sd, 1) == '\377');
     }
     sb_append1 (&buffer, '\0');
     sb_append1 (&buffer, 'z');
     {
       string_desc_t sd = sb_contents (&buffer);
-      ASSERT (string_desc_length (sd) == 4);
-      ASSERT (string_desc_char_at (sd, 0) == 'x');
-      ASSERT (string_desc_char_at (sd, 1) == '\377');
-      ASSERT (string_desc_char_at (sd, 2) == '\0');
-      ASSERT (string_desc_char_at (sd, 3) == 'z');
+      ASSERT (sd_length (sd) == 4);
+      ASSERT (sd_char_at (sd, 0) == 'x');
+      ASSERT (sd_char_at (sd, 1) == '\377');
+      ASSERT (sd_char_at (sd, 2) == '\0');
+      ASSERT (sd_char_at (sd, 3) == 'z');
     }
     char *s = sb_dupfree_c (&buffer);
     ASSERT (s != NULL && memcmp (s, "x\377\0z\0", 5) == 0);
@@ -109,7 +109,7 @@ main ()
 
     sb_init (&buffer);
     sb_append_c (&buffer, "abc");
-    sb_append_desc (&buffer, string_desc_new_addr (5, "de\0fg"));
+    sb_append_desc (&buffer, sd_new_addr (5, "de\0fg"));
     sb_append_c (&buffer, "hij");
     char *s = sb_dupfree_c (&buffer);
     ASSERT (s != NULL && memcmp (s, "abcde\0fghij", 12) == 0);

@@ -90,10 +90,10 @@ would not work for strings longer than @code{INT_MAX} bytes.
 Therefore Gnulib offers
 @itemize
 @item
-a function @code{string_desc_fwrite} that outputs a string descriptor to
+a function @code{sd_fwrite} that outputs a string descriptor to
 a @code{FILE} stream,
 @item
-a function @code{string_desc_write} that outputs a string descriptor to
+a function @code{sd_write} that outputs a string descriptor to
 a file descriptor,
 @item
 and for those applications where the NUL characters should become

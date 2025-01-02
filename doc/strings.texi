@@ -402,7 +402,7 @@ and in Gnulib.
 @item @code{strlen}
 @tab @code{strlen}
 @tab @code{mbslen}
-@tab @code{string_desc_length}
+@tab @code{sd_length}
 @tab @code{wcslen}
 @tab @code{u32_strlen}
 
@@ -416,7 +416,7 @@ and in Gnulib.
 @item @code{strcmp}
 @tab @code{strcmp}
 @tab @code{strcmp}
-@tab @code{string_desc_cmp}
+@tab @code{sd_cmp}
 @tab @code{wcscmp}
 @tab @code{u32_strcmp}
 
@@ -458,21 +458,21 @@ and in Gnulib.
 @item @code{strchr}
 @tab @code{strchr}
 @tab @code{mbschr}
-@tab @code{string_desc_index}
+@tab @code{sd_index}
 @tab @code{wcschr}
 @tab @code{u32_strchr}
 
 @item @code{strrchr}
 @tab @code{strrchr}
 @tab @code{mbsrchr}
-@tab @code{string_desc_last_index}
+@tab @code{sd_last_index}
 @tab @code{wcsrchr}
 @tab @code{u32_strrchr}
 
 @item @code{strstr}
 @tab @code{strstr}
 @tab @code{mbsstr}
-@tab @code{string_desc_contains}
+@tab @code{sd_contains}
 @tab @code{wcsstr}
 @tab @code{u32_strstr}
 
@@ -521,7 +521,7 @@ and in Gnulib.
 @item @code{strcpy}
 @tab @code{strcpy}
 @tab @code{strcpy}
-@tab @code{string_desc_copy}
+@tab @code{sd_copy}
 @tab @code{wcscpy}
 @tab @code{u32_strcpy}
 
@@ -549,7 +549,7 @@ and in Gnulib.
 @item @code{strcat}
 @tab @code{strcat}
 @tab @code{strcat}
-@tab @code{string_desc_concat}
+@tab @code{sd_concat}
 @tab @code{wcscat}
 @tab @code{u32_strcat}
 
@@ -563,14 +563,14 @@ and in Gnulib.
 @item @code{free}
 @tab @code{free}
 @tab @code{free}
-@tab @code{string_desc_free}
+@tab @code{sd_free}
 @tab @code{free}
 @tab @code{free}
 
 @item @code{strdup}
 @tab @code{strdup}
 @tab @code{strdup}
-@tab @code{string_desc_copy}
+@tab @code{sd_copy}
 @tab @code{wcsdup}
 @tab @code{u32_strdup}
 

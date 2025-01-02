@@ -46,8 +46,8 @@ sf_istream_init_from_string_desc (sf_istream_t *stream,
                                   string_desc_t input)
 {
   stream->fp = NULL;
-  stream->input = string_desc_data (input);
-  stream->input_end = stream->input + string_desc_length (input);
+  stream->input = sd_data (input);
+  stream->input_end = stream->input + sd_length (input);
 }
 
 int

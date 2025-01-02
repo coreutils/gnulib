@@ -28,53 +28,53 @@
 int
 main (void)
 {
-  string_desc_t s0 = string_desc_new_empty ();
-  string_desc_t s1 = string_desc_from_c ("Hello world!");
-  string_desc_t s2 = string_desc_new_addr (21, "The\0quick\0brown\0\0fox");
+  string_desc_t s0 = sd_new_empty ();
+  string_desc_t s1 = sd_from_c ("Hello world!");
+  string_desc_t s2 = sd_new_addr (21, "The\0quick\0brown\0\0fox");
 
-  /* Test xstring_desc_new.  */
-  string_desc_t s4 = xstring_desc_new (5);
-  string_desc_set_char_at (s4, 0, 'H');
-  string_desc_set_char_at (s4, 4, 'o');
-  string_desc_set_char_at (s4, 1, 'e');
-  string_desc_fill (s4, 2, 4, 'l');
-  ASSERT (string_desc_length (s4) == 5);
-  ASSERT (string_desc_startswith (s1, s4));
+  /* Test xsd_new.  */
+  string_desc_t s4 = xsd_new (5);
+  sd_set_char_at (s4, 0, 'H');
+  sd_set_char_at (s4, 4, 'o');
+  sd_set_char_at (s4, 1, 'e');
+  sd_fill (s4, 2, 4, 'l');
+  ASSERT (sd_length (s4) == 5);
+  ASSERT (sd_startswith (s1, s4));
 
-  /* Test xstring_desc_new_filled.  */
-  string_desc_t s5 = xstring_desc_new_filled (5, 'l');
-  string_desc_set_char_at (s5, 0, 'H');
-  string_desc_set_char_at (s5, 4, 'o');
-  string_desc_set_char_at (s5, 1, 'e');
-  ASSERT (string_desc_length (s5) == 5);
-  ASSERT (string_desc_startswith (s1, s5));
+  /* Test xsd_new_filled.  */
+  string_desc_t s5 = xsd_new_filled (5, 'l');
+  sd_set_char_at (s5, 0, 'H');
+  sd_set_char_at (s5, 4, 'o');
+  sd_set_char_at (s5, 1, 'e');
+  ASSERT (sd_length (s5) == 5);
+  ASSERT (sd_startswith (s1, s5));
 
-  /* Test xstring_desc_copy.  */
+  /* Test xsd_copy.  */
   {
-    string_desc_t s6 = xstring_desc_copy (s0);
-    ASSERT (string_desc_is_empty (s6));
-    string_desc_free (s6);
+    string_desc_t s6 = xsd_copy (s0);
+    ASSERT (sd_is_empty (s6));
+    sd_free (s6);
   }
   {
-    string_desc_t s6 = xstring_desc_copy (s2);
-    ASSERT (string_desc_equals (s6, s2));
-    string_desc_free (s6);
+    string_desc_t s6 = xsd_copy (s2);
+    ASSERT (sd_equals (s6, s2));
+    sd_free (s6);
   }
 
-  /* Test xstring_desc_concat.  */
+  /* Test xsd_concat.  */
   {
     string_desc_t s8 =
-      xstring_desc_concat (3, string_desc_new_addr (10, "The\0quick"),
-                              string_desc_new_addr (7, "brown\0"),
-                              string_desc_new_addr (4, "fox"),
-                              string_desc_new_addr (7, "unused"));
-    ASSERT (string_desc_equals (s8, s2));
-    string_desc_free (s8);
+      xsd_concat (3, sd_new_addr (10, "The\0quick"),
+                     sd_new_addr (7, "brown\0"),
+                     sd_new_addr (4, "fox"),
+                     sd_new_addr (7, "unused"));
+    ASSERT (sd_equals (s8, s2));
+    sd_free (s8);
   }
 
-  /* Test xstring_desc_c.  */
+  /* Test xsd_c.  */
   {
-    char *ptr = xstring_desc_c (s2);
+    char *ptr = xsd_c (s2);
     ASSERT (ptr != NULL);
     ASSERT (memcmp (ptr, "The\0quick\0brown\0\0fox\0", 22) == 0);
     free (ptr);

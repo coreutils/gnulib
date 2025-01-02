@@ -22,7 +22,7 @@
 #include "ialloc.h"
 
 string_desc_t
-xstring_desc_concat (idx_t n, string_desc_t string1, ...)
+xsd_concat (idx_t n, string_desc_t string1, ...)
 {
   if (n <= 0)
     /* Invalid argument.  */
