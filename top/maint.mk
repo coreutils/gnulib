@@ -1516,13 +1516,12 @@ vc-diff-check:
 rel-files = $(DIST_ARCHIVES)
 
 gnulib-version ?= \
-  $$(if test -e $(gnulib_dir)/.git; then				\
+  $$(head -c11 $(gnulib_dir)/ChangeLog;					\
+     if test -e $(gnulib_dir)/.git; then				\
        git -C $(gnulib_dir) rev-parse HEAD;				\
      elif test -f $(srcdir)/bootstrap.conf; then			\
        perl -lne '/^\s*GNULIB_REVISION=(\S+)/ and $$d=$$1;'		\
          -e 'END{defined $$d and print $$d}' $(srcdir)/bootstrap.conf;	\
-     else								\
-       head -1 $(gnulib_dir)/ChangeLog | sed -e 's/ .*//;q ';		\
      fi)
 bootstrap-tools ?= autoconf,automake,gnulib
 
@@ -1578,8 +1577,8 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --srcdir=$(srcdir)						\
 	    --news=$(srcdir)/NEWS					\
 	    --bootstrap-tools=$(bootstrap-tools)			\
-	    $$(case ,$(bootstrap-tools), in (*,gnulib,*)		\
-	       echo --gnulib-version=$(gnulib-version);; esac)		\
+	    "$$(case ,$(bootstrap-tools), in (*,gnulib,*)		\
+	       echo --gnulib-version=$(gnulib-version);; esac)"		\
 	    $(addprefix --url-dir=, $(url_dir_list))			\
 	    $(announce_gen_args)
 
