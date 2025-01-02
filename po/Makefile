@@ -13,6 +13,13 @@ $(DOMAIN).pot: force
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
 	  $(XGETTEXT_OPTIONS) \
 	  `cd .. && find lib '(' -name '*.c' -o -name '*.h' -o -name '*.y' ')' | LC_ALL=C sort`
-	mv $(DOMAIN).po $(DOMAIN).pot
+# We cannot use the usual comment
+# "This file is distributed under the same license as the GNU gnulib package."
+# here, because gnulib is not under a single license. Instead, use a comment
+# "This file is distributed under the LGPLv2+ license."
+# This comment is agreed-upon with the Translation Project.
+	sed -e 's/^# This file is distributed under the same license.*/# This file is distributed under the LGPLv2+ license./' < $(DOMAIN).po > $(DOMAIN).po1
+	mv $(DOMAIN).po1 $(DOMAIN).pot
+	rm -f $(DOMAIN).po
 
 force:
