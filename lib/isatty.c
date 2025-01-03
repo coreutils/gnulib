@@ -130,8 +130,7 @@ static BOOL IsCygwinConsoleHandle (HANDLE h)
              or higher.  */
           if (QueryFullProcessImageNameFunc (processHandle, 0, buf, &bufsize))
             {
-              if (strlen (buf) >= 11
-                  && strcmp (buf + strlen (buf) - 11, "\\mintty.exe") == 0)
+              if (str_endswith (buf, "\\mintty.exe"))
                 result = TRUE;
             }
           CloseHandle (processHandle);

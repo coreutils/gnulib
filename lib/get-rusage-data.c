@@ -174,9 +174,8 @@ get_rusage_data_via_setrlimit (void)
     struct utsname buf;
 
     if (uname (&buf) == 0
-        && strlen (buf.release) >= 5
-        && (strcmp (buf.release + strlen (buf.release) - 5, "11.00") == 0
-            || strcmp (buf.release + strlen (buf.release) - 5, "11.11") == 0))
+        && (str_endswith (buf.release, "11.00")
+            || str_endswith (buf.release, "11.11")))
       return 0;
   }
 #  endif

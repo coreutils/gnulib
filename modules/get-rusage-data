@@ -12,6 +12,7 @@ unistd-h
 extensions
 getpagesize
 vma-iter
+str_endswith
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([sbrk setrlimit])

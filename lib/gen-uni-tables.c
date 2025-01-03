@@ -219,7 +219,7 @@ fill_attributes (const char *unicodedata_filename)
       i = strtoul (field0, NULL, 16);
       if (field1[0] == '<'
           && strlen (field1) >= 9
-          && strcmp (field1 + strlen (field1) - 8, ", First>") == 0)
+          && str_endswith (field1, ", First>"))
         {
           /* Deal with a range. */
           lineno++;
@@ -246,7 +246,7 @@ fill_attributes (const char *unicodedata_filename)
             }
           if (!(field1[0] == '<'
                 && strlen (field1) >= 8
-                && strcmp (field1 + strlen (field1) - 7, ", Last>") == 0))
+                && str_endswith (field1, ", Last>")))
             {
               fprintf (stderr, "missing end range in '%s':%d\n",
                        unicodedata_filename, lineno);

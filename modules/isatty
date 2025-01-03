@@ -9,6 +9,7 @@ Depends-on:
 unistd-h
 msvc-inval      [test $REPLACE_ISATTY = 1]
 msvc-nothrow    [test $REPLACE_ISATTY = 1]
+str_endswith    [test $REPLACE_ISATTY = 1]
 
 configure.ac:
 gl_FUNC_ISATTY
