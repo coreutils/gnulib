@@ -1327,6 +1327,16 @@ _GL_EXTERN_C int mbs_startswith (const char *string, const char *prefix)
 # define mbs_startswith str_startswith
 #endif
 
+#if @GNULIB_MBS_ENDSWITH@
+/* Returns true if STRING ends with SUFFIX.
+   Returns false otherwise.
+   Unlike str_endswith(), this function works correctly in multibyte locales.
+ */
+_GL_EXTERN_C int mbs_endswith (const char *string, const char *suffix)
+     _GL_ATTRIBUTE_PURE
+     _GL_ARG_NONNULL ((1, 2));
+#endif
+
 /* Map any int, typically from errno, into an error message.  */
 #if @GNULIB_STRERROR@
 # if @REPLACE_STRERROR@

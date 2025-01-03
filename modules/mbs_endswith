@@ -1,0 +1,26 @@
+Description:
+mbs_endswith() function: test whether a multibyte string ends with a given suffix.
+
+Files:
+lib/mbs_endswith.c
+
+Depends-on:
+string-h
+str_endswith
+mbslen
+mbiter
+
+configure.ac:
+gl_STRING_MODULE_INDICATOR([mbs_endswith])
+
+Makefile.am:
+lib_SOURCES += mbs_endswith.c
+
+Include:
+<string.h>
+
+License:
+LGPL
+
+Maintainer:
+all
