@@ -1,0 +1,11 @@
+Files:
+tests/test-str_endswith.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-str_endswith
+check_PROGRAMS += test-str_endswith
