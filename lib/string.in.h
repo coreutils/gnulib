@@ -1085,6 +1085,14 @@ _GL_EXTERN_C int str_startswith (const char *string, const char *prefix)
      _GL_ARG_NONNULL ((1, 2));
 #endif
 
+#if @GNULIB_STR_ENDSWITH@
+/* Returns true if STRING ends with SUFFIX.
+   Returns false otherwise.  */
+_GL_EXTERN_C int str_endswith (const char *string, const char *prefix)
+     _GL_ATTRIBUTE_PURE
+     _GL_ARG_NONNULL ((1, 2));
+#endif
+
 #if @GNULIB_MBSLEN@
 /* Return the number of multibyte characters in the character string STRING.
    This considers multibyte characters, unlike strlen, which counts bytes.  */
