@@ -7,6 +7,7 @@ Depends-on:
 ignore-value
 same-inode
 symlink
+str_endswith
 
 configure.ac:
 

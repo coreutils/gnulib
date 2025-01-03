@@ -178,8 +178,7 @@ main (void)
     ASSERT (result1 != NULL);
     ASSERT (result2 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/tra"),
-                    "/" BASE "/tra") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/tra"));
     free (result1);
     free (result2);
   }
@@ -194,8 +193,7 @@ main (void)
     ASSERT (result3 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/lum"),
-                    "/" BASE "/lum") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/lum"));
     free (result1);
     free (result2);
     free (result3);

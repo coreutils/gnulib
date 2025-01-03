@@ -41,7 +41,7 @@ main (void)
   /* With the legacy system settings, expect some mixed locale, due to the
      limitations of the native setlocale().
      With the modern system settings, expect some "ll_CC.UTF-8" name.  */
-  if (!((strlen (name) > 6 && strcmp (name + strlen (name) - 6, ".UTF-8") == 0)
+  if (!((strlen (name) > 6 && str_endswith (name, ".UTF-8"))
         || strcmp (name, "LC_COLLATE=English_United States.65001;"
                          "LC_CTYPE=English_United States.65001;"
                          "LC_MONETARY=English_United States.65001;"

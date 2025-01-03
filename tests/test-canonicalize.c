@@ -204,8 +204,7 @@ main (void)
   {
     char *result1 = canonicalize_filename_mode (BASE "/huk", CAN_NOLINKS);
     ASSERT (result1 != NULL);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/huk"),
-                    "/" BASE "/huk") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/huk"));
     free (result1);
   }
 
@@ -219,8 +218,7 @@ main (void)
     ASSERT (result3 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/tra"),
-                    "/" BASE "/tra") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/tra"));
     free (result1);
     free (result2);
     free (result3);
@@ -239,8 +237,7 @@ main (void)
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
     ASSERT (strcmp (result3, result4) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/lum"),
-                    "/" BASE "/lum") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/lum"));
     free (result1);
     free (result2);
     free (result3);
@@ -330,8 +327,7 @@ main (void)
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
     ASSERT (strcmp (result3, result4) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/zzz"),
-                    "/" BASE "/zzz") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/zzz"));
     free (result1);
     free (result2);
     free (result3);
@@ -351,8 +347,7 @@ main (void)
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
     ASSERT (strcmp (result3, result4) == 0);
-    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/wum"),
-                    "/" BASE "/wum") == 0);
+    ASSERT (str_endswith (result1, "/" BASE "/wum"));
     free (result1);
     free (result2);
     free (result3);
@@ -365,7 +360,7 @@ main (void)
     char *result2 = canonicalize_filename_mode ("t-can.zzz/zzz", CAN_MISSING);
     ASSERT (result1 == NULL);
     ASSERT (result2 != NULL);
-    ASSERT (strcmp (result2 + strlen (result2) - 14, "/t-can.zzz/zzz") == 0);
+    ASSERT (str_endswith (result2, "/t-can.zzz/zzz"));
     free (result2);
   }
 

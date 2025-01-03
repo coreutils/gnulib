@@ -18,6 +18,7 @@ m4/windows-rc.m4
 
 Depends-on:
 strdup
+str_endswith
 test-xfail
 
 configure.ac:
