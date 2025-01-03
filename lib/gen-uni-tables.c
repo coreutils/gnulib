@@ -776,7 +776,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "\n");
   output_library_license (stream,
                           strcmp (filename, "unictype/categ_M.h") == 0
-                          || strncmp (filename, "unictype/ctype_", 15) == 0
+                          || str_startswith (filename, "unictype/ctype_")
                           || strcmp (filename, "uniwidth/width2.h") == 0);
   fprintf (stream, "\n");
 
@@ -3883,7 +3883,7 @@ is_property_composite (unsigned int ch)
           if (decomp[0] == ' ')
             decomp++;
         }
-      return strchr (decomp, ' ') != NULL && strncmp (decomp, "0020 ", 5) != 0;
+      return strchr (decomp, ' ') != NULL && str_startswith (decomp, "0020 ");
     }
   return false;
 }
@@ -6827,7 +6827,7 @@ is_nonspacing (unsigned int ch)
               || is_category_Cc (ch)
               || (is_category_Cf (ch)
                   && !is_property_prepended_concatenation_mark (ch))
-              || strncmp (unicode_attributes[ch].name, "ZERO WIDTH ", 11) == 0
+              || str_startswith (unicode_attributes[ch].name, "ZERO WIDTH ")
               || (ch >= 0x1160 && ch <= 0x11A7) || (ch >= 0xD7B0 && ch <= 0xD7C6) /* jungseong */
               || (ch >= 0x11A8 && ch <= 0x11FF) || (ch >= 0xD7CB && ch <= 0xD7FB) /* jongseong */
          )   );

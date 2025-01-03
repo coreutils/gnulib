@@ -1163,9 +1163,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
               printf ("GIT_REFLOG_ACTION=|%s|\n", var);
               #endif
               if (var != NULL
-                  && ((strncmp (var, "pull", 4) == 0
+                  && ((str_startswith (var, "pull")
                        && c_strstr (var, " --rebase") == NULL)
-                      || strncmp (var, "merge origin", 12) == 0))
+                      || str_startswith (var, "merge origin")))
                 downstream = true;
               else
                 {
