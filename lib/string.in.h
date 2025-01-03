@@ -1077,6 +1077,14 @@ _GL_WARN_ON_USE (strtok_r, "strtok_r is unportable - "
 /* The following functions are not specified by POSIX.  They are gnulib
    extensions.  */
 
+#if @GNULIB_STR_STARTSWITH@
+/* Returns true if STRING starts with PREFIX.
+   Returns false otherwise.  */
+_GL_EXTERN_C int str_startswith (const char *string, const char *prefix)
+     _GL_ATTRIBUTE_PURE
+     _GL_ARG_NONNULL ((1, 2));
+#endif
+
 #if @GNULIB_MBSLEN@
 /* Return the number of multibyte characters in the character string STRING.
    This considers multibyte characters, unlike strlen, which counts bytes.  */

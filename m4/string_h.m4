@@ -1,5 +1,5 @@
 # string_h.m4
-# serial 39
+# serial 40
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,6 +70,7 @@ AC_DEFUN([gl_STRING_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRSTR])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRCASESTR])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOK_R])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STR_STARTSWITH])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MBSLEN])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MBSNLEN])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MBSCHR])
