@@ -1,0 +1,22 @@
+Description:
+mbs_startswith() function: test whether a multibyte string starts with a given prefix.
+
+Files:
+
+Depends-on:
+string-h
+str_startswith
+
+configure.ac:
+gl_STRING_MODULE_INDICATOR([mbs_startswith])
+
+Makefile.am:
+
+Include:
+<string.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
