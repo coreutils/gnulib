@@ -33,7 +33,7 @@ SIGNATURE_CHECK (strsignal, char *, (int));
 /* In this case, we can guarantee some signal descriptions.
    But allow the actual result to be longer than the expected result.  */
 # define ASSERT_DESCRIPTION(actual, expected) \
-   ASSERT (strncmp (actual, expected, strlen (expected)) == 0)
+   ASSERT (str_startswith (actual, expected))
 #endif
 
 int

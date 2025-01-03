@@ -34,9 +34,9 @@ main (int argc, char *argv[])
   for (i = 1; i < argc; i++)
     {
       const char *arg = argv[i];
-      if (strncmp (arg, "--color=", 8) == 0)
+      if (str_startswith (arg, "--color="))
         handle_color_option (arg + 8);
-      else if (strncmp (arg, "--style=", 8) == 0)
+      else if (str_startswith (arg, "--style="))
         handle_style_option (arg + 8);
       else if (arg[0] == '-')
         {

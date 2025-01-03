@@ -3,6 +3,7 @@ tests/test-getprogname.c
 
 Depends-on:
 string-h
+str_startswith
 
 configure.ac:
 

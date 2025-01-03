@@ -36,7 +36,7 @@ main (void)
      with "lt-" (depends on the platform).  But the name of the temporary
      executable is a detail that should not be visible to the end user and to
      the test suite.  Remove this "lt-" prefix here.  */
-  if (strncmp (p, "lt-", 3) == 0)
+  if (str_startswith (p, "lt-"))
     p += 3;
 
   /* Note: You can make this test fail

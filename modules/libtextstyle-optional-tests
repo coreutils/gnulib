@@ -5,6 +5,7 @@ tests/test-libtextstyle-default.css
 Depends-on:
 c99
 isatty
+str_startswith
 
 configure.ac:
 gl_LIBTEXTSTYLE_OPTIONAL

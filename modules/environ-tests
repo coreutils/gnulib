@@ -2,6 +2,7 @@ Files:
 tests/test-environ.c
 
 Depends-on:
+str_startswith
 
 configure.ac:
 

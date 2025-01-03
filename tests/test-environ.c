@@ -35,7 +35,7 @@ main ()
 
   for (; (string = *remaining_variables) != NULL; remaining_variables++)
     {
-      if (strncmp (string, "PATH=", 5) == 0)
+      if (str_startswith (string, "PATH="))
         /* Found the PATH environment variable.  */
         return 0;
     }
