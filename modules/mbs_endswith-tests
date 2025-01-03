@@ -1,0 +1,30 @@
+Files:
+tests/test-mbs_endswith1.c
+tests/test-mbs_endswith2.sh
+tests/test-mbs_endswith2.c
+tests/test-mbs_endswith3.sh
+tests/test-mbs_endswith3.c
+tests/macros.h
+m4/locale-en.m4
+m4/locale-fr.m4
+m4/locale-zh.m4
+m4/codeset.m4
+
+Depends-on:
+setlocale
+
+configure.ac:
+gt_LOCALE_EN_UTF8
+gt_LOCALE_FR_UTF8
+gt_LOCALE_ZH_CN
+
+Makefile.am:
+TESTS += test-mbs_endswith1 test-mbs_endswith2.sh test-mbs_endswith3.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LOCALE_ZH_CN='@LOCALE_ZH_CN@'
+check_PROGRAMS += test-mbs_endswith1 test-mbs_endswith2 test-mbs_endswith3
+test_mbs_endswith1_LDADD = $(LDADD) $(LIBUNISTRING) $(MBRTOWC_LIB) $(LIBC32CONV)
+test_mbs_endswith2_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
+test_mbs_endswith3_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
