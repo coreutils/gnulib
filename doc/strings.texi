@@ -320,6 +320,8 @@ and in Gnulib.
 @mindex mbstok_r
 @mindex mbstowcs
 @mindex mbswidth
+@mindex mbs_endswith
+@mindex mbs_startswith
 @mindex stpcpy
 @mindex stpncpy
 @mindex strcase
@@ -343,8 +345,12 @@ and in Gnulib.
 @mindex strtoul
 @mindex strtoull
 @mindex strtoumax
+@mindex str_endswith
+@mindex str_startswith
 @mindex unicase/u32-casecmp
 @mindex unistr/u32-mbsnlen
+@mindex unistr/u32-endswith
+@mindex unistr/u32-startswith
 @mindex unistr/u32-stpcpy
 @mindex unistr/u32-stpncpy
 @mindex unistr/u32-strcat
@@ -482,6 +488,20 @@ and in Gnulib.
 @tab --
 @tab --
 @tab --
+
+@item @code{str_startswith}
+@tab @code{str_startswith}
+@tab @code{mbs_startswith}
+@tab --
+@tab --
+@tab @code{u32_startswith}
+
+@item @code{str_endswith}
+@tab @code{str_endswith}
+@tab @code{mbs_endswith}
+@tab --
+@tab --
+@tab @code{u32_endswith}
 
 @item @code{strspn}
 @tab @code{strspn}
