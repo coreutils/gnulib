@@ -492,14 +492,14 @@ and in Gnulib.
 @item @code{str_startswith}
 @tab @code{str_startswith}
 @tab @code{mbs_startswith}
-@tab --
+@tab @code{sd_startswith}
 @tab --
 @tab @code{u32_startswith}
 
 @item @code{str_endswith}
 @tab @code{str_endswith}
 @tab @code{mbs_endswith}
-@tab --
+@tab @code{sd_endswith}
 @tab --
 @tab @code{u32_endswith}
 
