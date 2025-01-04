@@ -489,12 +489,48 @@ and in Gnulib.
 @tab --
 @tab --
 
-@item @code{str_startswith}
-@tab @code{str_startswith}
-@tab @code{mbs_startswith}
-@tab @code{sd_startswith}
+@item
+@c Special hack, to make this table line look reasonable in info mode.
+@ifinfo
+@code{str_
+ startswith}
+@end ifinfo
+@ifnotinfo
+@code{str_startswith}
+@end ifnotinfo
+@tab
+@ifinfo
+@code{str_
+ startswith}
+@end ifinfo
+@ifnotinfo
+@code{str_startswith}
+@end ifnotinfo
+@tab
+@ifinfo
+@code{mbs_
+ startswith}
+@end ifinfo
+@ifnotinfo
+@code{mbs_startswith}
+@end ifnotinfo
+@tab
+@ifinfo
+@code{sd_
+ startswith}
+@end ifinfo
+@ifnotinfo
+@code{sd_startswith}
+@end ifnotinfo
 @tab --
-@tab @code{u32_startswith}
+@tab
+@ifinfo
+@code{u32_
+ startswith}
+@end ifinfo
+@ifnotinfo
+@code{u32_startswith}
+@end ifnotinfo
 
 @item @code{str_endswith}
 @tab @code{str_endswith}

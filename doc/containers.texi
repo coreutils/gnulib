@@ -44,7 +44,12 @@ to organize collections of application-defined objects.
 @mindex map
 @mindex omap
 
+@ifinfo
+@multitable @columnfractions .15 .45 .09 .15 .16
+@end ifinfo
+@ifnotinfo
 @multitable @columnfractions .15 .5 .1 .1 .15
+@end ifnotinfo
 @headitem Data type
 @tab Details
 @tab Module
@@ -106,6 +111,12 @@ the instance.
 
 The implementations and the guaranteed average performance for the operations
 for the ``sequential list'' data type are:
+
+@ifinfo
+@noindent
+Note: This table is overloaded in the @command{info}-formatted documentation.
+It is better viewable in the HTML-formatted documentation.
+@end ifinfo
 
 @multitable @columnfractions 0.2 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1
 @headitem Operation

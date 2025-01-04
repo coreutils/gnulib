@@ -526,6 +526,12 @@ The @code{<unitypes.h>} header file is provided by the module @code{unitypes-h}.
 @node <unictype.h> modules
 @subsubsection Declarations in <unictype.h>
 
+@ifinfo
+@noindent
+Note: This table is overloaded in the @command{info}-formatted documentation.
+It is better viewable in the HTML-formatted documentation.
+@end ifinfo
+
 @mindex unictype/category-L
 @mindex unictype/category-LC
 @mindex unictype/category-Lu
