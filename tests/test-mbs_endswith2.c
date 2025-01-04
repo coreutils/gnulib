@@ -62,5 +62,29 @@ main ()
   ASSERT (mbs_endswith ("\341\272\213\303\277\341\272\221", "\341\272\213\303\277\341\272\221")); /* "ẋÿẑ" "ẋÿẑ" */
   ASSERT (mbs_endswith ("\303\277\341\272\213\341\272\213\303\277\341\272\221", "\341\272\213\303\277\341\272\221")); /* "ÿẋẋÿẑ" "ẋÿẑ" */
 
+  /* Test cases with invalid or incomplete characters.  */
+
+  /* A valid character should not match an invalid character.  */
+  ASSERT (!mbs_endswith ("\303\247", "\301\247"));
+  ASSERT (!mbs_endswith ("\301\247", "\303\247"));
+
+  /* A valid character should not match an incomplete character.  */
+  ASSERT (!mbs_endswith ("\303\247", "\343\247"));
+  ASSERT (!mbs_endswith ("\343\247", "\303\247"));
+
+  /* An invalid character should not match an incomplete character.  */
+  ASSERT (!mbs_endswith ("\301\247", "\343\247"));
+  ASSERT (!mbs_endswith ("\343\247", "\301\247"));
+
+  /* Two invalid characters should match only if they are identical.  */
+  ASSERT (!mbs_endswith ("\301\246", "\301\247"));
+  ASSERT (!mbs_endswith ("\301\247", "\301\246"));
+  ASSERT (mbs_endswith ("\301\247", "\301\247"));
+
+  /* Two incomplete characters should match only if they are identical.  */
+  ASSERT (!mbs_endswith ("\343\246", "\343\247"));
+  ASSERT (!mbs_endswith ("\343\247", "\343\246"));
+  ASSERT (mbs_endswith ("\343\247", "\343\247"));
+
   return test_exit_status;
 }

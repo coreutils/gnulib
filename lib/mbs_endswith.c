@@ -23,8 +23,6 @@
 
 #include "mbiter.h"
 
-#include <stdlib.h>
-
 bool
 mbs_endswith (const char *string, const char *suffix)
 {
@@ -62,13 +60,15 @@ mbs_endswith (const char *string, const char *suffix)
           for (; len > n; len--)
             {
               if (!mbi_avail (iter))
-                abort ();
+                /* We can get here due to incomplete multibyte characters.  */
+                return false;
               mbi_advance (iter);
             }
           if (!mbi_avail (iter))
-            abort ();
+            /* We can get here due to incomplete multibyte characters.  */
+            return false;
           return strcmp (mbi_cur_ptr (iter), suffix) == 0;
         }
     }
-  return 0;
+  return false;
 }
