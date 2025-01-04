@@ -1080,7 +1080,7 @@ _GL_WARN_ON_USE (strtok_r, "strtok_r is unportable - "
 #if @GNULIB_STR_STARTSWITH@
 /* Returns true if STRING starts with PREFIX.
    Returns false otherwise.  */
-_GL_EXTERN_C int str_startswith (const char *string, const char *prefix)
+_GL_EXTERN_C bool str_startswith (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
 #endif
@@ -1088,7 +1088,7 @@ _GL_EXTERN_C int str_startswith (const char *string, const char *prefix)
 #if @GNULIB_STR_ENDSWITH@
 /* Returns true if STRING ends with SUFFIX.
    Returns false otherwise.  */
-_GL_EXTERN_C int str_endswith (const char *string, const char *prefix)
+_GL_EXTERN_C bool str_endswith (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
 #endif
@@ -1320,7 +1320,7 @@ _GL_EXTERN_C char * mbstok_r (char *restrict string, const char *delim,
 #if @GNULIB_MBS_STARTSWITH@
 /* Returns true if STRING starts with PREFIX.
    Returns false otherwise.  */
-_GL_EXTERN_C int mbs_startswith (const char *string, const char *prefix)
+_GL_EXTERN_C bool mbs_startswith (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
 /* No extra code is needed for multibyte locales for this function.  */
@@ -1332,7 +1332,7 @@ _GL_EXTERN_C int mbs_startswith (const char *string, const char *prefix)
    Returns false otherwise.
    Unlike str_endswith(), this function works correctly in multibyte locales.
  */
-_GL_EXTERN_C int mbs_endswith (const char *string, const char *suffix)
+_GL_EXTERN_C bool mbs_endswith (const char *string, const char *suffix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
 #endif

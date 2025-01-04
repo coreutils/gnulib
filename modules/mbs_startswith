@@ -5,6 +5,7 @@ Files:
 
 Depends-on:
 string-h
+bool
 str_startswith
 
 configure.ac:

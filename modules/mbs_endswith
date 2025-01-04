@@ -6,6 +6,7 @@ lib/mbs_endswith.c
 
 Depends-on:
 string-h
+bool
 str_endswith
 mbslen
 mbiter

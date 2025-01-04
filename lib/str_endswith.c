@@ -22,7 +22,7 @@
 #include <string.h>
 
 
-int
+bool
 str_endswith (const char *string, const char *suffix)
 {
   size_t len = strlen (string);

@@ -22,7 +22,7 @@
 #include <string.h>
 
 
-int
+bool
 str_startswith (const char *string, const char *prefix)
 {
   return strncmp (string, prefix, strlen (prefix)) == 0;

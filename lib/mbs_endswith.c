@@ -25,7 +25,7 @@
 
 #include <stdlib.h>
 
-int
+bool
 mbs_endswith (const char *string, const char *suffix)
 {
   if ((unsigned char) suffix[0] < 0x30)
