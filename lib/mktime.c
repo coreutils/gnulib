@@ -353,8 +353,8 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
   /* Ignore any tm_isdst request for timegm.  */
   int isdst = local ? tp->tm_isdst : 0;
 
-  /* 1 if the previous probe was DST.  */
-  int dst2 = 0;
+  /* True if the previous probe was DST.  */
+  bool dst2 = false;
 
   /* Ensure that mon is in range, and set year accordingly.  */
   int mon_remainder = mon % 12;
