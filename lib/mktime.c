@@ -355,9 +355,7 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
   int mday = tp->tm_mday;
   int mon = tp->tm_mon;
   int year_requested = tp->tm_year;
-
-  /* Ignore any tm_isdst request for timegm.  */
-  int isdst = local ? tp->tm_isdst : 0;
+  int isdst = tp->tm_isdst;
 
   /* True if the previous probe was DST.  */
   bool dst2 = false;
@@ -449,12 +447,9 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 
 	 Heuristic: probe the adjacent timestamps in both directions,
 	 looking for the desired isdst.  If none is found within a
-	 reasonable duration bound, assume a one-hour DST difference.
+	 reasonable duration bound, ignore the disagreement.
 	 This should work for all real time zone histories in the tz
 	 database.  */
-
-      /* +1 if we wanted standard time but got DST, -1 if the reverse.  */
-      int dst_difference = (isdst == 0) - (tm.tm_isdst == 0);
 
       /* Distance between probes when looking for a DST boundary.  In
 	 tzdata2003a, the shortest period of DST is 601200 seconds
@@ -465,21 +460,17 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 	 periods when probing.  */
       int stride = 601200;
 
-      /* In TZDB 2021e, the longest period of DST (or of non-DST), in
-	 which the DST (or adjacent DST) difference is not one hour,
-	 is 457243209 seconds: e.g., America/Cambridge_Bay with leap
-	 seconds, starting 1965-10-31 00:00 in a switch from
-	 double-daylight time (-05) to standard time (-07), and
-	 continuing to 1980-04-27 02:00 in a switch from standard time
-	 (-07) to daylight time (-06).  */
-      int duration_max = 457243209;
-
-      /* Search in both directions, so the maximum distance is half
-	 the duration; add the stride to avoid off-by-1 problems.  */
-      int delta_bound = duration_max / 2 + stride;
+      /* Do not probe too far away from the requested time,
+         by striding until at least a year has passed, but then giving up.
+         This helps avoid unexpected results in (for example) Asia/Kolkata,
+         for which today's users expect to see no DST even though it
+         did observe DST long ago.  */
+      int year_seconds_bound = 366 * 24 * 60 * 60 + 1;
+      int delta_bound = year_seconds_bound + stride;
 
       int delta, direction;
 
+      /* Search in both directions, closest first.  */
       for (delta = stride; delta < delta_bound; delta += stride)
 	for (direction = -1; direction <= 1; direction += 2)
 	  {
@@ -509,13 +500,8 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 	      }
 	  }
 
-      /* No unusual DST offset was found nearby.  Assume one-hour DST.  */
-      t += 60 * 60 * dst_difference;
-      if (mktime_min <= t && t <= mktime_max && __tz_convert (t, local, &tm))
-	goto offset_found;
-
-      __set_errno (EOVERFLOW);
-      return -1;
+      /* No probe with the requested tm_isdst was found nearby.
+         Ignore the requested tm_isdst.  */
     }
 
  offset_found:
