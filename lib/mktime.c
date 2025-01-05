@@ -101,8 +101,8 @@ my_tzset (void)
   tzset ();
 # endif
 }
-# undef __tzset
-# define __tzset() my_tzset ()
+# undef tzset
+# define tzset() my_tzset ()
 #endif
 
 #if defined _LIBC || NEED_MKTIME_WORKING || NEED_MKTIME_INTERNAL
@@ -540,12 +540,8 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 __time64_t
 __mktime64 (struct tm *tp)
 {
-# ifdef _LIBC
   __libc_lock_lock (__tzset_lock);
   __tzset_unlocked ();
-# else
-  __tzset ();
-# endif
 
 # if defined _LIBC || NEED_MKTIME_WORKING
   static mktime_offset_t localtime_offset;
@@ -555,10 +551,7 @@ __mktime64 (struct tm *tp)
   __time64_t result = mktime (tp);
 # endif
 
-# ifdef _LIBC
   __libc_lock_unlock (__tzset_lock);
-# endif
-
   return result;
 }
 #endif /* _LIBC || NEED_MKTIME_WORKING || NEED_MKTIME_WINDOWS */
