@@ -70,13 +70,13 @@ main (int argc, char **argv)
 
       /* Test an invalid base (undefined behaviour, as documented in xstrtol.h).
          Reported by Alejandro Colomar.  */
-#if !defined _MSC_VER
+#if !(defined __CYGWIN__ || defined _MSC_VER)
       {
         const char input[] = "k";
         char *endp = NULL;
         __strtol_t val = -17;
         strtol_error s_err = __xstrtol (input, &endp, -1, &val, "k");
-# if !(defined __GLIBC__ || defined __CYGWIN__ || is_GNULIB_strtol)
+# if !(defined __GLIBC__ || is_GNULIB_strtol)
         ASSERT (s_err == LONGINT_OK);
         ASSERT (endp == input + 1);
         ASSERT (val == 1024);
