@@ -9,7 +9,7 @@ stdckdint-h
 time-h
 unistd-h
 xconcat-filename
-xgetcwd
+xgetcwd-lgpl
 
 configure.ac:
 
