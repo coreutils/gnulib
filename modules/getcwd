@@ -1,6 +1,12 @@
 Description:
 Return the current working directory.
 
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'getcwd-lgpl' module, if
+that module occurs among the main modules in lib/.
+
 Files:
 lib/getcwd.c
 m4/getcwd-abort-bug.m4

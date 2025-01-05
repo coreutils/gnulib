@@ -15,7 +15,7 @@ stat-time
 stdbool
 symlink
 xconcat-filename
-xgetcwd
+xgetcwd-lgpl
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([getgid getegid])

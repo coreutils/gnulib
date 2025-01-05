@@ -17,7 +17,7 @@ symlink
 timespec
 utimecmp
 xconcat-filename
-xgetcwd
+xgetcwd-lgpl
 
 configure.ac:
 
