@@ -110,16 +110,28 @@ time_overflow (intmax_t n)
    errors that the cast doesn't.  */
 static unsigned char to_uchar (char ch) { return ch; }
 
-static void _GL_ATTRIBUTE_FORMAT ((__printf__, 1, 2))
-dbg_printf (char const *msg, ...)
+static void
+dbg_herald (void)
 {
-  va_list args;
   /* TODO: use gnulib's 'program_name' instead?  */
   fputs ("date: ", stderr);
+}
 
-  va_start (args, msg);
-  vfprintf (stderr, msg, args);
+static void _GL_ATTRIBUTE_FORMAT ((__printf__, 1, 2))
+dbg_printf (char const *msgid, ...)
+{
+  dbg_herald ();
+  va_list args;
+  va_start (args, msgid);
+  vfprintf (stderr, _(msgid), args);
   va_end (args);
+}
+
+static void
+dbg_fputs (char const *msgid)
+{
+  dbg_herald ();
+  fputs (_(msgid), stderr);
 }
 
 
@@ -1690,7 +1702,7 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
   if (!debugging (pc))
     return;
 
-  dbg_printf (_("error: invalid date/time value:\n"));
+  dbg_fputs (_("error: invalid date/time value:\n"));
   dbg_printf (_("    user provided time: '%s'\n"),
               debug_strfdatetime (tm0, pc, tmp, sizeof tmp));
   dbg_printf (_("       normalized time: '%s'\n"),
@@ -1716,12 +1728,12 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
     }
   dbg_printf ("%s\n", tmp);
 
-  dbg_printf (_("     possible reasons:\n"));
+  dbg_fputs (_("     possible reasons:\n"));
   if (dst_shift)
-    dbg_printf (_("       nonexistent due to daylight-saving time;\n"));
+    dbg_fputs (_("       nonexistent due to daylight-saving time;\n"));
   if (!eq_mday && !eq_month)
-    dbg_printf (_("       invalid day/month combination;\n"));
-  dbg_printf (_("       numeric values overflow;\n"));
+    dbg_fputs (_("       invalid day/month combination;\n"));
+  dbg_fputs (_("       numeric values overflow;\n"));
   dbg_printf ("       %s\n", (time_zone_seen ? _("incorrect timezone")
                               : _("missing timezone")));
 }
@@ -1831,7 +1843,7 @@ parse_datetime_body (struct timespec *result, char const *p,
   if (ckd_add (&pc.year.value, tmp.tm_year, TM_YEAR_BASE))
     {
       if (debugging (&pc))
-        dbg_printf (_("error: initial year out of range\n"));
+        dbg_fputs (_("error: initial year out of range\n"));
       goto fail;
     }
   pc.year.digits = 0;
@@ -1910,12 +1922,12 @@ parse_datetime_body (struct timespec *result, char const *p,
 
   if (debugging (&pc))
     {
-      dbg_printf (_("input timezone: "));
+      dbg_fputs (_("input timezone: "));
 
       if (pc.timespec_seen)
-        fprintf (stderr, _("'@timespec' - always UTC"));
+        fputs (_("'@timespec' - always UTC"), stderr);
       else if (pc.zones_seen)
-        fprintf (stderr, _("parsed date/time string"));
+        fputs (_("parsed date/time string"), stderr);
       else if (tzstring)
         {
           if (tz != tzdefault)
@@ -1923,19 +1935,19 @@ parse_datetime_body (struct timespec *result, char const *p,
           else if (STREQ (tzstring, "UTC0"))
             {
               /* Special case: 'date -u' sets TZ="UTC0".  */
-              fprintf (stderr, _("TZ=\"UTC0\" environment value or -u"));
+              fputs (_("TZ=\"UTC0\" environment value or -u"), stderr);
             }
           else
             fprintf (stderr, _("TZ=\"%s\" environment value"), tzstring);
         }
       else
-        fprintf (stderr, _("system default"));
+        fputs (_("system default"), stderr);
 
       /* Account for DST changes if tLOCAL_ZONE was seen.
          local timezone only changes DST and is relative to the
          default timezone.*/
       if (pc.local_zones_seen && !pc.zones_seen && 0 < pc.local_isdst)
-        fprintf (stderr, ", dst");
+        fputs (", dst", stderr);
 
       if (pc.zones_seen)
         fprintf (stderr, " (%s)", time_zone_str (pc.time_zone, time_zone_buf));
@@ -1953,15 +1965,15 @@ parse_datetime_body (struct timespec *result, char const *p,
           if (debugging (&pc))
             {
               if (pc.times_seen > 1)
-                dbg_printf ("error: seen multiple time parts\n");
+                dbg_fputs ("error: seen multiple time parts\n");
               if (pc.dates_seen > 1)
-                dbg_printf ("error: seen multiple date parts\n");
+                dbg_fputs ("error: seen multiple date parts\n");
               if (pc.days_seen > 1)
-                dbg_printf ("error: seen multiple days parts\n");
+                dbg_fputs ("error: seen multiple days parts\n");
               if (pc.dsts_seen > 1)
-                dbg_printf ("error: seen multiple daylight-saving parts\n");
+                dbg_fputs ("error: seen multiple daylight-saving parts\n");
               if ((pc.J_zones_seen + pc.local_zones_seen + pc.zones_seen) > 1)
-                dbg_printf ("error: seen multiple time-zone parts\n");
+                dbg_fputs ("error: seen multiple time-zone parts\n");
             }
           goto fail;
         }
@@ -1971,7 +1983,7 @@ parse_datetime_body (struct timespec *result, char const *p,
           || ckd_add (&tm.tm_mday, pc.day, 0))
         {
           if (debugging (&pc))
-            dbg_printf (_("error: year, month, or day overflow\n"));
+            dbg_fputs (_("error: year, month, or day overflow\n"));
           goto fail;
         }
       if (pc.times_seen || (pc.rels_seen && ! pc.dates_seen && ! pc.days_seen))
@@ -1999,7 +2011,7 @@ parse_datetime_body (struct timespec *result, char const *p,
           tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
           pc.seconds.tv_nsec = 0;
           if (debugging (&pc))
-            dbg_printf ("warning: using midnight as starting time: 00:00:00\n");
+            dbg_fputs ("warning: using midnight as starting time: 00:00:00\n");
         }
 
       /* Let mktime deduce tm_isdst if we have an absolute timestamp.  */
@@ -2127,13 +2139,13 @@ parse_datetime_body (struct timespec *result, char const *p,
           if (debugging (&pc))
             {
               if ((pc.rel.year != 0 || pc.rel.month != 0) && tm.tm_mday != 15)
-                dbg_printf (_("warning: when adding relative months/years, "
-                              "it is recommended to specify the 15th of the "
-                              "months\n"));
+                dbg_fputs (_("warning: when adding relative months/years, "
+                             "it is recommended to specify the 15th of the "
+                             "months\n"));
 
               if (pc.rel.day != 0 && tm.tm_hour != 12)
-                dbg_printf (_("warning: when adding relative days, "
-                              "it is recommended to specify noon\n"));
+                dbg_fputs (_("warning: when adding relative days, "
+                             "it is recommended to specify noon\n"));
             }
 
           int year, month, day;
@@ -2189,8 +2201,8 @@ parse_datetime_body (struct timespec *result, char const *p,
                  mktime (&tm).
               */
               if (tm0.tm_isdst != -1 && tm.tm_isdst != tm0.tm_isdst)
-                dbg_printf (_("warning: daylight saving time changed after "
-                              "date adjustment\n"));
+                dbg_fputs (_("warning: daylight saving time changed after "
+                             "date adjustment\n"));
 
               /* Warn if the user did not ask to adjust days but mday changed,
                  or
@@ -2208,8 +2220,8 @@ parse_datetime_body (struct timespec *result, char const *p,
                   && (tm.tm_mday != day
                       || (pc.rel.month == 0 && tm.tm_mon != month)))
                 {
-                  dbg_printf (_("warning: month/year adjustment resulted in "
-                                "shifted dates:\n"));
+                  dbg_fputs (_("warning: month/year adjustment resulted in "
+                               "shifted dates:\n"));
                   char tm_year_buf[TM_YEAR_BUFSIZE];
                   dbg_printf (_("     adjusted Y M D: %s %02d %02d\n"),
                               tm_year_str (year, tm_year_buf), month + 1, day);
@@ -2280,8 +2292,8 @@ parse_datetime_body (struct timespec *result, char const *p,
             || ckd_add (&t4, t3, d4))
           {
             if (debugging (&pc))
-              dbg_printf (_("error: adding relative time caused an "
-                            "overflow\n"));
+              dbg_fputs (_("error: adding relative time caused an "
+                           "overflow\n"));
             goto fail;
           }
 
@@ -2313,8 +2325,8 @@ parse_datetime_body (struct timespec *result, char const *p,
             struct tm lmt;
             if (tm.tm_isdst != -1 && localtime_rz (tz, &result->tv_sec, &lmt)
                 && tm.tm_isdst != lmt.tm_isdst)
-              dbg_printf (_("warning: daylight saving time changed after "
-                            "time adjustment\n"));
+              dbg_fputs (_("warning: daylight saving time changed after "
+                           "time adjustment\n"));
           }
       }
     }
@@ -2323,9 +2335,9 @@ parse_datetime_body (struct timespec *result, char const *p,
     {
       /* Special case: using 'date -u' simply set TZ=UTC0 */
       if (! tzstring)
-        dbg_printf (_("timezone: system default\n"));
+        dbg_fputs (_("timezone: system default\n"));
       else if (STREQ (tzstring, "UTC0"))
-        dbg_printf (_("timezone: Universal Time\n"));
+        dbg_fputs (_("timezone: Universal Time\n"));
       else
         dbg_printf (_("timezone: TZ=\"%s\" environment value\n"), tzstring);
 
