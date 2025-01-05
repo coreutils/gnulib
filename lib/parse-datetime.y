@@ -123,7 +123,7 @@ dbg_printf (char const *msgid, ...)
   dbg_herald ();
   va_list args;
   va_start (args, msgid);
-  vfprintf (stderr, _(msgid), args);
+  vfprintf (stderr, msgid, args);
   va_end (args);
 }
 
@@ -131,7 +131,7 @@ static void
 dbg_fputs (char const *msgid)
 {
   dbg_herald ();
-  fputs (_(msgid), stderr);
+  fputs (msgid, stderr);
 }
 
 
@@ -1965,15 +1965,15 @@ parse_datetime_body (struct timespec *result, char const *p,
           if (debugging (&pc))
             {
               if (pc.times_seen > 1)
-                dbg_fputs ("error: seen multiple time parts\n");
+                dbg_fputs (_("error: seen multiple time parts\n"));
               if (pc.dates_seen > 1)
-                dbg_fputs ("error: seen multiple date parts\n");
+                dbg_fputs (_("error: seen multiple date parts\n"));
               if (pc.days_seen > 1)
-                dbg_fputs ("error: seen multiple days parts\n");
+                dbg_fputs (_("error: seen multiple days parts\n"));
               if (pc.dsts_seen > 1)
-                dbg_fputs ("error: seen multiple daylight-saving parts\n");
+                dbg_fputs (_("error: seen multiple daylight-saving parts\n"));
               if ((pc.J_zones_seen + pc.local_zones_seen + pc.zones_seen) > 1)
-                dbg_fputs ("error: seen multiple time-zone parts\n");
+                dbg_fputs (_("error: seen multiple time-zone parts\n"));
             }
           goto fail;
         }
@@ -2011,7 +2011,8 @@ parse_datetime_body (struct timespec *result, char const *p,
           tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
           pc.seconds.tv_nsec = 0;
           if (debugging (&pc))
-            dbg_fputs ("warning: using midnight as starting time: 00:00:00\n");
+            dbg_printf (_("warning: using midnight as starting time: %s\n"),
+                        "00:00:00");
         }
 
       /* Let mktime deduce tm_isdst if we have an absolute timestamp.  */
