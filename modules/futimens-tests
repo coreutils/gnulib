@@ -16,7 +16,7 @@ timespec
 dup
 utimecmp
 xconcat-filename
-xgetcwd
+xgetcwd-lgpl
 
 configure.ac:
 
