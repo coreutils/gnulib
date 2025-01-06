@@ -17,4 +17,7 @@ mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On Windows, in 32-bit mode, this function is defined with a calling
+convention that is different from @code{cdecl}.
 @end itemize
