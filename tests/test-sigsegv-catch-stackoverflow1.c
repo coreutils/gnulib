@@ -1,5 +1,5 @@
 /* Test the stack overflow handler.
-   Copyright (C) 2002-2024 Free Software Foundation, Inc.
+   Copyright (C) 2002-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,14 @@
 /* Written by Bruno Haible and Eric Blake.  */
 
 #include <config.h>
+
+/* On GNU/Hurd, when compiling with -D_FORTIFY_SOURCE=2, avoid an error
+   "*** longjmp causes uninitialized stack frame ***: terminated".
+   Cf. <https://sourceware.org/bugzilla/show_bug.cgi?id=32522>  */
+#ifdef __GNU__
+# undef _FORTIFY_SOURCE
+# undef __USE_FORTIFY_LEVEL
+#endif
 
 /* Specification.  */
 #include "sigsegv.h"
