@@ -415,8 +415,14 @@ main (_GL_UNUSED int argc, char **argv)
       p = "now - 35 years";
       ASSERT (parse_datetime (&result, p, &now));
       LOG (p, now, result);
-      ASSERT (result.tv_sec
-              == 515107490 - 60 * 60 + (has_leap_seconds ? 13 : 0));
+      /* Allow "now - 35 years" to mean either (a) the naive sense
+         where subtracting 35 years from 2021-04-28 16:24:50 yields
+         1986-04-28 16:24:50, or (b) the pedantic sense where it
+         yields 1986-04-28 15:24:50 (an hour earlier) due to adjusting
+         for the switch from DST in 2021 to standard time in 1986.  */
+      time_t naive = 515107490 + (has_leap_seconds ? 13 : 0);
+      time_t pedantic = naive - 60 * 60;
+      ASSERT (result.tv_sec == naive || result.tv_sec == pedantic);
     }
 
   /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
