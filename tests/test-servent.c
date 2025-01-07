@@ -23,7 +23,7 @@
 
 #include "signature.h"
 
-#if defined _WIN64 && !defined __CYGWIN__
+#if !(defined _WIN32 && !defined _WIN64 && !defined __CYGWIN__)
 /* On 32-bit native Windows, these two functions may have the __stdcall calling
    convention.  But the SIGNATURE_CHECK works only for functions with __cdecl
    calling convention.  */
