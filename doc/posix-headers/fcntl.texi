@@ -56,12 +56,10 @@ glibc 2.40, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, 
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
 
-Note: @samp{O_SEARCH} is not suitable for opening a file descriptor
-that you want to use with @code{fchmod} later, because
-musl libc defines @samp{O_EXEC} to @code{O_PATH} and
-@c https://lists.gnu.org/archive/html/bug-gnulib/2012-11/msg00029.html
-Linux @code{fchmod} fails with error @code{EBADF} when given such a file
-descriptor.
+@item
+@samp{O_SEARCH} is defined to @code{O_PATH} on some platforms:
+@c https://bugs.gnu.org/75405
+musl libc.
 
 @item
 @samp{O_ACCMODE} is not defined on some platforms:
