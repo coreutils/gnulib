@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <sys/select.h>
 
 /* Check that the 'struct timeval' type is defined.  */
@@ -30,6 +31,21 @@ typedef int verify_tv_sec_type[sizeof (time_t) <= sizeof (a.tv_sec) ? 1 : -1];
 /* Check that sigset_t is defined.  */
 sigset_t t2;
 
+/* Check that time_t, suseconds_t are defined.  */
+time_t t3;
+suseconds_t t4;
+
+/* Check that the 'struct timespec' type is defined.  */
+struct timespec t5;
+
+/* Check that the 'fd_set' type is defined.  */
+fd_set t6;
+
+/* Check that FD_SETSIZE is defined.  */
+#if !FD_SETSIZE
+# error "FD_SETSIZE not positive"
+#endif
+
 #include "signature.h"
 
 /* The following may be macros without underlying functions, so only
@@ -38,7 +54,7 @@ sigset_t t2;
 SIGNATURE_CHECK (FD_CLR, void, (int, fd_set *));
 #endif
 #ifndef FD_ISSET
-SIGNATURE_CHECK (FD_ISSET, void, (int, fd_set *));
+SIGNATURE_CHECK (FD_ISSET, void, (int, const fd_set *));
 #endif
 #ifndef FD_SET
 SIGNATURE_CHECK (FD_SET, int, (int, fd_set *));
