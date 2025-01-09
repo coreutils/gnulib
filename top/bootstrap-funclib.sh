@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-11-25.15; # UTC
+scriptlibversion=2025-01-09.08; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -550,7 +550,6 @@ prepare_GNULIB_SRCDIR ()
             if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
               shallow='--depth 2'
             fi
-            mkdir -p "$gnulib_path"
             # Only want a shallow checkout of $GNULIB_REVISION, but git does not
             # support cloning by commit hash. So attempt a shallow fetch by
             # commit hash to minimize the amount of data downloaded and changes
@@ -559,13 +558,31 @@ prepare_GNULIB_SRCDIR ()
             # shallow fetch cannot be performed because we do not know what the
             # depth of the commit is without fetching all commits. So fall back
             # to fetching all commits.
+            # $GNULIB_REVISION can be a commit id, a tag name, or a branch name.
+            mkdir -p "$gnulib_path"
             git -C "$gnulib_path" init
             git -C "$gnulib_path" remote add origin "$gnulib_url"
-            git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
-              || git -C "$gnulib_path" fetch origin \
-              || cleanup_gnulib
-            git -C "$gnulib_path" reset --hard FETCH_HEAD
-            git -C "$gnulib_path" checkout "$GNULIB_REVISION" || cleanup_gnulib
+            if git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION"
+            then
+              # "git fetch" of the specific commit succeeded.
+              git -C "$gnulib_path" reset --hard FETCH_HEAD \
+                || cleanup_gnulib
+              # "git fetch" does not fetch tags (at least in git version 2.43).
+              # If $GNULIB_REVISION is a tag (not a commit id or branch name),
+              # add the tag explicitly.
+              revision=`git -C "$gnulib_path" log -1 --pretty=format:%H`
+              branch=`LC_ALL=C git -C "$gnulib_path" remote show origin \
+                      | sed -n -e 's/^    \([^ ]*\) * tracked$/\1/p'`
+              test "$revision" = "$GNULIB_REVISION" \
+                || test "$branch" = "$GNULIB_REVISION" \
+                || git -C "$gnulib_path" tag "$GNULIB_REVISION"
+            else
+              # Fetch the entire repository.
+              git -C "$gnulib_path" fetch origin \
+                || cleanup_gnulib
+              git -C "$gnulib_path" checkout "$GNULIB_REVISION" \
+                || cleanup_gnulib
+            fi
           fi
         fi
         trap - HUP INT PIPE TERM
