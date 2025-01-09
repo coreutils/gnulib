@@ -44,4 +44,43 @@ This header file does not declare the @code{msg_control} and
 platforms.  This can be detected by the absence of the
 @code{CMSG_FIRSTHDR} macro:
 gnulib replacement header, old BSD
+@item
+This header file does not define the macro code{SOCK_NONBLOCK}
+on some platforms:
+macOS 15, AIX 7.3, Solaris 10, mingw, MSVC 14.
+@item
+This header file does not define the macros code{SOCK_CLOEXEC} and
+@code{MSG_CMSG_CLOEXEC} on some platforms:
+macOS 15, AIX 7.3, Solaris 10, mingw, MSVC 14.
+@item
+This header file does not define the macro code{MSG_CMSG_CLOEXEC}
+on some platforms:
+Solaris 11 OmniOS.
+@item
+This header file does not define the macro code{SO_DOMAIN} on some platforms:
+macOS 15, NetBSD 10.0, AIX 7.3, Cygwin 3.5, mingw, MSVC 14.
+@item
+This header file does not define the macro code{SO_PROTOCOL} on some platforms:
+macOS 15, NetBSD 10.0, AIX 7.3, Solaris 11.4, Cygwin 3.5, mingw, MSVC 14.
+@item
+This header file does not define the macro code{MSG_NOSIGNAL} on some platforms:
+Solaris 10, mingw, MSVC 14.
+@item
+This header file does not define the macro code{MSG_EOR} on some platforms:
+mingw, MSVC 14.
+@item
+This header file does not define the macros code{MSG_CTRUNC} and
+@code{MSG_TRUNC} on some platforms:
+mingw.
+@item
+This header file does not define the macro code{MSG_WAITALL} on some platforms:
+MSVC 14.
+@item
+This header file does not define the type @code{struct cmsghdr} and
+the constant @code{SCM_RIGHTS} on some platforms:
+mingw, MSVC 14.
+@item
+This header file does not define the constants @code{SOCK_CLOFORK} and
+@code{MSG_CMSG_CLOFORK} on some platforms:
+glibc 2.39, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.3, Cygwin, mingw, MSVC, Android.
 @end itemize
