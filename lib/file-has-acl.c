@@ -176,11 +176,17 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
         }
     }
 
-  if (0 < ai->size && flags & ACL_GET_SCONTEXT)
+  /* A security context can exist only if extended attributes do: i.e.,
+     [l]listxattr either returned a positive number, or failed with E2BIG,
+     or failed with EACCES which in Linux kernel 6.12 NFS can mean merely
+     that we lack read access.  */
+  if (flags & ACL_GET_SCONTEXT
+      && (0 < ai->size
+          || (ai->size < 0 && (ai->u.err == E2BIG || ai->u.err == EACCES))))
     {
       if (is_smack_enabled ())
         {
-          if (aclinfo_has_xattr (ai, XATTR_NAME_SMACK))
+          if (ai->size < 0 || aclinfo_has_xattr (ai, XATTR_NAME_SMACK))
             {
               ssize_t r = smack_new_label_from_path (name, "security.SMACK64",
                                                      flags & ACL_SYMLINK_FOLLOW,
@@ -191,7 +197,7 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
       else
         {
 # if USE_SELINUX_SELINUX_H
-          if (aclinfo_has_xattr (ai, XATTR_NAME_SELINUX))
+          if (ai->size < 0 || aclinfo_has_xattr (ai, XATTR_NAME_SELINUX))
             {
               ssize_t r =
                 ((flags & ACL_SYMLINK_FOLLOW ? getfilecon : lgetfilecon)
