@@ -38,7 +38,7 @@ test_sys_wait_macros (void)
       if (!!WIFSIGNALED (i) + !!WIFEXITED (i) + !!WIFSTOPPED (i) != 1)
         return 1;
     }
-  i = WEXITSTATUS (i) + WSTOPSIG (i) + WTERMSIG (i);
+  i = WEXITSTATUS (i) + WSTOPSIG (i) + WTERMSIG (i) + WCOREDUMP (i);
 
 #if 0
   switch (i)
