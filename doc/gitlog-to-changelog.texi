@@ -32,8 +32,8 @@ gen-ChangeLog:
         $(AM_V_GEN)if test -e $(srcdir)/.git; then             \
           LC_ALL=en_US.UTF-8 TZ=UTC0                           \
             $(top_srcdir)/build-aux/gitlog-to-changelog        \
-              --srcdir=$(srcdir) > $(distdir)/ChangeLog.tmp && \
-          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog; \
+              --srcdir=$(srcdir) > $(distdir)/ChangeLog        \
+          || exit 1;                                           \
         fi
 @end example
 
@@ -55,8 +55,8 @@ gen-ChangeLog:
         $(AM_V_GEN)if test -e $(srcdir)/.git; then             \
           $(top_srcdir)/build-aux/gitlog-to-changelog          \
               --srcdir=$(srcdir) --commit-timezone             \
-              > $(distdir)/ChangeLog.tmp &&                    \
-          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog; \
+              > $(distdir)/ChangeLog                           \
+          || exit 1;                                           \
         fi
 @end example
 
@@ -100,7 +100,7 @@ gen-ChangeLog:
                 --srcdir=$(srcdir)                                 \
                 "$$amend_git_log" -- 'v$(gen_start_ver)~..' &&     \
             printf '\n\nSee the source repo for older entries.\n'; \
-          @} > $(distdir)/ChangeLog.tmp &&                          \
-          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog;     \
+          @} > $(distdir)/ChangeLog                                 \
+          || exit 1;                                               \
         fi
 @end example
