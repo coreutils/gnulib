@@ -1,5 +1,5 @@
 # sys_un_h.m4
-# serial 2
+# serial 3
 dnl Copyright 2024-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,28 @@ AC_DEFUN_ONCE([gl_SYS_UN_H],
 
   dnl Check if UNIX domain sockets are supported.
   AC_REQUIRE([gl_SOCKET_FAMILY_UNIX])
+
+  gl_PREREQ_SYS_SA_FAMILY
+  AC_CACHE_CHECK([whether <sys/un.h> defines sa_family_t],
+    [gl_cv_type_sys_un_sa_family_t],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[
+          #include <stddef.h>
+          #include <string.h>
+          #include <sys/un.h>
+          ]], [[
+          sa_family_t f;
+          ]])
+       ],
+       [gl_cv_type_sys_un_sa_family_t=yes],
+       [gl_cv_type_sys_un_sa_family_t=no])
+    ])
+  if test $gl_cv_type_sys_un_sa_family_t = yes; then
+    HAVE_SA_FAMILY_T_IN_SYS_UN_H=1
+  else
+    HAVE_SA_FAMILY_T_IN_SYS_UN_H=0
+  fi
+  AC_SUBST([HAVE_SA_FAMILY_T_IN_SYS_UN_H])
 
   GL_GENERATE_SYS_UN_H=false
   if test $gl_cv_socket_unix = yes; then
@@ -26,6 +48,9 @@ AC_DEFUN_ONCE([gl_SYS_UN_H],
       dnl at least in C++ mode with clang.
       *-gnu* | gnu*) GL_GENERATE_SYS_UN_H=true ;;
     esac
+  fi
+  if test $HAVE_SA_FAMILY_T_IN_SYS_UN_H = 0; then
+    GL_GENERATE_SYS_UN_H=true
   fi
 
   if $GL_GENERATE_SYS_UN_H; then

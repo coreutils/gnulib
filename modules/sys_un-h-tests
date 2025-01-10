@@ -3,6 +3,7 @@ tests/test-sys_un-h.c
 
 Depends-on:
 assert-h
+intprops
 sys_un-h-c++-tests
 
 configure.ac:

@@ -23,6 +23,11 @@
 /* Specification.  */
 # include <sys/un.h>
 
+# include "intprops.h"
+
+/* POSIX requires that sa_family_t is an unsigned integer type.  */
+static_assert (! TYPE_SIGNED (sa_family_t));
+
 int
 main (void)
 {

@@ -14,6 +14,9 @@ Portability problems fixed by Gnulib:
 @c <https://blogs.windows.com/windows-insider/2017/12/19/announcing-windows-10-insider-preview-build-17063-pc/>
 This header file is missing on some platforms:
 mingw, MSVC 14.
+@item
+This header file does not define the @code{sa_family_t} type on some platforms:
+Cygwin 3.5.5, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

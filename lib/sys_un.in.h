@@ -60,5 +60,25 @@
 
 #endif
 
+#if !@HAVE_SA_FAMILY_T_IN_SYS_UN_H@
+# if @HAVE_SA_FAMILY_T@
+/* A platform that has <sys/un.h> but which — unlike <sys/socket.h> — does not
+   define the 'sa_family_t' type.  */
+#  include <sys/socket.h>
+# else
+/* A platform which does not define the 'sa_family_t' type at all.
+   Define it here in the same way as in <sys/socket.h>.  */
+#  if !GNULIB_defined_sa_family_t
+/* On OS/2 kLIBC, sa_family_t is unsigned char unless TCPV40HDRS is defined. */
+#   if !defined __KLIBC__ || defined TCPV40HDRS
+typedef unsigned short  sa_family_t;
+#   else
+typedef unsigned char   sa_family_t;
+#   endif
+#   define GNULIB_defined_sa_family_t 1
+#  endif
+# endif
+#endif
+
 #endif /* _@GUARD_PREFIX@_SYS_UN_H */
 #endif /* _@GUARD_PREFIX@_SYS_UN_H */
