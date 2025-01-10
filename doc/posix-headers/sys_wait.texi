@@ -11,12 +11,15 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 mingw, MSVC 14.
+@item
+This header file does not define the @code{WCOREDUMP} macro on some platforms:
+AIX 7.3, Haiku.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 System status macros such as @code{WEXITSTATUS} require an lvalue
-argument on some platforms.
+argument on some platforms:
 macOS 11.1.
 @end itemize
