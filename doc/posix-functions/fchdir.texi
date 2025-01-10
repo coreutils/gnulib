@@ -17,4 +17,7 @@ But the replacement function is not safe to be used in libraries and is not mult
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function fails if the file descriptor was opened with @code{O_PATH}:
+Linux kernel 3.4.
 @end itemize

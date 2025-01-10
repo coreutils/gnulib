@@ -39,6 +39,9 @@ Portability problems not fixed by Gnulib:
 @item
 @xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @item
+This function fails if the file descriptor was opened with @code{O_PATH}:
+Linux kernel 3.5.
+@item
 On Cygwin, @code{fstat} applied to the file descriptors 0 and 1, returns
 different @code{st_ino} values, even if standard input and standard output
 are not redirected and refer to the same terminal.

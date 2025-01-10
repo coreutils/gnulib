@@ -18,4 +18,7 @@ FreeBSD 14.0, NetBSD 5.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 1
 @item
 This function has an extra @code{options} parameter on some platforms:
 macOS 14.
+@item
+This function fails with @code{EACCES} on unreadable files accessed via NFS:
+Linux kernel 6.12.
 @end itemize
