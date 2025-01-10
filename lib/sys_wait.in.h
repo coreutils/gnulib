@@ -80,7 +80,7 @@
 #  define WSTOPSIG(x) (((x) >> 8) & 0x7f)
 # endif
 
-/* True if the process dumped core.  Not standardized by POSIX.  */
+/* True if the process dumped core.  */
 # ifndef WCOREDUMP
 #  define WCOREDUMP(x) ((x) & 0x80)
 # endif
