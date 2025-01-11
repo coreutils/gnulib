@@ -10,6 +10,7 @@ m4/realloc.m4
 
 Depends-on:
 extern-inline
+stdlib
 
 configure.ac:
 gl_EEALLOC

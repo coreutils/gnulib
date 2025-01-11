@@ -13,6 +13,7 @@ assert-h
 idx
 stdckdint
 stdint
+stdlib
 xalloc-oversized
 
 configure.ac:
