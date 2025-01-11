@@ -17,6 +17,10 @@ mingw, MSVC 14.
 @item
 This header file does not define the @code{sa_family_t} type on some platforms:
 Cygwin 3.5.5, mingw, MSVC 14.
+@item
+This header file causes compilation errors in C++ mode on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=32024
+glibc 2.40.
 @end itemize
 
 Portability problems not fixed by Gnulib:
