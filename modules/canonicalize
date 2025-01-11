@@ -27,6 +27,7 @@ readlink
 glibc-internal/scratch_buffer
 stat
 stdbool
+stdlib
 sys_stat
 unistd
 xalloc-die
