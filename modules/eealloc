@@ -16,6 +16,7 @@ m4/malloc.m4
 
 Depends-on:
 extern-inline
+stdlib-h
 
 configure.ac:
 gl_EEALLOC
