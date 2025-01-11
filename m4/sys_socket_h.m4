@@ -1,5 +1,5 @@
 # sys_socket_h.m4
-# serial 30
+# serial 31
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,10 +53,10 @@ AC_DEFUN_ONCE([gl_SYS_SOCKET_H],
   fi
   # We need to check for ws2tcpip.h now.
   gl_PREREQ_SYS_H_SOCKET
+  gl_PREREQ_SYS_SA_FAMILY
   if test $ac_cv_type_struct_sockaddr_storage = no; then
     HAVE_STRUCT_SOCKADDR_STORAGE=0
   fi
-  gl_PREREQ_SYS_SA_FAMILY
   if test $ac_cv_type_struct_sockaddr_storage != no; then
     AC_CHECK_MEMBERS([struct sockaddr_storage.ss_family],
       [],
