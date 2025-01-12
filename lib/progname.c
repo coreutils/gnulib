@@ -63,12 +63,8 @@ set_program_name (const char *argv0)
       argv0 = base;
       if (strncmp (base, "lt-", 3) == 0)
         {
-          argv0 = base + 3;
-          /* On glibc systems, remove the "lt-" prefix from the variable
-             program_invocation_short_name.  */
-#if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
-          program_invocation_short_name = (char *) argv0;
-#endif
+          base += 3;
+          argv0 = base;
         }
     }
 
@@ -88,5 +84,8 @@ set_program_name (const char *argv0)
      as well.  */
 #if HAVE_DECL_PROGRAM_INVOCATION_NAME
   program_invocation_name = (char *) argv0;
+#endif
+#if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+  program_invocation_short_name = (char *) base;
 #endif
 }
