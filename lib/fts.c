@@ -1443,6 +1443,13 @@ fts_build (register FTS *sp, int type)
                 __set_errno (0);
                 struct dirent *dp = readdir(cur->fts_dirp);
                 if (dp == NULL) {
+                        /* Some readdir()s do not absorb ENOENT (dir
+                           deleted but open).  This bug was fixed in
+                           glibc 2.3 (2002).  */
+#if ! (2 < __GLIBC__ + (3 <= __GLIBC_MINOR__))
+                        if (errno == ENOENT)
+                          errno = 0;
+#endif
                         if (errno) {
                                 cur->fts_errno = errno;
                                 /* If we've not read any items yet, treat

@@ -123,7 +123,15 @@ streamsavedir (DIR *dirp, enum savedir_option option)
       errno = 0;
       dp = readdir (dirp);
       if (! dp)
-        break;
+        {
+          /* Some readdir()s do not absorb ENOENT (dir deleted but open).
+             This bug was fixed in glibc 2.3 (2002).  */
+#if ! (2 < __GLIBC__ + (3 <= __GLIBC_MINOR__))
+          if (errno == ENOENT)
+            errno = 0;
+#endif
+          break;
+        }
 
       /* Skip "", ".", and "..".  "" is returned by at least one buggy
          implementation: Solaris 2.4 readdir on NFS file systems.  */

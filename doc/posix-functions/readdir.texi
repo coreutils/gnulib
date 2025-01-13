@@ -30,4 +30,9 @@ formerly attempted to cater to these older systems, this caused
 misbehavior on standard systems and so Gnulib does not attempt to
 cater to them any more.  If you know of any problems caused by this,
 please send a bug report.
+@item
+When reading a directory that has been removed,
+this function sets @code{errno} to @code{ENOENT}
+instead of leaving @code{errno} alone to indicate EOF:
+glibc 2.2.5.
 @end itemize
