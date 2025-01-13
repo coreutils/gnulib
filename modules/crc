@@ -28,7 +28,7 @@ lib_SOURCES += crc.c
 # $(AM_LDFLAGS).  And do the compilation in a temporary directory, where
 # gnulib-generated stdio.h and stdlib.h files are not visible.
 $(srcdir)/crc-sliceby8.h: $(srcdir)/crc-generate-table.c
-	if test -n '$(BUILD_CC)'; then \
+	$(AM_V_GEN)if test -n '$(BUILD_CC)'; then \
 	  $(MKDIR_P) '%reldir%/crc-tmp' \
 	  && abs_srcdir=`cd $(srcdir)/. && pwd` \
 	  && (cd '%reldir%/crc-tmp' \
