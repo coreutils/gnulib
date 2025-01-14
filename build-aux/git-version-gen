@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2024-12-28.20; # UTC
+scriptversion=2025-01-14.06; # UTC
 
 # Copyright (C) 2007-2025 Free Software Foundation, Inc.
 #
@@ -80,7 +80,9 @@ scriptversion=2024-12-28.20; # UTC
 # $(top_srcdir)/.version:
 #	echo '$(VERSION)' > $@-t
 #	mv $@-t $@
-# dist-hook:
+# dist-hook: tarball-version
+# .PHONY: tarball-version
+# tarball-version
 #	echo '$(VERSION)' > $(distdir)/.tarball-version
 #
 # To setup support for "git archive" tarballs, use the following:
