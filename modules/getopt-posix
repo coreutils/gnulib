@@ -13,6 +13,7 @@ lib/getopt-pfx-ext.h
 lib/getopt_int.h
 m4/getopt.m4
 m4/sys_cdefs_h.m4
+m4/musl.m4
 
 Depends-on:
 unistd-h
@@ -35,6 +36,7 @@ AM_COND_IF([GL_COND_OBJ_GETOPT], [
   gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UNISTD_H_GETOPT], [1])
 ])
 gl_UNISTD_MODULE_INDICATOR([getopt-posix])
+gl_MUSL_LIBC
 
 Makefile.am:
 BUILT_SOURCES += $(GETOPT_H) $(GETOPT_CDEFS_H)
