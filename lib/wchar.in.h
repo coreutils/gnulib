@@ -53,6 +53,9 @@
      <wctype.h> is completely included or is still being included.  */
 
 #@INCLUDE_NEXT@ @NEXT_WCHAR_H@
+/* The glibc 2.5 /usr/include/wchar.h defines __need_wint_t but never undefines
+   it.  We need to do that here.  */
+#undef __need_wint_t
 
 #else
 /* Normal invocation convention.  */
