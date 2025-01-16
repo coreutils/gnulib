@@ -1,6 +1,6 @@
 /* A substitute for ISO C99 <wchar.h>, for platforms that have issues.
 
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -53,6 +53,9 @@
      <wctype.h> is completely included or is still being included.  */
 
 #@INCLUDE_NEXT@ @NEXT_WCHAR_H@
+/* The glibc 2.5 /usr/include/wchar.h defines __need_wint_t but never undefines
+   it.  We need to do that here.  */
+#undef __need_wint_t
 
 #else
 /* Normal invocation convention.  */
