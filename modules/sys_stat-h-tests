@@ -3,6 +3,7 @@ tests/test-sys_stat-h.c
 
 Depends-on:
 assert-h
+intprops
 sys_stat-h-c++-tests
 
 configure.ac:

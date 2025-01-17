@@ -328,8 +328,25 @@ invalid UTIME macros
 nlink_t t1;
 off_t t2;
 mode_t t3;
+blksize_t t4;
+blkcnt_t t5;
 
 struct timespec st;
+
+#include "intprops.h"
+
+/* POSIX requires that off_t is a signed integer type.  */
+static_assert (TYPE_SIGNED (off_t));
+
+/* POSIX requires that blksize_t is a signed integer type.  */
+#if !defined __ANDROID__
+static_assert (TYPE_SIGNED (blksize_t));
+#endif
+
+/* POSIX requires that blkcnt_t is a signed integer type.  */
+#if !defined __ANDROID__
+static_assert (TYPE_SIGNED (blkcnt_t));
+#endif
 
 int
 main (void)

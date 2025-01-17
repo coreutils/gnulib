@@ -12,6 +12,12 @@ Portability problems fixed by Gnulib module @code{sys_stat-h}:
 The type @code{mode_t} is not defined on some platforms:
 MSVC 14.
 @item
+The type @code{blksize_t} is not defined on some platforms:
+FreeBSD 5.5, OpenBSD 5.6, HP-UX 11.23, IRIX 6.5, mingw, MSVC 14.
+@item
+The type @code{blkcnt_t} is not defined on some platforms:
+FreeBSD 5.5, OpenBSD 5.6, mingw, MSVC 14.
+@item
 Some macros, such as @code{S_IFMT} or @code{S_IFIFO}, are missing on some
 platforms.
 @item
@@ -53,6 +59,9 @@ Also, on platforms where @code{ino_t} is a 32-bit type,
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms the types @code{blksize_t} and @code{blkcnt_t} are unsigned:
+Android.
 @item
 The macro @code{S_IFBLK} is missing on some platforms:
 MSVC 14.
