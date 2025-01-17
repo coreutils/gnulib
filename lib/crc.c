@@ -123,8 +123,8 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
       pclmul_checked = true;
     }
 
-  if (pclmul_enabled && len >= 16)
-    return crc32_update_no_xor_pclmul(crc, buf, len);
+  if (pclmul_enabled && len >= 16 && (intptr_t) buf % 16 == 0)
+    return crc32_update_no_xor_pclmul (crc, buf, len);
 #endif
 
   slice_alignment = (len & (-8));
@@ -205,8 +205,8 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
       pclmul_checked = true;
     }
 
-  if (pclmul_enabled && len >= 16)
-    return crc32_update_no_xor_pclmul(crc, buf, len);
+  if (pclmul_enabled && len >= 16 && (intptr_t) buf % 16 == 0)
+    return crc32_update_no_xor_pclmul (crc, buf, len);
 #endif
 
   for (n = 0; n < len; n++)
