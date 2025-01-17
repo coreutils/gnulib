@@ -1,5 +1,5 @@
 /* printf wrappers that fail immediately for non-file-related errors
-   Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ xvprintf (char const *restrict format, va_list args)
 {
   int retval = vprintf (format, args);
   if (retval < 0 && ! ferror (stdout))
-    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+    error (exit_failure, errno, "%s", gettext ("cannot perform formatted output"));
 
   return retval;
 }
@@ -73,7 +73,7 @@ xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
 {
   int retval = vfprintf (stream, format, args);
   if (retval < 0 && ! ferror (stream))
-    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+    error (exit_failure, errno, "%s", gettext ("cannot perform formatted output"));
 
   return retval;
 }
