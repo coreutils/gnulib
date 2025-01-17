@@ -36,8 +36,8 @@ collate_error (int collation_errno,
                char const *s1, size_t s1len,
                char const *s2, size_t s2len)
 {
-  error (0, collation_errno, _("string comparison failed"));
-  error (0, 0, _("Set LC_ALL='C' to work around the problem."));
+  error (0, collation_errno, "%s", _("string comparison failed"));
+  error (0, 0, "%s", _("Set LC_ALL='C' to work around the problem."));
   error (exit_failure, 0,
          _("The strings compared were %s and %s."),
          quotearg_n_style_mem (0, locale_quoting_style, s1, s1len),
