@@ -23,6 +23,8 @@ AC_DEFUN([gl_CRC_X86_64_PCLMUL],
             __m128i a, b;
             a = _mm_clmulepi64_si128 (a, b, 0x00);
             a = _mm_shuffle_epi8 (a, b);
+            static __m128i_u u;
+            b = _mm_loadu_si128 (&u);
             return __builtin_cpu_supports ("pclmul");
           }
         ]])
