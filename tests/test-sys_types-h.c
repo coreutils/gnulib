@@ -20,13 +20,40 @@
 
 #include <sys/types.h>
 
-/* Check that the types are all defined.  */
+/* Check that the most important types are defined.  */
 pid_t t1;
 size_t t2;
 ssize_t t3;
 off_t t4;
 mode_t t5;
 off64_t t6;
+blksize_t t7;
+blkcnt_t t8;
+
+#include "intprops.h"
+
+/* POSIX requires that pid_t is a signed integer type.  */
+static_assert (TYPE_SIGNED (pid_t));
+
+/* POSIX requires that size_t is an unsigned integer type.  */
+static_assert (! TYPE_SIGNED (size_t));
+
+/* POSIX requires that ssize_t is a signed integer type.  */
+static_assert (TYPE_SIGNED (ssize_t));
+
+/* POSIX requires that off_t is a signed integer type.  */
+static_assert (TYPE_SIGNED (off_t));
+static_assert (TYPE_SIGNED (off64_t));
+
+/* POSIX requires that blksize_t is a signed integer type.  */
+#if !defined __ANDROID__
+static_assert (TYPE_SIGNED (blksize_t));
+#endif
+
+/* POSIX requires that blkcnt_t is a signed integer type.  */
+#if !defined __ANDROID__
+static_assert (TYPE_SIGNED (blkcnt_t));
+#endif
 
 int
 main (void)
