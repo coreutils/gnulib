@@ -123,7 +123,7 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
       pclmul_checked = true;
     }
 
-  if (pclmul_enabled && len >= 16 && (intptr_t) buf % 16 == 0)
+  if (pclmul_enabled && len >= 16)
     return crc32_update_no_xor_pclmul (crc, buf, len);
 #endif
 
@@ -205,7 +205,7 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
       pclmul_checked = true;
     }
 
-  if (pclmul_enabled && len >= 16 && (intptr_t) buf % 16 == 0)
+  if (pclmul_enabled && len >= 16)
     return crc32_update_no_xor_pclmul (crc, buf, len);
 #endif
 

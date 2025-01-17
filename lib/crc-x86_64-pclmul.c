@@ -32,7 +32,7 @@ __attribute__ ((__target__ ("pclmul,avx")))
 uint32_t
 crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
 {
-  const __m128i *data = buf;
+  const __m128i_u *data = buf;
   __m128i *datarw;
   size_t bytes_remaining = len;
   __m128i in256[4] = { 0 };
