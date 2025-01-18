@@ -5,7 +5,8 @@ Status:
 deprecated
 
 Notice:
-This module is deprecated. Use the module 'stdalign-h' instead.
+This module is deprecated.
+New code should use the alignasof module, and not include <stdalign.h>.
 
 Files:
 

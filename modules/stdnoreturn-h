@@ -2,7 +2,7 @@ Description:
 A <stdnoreturn.h> that nearly conforms to ISO C11.
 
 Notice:
-The module 'stdnoreturn' is deprecated.
+This module is deprecated.
 New code should use the '_Noreturn' keyword or the 'noreturn' module.
 
 Files:

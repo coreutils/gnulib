@@ -2,7 +2,7 @@ Description:
 alignas and alignof that are like C23 and C++11.
 
 Notice:
-The stdalign module is deprecated.
+This module is deprecated.
 New code should use the alignasof module, and not include <stdalign.h>.
 
 Files:
