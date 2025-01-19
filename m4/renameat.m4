@@ -1,5 +1,5 @@
 # renameat.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,27 +29,25 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
   if test $ac_cv_func_renameat2 = yes; then
     AC_CACHE_CHECK([whether renameat2 works],
       [gl_cv_func_renameat2_works],
-      [AC_RUN_IFELSE(
+      [rm -rf conftest.a conftest.b
+       touch conftest.a
+       AC_RUN_IFELSE(
          [AC_LANG_SOURCE([[
             #include <unistd.h>
             #include <fcntl.h>
             #include <stdio.h>
             int main ()
             {
-              int fd;
+              int result = 0;
               /* This test fails on Cygwin 3.4.6.  */
               if (renameat2 (AT_FDCWD, "conftest.c", AT_FDCWD, "conftest.c",
                              RENAME_NOREPLACE) == 0)
-                return 1;
-              fd = open ("conftest.a", O_CREAT | O_EXCL | O_WRONLY, 0600);
-              if (fd < 0)
-                return 1;
+                result |= 1;
               /* This test fails on GNU/Hurd.  */
-              if (renameat2 (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.b/", 0) == 0)
-                return 1;
-              if (close (fd) < 0)
-                return 1;
-              return 0;
+              if (renameat2 (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.b/", 0)
+                  == 0)
+                result |= 2;
+              return result;
             }
          ]])],
          [gl_cv_func_renameat2_works=yes],
@@ -58,14 +56,14 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
                      # Guess yes on Linux.
             linux*)  gl_cv_func_renameat2_works="guessing yes" ;;
                      # Guess no on GNU/Hurd.
-            gnu*) gl_cv_func_renameat2_works="guessing no" ;;
+            gnu*)    gl_cv_func_renameat2_works="guessing no" ;;
                      # Guess no on Cygwin.
             cygwin*) gl_cv_func_renameat2_works="guessing no" ;;
                      # If we don't know, obey --enable-cross-guesses.
             *)       gl_cv_func_renameat2_works="$gl_cross_guess_normal" ;;
           esac
          ])
-        rm -rf conftest.a conftest.b
+       rm -rf conftest.a conftest.b
       ])
     case "$gl_cv_func_renameat2_works" in
       *yes)
