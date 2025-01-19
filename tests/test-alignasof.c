@@ -29,13 +29,12 @@ typedef struct { char a[2]; } struct2;
 typedef struct { char a[3]; } struct3;
 typedef struct { char a[4]; } struct4;
 
-#if (202311 <= __STDC_VERSION__ || __alignas_is_defined \
-     || 201103 <= __cplusplus)
+#if (defined alignas || __alignas_is_defined \
+     || 202311 <= __STDC_VERSION__ || 201103 <= __cplusplus)
 /* mingw can go up only to 8.  8 is all that GNU Emacs needs, so let's
    limit the test to 8 for now.  */
 # define TEST_ALIGNMENT 8
 #else
-# undef alignas
 # define alignas(alignment)
 # define TEST_ALIGNMENT 1
 #endif
