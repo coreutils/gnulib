@@ -223,7 +223,7 @@ main (void)
   ASSERT (errno == EEXIST || errno == EPERM || errno == EACCES);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link1", dfd, BASE "sub1/", 0) == -1);
-  ASSERT (errno == EEXIST || errno == ENOTDIR || errno == EINVAL);
+  ASSERT (errno == EEXIST || errno == ENOTDIR);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link1", dfd, BASE "sub1",
                   AT_SYMLINK_FOLLOW) == -1);

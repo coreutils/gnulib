@@ -27,4 +27,10 @@ Linux kernel 2.6.17.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+@code{linkat (fd, "directory", fd, "symlink/" ...)} sets @code{errno}
+to @code{EINVAL} instead of @code{EEXIST} or @code{ENOTDIR} on some
+platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=32569
+GNU/Hurd.
 @end itemize
