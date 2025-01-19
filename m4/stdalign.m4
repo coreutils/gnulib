@@ -1,5 +1,5 @@
 # stdalign.m4
-# serial 2
+# serial 3
 dnl Copyright 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -180,7 +180,8 @@ AC_DEFUN([gl_ALIGNASOF],
 #  if ((defined _Alignas \
         && !(defined __cplusplus \
              && (201103 <= __cplusplus || defined _MSC_VER))) \
-       || (defined __STDC_VERSION__ && 201112 <= __STDC_VERSION__))
+       || (defined __STDC_VERSION__ && 201112 <= __STDC_VERSION__ \
+           && !defined __xlC__))
 #   define alignas _Alignas
 #  endif
 # endif
