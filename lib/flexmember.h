@@ -32,7 +32,7 @@
    safe in practice even if FLEXIBLE_ARRAY_MEMBER is 1.
    On newer platforms, use _Alignof to get a tighter bound.  */
 
-#if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112
+#if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112 || defined _Alignof
 # define FLEXALIGNOF(type) (sizeof (type) & ~ (sizeof (type) - 1))
 #else
 # define FLEXALIGNOF(type) _Alignof (type)
