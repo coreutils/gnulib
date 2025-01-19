@@ -971,9 +971,6 @@ to be more like standard C@.
 Portability problems fixed by Gnulib:
 @itemize
 @item
-Pre-C11 platforms lack @code{alignas} and @code{alignof}.
-
-@item
 On pre-C23 platforms, @code{<stdalign.h>} must be included before
 using @code{alignas} or @code{alignof}.
 @xref{stdalign.h}.
@@ -981,6 +978,26 @@ using @code{alignas} or @code{alignof}.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The set of alignments supported by @code{alignas} is implementation
+dependent, and implementations need not support alignments greater
+than @code{alignof (max_align_t)}.
+
+@item
+Some older platforms do not support @code{alignas}.
+To test this, use the @code{alignasof} module
+along with the @code{#if} conditional
+@code{(defined alignas || defined __alignas_is_defined
+|| 202311 <= __STDC_VERSION__ || 201103 <= __cplusplus)}.
+Platforms where @code{alignas} does not work include:
+IBM XL C for AIX V16.1.
+
+@item
+On some platforms, the argument of @code{alignas} must be an integer
+constant like @samp{8}, instead of an integer constant expression
+like @samp{4 + 4} that evaluates to 8:
+GCC 4.9.
+
 @item
 On pre-C23 platforms, @code{alignas} and @code{alignof} are macros.
 @end itemize
