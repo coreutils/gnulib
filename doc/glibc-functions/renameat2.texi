@@ -19,6 +19,12 @@ glibc 2.27, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7
 This function succeeds when the @code{RENAME_NOREPLACE} flag is specified
 and the source and destination are the same file, on some platforms:
 Cygwin 3.4.6.
+@item
+@code{renameat2 (AT_FDCWD, "file", AT_FDCWD, "new/" ...)} succeeds
+instead of failing and setting @code{errno} to @code{ENOTDIR}, on some
+platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=32570
+GNU/Hurd.
 @end itemize
 
 @mindex renameatu

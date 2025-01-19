@@ -31,13 +31,23 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
       [gl_cv_func_renameat2_works],
       [AC_RUN_IFELSE(
          [AC_LANG_SOURCE([[
+            #include <unistd.h>
             #include <fcntl.h>
             #include <stdio.h>
             int main ()
             {
+              int fd;
               /* This test fails on Cygwin 3.4.6.  */
               if (renameat2 (AT_FDCWD, "conftest.c", AT_FDCWD, "conftest.c",
                              RENAME_NOREPLACE) == 0)
+                return 1;
+              fd = open ("conftest.a", O_CREAT | O_EXCL | O_WRONLY, 0600);
+              if (fd < 0)
+                return 1;
+              /* This test fails on GNU/Hurd.  */
+              if (renameat2 (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.b/", 0) == 0)
+                return 1;
+              if (close (fd) < 0)
                 return 1;
               return 0;
             }
@@ -47,12 +57,15 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
          [case "$host_os" in
                      # Guess yes on Linux.
             linux*)  gl_cv_func_renameat2_works="guessing yes" ;;
+                     # Guess no on GNU/Hurd.
+            gnu*) gl_cv_func_renameat2_works="guessing no" ;;
                      # Guess no on Cygwin.
             cygwin*) gl_cv_func_renameat2_works="guessing no" ;;
                      # If we don't know, obey --enable-cross-guesses.
             *)       gl_cv_func_renameat2_works="$gl_cross_guess_normal" ;;
           esac
          ])
+        rm -rf conftest.a conftest.b
       ])
     case "$gl_cv_func_renameat2_works" in
       *yes)
