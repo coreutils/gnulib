@@ -1,0 +1,19 @@
+Description:
+Support for a computed version string.
+
+Files:
+m4/init-package-version.m4
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+GPLed build tool
+
+Maintainer:
+Bruno Haible

@@ -5,6 +5,7 @@ Files:
 build-aux/git-version-gen
 
 Depends-on:
+package-version
 
 configure.ac:
 
