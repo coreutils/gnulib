@@ -44,6 +44,9 @@ include $(srcdir)/maint.mk
 
 # Ensure that $(VERSION) is up to date for dist-related targets, but not
 # for others: rerunning autoreconf and recompiling everything isn't cheap.
+# This is not part of the essential workflow with .tarball-version.  Rather,
+# it is meant to help the maintainer who has changed the current version
+# but not done a "make distclean".
 _have-git-version-gen := \
   $(shell test -f $(srcdir)/$(_build-aux)/git-version-gen && echo yes)
 ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))

@@ -8192,6 +8192,7 @@ for use with GNU Automake (in particular).
 * warnings::
 * manywarnings::
 * Running self-tests under valgrind::
+* Package version management::
 * VCS To ChangeLog::
 * gitlog-to-changelog::
 @end menu
@@ -8209,6 +8210,8 @@ for use with GNU Automake (in particular).
 @include manywarnings.texi
 
 @include valgrind-tests.texi
+
+@include package-version.texi
 
 @include vcs-to-changelog.texi
 

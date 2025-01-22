@@ -1,0 +1,238 @@
+@node Package version management
+@section Package version management
+
+@c Copyright (C) 2007--2025 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+The goals of a package maintainer,
+when dealing with the version number of a package, are:
+
+@itemize
+@item
+Programs should identify themselves with that version number
+when invoked as @command{@var{program} --version}.
+
+@item
+Every package tarball should contain the version number, in up to four ways:
+@itemize
+@item
+The tarball name should be @code{@var{package}-@var{version}.tar.gz}.
+@item
+The tarball should unpack into a directory
+named @code{@var{package}-@var{version}}.
+@item
+Programs built from that tarball should identify themselves
+when invoked as @command{@var{program} --version}.
+@item
+Documentation (especially in PDF format) and man pages
+may contain the version number, as an important bit of meta information.
+@end itemize
+
+@item
+The package maintainer should be able to
+easily set the version number before making a release,
+and doing so should be quick.
+
+@item
+When a contributor is
+building from the git repository (as opposed to a tarball),
+the version number should, by default, reflect the git commit,
+in order to avoid confusion w.r.t. official releases.
+@end itemize
+
+Here's how the GNU Build System and Gnulib achieve these goals.
+
+@menu
+* Setting the package version::
+* Propagating the package version::
+* Using the package version::
+@end menu
+
+@node Setting the package version
+@subsection Setting the package version
+
+@cindex @code{.tarball-version}
+When the maintainer has decided about the version number
+for the next build (and likely also the next tarball),
+they implement that decision by storing this version number
+in a file named @file{.tarball-version} at the top level of the package.
+This is a simple one-line text file.
+
+The maintainer can, alternatively, decide to
+let the git version be the version number.
+To implement this choice,
+they remove the file @file{.tarball-version} at the top level of the package.
+
+@mindex git-version-gen
+The actual version number comes from an invocation of
+the program @code{git-version-gen},
+part of the Gnulib module @code{git-version-gen}.
+It looks at the file @file{.tarball-version}, if that exists,
+and at the current checkout, otherwise.
+
+The file @file{.tarball-version} should not be put under version control.
+Therefore you may want to list it
+in the package's top-level @code{.gitignore} file.
+
+But you need a @code{Makefile.am} rule that will
+make sure that @file{.tarball-version} will exist in distribution tarballs:
+
+@example
+dist-hook: dist-tarball-version
+.PHONY: dist-tarball-version
+dist-tarball-version:
+	echo '$(VERSION)' > $(distdir)/.tarball-version
+@end example
+
+Typically, the maintainer will set the version number in a clean directory
+(i.e. after ``make distclean'').
+@mindex gnumakefile
+In order to adapt to alternative workflows,
+the file @file{GNUmakefile}, part of the Gnulib module @code{gnumakefile},
+contains a rule that will print a warning or possibly call @code{autoreconf}
+if it finds that the version has changed but has not yet been propagated.
+Reminder: Not every package supports @code{autoreconf}.
+
+@node Propagating the package version
+@subsection Propagating the package version
+
+At the end of a @file{configure} run,
+@code{config.status} is run,
+that creates various files with embedded pieces of information.
+It thus propagates the values of various variables
+to various files in the build tree
+(most notably, @code{Makefile}s and @code{config.h}).
+
+One such propagated value is
+the value of the Automake-defined variable @code{$(VERSION)}.
+(There is also the Autoconf-defined variable @code{$(PACKAGE_VERSION)},
+but nothing except Automake ought to use it.)
+
+For @code{$(VERSION)} to have a sensible value,
+a few lines are needed in @code{configure.ac}.
+
+The recommended code pattern is
+@example
+AC_INIT
+AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
+AC_CONFIG_AUX_DIR([build-aux])
+VERSION_NUMBER=`cd $srcdir \
+                && build-aux/git-version-gen .tarball-version \
+                   | sed -e 's/dirty$/modified/'`
+gl_INIT_PACKAGE([@var{package}], [$VERSION_NUMBER])
+AM_INIT_AUTOMAKE([@var{options}])
+@end example
+@noindent
+With this code pattern,
+the contents of the file @file{.tarball-version} and the git status
+are considered when @code{configure} is run.
+
+Two older code patterns are deprecated, because they read
+the contents of the file @file{.tarball-version} and the git status
+when @code{autoconf} is run, not when @code{configure} is run.
+These older code patterns thus require a longer turnaround cycle
+when the maintainer has changed the version number.
+
+The first such old code pattern
+is to set the version number directly in @code{configure.ac}:
+@example
+AC_INIT([@var{package}, @var{version}])
+AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([@var{options}])
+@end example
+
+The second such old code pattern
+is to invoke @code{git-version-gen} at @code{autoconf} time:
+@example
+AC_INIT([@var{package}],
+        m4_esyscmd([build-aux/git-version-gen .tarball-version \
+                    | sed -e 's/dirty$/modified/'])])
+AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([@var{options}])
+@end example
+
+@mindex package-version
+The macro @code{gl_INIT_PACKAGE}
+is defined in the Gnulib module @code{package-version}.
+
+@node Using the package version
+@subsection Using the package version during the build
+
+@subsubheading The unoptimized way
+
+Once propagated through @code{config.status},
+the value of @code{$(VERSION)} can appear anywhere in built files.
+For built files that are
+distributed (that is, not erased by ``make distclean''),
+it is important to add a dependency in the @code{Makefile.am},
+so that the file gets rebuilt:
+@example
+@var{built-file}: $(top_builddir)/config.status
+@end example
+
+For files that are erased by ``make distclean'', this is not really necessary,
+because
+@itemize
+@item
+In the main workflow, where the developer
+changes the version only between ``make distclean'' and ``./configure'',
+the built files have been remade.
+@item
+Most @code{.o} files depend on @code{config.h},
+which is rebuilt when @code{configure} runs.
+@end itemize
+
+Thus, only in packages that don't use Gnulib would a dependency such as
+@example
+hello-hello.$(OBJEXT): $(top_builddir)/config.status
+@end example
+@noindent
+be needed.
+
+@subsubheading The optimized way
+
+Notice that
+@code{config.status} usually changes much more often than the version number.
+Therefore, for built files which depend
+@emph{only} on @code{$(VERSION)} and not on other variables,
+the following optimized technique can be used.
+
+The technique consists of keeping a file named @code{$(top_srcdir)/.version},
+which is a timestamp file.
+Its modification time represents the last time
+the value of @code{$(VERSION)} was changed.
+Its contents is an undocumented implementation detail.
+
+With such a file, the dependency in @code{Makefile.am} becomes:
+@example
+@var{built-file}: $(top_srcdir)/.version
+@end example
+
+In order to prepare for using @code{$(top_srcdir)/.version},
+three modifications in the package are needed:
+@itemize
+@item
+In the top-level @code{configure.ac} file,
+add an invocation of the macro @code{gl_CONFIG_VERSION_STAMP},
+near the end (before @code{AC_OUTPUT}).
+This macro is defined in file @file{m4/version-stamp.m4},
+part of the Gnulib module @code{version-stamp}.
+@item
+In the top-level @code{Makefile.am}, add:
+@example
+EXTRA_DIST += $(top_srcdir)/.version
+BUILT_SOURCES += $(top_srcdir)/.version
+@end example
+@noindent
+so that the file @code{.version} will be present in tarballs
+and so that ``make maintainer-clean'' will erase it.
+@item
+Add @code{.version} to the package's top-level @code{.gitignore} file.
+@end itemize
