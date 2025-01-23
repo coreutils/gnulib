@@ -50,18 +50,6 @@ scriptversion=2025-01-22.18; # UTC
 #   If the file doesn't exist or the export-subst keyword wasn't
 #   effective, the file is ignored.
 #
-# .version - present in a checked-out repository and in a distribution
-#   tarball.  Usable in dependencies, particularly for files that don't
-#   want to depend on config.h but do want to track version changes.
-#   Delete this file prior to any autoconf run where you want to rebuild
-#   files to pick up a version string change; and leave it stale to
-#   minimize rebuild time after unrelated changes to configure sources.
-#
-# As with any generated file in a VC'd directory, you should add
-# /.version to .gitignore, so that you don't accidentally commit it.
-# .tarball-version is never generated in a VC'd directory, so needn't
-# be listed there.
-#
 # Use the following snippet in your configure.ac, so that $(VERSION) will
 # automatically be up-to-date each time configure is run (and note that
 # since configure.ac no longer includes a version string, Makefile rules
