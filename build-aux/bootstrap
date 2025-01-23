@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-01-09.08; # UTC
+scriptlibversion=2025-01-23.20; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -152,7 +152,8 @@ po_download_command_format=\
 "wget --mirror --level=1 -nd -nv -A.po -P '%s' \
  https://translationproject.org/latest/%s/"
 
-# Prefer a non-empty tarname (4th argument of AC_INIT if given), else
+# When extracting the package name from an AC_INIT invocation,
+# prefer a non-empty tarname (4th argument of AC_INIT if given), else
 # fall back to the package name (1st argument with munging).
 extract_package_name='
   /^AC_INIT(\[*/{
@@ -164,17 +165,25 @@ extract_package_name='
        q
      }
      s/[],)].*//
-     s/^GNU //
-     y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-     s/[^abcdefghijklmnopqrstuvwxyz0123456789_]/-/g
      p
   }
 '
-package=$(${AUTOCONF:-autoconf} --trace AC_INIT:\$4 configure.ac 2>/dev/null)
+normalize_package_name='
+  s/^GNU //
+  y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+  s/[^abcdefghijklmnopqrstuvwxyz0123456789_]/-/g
+'
+package=$(${AUTOCONF:-autoconf} --trace 'gl_INIT_PACKAGE:$1' configure.ac \
+          2>/dev/null)
 if test -z "$package"; then
-  package=$(sed -n "$extract_package_name" configure.ac) \
-      || die 'cannot find package name in configure.ac'
+  package=$(${AUTOCONF:-autoconf} --trace 'AC_INIT:$4' configure.ac \
+            2>/dev/null)
+  if test -z "$package"; then
+    package=$(sed -n "$extract_package_name" configure.ac) \
+        || die 'cannot find package name in configure.ac'
+  fi
 fi
+package=$(echo "$package" | sed "$normalize_package_name")
 gnulib_name=lib$package
 
 build_aux=build-aux
