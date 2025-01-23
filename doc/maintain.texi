@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 8, 2023
+@set lastupdate January 22, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -311,9 +311,14 @@ distribute the package, and the standing to defend its GPL-covered
 status in court if necessary.
 
 GNU packages need not be FSF-copyrighted; this is up to the author(s),
-generally at the time the package is dubbed GNU@.  When copyright is
-assigned to the FSF, the FSF can act to stop GPL violations about the
-package.  Otherwise, legal actions are up to the author(s).  The rest
+generally at the time the package is dubbed GNU@.   When copyright is
+assigned to the FSF, the FSF has authority to act to stop GPL
+violations about the package (otherwise, legal actions are up to the
+author(s)).   It also allows the FSF to grant additional permissions on a
+package, such as an exception, if the need should arise.  Additionally,
+holding the copyright allows the FSF to upgrade the license of a package
+even if it had been initially released under "GPLv2 only" (instead of
+the "or later" licensing option as recommended by the FSF).  The rest
 of this section is about the case when a package is FSF-copyrighted.
 
 @emph{Before} incorporating significant changes, make sure that the
