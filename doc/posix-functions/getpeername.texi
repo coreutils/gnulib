@@ -30,4 +30,8 @@ Portability problems not fixed by Gnulib:
 @item
 Some platforms don't have a @code{socklen_t} type; in this case this function's
 third argument type is @samp{int *}.
+@item
+On some platforms, this function's third argument type is @samp{void *},
+not @samp{socklen_t *}:
+Solaris 11 OmniOS.
 @end itemize

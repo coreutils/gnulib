@@ -19,7 +19,9 @@
 #include <sys/socket.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (getsockopt, int, (int, int, int, void *, socklen_t *));
+#endif
 
 #include <errno.h>
 #include <unistd.h>

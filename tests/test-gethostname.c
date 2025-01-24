@@ -21,7 +21,9 @@
 #include <unistd.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (gethostname, int, (char *, size_t));
+#endif
 
 /* Get HOST_NAME_MAX definition.  */
 #include <limits.h>
