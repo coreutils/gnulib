@@ -118,7 +118,7 @@ a few lines are needed in @code{configure.ac}.
 
 The recommended code pattern is
 @example
-AC_INIT
+AC_INIT([@var{package}], [dummy])
 AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 AC_CONFIG_AUX_DIR([build-aux])
 VERSION_NUMBER=`cd $srcdir \

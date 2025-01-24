@@ -1,5 +1,5 @@
 # init-package-version.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 1992-2025 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -57,7 +57,7 @@ dnl the same distribution terms as the rest of that program.
 #
 # With the macro defined in this file, the approach can be coded like this:
 #
-#   AC_INIT
+#   AC_INIT(PACKAGE, [dummy], [MORE OPTIONS])
 #   AC_CONFIG_SRCDIR(WITNESS)
 #   . $srcdir/../version.sh
 #   gl_INIT_PACKAGE(PACKAGE, $VERSION_NUMBER)
@@ -102,8 +102,16 @@ AC_DEFUN([gl_INIT_PACKAGE],
               [AC_PACKAGE_NAME], [gl_INIT_DUMMY])),
           [AC_PACKAGE_TARNAME], [gl_INIT_EMPTY])),
       [AC_PACKAGE_VERSION], [gl_INIT_DUMMY])
-    [AC_SUBST([PACKAGE], [$1])
-     AC_SUBST([VERSION], [$2])
+    [dnl Set variables documented in Automake.
+     AC_SUBST([PACKAGE], [$1])
+     AC_SUBST([VERSION], ["$2"])
+     dnl Set variables documented in Autoconf.
+     AC_SUBST([PACKAGE_VERSION], ["$2"])
+     AC_SUBST([PACKAGE_STRING], ["$1 $2"])
+     AC_DEFINE_UNQUOTED([PACKAGE_VERSION], ["$2"],
+       [Define to the version of this package.])
+     AC_DEFINE_UNQUOTED([PACKAGE_STRING], ["$1 $2"],
+       [Define to the full name and version of this package.])
     ])
   m4_define([AM_INIT_AUTOMAKE],
     m4_defn([gl_RPL_INIT_AUTOMAKE]))
@@ -118,7 +126,7 @@ AC_DEFUN([gl_RPL_INIT_AUTOMAKE], [
     [m4_fatal([After gl_INIT_PACKAGE, the two-argument form of AM_INIT_AUTOMAKE cannot be used.])])
   gl_AM_INIT_AUTOMAKE([$1 no-define])
   m4_if(m4_index([ $1 ], [ no-define ]), [-1],
-    [AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
-     AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])
+    [AC_DEFINE_UNQUOTED([PACKAGE], ["$PACKAGE"], [Name of package])
+     AC_DEFINE_UNQUOTED([VERSION], ["$VERSION"], [Version number of package])
     ])
 ])
