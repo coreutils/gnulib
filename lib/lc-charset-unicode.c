@@ -1,5 +1,5 @@
 /* Conversion between the current locale's character encoding and Unicode.
-   Copyright (C) 2023-2024 Free Software Foundation, Inc.
+   Copyright (C) 2023-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -175,7 +175,7 @@ locale_encoding_to_unicode (wchar_t wc)
     char *utf8ptr = utf8buf;
     size_t utf8size = sizeof (utf8buf);
     size_t ret = iconv (conv->cd_locale_to_utf8,
-                        &mbptr, &mbsize,
+                        (ICONV_CONST char **) &mbptr, &mbsize,
                         &utf8ptr, &utf8size);
     if (ret == (size_t)(-1))
       /* Conversion error.  */
@@ -234,7 +234,7 @@ unicode_to_locale_encoding (char32_t uc)
     char *mbptr = mbbuf;
     size_t mbsize = sizeof (mbbuf);
     size_t ret = iconv (conv->cd_utf8_to_locale,
-                        &utf8ptr, &utf8size,
+                        (ICONV_CONST char **) &utf8ptr, &utf8size,
                         &mbptr, &mbsize);
     if (ret == (size_t)(-1))
       /* Conversion error.  */
