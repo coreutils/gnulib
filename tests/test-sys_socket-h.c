@@ -165,7 +165,7 @@ main (void)
 #ifdef MSG_CMSG_CLOEXEC
     case MSG_CMSG_CLOEXEC:
 #endif
-#ifdef SOCK_CLOFORK
+#ifdef MSG_CMSG_CLOFORK
     case MSG_CMSG_CLOFORK:
 #endif
     case MSG_DONTROUTE:
