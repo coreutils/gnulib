@@ -1,5 +1,5 @@
 /* Test the recvfrom() function.
-   Copyright (C) 2011-2024 Free Software Foundation, Inc.
+   Copyright (C) 2011-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,9 +19,10 @@
 #include <sys/socket.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (recvfrom, ssize_t,
-                 (int, void *, size_t, int,
-                  struct sockaddr *, socklen_t *));
+                 (int, void *, size_t, int, struct sockaddr *, socklen_t *));
+#endif
 
 #include <errno.h>
 #include <netinet/in.h>

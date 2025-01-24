@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2024 Free Software Foundation, Inc.
+ * Copyright (C) 2008-2025 Free Software Foundation, Inc.
  * Written by Simon Josefsson.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,9 @@
 #include <unistd.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (gethostname, int, (char *, size_t));
+#endif
 
 /* Get HOST_NAME_MAX definition.  */
 #include <limits.h>

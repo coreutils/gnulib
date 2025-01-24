@@ -1,5 +1,5 @@
 /* Test getsockname() function.
-   Copyright (C) 2011-2024 Free Software Foundation, Inc.
+   Copyright (C) 2011-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,9 @@
 #include <sys/socket.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (getsockname, int, (int, struct sockaddr *, socklen_t *));
+#endif
 
 #include <stdio.h>
 #include <string.h>

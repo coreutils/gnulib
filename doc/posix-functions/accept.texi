@@ -32,5 +32,5 @@ third argument type is @samp{int *}.
 @item
 On some platforms, this function's third argument type is @samp{void *},
 not @samp{socklen_t *}:
-Solaris 10.
+Solaris 10, Solaris 11 OmniOS.
 @end itemize
