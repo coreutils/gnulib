@@ -23,7 +23,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function's second argument type is @code{int} instead of @code{size_t}
 on some platforms:
-Solaris 10.
+Solaris 10, Solaris 11 OmniOS.
 @item
 If the given buffer is too small for the host name, some implementations
 fail with @code{EINVAL}, instead of returning a truncated host name.

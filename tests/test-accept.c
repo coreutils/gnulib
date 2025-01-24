@@ -19,7 +19,9 @@
 #include <sys/socket.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (accept, int, (int, struct sockaddr *, socklen_t *));
+#endif
 
 #include <errno.h>
 #include <netinet/in.h>

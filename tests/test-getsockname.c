@@ -19,7 +19,9 @@
 #include <sys/socket.h>
 
 #include "signature.h"
+#if !defined __sun
 SIGNATURE_CHECK (getsockname, int, (int, struct sockaddr *, socklen_t *));
+#endif
 
 #include <stdio.h>
 #include <string.h>

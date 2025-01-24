@@ -33,5 +33,9 @@ Portability problems not fixed by Gnulib:
 Some platforms don't have a @code{socklen_t} type; in this case this function's
 fifth argument type is @samp{int *}.
 @item
+On some platforms, this function's fifth argument type is @samp{void *},
+not @samp{socklen_t *}:
+Solaris 11 OmniOS.
+@item
 Many socket options are not available on all platforms.
 @end itemize
