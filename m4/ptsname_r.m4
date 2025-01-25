@@ -1,5 +1,5 @@
 # ptsname_r.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,8 +79,10 @@ main (void)
       dnl result buffer. We don't use an AC_RUN_IFELSE test here, because
       dnl while the bug exists on all platforms, only NetBSD/i386 has the
       dnl files /dev/ptyp[01] on which the bug becomes apparent.
+      dnl
+      dnl On Solaris 11 OmniOS the result buffer is clobbered as well.
       case "$host_os" in
-        netbsd*) REPLACE_PTSNAME_R=1 ;;
+        netbsd* | solaris*) REPLACE_PTSNAME_R=1 ;;
       esac
     fi
   fi

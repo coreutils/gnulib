@@ -68,7 +68,7 @@ ptsname_r (int fd, char *buf, size_t buflen)
 #undef ptsname_r
 {
 #if HAVE_ESSENTIALLY_WORKING_PTSNAME_R
-# if defined __NetBSD__
+# if defined __NetBSD__ || defined __sun
   char tmpbuf[32];
   if (buf == NULL)
     return EINVAL;
