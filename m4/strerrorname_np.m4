@@ -1,5 +1,5 @@
 # strerrorname_np.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2020-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,6 +45,9 @@ AC_DEFUN([gl_CHECK_STRERRORNAME_NP],
     dnl In glibc 2.37, strerrorname_np returns NULL for ENOSYM and
     dnl EREMOTERELEASE on hppa platforms.
     dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=31080>.
+    dnl In Solaris 11 OmniOS, strerrorname_np returns NULL for ERESTART
+    dnl and ESTRPIPE.
+    dnl see <https://www.illumos.org/issues/17134>.
     AC_CACHE_CHECK([whether strerrorname_np works],
       [gl_cv_func_strerrorname_np_works],
       [AC_RUN_IFELSE(
@@ -59,6 +62,12 @@ AC_DEFUN([gl_CHECK_STRERRORNAME_NP],
                 #endif
                 #ifdef ENOSYM
                 || strerrorname_np (ENOSYM) == NULL
+                #endif
+                #ifdef ERESTART
+                || strerrorname_np (ERESTART) == NULL
+                #endif
+                #ifdef ESTRPIPE
+                || strerrorname_np (ESTRPIPE) == NULL
                 #endif
                 ;
             ]])],

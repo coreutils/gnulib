@@ -23,7 +23,8 @@ This function returns wrong values on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=26555
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=29545
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=31080
-glibc 2.37.
+@c https://www.illumos.org/issues/17134
+glibc 2.37, Solaris 11 OmniOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
