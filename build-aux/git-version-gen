@@ -55,13 +55,13 @@ scriptversion=2025-01-22.18; # UTC
 # since configure.ac no longer includes a version string, Makefile rules
 # should not depend on configure.ac for version updates).
 #
-# AC_INIT
+# AC_INIT([@var{package}], [dummy])
 # AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 # AC_CONFIG_AUX_DIR([build-aux])
 # VERSION_NUMBER=`cd $srcdir \
 #                 && build-aux/git-version-gen .tarball-version \
 #                    | sed -e 's/dirty$/modified/'`
-# gl_INIT_PACKAGE([@var{package}], [$VERSION_NUMBER])
+# gl_INIT_PACKAGE_VERSION([$VERSION_NUMBER])
 # AM_INIT_AUTOMAKE([@var{options}])
 #
 # Then use the following lines in your Makefile.am, so that

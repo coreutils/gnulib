@@ -124,7 +124,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 VERSION_NUMBER=`cd $srcdir \
                 && build-aux/git-version-gen .tarball-version \
                    | sed -e 's/dirty$/modified/'`
-gl_INIT_PACKAGE([@var{package}], [$VERSION_NUMBER])
+gl_INIT_PACKAGE_VERSION([$VERSION_NUMBER])
 AM_INIT_AUTOMAKE([@var{options}])
 @end example
 @noindent
@@ -159,7 +159,7 @@ AM_INIT_AUTOMAKE([@var{options}])
 @end example
 
 @mindex package-version
-The macro @code{gl_INIT_PACKAGE}
+The macro @code{gl_INIT_PACKAGE_VERSION}
 is defined in the Gnulib module @code{package-version}.
 
 @node Using the package version

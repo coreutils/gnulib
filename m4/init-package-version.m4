@@ -1,5 +1,5 @@
 # init-package-version.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 1992-2025 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -60,7 +60,7 @@ dnl the same distribution terms as the rest of that program.
 #   AC_INIT(PACKAGE, [dummy], [MORE OPTIONS])
 #   AC_CONFIG_SRCDIR(WITNESS)
 #   . $srcdir/../version.sh
-#   gl_INIT_PACKAGE(PACKAGE, $VERSION_NUMBER)
+#   gl_INIT_PACKAGE_VERSION($VERSION_NUMBER)
 #   AM_INIT_AUTOMAKE([OPTIONS])
 #
 # and after changing version.sh, the developer can directly configure and build:
@@ -85,32 +85,26 @@ dnl the same distribution terms as the rest of that program.
 #   make
 #
 
-# gl_INIT_PACKAGE(PACKAGE-NAME, VERSION)
-# --------------------------------------
+# gl_INIT_PACKAGE_VERSION(VERSION)
+# --------------------------------
 # followed by an AM_INIT_AUTOMAKE invocation,
 # is like calling AM_INIT_AUTOMAKE(PACKAGE-NAME, VERSION)
 # except that it can use computed non-literal arguments.
-AC_DEFUN([gl_INIT_PACKAGE],
+AC_DEFUN([gl_INIT_PACKAGE_VERSION],
 [
   AC_BEFORE([$0], [AM_INIT_AUTOMAKE])
   dnl Redefine AM_INIT_AUTOMAKE.
   m4_define([gl_AM_INIT_AUTOMAKE],
-    m4_bpatsubst(m4_dquote(
-        m4_bpatsubst(m4_dquote(
-            m4_bpatsubst(m4_dquote(
-                m4_defn([AM_INIT_AUTOMAKE])),
-              [AC_PACKAGE_NAME], [gl_INIT_DUMMY])),
-          [AC_PACKAGE_TARNAME], [gl_INIT_EMPTY])),
+    m4_bpatsubst(m4_dquote(m4_defn([AM_INIT_AUTOMAKE])),
       [AC_PACKAGE_VERSION], [gl_INIT_DUMMY])
     [dnl Set variables documented in Automake.
-     AC_SUBST([PACKAGE], [$1])
-     AC_SUBST([VERSION], ["$2"])
+     AC_SUBST([VERSION], ["$1"])
      dnl Set variables documented in Autoconf.
-     AC_SUBST([PACKAGE_VERSION], ["$2"])
-     AC_SUBST([PACKAGE_STRING], ["$1 $2"])
-     AC_DEFINE_UNQUOTED([PACKAGE_VERSION], ["$2"],
+     AC_SUBST([PACKAGE_VERSION], ["$1"])
+     AC_SUBST([PACKAGE_STRING], ["AC_PACKAGE_NAME $1"])
+     AC_DEFINE_UNQUOTED([PACKAGE_VERSION], ["$1"],
        [Define to the version of this package.])
-     AC_DEFINE_UNQUOTED([PACKAGE_STRING], ["$1 $2"],
+     AC_DEFINE_UNQUOTED([PACKAGE_STRING], ["AC_PACKAGE_NAME $1"],
        [Define to the full name and version of this package.])
     ])
   m4_define([AM_INIT_AUTOMAKE],
@@ -123,7 +117,7 @@ m4_define([gl_INIT_DUMMY], [gl_INIT_DUMMY2])
 m4_define([gl_INIT_DUMMY2], [])
 AC_DEFUN([gl_RPL_INIT_AUTOMAKE], [
   m4_ifval([$2],
-    [m4_fatal([After gl_INIT_PACKAGE, the two-argument form of AM_INIT_AUTOMAKE cannot be used.])])
+    [m4_fatal([After gl_INIT_PACKAGE_VERSION, the two-argument form of AM_INIT_AUTOMAKE cannot be used.])])
   gl_AM_INIT_AUTOMAKE([$1 no-define])
   m4_if(m4_index([ $1 ], [ no-define ]), [-1],
     [AC_DEFINE_UNQUOTED([PACKAGE], ["$PACKAGE"], [Name of package])
