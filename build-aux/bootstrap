@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-01-23.20; # UTC
+scriptlibversion=2025-01-26.03; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -173,15 +173,10 @@ normalize_package_name='
   y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
   s/[^abcdefghijklmnopqrstuvwxyz0123456789_]/-/g
 '
-package=$(${AUTOCONF:-autoconf} --trace 'gl_INIT_PACKAGE:$1' configure.ac \
-          2>/dev/null)
+package=$(${AUTOCONF:-autoconf} --trace 'AC_INIT:$4' configure.ac 2>/dev/null)
 if test -z "$package"; then
-  package=$(${AUTOCONF:-autoconf} --trace 'AC_INIT:$4' configure.ac \
-            2>/dev/null)
-  if test -z "$package"; then
-    package=$(sed -n "$extract_package_name" configure.ac) \
-        || die 'cannot find package name in configure.ac'
-  fi
+  package=$(sed -n "$extract_package_name" configure.ac) \
+      || die 'cannot find package name in configure.ac'
 fi
 package=$(echo "$package" | sed "$normalize_package_name")
 gnulib_name=lib$package
