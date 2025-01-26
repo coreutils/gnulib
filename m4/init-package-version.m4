@@ -1,5 +1,5 @@
 # init-package-version.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 1992-2025 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -102,8 +102,10 @@ AC_DEFUN([gl_INIT_PACKAGE_VERSION],
      dnl Set variables documented in Autoconf.
      AC_SUBST([PACKAGE_VERSION], ["$1"])
      AC_SUBST([PACKAGE_STRING], ["AC_PACKAGE_NAME $1"])
+     _AC_DEFINE([#undef PACKAGE_VERSION])
      AC_DEFINE_UNQUOTED([PACKAGE_VERSION], ["$1"],
        [Define to the version of this package.])
+     _AC_DEFINE([#undef PACKAGE_STRING])
      AC_DEFINE_UNQUOTED([PACKAGE_STRING], ["AC_PACKAGE_NAME $1"],
        [Define to the full name and version of this package.])
     ])
