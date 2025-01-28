@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2025-01-22.18; # UTC
+scriptversion=2025-01-28.09; # UTC
 
 # Copyright (C) 2007-2025 Free Software Foundation, Inc.
 #
@@ -59,8 +59,7 @@ scriptversion=2025-01-22.18; # UTC
 # AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 # AC_CONFIG_AUX_DIR([build-aux])
 # VERSION_NUMBER=`cd $srcdir \
-#                 && build-aux/git-version-gen .tarball-version \
-#                    | sed -e 's/dirty$/modified/'`
+#                 && build-aux/git-version-gen .tarball-version`
 # gl_INIT_PACKAGE_VERSION([$VERSION_NUMBER])
 # AM_INIT_AUTOMAKE([@var{options}])
 #
@@ -213,20 +212,29 @@ v=`echo "$v" | sed 's/-\([^-]*\)-g\([^-]*\)$/.\1-\2/'`;
 
 v=`echo "$v" |sed "s/^$prefix//"`
 
-# Test whether to append the "-dirty" suffix only if the version
+# The "-modified" suffix was previously called "-dirty".  While this term
+# was invented by the git people to designate a checkout that is not "clean",
+# it has a negative connotation that is not in line with the fact that
+# a Free Software developer routinely works with modified source code.
+# In fact, modifying source code is the *essence* of Free Software.
+# What we need here is a term that is suitable for naming tarballs, without
+# shaming the developer.  Giving a name to a tarball is something else than
+# describing the state of a git checkout.
+#
+# Test whether to append the "-modified" suffix only if the version
 # string we're using came from git.  I.e., skip the test if it's "UNKNOWN"
 # or if it came from .tarball-version.
 if test "x$v_from_git" != x; then
-  # Don't declare a version "dirty" merely because a timestamp has changed.
+  # Don't declare a version "modified" merely because a timestamp has changed.
   git update-index --refresh > /dev/null 2>&1
 
-  dirty=`exec 2>/dev/null;git diff-index --name-only HEAD` || dirty=
-  case "$dirty" in
+  modified=`exec 2>/dev/null;git diff-index --name-only HEAD` || modified=
+  case "$modified" in
       '') ;;
       *) # Append the suffix only if there isn't one already.
           case $v in
-            *-dirty) ;;
-            *) v="$v-dirty" ;;
+            *-dirty | *-modified) ;;
+            *) v="$v-modified" ;;
           esac ;;
   esac
 fi

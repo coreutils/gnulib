@@ -122,8 +122,7 @@ AC_INIT([@var{package}], [dummy])
 AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 AC_CONFIG_AUX_DIR([build-aux])
 VERSION_NUMBER=`cd $srcdir \
-                && build-aux/git-version-gen .tarball-version \
-                   | sed -e 's/dirty$/modified/'`
+                && build-aux/git-version-gen .tarball-version`
 gl_INIT_PACKAGE_VERSION([$VERSION_NUMBER])
 AM_INIT_AUTOMAKE([@var{options}])
 @end example
@@ -151,8 +150,7 @@ The second such old code pattern
 is to invoke @code{git-version-gen} at @code{autoconf} time:
 @example
 AC_INIT([@var{package}],
-        m4_esyscmd([build-aux/git-version-gen .tarball-version \
-                    | sed -e 's/dirty$/modified/'])])
+        m4_esyscmd([build-aux/git-version-gen .tarball-version])])
 AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([@var{options}])
