@@ -1,0 +1,104 @@
+@node Printing --version and bug-reporting information
+@section Printing --version and bug-reporting information
+
+@c Copyright (C) 2025 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Collin Funk
+
+Gnulib provides a few modules for printing @code{--version} and
+bug-reporting information according to the GNU Coding Standards; see
+@ifinfo
+@ref{--version,,,standards}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/prep/standards/html_node/_002d_002dversion.html#g_t_002d_002dversion}
+@end ifnotinfo
+
+@mindex version-etc
+The @samp{version-etc} module defines functions used to emit
+@code{--version} and bug-reporting input in a standard way.  The module
+expects the string @code{version_etc_copyright} to be defined to display
+the copyright holder along with the package release year.  The
+@code{version_etc} function can then be used like so:
+
+@smallexample
+
+const char version_etc_copyright[] = "Copyright %s %d copyright-holder";
+
+int
+main (void)
+@{
+  version_etc (stdout, "my-program", "my-package", "1.0",
+               "author1", "author2", (const char *) NULL);
+  return 0;
+@}
+@end smallexample
+
+The above example generates the following output:
+
+@smallexample
+my-program (my-package) 1.0
+Copyright (C) 2025 copyright-holder
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by author1 and author2.
+@end smallexample
+
+The @samp{version-etc} module also defines the function
+@code{emit_bug_reporting_address} which emits the bug-reporting location
+based on arguments passed to @code{AC_INIT}.  For example, using the
+following in @file{configure.ac}:
+
+@smallexample
+AC_INIT([gnulib], [0.0], [bug-gnulib@@gnu.org], [gnulib],
+        [https://www.gnu.org/software/gnulib/])
+@end smallexample
+
+And the following program:
+
+@smallexample
+#include <config.h>
+
+#include "version-etc.h"
+
+int
+main (void)
+@{
+  emit_bug_reporting_address ();
+  return 0;
+@}
+@end smallexample
+
+Will output:
+
+@smallexample
+Report bugs to: bug-gnulib@@gnu.org
+gnulib home page: <https://www.gnu.org/software/gnulib/>
+General help using GNU software: <https://www.gnu.org/gethelp/>
+@end smallexample
+
+@mindex version-etc-fsf
+The @samp{version-etc-fsf} module defines and links to the variable
+@code{version_etc_copyright} containing copyright information for Free
+Software Foundation.  This module should be used by programs which are
+FSF-copyrighted and use the @samp{version-etc} module.
+
+@mindex argp-version-etc
+The @samp{argp-version-etc} defines the @code{argp_version_setup}
+function takes the program name and authors as arguments.  This function
+should be called before @code{argp_parse} since it modifies argp global
+variables; see
+@ifinfo
+@ref{Argp Global Variables,,Argp Global Variables,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Argp-Global-Variables.html}.
+@end ifnotinfo

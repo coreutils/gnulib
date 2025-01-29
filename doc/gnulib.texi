@@ -8081,6 +8081,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Advanced stdio functions::
 * libunistring::
 * Stack traces::
+* Printing --version and bug-reporting information::
 * Recognizing Option Arguments::
 * Quoting::
 * progname and getprogname::
@@ -8129,6 +8130,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include libunistring.texi
 
 @include stack-trace.texi
+
+@include version-etc.texi
 
 @include argmatch.texi
 
