@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2024-12-28 18:31'; # UTC
+my $VERSION = '2025-01-31 23:21'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -375,16 +375,16 @@ sub get_tool_versions ($$)
       # Assume that the last "word" on the first line of
       # 'tool --version' output is the version string.
       my ($first_line, undef) = split ("\n", `$t --version`);
-      if ($first_line =~ /.* (\d[\w.-]+)$/)
+      if ($first_line =~ /.* ([a-f\d][\w.-]+)$/)
         {
           $t = ucfirst $t;
           push @tool_version_pair, "$t $1";
         }
       else
         {
+          warn "$t: unexpected --version output:\n$first_line";
           defined $first_line
             and $first_line = '';
-          warn "$t: unexpected --version output\n:$first_line";
           $fail = 1;
         }
     }
