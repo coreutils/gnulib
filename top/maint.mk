@@ -148,7 +148,7 @@ url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
 
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
-today = $(shell date +%Y-%m-%d)
+today = [0-9]{4,}-[0-9][0-9]-[0-9][0-9]
 
 # Select which lines of NEWS are searched for $(news-check-regexp).
 # This is a sed line number spec.  The default says that we search
