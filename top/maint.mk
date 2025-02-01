@@ -146,6 +146,7 @@ url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
                      https://ftpmirror.gnu.org/$(PACKAGE),		\
                      https://$(gnu_rel_host)/gnu/$(PACKAGE))
 
+# An ERE matching the release date (typically today, but not necessarily).
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
 today = [0-9]{4,}-[0-9][0-9]-[0-9][0-9]
@@ -155,6 +156,8 @@ today = [0-9]{4,}-[0-9][0-9]-[0-9][0-9]
 # lines 1..10 of NEWS for $(news-check-regexp).
 # If you want to search only line 3 or only lines 20-22, use "3" or "20,22".
 news-check-lines-spec ?= 1,10
+
+# An ERE quoted for the shell, for matching a version+date line prefix.
 news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
