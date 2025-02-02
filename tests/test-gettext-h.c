@@ -20,6 +20,8 @@
 
 #include "gettext.h"
 
+#include <string.h>
+
 int
 main (void)
 {
@@ -28,7 +30,12 @@ main (void)
   textdomain ("tzlof");
 
   s = gettext ("some text");
+  if (strcmp (s, "some text") != 0)
+    return 1;
+
   s = pgettext ("menu", "some other text");
+  if (strcmp (s, "some other text") != 0)
+    return 1;
 
   return 0;
 }
