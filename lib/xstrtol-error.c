@@ -57,7 +57,7 @@ xstrtol_error (enum strtol_error err,
 
   switch (err)
     {
-    default:
+    case LONGINT_OK: default:
       abort ();
 
     case LONGINT_INVALID:
