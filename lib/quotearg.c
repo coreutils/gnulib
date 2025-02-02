@@ -443,7 +443,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           break;
 
         case '?':
-          switch (quoting_style)
+          switch (+quoting_style)
             {
             case shell_always_quoting_style:
               if (elide_outer_quotes)
@@ -469,13 +469,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                     STORE ('"');
                     STORE ('?');
                     break;
-
-                  default:
-                    break;
                   }
-              break;
-
-            default:
               break;
             }
           break;
@@ -654,9 +648,6 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                                 case '[': case '\\': case '^':
                                 case '`': case '|':
                                   goto force_outer_quoting_style;
-
-                                default:
-                                  break;
                                 }
                           }
 
