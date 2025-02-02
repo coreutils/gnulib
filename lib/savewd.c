@@ -164,7 +164,7 @@ savewd_chdir (struct savewd *wd, char const *dir, int options,
                 assure (wd->val.child == 0);
                 break;
 
-              default:
+              case INITIAL_STATE: default:
                 assure (false);
               }
         }
@@ -231,7 +231,7 @@ savewd_restore (struct savewd *wd, int status)
       }
       break;
 
-    default:
+    case FINAL_STATE: default:
       assure (false);
     }
 
@@ -259,7 +259,7 @@ savewd_finish (struct savewd *wd)
       wd->val.errnum = 0;
       break;
 
-    default:
+    case FINAL_STATE: default:
       assure (false);
     }
 
