@@ -4030,8 +4030,16 @@ func_emit_lib_Makefile_am ()
   fi
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
   # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
-  echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
-  echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  if ! $for_test; then
+    # When there is a ${libname}_${libext}_CFLAGS or ${libname}_${libext}_CPPFLAGS
+    # definition, Automake emits rules for creating object files prefixed with
+    # "${libname}_${libext}-".
+    echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
+    echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
+  else
+    echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+    echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  fi
   echo "EXTRA_${libname}_${libext}_SOURCES ="
   if test "$libtool" = true; then
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
@@ -4067,7 +4075,14 @@ func_emit_lib_Makefile_am ()
   # Extend the 'distclean' rule.
   echo "distclean-local: distclean-gnulib-libobjs"
   echo "distclean-gnulib-libobjs:"
-  echo "	-rm -f @${macro_prefix}_LIBOBJDEPS@"
+  if ! $for_test; then
+    # When there is a ${libname}_${libext}_CFLAGS or ${libname}_${libext}_CPPFLAGS
+    # definition, Automake emits rules for creating object files prefixed with
+    # "${libname}_${libext}-".
+    echo "	-rm -f @${macro_prefix}_${libname}_LIBOBJDEPS@"
+  else
+    echo "	-rm -f @${macro_prefix}_LIBOBJDEPS@"
+  fi
   # Extend the 'maintainer-clean' rule.
   echo "maintainer-clean-local: distclean-gnulib-libobjs"
   rm -f "$tmp"/allsnippets
@@ -4537,6 +4552,7 @@ func_emit_initmacro_start ()
 # - gentests                 true if a tests Makefile.am is being generated,
 #                            false otherwise
 # - automake_subdir  true if --automake-subdir was given, false otherwise
+# - libname         library name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 func_emit_initmacro_end ()
@@ -4568,14 +4584,16 @@ func_emit_initmacro_end ()
   echo "    ${macro_prefix_arg}_libobjs="
   echo "    ${macro_prefix_arg}_ltlibobjs="
   echo "    ${macro_prefix_arg}_libobjdeps="
+  echo "    ${macro_prefix_arg}_${libname}_libobjs="
+  echo "    ${macro_prefix_arg}_${libname}_ltlibobjs="
+  echo "    ${macro_prefix_arg}_${libname}_libobjdeps="
   echo "    if test -n \"\$${macro_prefix_arg}_LIBOBJS\"; then"
   echo "      # Remove the extension."
   echo "changequote(,)dnl"
   echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
   echo "      sed_dirname1='s,//*,/,g'"
   echo "      sed_dirname2='s,\\(.\\)/\$,\\1,'"
-  echo "      sed_dirname3='s,^[^/]*\$,.,'"
-  echo "      sed_dirname4='s,\\(.\\)/[^/]*\$,\\1,'"
+  echo "      sed_dirname3='s,[^/]*\$,,'"
   echo "      sed_basename1='s,.*/,,'"
   echo "changequote([, ])dnl"
   if $automake_subdir && ! "$2" && test -n "$sourcebase" && test "$sourcebase" != '.'; then
@@ -4588,18 +4606,25 @@ func_emit_initmacro_end ()
   echo "      for i in \`for i in \$${macro_prefix_arg}_LIBOBJS; do echo \"\$i\"; done | sed -e \"\$sed_drop_objext\" | sort | uniq\`; do"
   echo "        ${macro_prefix_arg}_libobjs=\"\$${macro_prefix_arg}_libobjs ${subdir}\$i.\$ac_objext\""
   echo "        ${macro_prefix_arg}_ltlibobjs=\"\$${macro_prefix_arg}_ltlibobjs ${subdir}\$i.lo\""
-  echo "        i_dir=\`echo \"\$i\" | sed -e \"\$sed_dirname1\" -e \"\$sed_dirname2\" -e \"\$sed_dirname3\" -e \"\$sed_dirname4\"\`"
+  echo "        i_dir=\`echo \"\$i\" | sed -e \"\$sed_dirname1\" -e \"\$sed_dirname2\" -e \"\$sed_dirname3\"\`"
   echo "        i_base=\`echo \"\$i\" | sed -e \"\$sed_basename1\"\`"
+  echo "        ${macro_prefix_arg}_${libname}_libobjs=\"\$${macro_prefix_arg}_${libname}_libobjs ${subdir}\$i_dir\"\"${libname}_a-\$i_base.\$ac_objext\""
+  echo "        ${macro_prefix_arg}_${libname}_ltlibobjs=\"\$${macro_prefix_arg}_${libname}_ltlibobjs ${subdir}\$i_dir\"\"${libname}_la-\$i_base.lo\""
   if test "$libtool" = true; then
-    echo "        ${macro_prefix_arg}_libobjdeps=\"\$${macro_prefix_arg}_libobjdeps ${subdir}\$i_dir/\\\$(DEPDIR)/\$i_base.Plo\""
+    echo "        ${macro_prefix_arg}_libobjdeps=\"\$${macro_prefix_arg}_libobjdeps ${subdir}\$i_dir\\\$(DEPDIR)/\$i_base.Plo\""
+    echo "        ${macro_prefix_arg}_${libname}_libobjdeps=\"\$${macro_prefix_arg}_${libname}_libobjdeps ${subdir}\$i_dir\\\$(DEPDIR)/${libname}_la-\$i_base.Plo\""
   else
-    echo "        ${macro_prefix_arg}_libobjdeps=\"\$${macro_prefix_arg}_libobjdeps ${subdir}\$i_dir/\\\$(DEPDIR)/\$i_base.Po\""
+    echo "        ${macro_prefix_arg}_libobjdeps=\"\$${macro_prefix_arg}_libobjdeps ${subdir}\$i_dir\\\$(DEPDIR)/\$i_base.Po\""
+    echo "        ${macro_prefix_arg}_${libname}_libobjdeps=\"\$${macro_prefix_arg}_${libname}_libobjdeps ${subdir}\$i_dir\\\$(DEPDIR)/${libname}_a-\$i_base.Po\""
   fi
   echo "      done"
   echo "    fi"
   echo "    AC_SUBST([${macro_prefix_arg}_LIBOBJS], [\$${macro_prefix_arg}_libobjs])"
   echo "    AC_SUBST([${macro_prefix_arg}_LTLIBOBJS], [\$${macro_prefix_arg}_ltlibobjs])"
   echo "    AC_SUBST([${macro_prefix_arg}_LIBOBJDEPS], [\$${macro_prefix_arg}_libobjdeps])"
+  echo "    AC_SUBST([${macro_prefix_arg}_${libname}_LIBOBJS], [\$${macro_prefix_arg}_${libname}_libobjs])"
+  echo "    AC_SUBST([${macro_prefix_arg}_${libname}_LTLIBOBJS], [\$${macro_prefix_arg}_${libname}_ltlibobjs])"
+  echo "    AC_SUBST([${macro_prefix_arg}_${libname}_LIBOBJDEPS], [\$${macro_prefix_arg}_${libname}_libobjdeps])"
   echo "  ])"
 }
 
