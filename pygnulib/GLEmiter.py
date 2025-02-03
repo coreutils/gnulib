@@ -911,8 +911,22 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         emit += '\n'
         emit += '%s_%s_SOURCES =\n' % (libname, libext)
+        # Insert a '-Wno-error' option in the compilation commands emitted by
+        # Automake, between $(AM_CPPFLAGS) and before the reference to @CFLAGS@.
+        # Why?
+        # - Because every package maintainer has their preferred set of warnings
+        #   that they may want to enforce in the main source code of their package,
+        #   and some of these warnings (such as '-Wswitch-enum') complain about code
+        #   that is just perfect.
+        #   Gnulib source code is maintained according to Gnulib coding style.
+        #   Package maintainers have no right to force their coding style upon Gnulib.
+        # Why before @CFLAGS@?
+        # - Because "the user is always right": If a user adds '-Werror' to their
+        #   CFLAGS, they have asked for errors, they will get errors. But they have
+        #   no right to complain about these errors, because Gnulib does not support
+        #   '-Werror'.
         if not for_test:
-            emit += '%s_%s_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS)\n' % (libname, libext)
+            emit += '%s_%s_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS) $(GL_CFLAG_ALLOW_WARNINGS)\n' % (libname, libext)
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
         emit += '%s_%s_LIBADD = $(%s_%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, libname, perhapsLT)
@@ -1183,7 +1197,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #    arguments, endless recursions, etc.) that a compiler may warn about,
         #    even with just the normal '-Wall' option.
         # 2) Because every package maintainer has their preferred set of warnings
-        #    that they may want to enforce in the main source code of their package.
+        #    that they may want to enforce in the main source code of their package,
+        #    and some of these warnings (such as '-Wswitch-enum') complain about code
+        #    that is just perfect.
         #    But Gnulib tests are maintained in Gnulib and don't end up in binaries
         #    that that package installs; therefore it does not make sense for
         #    package maintainers to enforce the absence of warnings on these tests.
