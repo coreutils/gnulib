@@ -6211,7 +6211,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
                   }
 
-                switch (type)
+                switch (+type)
                   {
                   case TYPE_LONGLONGINT:
                   case TYPE_ULONGLONGINT:
@@ -6507,7 +6507,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
                     errno = 0;
-                    switch (type)
+                    switch (+type)
                       {
                       case TYPE_SCHAR:
                         {

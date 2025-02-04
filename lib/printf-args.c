@@ -296,6 +296,7 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
           }
         break;
 #endif
+      case TYPE_NONE:
       default:
         /* Unknown type.  */
         return -1;
