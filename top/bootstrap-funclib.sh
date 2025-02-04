@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-01-26.03; # UTC
+scriptlibversion=2025-02-04.01; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -564,7 +564,10 @@ prepare_GNULIB_SRCDIR ()
             # to fetching all commits.
             # $GNULIB_REVISION can be a commit id, a tag name, or a branch name.
             mkdir -p "$gnulib_path"
-            git -C "$gnulib_path" init
+            # Use a -c option to silence an annoying message
+            # "hint: Using 'master' as the name for the initial branch."
+            # (cf. <https://stackoverflow.com/questions/65524512/>).
+            git -C "$gnulib_path" -c init.defaultBranch=master init
             git -C "$gnulib_path" remote add origin "$gnulib_url"
             if git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION"
             then
