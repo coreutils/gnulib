@@ -929,8 +929,15 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += '%s_%s_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS) $(GL_CFLAG_ALLOW_WARNINGS)\n' % (libname, libext)
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
-        emit += '%s_%s_LIBADD = $(%s_%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, libname, perhapsLT)
-        emit += '%s_%s_DEPENDENCIES = $(%s_%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, libname, perhapsLT)
+        if not for_test:
+            # When there is a {libname}_{libext}_CFLAGS or {libname}_{libext}_CPPFLAGS
+            # definition, Automake emits rules for creating object files prefixed with
+            # "{libname}_{libext}-".
+            emit += '%s_%s_LIBADD = $(%s_%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, libname, perhapsLT)
+            emit += '%s_%s_DEPENDENCIES = $(%s_%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, libname, perhapsLT)
+        else:
+            emit += '%s_%s_LIBADD = $(%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, perhapsLT)
+            emit += '%s_%s_DEPENDENCIES = $(%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, perhapsLT)
         emit += 'EXTRA_%s_%s_SOURCES =\n' % (libname, libext)
         if libtool:
             emit += '%s_%s_LDFLAGS = $(AM_LDFLAGS)\n' % (libname, libext)
@@ -969,7 +976,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Extend the 'distclean' rule.
         emit += 'distclean-local: distclean-gnulib-libobjs\n'
         emit += 'distclean-gnulib-libobjs:\n'
-        emit += '\t-rm -f @%s_%s_LIBOBJDEPS@\n' % (macro_prefix, libname)
+        if not for_test:
+            # When there is a {libname}_{libext}_CFLAGS or {libname}_{libext}_CPPFLAGS
+            # definition, Automake emits rules for creating object files prefixed with
+            # "{libname}_{libext}-".
+            emit += '\t-rm -f @%s_%s_LIBOBJDEPS@\n' % (macro_prefix, libname)
+        else:
+            emit += '\t-rm -f @%s_LIBOBJDEPS@\n' % (macro_prefix)
         # Extend the 'maintainer-clean' rule.
         emit += 'maintainer-clean-local: distclean-gnulib-libobjs\n'
         return emit

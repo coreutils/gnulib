@@ -4044,8 +4044,16 @@ func_emit_lib_Makefile_am ()
   fi
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
   # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
-  echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
-  echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
+  if ! $for_test; then
+    # When there is a ${libname}_${libext}_CFLAGS or ${libname}_${libext}_CPPFLAGS
+    # definition, Automake emits rules for creating object files prefixed with
+    # "${libname}_${libext}-".
+    echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
+    echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${libname}_${perhapsLT}LIBOBJS)"
+  else
+    echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+    echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  fi
   echo "EXTRA_${libname}_${libext}_SOURCES ="
   if test "$libtool" = true; then
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
@@ -4081,7 +4089,14 @@ func_emit_lib_Makefile_am ()
   # Extend the 'distclean' rule.
   echo "distclean-local: distclean-gnulib-libobjs"
   echo "distclean-gnulib-libobjs:"
-  echo "	-rm -f @${macro_prefix}_${libname}_LIBOBJDEPS@"
+  if ! $for_test; then
+    # When there is a ${libname}_${libext}_CFLAGS or ${libname}_${libext}_CPPFLAGS
+    # definition, Automake emits rules for creating object files prefixed with
+    # "${libname}_${libext}-".
+    echo "	-rm -f @${macro_prefix}_${libname}_LIBOBJDEPS@"
+  else
+    echo "	-rm -f @${macro_prefix}_LIBOBJDEPS@"
+  fi
   # Extend the 'maintainer-clean' rule.
   echo "maintainer-clean-local: distclean-gnulib-libobjs"
   rm -f "$tmp"/allsnippets
