@@ -32,6 +32,9 @@
 /* Get INT_WIDTH.  */
 #include <limits.h>
 
+/* Get abort().  */
+#include <stdlib.h>
+
 #ifdef STATIC
 STATIC
 #endif
@@ -297,9 +300,18 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
         break;
 #endif
       case TYPE_NONE:
-      default:
-        /* Unknown type.  */
+        /* Argument i is not used by any directive, but some argument with
+           number > i is used by a format directive.  POSIX says that this
+           is invalid:
+             "When numbered argument specifications are used, specifying the
+              Nth argument requires that all the leading arguments, from the
+              first to the (N-1)th, are specified in the format string."
+           The reason is that we cannot know how many bytes to skip in the
+           va_arg sequence.  */
         return -1;
+      default:
+        /* Unknown type.  Should not happen.  */
+        abort ();
       }
   return 0;
 }
