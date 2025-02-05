@@ -51,6 +51,8 @@ esac
 gl_CONDITIONAL([PLATFORM_IS_MINGW], [$is_mingw])
 gl_CONDITIONAL([PLATFORM_IS_MSVC], [$is_msvc])
 
+gl_CONDITIONAL([OS_IS_HAIKU],
+               [case "$host_os" in haiku*) true ;; *) false ;; esac])
 gl_CONDITIONAL([OS_IS_ANDROID],
                [case "$host_os" in linux-androideabi*) true ;; *) false ;; esac])
 
