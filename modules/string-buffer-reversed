@@ -1,0 +1,29 @@
+Description:
+A buffer that accumulates a string by piecewise concatenation,
+from the end to the start.
+
+Files:
+lib/string-buffer-reversed.h
+lib/string-buffer-reversed.c
+lib/string-buffer-reversed-printf.c
+
+Depends-on:
+bool
+attribute
+string-desc
+stdarg-h
+vsnzprintf-posix
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += string-buffer-reversed.c string-buffer-reversed-printf.c
+
+Include:
+"string-buffer-reversed.h"
+
+License:
+LGPL
+
+Maintainer:
+all
