@@ -1,0 +1,25 @@
+Description:
+Error-checking functions on a string buffer.
+
+Files:
+lib/xstring-buffer-reversed.c
+lib/xstring-buffer-reversed-printf.c
+
+Depends-on:
+string-buffer-reversed
+xalloc-die
+
+configure.ac:
+gl_MODULE_INDICATOR([xstring-buffer-reversed])
+
+Makefile.am:
+lib_SOURCES += xstring-buffer-reversed.c xstring-buffer-reversed-printf.c
+
+Include:
+"string-buffer-reversed.h"
+
+License:
+GPL
+
+Maintainer:
+all
