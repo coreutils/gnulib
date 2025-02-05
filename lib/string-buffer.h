@@ -38,6 +38,7 @@ typedef char * _GL_ATTRIBUTE_CAPABILITY_TYPE ("memory resource")
 /* A string buffer type.  */
 struct string_buffer
 {
+  /* data[0 .. length-1] are used.  */
   sb_heap_allocated_pointer_t data;
   size_t length;     /* used bytes, <= allocated */
   size_t allocated;  /* allocated bytes */
