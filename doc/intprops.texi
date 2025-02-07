@@ -49,6 +49,7 @@ but it does not assume that signed integer arithmetic wraps around.
 
 @menu
 * Arithmetic Type Properties::  Determining properties of arithmetic types.
+* Arithmetic Type Conversion::  Converting arithmetic types.
 * Integer Bounds::              Bounds on integer values and representations.
 * Checking Integer Overflow::   Checking for overflow while computing integers.
 * Wraparound Arithmetic::       Well-defined behavior on integer overflow.
@@ -97,6 +98,62 @@ CLOCKS_PER_SEC_is_signed (void)
 @{
   return EXPR_SIGNED (CLOCKS_PER_SEC);
 @}
+@end example
+
+@node Arithmetic Type Conversion
+@subsection Arithmetic Type Conversion
+
+@cindex type conversion, arithmetic
+@cindex arithmetic type conversion
+@cindex integer type conversion
+
+Here are some ways in C to convert an arithmetic expression @var{e} to
+a possibly different arithmetic type @var{t}.
+
+@itemize @bullet
+@item
+An explicit conversion like @code{((@var{t}) @var{e})} is powerful and
+can therefore be dangerous, because the conversion can succeed even if
+neither @var{e} nor @var{t} happens to have an arithmetic type.  For
+example, if @var{e} is a pointer, @code{((long int) @var{e})} will do
+a conversion even if that was not the intent.
+
+@item
+An implicit conversion like @code{@var{t} v = @var{e};} is less
+powerful, as it does not convert from pointers.  However, it can lose
+information and sign, as in for example @code{int v = -0.9;} which
+sets @code{v} to zero.
+
+@item
+A no-op arithmetic expression like @code{+@var{e}} is even less
+powerful, as it preserves value (including sign) because it does only
+integer promotions.  That is, it converts to @code{int} if that can
+represent all values of @code{e}'s underlying type, otherwise to
+@code{unsigned int} if that can represent all values, and
+otherwise it does no conversion.
+@end itemize
+
+@findex INT_PROMOTE
+@code{INT_PROMOTE (@var{e})} is an expression with the same value as
+the arithmetic expression @var{e} but with @var{e}'s type after
+any integer promotion.  It behaves like @code{+@var{e}}.
+
+In the following example, using @code{INT_PROMOTE} pacifies GCC's
+@code{-Wswitch-enum} option, and may help human readers see what is
+going on even if they are not expert in C's integer promotion rules
+and might be confused by the simpler @code{switch (+v)}.
+
+@example
+enum @{ A = 1, B, C, D, E @} v = ...;
+switch (INT_PROMOTE (v))
+  @{
+    case A: case C:
+      return true;
+    default:
+      /* Handle all other cases,
+         even cases like v == 0.  */
+      return false;
+  @}
 @end example
 
 @node Integer Bounds

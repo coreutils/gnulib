@@ -62,6 +62,14 @@
 
 #define DONTCARE __LINE__
 
+/* Check that INT_PROMOTE promotes to int.
+   GCC < 4.9 lacks _Generic even though it may claim C11 conformance.  */
+#if (201112 <= __STDC_VERSION__ \
+     && (!defined __GNUC__ || 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
+         || defined __clang__))
+int check_INT_PROMOTE = _Generic (INT_PROMOTE ((short int) 0), int: 0);
+#endif
+
 int int_minus_2 = -2;
 int int_1 = 1;
 
