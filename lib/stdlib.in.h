@@ -63,7 +63,7 @@
 #include <stddef.h>
 
 /* MirBSD 10 defines WEXITSTATUS in <sys/wait.h>, not in <stdlib.h>.
-   glibc 2.40 defines WCOREDUMP in <sys/wait.h>, not in <stdlib.h>.  */
+   glibc 2.41 defines WCOREDUMP in <sys/wait.h>, not in <stdlib.h>.  */
 #if @GNULIB_SYSTEM_POSIX@ && !(defined WEXITSTATUS && defined WCOREDUMP)
 # include <sys/wait.h>
 #endif

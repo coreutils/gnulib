@@ -20,7 +20,7 @@ Cygwin 3.5.5, mingw, MSVC 14.
 @item
 This header file causes compilation errors in C++ mode on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=32024
-glibc 2.40.
+glibc 2.41.
 @end itemize
 
 Portability problems not fixed by Gnulib:

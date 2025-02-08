@@ -54,7 +54,7 @@ have one of the following behaviors:
 @enumerate
 @item
 Free @code{p}, do not change @code{errno}, and return a null pointer:
-glibc 2.33--2.40 by default, Android.
+glibc 2.33--2.41 by default, Android.
 
 @item
 Free @code{p}, possibly set @code{errno}, and return a null pointer:
@@ -69,7 +69,7 @@ AIX 7.3 without @code{_LINUX_SOURCE_COMPAT}.
 @item
 Free @code{p} and return a pointer to a new region of size zero:
 AIX 7.3 with @code{_LINUX_SOURCE_COMPAT}, glibc 1--2.1 by default,
-glibc 2.1.1--2.40 if specially built with @code{REALLOC_ZERO_BYTES_FREES=0},
+glibc 2.1.1--2.41 if specially built with @code{REALLOC_ZERO_BYTES_FREES=0},
 musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin.
 @end enumerate
 
@@ -110,5 +110,5 @@ Portability problems not fixed by Gnulib:
 When not growing an already-allocated region, i.e.,
 when @code{p} points to a region of size @code{psize} and @code{n <= psize},
 @code{realloc (p, n)} can fail and return a null pointer:
-glibc 2.40 and probably other platforms.
+glibc 2.41 and probably other platforms.
 @end itemize

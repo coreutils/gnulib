@@ -33,14 +33,14 @@ On some platforms, the @code{struct utmpx} field @code{ut_tv} is not
 of type @code{struct timeval}.  Instead, it is a different
 struct with @code{tv_sec} and @code{tv_usec} members that may
 have different types than the members of @code{struct timeval}:
-glibc 2.40 on platforms where @code{time_t} was historically 32 bits
+glibc 2.41 on platforms where @code{time_t} was historically 32 bits
 and where log file formats were not changed when 64-bit @code{time_t}
 was introduced.
 @item
 On some platforms, this API does not support timestamps past the
 year 2038:
 glibc 2.39 on 32-bit platforms like x86 and ARM where @code{time_t}
-was historically 32 bits; however, glibc 2.40 is planned to support
+was historically 32 bits; later glibc versions support
 timestamps up to the year 2106, by changing @code{ut_tv.tv_sec}'s type
 to be a 32-bit unsigned integer.
 @item

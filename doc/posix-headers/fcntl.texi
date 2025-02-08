@@ -39,7 +39,8 @@ non-zero value; otherwise, the gnulib replacement is 0.
 
 @item
 @samp{O_EXEC} is not defined on some platforms:
-glibc 2.40, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.5, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.41, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.5, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+However, glibc does define @samp{O_EXEC} on GNU/Hurd.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
 
@@ -52,7 +53,7 @@ descriptor.
 
 @item
 @samp{O_SEARCH} is not defined on some platforms:
-glibc 2.40, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.41, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
 
