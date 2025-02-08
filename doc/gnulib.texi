@@ -3601,6 +3601,7 @@ This list of functions is sorted according to the header that declares them.
 * mblen::
 * mbstowcs::
 * mbtowc::
+* memalignment::
 * mkdtemp::
 * mkostemp::
 * mkstemp::
@@ -3679,6 +3680,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/mblen.texi
 @include posix-functions/mbstowcs.texi
 @include posix-functions/mbtowc.texi
+@include posix-functions/memalignment.texi
 @include posix-functions/mkdtemp.texi
 @include posix-functions/mkostemp.texi
 @include posix-functions/mkstemp.texi

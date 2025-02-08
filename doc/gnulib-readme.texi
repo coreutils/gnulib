@@ -535,15 +535,21 @@ A pointer @var{P} points within an object @var{O} if and only if
 Arithmetic on a valid pointer is equivalent to the same arithmetic on
 the pointer converted to @code{uintptr_t}, except that offsets are
 multiplied by the size of the pointed-to objects.
-For example, if @code{P + I} is a valid expression involving a pointer
-@var{P} and an integer @var{I}, then @code{(uintptr_t) (P + I) ==
-(uintptr_t) ((uintptr_t) P + I * sizeof *P)}.
+For example, if @code{@var{P} + @var{I}} is a valid expression
+involving a pointer @var{P} and an integer @var{I}, then
+@code{(uintptr_t) (@var{P} + @var{I}) == (uintptr_t) ((uintptr_t)
+@var{P} + @var{I} * sizeof *@var{P})}.
 Similar arithmetic can be done with @code{intptr_t}, although more
 care must be taken in case of integer overflow or negative integers.
 
 @item
-A pointer @code{P} has alignment @code{A} if and only if
-@code{(uintptr_t) P % A} is zero, and similarly for @code{intptr_t}.
+A pointer @var{P} has alignment @var{A} if and only if
+@code{(uintptr_t) @var{P} % @var{A}} is zero, and similarly for @code{intptr_t}.
+Although C23 says that portable code should instead test whether
+@code{memalignment (@var{P}) % @var{A}} is zero, @code{memalignment} is
+missing in many non-C23 systems, is not specified to work portably on
+pointers to atomic or volatile memory, and is likely a bit slower than
+the cast.
 
 @item
 If an existing object has size @var{S}, and if @var{T} is sufficiently
