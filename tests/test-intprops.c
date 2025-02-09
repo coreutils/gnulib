@@ -62,18 +62,20 @@
 
 #define DONTCARE __LINE__
 
+#ifndef TEST_STDCKDINT
 /* Check that INT_PROMOTE promotes to int.
    GCC < 4.9 lacks _Generic even though it may claim C11 conformance.  */
-#if (201112 <= __STDC_VERSION__ \
-     && (!defined __GNUC__ || 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
-         || defined __clang__))
+# if (201112 <= __STDC_VERSION__ \
+      && (!defined __GNUC__ || 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
+          || defined __clang__))
 int check_INT_PROMOTE = _Generic (INT_PROMOTE ((short int) 0), int: 0);
-#endif
+# endif
 /* For other compilers, check the size and sign of INT_PROMOTE (x).  */
 int check_INT_PROMOTE_size
     [2 * (sizeof (INT_PROMOTE ((short int) 0)) == sizeof (int)) - 1];
 int check_INT_PROMOTE_sign
     [2 * (INT_PROMOTE ((short int) -1) < 0) - 1];
+#endif
 
 int int_minus_2 = -2;
 int int_1 = 1;
@@ -83,9 +85,6 @@ main (void)
 {
   /* Use VERIFY for tests that must be integer constant expressions,
      ASSERT otherwise.  */
-
-  /* Check that INT_PROMOTE is a no-op on floats.  */
-  ASSERT (INT_PROMOTE (2.71828) > 2);
 
 #ifndef TEST_STDCKDINT
   /* TYPE_IS_INTEGER.  */
@@ -120,6 +119,9 @@ main (void)
   ASSERT (TYPE_SIGNED (float));
   ASSERT (TYPE_SIGNED (double));
   ASSERT (TYPE_SIGNED (long double));
+
+  /* Check that INT_PROMOTE is a no-op on floats.  */
+  ASSERT (INT_PROMOTE (2.71828) > 2);
 
   /* Integer representation.  Check that it is two's complement.  */
   VERIFY (INT_MIN + INT_MAX < 0);
