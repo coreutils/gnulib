@@ -19,7 +19,8 @@
 #ifndef _XSTRING_DESC_H
 #define _XSTRING_DESC_H 1
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_DEALLOC_FREE, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -95,7 +96,7 @@ xsd_copy (string_desc_t s)
 }
 
 GL_XSTRING_DESC_INLINE
-_GL_ATTRIBUTE_DEALLOC_FREE
+_GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_RETURNS_NONNULL
 char *
 xsd_c (string_desc_t s)
 {
