@@ -45,7 +45,7 @@ sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
     {
       if (sbr_ensure_more_bytes (buffer, 64) < 0)
         {
-          buffer->error = true;
+          buffer->oom = true;
           errno = ENOMEM;
           return -1;
         }
@@ -59,7 +59,10 @@ sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
   if (ret < 0)
     {
       /* Failed.  errno is set.  */
-      buffer->error = true;
+      if (errno == ENOMEM)
+        buffer->oom = true;
+      else
+        buffer->error = true;
       ret = -1;
     }
   else
@@ -79,7 +82,7 @@ sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
              vsnzprintf() call.  */
           if (sbr_ensure_more_bytes (buffer, (size_t) ret) < 0)
             {
-              buffer->error = true;
+              buffer->oom = true;
               errno = ENOMEM;
               ret = -1;
             }
@@ -91,7 +94,10 @@ sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
               if (ret < 0)
                 {
                   /* Failed.  errno is set.  */
-                  buffer->error = true;
+                  if (errno == ENOMEM)
+                    buffer->oom = true;
+                  else
+                    buffer->error = true;
                   ret = -1;
                 }
               else
@@ -131,7 +137,7 @@ sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
     {
       if (sbr_ensure_more_bytes (buffer, 64) < 0)
         {
-          buffer->error = true;
+          buffer->oom = true;
           errno = ENOMEM;
           return -1;
         }
@@ -145,7 +151,10 @@ sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
   if (ret < 0)
     {
       /* Failed.  errno is set.  */
-      buffer->error = true;
+      if (errno == ENOMEM)
+        buffer->oom = true;
+      else
+        buffer->error = true;
       ret = -1;
     }
   else
@@ -165,7 +174,7 @@ sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
              vsnzprintf() call.  */
           if (sbr_ensure_more_bytes (buffer, (size_t) ret) < 0)
             {
-              buffer->error = true;
+              buffer->oom = true;
               errno = ENOMEM;
               ret = -1;
             }
@@ -179,7 +188,10 @@ sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
               if (ret < 0)
                 {
                   /* Failed.  errno is set.  */
-                  buffer->error = true;
+                  if (errno == ENOMEM)
+                    buffer->oom = true;
+                  else
+                    buffer->error = true;
                   ret = -1;
                 }
               else

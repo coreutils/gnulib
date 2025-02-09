@@ -43,7 +43,7 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
     {
       if (sb_ensure_more_bytes (buffer, 64) < 0)
         {
-          buffer->error = true;
+          buffer->oom = true;
           errno = ENOMEM;
           return -1;
         }
@@ -58,7 +58,10 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
   if (ret < 0)
     {
       /* Failed.  errno is set.  */
-      buffer->error = true;
+      if (errno == ENOMEM)
+        buffer->oom = true;
+      else
+        buffer->error = true;
       ret = -1;
     }
   else
@@ -75,7 +78,7 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
              vsnzprintf() call.  */
           if (sb_ensure_more_bytes (buffer, (size_t) ret) < 0)
             {
-              buffer->error = true;
+              buffer->oom = true;
               errno = ENOMEM;
               ret = -1;
             }
@@ -88,7 +91,10 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
               if (ret < 0)
                 {
                   /* Failed.  errno is set.  */
-                  buffer->error = true;
+                  if (errno == ENOMEM)
+                    buffer->oom = true;
+                  else
+                    buffer->error = true;
                   ret = -1;
                 }
               else
@@ -124,7 +130,7 @@ sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
     {
       if (sb_ensure_more_bytes (buffer, 64) < 0)
         {
-          buffer->error = true;
+          buffer->oom = true;
           errno = ENOMEM;
           return -1;
         }
@@ -139,7 +145,10 @@ sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
   if (ret < 0)
     {
       /* Failed.  errno is set.  */
-      buffer->error = true;
+      if (errno == ENOMEM)
+        buffer->oom = true;
+      else
+        buffer->error = true;
       ret = -1;
     }
   else
@@ -156,7 +165,7 @@ sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
              vsnzprintf() call.  */
           if (sb_ensure_more_bytes (buffer, (size_t) ret) < 0)
             {
-              buffer->error = true;
+              buffer->oom = true;
               errno = ENOMEM;
               ret = -1;
             }
@@ -171,7 +180,10 @@ sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
               if (ret < 0)
                 {
                   /* Failed.  errno is set.  */
-                  buffer->error = true;
+                  if (errno == ENOMEM)
+                    buffer->oom = true;
+                  else
+                    buffer->error = true;
                   ret = -1;
                 }
               else

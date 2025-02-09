@@ -41,6 +41,7 @@ sb_init (struct string_buffer *buffer)
   buffer->data = buffer->space;
   buffer->length = 0;
   buffer->allocated = sizeof (buffer->space);
+  buffer->oom = false;
   buffer->error = false;
 }
 
@@ -91,7 +92,7 @@ sb_append1 (struct string_buffer *buffer, char c)
 {
   if (sb_ensure_more_bytes (buffer, 1) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   buffer->data[buffer->length++] = c;
@@ -104,7 +105,7 @@ sb_append_desc (struct string_buffer *buffer, string_desc_t s)
   size_t len = sd_length (s);
   if (sb_ensure_more_bytes (buffer, len) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   memcpy (buffer->data + buffer->length, sd_data (s), len);
@@ -118,7 +119,7 @@ sb_append_c (struct string_buffer *buffer, const char *str)
   size_t len = strlen (str);
   if (sb_ensure_more_bytes (buffer, len) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   memcpy (buffer->data + buffer->length, str, len);
@@ -152,7 +153,7 @@ sb_contents_c (struct string_buffer *buffer)
 string_desc_t
 sb_dupfree (struct string_buffer *buffer)
 {
-  if (buffer->error)
+  if (buffer->oom || buffer->error)
     goto fail;
 
   size_t length = buffer->length;
@@ -185,7 +186,7 @@ sb_dupfree (struct string_buffer *buffer)
 char *
 sb_dupfree_c (struct string_buffer *buffer)
 {
-  if (buffer->error)
+  if (buffer->oom || buffer->error)
     goto fail;
 
   if (sb_ensure_more_bytes (buffer, 1) < 0)

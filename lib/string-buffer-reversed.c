@@ -45,6 +45,7 @@ sbr_init (struct string_buffer_reversed *buffer)
   buffer->data[sizeof (buffer->space) - 1] = '\0';
   buffer->length = 1;
   buffer->allocated = sizeof (buffer->space);
+  buffer->oom = false;
   buffer->error = false;
 }
 
@@ -100,7 +101,7 @@ sbr_prepend1 (struct string_buffer_reversed *buffer, char c)
 {
   if (sbr_ensure_more_bytes (buffer, 1) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   buffer->data[buffer->allocated - buffer->length - 1] = c;
@@ -114,7 +115,7 @@ sbr_prepend_desc (struct string_buffer_reversed *buffer, string_desc_t s)
   size_t len = sd_length (s);
   if (sbr_ensure_more_bytes (buffer, len) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   memcpy (buffer->data + buffer->allocated - buffer->length - len, sd_data (s), len);
@@ -128,7 +129,7 @@ sbr_prepend_c (struct string_buffer_reversed *buffer, const char *str)
   size_t len = strlen (str);
   if (sbr_ensure_more_bytes (buffer, len) < 0)
     {
-      buffer->error = true;
+      buffer->oom = true;
       return -1;
     }
   memcpy (buffer->data + buffer->allocated - buffer->length - len, str, len);
@@ -159,7 +160,7 @@ sbr_contents_c (struct string_buffer_reversed *buffer)
 string_desc_t
 sbr_dupfree (struct string_buffer_reversed *buffer)
 {
-  if (buffer->error)
+  if (buffer->oom || buffer->error)
     goto fail;
 
   size_t length = buffer->length;
@@ -190,7 +191,7 @@ sbr_dupfree (struct string_buffer_reversed *buffer)
 char *
 sbr_dupfree_c (struct string_buffer_reversed *buffer)
 {
-  if (buffer->error)
+  if (buffer->oom || buffer->error)
     goto fail;
 
   size_t length = buffer->length;

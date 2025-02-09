@@ -43,7 +43,8 @@ struct string_buffer_reversed
   sbr_heap_allocated_pointer_t data;
   size_t length;     /* used bytes, <= allocated */
   size_t allocated;  /* allocated bytes */
-  bool error;        /* true if there was an error */
+  bool oom;          /* true if there was an out-of-memory error */
+  bool error;        /* true if there was an error other than out-of-memory */
   char space[1024];  /* stack allocated space */
 };
 
