@@ -17,6 +17,13 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
 
+/* Before including this file, you may define:
+     SBR_NO_PREPENDF         Provides for more efficient code, assuming that
+                             sbr_prependvf and sbr_prependf will not be called
+                             and that 'struct string_buffer_reversed' instances
+                             are not used across different compilation units.
+ */
+
 #ifndef _STRING_BUFFER_REVERSED_H
 #define _STRING_BUFFER_REVERSED_H
 
@@ -72,6 +79,8 @@ extern int sbr_prepend_desc (struct string_buffer_reversed *buffer,
 extern int sbr_prepend_c (struct string_buffer_reversed *buffer,
                          const char *str);
 
+#ifndef SBR_NO_PREPENDF
+
 /* Prepends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
    Returns 0, or -1 with errno set in case of error.
@@ -101,6 +110,8 @@ extern int sbr_prependf (struct string_buffer_reversed *buffer,
   ATTRIBUTE_FORMAT ((__printf__, 2, 3))
   #endif
   ;
+
+#endif
 
 /* Frees the memory held by BUFFER.  */
 extern void sbr_free (struct string_buffer_reversed *buffer)
@@ -148,6 +159,8 @@ extern void sbr_xprepend_desc (struct string_buffer_reversed *buffer,
 extern void sbr_xprepend_c (struct string_buffer_reversed *buffer,
                             const char *str);
 
+# ifndef SBR_NO_PREPENDF
+
 /* Prepends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
    Returns 0, or -1 in case of error other than out-of-memory error.
@@ -178,6 +191,8 @@ extern int sbr_xprependf (struct string_buffer_reversed *buffer,
   #endif
   ;
 
+# endif
+
 /* Returns the contents of BUFFER and frees all other memory held by BUFFER.
    Returns (0, NULL) if there was an error earlier.
    It is the responsibility of the caller to sd_free() the result.  */
@@ -190,6 +205,9 @@ extern string_desc_t sbr_xdupfree (struct string_buffer_reversed *buffer)
    It is the responsibility of the caller to free() the result.  */
 extern char * sbr_xdupfree_c (struct string_buffer_reversed *buffer)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+# ifdef SBR_NO_PREPENDF
+  _GL_ATTRIBUTE_RETURNS_NONNULL /* because buffer->error is always false */
+# endif
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 #endif /* GNULIB_XSTRING_BUFFER_REVERSED */

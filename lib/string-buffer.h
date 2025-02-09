@@ -16,6 +16,13 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2021.  */
 
+/* Before including this file, you may define:
+     SB_NO_APPENDF           Provides for more efficient code, assuming that
+                             sb_appendvf and sb_appendf will not be called and
+                             that 'struct string_buffer' instances are not used
+                             across different compilation units.
+ */
+
 #ifndef _STRING_BUFFER_H
 #define _STRING_BUFFER_H
 
@@ -69,6 +76,8 @@ extern int sb_append_desc (struct string_buffer *buffer, string_desc_t s);
    Returns 0, or -1 in case of out-of-memory error.  */
 extern int sb_append_c (struct string_buffer *buffer, const char *str);
 
+#ifndef SB_NO_APPENDF
+
 /* Appends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
    Returns 0, or -1 with errno set in case of error.
@@ -98,6 +107,8 @@ extern int sb_appendf (struct string_buffer *buffer,
   ATTRIBUTE_FORMAT ((__printf__, 2, 3))
   #endif
   ;
+
+#endif
 
 /* Frees the memory held by BUFFER.  */
 extern void sb_free (struct string_buffer *buffer)
@@ -144,6 +155,8 @@ extern void sb_xappend_desc (struct string_buffer *buffer, string_desc_t s);
 /* Appends the contents of the C string STR to BUFFER.  */
 extern void sb_xappend_c (struct string_buffer *buffer, const char *str);
 
+# ifndef SB_NO_APPENDF
+
 /* Appends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
    Returns 0, or -1 in case of error other than out-of-memory error.
@@ -174,6 +187,8 @@ extern int sb_xappendf (struct string_buffer *buffer,
   #endif
   ;
 
+# endif
+
 /* Ensures the contents of BUFFER is followed by a NUL byte (without
    incrementing the length of the contents).
    Then returns a read-only view of the current contents of BUFFER,
@@ -194,6 +209,9 @@ extern string_desc_t sb_xdupfree (struct string_buffer *buffer)
    It is the responsibility of the caller to free() the result.  */
 extern char * sb_xdupfree_c (struct string_buffer *buffer)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+# ifdef SB_NO_APPENDF
+  _GL_ATTRIBUTE_RETURNS_NONNULL /* because buffer->error is always false */
+# endif
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 #endif /* GNULIB_XSTRING_BUFFER */
