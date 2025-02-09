@@ -1178,6 +1178,19 @@ _GL_CXXALIASWARN (mbsrchr);
 _GL_EXTERN_C char * mbsstr (const char *haystack, const char *needle)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
+/* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
+   compiler warnings for 'const' related mistakes.  */
+# if !(defined _GL_NO_CONST_GENERICS || defined __cplusplus)
+#  if __STDC_VERSION__ >= 202311
+#   define mbsstr(h,n) (typeof(h)) mbsstr ((h), (n))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define mbsstr(h,n) \
+      _Generic ((h), \
+                char const *: (char const *) mbsstr ((h), (n)), \
+                default     :                mbsstr ((h), (n)))
+#  endif
+# endif
 #endif
 
 #if @GNULIB_MBSCASECMP@
@@ -1219,6 +1232,19 @@ _GL_EXTERN_C int mbsncasecmp (const char *s1, const char *s2, size_t n)
 _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
+/* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
+   compiler warnings for 'const' related mistakes.  */
+# if !(defined _GL_NO_CONST_GENERICS || defined __cplusplus)
+#  if __STDC_VERSION__ >= 202311
+#   define mbspcasecmp(s,p) (typeof(s)) mbspcasecmp ((s), (p))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define mbspcasecmp(s,p) \
+      _Generic ((s), \
+                char const *: (char const *) mbspcasecmp ((s), (p)), \
+                default     :                mbspcasecmp ((s), (p)))
+#  endif
+# endif
 #endif
 
 #if @GNULIB_MBSCASESTR@
@@ -1230,6 +1256,19 @@ _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)
 _GL_EXTERN_C char * mbscasestr (const char *haystack, const char *needle)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
+/* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
+   compiler warnings for 'const' related mistakes.  */
+# if !(defined _GL_NO_CONST_GENERICS || defined __cplusplus)
+#  if __STDC_VERSION__ >= 202311
+#   define mbscasestr(h,n) (typeof(h)) mbscasestr ((h), (n))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define mbscasestr(h,n) \
+      _Generic ((h), \
+                char const *: (char const *) mbscasestr ((h), (n)), \
+                default     :                mbscasestr ((h), (n)))
+#  endif
+# endif
 #endif
 
 #if @GNULIB_MBSCSPN@
