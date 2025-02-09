@@ -3585,6 +3585,8 @@ This list of functions is sorted according to the header that declares them.
 * erand48::
 * exit::
 * free::
+* free_aligned_sized::
+* free_sized::
 * getenv::
 * getsubopt::
 * grantpt::
@@ -3664,6 +3666,8 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/erand48.texi
 @include posix-functions/exit.texi
 @include posix-functions/free.texi
+@include posix-functions/free_aligned_sized.texi
+@include posix-functions/free_sized.texi
 @include posix-functions/getenv.texi
 @include posix-functions/getsubopt.texi
 @include posix-functions/grantpt.texi
