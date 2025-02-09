@@ -24,6 +24,9 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Don't use the const-improved function macros in this compilation unit.  */
+#define _LIBUNISTRING_NO_CONST_GENERICS
+
 #include <config.h>
 
 /* Specification.  */

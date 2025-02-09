@@ -110,6 +110,73 @@ extern const uint16_t *
 extern const uint32_t *
        u32_grapheme_next (const uint32_t *s, const uint32_t *end)
        _UC_ATTRIBUTE_PURE;
+#ifndef _LIBUNISTRING_NO_CONST_GENERICS
+/* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
+   want compiler warnings for 'const' related mistakes.  */
+# ifdef __cplusplus
+template <typename T>
+  T * u8_grapheme_next_template (T* s, const uint8_t *end);
+template <>
+  inline uint8_t * u8_grapheme_next_template (uint8_t *s, const uint8_t *end)
+  { return const_cast<uint8_t *>(u8_grapheme_next (s, end)); }
+template <>
+  inline const uint8_t * u8_grapheme_next_template (const uint8_t *s, const uint8_t *end)
+  { return u8_grapheme_next (s, end); }
+#  define u8_grapheme_next u8_grapheme_next_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u8_grapheme_next(s,end) (typeof ((s) + 0)) u8_grapheme_next ((s), (end))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u8_grapheme_next(s,end) \
+      _Generic ((s), \
+                uint8_t *: (uint8_t *) u8_grapheme_next ((s), (end)), \
+                default  :             u8_grapheme_next ((s), (end)))
+#  endif
+# endif
+# ifdef __cplusplus
+template <typename T>
+  T * u16_grapheme_next_template (T* s, const uint16_t *end);
+template <>
+  inline uint16_t * u16_grapheme_next_template (uint16_t *s, const uint16_t *end)
+  { return const_cast<uint16_t *>(u16_grapheme_next (s, end)); }
+template <>
+  inline const uint16_t * u16_grapheme_next_template (const uint16_t *s, const uint16_t *end)
+  { return u16_grapheme_next (s, end); }
+#  define u16_grapheme_next u16_grapheme_next_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u16_grapheme_next(s,end) (typeof ((s) + 0)) u16_grapheme_next ((s), (end))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u16_grapheme_next(s,end) \
+      _Generic ((s), \
+                uint16_t *: (uint16_t *) u16_grapheme_next ((s), (end)), \
+                default   :              u16_grapheme_next ((s), (end)))
+#  endif
+# endif
+# ifdef __cplusplus
+template <typename T>
+  T * u32_grapheme_next_template (T* s, const uint32_t *end);
+template <>
+  inline uint32_t * u32_grapheme_next_template (uint32_t *s, const uint32_t *end)
+  { return const_cast<uint32_t *>(u32_grapheme_next (s, end)); }
+template <>
+  inline const uint32_t * u32_grapheme_next_template (const uint32_t *s, const uint32_t *end)
+  { return u32_grapheme_next (s, end); }
+#  define u32_grapheme_next u32_grapheme_next_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u32_grapheme_next(s,end) (typeof ((s) + 0)) u32_grapheme_next ((s), (end))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u32_grapheme_next(s,end) \
+      _Generic ((s), \
+                uint32_t *: (uint32_t *) u32_grapheme_next ((s), (end)), \
+                default   :              u32_grapheme_next ((s), (end)))
+#  endif
+# endif
+#endif
 
 /* Returns the start of the previous grapheme cluster before S, or NULL if the
    start of the string has been reached.
@@ -124,6 +191,73 @@ extern const uint16_t *
 extern const uint32_t *
        u32_grapheme_prev (const uint32_t *s, const uint32_t *start)
        _UC_ATTRIBUTE_PURE;
+#ifndef _LIBUNISTRING_NO_CONST_GENERICS
+/* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
+   want compiler warnings for 'const' related mistakes.  */
+# ifdef __cplusplus
+template <typename T>
+  T * u8_grapheme_prev_template (T* s, const uint8_t *start);
+template <>
+  inline uint8_t * u8_grapheme_prev_template (uint8_t *s, const uint8_t *start)
+  { return const_cast<uint8_t *>(u8_grapheme_prev (s, start)); }
+template <>
+  inline const uint8_t * u8_grapheme_prev_template (const uint8_t *s, const uint8_t *start)
+  { return u8_grapheme_prev (s, start); }
+#  define u8_grapheme_prev u8_grapheme_prev_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u8_grapheme_prev(s,start) (typeof ((s) + 0)) u8_grapheme_prev ((s), (start))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u8_grapheme_prev(s,start) \
+      _Generic ((s), \
+                uint8_t *: (uint8_t *) u8_grapheme_prev ((s), (start)), \
+                default  :             u8_grapheme_prev ((s), (start)))
+#  endif
+# endif
+# ifdef __cplusplus
+template <typename T>
+  T * u16_grapheme_prev_template (T* s, const uint16_t *start);
+template <>
+  inline uint16_t * u16_grapheme_prev_template (uint16_t *s, const uint16_t *start)
+  { return const_cast<uint16_t *>(u16_grapheme_prev (s, start)); }
+template <>
+  inline const uint16_t * u16_grapheme_prev_template (const uint16_t *s, const uint16_t *start)
+  { return u16_grapheme_prev (s, start); }
+#  define u16_grapheme_prev u16_grapheme_prev_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u16_grapheme_prev(s,start) (typeof ((s) + 0)) u16_grapheme_prev ((s), (start))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u16_grapheme_prev(s,start) \
+      _Generic ((s), \
+                uint16_t *: (uint16_t *) u16_grapheme_prev ((s), (start)), \
+                default   :              u16_grapheme_prev ((s), (start)))
+#  endif
+# endif
+# ifdef __cplusplus
+template <typename T>
+  T * u32_grapheme_prev_template (T* s, const uint32_t *start);
+template <>
+  inline uint32_t * u32_grapheme_prev_template (uint32_t *s, const uint32_t *start)
+  { return const_cast<uint32_t *>(u32_grapheme_prev (s, start)); }
+template <>
+  inline const uint32_t * u32_grapheme_prev_template (const uint32_t *s, const uint32_t *start)
+  { return u32_grapheme_prev (s, start); }
+#  define u32_grapheme_prev u32_grapheme_prev_template
+# else
+#  if __STDC_VERSION__ >= 202311
+#   define u32_grapheme_prev(s,start) (typeof ((s) + 0)) u32_grapheme_prev ((s), (start))
+#  elif ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+         || defined __ICC  || defined __TINYC__)
+#   define u32_grapheme_prev(s,start) \
+      _Generic ((s), \
+                uint32_t *: (uint32_t *) u32_grapheme_prev ((s), (start)), \
+                default   :              u32_grapheme_prev ((s), (start)))
+#  endif
+# endif
+#endif
 
 /* Determine the grapheme cluster boundaries in S, and store the result at
    p[0..n-1].  p[i] = 1 means that a new grapheme cluster begins at s[i].  p[i]
