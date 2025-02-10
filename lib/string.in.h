@@ -1192,8 +1192,9 @@ template <>
   { return mbsstr (haystack, needle); }
 #   define mbsstr mbsstr_template
 #  else
-#   if (__STDC_VERSION__ >= 201112L || (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
-        || (__clang_major__ >= 3) || defined __ICC  || defined __TINYC__)
+#   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+        || defined __ICC  || defined __TINYC__ \
+        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
 #    define mbsstr(h,n) \
        _Generic ((h), \
                  char const *: (char const *) mbsstr ((h), (n)), \
@@ -1256,8 +1257,9 @@ template <>
   { return mbspcasecmp (string, prefix); }
 #   define mbspcasecmp mbspcasecmp_template
 #  else
-#   if (__STDC_VERSION__ >= 201112L || (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
-        || (__clang_major__ >= 3) || defined __ICC  || defined __TINYC__)
+#   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+        || defined __ICC  || defined __TINYC__ \
+        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
 #    define mbspcasecmp(s,p) \
        _Generic ((s), \
                  char const *: (char const *) mbspcasecmp ((s), (p)), \
@@ -1290,8 +1292,9 @@ template <>
   { return mbscasestr (haystack, needle); }
 #   define mbscasestr mbscasestr_template
 #  else
-#   if (__STDC_VERSION__ >= 201112L || (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
-        || (__clang_major__ >= 3) || defined __ICC  || defined __TINYC__)
+#   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
+        || defined __ICC  || defined __TINYC__ \
+        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
 #    define mbscasestr(h,n) \
        _Generic ((h), \
                  char const *: (char const *) mbscasestr ((h), (n)), \
