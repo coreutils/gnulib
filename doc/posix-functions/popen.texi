@@ -16,6 +16,9 @@ MSVC 14.
 Some platforms start the child with closed stdin or stdout if the
 standard descriptors were closed in the parent:
 Cygwin 1.5.x.
+@item
+This function hangs if called with closed stdin or stdout on some platforms:
+OS/2 kLIBC.
 @end itemize
 
 Portability problems not fixed by Gnulib:
