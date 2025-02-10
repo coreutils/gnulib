@@ -93,8 +93,9 @@ template <>
 template <>
   inline const uint8_t * u8_check_template (const uint8_t *s, size_t n)
   { return u8_check (s, n); }
+#  undef u8_check
 #  define u8_check u8_check_template
-# else
+# elif !defined u8_check
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -113,8 +114,9 @@ template <>
 template <>
   inline const uint16_t * u16_check_template (const uint16_t *s, size_t n)
   { return u16_check (s, n); }
+#  undef u16_check
 #  define u16_check u16_check_template
-# else
+# elif !defined u16_check
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -133,8 +135,9 @@ template <>
 template <>
   inline const uint32_t * u32_check_template (const uint32_t *s, size_t n)
   { return u32_check (s, n); }
+#  undef u32_check
 #  define u32_check u32_check_template
-# else
+# elif !defined u32_check
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -521,8 +524,9 @@ template <>
 template <>
   inline const uint8_t * u8_chr_template (const uint8_t *str, size_t n, ucs4_t uc)
   { return u8_chr (str, n, uc); }
+#  undef u8_chr
 #  define u8_chr u8_chr_template
-# else
+# elif !defined u8_chr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -541,8 +545,9 @@ template <>
 template <>
   inline const uint16_t * u16_chr_template (const uint16_t *str, size_t n, ucs4_t uc)
   { return u16_chr (str, n, uc); }
+#  undef u16_chr
 #  define u16_chr u16_chr_template
-# else
+# elif !defined u16_chr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -561,8 +566,9 @@ template <>
 template <>
   inline const uint32_t * u32_chr_template (const uint32_t *str, size_t n, ucs4_t uc)
   { return u32_chr (str, n, uc); }
+#  undef u32_chr
 #  define u32_chr u32_chr_template
-# else
+# elif !defined u32_chr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -641,8 +647,9 @@ template <>
 template <>
   inline const uint8_t * u8_next_template (ucs4_t *puc, const uint8_t *s)
   { return u8_next (puc, s); }
+#  undef u8_next
 #  define u8_next u8_next_template
-# else
+# elif !defined u8_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -661,8 +668,9 @@ template <>
 template <>
   inline const uint16_t * u16_next_template (ucs4_t *puc, const uint16_t *s)
   { return u16_next (puc, s); }
+#  undef u16_next
 #  define u16_next u16_next_template
-# else
+# elif !defined u16_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -681,8 +689,9 @@ template <>
 template <>
   inline const uint32_t * u32_next_template (ucs4_t *puc, const uint32_t *s)
   { return u32_next (puc, s); }
+#  undef u32_next
 #  define u32_next u32_next_template
-# else
+# elif !defined u32_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -715,8 +724,9 @@ template <>
 template <>
   inline const uint8_t * u8_prev_template (ucs4_t *puc, const uint8_t *s, const uint8_t *start)
   { return u8_prev (puc, s, start); }
+#  undef u8_prev
 #  define u8_prev u8_prev_template
-# else
+# elif !defined u8_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -735,8 +745,9 @@ template <>
 template <>
   inline const uint16_t * u16_prev_template (ucs4_t *puc, const uint16_t *s, const uint16_t *start)
   { return u16_prev (puc, s, start); }
+#  undef u16_prev
 #  define u16_prev u16_prev_template
-# else
+# elif !defined u16_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -755,8 +766,9 @@ template <>
 template <>
   inline const uint32_t * u32_prev_template (ucs4_t *puc, const uint32_t *s, const uint32_t *start)
   { return u32_prev (puc, s, start); }
+#  undef u32_prev
 #  define u32_prev u32_prev_template
-# else
+# elif !defined u32_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -925,8 +937,9 @@ template <>
 template <>
   inline const uint8_t * u8_strchr_template (const uint8_t *str, ucs4_t uc)
   { return u8_strchr (str, uc); }
+#  undef u8_strchr
 #  define u8_strchr u8_strchr_template
-# else
+# elif !defined u8_strchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -945,8 +958,9 @@ template <>
 template <>
   inline const uint16_t * u16_strchr_template (const uint16_t *str, ucs4_t uc)
   { return u16_strchr (str, uc); }
+#  undef u16_strchr
 #  define u16_strchr u16_strchr_template
-# else
+# elif !defined u16_strchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -965,8 +979,9 @@ template <>
 template <>
   inline const uint32_t * u32_strchr_template (const uint32_t *str, ucs4_t uc)
   { return u32_strchr (str, uc); }
+#  undef u32_strchr
 #  define u32_strchr u32_strchr_template
-# else
+# elif !defined u32_strchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1001,8 +1016,9 @@ template <>
 template <>
   inline const uint8_t * u8_strrchr_template (const uint8_t *str, ucs4_t uc)
   { return u8_strrchr (str, uc); }
+#  undef u8_strrchr
 #  define u8_strrchr u8_strrchr_template
-# else
+# elif !defined u8_strrchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1021,8 +1037,9 @@ template <>
 template <>
   inline const uint16_t * u16_strrchr_template (const uint16_t *str, ucs4_t uc)
   { return u16_strrchr (str, uc); }
+#  undef u16_strrchr
 #  define u16_strrchr u16_strrchr_template
-# else
+# elif !defined u16_strrchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1041,8 +1058,9 @@ template <>
 template <>
   inline const uint32_t * u32_strrchr_template (const uint32_t *str, ucs4_t uc)
   { return u32_strrchr (str, uc); }
+#  undef u32_strrchr
 #  define u32_strrchr u32_strrchr_template
-# else
+# elif !defined u32_strrchr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1103,8 +1121,9 @@ template <>
 template <>
   inline const uint8_t * u8_strpbrk_template (const uint8_t *str, const uint8_t *accept)
   { return u8_strpbrk (str, accept); }
+#  undef u8_strpbrk
 #  define u8_strpbrk u8_strpbrk_template
-# else
+# elif !defined u8_strpbrk
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1123,8 +1142,9 @@ template <>
 template <>
   inline const uint16_t * u16_strpbrk_template (const uint16_t *str, const uint16_t *accept)
   { return u16_strpbrk (str, accept); }
+#  undef u16_strpbrk
 #  define u16_strpbrk u16_strpbrk_template
-# else
+# elif !defined u16_strpbrk
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1143,8 +1163,9 @@ template <>
 template <>
   inline const uint32_t * u32_strpbrk_template (const uint32_t *str, const uint32_t *accept)
   { return u32_strpbrk (str, accept); }
+#  undef u32_strpbrk
 #  define u32_strpbrk u32_strpbrk_template
-# else
+# elif !defined u32_strpbrk
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1179,8 +1200,9 @@ template <>
 template <>
   inline const uint8_t * u8_strstr_template (const uint8_t *haystack, const uint8_t *needle)
   { return u8_strstr (haystack, needle); }
+#  undef u8_strstr
 #  define u8_strstr u8_strstr_template
-# else
+# elif !defined u8_strstr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1199,8 +1221,9 @@ template <>
 template <>
   inline const uint16_t * u16_strstr_template (const uint16_t *haystack, const uint16_t *needle)
   { return u16_strstr (haystack, needle); }
+#  undef u16_strstr
 #  define u16_strstr u16_strstr_template
-# else
+# elif !defined u16_strstr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1219,8 +1242,9 @@ template <>
 template <>
   inline const uint32_t * u32_strstr_template (const uint32_t *haystack, const uint32_t *needle)
   { return u32_strstr (haystack, needle); }
+#  undef u32_strstr
 #  define u32_strstr u32_strstr_template
-# else
+# elif !defined u32_strstr
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))

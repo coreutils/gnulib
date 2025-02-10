@@ -1192,8 +1192,9 @@ template <>
   inline const char * mbsstr_template (const char *haystack, const char *needle)
   { return mbsstr (haystack, needle); }
 }
+#   undef mbsstr
 #   define mbsstr mbsstr_template
-#  else
+#  elif !defined mbsstr
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
         || defined __ICC  || defined __TINYC__ \
         || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1259,8 +1260,9 @@ template <>
   inline const char * mbspcasecmp_template (const char *string, const char *prefix)
   { return mbspcasecmp (string, prefix); }
 }
+#   undef mbspcasecmp
 #   define mbspcasecmp mbspcasecmp_template
-#  else
+#  elif !defined mbspcasecmp
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
         || defined __ICC  || defined __TINYC__ \
         || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -1296,8 +1298,9 @@ template <>
   inline const char * mbscasestr_template (const char *haystack, const char *needle)
   { return mbscasestr (haystack, needle); }
 }
+#   undef mbscasestr
 #   define mbscasestr mbscasestr_template
-#  else
+#  elif !defined mbscasestr
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
         || defined __ICC  || defined __TINYC__ \
         || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))

@@ -122,8 +122,9 @@ template <>
 template <>
   inline const uint8_t * u8_grapheme_next_template (const uint8_t *s, const uint8_t *end)
   { return u8_grapheme_next (s, end); }
+#  undef u8_grapheme_next
 #  define u8_grapheme_next u8_grapheme_next_template
-# else
+# elif !defined u8_grapheme_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -142,8 +143,9 @@ template <>
 template <>
   inline const uint16_t * u16_grapheme_next_template (const uint16_t *s, const uint16_t *end)
   { return u16_grapheme_next (s, end); }
+#  undef u16_grapheme_next
 #  define u16_grapheme_next u16_grapheme_next_template
-# else
+# elif !defined u16_grapheme_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -162,8 +164,9 @@ template <>
 template <>
   inline const uint32_t * u32_grapheme_next_template (const uint32_t *s, const uint32_t *end)
   { return u32_grapheme_next (s, end); }
+#  undef u32_grapheme_next
 #  define u32_grapheme_next u32_grapheme_next_template
-# else
+# elif !defined u32_grapheme_next
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -200,8 +203,9 @@ template <>
 template <>
   inline const uint8_t * u8_grapheme_prev_template (const uint8_t *s, const uint8_t *start)
   { return u8_grapheme_prev (s, start); }
+#  undef u8_grapheme_prev
 #  define u8_grapheme_prev u8_grapheme_prev_template
-# else
+# elif !defined u8_grapheme_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -220,8 +224,9 @@ template <>
 template <>
   inline const uint16_t * u16_grapheme_prev_template (const uint16_t *s, const uint16_t *start)
   { return u16_grapheme_prev (s, start); }
+#  undef u16_grapheme_prev
 #  define u16_grapheme_prev u16_grapheme_prev_template
-# else
+# elif !defined u16_grapheme_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
@@ -240,8 +245,9 @@ template <>
 template <>
   inline const uint32_t * u32_grapheme_prev_template (const uint32_t *s, const uint32_t *start)
   { return u32_grapheme_prev (s, start); }
+#  undef u32_grapheme_prev
 #  define u32_grapheme_prev u32_grapheme_prev_template
-# else
+# elif !defined u32_grapheme_prev
 #  if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
        || defined __ICC  || defined __TINYC__ \
        || (__STDC_VERSION__ >= 201112L && !(defined __GNUC__ || defined __clang__)))
