@@ -1182,6 +1182,7 @@ _GL_EXTERN_C char * mbsstr (const char *haystack, const char *needle)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
+extern "C++" { /* needed for AIX */
 template <typename T>
   T * mbsstr_template (T* haystack, const char *needle);
 template <>
@@ -1190,6 +1191,7 @@ template <>
 template <>
   inline const char * mbsstr_template (const char *haystack, const char *needle)
   { return mbsstr (haystack, needle); }
+}
 #   define mbsstr mbsstr_template
 #  else
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
@@ -1247,6 +1249,7 @@ _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
+extern "C++" { /* needed for AIX */
 template <typename T>
   T * mbspcasecmp_template (T* string, const char *prefix);
 template <>
@@ -1255,6 +1258,7 @@ template <>
 template <>
   inline const char * mbspcasecmp_template (const char *string, const char *prefix)
   { return mbspcasecmp (string, prefix); }
+}
 #   define mbspcasecmp mbspcasecmp_template
 #  else
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
@@ -1282,6 +1286,7 @@ _GL_EXTERN_C char * mbscasestr (const char *haystack, const char *needle)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
+extern "C++" { /* needed for AIX */
 template <typename T>
   T * mbscasestr_template (T* haystack, const char *needle);
 template <>
@@ -1290,6 +1295,7 @@ template <>
 template <>
   inline const char * mbscasestr_template (const char *haystack, const char *needle)
   { return mbscasestr (haystack, needle); }
+}
 #   define mbscasestr mbscasestr_template
 #  else
 #   if ((__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) || (__clang_major__ >= 3) \
