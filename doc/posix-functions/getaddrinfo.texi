@@ -13,11 +13,14 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 HP-UX 11.11, Cygwin 1.5.x, mingw, MSVC 14.
 @item
-On Windows, this function is declared in @code{<ws2tcpip.h>} rather than in
-@code{<netdb.h>}.
+On native Windows, this function is declared in @code{<ws2tcpip.h>}
+rather than in @code{<netdb.h>}.
 @item
-On Windows, in 32-bit mode, this function is defined with a calling convention
-that is different from @code{cdecl}.
+On native Windows, this function does not support
+the @code{AI_NUMERICSERV} hints flag.
+@item
+On native Windows, in 32-bit mode, this function is defined
+with a calling convention that is different from @code{cdecl}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

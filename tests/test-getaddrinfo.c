@@ -82,7 +82,9 @@ simple (int pass, char const *host, char const *service)
   else
     {
       memset (&hints, 0, sizeof (hints));
-      hints.ai_flags = AI_CANONNAME | (pass == 3 ? AI_NUMERICHOST : 0);
+      hints.ai_flags = AI_CANONNAME
+                       | (pass == 3 ? AI_NUMERICHOST : 0)
+                       | (pass == 4 ? AI_NUMERICSERV : 0);
       hints.ai_family = AF_UNSPEC;
       hints.ai_socktype = SOCK_STREAM;
       hints_p = &hints;
@@ -94,6 +96,9 @@ simple (int pass, char const *host, char const *service)
   dbgprintf ("res %d: %s\n", res, gai_strerror (res));
 
   if (pass == 3 && ! isdigit (host[0]))
+    return res != EAI_NONAME;
+
+  if (pass == 4 && ! isdigit (service[0]))
     return res != EAI_NONAME;
 
   if (res != 0)
@@ -187,9 +192,13 @@ int main (void)
   (void) gl_sockets_startup (SOCKETS_1_1);
 
   return (  simple (1, HOST1, SERV1)
+          + simple (1, HOST1, "80")
           + simple (1, HOST2, SERV2)
+          + simple (1, HOST2, "443")
           + simple (1, HOST3, SERV3)
+          + simple (1, HOST3, "80")
           + simple (1, HOST4, SERV4)
+          + simple (1, HOST4, "389")
           + simple (2, HOST1, SERV1)
           + simple (2, HOST2, SERV2)
           + simple (2, HOST3, SERV3)
@@ -203,5 +212,13 @@ int main (void)
           + simple (3, HOST1, SERV1)
           + simple (3, HOST2, SERV2)
           + simple (3, HOST3, SERV3)
-          + simple (3, HOST4, SERV4));
+          + simple (3, HOST4, SERV4)
+          + simple (4, HOST1, SERV1)
+          + simple (4, HOST1, "80")
+          + simple (4, HOST2, SERV2)
+          + simple (4, HOST2, "443")
+          + simple (4, HOST3, SERV3)
+          + simple (4, HOST3, "80")
+          + simple (4, HOST4, SERV4)
+          + simple (4, HOST4, "389"));
 }

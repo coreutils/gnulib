@@ -54,7 +54,7 @@
 
 #if HAVE_GETADDRINFO
 
-/* Override with cdecl calling convention.  */
+/* Override with cdecl calling convention and mingw fix.  */
 
 int
 getaddrinfo (const char *restrict nodename,
@@ -63,6 +63,10 @@ getaddrinfo (const char *restrict nodename,
              struct addrinfo **restrict res)
 # undef getaddrinfo
 {
+  if (hints && (hints->ai_flags & AI_NUMERICSERV) != 0
+      && servname && !(*servname >= '0' && *servname <= '9'))
+    return EAI_NONAME;
+
   return getaddrinfo (nodename, servname, hints, res);
 }
 
@@ -237,10 +241,17 @@ getaddrinfo (const char *restrict nodename,
 
 # ifdef WINDOWS_NATIVE
   if (use_win32_p ())
-    return getaddrinfo_ptr (nodename, servname, hints, res);
+    {
+      if (hints && (hints->ai_flags & AI_NUMERICSERV) != 0
+          && servname && !(*servname >= '0' && *servname <= '9'))
+        return EAI_NONAME;
+      return getaddrinfo_ptr (nodename, servname, hints, res);
+    }
 # endif
 
-  if (hints && (hints->ai_flags & ~(AI_CANONNAME|AI_PASSIVE|AI_NUMERICHOST)))
+  if (hints
+      && (hints->ai_flags
+          & ~(AI_CANONNAME | AI_PASSIVE | AI_NUMERICHOST | AI_NUMERICSERV)))
     /* FIXME: Support more flags. */
     return EAI_BADFLAGS;
 
