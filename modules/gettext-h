@@ -5,6 +5,7 @@ Files:
 lib/gettext.h
 
 Depends-on:
+locale-h
 vararrays
 
 configure.ac:
