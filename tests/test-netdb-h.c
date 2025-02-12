@@ -29,6 +29,9 @@ struct hostent t1;
 /* Check that the 'socklen_t' type is defined.  */
 socklen_t t2;
 
+int ai1 = AI_NUMERICHOST;
+int ai2 = AI_NUMERICSERV;
+
 int
 main (void)
 {

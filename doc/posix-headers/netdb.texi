@@ -26,6 +26,14 @@ This header file does not define @code{AI_ADDRCONFIG} on some platforms:
 NetBSD 5.0.
 
 @item
+This header file does not define @code{AI_NUMERICHOST} on some platforms:
+HP-UX 11.11.
+
+@item
+This header file does not define @code{AI_NUMERICSERV} on some platforms:
+macOS 10.5, HP-UX 11.11, mingw.
+
+@item
 @c Defined in RFC 2553.
 This header file incorrectly defines @code{NI_MAXHOST} on some platforms:
 musl libc 1.2.4, OpenBSD 7.5.
