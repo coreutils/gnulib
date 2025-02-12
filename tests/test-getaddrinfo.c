@@ -60,11 +60,12 @@ SIGNATURE_CHECK (getaddrinfo, int, (char const *, char const *,
 #endif
 
 static int
-simple (char const *host, char const *service)
+simple (int pass, char const *host, char const *service)
 {
   char buf[BUFSIZ];
   static int skip = 0;
   struct addrinfo hints;
+  struct addrinfo *hints_p;
   struct addrinfo *ai0, *ai;
   int res;
   int err;
@@ -75,14 +76,18 @@ simple (char const *host, char const *service)
 
   dbgprintf ("Finding %s service %s...\n", host, service);
 
-  /* This initializes "hints" but does not use it.  Is there a reason
-     for this?  If so, please fix this comment.  */
-  memset (&hints, 0, sizeof (hints));
-  hints.ai_flags = AI_CANONNAME;
-  hints.ai_family = AF_UNSPEC;
-  hints.ai_socktype = SOCK_STREAM;
+  if (pass == 1)
+    hints_p = NULL;
+  else
+    {
+      memset (&hints, 0, sizeof (hints));
+      hints.ai_flags = AI_CANONNAME;
+      hints.ai_family = AF_UNSPEC;
+      hints.ai_socktype = SOCK_STREAM;
+      hints_p = &hints;
+    }
 
-  res = getaddrinfo (host, service, NULL, &ai0);
+  res = getaddrinfo (host, service, hints_p, &ai0);
   err = errno;
 
   dbgprintf ("res %d: %s\n", res, gai_strerror (res));
@@ -171,8 +176,12 @@ int main (void)
 {
   (void) gl_sockets_startup (SOCKETS_1_1);
 
-  return simple (HOST1, SERV1)
-    + simple (HOST2, SERV2)
-    + simple (HOST3, SERV3)
-    + simple (HOST4, SERV4);
+  return (  simple (1, HOST1, SERV1)
+          + simple (1, HOST2, SERV2)
+          + simple (1, HOST3, SERV3)
+          + simple (1, HOST4, SERV4)
+          + simple (2, HOST1, SERV1)
+          + simple (2, HOST2, SERV2)
+          + simple (2, HOST3, SERV3)
+          + simple (2, HOST4, SERV4));
 }
