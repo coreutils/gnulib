@@ -13,6 +13,7 @@ extensions
 gettext-h       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
 gnulib-i18n     [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
 inet_ntop       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+inet_pton       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
 snprintf        [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
 bool            [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
 strdup          [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]

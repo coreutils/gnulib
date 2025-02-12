@@ -169,16 +169,43 @@ validate_family (int family)
 {
   /* FIXME: Support more families. */
 # if HAVE_IPV4
-     if (family == PF_INET)
-       return true;
+   if (family == PF_INET)
+     return true;
 # endif
 # if HAVE_IPV6
-     if (family == PF_INET6)
-       return true;
+   if (family == PF_INET6)
+     return true;
 # endif
-     if (family == PF_UNSPEC)
-       return true;
-     return false;
+   if (family == PF_UNSPEC)
+     return true;
+   return false;
+}
+
+static bool
+is_numeric_host (const char *host, int family)
+{
+# if HAVE_IPV4
+  if (family == PF_INET || family == PF_UNSPEC)
+    {
+      /* glibc supports IPv4 addresses in numbers-and-dots notation, that is,
+         also hexadecimal and octal number formats and formats that don't
+         require all four bytes to be explicitly written, via inet_aton().
+         But POSIX doesn't require support for these legacy formats.  Therefore
+         we are free to use inet_pton() instead of inet_aton().  */
+      struct in_addr addr;
+      if (inet_pton (AF_INET, host, &addr))
+        return true;
+    }
+# endif
+# if HAVE_IPV6
+  if (family == PF_INET6 || family == PF_UNSPEC)
+    {
+      struct in6_addr addr;
+      if (inet_pton (AF_INET6, host, &addr))
+        return true;
+    }
+# endif
+  return false;
 }
 
 /* Translate name of a service location and/or a service name to set of
@@ -213,7 +240,7 @@ getaddrinfo (const char *restrict nodename,
     return getaddrinfo_ptr (nodename, servname, hints, res);
 # endif
 
-  if (hints && (hints->ai_flags & ~(AI_CANONNAME|AI_PASSIVE)))
+  if (hints && (hints->ai_flags & ~(AI_CANONNAME|AI_PASSIVE|AI_NUMERICHOST)))
     /* FIXME: Support more flags. */
     return EAI_BADFLAGS;
 
@@ -225,12 +252,18 @@ getaddrinfo (const char *restrict nodename,
     /* FIXME: Support other socktype. */
     return EAI_SOCKTYPE; /* FIXME: Better return code? */
 
-  if (!nodename)
+  if (nodename != NULL)
+    {
+      if (hints && (hints->ai_flags & AI_NUMERICHOST) != 0
+          && !is_numeric_host (nodename, hints->ai_family))
+        return EAI_NONAME;
+    }
+  else
     {
       if (!(hints->ai_flags & AI_PASSIVE))
         return EAI_NONAME;
 
-# ifdef HAVE_IPV6
+# if HAVE_IPV6
       nodename = (hints->ai_family == AF_INET6) ? "::" : "0.0.0.0";
 # else
       nodename = "0.0.0.0";

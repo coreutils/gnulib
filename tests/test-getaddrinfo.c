@@ -34,6 +34,7 @@ SIGNATURE_CHECK (getaddrinfo, int, (char const *, char const *,
 #endif
 
 #include <arpa/inet.h>
+#include <ctype.h>
 #include <errno.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -81,7 +82,7 @@ simple (int pass, char const *host, char const *service)
   else
     {
       memset (&hints, 0, sizeof (hints));
-      hints.ai_flags = AI_CANONNAME;
+      hints.ai_flags = AI_CANONNAME | (pass == 3 ? AI_NUMERICHOST : 0);
       hints.ai_family = AF_UNSPEC;
       hints.ai_socktype = SOCK_STREAM;
       hints_p = &hints;
@@ -91,6 +92,9 @@ simple (int pass, char const *host, char const *service)
   err = errno;
 
   dbgprintf ("res %d: %s\n", res, gai_strerror (res));
+
+  if (pass == 3 && ! isdigit (host[0]))
+    return res != EAI_NONAME;
 
   if (res != 0)
     {
@@ -171,6 +175,12 @@ simple (int pass, char const *host, char const *service)
 #define SERV3 "http"
 #define HOST4 "google.org"
 #define SERV4 "ldap"
+#if HAVE_IPV4
+# define NUMERICHOSTV4 "1.2.3.4"
+#endif
+#if HAVE_IPV6
+# define NUMERICHOSTV6 "2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF"
+#endif
 
 int main (void)
 {
@@ -183,5 +193,15 @@ int main (void)
           + simple (2, HOST1, SERV1)
           + simple (2, HOST2, SERV2)
           + simple (2, HOST3, SERV3)
-          + simple (2, HOST4, SERV4));
+          + simple (2, HOST4, SERV4)
+#if HAVE_IPV4
+          + simple (3, NUMERICHOSTV4, SERV1)
+#endif
+#if HAVE_IPV6
+          + simple (3, NUMERICHOSTV6, SERV1)
+#endif
+          + simple (3, HOST1, SERV1)
+          + simple (3, HOST2, SERV2)
+          + simple (3, HOST3, SERV3)
+          + simple (3, HOST4, SERV4));
 }
