@@ -18,6 +18,7 @@ minmax
 stat
 bool
 sys_stat-h
+stdint-h
 
 configure.ac:
 gl_FUNC_ACL

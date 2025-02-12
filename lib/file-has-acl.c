@@ -50,7 +50,6 @@ static char const UNKNOWN_SECURITY_CONTEXT[] = "?";
 #  include <selinux/selinux.h>
 # endif
 # include <stdckdint.h>
-# include <stdint.h>
 # include <string.h>
 # include <arpa/inet.h>
 # include <sys/xattr.h>

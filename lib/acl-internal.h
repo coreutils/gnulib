@@ -52,10 +52,7 @@ extern int aclsort (int, int, struct acl *);
 #include <errno.h>
 
 #include <limits.h>
-
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
+#include <stdint.h>
 
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false

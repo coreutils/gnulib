@@ -17,6 +17,7 @@ extern-inline
 minmax
 free-posix
 limits-h
+stdint-h
 malloc-posix
 ssize_t
 stat
