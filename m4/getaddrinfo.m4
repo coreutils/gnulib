@@ -1,5 +1,5 @@
 # getaddrinfo.m4
-# serial 36
+# serial 37
 dnl Copyright (C) 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,10 +89,11 @@ int getaddrinfo (const char *, const char *, const struct addrinfo *, struct add
       HAVE_GETADDRINFO=0
     fi
   fi
-  AC_CACHE_CHECK([whether getaddrinfo supports AI_NUMERICSERV],
-    [gl_cv_func_getaddrinfo_works],
-    [AC_RUN_IFELSE(
-       [AC_LANG_PROGRAM([[
+  if test $HAVE_GETADDRINFO != 0; then
+    AC_CACHE_CHECK([whether getaddrinfo supports AI_NUMERICSERV],
+      [gl_cv_func_getaddrinfo_works],
+      [AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
@@ -105,28 +106,29 @@ int getaddrinfo (const char *, const char *, const struct addrinfo *, struct add
 #endif
 #include <stddef.h>
 #include <string.h>
-          ]], [[
-          struct addrinfo hints;
-          struct addrinfo ai;
-          memset (&hints, 0, sizeof (hints));
-          hints.ai_flags = AI_NUMERICSERV;
-          return getaddrinfo ("www.gnu.org", "http", &hints, &ai) != EAI_NONAME;
-          ]])
-       ],
-       [gl_cv_func_getaddrinfo_works=yes],
-       [gl_cv_func_getaddrinfo_works=no],
-       [case "$host_os" in
-                             # Guess no on native Windows.
-          mingw* | windows*) gl_cv_func_getaddrinfo_works="guessing no" ;;
-                             # Guess yes otherwise.
-          *)                 gl_cv_func_getaddrinfo_works="guessing yes" ;;
-        esac
-       ])
-    ])
-  case "$gl_cv_func_getaddrinfo_works" in
-    *yes) ;;
-    *) REPLACE_GETADDRINFO=1 ;;
-  esac
+            ]], [[
+              struct addrinfo hints;
+              struct addrinfo ai;
+              memset (&hints, 0, sizeof (hints));
+              hints.ai_flags = AI_NUMERICSERV;
+              return getaddrinfo ("www.gnu.org", "http", &hints, &ai) != EAI_NONAME;
+            ]])
+         ],
+         [gl_cv_func_getaddrinfo_works=yes],
+         [gl_cv_func_getaddrinfo_works=no],
+         [case "$host_os" in
+                               # Guess no on native Windows.
+            mingw* | windows*) gl_cv_func_getaddrinfo_works="guessing no" ;;
+                               # Guess yes otherwise.
+            *)                 gl_cv_func_getaddrinfo_works="guessing yes" ;;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_getaddrinfo_works" in
+      *yes) ;;
+      *) REPLACE_GETADDRINFO=1 ;;
+    esac
+  fi
   AC_DEFINE_UNQUOTED([HAVE_GETADDRINFO], [$HAVE_GETADDRINFO],
     [Define to 1 if getaddrinfo exists, or to 0 otherwise.])
 
