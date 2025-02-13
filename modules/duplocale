@@ -30,7 +30,7 @@ Link:
 $(DUPLOCALE_LIB)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
