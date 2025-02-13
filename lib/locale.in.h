@@ -69,6 +69,85 @@
 # define LC_MESSAGES 1729
 #endif
 
+#if !@HAVE_LOCALE_T@
+# if !defined GNULIB_defined_locale_t
+/* The values of the POSIX-standardized LC_* macros are:
+
+                  LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
+
+   glibc, Solaris,     3        0           5         4            1        2
+   Android
+   macOS, *BSD         1        2           6         3            4        5
+   native Windows      1        2        1729         3            4        5
+
+   We map these to the log2(LC_*_MASK) values, chosen to be compatible with
+   later releases of the same operating system.  */
+#  if defined __APPLE__ && defined __MACH__          /* macOS */
+/*                LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
+
+   category            1        2           6         3            4        5
+   log2(LC_*_MASK)     0        1           2         3            4        5
+ */
+#   define gl_log2_lc_mask(category) ((0x2543100 >> (4 * (category))) & 0xf)
+#  elif defined __FreeBSD__ || defined __DragonFly__ /* FreeBSD */
+/*                LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
+
+   category            1        2           6         3            4        5
+   log2(LC_*_MASK)     0        1           5         2            3        4
+ */
+#   define gl_log2_lc_mask(category) ((category) - 1)
+#  elif defined _WIN32 && !defined __CYGWIN__        /* native Windows */
+#   define gl_log2_lc_mask(category) \
+      ((category) == LC_MESSAGES ? 0 : (category))
+#  else                           /* glibc, Solaris, Android, NetBSD, OpenBSD */
+#   define gl_log2_lc_mask(category) (category)
+#  endif
+/* From there we map them to array indices 0..5.  */
+#  if (gl_log2_lc_mask (LC_COLLATE) == 0 || gl_log2_lc_mask (LC_CTYPE) == 0 \
+       || gl_log2_lc_mask (LC_MESSAGES) == 0)
+  /* glibc, Solaris, Android, macOS, FreeBSD, native Windows */
+#   define gl_log2_lcmask_to_index(c) (c)
+#   define gl_index_to_log2_lcmask(i) (i)
+#  else
+  /* NetBSD, OpenBSD */
+#   define gl_log2_lcmask_to_index(c) ((c) - 1)
+#   define gl_index_to_log2_lcmask(i) ((i) + 1)
+#  endif
+/* Define the LC_*_MASK macros.  */
+#  define LC_COLLATE_MASK  (1 << gl_log2_lc_mask (LC_COLLATE))
+#  define LC_CTYPE_MASK    (1 << gl_log2_lc_mask (LC_CTYPE))
+#  define LC_MESSAGES_MASK (1 << gl_log2_lc_mask (LC_MESSAGES))
+#  define LC_MONETARY_MASK (1 << gl_log2_lc_mask (LC_MONETARY))
+#  define LC_NUMERIC_MASK  (1 << gl_log2_lc_mask (LC_NUMERIC))
+#  define LC_TIME_MASK     (1 << gl_log2_lc_mask (LC_TIME))
+#  define LC_ALL_MASK \
+     (LC_COLLATE_MASK | LC_CTYPE_MASK | LC_MESSAGES_MASK | LC_MONETARY_MASK \
+      | LC_NUMERIC_MASK | LC_TIME_MASK)
+/* Now define the locale_t type.  */
+struct gl_locale_category_t
+{
+  char *name;
+  bool is_c_locale;
+#  if @HAVE_WINDOWS_LOCALE_T@
+  /* Use the native Windows '_locale_t' type.
+     Documentation:
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/locale>
+     This field is NULL if is_c_locale is true.  But don't use this NULL value,
+     since for the native Windows *_l functions a null _locale_t means to use
+     the global locale.  */
+  _locale_t system_locale;
+#  endif
+};
+struct gl_locale_t
+{
+  struct gl_locale_category_t category[6];
+};
+typedef struct gl_locale_t *locale_t;
+#  define LC_GLOBAL_LOCALE ((locale_t)(-1))
+#  define GNULIB_defined_locale_t 1
+# endif
+#endif
+
 /* On native Windows with MSVC, 'struct lconv' lacks the members int_p_* and
    int_n_*.  Instead of overriding 'struct lconv', merely define these member
    names as macros.  This avoids trouble in C++ mode.  */

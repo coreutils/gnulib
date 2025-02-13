@@ -30,9 +30,21 @@ int a[] =
     LC_NUMERIC,
     LC_TIME
   };
+int m[] =
+  {
+    LC_ALL_MASK,
+    LC_COLLATE_MASK,
+    LC_CTYPE_MASK,
+    LC_MESSAGES_MASK,
+    LC_MONETARY_MASK,
+    LC_NUMERIC_MASK,
+    LC_TIME_MASK
+  };
 
 /* Check that the 'struct lconv' type is defined.  */
 struct lconv l;
+/* Check that the 'locale_t' type is defined.  */
+locale_t lt;
 int ls;
 
 /* Check that NULL can be passed through varargs as a pointer type,
@@ -42,11 +54,9 @@ static_assert (sizeof NULL == sizeof (void *));
 int
 main ()
 {
-#if HAVE_WORKING_NEWLOCALE
   /* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
   locale_t b = LC_GLOBAL_LOCALE;
   (void) b;
-#endif
 
   /* Check that 'struct lconv' has the ISO C and POSIX specified members.  */
   ls += sizeof (*l.decimal_point);

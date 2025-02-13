@@ -1,5 +1,5 @@
 # locale_h.m4
-# serial 31
+# serial 32
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,26 @@ AC_DEFUN_ONCE([gl_LOCALE_H],
   AC_REQUIRE([gl_STDDEF_H])
 
   AC_REQUIRE([gl_LOCALE_T])
+  dnl On native Windows, there is a type '_locale_t' that can be used to
+  dnl define locale_t.
+  AC_CACHE_CHECK([whether locale.h defines _locale_t],
+    [gl_cv_header_locale_has_windows_locale_t],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <locale.h>
+            _locale_t x;]],
+          [[]])],
+       [gl_cv_header_locale_has_windows_locale_t=yes],
+       [gl_cv_header_locale_has_windows_locale_t=no])
+    ])
+  if test $gl_cv_header_locale_has_windows_locale_t = yes; then
+    HAVE_WINDOWS_LOCALE_T=1
+    AC_DEFINE([HAVE_WINDOWS_LOCALE_T], [1],
+      [Define to 1 if <locale.h> defines the _locale_t type.])
+  else
+    HAVE_WINDOWS_LOCALE_T=0
+  fi
+  AC_SUBST([HAVE_WINDOWS_LOCALE_T])
 
   dnl Solaris 11.0 defines the int_p_*, int_n_* members of 'struct lconv'
   dnl only if _LCONV_C99 is defined.
@@ -131,6 +151,7 @@ AC_DEFUN([gl_LOCALE_T],
     fi
   fi
   AC_SUBST([HAVE_XLOCALE_H])
+  AC_SUBST([HAVE_LOCALE_T])
 ])
 
 # gl_LOCALE_MODULE_INDICATOR([modulename])
