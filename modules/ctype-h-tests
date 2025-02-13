@@ -1,0 +1,11 @@
+Files:
+tests/test-ctype-h.c
+
+Depends-on:
+ctype-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ctype-h
+check_PROGRAMS += test-ctype-h

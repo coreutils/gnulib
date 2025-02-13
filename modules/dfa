@@ -16,7 +16,7 @@ c32tob
 c32tolower
 c32toupper
 c99
-ctype
+ctype-h
 flexmember
 gettext-h
 gnulib-i18n

@@ -3,7 +3,7 @@ tests/test-c-ctype.c
 tests/macros.h
 
 Depends-on:
-ctype
+ctype-h
 isblank
 
 configure.ac:

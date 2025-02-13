@@ -7,7 +7,7 @@ m4/isblank.m4
 
 Depends-on:
 extensions
-ctype
+ctype-h
 
 configure.ac:
 gl_FUNC_ISBLANK

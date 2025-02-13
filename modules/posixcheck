@@ -8,7 +8,7 @@ m4/posixcheck.m4
 Depends-on:
 # All modules that depend on 'snippet/warn-on-use'.
 arpa_inet-h
-ctype
+ctype-h
 dirent-h
 fcntl-h
 fnmatch-h
