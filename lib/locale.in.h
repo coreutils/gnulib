@@ -300,7 +300,7 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
 # include "setlocale_null.h"
 #endif
 
-#if /*@GNULIB_NEWLOCALE@ ||*/ (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_NEWLOCALE@)
+#if @GNULIB_NEWLOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_NEWLOCALE@)
 # if @REPLACE_NEWLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef newlocale
@@ -313,18 +313,16 @@ _GL_FUNCDECL_RPL (newlocale, locale_t,
 _GL_CXXALIAS_RPL (newlocale, locale_t,
                   (int category_mask, const char *name, locale_t base));
 # else
-#  if @HAVE_NEWLOCALE@
+#  if !@HAVE_NEWLOCALE@
+_GL_FUNCDECL_SYS (newlocale, locale_t,
+                  (int category_mask, const char *name, locale_t base),
+                  _GL_ARG_NONNULL ((2)));
+#  endif
 _GL_CXXALIAS_SYS (newlocale, locale_t,
                   (int category_mask, const char *name, locale_t base));
-#  endif
 # endif
-# if __GLIBC__ >= 2 && @HAVE_NEWLOCALE@
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (newlocale);
-# endif
-# if @HAVE_NEWLOCALE@ || @REPLACE_NEWLOCALE@
-#  ifndef HAVE_WORKING_NEWLOCALE
-#   define HAVE_WORKING_NEWLOCALE 1
-#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef newlocale

@@ -32,7 +32,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::localeconv, struct lconv *, (void));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setlocale, char *, (int, const char *));
 #endif
 
-#if 0
+#if GNULIB_TEST_NEWLOCALE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::newlocale, locale_t, (int, const char *, locale_t));
 #endif
 
