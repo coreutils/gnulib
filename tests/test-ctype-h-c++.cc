@@ -25,7 +25,7 @@
 
 
 #if GNULIB_TEST_ISALNUM_L
-SIGNATURE_CHECK (GNULIB_NAMESPACE::isalnum_l, int, (int, locale-t));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isalnum_l, int, (int, locale_t));
 #endif
 
 #if 0

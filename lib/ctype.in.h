@@ -70,7 +70,9 @@ _GL_FUNCDECL_SYS (isalnum_l, int, (int c, locale_t locale),
                                   _GL_ARG_NONNULL ((2)));
 # endif
 _GL_CXXALIAS_SYS (isalnum_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (isalnum_l);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef isalnum_l
 # if HAVE_RAW_DECL_ISALNUM_L
