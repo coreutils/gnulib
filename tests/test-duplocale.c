@@ -20,8 +20,6 @@
 
 #include <locale.h>
 
-#if HAVE_WORKING_DUPLOCALE
-
 #include "signature.h"
 SIGNATURE_CHECK (duplocale, locale_t, (locale_t));
 
@@ -234,16 +232,3 @@ main ()
 
   return test_exit_status;
 }
-
-#else
-
-#include <stdio.h>
-
-int
-main ()
-{
-  fprintf (stderr, "Skipping test: function duplocale not available\n");
-  return 77;
-}
-
-#endif

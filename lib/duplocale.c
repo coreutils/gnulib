@@ -22,16 +22,17 @@
 #include <locale.h>
 
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
-#undef duplocale
-
 locale_t
-rpl_duplocale (locale_t locale)
+duplocale (locale_t locale)
+#undef duplocale
 {
-  /* Work around crash in the duplocale function in glibc < 2.12.
+  /* Implement duplocale(LC_GLOBAL_LOCALE) on platforms without locale_t.
+     Also, work around crash in the duplocale function in glibc < 2.12.
      See <https://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
      Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
      errno set to EINVAL.
@@ -113,5 +114,75 @@ rpl_duplocale (locale_t locale)
       return base_copy;
     }
 
+#if GNULIB_defined_locale_t
+
+  locale_t result = (struct gl_locale_t *) malloc (sizeof (struct gl_locale_t));
+  if (result == NULL)
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
+
+  int i;
+  int err;
+  for (i = 0; i < 6; i++)
+    {
+      int log2_lcmask = gl_index_to_log2_lcmask (i);
+
+      result->category[i].name = strdup (locale->category[i].name);
+      if (result->category[i].name == NULL)
+        {
+          err = ENOMEM;
+          goto fail_with_err;
+        }
+      result->category[i].is_c_locale = locale->category[i].is_c_locale;
+# if HAVE_WINDOWS_LOCALE_T
+      if (log2_lcmask == gl_log2_lc_mask (LC_MESSAGES)
+          || result->category[i].is_c_locale)
+        {
+          /* Just to initialize it.  */
+          result->category[i].system_locale = NULL;
+        }
+      else
+        {
+          int cat = log2_lcmask;
+          (void) cat;
+          /* Documentation:
+             <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/create-locale-wcreate-locale>  */
+          result->category[i].system_locale =
+            _create_locale (LC_ALL /* or cat */, result->category[i].name);
+          if (result->category[i].system_locale == NULL)
+            {
+              free (result->category[i].name);
+              err = ENOENT;
+              goto fail_with_err;
+            }
+        }
+# endif
+    }
+
+  /* Success.  */
+  return result;
+
+ fail_with_err:
+  while (--i >= 0)
+    {
+# if HAVE_WINDOWS_LOCALE_T
+      if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+            || result->category[i].is_c_locale))
+        /* Documentation:
+           <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
+        _free_locale (result->category[i].system_locale);
+# endif
+      free (result->category[i].name);
+    }
+  free (result);
+  errno = err;
+  return NULL;
+
+#else
+
   return duplocale (locale);
+
+#endif
 }

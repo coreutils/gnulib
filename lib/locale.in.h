@@ -332,31 +332,27 @@ _GL_WARN_ON_USE (newlocale, "newlocale is not portable");
 #endif
 
 #if @GNULIB_DUPLOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_DUPLOCALE@)
-# if @HAVE_DUPLOCALE@ /* locale_t may be undefined if !@HAVE_DUPLOCALE@.  */
-#  if @REPLACE_DUPLOCALE@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    undef duplocale
-#    define duplocale rpl_duplocale
-#    define GNULIB_defined_duplocale 1
-#   endif
+# if @REPLACE_DUPLOCALE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef duplocale
+#   define duplocale rpl_duplocale
+#   define GNULIB_defined_duplocale 1
+#  endif
 _GL_FUNCDECL_RPL (duplocale, locale_t, (locale_t locale), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (duplocale, locale_t, (locale_t locale));
-#  else
+# else
+#  if !@HAVE_DUPLOCALE@
+_GL_FUNCDECL_SYS (duplocale, locale_t, (locale_t locale), _GL_ARG_NONNULL ((1)));
+#  endif
 _GL_CXXALIAS_SYS (duplocale, locale_t, (locale_t locale));
-#  endif
 # endif
-# if __GLIBC__ >= 2 && @HAVE_DUPLOCALE@
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (duplocale);
-# endif
-# if @HAVE_DUPLOCALE@
-#  ifndef HAVE_WORKING_DUPLOCALE
-#   define HAVE_WORKING_DUPLOCALE 1
-#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef duplocale
 # if HAVE_RAW_DECL_DUPLOCALE
-_GL_WARN_ON_USE (duplocale, "duplocale is buggy on some glibc systems - "
+_GL_WARN_ON_USE (duplocale, "duplocale is unportable and buggy on some glibc systems - "
                  "use gnulib module duplocale for portability");
 # endif
 #endif
