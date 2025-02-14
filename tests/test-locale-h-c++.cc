@@ -40,7 +40,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::newlocale, locale_t, (int, const char *, loca
 SIGNATURE_CHECK (GNULIB_NAMESPACE::duplocale, locale_t, (locale_t));
 #endif
 
-#if 0
+#if GNULIB_TEST_FREELOCALE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::freelocale, void, (locale_t));
 #endif
 

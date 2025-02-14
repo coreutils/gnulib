@@ -1,0 +1,31 @@
+Description:
+freelocale() function: free a locale object.
+
+Files:
+lib/freelocale.c
+m4/freelocale.m4
+
+Depends-on:
+locale-h
+
+configure.ac:
+gl_FUNC_FREELOCALE
+gl_CONDITIONAL([GL_COND_OBJ_FREELOCALE], [test $HAVE_LOCALE_T = 0])
+AM_COND_IF([GL_COND_OBJ_FREELOCALE], [
+  gl_PREREQ_FREELOCALE
+])
+gl_LOCALE_MODULE_INDICATOR([freelocale])
+
+Makefile.am:
+if GL_COND_OBJ_FREELOCALE
+lib_SOURCES += freelocale.c
+endif
+
+Include:
+<locale.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

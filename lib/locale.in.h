@@ -361,7 +361,7 @@ _GL_WARN_ON_USE (duplocale, "duplocale is buggy on some glibc systems - "
 # endif
 #endif
 
-#if /*@GNULIB_FREELOCALE@ ||*/ (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_FREELOCALE@)
+#if @GNULIB_FREELOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_FREELOCALE@)
 # if @REPLACE_FREELOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef freelocale
@@ -371,13 +371,14 @@ _GL_WARN_ON_USE (duplocale, "duplocale is buggy on some glibc systems - "
 _GL_FUNCDECL_RPL (freelocale, void, (locale_t locale), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (freelocale, void, (locale_t locale));
 # else
-#  if @HAVE_FREELOCALE@
+#  if !@HAVE_FREELOCALE@
+_GL_FUNCDECL_SYS (duplocale, locale_t, (locale_t locale), _GL_ARG_NONNULL ((1)));
+#  endif
 /* Need to cast, because on FreeBSD and Mac OS X 10.13, the return type is
                                    int.  */
 _GL_CXXALIAS_SYS_CAST (freelocale, void, (locale_t locale));
-#  endif
 # endif
-# if __GLIBC__ >= 2 && @HAVE_FREELOCALE@
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (freelocale);
 # endif
 #elif defined GNULIB_POSIXCHECK

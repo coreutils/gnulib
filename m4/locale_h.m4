@@ -1,5 +1,5 @@
 # locale_h.m4
-# serial 33
+# serial 34
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -178,6 +178,7 @@ AC_DEFUN([gl_LOCALE_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETLOCALE_NULL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NEWLOCALE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_DUPLOCALE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FREELOCALE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALENAME_UNSAFE])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_LOCALE_H_MODULE_INDICATOR_DEFAULTS])
