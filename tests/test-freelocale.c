@@ -21,7 +21,9 @@
 #include <locale.h>
 
 #include "signature.h"
+#if !(defined __APPLE__ && defined __MACH__)
 SIGNATURE_CHECK (freelocale, void, (locale_t));
+#endif
 
 #include "macros.h"
 

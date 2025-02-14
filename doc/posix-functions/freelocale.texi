@@ -21,6 +21,8 @@ z/OS.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function's return type is @code{int} instead of @code{void} on macOS.
+@item
 This function may cause crashes in subsequent @code{newlocale} invocations
 on some platforms:
 @c https://dev.haiku-os.org/ticket/18344
