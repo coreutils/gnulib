@@ -23,6 +23,10 @@
 #include "signature.h"
 SIGNATURE_CHECK (newlocale, locale_t, (int, const char *, locale_t));
 
+#if HAVE_NL_LANGINFO_L
+# include <langinfo.h>
+#endif
+
 #include "macros.h"
 
 #if defined _WIN32 && !defined __CYGWIN__
@@ -47,10 +51,33 @@ SIGNATURE_CHECK (newlocale, locale_t, (int, const char *, locale_t));
 int
 main ()
 {
-  locale_t l1 = newlocale (LC_TIME_MASK, LOCALE1, NULL);
-  locale_t l2 = newlocale (LC_MESSAGES_MASK, LOCALE2, l1);
-  locale_t l3 = newlocale (LC_TIME_MASK, LOCALE3, l2);
-  (void) l3;
+  {
+    locale_t l1 = newlocale (LC_TIME_MASK, LOCALE1, NULL);
+    locale_t l2 = newlocale (LC_MESSAGES_MASK, LOCALE2, l1);
+    locale_t l3 = newlocale (LC_TIME_MASK, LOCALE3, l2);
+    (void) l3;
+  }
+
+#if HAVE_NL_LANGINFO_L
+  /* Verify that when the base argument is NULL, "the data for all sections
+     not requested by category_mask shall be taken from the POSIX locale".  */
+  {
+    locale_t l1 = newlocale (LC_TIME_MASK, LOCALE1, NULL);
+    if (l1 != NULL)
+      {
+        const char *radixchar1 = nl_langinfo_l (RADIXCHAR, l1);
+        ASSERT (*radixchar1 == '.');
+        if (setlocale (LC_ALL, LOCALE2) != NULL)
+          {
+            radixchar1 = nl_langinfo_l (RADIXCHAR, l1);
+            ASSERT (*radixchar1 == '.');
+            locale_t l1a = newlocale (LC_TIME_MASK, LOCALE1, NULL);
+            const char *radixchar1a = nl_langinfo_l (RADIXCHAR, l1a);
+            ASSERT (*radixchar1a == '.');
+          }
+      }
+  }
+#endif
 
   return test_exit_status;
 }

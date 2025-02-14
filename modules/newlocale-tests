@@ -6,6 +6,7 @@ tests/macros.h
 Depends-on:
 
 configure.ac:
+gl_CHECK_FUNCS_ANDROID([nl_langinfo_l], [[#include <langinfo.h>]])
 
 Makefile.am:
 TESTS += test-newlocale

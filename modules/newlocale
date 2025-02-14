@@ -11,7 +11,8 @@ localename-environ
 
 configure.ac:
 gl_FUNC_NEWLOCALE
-gl_CONDITIONAL([GL_COND_OBJ_NEWLOCALE], [test $HAVE_LOCALE_T = 0])
+gl_CONDITIONAL([GL_COND_OBJ_NEWLOCALE],
+               [test $HAVE_LOCALE_T = 0 || { test $REPLACE_NEWLOCALE = 1 && test "$gt_localename_enhances_locale_funcs" != yes; }])
 AM_COND_IF([GL_COND_OBJ_NEWLOCALE], [
   gl_PREREQ_NEWLOCALE
 ])
