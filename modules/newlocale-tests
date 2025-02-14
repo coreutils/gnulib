@@ -1,0 +1,12 @@
+Files:
+tests/test-newlocale.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-newlocale
+check_PROGRAMS += test-newlocale
