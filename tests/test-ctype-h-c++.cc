@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_ISALNUM_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isalnum_l, int, (int, locale-t));
+#endif
+
 #if 0
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isblank, int, (int));
 #endif
