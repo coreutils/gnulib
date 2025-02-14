@@ -26,6 +26,9 @@
 #if HAVE_NEWLOCALE
 /* Only provide workarounds.  */
 
+# include <sys/types.h>
+# include <sys/stat.h>
+
 locale_t
 newlocale (int category_mask, const char *name, locale_t base)
 # undef newlocale
@@ -35,6 +38,33 @@ newlocale (int category_mask, const char *name, locale_t base)
       errno = EINVAL;
       return NULL;
     }
+
+# if defined __NetBSD__
+  /* Work around a NetBSD bug: newlocale does not fail (unlike setlocale)
+     when NAME is an invalid locale name.  */
+  if (category_mask != 0)
+    {
+      /* Test whether NAME is valid.  */
+      if (!(strcmp (name, "C") == 0 || strcmp (name, "POSIX") == 0))
+        {
+          char *filename = (char *) malloc (18 + strlen (name) + 9 + 1);
+          if (filename == NULL)
+            {
+              errno = ENOMEM;
+              return NULL;
+            }
+          sprintf (filename, "/usr/share/locale/%s/LC_CTYPE", name);
+          struct stat statbuf;
+          if (stat (filename, &statbuf) < 0)
+            {
+              free (filename);
+              errno = ENOENT;
+              return NULL;
+            }
+          free (filename);
+        }
+    }
+# endif
 
   if (category_mask != LC_ALL_MASK && base == NULL)
     base = newlocale (LC_ALL_MASK, "C", NULL);

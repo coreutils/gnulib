@@ -20,6 +20,10 @@ z/OS.
 When the third argument is NULL, this function uses locale category data
 from the current locale instead of from the "C" locale on some platforms:
 macOS, NetBSD 10.0, Solaris 11 OpenIndiana.
+@item
+When the second argument is an invalid or unsupported locale name,
+this function uses the "C" locale instead of failing on some platforms:
+NetBSD 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
