@@ -1,5 +1,5 @@
 # newlocale.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,9 +9,21 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_FUNC_NEWLOCALE],
 [
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
-  gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
-  if test $ac_cv_func_newlocale = no; then
+  AC_REQUIRE([gl_LOCALE_T])
+  if test $HAVE_LOCALE_T = 1; then
+    gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
+    gl_func_newlocale="$ac_cv_func_newlocale"
+  else
+    dnl In 2019, some versions of z/OS lack the locale_t type and have broken
+    dnl newlocale, duplocale, freelocale functions.
+    gl_cv_onwards_func_newlocale='future OS version'
+    gl_func_newlocale=no
+  fi
+  if test $gl_func_newlocale != yes; then
     HAVE_NEWLOCALE=0
+    case "$gl_cv_onwards_func_newlocale" in
+      future*) REPLACE_NEWLOCALE=1 ;;
+    esac
   fi
 ])
 
