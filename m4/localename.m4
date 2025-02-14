@@ -1,5 +1,5 @@
 # localename.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,4 +60,9 @@ AC_DEFUN([gl_LOCALENAME_UNSAFE_LIMITED],
 [
   AC_REQUIRE([gt_LC_MESSAGES])
   AC_REQUIRE([gt_INTL_THREAD_LOCALE_NAME])
+])
+
+AC_DEFUN([gl_LOCALENAME_ENVIRON],
+[
+  AC_REQUIRE([gt_INTL_MACOSX])
 ])

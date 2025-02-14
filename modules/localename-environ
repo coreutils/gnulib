@@ -1,0 +1,26 @@
+Description:
+Return current locale's name, as specified by environment variables.
+
+Files:
+lib/localename.h
+lib/localename-environ.c
+m4/localename.m4
+m4/intlmacosx.m4
+
+Depends-on:
+
+configure.ac:
+gl_LOCALENAME_ENVIRON
+gl_LOCALE_MODULE_INDICATOR([localename-environ])
+
+Makefile.am:
+lib_SOURCES += localename-environ.c
+
+Include:
+"localename.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

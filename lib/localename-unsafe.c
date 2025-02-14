@@ -3311,39 +3311,6 @@ gl_locale_name_posix_unsafe (int category, _GL_UNUSED const char *categoryname)
 }
 
 const char *
-gl_locale_name_environ (_GL_UNUSED int category, const char *categoryname)
-{
-  const char *retval;
-
-  /* Setting of LC_ALL overrides all other.  */
-  retval = getenv ("LC_ALL");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  /* Next comes the name of the desired category.  */
-  retval = getenv (categoryname);
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  /* Last possibility is the LANG environment variable.  */
-  retval = getenv ("LANG");
-  if (retval != NULL && retval[0] != '\0')
-    {
-#if HAVE_CFPREFERENCESCOPYAPPVALUE
-      /* Mac OS X 10.2 or newer.
-         Ignore invalid LANG value set by the Terminal application.  */
-      if (strcmp (retval, "UTF-8") != 0)
-#endif
-#if defined __CYGWIN__
-      /* Cygwin.
-         Ignore dummy LANG value set by ~/.profile.  */
-      if (strcmp (retval, "C.UTF-8") != 0)
-#endif
-        return retval;
-    }
-
-  return NULL;
-}
-
-const char *
 gl_locale_name_default (void)
 {
   /* POSIX:2001 says:

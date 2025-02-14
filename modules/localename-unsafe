@@ -16,6 +16,7 @@ m4/musl.m4
 
 Depends-on:
 localename-unsafe-limited
+localename-environ
 extensions
 bool
 locale-h
