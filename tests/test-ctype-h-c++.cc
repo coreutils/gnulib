@@ -56,6 +56,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::isgraph_l, int, (int, locale_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::islower_l, int, (int, locale_t));
 #endif
 
+#if GNULIB_TEST_ISPRINT_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isprint_l, int, (int, locale_t));
+#endif
+
 
 int
 main ()

@@ -56,7 +56,7 @@
 
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
-     || @GNULIB_ISLOWER_L@)
+     || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -201,6 +201,24 @@ _GL_CXXALIASWARN (islower_l);
 # if HAVE_RAW_DECL_ISLOWER_L
 _GL_WARN_ON_USE (islower_l, "islower_l is unportable - "
                  "use gnulib module islower_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is printable.  */
+#if @GNULIB_ISPRINT_L@
+# if !@HAVE_ISPRINT_L@
+_GL_FUNCDECL_SYS (isprint_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (isprint_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (isprint_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef isprint_l
+# if HAVE_RAW_DECL_ISPRINT_L
+_GL_WARN_ON_USE (isprint_l, "isprint_l is unportable - "
+                 "use gnulib module isprint_l for portability");
 # endif
 #endif
 
