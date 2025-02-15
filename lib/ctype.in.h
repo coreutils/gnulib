@@ -54,7 +54,8 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@
+#if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
+     || @GNULIB_ISCNTRL_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -127,6 +128,24 @@ _GL_CXXALIASWARN (isblank_l);
 # if HAVE_RAW_DECL_ISBLANK_L
 _GL_WARN_ON_USE (isblank_l, "isblank_l is unportable - "
                  "use gnulib module isblank_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is a control character.  */
+#if @GNULIB_ISCNTRL_L@
+# if !@HAVE_ISCNTRL_L@
+_GL_FUNCDECL_SYS (iscntrl_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (iscntrl_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (iscntrl_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef iscntrl_l
+# if HAVE_RAW_DECL_ISCNTRL_L
+_GL_WARN_ON_USE (iscntrl_l, "iscntrl_l is unportable - "
+                 "use gnulib module iscntrl_l for portability");
 # endif
 #endif
 

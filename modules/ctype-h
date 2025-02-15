@@ -34,10 +34,12 @@ ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's/@''GNULIB_ISALPHA_L''@/$(GNULIB_ISALPHA_L)/g' \
 	      -e 's/@''GNULIB_ISBLANK''@/$(GNULIB_ISBLANK)/g' \
 	      -e 's/@''GNULIB_ISBLANK_L''@/$(GNULIB_ISBLANK_L)/g' \
+	      -e 's/@''GNULIB_ISCNTRL_L''@/$(GNULIB_ISCNTRL_L)/g' \
 	      -e 's/@''HAVE_ISALNUM_L''@/$(HAVE_ISALNUM_L)/g' \
 	      -e 's/@''HAVE_ISALPHA_L''@/$(HAVE_ISALPHA_L)/g' \
 	      -e 's/@''HAVE_ISBLANK''@/$(HAVE_ISBLANK)/g' \
 	      -e 's/@''HAVE_ISBLANK_L''@/$(HAVE_ISBLANK_L)/g' \
+	      -e 's/@''HAVE_ISCNTRL_L''@/$(HAVE_ISCNTRL_L)/g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/ctype.in.h > $@-t
