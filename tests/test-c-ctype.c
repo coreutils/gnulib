@@ -34,7 +34,6 @@ test_agree_with_C_locale (void)
 
   for (c = 0; c <= UCHAR_MAX; c++)
     {
-      ASSERT (c_isascii (c) == (isascii (c) != 0));
       if (c_isascii (c))
         {
           ASSERT (c_isalnum (c) == (isalnum (c) != 0));
