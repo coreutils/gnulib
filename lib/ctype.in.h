@@ -57,7 +57,7 @@
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
      || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@ \
-     || @GNULIB_ISSPACE_L@ || @GNULIB_ISUPPER_L@)
+     || @GNULIB_ISSPACE_L@ || @GNULIB_ISUPPER_L@ || @GNULIB_ISXDIGIT_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -274,6 +274,24 @@ _GL_CXXALIASWARN (isupper_l);
 # if HAVE_RAW_DECL_ISUPPER_L
 _GL_WARN_ON_USE (isupper_l, "isupper_l is unportable - "
                  "use gnulib module isupper_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is a hexadecimal digit.  */
+#if @GNULIB_ISXDIGIT_L@
+# if !@HAVE_ISXDIGIT_L@
+_GL_FUNCDECL_SYS (isxdigit_l, int, (int c, locale_t locale),
+                                   _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (isxdigit_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (isxdigit_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef isxdigit_l
+# if HAVE_RAW_DECL_ISXDIGIT_L
+_GL_WARN_ON_USE (isxdigit_l, "isxdigit_l is unportable - "
+                 "use gnulib module isxdigit_l for portability");
 # endif
 #endif
 
