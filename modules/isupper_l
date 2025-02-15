@@ -1,0 +1,33 @@
+Description:
+isupper_l() function: test whether a single-byte character is uppercase.
+
+Files:
+lib/isupper_l.c
+lib/is_l-impl.h
+m4/isupper_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_ISUPPER_L
+gl_CONDITIONAL([GL_COND_OBJ_ISUPPER_L], [test $HAVE_ISUPPER_L = 0])
+gl_MODULE_INDICATOR([isupper_l])
+gl_CTYPE_MODULE_INDICATOR([isupper_l])
+
+Makefile.am:
+if GL_COND_OBJ_ISUPPER_L
+lib_SOURCES += isupper_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

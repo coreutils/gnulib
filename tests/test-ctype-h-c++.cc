@@ -68,6 +68,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ispunct_l, int, (int, locale_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isspace_l, int, (int, locale_t));
 #endif
 
+#if GNULIB_TEST_ISUPPER_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isupper_l, int, (int, locale_t));
+#endif
+
 
 int
 main ()
