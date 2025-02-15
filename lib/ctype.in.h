@@ -54,7 +54,7 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_ISALNUM_L@
+#if @GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -78,6 +78,24 @@ _GL_CXXALIASWARN (isalnum_l);
 # if HAVE_RAW_DECL_ISALNUM_L
 _GL_WARN_ON_USE (isalnum_l, "isalnum_l is unportable - "
                  "use gnulib module isalnum_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is alphabetic.  */
+#if @GNULIB_ISALPHA_L@
+# if !@HAVE_ISALPHA_L@
+_GL_FUNCDECL_SYS (isalpha_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (isalpha_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (isalpha_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef isalpha_l
+# if HAVE_RAW_DECL_ISALPHA_L
+_GL_WARN_ON_USE (isalpha_l, "isalpha_l is unportable - "
+                 "use gnulib module isalpha_l for portability");
 # endif
 #endif
 

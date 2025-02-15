@@ -1,0 +1,33 @@
+Description:
+isalpha_l() function: test whether a single-byte character is alphabetic.
+
+Files:
+lib/isalpha_l.c
+lib/is_l-impl.h
+m4/isalpha_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_ISALPHA_L
+gl_CONDITIONAL([GL_COND_OBJ_ISALPHA_L], [test $HAVE_ISALPHA_L = 0])
+gl_MODULE_INDICATOR([isalpha_l])
+gl_CTYPE_MODULE_INDICATOR([isalpha_l])
+
+Makefile.am:
+if GL_COND_OBJ_ISALPHA_L
+lib_SOURCES += isalpha_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

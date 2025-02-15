@@ -28,6 +28,10 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isalnum_l, int, (int, locale_t));
 #endif
 
+#if GNULIB_TEST_ISALPHA_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isalpha_l, int, (int, locale_t));
+#endif
+
 #if 0
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isblank, int, (int));
 #endif
