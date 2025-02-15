@@ -56,7 +56,8 @@
 
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
-     || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@)
+     || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@ \
+     || @GNULIB_ISSPACE_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -237,6 +238,24 @@ _GL_CXXALIASWARN (ispunct_l);
 # if HAVE_RAW_DECL_ISPUNCT_L
 _GL_WARN_ON_USE (ispunct_l, "ispunct_l is unportable - "
                  "use gnulib module ispunct_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is white-space.  */
+#if @GNULIB_ISSPACE_L@
+# if !@HAVE_ISSPACE_L@
+_GL_FUNCDECL_SYS (isspace_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (isspace_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (isspace_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef isspace_l
+# if HAVE_RAW_DECL_ISSPACE_L
+_GL_WARN_ON_USE (isspace_l, "isspace_l is unportable - "
+                 "use gnulib module isspace_l for portability");
 # endif
 #endif
 

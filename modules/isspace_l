@@ -1,0 +1,33 @@
+Description:
+isspace_l() function: test whether a single-byte character is white-space.
+
+Files:
+lib/isspace_l.c
+lib/is_l-impl.h
+m4/isspace_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_ISSPACE_L
+gl_CONDITIONAL([GL_COND_OBJ_ISSPACE_L], [test $HAVE_ISSPACE_L = 0])
+gl_MODULE_INDICATOR([isspace_l])
+gl_CTYPE_MODULE_INDICATOR([isspace_l])
+
+Makefile.am:
+if GL_COND_OBJ_ISSPACE_L
+lib_SOURCES += isspace_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
