@@ -331,8 +331,8 @@ list but is obsolescent as of C23.  Gnulib code can also assume the existence
 of @code{<ctype.h>}, @code{<errno.h>}, @code{<fcntl.h>},
 @code{<locale.h>}, @code{<signal.h>}, @code{<stdio.h>},
 @code{<stdlib.h>}, @code{<string.h>}, and @code{<time.h>}.  Similarly,
-many modules include @code{<sys/types.h>} even though it's not even in
-C11; that's OK since @code{<sys/types.h>} has been around nearly
+many modules include @code{<sys/types.h>} even though it's not
+in the C standard; that's OK since @code{<sys/types.h>} has been around nearly
 forever.
 
 Even if the include files exist, they may not conform to the C standard.
