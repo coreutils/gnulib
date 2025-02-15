@@ -56,7 +56,7 @@
 
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
-     || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@)
+     || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -219,6 +219,24 @@ _GL_CXXALIASWARN (isprint_l);
 # if HAVE_RAW_DECL_ISPRINT_L
 _GL_WARN_ON_USE (isprint_l, "isprint_l is unportable - "
                  "use gnulib module isprint_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is a punctuation or symbol character.  */
+#if @GNULIB_ISPUNCT_L@
+# if !@HAVE_ISPUNCT_L@
+_GL_FUNCDECL_SYS (ispunct_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (ispunct_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (ispunct_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef ispunct_l
+# if HAVE_RAW_DECL_ISPUNCT_L
+_GL_WARN_ON_USE (ispunct_l, "ispunct_l is unportable - "
+                 "use gnulib module ispunct_l for portability");
 # endif
 #endif
 
