@@ -55,7 +55,8 @@
 #endif
 
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
-     || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@)
+     || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
+     || @GNULIB_ISLOWER_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -182,6 +183,24 @@ _GL_CXXALIASWARN (isgraph_l);
 # if HAVE_RAW_DECL_ISGRAPH_L
 _GL_WARN_ON_USE (isgraph_l, "isgraph_l is unportable - "
                  "use gnulib module isgraph_l for portability");
+# endif
+#endif
+
+/* Return non-zero if c is lowercase.  */
+#if @GNULIB_ISLOWER_L@
+# if !@HAVE_ISLOWER_L@
+_GL_FUNCDECL_SYS (islower_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (islower_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (islower_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef islower_l
+# if HAVE_RAW_DECL_ISLOWER_L
+_GL_WARN_ON_USE (islower_l, "islower_l is unportable - "
+                 "use gnulib module islower_l for portability");
 # endif
 #endif
 
