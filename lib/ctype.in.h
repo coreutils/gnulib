@@ -54,7 +54,7 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@
+#if @GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -109,6 +109,24 @@ _GL_EXTERN_C int isblank (int c);
 # if HAVE_RAW_DECL_ISBLANK
 _GL_WARN_ON_USE (isblank, "isblank is unportable - "
                  "use gnulib module isblank for portability");
+# endif
+#endif
+
+/* Return non-zero if c is a blank, i.e. a space or tab character.  */
+#if @GNULIB_ISBLANK_L@
+# if !@HAVE_ISBLANK_L@
+_GL_FUNCDECL_SYS (isblank_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (isblank_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (isblank_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef isblank_l
+# if HAVE_RAW_DECL_ISBLANK_L
+_GL_WARN_ON_USE (isblank_l, "isblank_l is unportable - "
+                 "use gnulib module isblank_l for portability");
 # endif
 #endif
 

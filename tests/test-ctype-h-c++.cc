@@ -36,6 +36,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::isalpha_l, int, (int, locale_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isblank, int, (int));
 #endif
 
+#if GNULIB_TEST_ISBLANK_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isblank_l, int, (int, locale_t));
+#endif
+
 
 int
 main ()

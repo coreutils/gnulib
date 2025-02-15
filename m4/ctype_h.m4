@@ -1,5 +1,5 @@
 # ctype_h.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,7 @@ AC_DEFUN_ONCE([gl_CTYPE_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <ctype.h>
-    ]], [isalnum_l isalpha_l isblank])
+    ]], [isalnum_l isalpha_l isblank isblank_l])
 ])
 
 # gl_CTYPE_MODULE_INDICATOR([modulename])
@@ -39,6 +39,7 @@ AC_DEFUN([gl_CTYPE_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISALNUM_L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISALPHA_L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISBLANK])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISBLANK_L])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_CTYPE_H_MODULE_INDICATOR_DEFAULTS])
   AC_REQUIRE([gl_CTYPE_H_DEFAULTS])
@@ -50,4 +51,5 @@ AC_DEFUN([gl_CTYPE_H_DEFAULTS],
   HAVE_ISALNUM_L=1;   AC_SUBST([HAVE_ISALNUM_L])
   HAVE_ISALPHA_L=1;   AC_SUBST([HAVE_ISALPHA_L])
   HAVE_ISBLANK=1;     AC_SUBST([HAVE_ISBLANK])
+  HAVE_ISBLANK_L=1;   AC_SUBST([HAVE_ISBLANK_L])
 ])

@@ -1,0 +1,33 @@
+Description:
+isblank_l() function: test whether a single-byte character is blank.
+
+Files:
+lib/isblank_l.c
+lib/is_l-impl.h
+m4/isblank_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_ISBLANK_L
+gl_CONDITIONAL([GL_COND_OBJ_ISBLANK_L], [test $HAVE_ISBLANK_L = 0])
+gl_MODULE_INDICATOR([isblank_l])
+gl_CTYPE_MODULE_INDICATOR([isblank_l])
+
+Makefile.am:
+if GL_COND_OBJ_ISBLANK_L
+lib_SOURCES += isblank_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
