@@ -44,6 +44,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::isblank_l, int, (int, locale_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iscntrl_l, int, (int, locale_t));
 #endif
 
+#if GNULIB_TEST_ISDIGIT_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isdigit_l, int, (int, locale_t));
+#endif
+
 
 int
 main ()

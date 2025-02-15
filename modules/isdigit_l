@@ -1,0 +1,31 @@
+Description:
+isdigit_l() function: test whether a single-byte character is a digit.
+
+Files:
+lib/isdigit_l.c
+m4/isdigit_l.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_ISDIGIT_L
+gl_CONDITIONAL([GL_COND_OBJ_ISDIGIT_L], [test $HAVE_ISDIGIT_L = 0])
+gl_MODULE_INDICATOR([isdigit_l])
+gl_CTYPE_MODULE_INDICATOR([isdigit_l])
+
+Makefile.am:
+if GL_COND_OBJ_ISDIGIT_L
+lib_SOURCES += isdigit_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
