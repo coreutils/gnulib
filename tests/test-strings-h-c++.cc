@@ -28,6 +28,11 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ffs, int, (int));
 #endif
 
+#if GNULIB_TEST_STRCASECMP_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strcasecmp_l, int,
+                 (const char *, const char *, locale_t));
+#endif
+
 
 int
 main ()

@@ -34,12 +34,15 @@ strings.h: strings.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE
 	      -e 's|@''NEXT_STRINGS_H''@|$(NEXT_STRINGS_H)|g' \
 	      -e 's/@''GNULIB_FFS''@/$(GNULIB_FFS)/g' \
 	      -e 's/@''GNULIB_STRCASECMP''@/$(GNULIB_STRCASECMP)/g' \
+	      -e 's/@''GNULIB_STRCASECMP_L''@/$(GNULIB_STRCASECMP_L)/g' \
 	      -e 's/@''GNULIB_STRNCASECMP''@/$(GNULIB_STRNCASECMP)/g' \
 	      -e 's|@''HAVE_FFS''@|$(HAVE_FFS)|g' \
 	      -e 's|@''HAVE_STRCASECMP''@|$(HAVE_STRCASECMP)|g' \
+	      -e 's|@''HAVE_STRCASECMP_L''@|$(HAVE_STRCASECMP_L)|g' \
 	      -e 's|@''HAVE_STRNCASECMP''@|$(HAVE_STRNCASECMP)|g' \
 	      -e 's|@''HAVE_DECL_STRNCASECMP''@|$(HAVE_DECL_STRNCASECMP)|g' \
 	      -e 's|@''REPLACE_STRCASECMP''@|$(REPLACE_STRCASECMP)|g' \
+	      -e 's|@''REPLACE_STRCASECMP_L''@|$(REPLACE_STRCASECMP_L)|g' \
 	      -e 's|@''REPLACE_STRNCASECMP''@|$(REPLACE_STRNCASECMP)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \

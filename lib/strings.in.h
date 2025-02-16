@@ -36,7 +36,7 @@
 #ifndef _@GUARD_PREFIX@_STRINGS_H
 #define _@GUARD_PREFIX@_STRINGS_H
 
-/* This file uses GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+/* This file uses _GL_ARG_NONNULL, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -44,6 +44,16 @@
 #if ! @HAVE_DECL_STRNCASECMP@
 /* Get size_t.  */
 # include <stddef.h>
+#endif
+
+#if @GNULIB_STRCASECMP_L@
+/* Get locale_t.  */
+# include <locale.h>
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 10) \
+      || (defined __APPLE__ && defined __MACH__))
+/* Get the declaration of strcasecmp_l.  */
+#  include <string.h>
+# endif
 #endif
 
 
@@ -107,6 +117,41 @@ _GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
                  "internationalization, or use c_strcasecmp "
                  "(gnulib module c-strcasecmp) if you want a locale "
                  "independent function");
+# endif
+#endif
+
+#if @GNULIB_STRCASECMP_L@
+# if @REPLACE_STRCASECMP_L@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strcasecmp_l
+#   define strcasecmp_l rpl_strcasecmp_l
+#  endif
+_GL_FUNCDECL_RPL (strcasecmp_l, int,
+                  (const char *s1, const char *s2, locale_t locale),
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (strcasecmp_l, int,
+                  (const char *s1, const char *s2, locale_t locale));
+# else
+#  if !@HAVE_STRCASECMP_L@
+_GL_FUNCDECL_SYS (strcasecmp_l, int,
+                  (const char *s1, const char *s2, locale_t locale),
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+#  endif
+_GL_CXXALIAS_SYS (strcasecmp_l, int,
+                  (const char *s1, const char *s2, locale_t locale));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (strcasecmp_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+/* strcasecmp_l() does not work with multibyte strings:
+   POSIX says that it operates on "strings", and "string" in POSIX is defined
+   as a sequence of bytes, not of characters.   */
+# undef strcasecmp_l
+# if HAVE_RAW_DECL_STRCASECMP_L
+_GL_WARN_ON_USE (strcasecmp_l, "strcasecmp_l cannot work correctly on "
+                 "character strings in multibyte locales and is unportable - "
+                 "use gnulib module strcasecmp_l for portability");
 # endif
 #endif
 
