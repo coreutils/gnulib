@@ -15,6 +15,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
+fcntl-h
 ssize_t
 stddef-h
 sys_types-h
