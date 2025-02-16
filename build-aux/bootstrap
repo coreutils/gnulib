@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-02-04.01; # UTC
+scriptlibversion=2025-02-16.12; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -580,17 +580,11 @@ prepare_GNULIB_SRCDIR ()
           || cleanup_gnulib
         else
           # GNULIB_REFDIR is not set or not usable. Ignore it.
-          shallow=
+          shallow='--depth 2'
           if test -z "$GNULIB_REVISION"; then
-            if git clone -h 2>&1 | grep -- --depth > /dev/null; then
-              shallow='--depth 2'
-            fi
             git clone $shallow "$gnulib_url" "$gnulib_path" \
               || cleanup_gnulib
           else
-            if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
-              shallow='--depth 2'
-            fi
             # Only want a shallow checkout of $GNULIB_REVISION, but git does not
             # support cloning by commit hash. So attempt a shallow fetch by
             # commit hash to minimize the amount of data downloaded and changes
