@@ -1,0 +1,16 @@
+Files:
+tests/test-tolower_l.c
+tests/signature.h
+tests/macros.h
+m4/musl.m4
+
+Depends-on:
+newlocale
+freelocale
+
+configure.ac:
+gl_MUSL_LIBC
+
+Makefile.am:
+TESTS += test-tolower_l
+check_PROGRAMS += test-tolower_l
