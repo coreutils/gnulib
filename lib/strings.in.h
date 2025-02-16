@@ -46,7 +46,7 @@
 # include <stddef.h>
 #endif
 
-#if @GNULIB_STRCASECMP_L@
+#if @GNULIB_STRCASECMP_L@ || @GNULIB_STRNCASECMP_L@
 /* Get locale_t.  */
 # include <locale.h>
 # if ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 10) \
@@ -190,6 +190,41 @@ _GL_WARN_ON_USE (strncasecmp, "strncasecmp cannot work correctly on character "
                  "internationalization, or use c_strncasecmp "
                  "(gnulib module c-strncasecmp) if you want a locale "
                  "independent function");
+# endif
+#endif
+
+#if @GNULIB_STRNCASECMP_L@
+# if @REPLACE_STRNCASECMP_L@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strncasecmp_l
+#   define strncasecmp_l rpl_strncasecmp_l
+#  endif
+_GL_FUNCDECL_RPL (strncasecmp_l, int,
+                  (const char *s1, const char *s2, size_t n, locale_t locale),
+                  _GL_ARG_NONNULL ((1, 2, 4)));
+_GL_CXXALIAS_RPL (strncasecmp_l, int,
+                  (const char *s1, const char *s2, size_t n, locale_t locale));
+# else
+#  if !@HAVE_STRNCASECMP_L@
+_GL_FUNCDECL_SYS (strncasecmp_l, int,
+                  (const char *s1, const char *s2, size_t n, locale_t locale),
+                  _GL_ARG_NONNULL ((1, 2, 4)));
+#  endif
+_GL_CXXALIAS_SYS (strncasecmp_l, int,
+                  (const char *s1, const char *s2, size_t n, locale_t locale));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (strncasecmp_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+/* strncasecmp_l() does not work with multibyte strings:
+   POSIX says that it operates on "strings", and "string" in POSIX is defined
+   as a sequence of bytes, not of characters.   */
+# undef strncasecmp_l
+# if HAVE_RAW_DECL_STRNCASECMP_L
+_GL_WARN_ON_USE (strncasecmp_l, "strncasecmp_l cannot work correctly on "
+                 "character strings in multibyte locales and is unportable - "
+                 "use gnulib module strncasecmp_l for portability");
 # endif
 #endif
 

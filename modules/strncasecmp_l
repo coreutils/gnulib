@@ -1,0 +1,39 @@
+Description:
+Case-insensitive string comparison for unibyte locales.
+
+Files:
+lib/strncasecmp_l.c
+m4/strncasecmp_l.m4
+m4/strcasecmp.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+strings-h
+locale-h
+extensions
+c-strncasecmp   [test $HAVE_STRNCASECMP_L = 0 || test $REPLACE_STRNCASECMP_L = 1]
+tolower_l       [test $HAVE_STRNCASECMP_L = 0 || test $REPLACE_STRNCASECMP_L = 1]
+
+configure.ac:
+gl_FUNC_STRNCASECMP_L
+gl_CONDITIONAL([GL_COND_OBJ_STRNCASECMP_L],
+               [test $HAVE_STRNCASECMP_L = 0 || test $REPLACE_STRNCASECMP_L = 1])
+AM_COND_IF([GL_COND_OBJ_STRNCASECMP_L], [
+  gl_PREREQ_STRNCASECMP_L
+])
+gl_MODULE_INDICATOR([strncasecmp_l])
+gl_STRINGS_MODULE_INDICATOR([strncasecmp_l])
+
+Makefile.am:
+if GL_COND_OBJ_STRNCASECMP_L
+lib_SOURCES += strncasecmp_l.c
+endif
+
+Include:
+<strings.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
