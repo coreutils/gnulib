@@ -8,7 +8,7 @@ lib/str-two-way.h
 
 Depends-on:
 c-ctype
-c-strcase
+c-strncasecmp
 bool
 memchr
 memcmp

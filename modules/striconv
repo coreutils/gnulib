@@ -10,7 +10,7 @@ iconv
 iconv_open
 free-posix
 strdup
-c-strcase
+c-strcasecmp
 
 configure.ac:
 if test $gl_cond_libtool = false; then

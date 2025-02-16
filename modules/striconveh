@@ -17,7 +17,7 @@ unistr/u8-mbtoucr
 unistr/u8-uctomb
 free-posix
 strdup
-c-strcase
+c-strcasecmp
 c-strcaseeq
 memmove
 

@@ -16,8 +16,9 @@ The functions are provided by the following modules.
 
 @menu
 * c-ctype::
-* c-strcase::
 * c-strcaseeq::
+* c-strcasecmp::
+* c-strncasecmp::
 * c-strcasestr::
 * c-strstr::
 * c-strtod::
@@ -28,13 +29,17 @@ The functions are provided by the following modules.
 @subsubsection c-ctype
 @include c-ctype.texi
 
-@node c-strcase
-@subsubsection c-strcase
-@include c-strcase.texi
-
 @node c-strcaseeq
 @subsubsection c-strcaseeq
 @include c-strcaseeq.texi
+
+@node c-strcasecmp
+@subsubsection c-strcasecmp
+@include c-strcasecmp.texi
+
+@node c-strncasecmp
+@subsubsection c-strncasecmp
+@include c-strncasecmp.texi
 
 @node c-strcasestr
 @subsubsection c-strcasestr

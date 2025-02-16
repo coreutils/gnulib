@@ -14,7 +14,7 @@ mbchar
 mbuiter
 iconv
 localcharset
-c-strcase
+c-strcasecmp
 xstriconv
 xalloc
 gettext-h

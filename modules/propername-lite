@@ -7,7 +7,7 @@ lib/propername.h
 
 Depends-on:
 localcharset
-c-strcase
+c-strcasecmp
 gettext-h
 
 configure.ac:

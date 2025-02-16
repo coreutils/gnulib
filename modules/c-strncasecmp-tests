@@ -1,0 +1,21 @@
+Files:
+tests/test-c-strncasecmp.sh
+tests/test-c-strncasecmp.c
+tests/macros.h
+m4/locale-fr.m4
+m4/locale-tr.m4
+m4/codeset.m4
+
+Depends-on:
+c-ctype
+setlocale
+
+configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_TR_UTF8
+
+Makefile.am:
+TESTS += test-c-strncasecmp.sh
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
+check_PROGRAMS += test-c-strncasecmp
+test_c_strncasecmp_LDADD = $(LDADD) $(SETLOCALE_LIB)

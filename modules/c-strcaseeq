@@ -5,7 +5,7 @@ Files:
 lib/c-strcaseeq.h
 
 Depends-on:
-c-strcase
+c-strcasecmp
 c-ctype
 
 configure.ac:

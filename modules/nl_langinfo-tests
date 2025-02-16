@@ -12,7 +12,7 @@ m4/intl-thread-locale.m4
 m4/musl.m4
 
 Depends-on:
-c-strcase
+c-strcasecmp
 c-strcasestr
 setlocale
 thread

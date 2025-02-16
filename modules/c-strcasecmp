@@ -1,0 +1,23 @@
+Description:
+Case-insensitive string comparison functions in C locale.
+
+Files:
+lib/c-strcase.h
+lib/c-strcasecmp.c
+
+Depends-on:
+c-ctype
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += c-strcasecmp.c
+
+Include:
+"c-strcase.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

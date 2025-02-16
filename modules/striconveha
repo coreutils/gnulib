@@ -11,7 +11,7 @@ bool
 striconveh
 malloca
 strdup
-c-strcase
+c-strcasecmp
 
 configure.ac:
 
