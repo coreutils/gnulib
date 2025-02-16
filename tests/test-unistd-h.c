@@ -30,7 +30,11 @@ int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 /* Check that the various *_FILENO macros are defined.  */
 #if ! (defined STDIN_FILENO                                     \
        && (STDIN_FILENO + STDOUT_FILENO + STDERR_FILENO == 3))
-missing or broken *_FILENO macros
+# error "missing or broken *_FILENO macros"
+#endif
+
+#ifndef O_CLOEXEC
+# error "O_CLOEXEC is not defined"
 #endif
 
 /* Check that the types are all defined.  */
