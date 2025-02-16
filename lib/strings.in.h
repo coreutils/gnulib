@@ -77,9 +77,23 @@ _GL_WARN_ON_USE (ffs, "ffs is not portable - use the ffs module");
    greater than zero if S1 is lexicographically less than, equal to or greater
    than S2.
    Note: This function does not work in multibyte locales.  */
-# if ! @HAVE_STRCASECMP@
-extern int strcasecmp (char const *s1, char const *s2)
-     _GL_ARG_NONNULL ((1, 2));
+# if @REPLACE_STRCASECMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strcasecmp
+#   define strcasecmp rpl_strcasecmp
+#  endif
+_GL_FUNCDECL_RPL (strcasecmp, int, (const char *, const char *),
+                                   _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (strcasecmp, int, (const char *, const char *));
+# else
+#  if !@HAVE_STRCASECMP@
+_GL_FUNCDECL_SYS (strcasecmp, int, (const char *, const char *),
+                                   _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (strcasecmp, int, (const char *, const char *));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (strcasecmp);
 # endif
 #elif defined GNULIB_POSIXCHECK
 /* strcasecmp() does not work with multibyte strings:
@@ -88,7 +102,7 @@ extern int strcasecmp (char const *s1, char const *s2)
 # undef strcasecmp
 # if HAVE_RAW_DECL_STRCASECMP
 _GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
-                 "strings in multibyte locales - "
+                 "strings in multibyte locales and is unportable - "
                  "use mbscasecmp if you care about "
                  "internationalization, or use c_strcasecmp "
                  "(gnulib module c-strcasecmp) if you want a locale "

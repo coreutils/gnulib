@@ -1,5 +1,5 @@
 # strings_h.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,4 +63,5 @@ AC_DEFUN([gl_STRINGS_H_DEFAULTS],
   HAVE_FFS=1;              AC_SUBST([HAVE_FFS])
   HAVE_STRCASECMP=1;       AC_SUBST([HAVE_STRCASECMP])
   HAVE_DECL_STRNCASECMP=1; AC_SUBST([HAVE_DECL_STRNCASECMP])
+  REPLACE_STRCASECMP=1;    AC_SUBST([REPLACE_STRCASECMP])
 ])
