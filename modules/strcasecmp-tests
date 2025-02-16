@@ -1,0 +1,21 @@
+Files:
+tests/test-strcasecmp-1.sh
+tests/test-strcasecmp-2.sh
+tests/test-strcasecmp.c
+tests/signature.h
+tests/macros.h
+m4/locale-fr.m4
+m4/codeset.m4
+
+Depends-on:
+setlocale
+
+configure.ac:
+gt_LOCALE_FR
+
+Makefile.am:
+TESTS += test-strcasecmp-1.sh test-strcasecmp-2.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@'
+check_PROGRAMS += test-strcasecmp
+test_strcasecmp_LDADD = $(LDADD) $(SETLOCALE_LIB)
