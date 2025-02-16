@@ -1,5 +1,5 @@
 # strncasecmp.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2002-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,12 @@ AC_DEFUN([gl_FUNC_STRNCASECMP],
   AC_REQUIRE([gl_STRINGS_H_DEFAULTS])
   AC_CHECK_FUNCS([strncasecmp])
   if test $ac_cv_func_strncasecmp = yes; then
-    HAVE_STRNCASECMP=1
+    dnl Assume that strncasecmp and strcasecmp share the same bugs.
+    gl_STRCASECMP_WORKS
+    case "$gl_cv_func_strcasecmp_works" in
+      *yes) ;;
+      *) REPLACE_STRNCASECMP=1 ;;
+    esac
   else
     HAVE_STRNCASECMP=0
   fi

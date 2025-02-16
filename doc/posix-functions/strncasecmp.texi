@@ -12,6 +12,11 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 MSVC 14.
+@item
+This function uses the case mappings of a wrong locale on some platforms:
+Solaris 11.4,
+@c https://sourceware.org/pipermail/cygwin/2025-February/257347.html
+Cygwin 3.5.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:
