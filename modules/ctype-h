@@ -44,6 +44,7 @@ ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's/@''GNULIB_ISUPPER_L''@/$(GNULIB_ISUPPER_L)/g' \
 	      -e 's/@''GNULIB_ISXDIGIT_L''@/$(GNULIB_ISXDIGIT_L)/g' \
 	      -e 's/@''GNULIB_TOLOWER_L''@/$(GNULIB_TOLOWER_L)/g' \
+	      -e 's/@''GNULIB_TOUPPER_L''@/$(GNULIB_TOUPPER_L)/g' \
 	      -e 's/@''HAVE_ISALNUM_L''@/$(HAVE_ISALNUM_L)/g' \
 	      -e 's/@''HAVE_ISALPHA_L''@/$(HAVE_ISALPHA_L)/g' \
 	      -e 's/@''HAVE_ISBLANK''@/$(HAVE_ISBLANK)/g' \
@@ -58,6 +59,7 @@ ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's/@''HAVE_ISUPPER_L''@/$(HAVE_ISUPPER_L)/g' \
 	      -e 's/@''HAVE_ISXDIGIT_L''@/$(HAVE_ISXDIGIT_L)/g' \
 	      -e 's/@''HAVE_TOLOWER_L''@/$(HAVE_TOLOWER_L)/g' \
+	      -e 's/@''HAVE_TOUPPER_L''@/$(HAVE_TOUPPER_L)/g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/ctype.in.h > $@-t

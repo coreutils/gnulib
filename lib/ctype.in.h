@@ -58,7 +58,7 @@
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
      || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@ \
      || @GNULIB_ISSPACE_L@ || @GNULIB_ISUPPER_L@ || @GNULIB_ISXDIGIT_L@ \
-     || @GNULIB_TOLOWER_L@)
+     || @GNULIB_TOLOWER_L@ || @GNULIB_TOUPPER_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -311,6 +311,24 @@ _GL_CXXALIASWARN (tolower_l);
 # if HAVE_RAW_DECL_TOLOWER_L
 _GL_WARN_ON_USE (tolower_l, "tolower_l is unportable - "
                  "use gnulib module tolower_l for portability");
+# endif
+#endif
+
+/* Map c to uppercase.  */
+#if @GNULIB_TOUPPER_L@
+# if !@HAVE_TOUPPER_L@
+_GL_FUNCDECL_SYS (toupper_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (toupper_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (toupper_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef toupper_l
+# if HAVE_RAW_DECL_TOUPPER_L
+_GL_WARN_ON_USE (toupper_l, "toupper_l is unportable - "
+                 "use gnulib module toupper_l for portability");
 # endif
 #endif
 

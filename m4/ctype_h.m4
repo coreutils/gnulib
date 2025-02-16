@@ -1,5 +1,5 @@
 # ctype_h.m4
-# serial 22
+# serial 23
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN_ONCE([gl_CTYPE_H],
   gl_WARN_ON_USE_PREPARE([[#include <ctype.h>
     ]], [isalnum_l isalpha_l isblank isblank_l iscntrl_l isdigit_l isgraph_l
     islower_l isprint_l ispunct_l isspace_l isupper_l isxdigit_l
-    tolower_l])
+    tolower_l toupper_l])
 ])
 
 # gl_CTYPE_MODULE_INDICATOR([modulename])
@@ -52,6 +52,7 @@ AC_DEFUN([gl_CTYPE_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISUPPER_L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISXDIGIT_L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOLOWER_L])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOUPPER_L])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_CTYPE_H_MODULE_INDICATOR_DEFAULTS])
   AC_REQUIRE([gl_CTYPE_H_DEFAULTS])
@@ -74,4 +75,5 @@ AC_DEFUN([gl_CTYPE_H_DEFAULTS],
   HAVE_ISUPPER_L=1;   AC_SUBST([HAVE_ISUPPER_L])
   HAVE_ISXDIGIT_L=1;  AC_SUBST([HAVE_ISXDIGIT_L])
   HAVE_TOLOWER_L=1;   AC_SUBST([HAVE_TOLOWER_L])
+  HAVE_TOUPPER_L=1;   AC_SUBST([HAVE_TOUPPER_L])
 ])

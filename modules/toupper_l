@@ -1,0 +1,33 @@
+Description:
+toupper_l() function: map a single-byte character to uppercase.
+
+Files:
+lib/toupper_l.c
+lib/to_l-impl.h
+m4/toupper_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_TOUPPER_L
+gl_CONDITIONAL([GL_COND_OBJ_TOUPPER_L], [test $HAVE_TOUPPER_L = 0])
+gl_MODULE_INDICATOR([toupper_l])
+gl_CTYPE_MODULE_INDICATOR([toupper_l])
+
+Makefile.am:
+if GL_COND_OBJ_TOUPPER_L
+lib_SOURCES += toupper_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
