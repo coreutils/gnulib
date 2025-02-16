@@ -1,4 +1,4 @@
-/* strncasecmp.c -- case insensitive string comparator
+/* Case-insensitive string comparison function for unibyte locales.
    Copyright (C) 1998-1999, 2005-2007, 2009-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify

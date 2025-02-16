@@ -324,11 +324,12 @@ and in Gnulib.
 @mindex mbs_startswith
 @mindex stpcpy
 @mindex stpncpy
-@mindex strcase
+@mindex strcasecmp
 @mindex strcasestr
 @mindex strcspn
 @mindex strdup
 @mindex string-desc
+@mindex strncasecmp
 @mindex strncat
 @mindex strndup
 @mindex strnlen

@@ -4,8 +4,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcasecmp.html}
 
-Gnulib module: strcase
-@mindex strcase
+Gnulib module: strcasecmp
+@mindex strcasecmp
 
 Portability problems fixed by Gnulib:
 @itemize

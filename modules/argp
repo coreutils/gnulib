@@ -28,7 +28,7 @@ sysexits-h
 malloc-gnu
 mempcpy
 strndup
-strcase
+strcasecmp
 extensions
 vsnprintf
 sleep

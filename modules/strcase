@@ -1,32 +1,15 @@
 Description:
-Case-insensitive string comparison functions.
+Case-insensitive string comparison functions for unibyte locales.
 
 Files:
-lib/strcasecmp.c
-lib/strncasecmp.c
-m4/strcase.m4
 
 Depends-on:
-strings-h
+strcasecmp
+strncasecmp
 
 configure.ac:
-gl_STRCASE
-gl_CONDITIONAL([GL_COND_OBJ_STRCASECMP], [test $HAVE_STRCASECMP = 0])
-AM_COND_IF([GL_COND_OBJ_STRCASECMP], [
-  gl_PREREQ_STRCASECMP
-])
-gl_CONDITIONAL([GL_COND_OBJ_STRNCASECMP], [test $HAVE_STRNCASECMP = 0])
-AM_COND_IF([GL_COND_OBJ_STRNCASECMP], [
-  gl_PREREQ_STRNCASECMP
-])
 
 Makefile.am:
-if GL_COND_OBJ_STRCASECMP
-lib_SOURCES += strcasecmp.c
-endif
-if GL_COND_OBJ_STRNCASECMP
-lib_SOURCES += strncasecmp.c
-endif
 
 Include:
 <strings.h>

@@ -1,0 +1,30 @@
+Description:
+Case-insensitive string comparison function for unibyte locales.
+
+Files:
+lib/strcasecmp.c
+m4/strcasecmp.m4
+
+Depends-on:
+strings-h
+
+configure.ac:
+gl_FUNC_STRCASECMP
+gl_CONDITIONAL([GL_COND_OBJ_STRCASECMP], [test $HAVE_STRCASECMP = 0])
+AM_COND_IF([GL_COND_OBJ_STRCASECMP], [
+  gl_PREREQ_STRCASECMP
+])
+
+Makefile.am:
+if GL_COND_OBJ_STRCASECMP
+lib_SOURCES += strcasecmp.c
+endif
+
+Include:
+<strings.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

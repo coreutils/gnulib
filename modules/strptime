@@ -11,7 +11,7 @@ time-h
 extensions
 sys_time-h      [test $HAVE_STRPTIME = 0]
 string-h        [test $HAVE_STRPTIME = 0]
-strcase         [test $HAVE_STRPTIME = 0]
+strncasecmp     [test $HAVE_STRPTIME = 0]
 bool            [test $HAVE_STRPTIME = 0]
 time_r          [test $HAVE_STRPTIME = 0]
 

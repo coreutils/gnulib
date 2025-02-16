@@ -89,8 +89,8 @@ extern int strcasecmp (char const *s1, char const *s2)
 _GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
                  "strings in multibyte locales - "
                  "use mbscasecmp if you care about "
-                 "internationalization, or use c_strcasecmp , "
-                 "gnulib module c-strcase) if you want a locale "
+                 "internationalization, or use c_strcasecmp "
+                 "(gnulib module c-strcase) if you want a locale "
                  "independent function");
 # endif
 #endif
@@ -112,8 +112,8 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n)
 _GL_WARN_ON_USE (strncasecmp, "strncasecmp cannot work correctly on character "
                  "strings in multibyte locales - "
                  "use mbsncasecmp or mbspcasecmp if you care about "
-                 "internationalization, or use c_strncasecmp , "
-                 "gnulib module c-strcase) if you want a locale "
+                 "internationalization, or use c_strncasecmp "
+                 "(gnulib module c-strcase) if you want a locale "
                  "independent function");
 # endif
 #endif
