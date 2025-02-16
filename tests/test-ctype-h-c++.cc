@@ -76,6 +76,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::isupper_l, int, (int, locale_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::isxdigit_l, int, (int, locale_t));
 #endif
 
+#if GNULIB_TEST_TOLOWER_L
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tolower_l, int, (int, locale_t));
+#endif
+
 
 int
 main ()

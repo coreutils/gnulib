@@ -1,0 +1,33 @@
+Description:
+tolower_l() function: map a single-byte character to lowercase.
+
+Files:
+lib/tolower_l.c
+lib/to_l-impl.h
+m4/tolower_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+ctype-h
+locale-h
+extensions
+
+configure.ac:
+gl_FUNC_TOLOWER_L
+gl_CONDITIONAL([GL_COND_OBJ_TOLOWER_L], [test $HAVE_TOLOWER_L = 0])
+gl_MODULE_INDICATOR([tolower_l])
+gl_CTYPE_MODULE_INDICATOR([tolower_l])
+
+Makefile.am:
+if GL_COND_OBJ_TOLOWER_L
+lib_SOURCES += tolower_l.c
+endif
+
+Include:
+<ctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

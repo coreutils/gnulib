@@ -57,7 +57,8 @@
 #if (@GNULIB_ISALNUM_L@ || @GNULIB_ISALPHA_L@ || @GNULIB_ISBLANK_L@ \
      || @GNULIB_ISCNTRL_L@ || @GNULIB_ISDIGIT_L@ || @GNULIB_ISGRAPH_L@ \
      || @GNULIB_ISLOWER_L@ || @GNULIB_ISPRINT_L@ || @GNULIB_ISPUNCT_L@ \
-     || @GNULIB_ISSPACE_L@ || @GNULIB_ISUPPER_L@ || @GNULIB_ISXDIGIT_L@)
+     || @GNULIB_ISSPACE_L@ || @GNULIB_ISUPPER_L@ || @GNULIB_ISXDIGIT_L@ \
+     || @GNULIB_TOLOWER_L@)
 /* Get locale_t.  */
 # include <locale.h>
 #endif
@@ -292,6 +293,24 @@ _GL_CXXALIASWARN (isxdigit_l);
 # if HAVE_RAW_DECL_ISXDIGIT_L
 _GL_WARN_ON_USE (isxdigit_l, "isxdigit_l is unportable - "
                  "use gnulib module isxdigit_l for portability");
+# endif
+#endif
+
+/* Map c to lowercase.  */
+#if @GNULIB_TOLOWER_L@
+# if !@HAVE_TOLOWER_L@
+_GL_FUNCDECL_SYS (tolower_l, int, (int c, locale_t locale),
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (tolower_l, int, (int c, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (tolower_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef tolower_l
+# if HAVE_RAW_DECL_TOLOWER_L
+_GL_WARN_ON_USE (tolower_l, "tolower_l is unportable - "
+                 "use gnulib module tolower_l for portability");
 # endif
 #endif
 
