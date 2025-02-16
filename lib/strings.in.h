@@ -77,23 +77,23 @@ _GL_WARN_ON_USE (ffs, "ffs is not portable - use the ffs module");
    greater than zero if S1 is lexicographically less than, equal to or greater
    than S2.
    Note: This function does not work in multibyte locales.  */
-# if @REPLACE_STRNCASECMP@
+# if @REPLACE_STRCASECMP@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef strncasecmp
-#   define strncasecmp rpl_strncasecmp
+#   undef strcasecmp
+#   define strcasecmp rpl_strcasecmp
 #  endif
-_GL_FUNCDECL_RPL (strncasecmp, int, (const char *, const char *, size_t),
-                                    _GL_ARG_NONNULL ((1, 2)));
-_GL_CXXALIAS_RPL (strncasecmp, int, (const char *, const char *, size_t));
+_GL_FUNCDECL_RPL (strcasecmp, int, (const char *, const char *),
+                                   _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (strcasecmp, int, (const char *, const char *));
 # else
-#  if !@HAVE_STRNCASECMP@
-_GL_FUNCDECL_SYS (strncasecmp, int, (const char *, const char *, size_t),
-                                    _GL_ARG_NONNULL ((1, 2)));
+#  if !@HAVE_STRCASECMP@
+_GL_FUNCDECL_SYS (strcasecmp, int, (const char *, const char *),
+                                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (strncasecmp, int, (const char *, const char *, size_t));
+_GL_CXXALIAS_SYS (strcasecmp, int, (const char *, const char *));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (strncasecmp);
+_GL_CXXALIASWARN (strcasecmp);
 # endif
 #elif defined GNULIB_POSIXCHECK
 /* strcasecmp() does not work with multibyte strings:
@@ -115,9 +115,23 @@ _GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
    returning less than, equal to or greater than zero if S1 is
    lexicographically less than, equal to or greater than S2.
    Note: This function cannot work correctly in multibyte locales.  */
-# if ! @HAVE_DECL_STRNCASECMP@
-extern int strncasecmp (char const *s1, char const *s2, size_t n)
-     _GL_ARG_NONNULL ((1, 2));
+# if @REPLACE_STRNCASECMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strncasecmp
+#   define strncasecmp rpl_strncasecmp
+#  endif
+_GL_FUNCDECL_RPL (strncasecmp, int, (const char *, const char *, size_t),
+                                    _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (strncasecmp, int, (const char *, const char *, size_t));
+# else
+#  if !@HAVE_DECL_STRNCASECMP@
+_GL_FUNCDECL_SYS (strncasecmp, int, (const char *, const char *, size_t),
+                                    _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (strncasecmp, int, (const char *, const char *, size_t));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (strncasecmp);
 # endif
 #elif defined GNULIB_POSIXCHECK
 /* strncasecmp() does not work with multibyte strings:
