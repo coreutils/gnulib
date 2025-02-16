@@ -1472,11 +1472,17 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 # if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
 #  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2
 #   define _GL_INLINE_RPL_REALLOC 1
+#   ifdef __cplusplus
+extern "C" {
+#   endif
 _GL_REALLOC_INLINE void *
 rpl_realloc (void *ptr, size_t size)
 {
   return realloc (ptr, size ? size : 1);
 }
+#   ifdef __cplusplus
+}
+#   endif
 #  endif
 #  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
         || _GL_USE_STDLIB_ALLOC)
