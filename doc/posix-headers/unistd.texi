@@ -25,7 +25,7 @@ The @code{_exit} function is not declared in this file on some platforms:
 mingw.
 @item
 This header file does not define @code{O_CLOEXEC} on some platforms:
-glibc 2.41, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Solaris 11.4, Cygwin 3.5, mingw, MSVC 14.
+glibc 2.41, macOS 12, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5, mingw.
 
 @item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
