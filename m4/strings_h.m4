@@ -1,5 +1,5 @@
 # strings_h.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,8 @@ AC_DEFUN([gl_STRINGS_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_STRINGS_H_MODULE_INDICATOR_DEFAULTS], [
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FFS])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRCASECMP])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRNCASECMP])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_STRINGS_H_MODULE_INDICATOR_DEFAULTS])
   AC_REQUIRE([gl_STRINGS_H_DEFAULTS])

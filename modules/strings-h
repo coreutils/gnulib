@@ -33,6 +33,8 @@ strings.h: strings.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_STRINGS_H''@|$(NEXT_STRINGS_H)|g' \
 	      -e 's/@''GNULIB_FFS''@/$(GNULIB_FFS)/g' \
+	      -e 's/@''GNULIB_STRCASECMP''@/$(GNULIB_STRCASECMP)/g' \
+	      -e 's/@''GNULIB_STRNCASECMP''@/$(GNULIB_STRNCASECMP)/g' \
 	      -e 's|@''HAVE_FFS''@|$(HAVE_FFS)|g' \
 	      -e 's|@''HAVE_STRCASECMP''@|$(HAVE_STRCASECMP)|g' \
 	      -e 's|@''HAVE_DECL_STRNCASECMP''@|$(HAVE_DECL_STRNCASECMP)|g' \

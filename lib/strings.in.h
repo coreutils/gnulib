@@ -58,8 +58,8 @@ extern "C" {
 #endif
 
 
-  /* Find the index of the least-significant set bit.  */
 #if @GNULIB_FFS@
+/* Find the index of the least-significant set bit.  */
 # if !@HAVE_FFS@
 _GL_FUNCDECL_SYS (ffs, int, (int i), );
 # endif
@@ -72,15 +72,16 @@ _GL_WARN_ON_USE (ffs, "ffs is not portable - use the ffs module");
 # endif
 #endif
 
+#if @GNULIB_STRCASECMP@
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than, equal to or greater
    than S2.
    Note: This function does not work in multibyte locales.  */
-#if ! @HAVE_STRCASECMP@
+# if ! @HAVE_STRCASECMP@
 extern int strcasecmp (char const *s1, char const *s2)
      _GL_ARG_NONNULL ((1, 2));
-#endif
-#if defined GNULIB_POSIXCHECK
+# endif
+#elif defined GNULIB_POSIXCHECK
 /* strcasecmp() does not work with multibyte strings:
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.   */
@@ -95,15 +96,16 @@ _GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
 # endif
 #endif
 
+#if @GNULIB_STRNCASECMP@
 /* Compare no more than N bytes of strings S1 and S2, ignoring case,
    returning less than, equal to or greater than zero if S1 is
    lexicographically less than, equal to or greater than S2.
    Note: This function cannot work correctly in multibyte locales.  */
-#if ! @HAVE_DECL_STRNCASECMP@
+# if ! @HAVE_DECL_STRNCASECMP@
 extern int strncasecmp (char const *s1, char const *s2, size_t n)
      _GL_ARG_NONNULL ((1, 2));
-#endif
-#if defined GNULIB_POSIXCHECK
+# endif
+#elif defined GNULIB_POSIXCHECK
 /* strncasecmp() does not work with multibyte strings:
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.  */
