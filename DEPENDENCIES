@@ -405,6 +405,18 @@ For module 'readline':
     + If it is installed in a nonstandard directory, pass the option
       --with-libreadline-prefix=DIR to 'configure'.
 
+For modules 'readutmp' and 'boot-time':
+  * systemd libraries
+    + Recommended if systemd >= 254 is present on the system.
+      Needed for fetching current status from systemd-logind instead of
+      from the file /var/run/utmp.
+    + Homepage:
+      https://systemd.io/
+    + Pre-built package name:
+       - On Debian and Debian-based systems: libsystemd-dev,
+       - On Red Hat distributions: systemd-devel.
+       - Other: https://repology.org/project/systemd/versions
+
 For modules 'terminfo' and 'termcap':
   * GNU ncurses (preferred)
     or libtermcap (discouraged) or a curses library (legacy).
