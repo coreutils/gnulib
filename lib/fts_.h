@@ -273,6 +273,7 @@ FTSENT  *fts_read (FTS *) __THROW;
 int      fts_set (FTS *, FTSENT *, int) __THROW;
 
 #if GNULIB_FTS_DEBUG
+extern bool fts_debug;
 void     fts_cross_check (FTS const *);
 #endif
 __END_DECLS
