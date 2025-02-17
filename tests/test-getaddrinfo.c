@@ -95,11 +95,19 @@ simple (int pass, char const *host, char const *service)
 
   dbgprintf ("res %d: %s\n", res, gai_strerror (res));
 
-  if (pass == 3 && ! isdigit (host[0]))
-    return res != EAI_NONAME;
-
-  if (pass == 4 && ! isdigit (service[0]))
-    return res != EAI_NONAME;
+  if ((pass == 3 && ! isdigit (host[0]))
+      || (pass == 4 && ! isdigit (service[0])))
+    {
+      if (res != EAI_NONAME)
+        {
+          fprintf (stderr,
+                   "Test case pass=%d, host=%s, service=%s failed: "
+                   "expected EAI_NONAME, got %d\n",
+                   pass, host, service, res);
+          return 1;
+        }
+      return 0;
+    }
 
   if (res != 0)
     {
@@ -130,6 +138,10 @@ simple (int pass, char const *host, char const *service)
       if (res == EAI_SYSTEM)
         fprintf (stderr, "system error: %s\n", strerror (err));
 
+      fprintf (stderr,
+               "Test case pass=%d, host=%s, service=%s failed: "
+               "expected 0, got %d\n",
+               pass, host, service, res);
       return 1;
     }
 
