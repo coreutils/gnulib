@@ -41,8 +41,7 @@ main (int argc, char *argv[])
   int count;
   for (count = 0; count < repeat; count++)
     {
-      uint32_t volatile digest =
-        crc32 ((const char *) randomb, sizeof (randomb));
+      uint32_t volatile digest = crc32 (randomb, sizeof randomb);
       ASSERT (digest == 0x5299f9d2U);
     }
 
