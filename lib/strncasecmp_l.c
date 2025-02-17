@@ -61,8 +61,8 @@ strncasecmp_l (const char *s1, const char *s2, size_t n, locale_t locale)
 
   do
     {
-      c1 = tolower ((unsigned char) *s1);
-      c2 = tolower ((unsigned char) *s2);
+      c1 = tolower_l ((unsigned char) *s1, locale);
+      c2 = tolower_l ((unsigned char) *s2, locale);
 
       if (--n == 0 || c1 == '\0')
         break;
