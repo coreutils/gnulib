@@ -1,0 +1,15 @@
+Files:
+tests/test-at-init.sh
+tests/test-at-init.c
+tests/test-at-init-2.c
+tests/test-at-init-3.c
+
+Depends-on:
+write
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-at-init.sh
+check_PROGRAMS += test-at-init
+test_at_init_SOURCES = test-at-init.c test-at-init-2.c test-at-init-3.c
