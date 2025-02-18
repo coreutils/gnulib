@@ -1,0 +1,15 @@
+Files:
+tests/test-strerror_l.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+newlocale
+freelocale
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strerror_l
+check_PROGRAMS += test-strerror_l
