@@ -1,0 +1,22 @@
+Description:
+Computed initializations before the program starts
+
+Files:
+lib/at-init.h
+lib/at-init.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += at-init.c
+
+Include:
+"at-init.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
