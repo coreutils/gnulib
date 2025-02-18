@@ -54,6 +54,11 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
+#if @GNULIB_STRERROR_L@
+/* Get locale_t.  */
+# include <locale.h>
+#endif
+
 /* MirBSD defines mbslen as a macro.  */
 #if @GNULIB_MBSLEN@ && defined __MirBSD__
 # include <wchar.h>
@@ -1467,6 +1472,43 @@ _GL_CXXALIASWARN (strerror_r);
 _GL_WARN_ON_USE (strerror_r, "strerror_r is unportable - "
                  "use gnulib module strerror_r-posix for portability");
 # endif
+#endif
+
+/* Map any int, typically from errno, into an error message.
+   With locale_t argument.  */
+#if @GNULIB_STRERROR_L@
+# if @REPLACE_STRERROR_L@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strerror_l
+#   define strerror_l rpl_strerror_l
+#  endif
+_GL_FUNCDECL_RPL (strerror_l, char *, (int errnum, locale_t locale),
+                                                   _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (strerror_l, char *, (int errnum, locale_t locale));
+# else
+#  if !@HAVE_STRERROR_L@
+_GL_FUNCDECL_SYS (strerror_l, char *, (int errnum, locale_t locale),
+                                                   _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (strerror_l, char *, (int errnum, locale_t locale));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (strerror_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strerror_l
+/* Assume strerror_l is always declared.  */
+_GL_WARN_ON_USE (strerror_l, "strerror_l is unportable - "
+                 "use gnulib module strerror_l for portability");
+#endif
+
+/* Map any int, typically from errno, into an error message.  Multithread-safe,
+   with locale_t argument.
+   Not portable! Only provided by gnulib.  */
+#if @GNULIB_STRERROR_L@
+_GL_FUNCDECL_SYS (strerror_l_r, int,
+                  (int errnum, char *buf, size_t buflen, locale_t locale),
+                  _GL_ARG_NONNULL ((2, 4)));
 #endif
 
 /* Return the name of the system error code ERRNUM.  */

@@ -1,0 +1,46 @@
+Description:
+strerror_l() function: get string describing error code.
+
+Files:
+lib/strerror_l.c
+m4/strerror_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+string-h
+locale-h
+extensions
+errno-h          [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+at-init          [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+errno-iter       [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+write            [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+tls              [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+once             [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+strerror         [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+strdup           [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+calloc-posix     [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+strerror_r-posix [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1]
+
+configure.ac:
+gl_FUNC_STRERROR_L
+gl_CONDITIONAL([GL_COND_OBJ_STRERROR_L],
+               [test $HAVE_STRERROR_L = 0 || test $REPLACE_STRERROR_L = 1])
+AM_COND_IF([GL_COND_OBJ_STRERROR_L], [
+  gl_PREREQ_STRERROR_L
+])
+gl_MODULE_INDICATOR([strerror_l])
+gl_STRING_MODULE_INDICATOR([strerror_l])
+
+Makefile.am:
+if GL_COND_OBJ_STRERROR_L
+lib_SOURCES += strerror_l.c
+endif
+
+Include:
+<string.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
