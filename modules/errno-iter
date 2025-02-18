@@ -1,0 +1,22 @@
+Description:
+Iteration over all valid error numbers.
+
+Files:
+lib/errno-iter.h
+lib/errno-iter.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += errno-iter.c
+
+Include:
+"errno-iter.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
