@@ -877,8 +877,8 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                     }
                 }
 
-              /* Create up to two USER_PROCESS entries: one for the seat,
-                 one for the tty.  */
+              /* Create up to two USER_PROCESS or LOGIN_PROCESS entries:
+                 one for the seat, one for the tty.  */
               if (seat != NULL || tty != NULL)
                 {
                   char *user;
@@ -888,6 +888,13 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                   pid_t leader_pid;
                   if (sd_session_get_leader (session, &leader_pid) < 0)
                     leader_pid = 0;
+
+                  char *clasz;
+                  if (sd_session_get_class (session, &clasz) < 0)
+                    clasz = missing;
+                  short ctype =
+                    (strncmp (clasz, "manager", 7) == 0 ? LOGIN_PROCESS :
+                     USER_PROCESS);
 
                   char *host;
                   char *remote_host;
@@ -932,7 +939,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                                   seat, strlen (seat),
                                   host, strlen (host),
                                   leader_pid /* the best we have */,
-                                  USER_PROCESS, start_ts, leader_pid, 0, 0);
+                                  ctype, start_ts, leader_pid, 0, 0);
                   if (tty != NULL)
                     a = add_utmp (a, options,
                                   user, strlen (user),
@@ -940,10 +947,12 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                                   tty, strlen (tty),
                                   host, strlen (host),
                                   leader_pid /* the best we have */,
-                                  USER_PROCESS, start_ts, leader_pid, 0, 0);
+                                  ctype, start_ts, leader_pid, 0, 0);
 
                   if (host != missing)
                     free (host);
+                  if (clasz != missing)
+                    free (clasz);
                   if (user != missing)
                     free (user);
                 }
