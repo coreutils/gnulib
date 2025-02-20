@@ -29,7 +29,7 @@ strcasecmp_l (const char *s1, const char *s2, locale_t locale)
 #if GNULIB_defined_locale_t
 
   struct gl_locale_category_t *plc =
-    &locale->category[gl_log2_lc_mask (LC_CTYPE)];
+    &locale->category[gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_CTYPE))];
   if (plc->is_c_locale)
     /* Implementation for the "C" locale.  */
     return c_strcasecmp (s1, s2);

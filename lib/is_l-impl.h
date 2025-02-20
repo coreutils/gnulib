@@ -23,7 +23,7 @@ int
 FUNC (int c, locale_t locale)
 {
   struct gl_locale_category_t *plc =
-    &locale->category[gl_log2_lc_mask (LC_CTYPE)];
+    &locale->category[gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_CTYPE))];
   if (plc->is_c_locale)
     /* Implementation for the "C" locale.  */
     return C_FUNC (c);
