@@ -3093,8 +3093,6 @@ gl_locale_name_thread_unsafe (int category, _GL_UNUSED const char *categoryname)
             default: /* We shouldn't get here.  */
               return "";
             }
-#  elif HAVE_NAMELESS_LOCALES
-        return get_locale_t_name (category, thread_locale);
 #  else
         /* Solaris 11 OpenIndiana.
            For the internal structure of locale objects, see
