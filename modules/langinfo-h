@@ -35,6 +35,7 @@ langinfo.h: langinfo.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''HAVE_LANGINFO_CODESET''@|$(HAVE_LANGINFO_CODESET)|g' \
 	      -e 's|@''HAVE_LANGINFO_T_FMT_AMPM''@|$(HAVE_LANGINFO_T_FMT_AMPM)|g' \
 	      -e 's|@''HAVE_LANGINFO_ALTMON''@|$(HAVE_LANGINFO_ALTMON)|g' \
+	      -e 's|@''HAVE_LANGINFO_ABALTMON''@|$(HAVE_LANGINFO_ABALTMON)|g' \
 	      -e 's|@''HAVE_LANGINFO_ERA''@|$(HAVE_LANGINFO_ERA)|g' \
 	      -e 's|@''HAVE_LANGINFO_YESEXPR''@|$(HAVE_LANGINFO_YESEXPR)|g' \
 	      -e 's|@''HAVE_NL_LANGINFO''@|$(HAVE_NL_LANGINFO)|g' \

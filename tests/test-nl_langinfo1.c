@@ -130,6 +130,32 @@ main (int argc, char *argv[])
   ASSERT (strlen (nl_langinfo (ABMON_10)) > 0);
   ASSERT (strlen (nl_langinfo (ABMON_11)) > 0);
   ASSERT (strlen (nl_langinfo (ABMON_12)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_1)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_2)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_3)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_4)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_5)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_6)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_7)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_8)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_9)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_10)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_11)) > 0);
+  ASSERT (strlen (nl_langinfo (ABALTMON_12)) > 0);
+  /* In the tested locales, abbreviated alternate month names and abbreviated
+     month names ought to be the same.  */
+  ASSERT (strcmp (nl_langinfo (ABALTMON_1), nl_langinfo (ABMON_1)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_2), nl_langinfo (ABMON_2)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_3), nl_langinfo (ABMON_3)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_4), nl_langinfo (ABMON_4)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_5), nl_langinfo (ABMON_5)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_6), nl_langinfo (ABMON_6)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_7), nl_langinfo (ABMON_7)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_8), nl_langinfo (ABMON_8)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_9), nl_langinfo (ABMON_9)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_10), nl_langinfo (ABMON_10)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_11), nl_langinfo (ABMON_11)) == 0);
+  ASSERT (strcmp (nl_langinfo (ABALTMON_12), nl_langinfo (ABMON_12)) == 0);
   ASSERT (strlen (nl_langinfo (ERA)) >= 0);
   ASSERT (strlen (nl_langinfo (ERA_D_FMT)) >= 0);
   ASSERT (strlen (nl_langinfo (ERA_D_T_FMT)) >= 0);
