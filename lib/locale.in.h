@@ -300,7 +300,7 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
 # include "setlocale_null.h"
 #endif
 
-#if @GNULIB_NEWLOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_NEWLOCALE@)
+#if @GNULIB_NEWLOCALE@ || (@GNULIB_GETLOCALENAME_L@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_NEWLOCALE@)
 # if @REPLACE_NEWLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef newlocale
@@ -331,7 +331,7 @@ _GL_WARN_ON_USE (newlocale, "newlocale is not portable");
 # endif
 #endif
 
-#if @GNULIB_DUPLOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_DUPLOCALE@)
+#if @GNULIB_DUPLOCALE@ || (@GNULIB_GETLOCALENAME_L@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_DUPLOCALE@)
 # if @REPLACE_DUPLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef duplocale
@@ -357,7 +357,7 @@ _GL_WARN_ON_USE (duplocale, "duplocale is unportable and buggy on some glibc sys
 # endif
 #endif
 
-#if @GNULIB_FREELOCALE@ || (@GNULIB_LOCALENAME_UNSAFE@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_FREELOCALE@)
+#if @GNULIB_FREELOCALE@ || (@GNULIB_GETLOCALENAME_L@ && @LOCALENAME_ENHANCE_LOCALE_FUNCS@ && @HAVE_FREELOCALE@)
 # if @REPLACE_FREELOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef freelocale
@@ -381,6 +381,24 @@ _GL_CXXALIASWARN (freelocale);
 # undef freelocale
 # if HAVE_RAW_DECL_FREELOCALE
 _GL_WARN_ON_USE (freelocale, "freelocale is not portable");
+# endif
+#endif
+
+#if @GNULIB_GETLOCALENAME_L@
+# if !@HAVE_GETLOCALENAME_L@
+_GL_FUNCDECL_SYS (getlocalename_l, const char *,
+                  (int category, locale_t locale),
+                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (getlocalename_l, const char *,
+                  (int category, locale_t locale));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (getlocalename_l);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getlocalename_l
+# if HAVE_RAW_DECL_GETLOCALENAME_L
+_GL_WARN_ON_USE (getlocalename_l, "getlocalename_l is not portable");
 # endif
 #endif
 

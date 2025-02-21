@@ -14,3 +14,4 @@ gl_MUSL_LIBC
 Makefile.am:
 TESTS += test-isblank_l
 check_PROGRAMS += test-isblank_l
+test_isblank_l_LDADD = $(LDADD) $(GETLOCALENAME_L_LIB)

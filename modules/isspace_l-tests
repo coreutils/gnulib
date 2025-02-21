@@ -14,3 +14,4 @@ gl_MUSL_LIBC
 Makefile.am:
 TESTS += test-isspace_l
 check_PROGRAMS += test-isspace_l
+test_isspace_l_LDADD = $(LDADD) $(GETLOCALENAME_L_LIB)

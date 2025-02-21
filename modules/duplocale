@@ -29,7 +29,7 @@ Include:
 <locale.h>
 
 Link:
-$(DUPLOCALE_LIB)
+$(DUPLOCALE_LIB) $(GETLOCALENAME_L_LIB)
 
 License:
 LGPLv2+

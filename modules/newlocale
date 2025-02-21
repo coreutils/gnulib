@@ -26,6 +26,9 @@ endif
 Include:
 <locale.h>
 
+Link:
+$(GETLOCALENAME_L_LIB)
+
 License:
 LGPLv2+
 

@@ -30,7 +30,7 @@
 
      flexmember
      lock
-     stdbool
+     bool
      thread-optim
  */
 

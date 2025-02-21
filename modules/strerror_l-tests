@@ -13,3 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-strerror_l
 check_PROGRAMS += test-strerror_l
+test_strerror_l_LDADD = $(LDADD) $(GETLOCALENAME_L_LIB)

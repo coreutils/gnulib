@@ -1,5 +1,5 @@
 # intl-thread-locale.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2015-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,8 +38,9 @@ AC_DEFUN([gt_INTL_THREAD_LOCALE_NAME],
   dnl OpenBSD base system, store complete information about the global locale,
   dnl such that third-party software can access it"), but for uselocale()
   dnl they did not think about the programs.
-  dnl In this situation, even the HAVE_NAMELESS_LOCALES support does not work.
-  dnl So, define HAVE_FAKE_LOCALES and disable all locale_t support.
+  dnl In this situation, even the HAVE_NAMELESS_LOCALES support cannot make
+  dnl uselocale() work.
+  dnl So, define HAVE_FAKE_LOCALES and disable all per-thread locale support.
   dnl Expected result: HAVE_FAKE_LOCALES is defined on OpenBSD ≥ 6.2.
   case "$gt_cv_func_uselocale_works" in
     *yes)
@@ -123,16 +124,14 @@ int main ()
   dnl requires the gnulib overrides of 'newlocale', 'duplocale', 'freelocale',
   dnl which is a problem for GNU libunistring.  Therefore try hard to avoid
   dnl enabling this code!
-  dnl Expected result: HAVE_NAMELESS_LOCALES is defined on AIX,
+  dnl Expected result: HAVE_NAMELESS_LOCALES is defined on OpenBSD ≥ 6.2, AIX,
   dnl and              HAVE_AIX72_LOCALES is defined on AIX ≥ 7.2.
-  gt_nameless_locales=no
+  gt_nameless_locales=$gt_fake_locales
   case "$host_os" in
     dnl It's needed on AIX 7.2.
     aix*)
       gt_nameless_locales=yes
-      AC_DEFINE([HAVE_NAMELESS_LOCALES], [1],
-        [Define if the locale_t type does not contain the name of each locale category.])
-      dnl In AIX ≥ 7.2, a locale contains at least the name of the LC_MESSSAGES
+      dnl In AIX ≥ 7.2, a locale contains at least the name of the LC_MESSAGES
       dnl category (fix of defect 823926).
       AC_CACHE_CHECK([for AIX locales with LC_MESSAGES name],
         [gt_cv_locale_aix72],
@@ -153,6 +152,10 @@ int main ()
       fi
       ;;
   esac
+  if test $gt_nameless_locales = yes; then
+    AC_DEFINE([HAVE_NAMELESS_LOCALES], [1],
+      [Define if the locale_t type does not contain the name of each locale category.])
+  fi
 
   dnl We cannot support uselocale() on platforms where the locale_t type is
   dnl fake.  So, set
@@ -172,8 +175,8 @@ int main ()
   dnl overrides newlocale(), duplocale(), freelocale() to keep track of locale
   dnl names.
   dnl Expected result: LOCALENAME_ENHANCE_LOCALE_FUNCS is defined on
-  dnl AIX 7.1, AIX ≥ 7.3.
-  if test $gt_good_uselocale = yes && test $gt_nameless_locales = yes; then
+  dnl OpenBSD ≥ 6.2, AIX 7.1, AIX ≥ 7.3.
+  if test $gt_working_uselocale = yes && test $gt_nameless_locales = yes; then
     gt_localename_enhances_locale_funcs=yes
     LOCALENAME_ENHANCE_LOCALE_FUNCS=1
     AC_DEFINE([LOCALENAME_ENHANCE_LOCALE_FUNCS], [1],

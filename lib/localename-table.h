@@ -23,9 +23,12 @@
 
 # include "glthread/lock.h"
 
+/* Smallest among the six LC_* category values.  */
+# define LCMIN (LC_ALL == 0 ? 1 : 0)
+
 struct locale_categories_names
   {
-    /* Locale category -> name (allocated with indefinite extent).  */
+    /* (Locale category - LCMIN) -> name (allocated with indefinite extent).  */
     const char *category_name[6];
   };
 

@@ -17,4 +17,4 @@ gt_FUNC_USELOCALE
 Makefile.am:
 TESTS += test-duplocale
 check_PROGRAMS += test-duplocale
-test_duplocale_LDADD = $(LDADD) $(SETLOCALE_LIB) @DUPLOCALE_LIB@
+test_duplocale_LDADD = $(LDADD) $(SETLOCALE_LIB) @DUPLOCALE_LIB@ $(GETLOCALENAME_L_LIB)

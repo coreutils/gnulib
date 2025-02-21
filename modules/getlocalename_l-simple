@@ -1,0 +1,47 @@
+Description:
+getlocalename_l() function: return name of a single locale category.
+
+Files:
+lib/getlocalename_l.c
+lib/localename-table.h
+lib/localename-table.c
+lib/struniq.h
+m4/getlocalename_l.m4
+m4/intl-thread-locale.m4
+
+Depends-on:
+locale-h
+extensions
+flexmember         [test $HAVE_GETLOCALENAME_L = 0]
+lock               [test $HAVE_GETLOCALENAME_L = 0]
+bool               [test $HAVE_GETLOCALENAME_L = 0]
+thread-optim       [test $HAVE_GETLOCALENAME_L = 0]
+setlocale-messages [test $HAVE_GETLOCALENAME_L = 0]
+setlocale-null     [test $HAVE_GETLOCALENAME_L = 0]
+free-posix         [test $HAVE_GETLOCALENAME_L = 0]
+
+configure.ac:
+gl_FUNC_GETLOCALENAME_L_SIMPLE
+gl_CONDITIONAL([GL_COND_OBJ_GETLOCALENAME_L], [test $HAVE_GETLOCALENAME_L = 0])
+AM_COND_IF([GL_COND_OBJ_GETLOCALENAME_L], [
+  gl_PREREQ_GETLOCALENAME_L_SIMPLE
+])
+gl_MODULE_INDICATOR([getlocalename_l])
+gl_LOCALE_MODULE_INDICATOR([getlocalename_l])
+
+Makefile.am:
+if GL_COND_OBJ_GETLOCALENAME_L
+lib_SOURCES += getlocalename_l.c localename-table.c
+endif
+
+Include:
+<locale.h>
+
+Link:
+$(GETLOCALENAME_L_LIB)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

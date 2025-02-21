@@ -14,3 +14,4 @@ gl_MUSL_LIBC
 Makefile.am:
 TESTS += test-tolower_l
 check_PROGRAMS += test-tolower_l
+test_tolower_l_LDADD = $(LDADD) $(GETLOCALENAME_L_LIB)

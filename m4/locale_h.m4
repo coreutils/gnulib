@@ -1,5 +1,5 @@
 # locale_h.m4
-# serial 34
+# serial 35
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -107,7 +107,7 @@ AC_DEFUN_ONCE([gl_LOCALE_H],
 # include <xlocale.h>
 #endif
     ]],
-    [setlocale newlocale duplocale freelocale])
+    [setlocale newlocale duplocale freelocale getlocalename_l])
 ])
 
 dnl Checks to determine whether the system has the locale_t type,
@@ -179,6 +179,7 @@ AC_DEFUN([gl_LOCALE_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NEWLOCALE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_DUPLOCALE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FREELOCALE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETLOCALENAME_L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALENAME_UNSAFE])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_LOCALE_H_MODULE_INDICATOR_DEFAULTS])
@@ -191,6 +192,7 @@ AC_DEFUN([gl_LOCALE_H_DEFAULTS],
   HAVE_NEWLOCALE=1;       AC_SUBST([HAVE_NEWLOCALE])
   HAVE_DUPLOCALE=1;       AC_SUBST([HAVE_DUPLOCALE])
   HAVE_FREELOCALE=1;      AC_SUBST([HAVE_FREELOCALE])
+  HAVE_GETLOCALENAME_L=1; AC_SUBST([HAVE_GETLOCALENAME_L])
   REPLACE_LOCALECONV=0;   AC_SUBST([REPLACE_LOCALECONV])
   REPLACE_SETLOCALE=0;    AC_SUBST([REPLACE_SETLOCALE])
   REPLACE_NEWLOCALE=0;    AC_SUBST([REPLACE_NEWLOCALE])
