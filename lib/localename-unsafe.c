@@ -46,10 +46,7 @@
 #  include <langinfo.h>
 # endif
 # if defined __sun
-#  if HAVE_GETLOCALENAME_L
-/* Solaris >= 12.  */
-extern char * getlocalename_l(int, locale_t);
-#  elif HAVE_SOLARIS114_LOCALES
+#  if HAVE_SOLARIS114_LOCALES
 #   include <sys/localedef.h>
 #  endif
 # endif
@@ -3080,10 +3077,7 @@ gl_locale_name_thread_unsafe (int category, _GL_UNUSED const char *categoryname)
           }
         return querylocale (mask, thread_locale);
 # elif defined __sun
-#  if HAVE_GETLOCALENAME_L
-        /* Solaris >= 12.  */
-        return getlocalename_l (category, thread_locale);
-#  elif HAVE_SOLARIS114_LOCALES
+#  if HAVE_SOLARIS114_LOCALES
         /* Solaris >= 11.4.  */
         void *lcp = (*thread_locale)->core.data->lcp;
         if (lcp != NULL)

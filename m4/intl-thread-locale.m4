@@ -1,5 +1,5 @@
 # intl-thread-locale.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2015-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,15 +117,6 @@ int main ()
     AC_DEFINE([HAVE_SOLARIS114_LOCALES], [1],
       [Define if the locale_t type is as on Solaris 11.4.])
   fi
-
-  dnl Solaris 12 will maybe provide getlocalename_l.  If it does, it will
-  dnl improve the implementation of gl_locale_name_thread(), by removing
-  dnl the use of undocumented structures.
-  case "$gt_cv_func_uselocale_works" in
-    *yes)
-      AC_CHECK_FUNCS([getlocalename_l])
-      ;;
-  esac
 
   dnl This code is for platforms where the locale_t type does not provide access
   dnl to the name of each locale category.  This code has the drawback that it
