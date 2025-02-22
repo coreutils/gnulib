@@ -3,22 +3,17 @@ getlocalename_l() function: return name of a single locale category.
 
 Files:
 lib/getlocalename_l.c
-lib/localename-table.h
-lib/localename-table.c
 lib/struniq.h
 m4/getlocalename_l.m4
-m4/intl-thread-locale.m4
 
 Depends-on:
 locale-h
 extensions
-flexmember         [test $HAVE_GETLOCALENAME_L = 0]
-lock               [test $HAVE_GETLOCALENAME_L = 0]
-bool               [test $HAVE_GETLOCALENAME_L = 0]
-thread-optim       [test $HAVE_GETLOCALENAME_L = 0]
-setlocale-messages [test $HAVE_GETLOCALENAME_L = 0]
-setlocale-null     [test $HAVE_GETLOCALENAME_L = 0]
-free-posix         [test $HAVE_GETLOCALENAME_L = 0]
+getlocalename_l-unsafe [test $HAVE_GETLOCALENAME_L = 0]
+flexmember             [test $HAVE_GETLOCALENAME_L = 0]
+lock                   [test $HAVE_GETLOCALENAME_L = 0]
+bool                   [test $HAVE_GETLOCALENAME_L = 0]
+thread-optim           [test $HAVE_GETLOCALENAME_L = 0]
 
 configure.ac:
 gl_FUNC_GETLOCALENAME_L_SIMPLE
@@ -31,7 +26,7 @@ gl_LOCALE_MODULE_INDICATOR([getlocalename_l])
 
 Makefile.am:
 if GL_COND_OBJ_GETLOCALENAME_L
-lib_SOURCES += getlocalename_l.c localename-table.c
+lib_SOURCES += getlocalename_l.c
 endif
 
 Include:

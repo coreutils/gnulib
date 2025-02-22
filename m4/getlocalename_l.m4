@@ -1,5 +1,5 @@
 # getlocalename_l.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,17 @@ AC_DEFUN([gl_FUNC_GETLOCALENAME_L_SIMPLE],
   dnl Persuade glibc <locale.h> to declare getlocalename_l().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
+  AC_REQUIRE([gl_FUNC_GETLOCALENAME_L_UNSAFE])
+])
+
+# Prerequisites of lib/getlocalename_l.c.
+AC_DEFUN([gl_PREREQ_GETLOCALENAME_L_SIMPLE],
+[
+  :
+])
+
+AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
+[
   AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
   AC_CHECK_FUNCS_ONCE([getlocalename_l])
   if test $ac_cv_func_getlocalename_l = yes; then
@@ -26,8 +37,8 @@ AC_DEFUN([gl_FUNC_GETLOCALENAME_L_SIMPLE],
   AC_SUBST([GETLOCALENAME_L_LIB])
 ])
 
-# Prerequisites of lib/getlocalename_l.c.
-AC_DEFUN([gl_PREREQ_GETLOCALENAME_L_SIMPLE],
+# Prerequisites of lib/getlocalename_l-unsafe.c.
+AC_DEFUN([gl_PREREQ_GETLOCALENAME_L_UNSAFE],
 [
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
   AC_REQUIRE([gl_LOCALE_T])
