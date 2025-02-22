@@ -1,41 +1,28 @@
 Description:
 getlocalename_l_unsafe() function: return name of a single locale category.
+Only works on a limited set of platforms: on NetBSD and Solaris.
 
 Files:
 lib/getlocalename_l-unsafe.h
 lib/getlocalename_l-unsafe.c
-lib/localename-table.h
-lib/localename-table.c
-lib/struniq.h
 m4/getlocalename_l.m4
-m4/intl-thread-locale.m4
 
 Depends-on:
 locale-h
-getlocalename_l-unsafe-limited
-flexmember
-lock
-bool
-thread-optim
-setlocale-messages
 setlocale-null
-free-posix
 
 configure.ac:
-gl_FUNC_GETLOCALENAME_L_UNSAFE
-gl_PREREQ_GETLOCALENAME_L_UNSAFE
+AC_REQUIRE([AC_CANONICAL_HOST])
+gl_CONDITIONAL([GL_COND_OBJ_GETLOCALENAME_L_UNSAFE_LIMITED],
+               [case "$host_os" in netbsd* | solaris*) true;; *) false;; esac])
 
 Makefile.am:
-if !GL_COND_OBJ_GETLOCALENAME_L_UNSAFE_LIMITED
+if GL_COND_OBJ_GETLOCALENAME_L_UNSAFE_LIMITED
 lib_SOURCES += getlocalename_l-unsafe.c
 endif
-lib_SOURCES += localename-table.c
 
 Include:
 "getlocalename_l-unsafe.h"
-
-Link:
-$(GETLOCALENAME_L_LIB)
 
 License:
 LGPLv2+
