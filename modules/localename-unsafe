@@ -18,7 +18,7 @@ extensions
 locale-h
 strdup
 lock
-getlocalename_l-simple
+getlocalename_l-unsafe
 setlocale-null-unlocked
 
 configure.ac:

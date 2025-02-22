@@ -34,6 +34,7 @@
 #include <locale.h>
 #include <string.h>
 
+#include "getlocalename_l-unsafe.h"
 #include "setlocale_null.h"
 
 #if HAVE_GOOD_USELOCALE
@@ -2622,7 +2623,11 @@ gl_locale_name_thread_unsafe (int category, _GL_UNUSED const char *categoryname)
   {
     locale_t thread_locale = uselocale (NULL);
     if (thread_locale != LC_GLOBAL_LOCALE)
-      return getlocalename_l (category, thread_locale);
+      {
+        struct string_with_storage ret =
+          getlocalename_l_unsafe (category, thread_locale);
+        return ret.value;
+      }
   }
 #endif
   /* On WINDOWS_NATIVE, don't use GetThreadLocale() here, because when

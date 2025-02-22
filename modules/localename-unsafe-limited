@@ -13,7 +13,7 @@ m4/lcmessage.m4
 Depends-on:
 extensions
 locale-h
-getlocalename_l-simple
+getlocalename_l-unsafe
 setlocale-null-unlocked
 
 configure.ac:
