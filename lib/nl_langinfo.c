@@ -317,6 +317,24 @@ rpl_nl_langinfo (nl_item item)
       item = item - ALTMON_1 + MON_1;
       break;
 # endif
+# if GNULIB_defined_ABALTMON
+    case ABALTMON_1:
+    case ABALTMON_2:
+    case ABALTMON_3:
+    case ABALTMON_4:
+    case ABALTMON_5:
+    case ABALTMON_6:
+    case ABALTMON_7:
+    case ABALTMON_8:
+    case ABALTMON_9:
+    case ABALTMON_10:
+    case ABALTMON_11:
+    case ABALTMON_12:
+      /* We don't ship the appropriate localizations with gnulib.  Therefore,
+         treat ABALTMON_i like ABMON_i.  */
+      item = item - ABALTMON_1 + ABMON_1;
+      break;
+# endif
 # if GNULIB_defined_ERA
     case ERA:
       /* The format is not standardized.  In glibc it is a sequence of strings
