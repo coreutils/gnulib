@@ -24,6 +24,7 @@ free-posix
 configure.ac:
 gl_FUNC_GETLOCALENAME_L_UNSAFE
 gl_PREREQ_GETLOCALENAME_L_UNSAFE
+gl_LOCALE_MODULE_INDICATOR([getlocalename_l-unsafe])
 
 Makefile.am:
 if !GL_COND_OBJ_GETLOCALENAME_L_UNSAFE_LIMITED
