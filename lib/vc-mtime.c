@@ -102,7 +102,9 @@ static int
 git_mtime (struct timespec *mtime, const char *filename)
 {
   /* Run "git log -1 --format=%ct -- FILENAME".  It prints the time of last
-     modification, as the number of seconds since the Epoch.
+     modification (the 'CommitDate', not the 'AuthorDate' which merely
+     represents the time at which the author locally committed the first version
+     of the change), as the number of seconds since the Epoch.
      The '--' option is for the case that the specified file was removed.  */
   const char *argv[7];
   pid_t child;
