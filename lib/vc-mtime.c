@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "vc-mtime.h"
 
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -56,11 +57,17 @@ git_vc_controlled (const char *filename)
     return false;
 
   /* Read the subprocess output, and test whether it is non-empty.  */
-  size_t count = 0;
-  char c;
+  ptrdiff_t count = 0;
 
-  while (safe_read (fd[0], &c, 1) > 0)
-    count++;
+  for (;;)
+    {
+      char buf[1024];
+      ptrdiff_t n = safe_read (fd[0], buf, sizeof (buf));
+      if (n > 0)
+        count += n;
+      else
+        break;
+    }
 
   close (fd[0]);
 
