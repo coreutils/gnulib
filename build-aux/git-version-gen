@@ -55,7 +55,7 @@ scriptversion=2025-01-28.09; # UTC
 # since configure.ac no longer includes a version string, Makefile rules
 # should not depend on configure.ac for version updates).
 #
-# AC_INIT([@var{package}], [dummy])
+# AC_INIT([@var{package}], [package])
 # AC_CONFIG_SRCDIR([@var{unique-file-in-source-dir}])
 # AC_CONFIG_AUX_DIR([build-aux])
 # VERSION_NUMBER=`cd $srcdir \

@@ -1,5 +1,5 @@
 # init-package-version.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 1992-2025 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -57,7 +57,7 @@ dnl the same distribution terms as the rest of that program.
 #
 # With the macro defined in this file, the approach can be coded like this:
 #
-#   AC_INIT(PACKAGE, [dummy], [MORE OPTIONS])
+#   AC_INIT(PACKAGE, [package], [MORE OPTIONS])
 #   AC_CONFIG_SRCDIR(WITNESS)
 #   . $srcdir/../version.sh
 #   gl_INIT_PACKAGE_VERSION($VERSION_NUMBER)
