@@ -23,9 +23,13 @@ How to update gnulib manual on www.gnu.org
 
    GNULIB_WWW_CHECKOUT=`cd $GNULIB_WWW_CHECKOUT && pwd`
    cd $GNULIB_WWW_CHECKOUT
+   cvs update -dP
    tar -cf html-CVS.tar manual/html_node/CVS manual/html_node/.symlinks
-   cd $GNULIB_CHECKOUT/doc
-   make updated-stamp
+   cd $GNULIB_CHECKOUT
+   git checkout master
+   git pull
+   cd doc
+   make undocumented-modules.texi updated-stamp
    ../build-aux/gendocs.sh \
      -I ../build-aux \
      --email bug-gnulib@gnu.org \
@@ -34,6 +38,10 @@ How to update gnulib manual on www.gnu.org
    cd $GNULIB_WWW_CHECKOUT
    tar -xf html-CVS.tar
    rm html-CVS.tar
+   newfiles=`cvs -n update -dP | sed -n -e 's|^[?] manual/html_node/|manual/html_node/|p'`
+   if test -n "$newfiles"; then
+     cvs add $newfiles
+   fi
 
    Run 'cvs diff -u' and verify that the output looks sane.
 
