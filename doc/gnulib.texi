@@ -900,6 +900,7 @@ better to share them.
 * A C++ namespace for gnulib::      A different way of using Gnulib in C++
 * License Texinfo sources::
 * Building gnulib::
+* Gnulib Git Bundle::
 @end menu
 
 @include out-of-memory.texi
@@ -915,6 +916,8 @@ better to share them.
 @include licenses-texi.texi
 
 @include build-automation.texi
+
+@include gnulib-git-bundle.texi
 
 
 @node POSIX Substitutes Library
