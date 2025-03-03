@@ -20,7 +20,7 @@ gl_FUNC_VASPRINTF_GNU
 Makefile.am:
 
 Include:
-"vasprintf.h"
+<stdio.h>
 
 License:
 LGPL
