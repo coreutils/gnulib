@@ -1,5 +1,5 @@
 # getaddrinfo.m4
-# serial 37
+# serial 38
 dnl Copyright (C) 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -108,7 +108,7 @@ int getaddrinfo (const char *, const char *, const struct addrinfo *, struct add
 #include <string.h>
             ]], [[
               struct addrinfo hints;
-              struct addrinfo ai;
+              struct addrinfo *ai;
               memset (&hints, 0, sizeof (hints));
               hints.ai_flags = AI_NUMERICSERV;
               return getaddrinfo ("www.gnu.org", "http", &hints, &ai) != EAI_NONAME;
