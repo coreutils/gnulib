@@ -19,5 +19,11 @@
 
 # Usage: /bin/sh gocomp.sh [OPTION] SOURCE.go ...
 
+# Avoid error "CC environment variable is relative; must be absolute path"
+# on native Windows. Cf.
+# <https://github.com/golang/go/commit/aa161e799df7e1eba99d2be10271e76b6f758142>
+unset CC
+unset CXX
+
 test -z "$GO_VERBOSE" || echo "@GO@ build @GOCOMPFLAGS@ $@"
 exec @GO@ build @GOCOMPFLAGS@ "$@"
