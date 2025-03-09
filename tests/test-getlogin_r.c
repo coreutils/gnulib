@@ -68,5 +68,10 @@ main (void)
     ASSERT (strcmp (hugebuf, buf) == 0);
   }
 
+  /* Check that getlogin_r() does not merely return getenv ("LOGNAME").  */
+  putenv ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke");
+  err = getlogin_r (buf, sizeof buf);
+  ASSERT (!(err == 0 && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
+
   return test_exit_status;
 }
