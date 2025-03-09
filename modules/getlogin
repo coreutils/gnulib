@@ -7,10 +7,12 @@ m4/getlogin.m4
 
 Depends-on:
 unistd-h
+readutmp        [test $HAVE_GETLOGIN = 0 || test $REPLACE_GETLOGIN = 1]
 
 configure.ac:
 gl_FUNC_GETLOGIN
-gl_CONDITIONAL([GL_COND_OBJ_GETLOGIN], [test $HAVE_GETLOGIN = 0])
+gl_CONDITIONAL([GL_COND_OBJ_GETLOGIN],
+               [test $HAVE_GETLOGIN = 0 || test $REPLACE_GETLOGIN = 1])
 gl_UNISTD_MODULE_INDICATOR([getlogin])
 AC_REQUIRE([gl_LIB_GETLOGIN])
 
@@ -26,7 +28,7 @@ Link:
 $(GETLOGIN_LIB)
 
 License:
-LGPLv2+
+GPL
 
 Maintainer:
 all

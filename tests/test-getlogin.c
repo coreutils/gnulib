@@ -41,5 +41,11 @@ main (void)
 #endif
   test_getlogin_result (buf, err);
 
+  /* Check that getlogin() does not merely return getenv ("LOGNAME").  */
+  putenv ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke");
+  buf = getlogin ();
+  ASSERT (!(buf != NULL
+            && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
+
   return test_exit_status;
 }
