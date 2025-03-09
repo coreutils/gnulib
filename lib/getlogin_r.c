@@ -39,6 +39,14 @@ extern char *getlogin (void);
 # endif
 #endif
 
+#if defined __linux__ || defined __ANDROID__
+# include <fcntl.h>
+# include <pwd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/stat.h>
+#endif
+
 /* See unistd.in.h for documentation.  */
 int
 getlogin_r (char *name, size_t size)
@@ -64,6 +72,72 @@ getlogin_r (char *name, size_t size)
         return ENOENT;
     }
   return 0;
+#elif defined __linux__ || defined __ANDROID__
+  /* Linux.  */
+  {
+    /* Read the login uid from the /proc file system.  */
+    int fd = open ("/proc/self/loginuid", O_RDONLY);
+    if (fd >= 0)
+      {
+        char buf[20 + 1];
+        int n = read (fd, buf, sizeof (buf) - 1);
+        if (n > 0)
+          {
+            buf[n] = '\0';
+            char *endptr;
+            unsigned long uid = strtoul (buf, &endptr, 10);
+            if (endptr == buf + n && uid != (uid_t) -1)
+              {
+                /* Convert the uid to a user name.  */
+                struct passwd pbuf1;
+                char pbuf2[1024];
+                struct passwd *p;
+                if (getpwuid_r (uid, &pbuf1, pbuf2, sizeof (pbuf2), &p) == 0)
+                  {
+                    if (strlen (p->pw_name) < size)
+                      {
+                        strcpy (name, p->pw_name);
+                        close (fd);
+                        return 0;
+                      }
+                    return ERANGE;
+                  }
+              }
+          }
+        close (fd);
+      }
+  }
+  {
+    /* Find the tty connected to the current process.  */
+    char tty[1024];
+    if (ttyname_r (STDIN_FILENO, tty, sizeof (tty)) == 0)
+      {
+        /* We cannot use read_utmp here, since it is not multithread-safe.  */
+        /* Fallback for systems which don't maintain an utmp database
+           or for ttys that are not recorded in that the utmp database:
+           Look at the owner of that tty.  */
+        struct stat statbuf;
+        if (stat (tty, &statbuf) >= 0)
+          {
+            uid_t uid = statbuf.st_uid;
+            /* Convert the uid to a user name.  */
+            struct passwd pbuf1;
+            char pbuf2[1024];
+            struct passwd *p;
+            if (getpwuid_r (uid, &pbuf1, pbuf2, sizeof (pbuf2), &p) == 0)
+              {
+                if (strlen (p->pw_name) < size)
+                  {
+                    strcpy (name, p->pw_name);
+                    return 0;
+                  }
+                return ERANGE;
+              }
+          }
+      }
+  }
+  /* ENOENT is a reasonable errno value if getlogin returns NULL.  */
+  return ENOENT;
 #elif HAVE_GETLOGIN_R
   /* Platform with a getlogin_r() function.  */
   int ret = getlogin_r (name, size);

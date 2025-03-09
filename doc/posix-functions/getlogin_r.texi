@@ -20,6 +20,9 @@ HP-UX 11.
 This function returns a truncated result, instead of failing with error code
 @code{ERANGE}, when the buffer is not large enough, on some platforms:
 macOS 14.
+@item
+This function returns the value of the @env{LOGNAME} environment variable:
+musl libc 1.2.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -27,9 +30,6 @@ Portability problems not fixed by Gnulib:
 @item
 This function has an incompatible declaration on some platforms:
 FreeBSD 12.0, MidnightBSD 2.0, Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
-@item
-This function returns the value of the @env{LOGNAME} environment variable:
-musl libc 1.2.5.
 @item
 This function fails even when standard input is a tty on some platforms:
 HP-UX 11.11.

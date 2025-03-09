@@ -1,5 +1,5 @@
 # getlogin_r.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,22 +35,26 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
     HAVE_GETLOGIN_R=1
     dnl On Mac OS X 10.13 and OSF/1 5.1, getlogin_r returns a truncated result
     dnl if the buffer is not large enough.
+    dnl On musl libc, getlogin_r returns getenv ("LOGNAME").
     AC_REQUIRE([AC_CANONICAL_HOST])
-    AC_CACHE_CHECK([whether getlogin_r works with small buffers],
+    AC_CACHE_CHECK([whether getlogin_r works],
       [gl_cv_func_getlogin_r_works],
       [
         dnl Initial guess, used when cross-compiling.
 changequote(,)dnl
         case "$host_os" in
-                          # Guess no on Mac OS X, OSF/1.
-          darwin* | osf*) gl_cv_func_getlogin_r_works="guessing no" ;;
-                          # Guess yes otherwise.
-          *)              gl_cv_func_getlogin_r_works="guessing yes" ;;
+                              # Guess no on Mac OS X, OSF/1.
+          darwin* | osf*)     gl_cv_func_getlogin_r_works="guessing no" ;;
+                              # Guess no on musl libc.
+          *-musl* | midipix*) gl_cv_func_getlogin_r_works="guessing no" ;;
+                              # Guess yes otherwise.
+          *)                  gl_cv_func_getlogin_r_works="guessing yes" ;;
         esac
 changequote([,])dnl
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
 #include <stddef.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #if !HAVE_DECL_GETLOGIN_R
@@ -76,6 +80,10 @@ main (void)
       if (getlogin_r (buf, n) == 0)
         result |= 4;
     }
+  putenv ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke");
+  if (getlogin_r (buf, 100) == 0
+      && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0)
+    result |= 8;
   return result;
 }]])],
           [gl_cv_func_getlogin_r_works=yes],
