@@ -1,6 +1,6 @@
 /* quotearg.c - quote arguments for output
 
-   Copyright (C) 1998-2002, 2004-2024 Free Software Foundation, Inc.
+   Copyright (C) 1998-2002, 2004-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -147,8 +147,8 @@ set_char_quoting (struct quoting_options *o, char c, int i)
   unsigned int *p =
     (o ? o : &default_quoting_options)->quote_these_too + uc / INT_BITS;
   int shift = uc % INT_BITS;
-  int r = (*p >> shift) & 1;
-  *p ^= ((i & 1) ^ r) << shift;
+  unsigned int r = (*p >> shift) & 1;
+  *p ^= ((i & 1U) ^ r) << shift;
   return r;
 }
 
