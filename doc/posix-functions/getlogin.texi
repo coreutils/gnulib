@@ -16,7 +16,8 @@ older mingw, MSVC 14.
 This function is not declared unless @code{_POSIX} is defined on some platforms:
 mingw.
 @item
-This function returns the value of the @env{LOGNAME} environment variable:
+This function returns the value of the @env{LOGNAME} environment variable
+and this therefore arbitrarily fakeable:
 musl libc 1.2.5.
 @end itemize
 
@@ -26,4 +27,9 @@ Portability problems not fixed by Gnulib:
 This function returns an empty string even when standard input is a tty
 on some platforms:
 HP-UX 11.11.
+@item
+When there are several user names with the same user ID,
+this function may return, instead of the user name that logged in,
+another user name that has the same user ID, on some platforms:
+Linux and others.
 @end itemize

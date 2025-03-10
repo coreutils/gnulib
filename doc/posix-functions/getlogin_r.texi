@@ -21,7 +21,8 @@ This function returns a truncated result, instead of failing with error code
 @code{ERANGE}, when the buffer is not large enough, on some platforms:
 macOS 14.
 @item
-This function returns the value of the @env{LOGNAME} environment variable:
+This function returns the value of the @env{LOGNAME} environment variable
+and this therefore arbitrarily fakeable:
 musl libc 1.2.5.
 @end itemize
 
@@ -42,4 +43,9 @@ This function fails with error code @code{ENOMEM} instead of @code{ERANGE} on
 some platforms:
 @c https://dev.haiku-os.org/ticket/18349
 Haiku.
+@item
+When there are several user names with the same user ID,
+this function may return, instead of the user name that logged in,
+another user name that has the same user ID, on some platforms:
+Linux and others.
 @end itemize
