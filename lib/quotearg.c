@@ -147,8 +147,8 @@ set_char_quoting (struct quoting_options *o, char c, int i)
   unsigned int *p =
     (o ? o : &default_quoting_options)->quote_these_too + uc / INT_BITS;
   int shift = uc % INT_BITS;
-  int r = (*p >> shift) & 1;
-  *p ^= ((i & 1) ^ r) << shift;
+  unsigned int r = (*p >> shift) & 1;
+  *p ^= ((i & 1U) ^ r) << shift;
   return r;
 }
 
