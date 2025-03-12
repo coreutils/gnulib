@@ -3,7 +3,7 @@
 
 To provide a serialized archival copy of the Gnulib Git repository we
 publish Git Bundles (@url{https://git-scm.com/docs/git-bundle}) of
-Gnulib at @url{ftp://ftp.gnu.org/gnu/gnulib/}.  These may be useful if
+Gnulib at @url{https://ftp.gnu.org/gnu/gnulib/}.  These may be useful if
 Savannah happens to be offline or if you want to have a GnuPG signed
 confirmation of the Gnulib content.
 
@@ -34,7 +34,21 @@ git clone /path/to/your/gnulib-20250303.bundle gnulib
 cd gnulib
 @end example
 
-We desire that the Gnulib Git bundle is bit-by-bit reproducible,
+Below are SHA-256 checksums of known releases:
+
+@example
+9dae009ef9dd7cff17b74c0cda5d7a423e2ed98b4f5b7aa29a970565b0591c06  gnulib-20250303.bundle
+@end example
+
+The following PGP keys have signed releases:
+
+@example
+sec>  ed25519 2019-03-20 [SC] https://josefsson.org/key-20190320.txt
+      B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE
+uid           [ultimate] Simon Josefsson <simon@josefsson.org>
+@end example
+
+We desire that the Gnulib Git bundles are bit-by-bit reproducible,
 however we do not know how to achieve this.  Currently gnulib
 maintainers may invoke the following commands to prepare and upload a
 Gnulib git bundle.  We appreciate ideas on how to improve these set of
@@ -43,7 +57,7 @@ bit-by-bit reproducible by anyone.
 
 @example
 cd $(mktemp -d)
-REV=2520437549b14f3785b4b3c32a0a3fc792d4a9c0 # master branch commit to package
+REV=ac9dd0041307b1d3a68d26bf73567aa61222df54 # master branch commit to package
 git clone https://git.savannah.gnu.org/git/gnulib.git
 cd gnulib
 git fsck # attempt to validate input
@@ -55,7 +69,5 @@ git gc --prune=now # drop any commits after $REV
 git -c 'pack.threads=1' bundle create gnulib.bundle --all
 V=$(env TZ=UTC0 git show -s --date=format:%Y%m%d --pretty=%cd master)
 mv gnulib.bundle gnulib-$V.bundle
-gpg --detach-sign --armor gnulib-$V.bundle
-gpg --verify gnulib-$V.bundle
 build-aux/gnupload --to ftp.gnu.org:gnulib gnulib-$V.bundle
 @end example
