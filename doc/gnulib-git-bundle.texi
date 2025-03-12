@@ -45,7 +45,7 @@ The following PGP keys have signed releases:
 @example
 sec>  ed25519 2019-03-20 [SC] https://josefsson.org/key-20190320.txt
       B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE
-uid           [ultimate] Simon Josefsson <simon@josefsson.org>
+uid           [ultimate] Simon Josefsson <simon@@josefsson.org>
 @end example
 
 We desire that the Gnulib Git bundles are bit-by-bit reproducible,
