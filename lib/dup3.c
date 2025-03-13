@@ -1,5 +1,5 @@
 /* Copy a file descriptor, applying specific flags.
-   Copyright (C) 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 2009-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -46,8 +46,10 @@ dup3 (int oldfd, int newfd, int flags)
           {
             have_dup3_really = 1;
             /* On NetBSD dup3 is a no-op when oldfd == newfd, but we are
-               expected to fail with error EINVAL.  */
-# ifdef __NetBSD__
+               expected to fail with error EINVAL.
+
+               Likewise on Haiku.  */
+# if defined __NetBSD__ || defined __HAIKU__
             if (newfd == oldfd)
               {
                 errno = EINVAL;
