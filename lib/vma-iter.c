@@ -1,5 +1,5 @@
 /* Iteration over virtual memory areas.
-   Copyright (C) 2011-2024 Free Software Foundation, Inc.
+   Copyright (C) 2011-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2011-2017.
 
    This program is free software: you can redistribute it and/or modify
@@ -1692,9 +1692,11 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       end = start + info.size;
       flags = 0;
       if (info.protection & B_READ_AREA)
-        flags |= VMA_PROT_READ | VMA_PROT_EXECUTE;
+        flags |= VMA_PROT_READ;
       if (info.protection & B_WRITE_AREA)
         flags |= VMA_PROT_WRITE;
+      if (info.protection & B_EXECUTE_AREA)
+        flags |= VMA_PROT_EXECUTE;
 
       if (callback (data, start, end, flags))
         break;
