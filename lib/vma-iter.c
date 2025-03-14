@@ -1692,9 +1692,11 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       end = start + info.size;
       flags = 0;
       if (info.protection & B_READ_AREA)
-        flags |= VMA_PROT_READ | VMA_PROT_EXECUTE;
+        flags |= VMA_PROT_READ;
       if (info.protection & B_WRITE_AREA)
         flags |= VMA_PROT_WRITE;
+      if (info.protection & B_EXECUTE_AREA)
+        flags |= VMA_PROT_EXECUTE;
 
       if (callback (data, start, end, flags))
         break;
