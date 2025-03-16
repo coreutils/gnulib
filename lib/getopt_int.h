@@ -70,9 +70,6 @@ struct _getopt_data
 
   /* Internal members.  */
 
-  /* True if the internal members have been initialized.  */
-  int __initialized;
-
   /* The next char to be scanned in the option-element
      in which the last option character we returned was found.
      This allows us to pick up the scan where we left off.
@@ -80,6 +77,9 @@ struct _getopt_data
      If this is zero, or a null string, it means resume the scan
      by advancing to the next ARGV-element.  */
   char *__nextchar;
+
+  /* True if the internal members have been initialized.  */
+  int __initialized;
 
   /* See __ord above.  */
   enum __ord __ordering;

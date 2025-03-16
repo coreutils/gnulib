@@ -33,9 +33,9 @@
 
 static struct option const long_options[] =
 {
-  {"help", no_argument, NULL, 'h'},
-  {"version", no_argument, NULL, 'v'},
-  {NULL, 0, NULL, 0}
+  {"help", NULL, no_argument, 'h'},
+  {"version", NULL, no_argument, 'v'},
+  {NULL, NULL, 0, 0}
 };
 
 /* Process long options --help and --version, but only if argc == 2.

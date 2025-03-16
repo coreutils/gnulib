@@ -77,13 +77,13 @@ static volatile int _argp_hang;
 
 static const struct argp_option argp_default_options[] =
 {
-  {"help",        '?',          NULL, 0,  N_("give this help list"), -1},
-  {"usage",       OPT_USAGE,    NULL, 0,  N_("give a short usage message"), 0},
-  {"program-name",OPT_PROGNAME, N_("NAME"), OPTION_HIDDEN,
+  {"help",          NULL,       '?', 0,  N_("give this help list"), -1},
+  {"usage",         NULL,       OPT_USAGE, 0,  N_("give a short usage message"), 0},
+  {"program-name",  N_("NAME"), OPT_PROGNAME, OPTION_HIDDEN,
    N_("set the program name"), 0},
-  {"HANG",        OPT_HANG,    N_("SECS"), OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
+  {"HANG",          N_("SECS"), OPT_HANG, OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
    N_("hang for SECS seconds (default 3600)"), 0},
-  {NULL, 0, NULL, 0, NULL, 0}
+  {NULL, NULL, 0, 0, NULL, 0}
 };
 
 static error_t
@@ -139,8 +139,8 @@ static const struct argp argp_default_argp =
 
 static const struct argp_option argp_version_options[] =
 {
-  {"version",     'V',          NULL, 0,  N_("print program version"), -1},
-  {NULL, 0, NULL, 0, NULL, 0}
+  {"version", NULL,   'V', 0,  N_("print program version"), -1},
+  {NULL, NULL, 0, 0, NULL, 0}
 };
 
 static error_t

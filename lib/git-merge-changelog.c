@@ -979,10 +979,10 @@ conflict_write (FILE *fp, struct conflict *c)
 /* Long options.  */
 static const struct option long_options[] =
 {
-  { "help", no_argument, NULL, 'h' },
-  { "split-merged-entry", no_argument, NULL, CHAR_MAX + 1 },
-  { "version", no_argument, NULL, 'V' },
-  { NULL, 0, NULL, 0 }
+  { "help", NULL, no_argument, 'h' },
+  { "split-merged-entry", NULL, no_argument, CHAR_MAX + 1 },
+  { "version", NULL, no_argument, 'V' },
+  { NULL, NULL, 0, 0 }
 };
 
 /* Print a usage message and exit.  */

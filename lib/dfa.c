@@ -404,10 +404,10 @@ enum { MAX_TRCOUNT = 1024 };
 struct mb_char_classes
 {
   ptrdiff_t cset;
-  bool invert;
   char32_t *chars;              /* Normal characters.  */
   idx_t nchars;
   idx_t nchars_alloc;
+  bool invert;
 };
 
 struct regex_syntax
@@ -443,6 +443,9 @@ struct regex_syntax
    meaning of the @#%!@#%^!@ syntax bits.  */
 struct lexer_state
 {
+  /* The most recently analyzed multibyte bracket expression.  */
+  struct mb_char_classes brack;
+
   char const *ptr;	/* Pointer to next input character.  */
   idx_t left;		/* Number of characters remaining.  */
   token lasttok;	/* Previous token returned; initially END.  */
@@ -453,9 +456,6 @@ struct lexer_state
      or WEOF if there was an encoding error.  Used only if
      MB_CUR_MAX > 1.  */
   wint_t wctok;
-
-  /* The most recently analyzed multibyte bracket expression.  */
-  struct mb_char_classes brack;
 
   /* We're separated from beginning or (, | only by zero-width characters.  */
   bool laststart;

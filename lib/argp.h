@@ -77,13 +77,13 @@ struct argp_option
      can use following options with the OPTION_ALIAS flag set.  */
   const char *name;
 
-  /* What key is returned for this option.  If > 0 and printable, then it's
-     also accepted as a short option.  */
-  int key;
-
   /* If non-NULL, this is the name of the argument associated with this
      option, which is required unless the OPTION_ARG_OPTIONAL flag is set. */
   const char *arg;
+
+  /* What key is returned for this option.  If > 0 and printable, then it's
+     also accepted as a short option.  */
+  int key;
 
   /* OPTION_ flags.  */
   int flags;
@@ -291,14 +291,14 @@ struct argp_child
   /* The child parser.  */
   const struct argp *argp;
 
-  /* Flags for this child.  */
-  int flags;
-
   /* If non-zero, an optional header to be printed in help output before the
      child options.  As a side-effect, a non-zero value forces the child
      options to be grouped together; to achieve this effect without actually
      printing a header string, use a value of "".  */
   const char *header;
+
+  /* Flags for this child.  */
+  int flags;
 
   /* Where to group the child options relative to the other ("consolidated")
      options in the parent argp; the values are the same as the GROUP field

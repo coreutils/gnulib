@@ -48,15 +48,15 @@ typedef struct
 {
   const wchar_t* dir_start;
   const wchar_t* dir_end;
-  int flags;
   const wchar_t* width_start;
   const wchar_t* width_end;
   size_t width_arg_index;
   const wchar_t* precision_start;
   const wchar_t* precision_end;
   size_t precision_arg_index;
-  wchar_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
+  int flags;
+  wchar_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
 }
 wchar_t_directive;
 

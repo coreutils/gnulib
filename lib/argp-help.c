@@ -372,16 +372,16 @@ struct hol_entry
      probably been shadowed by some other entry).  */
   char *short_options;
 
-  /* Entries are sorted by their group first, in the order:
-       0, 1, 2, ..., n, -m, ..., -2, -1
-     and then alphabetically within each group.  The default is 0.  */
-  int group;
-
   /* The cluster of options this entry belongs to, or NULL if none.  */
   struct hol_cluster *cluster;
 
   /* The argp from which this option came.  */
   const struct argp *argp;
+
+  /* Entries are sorted by their group first, in the order:
+       0, 1, 2, ..., n, -m, ..., -2, -1
+     and then alphabetically within each group.  The default is 0.  */
+  int group;
 
   /* Position in the array */
   unsigned ord;

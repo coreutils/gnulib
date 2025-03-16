@@ -165,13 +165,13 @@ struct rofile
   {
     size_t position;
     size_t filled;
-    int eof_seen;
     /* These fields deal with allocation of the buffer.  */
     char *buffer;
     char *auxmap;
     size_t auxmap_length;
     unsigned long auxmap_start;
     unsigned long auxmap_end;
+    int eof_seen;
     char stack_allocated_buffer[STACK_ALLOCATED_BUFFER_SIZE];
   };
 

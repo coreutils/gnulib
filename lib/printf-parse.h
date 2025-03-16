@@ -54,15 +54,15 @@ typedef struct
 {
   const char* dir_start;
   const char* dir_end;
-  int flags;
   const char* width_start;
   const char* width_end;
   size_t width_arg_index;
   const char* precision_start;
   const char* precision_end;
   size_t precision_arg_index;
-  char conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
+  int flags;
+  char conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
 }
 char_directive;
 
@@ -84,15 +84,15 @@ typedef struct
 {
   const uint8_t* dir_start;
   const uint8_t* dir_end;
-  int flags;
   const uint8_t* width_start;
   const uint8_t* width_end;
   size_t width_arg_index;
   const uint8_t* precision_start;
   const uint8_t* precision_end;
   size_t precision_arg_index;
-  uint8_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
+  int flags;
+  uint8_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
 }
 u8_directive;
 
@@ -112,15 +112,15 @@ typedef struct
 {
   const uint16_t* dir_start;
   const uint16_t* dir_end;
-  int flags;
   const uint16_t* width_start;
   const uint16_t* width_end;
   size_t width_arg_index;
   const uint16_t* precision_start;
   const uint16_t* precision_end;
   size_t precision_arg_index;
-  uint16_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
+  int flags;
+  uint16_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
 }
 u16_directive;
 
@@ -140,15 +140,15 @@ typedef struct
 {
   const uint32_t* dir_start;
   const uint32_t* dir_end;
-  int flags;
   const uint32_t* width_start;
   const uint32_t* width_end;
   size_t width_arg_index;
   const uint32_t* precision_start;
   const uint32_t* precision_end;
   size_t precision_arg_index;
-  uint32_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
+  int flags;
+  uint32_t conversion; /* d i b B o u x X f F e E g G a A c s p n U % but not C S */
 }
 u32_directive;
 

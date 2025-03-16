@@ -134631,7 +134631,7 @@ static const struct { uint16_t index; uint32_t name:24; } ATTRIBUTE_PACKED unico
 };
 #define UNICODE_CHARNAME_MAX_LENGTH 88
 #define UNICODE_CHARNAME_MAX_WORDS 15
-static const struct { uint16_t index; uint32_t gap; uint16_t length; } unicode_ranges[721] = {
+static const struct { uint16_t index; uint32_t gap; uint16_t length; } ATTRIBUTE_PACKED unicode_ranges[721] = {
   { 0, 32, 95 },
   { 95, 65, 728 },
   { 823, 67, 6 },

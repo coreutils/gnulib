@@ -58,10 +58,10 @@ struct closeable_fd
 {
   /* The file descriptor to close.  */
   int volatile fd;
-  /* Set to true when it has been closed.  */
-  bool volatile closed;
   /* Lock that protects the fd from being closed twice.  */
   asyncsafe_spinlock_t lock;
+  /* Set to true when it has been closed.  */
+  bool volatile closed;
   /* Tells whether this list element has been done and can be freed.  */
   bool volatile done;
 };
