@@ -73,6 +73,25 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
                 else if (st.st_ctime < st.st_atime)
                   result |= 64;
               }
+              enum
+              {
+                BILLION = 1000 * 1000 * 1000,
+                /* Bogus positive and negative tv_nsec values closest to valid
+                   range, but without colliding with UTIME_NOW or UTIME_OMIT.  */
+                UTIME_BOGUS_POS = BILLION + ((UTIME_NOW == BILLION || UTIME_OMIT == BILLION)
+                                             ? (1 + (UTIME_NOW == BILLION + 1)
+                                                + (UTIME_OMIT == BILLION + 1))
+                                             : 0)
+              };
+              {
+                struct timespec ts[2];
+                ts[0].tv_sec = 1;
+                ts[0].tv_nsec = UTIME_BOGUS_POS;
+                ts[1].tv_sec = 1;
+                ts[1].tv_nsec = 0;
+                if (utimensat (AT_FDCWD, f, ts, 0) == 0)
+                  result |= 128;
+              }
               return result;
             ]])],
          [gl_cv_func_utimensat_works=yes],
@@ -83,8 +102,11 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
          ],
          [case "$host_os" in
             # Guess yes on Linux or glibc systems.
-            linux-* | linux | *-gnu* | gnu*)
+            linux*)
               gl_cv_func_utimensat_works="guessing yes" ;;
+            # Guess no on GNU/Hurd.
+            gnu*)
+              gl_cv_func_utimensat_works="guessing no" ;;
             # Guess yes on systems that emulate the Linux system calls.
             midipix*)
               gl_cv_func_utimensat_works="guessing yes" ;;
