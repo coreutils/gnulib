@@ -1,5 +1,5 @@
 # utimensat.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
