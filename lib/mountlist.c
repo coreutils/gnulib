@@ -1114,37 +1114,34 @@ read_file_system_list (bool need_fs_type)
       {
         if (value & (1U << i))
           {
+            char mountdir[4];
             char fs_name[MAX_PATH + 1];
-            me = xmalloc (sizeof *me);
-            me->me_mountdir = xmalloc (4);
-            me->me_mountdir[0] = 'A' + i;
-            me->me_mountdir[1] = ':';
-            me->me_mountdir[2] = '\\';
-            me->me_mountdir[3] = '\0';
-            /* Check if drive is remote.  See:
-               <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdrivetypea>.  */
-            me->me_remote = GetDriveType (me->me_mountdir) == DRIVE_REMOTE;
-            me->me_devname = NULL;
-            me->me_mntroot = NULL;
-            me->me_dev = (dev_t) -1;
-            me->me_dummy = 0;
-            /* Get the name of the file system.  See:
+            mountdir[0] = 'A' + i;
+            mountdir[1] = ':';
+            mountdir[2] = '\\';
+            mountdir[3] = '\0';
+            /* Test whether the drive actually exists, and
+               get the name of the file system.  See:
                <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationa>.  */
-            if (GetVolumeInformation (me->me_mountdir, NULL, 0, NULL, NULL,
-                                      NULL, fs_name, sizeof fs_name))
+            if (GetVolumeInformation (mountdir, NULL, 0, NULL, NULL, NULL,
+                                      fs_name, sizeof fs_name))
               {
+                me = xmalloc (sizeof *me);
+                me->me_mountdir = xstrdup (mountdir);
+                /* Check if drive is remote.  See:
+                   <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdrivetypea>.  */
+                me->me_remote = GetDriveType (mountdir) == DRIVE_REMOTE;
+                me->me_devname = NULL;
+                me->me_mntroot = NULL;
+                me->me_dev = (dev_t) -1;
+                me->me_dummy = 0;
                 me->me_type = xstrdup (fs_name);
                 me->me_type_malloced = 1;
-              }
-            else
-              {
-                me->me_type = NULL;
-                me->me_type_malloced = 0;
-              }
 
-            /* Add to the linked list. */
-            *mtail = me;
-            mtail = &me->me_next;
+                /* Add to the linked list. */
+                *mtail = me;
+                mtail = &me->me_next;
+              }
           }
       }
   }
