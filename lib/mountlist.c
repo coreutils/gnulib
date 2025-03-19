@@ -1195,7 +1195,96 @@ read_file_system_list (bool need_fs_type)
           }
       }
   }
+  {
+    /* Windows also has true mount points, called "mounted folders".  See
+       <https://learn.microsoft.com/en-us/windows/win32/fileio/volume-mount-points>
+       For testing: <https://learn.microsoft.com/en-us/windows-server/storage/disk-management/assign-a-mount-point-folder-path-to-a-drive>  */
+    /* Enumerate the volumes.  See
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findfirstvolumew>
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findnextvolumew>
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findvolumeclose>  */
+    wchar_t vol_name[MAX_PATH + 1];
+    HANDLE h = FindFirstVolumeW (vol_name, sizeof (vol_name) / sizeof (vol_name[0]));
+    if (h != INVALID_HANDLE_VALUE)
+      {
+        do
+          {
+            /* Look where the volume vol_name is mounted.
+               There are two APIs for doing this:
+                 - FindFirstVolumeMountPointW, FindNextVolumeMountPointW,
+                   FindVolumeMountPointClose.  This API always fails with
+                   error code ERROR_ACCESS_DENIED.
+                 - GetVolumePathNamesForVolumeNameW.  This API works but
+                   may require a significantly larger buffer.
+                   <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumepathnamesforvolumenamew>  */
+            wchar_t stack_buf[MAX_PATH + 2];
+            wchar_t *malloced_buf = NULL;
+            wchar_t *buf = stack_buf;
+            DWORD bufsize = sizeof (stack_buf) / sizeof (wchar_t);
+            BOOL success;
+            for (;;)
+              {
+                success = GetVolumePathNamesForVolumeNameW (vol_name, buf, bufsize, &bufsize);
+                if (!success && GetLastError () == ERROR_MORE_DATA)
+                  {
+                    free (malloced_buf);
+                    malloced_buf = (wchar_t *) xmalloc (bufsize * sizeof (wchar_t));
+                    buf = malloced_buf;
+                  }
+                else
+                  break;
+              }
+            if (success)
+              {
+                wchar_t *mount_dir = buf;
+                while (*mount_dir != L'\0')
+                  {
+                    /* Drive mounts are already handled above.  */
+                    if (!(mount_dir[0] >= L'A' && mount_dir[0] <= L'Z'
+                          && mount_dir[1] == L':' && mount_dir[2] == L'\\'
+                          && mount_dir[3] == L'\0'))
+                      {
+                        char mountdir[MAX_PATH + 1];
+                        size_t mountdir_len = wcstombs (mountdir, mount_dir, sizeof (mountdir));
+                        if (mountdir_len > 0 && mountdir_len <= MAX_PATH)
+                          {
+                            char fs_name[MAX_PATH + 1];
+                            /* Get the name of the file system.  See:
+                               <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationa>.  */
+                            if (GetVolumeInformation (mountdir, NULL, 0, NULL, NULL, NULL,
+                                                      fs_name, sizeof fs_name))
+                              {
+                                me = xmalloc (sizeof *me);
+                                me->me_mountdir = xstrdup (mountdir);
+                                me->me_remote = false;
+                                /* Here we could use vol_name, something like '\\?\Volume{...}'.  */
+                                me->me_devname = NULL;
+                                me->me_mntroot = NULL;
+                                me->me_dev = (dev_t) -1;
+                                me->me_dummy = 0;
+                                me->me_type = xstrdup (fs_name);
+                                me->me_type_malloced = 1;
 
+                                /* Add to the linked list. */
+                                *mtail = me;
+                                mtail = &me->me_next;
+                              }
+                          }
+                        else
+                          {
+                            /* mount_dir is too long or not convertible to the
+                               locale encoding.  */
+                          }
+                      }
+                    mount_dir += wcslen (mount_dir) + 1;
+                  }
+              }
+            free (malloced_buf);
+          }
+        while (FindNextVolumeW (h, vol_name, sizeof (vol_name) / sizeof (vol_name[0])));
+        FindVolumeClose (h);
+      }
+  }
 #endif
 
   *mtail = NULL;
