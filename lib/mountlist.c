@@ -132,6 +132,10 @@
 # endif
 #endif
 
+#if defined _WIN32 && !defined __CYGWIN__
+# include <windows.h>
+#endif
+
 #ifndef HAVE_HASMNTOPT
 # define hasmntopt(mnt, opt) ((char *) 0)
 #endif
@@ -1091,6 +1095,61 @@ read_file_system_list (bool need_fs_type)
     closedir (dirp);
   }
 #endif /* MOUNTED_INTERIX_STATVFS */
+
+#if defined _WIN32 && !defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef GetDriveType
+# define GetDriveType GetDriveTypeA
+# undef GetVolumeInformation
+# define GetVolumeInformation GetVolumeInformationA
+  {
+    /* Windows has drive prefixes which are similar to mount points.
+       GetLogicalDrives returns a bitmask where the i-th bit is set
+       if ASCII 'A' + i is an available drive.  See:
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getlogicaldrives>.  */
+    DWORD value = GetLogicalDrives ();
+    unsigned int i;
+
+    for (i = 0; i < 26; ++i)
+      {
+        if (value & (1U << i))
+          {
+            char fs_name[MAX_PATH + 1];
+            me = xmalloc (sizeof *me);
+            me->me_mountdir = xmalloc (4);
+            me->me_mountdir[0] = 'A' + i;
+            me->me_mountdir[1] = ':';
+            me->me_mountdir[2] = '\\';
+            me->me_mountdir[3] = '\0';
+            /* Check if drive is remote.  See:
+               <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdrivetypea>.  */
+            me->me_remote = GetDriveType (me->me_mountdir) == DRIVE_REMOTE;
+            me->me_devname = NULL;
+            me->me_mntroot = NULL;
+            me->me_dev = (dev_t) -1;
+            me->me_dummy = 0;
+            /* Get the name of the file system.  See:
+               <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationa>.  */
+            if (GetVolumeInformation (me->me_mountdir, NULL, 0, NULL, NULL,
+                                      NULL, fs_name, sizeof fs_name))
+              {
+                me->me_type = xstrdup (fs_name);
+                me->me_type_malloced = 1;
+              }
+            else
+              {
+                me->me_type = NULL;
+                me->me_type_malloced = 0;
+              }
+
+            /* Add to the linked list. */
+            *mtail = me;
+            mtail = &me->me_next;
+          }
+      }
+  }
+
+#endif
 
   *mtail = NULL;
   return mount_list;
