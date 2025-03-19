@@ -22,7 +22,7 @@ This function returns a truncated result, instead of failing with error code
 macOS 14.
 @item
 This function returns the value of the @env{LOGNAME} environment variable
-and this therefore arbitrarily fakeable:
+and is therefore arbitrarily fakeable:
 musl libc 1.2.5.
 @end itemize
 

@@ -17,7 +17,7 @@ This function is not declared unless @code{_POSIX} is defined on some platforms:
 mingw.
 @item
 This function returns the value of the @env{LOGNAME} environment variable
-and this therefore arbitrarily fakeable:
+and is therefore arbitrarily fakeable:
 musl libc 1.2.5.
 @end itemize
 
