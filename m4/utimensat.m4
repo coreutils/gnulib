@@ -1,5 +1,5 @@
 # utimensat.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,11 +67,11 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
                 ts[1].tv_sec = 1;
                 ts[1].tv_nsec = UTIME_OMIT;
                 if (utimensat (AT_FDCWD, f, ts, 0))
-                  result |= 16;
+                  result |= 8;
                 if (stat (f, &st))
-                  result |= 32;
+                  result |= 8;
                 else if (st.st_ctime < st.st_atime)
-                  result |= 64;
+                  result |= 16;
               }
               enum
               {
@@ -90,7 +90,7 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
                 ts[1].tv_sec = 1;
                 ts[1].tv_nsec = 0;
                 if (utimensat (AT_FDCWD, f, ts, 0) == 0)
-                  result |= 128;
+                  result |= 32;
               }
               return result;
             ]])],
