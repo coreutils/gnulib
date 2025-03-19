@@ -44,20 +44,16 @@ parse_omp_threads (char const* threads)
   /* Convert it from positive decimal to 'unsigned long'.  */
   if (c_isdigit (*threads))
     {
-      char *endptr = NULL;
+      char *endptr;
       unsigned long int value = strtoul (threads, &endptr, 10);
-
-      if (endptr != NULL)
-        {
-          while (*endptr != '\0' && c_isspace (*endptr))
-            endptr++;
-          if (*endptr == '\0')
-            return value;
-          /* Also accept the first value in a nesting level,
-             since we can't determine the nesting level from env vars.  */
-          else if (*endptr == ',')
-            return value;
-        }
+      while (*endptr != '\0' && c_isspace (*endptr))
+        endptr++;
+      if (*endptr == '\0')
+        return value;
+      /* Also accept the first value in a nesting level,
+         since we can't determine the nesting level from env vars.  */
+      else if (*endptr == ',')
+        return value;
     }
 
   return ret;
