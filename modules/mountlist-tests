@@ -1,0 +1,11 @@
+Files:
+tests/test-mountlist.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mountlist
+check_PROGRAMS += test-mountlist
