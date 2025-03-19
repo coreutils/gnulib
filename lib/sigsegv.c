@@ -359,7 +359,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 #endif
 
-#if defined __GNU__ /* Hurd */
+#if defined __gnu_hurd__ /* Hurd */
 
 # define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, long code, struct sigcontext *scp
 # define SIGSEGV_FAULT_ADDRESS  (unsigned long) code
@@ -825,7 +825,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 /* List of signals that are sent when an invalid virtual memory address
    is accessed, or when the stack overflows.  */
-#if defined __GNU__ \
+#if defined __gnu_hurd__ \
     || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ \
     || defined __NetBSD__ || defined __OpenBSD__ \
     || (defined __APPLE__ && defined __MACH__)
@@ -930,7 +930,7 @@ static void sigsegv_reset_onstack_flag (void);
 
 /* -------------------------- leave-sigaltstack.c -------------------------- */
 
-# if defined __GNU__ \
+# if defined __gnu_hurd__ \
      || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ \
      || defined __NetBSD__ || defined __OpenBSD__
 

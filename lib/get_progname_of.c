@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ || defined __NetBSD__ || defined __FreeBSD__ /* Linux, GNU/kFreeBSD, GNU/Hurd, NetBSD, FreeBSD */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __gnu_hurd__ || defined __NetBSD__ || defined __FreeBSD__ /* Linux, GNU/kFreeBSD, GNU/Hurd, NetBSD, FreeBSD */
 # include <unistd.h>
 # if defined __ANDROID__
 #  include <fcntl.h>
@@ -85,7 +85,7 @@ extern int proc_pidinfo (int, int, uint64_t, void *, int) WEAK_IMPORT_ATTRIBUTE;
 char *
 get_progname_of (pid_t pid)
 {
-#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ || defined __NetBSD__ /* Linux, GNU/kFreeBSD, GNU/Hurd, NetBSD */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __gnu_hurd__ || defined __NetBSD__ /* Linux, GNU/kFreeBSD, GNU/Hurd, NetBSD */
 /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
    file system.  */
 

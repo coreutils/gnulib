@@ -108,10 +108,10 @@
 # endif
 
 /* Same issues as for NeXT apply to the HURD-based GNU system.  */
-# ifdef __GNU__
+# if defined __gnu_hurd__ || defined NeXT
 #  undef BSD
 #  undef FSCALE
-# endif /* __GNU__ */
+# endif /* __gnu_hurd__ || NeXT */
 
 /* Set values that are different from the defaults, which are
    set a little farther down with #ifndef.  */
@@ -312,8 +312,7 @@
 #  endif
 # endif
 
-# if defined (__GNU__) && !defined (NeXT)
-/* Note that NeXT Openstep defines __GNU__ even though it should not.  */
+# if defined __gnu_hurd__ && !defined NeXT
 /* GNU system acts much like NeXT, for load average purposes,
    but not exactly.  */
 #  define NeXT

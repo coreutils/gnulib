@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix || defined __sun /* Linux, GNU/kFreeBSD, GNU/Hurd, FreeBSD, NetBSD, Minix, Solaris */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __gnu_hurd__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix || defined __sun /* Linux, GNU/kFreeBSD, GNU/Hurd, FreeBSD, NetBSD, Minix, Solaris */
 # include <fcntl.h>
 # include <unistd.h>
 #endif
@@ -77,7 +77,7 @@ extern int proc_pidinfo (int, int, uint64_t, void *, int) WEAK_IMPORT_ATTRIBUTE;
 pid_t
 get_ppid_of (pid_t pid)
 {
-#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ /* Linux, GNU/kFreeBSD, GNU/Hurd */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __gnu_hurd__ /* Linux, GNU/kFreeBSD, GNU/Hurd */
 /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
    file system.  */
 

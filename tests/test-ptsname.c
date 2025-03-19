@@ -161,7 +161,7 @@ main (void)
     close (fd);
   }
 
-#elif defined __GNU__ /* Hurd */
+#elif defined __gnu_hurd__ /* Hurd */
 
   /* Try various master names of Hurd: /dev/pty[p-q][0-9a-v]  */
   {
