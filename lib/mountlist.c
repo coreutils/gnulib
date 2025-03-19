@@ -1131,8 +1131,58 @@ read_file_system_list (bool need_fs_type)
                 /* Check if drive is remote.  See:
                    <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdrivetypea>.  */
                 me->me_remote = GetDriveType (mountdir) == DRIVE_REMOTE;
+                /* Here we could use
+                   QueryDosDeviceW -> returns something like '\Device\HarddiskVolume2'
+                   GetVolumeNameForVolumeMountPointW -> return something like '\\?\Volume{...}'
+                 */
                 me->me_devname = NULL;
-                me->me_mntroot = NULL;
+                {
+                  /* Find the SUBST or NET USE mapping of the given drive.
+                     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-querydosdevicew>
+                     For testing of SUBST:   <https://ss64.com/nt/subst.html>
+                     For testing of NET USE: <https://ss64.com/nt/net-use.html>  */
+                  wchar_t drive[3];
+                  wchar_t mapping[MAX_PATH + 1];
+                  drive[0] = L'A' + i;
+                  drive[1] = L':';
+                  drive[2] = L'\0';
+                  DWORD mapping_len = QueryDosDeviceW (drive, mapping, sizeof (mapping) / sizeof (mapping[0]));
+                  if (mapping_len > 4 && wcsncmp (mapping, L"\\??\\", 4) == 0)
+                    {
+                      /* It's a SUBSTed drive.  */
+                      char subst_dir[MAX_PATH + 1];
+                      size_t subst_dir_len = wcstombs (subst_dir, mapping + 4, sizeof (subst_dir));
+                      if (subst_dir_len > 0 && subst_dir_len <= MAX_PATH)
+                        me->me_mntroot = xstrdup (subst_dir);
+                      else
+                        /* mapping is too long or not convertible to the
+                           locale encoding.  */
+                        me->me_mntroot = NULL;
+                    }
+                  else if (mapping_len > 26
+                           && wcsncmp (mapping, L"\\Device\\LanmanRedirector\\;", 26) == 0)
+                    {
+                      wchar_t *next_backslash = wcschr (mapping + 26, L'\\');
+                      if (next_backslash != NULL)
+                        {
+                          *--next_backslash = L'\\';
+                          char share_dir[MAX_PATH + 1];
+                          size_t share_dir_len = wcstombs (share_dir, next_backslash, sizeof (share_dir));
+                          if (share_dir_len > 0 && share_dir_len <= MAX_PATH)
+                            me->me_mntroot = xstrdup (share_dir);
+                          else
+                            /* mapping is too long or not convertible to the
+                               locale encoding.  */
+                            me->me_mntroot = NULL;
+                        }
+                      else
+                        /* mapping does not have the expected form.  */
+                        me->me_mntroot = NULL;
+                    }
+                  else
+                    /* It's neither a SUBSTed nor a NET USEd drive.  */
+                    me->me_mntroot = NULL;
+                }
                 me->me_dev = (dev_t) -1;
                 me->me_dummy = 0;
                 me->me_type = xstrdup (fs_name);
