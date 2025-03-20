@@ -1,6 +1,6 @@
 /* A GNU-like <string.h>.
 
-   Copyright (C) 1995-1996, 2001-2024 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 2001-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -429,7 +429,9 @@ _GL_FUNCDECL_SYS (memset_explicit, void *,
 #  endif
 _GL_CXXALIAS_SYS (memset_explicit, void *, (void *__dest, int __c, size_t __n));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (memset_explicit);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef memset_explicit
 # if HAVE_RAW_DECL_MEMSET_EXPLICIT
@@ -1367,7 +1369,9 @@ _GL_FUNCDECL_SYS (strerrorname_np, const char *, (int errnum));
 #  endif
 _GL_CXXALIAS_SYS (strerrorname_np, const char *, (int errnum));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strerrorname_np);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strerrorname_np
 # if HAVE_RAW_DECL_STRERRORNAME_NP

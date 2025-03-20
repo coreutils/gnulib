@@ -1,5 +1,5 @@
 /* Substitute for and wrapper around <unistd.h>.
-   Copyright (C) 2003-2024 Free Software Foundation, Inc.
+   Copyright (C) 2003-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -463,7 +463,9 @@ _GL_CXXALIAS_SYS (copy_file_range, ssize_t, (int ifd, off_t *ipos,
                                              int ofd, off_t *opos,
                                              size_t len, unsigned flags));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (copy_file_range);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef copy_file_range
 # if HAVE_RAW_DECL_COPY_FILE_RANGE
