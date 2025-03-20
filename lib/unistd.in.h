@@ -463,7 +463,9 @@ _GL_CXXALIAS_SYS (copy_file_range, ssize_t, (int ifd, off_t *ipos,
                                              int ofd, off_t *opos,
                                              size_t len, unsigned flags));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (copy_file_range);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef copy_file_range
 # if HAVE_RAW_DECL_COPY_FILE_RANGE
