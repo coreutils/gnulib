@@ -434,6 +434,9 @@ num_processors (enum nproc_query query)
       query = NPROC_CURRENT;
     }
   /* Here query is one of NPROC_ALL, NPROC_CURRENT.  */
+  if (omp_env_limit == 1)
+    /* No need to even call num_processors_ignoring_omp (query).  */
+    return 1;
   {
     unsigned long nprocs = num_processors_ignoring_omp (query);
     return MIN (nprocs, omp_env_limit);
