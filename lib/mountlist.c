@@ -1096,7 +1096,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_INTERIX_STATVFS */
 
-#if defined _WIN32 && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__  /* native Windows */
 /* Don't assume that UNICODE is not defined.  */
 # undef GetDriveType
 # define GetDriveType GetDriveTypeA
@@ -1285,6 +1285,10 @@ read_file_system_list (bool need_fs_type)
         FindVolumeClose (h);
       }
   }
+#endif
+
+#if MOUNTED_NOT_PORTED
+# error "Please port gnulib mountlist.c to your platform!"
 #endif
 
   *mtail = NULL;

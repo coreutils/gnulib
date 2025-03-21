@@ -20,15 +20,10 @@ xalloc
 
 configure.ac:
 gl_MOUNTLIST
-gl_CONDITIONAL([GL_COND_OBJ_MOUNTLIST], [test $gl_cv_list_mounted_fs = yes])
-AM_COND_IF([GL_COND_OBJ_MOUNTLIST], [
-  gl_PREREQ_MOUNTLIST_EXTRA
-])
+gl_PREREQ_MOUNTLIST_EXTRA
 
 Makefile.am:
-if GL_COND_OBJ_MOUNTLIST
 lib_SOURCES += mountlist.c
-endif
 
 Include:
 "mountlist.h"
