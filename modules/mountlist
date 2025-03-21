@@ -8,6 +8,7 @@ m4/fstypename.m4
 m4/mountlist.m4
 
 Depends-on:
+c-ctype
 fopen-gnu
 free-posix
 getline

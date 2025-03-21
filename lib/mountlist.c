@@ -19,19 +19,17 @@
 
 #include "mountlist.h"
 
+#include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-
-#include "xalloc.h"
-
-#include <errno.h>
-
-#include <fcntl.h>
-
 #include <unistd.h>
+
+#include "c-ctype.h"
+#include "xalloc.h"
 
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>
@@ -400,15 +398,18 @@ dev_from_mount_options (char const *mount_options)
   if (devopt)
     {
       char const *optval = devopt + sizeof dev_pattern - 1;
-      char *optvalend;
-      unsigned long int dev;
-      errno = 0;
-      dev = strtoul (optval, &optvalend, 16);
-      if (optval != optvalend
-          && (*optvalend == '\0' || *optvalend == ',')
-          && ! (dev == ULONG_MAX && errno == ERANGE)
-          && dev == (dev_t) dev)
-        return dev;
+      if (c_isxdigit (*optval))
+        {
+          char *optvalend;
+          unsigned long int dev;
+          errno = 0;
+          dev = strtoul (optval, &optvalend, 16);
+          if (optval != optvalend
+              && (*optvalend == '\0' || *optvalend == ',')
+              && ! (dev == ULONG_MAX && errno == ERANGE)
+              && dev == (dev_t) dev)
+            return dev;
+        }
     }
 
 # endif
