@@ -457,12 +457,8 @@ terminate_at_blank (char *str)
     *s = '\0';
   return s;
 }
-#endif
 
-/* Return a list of the currently mounted file systems, or NULL on error.
-   Add each entry to the tail of the list so that they stay in order.
-   If NEED_FS_TYPE is true, ensure that the file system type fields in
-   the returned list are valid.  Otherwise, they might not be.  */
+#endif
 
 struct mount_entry *
 read_file_system_list (bool need_fs_type)
