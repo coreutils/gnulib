@@ -30,7 +30,7 @@ main (int argc, char *argv[])
 {
   if (--argc <= 0)
     {
-      fprintf (stderr, "USAGE: %s <time-spec> [...]", argv[0]);
+      fprintf (stderr, "USAGE: %s <time-spec> [...]\n", argv[0]);
       return 1;
     }
 

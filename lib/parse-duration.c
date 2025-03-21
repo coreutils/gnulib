@@ -56,11 +56,25 @@ typedef enum {
 #undef  MAX_DURATION
 #define MAX_DURATION    TYPE_MAXIMUM(time_t)
 
-/* Wrapper around strtoul that does not require a cast.  */
+/* Wrapper around strtoul that does not allow a sign.  */
 static unsigned long
 str_const_to_ul (cch_t * str, cch_t ** ppz, int base)
 {
-  return strtoul (str, (char **)ppz, base);
+  cch_t * orig_str = str;
+  while (isspace ((unsigned char) *str))
+    str++;
+  if (isdigit ((unsigned char) *str))
+    {
+      unsigned long ret = strtoul (str, (char **)ppz, base);
+      if (*ppz == str)
+        *ppz = orig_str;
+      return ret;
+    }
+  else
+    {
+      *ppz = orig_str;
+      return 0;
+    }
 }
 
 /* Wrapper around strtol that does not require a cast.  */
