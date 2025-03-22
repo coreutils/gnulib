@@ -17,7 +17,7 @@ flexmember
 lock
 bool
 thread-optim
-setlocale-messages
+setlocale-fixes
 setlocale-null
 free-posix
 

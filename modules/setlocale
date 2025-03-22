@@ -7,7 +7,7 @@ m4/setlocale.m4
 
 Depends-on:
 locale-h
-setlocale-messages [test $NEED_SETLOCALE_IMPROVED = 1]
+setlocale-fixes    [test $NEED_SETLOCALE_IMPROVED = 1]
 localename         [test $NEED_SETLOCALE_IMPROVED = 1]
 localename-environ [test $NEED_SETLOCALE_IMPROVED = 1]
 setlocale-null     [test $NEED_SETLOCALE_MTSAFE = 1]

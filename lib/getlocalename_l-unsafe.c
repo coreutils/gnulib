@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if LC_MESSAGES == 1729
-# include "setlocale-messages.h"
+#if LC_MESSAGES == 1729 || defined __ANDROID__
+# include "setlocale-fixes.h"
 #endif
 #include "setlocale_null.h"
 
@@ -668,7 +668,11 @@ getlocalename_l_unsafe (int category, locale_t locale)
         name = setlocale_messages_null ();
       else
 #endif
+#if defined __ANDROID__
+        name = setlocale_fixed_null (category);
+#else
         name = setlocale_null (category);
+#endif
       if (name != NULL)
         return (struct string_with_storage) { name, STORAGE_GLOBAL };
       else

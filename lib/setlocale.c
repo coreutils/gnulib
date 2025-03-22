@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "setlocale-messages.h"
+#include "setlocale-fixes.h"
 #include "localename.h"
 
 #if HAVE_CFLOCALECOPYPREFERREDLANGUAGES || HAVE_CFPREFERENCESCOPYAPPVALUE
@@ -873,7 +873,7 @@ setlocale_unixlike (int category, const char *locale)
 static char *
 setlocale_unixlike (int category, const char *locale)
 {
-  char *result = setlocale_mtsafe (category, locale);
+  char *result = setlocale_fixed (category, locale);
   if (result == NULL)
     switch (category)
       {
@@ -1805,6 +1805,8 @@ setlocale_improved (int category, const char *locale)
         return resultbuf;
       }
   }
+#  elif defined __ANDROID__
+  return setlocale_fixed_null (LC_ALL);
 #  else
   return setlocale (LC_ALL, NULL);
 #  endif

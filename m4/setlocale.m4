@@ -1,5 +1,5 @@
 # setlocale.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,37 +18,14 @@ AC_DEFUN([gl_FUNC_SETLOCALE],
     dnl On native Windows systems, setlocale(category,NULL) does not look at
     dnl the environment variables LC_ALL, category, and LANG.
     mingw* | windows*) NEED_SETLOCALE_IMPROVED=1 ;;
+    dnl On Android, setlocale(category,name) treats all categories as equivalent
+    dnl to LC_CTYPE. And on Android 4.3, setlocale(category,"C") always fails.
+    *-android*) NEED_SETLOCALE_IMPROVED=1 ;;
     dnl On Cygwin 1.5.x, setlocale always succeeds but setlocale(LC_CTYPE,NULL)
     dnl is then still "C".
     cygwin*)
       case `uname -r` in
         1.5.*) NEED_SETLOCALE_IMPROVED=1 ;;
-      esac
-      ;;
-    dnl On Android 4.3, setlocale(category,"C") always fails.
-    *)
-      AC_CACHE_CHECK([whether setlocale supports the C locale],
-        [gl_cv_func_setlocale_works],
-        [AC_RUN_IFELSE(
-           [AC_LANG_SOURCE([[
-#include <locale.h>
-int main ()
-{
-  return setlocale (LC_ALL, "C") == NULL;
-}]])],
-           [gl_cv_func_setlocale_works=yes],
-           [gl_cv_func_setlocale_works=no],
-           [case "$host_os" in
-                               # Guess no on Android.
-              linux*-android*) gl_cv_func_setlocale_works="guessing no";;
-                               # Guess yes otherwise.
-              *)               gl_cv_func_setlocale_works="guessing yes";;
-            esac
-           ])
-        ])
-      case "$gl_cv_func_setlocale_works" in
-        *yes) ;;
-        *) NEED_SETLOCALE_IMPROVED=1 ;;
       esac
       ;;
   esac
