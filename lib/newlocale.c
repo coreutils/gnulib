@@ -28,6 +28,9 @@
 
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
 
 locale_t
 newlocale (int category_mask, const char *name, locale_t base)
