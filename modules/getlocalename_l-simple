@@ -9,15 +9,16 @@ m4/getlocalename_l.m4
 Depends-on:
 locale-h
 extensions
-getlocalename_l-unsafe [test $HAVE_GETLOCALENAME_L = 0]
-flexmember             [test $HAVE_GETLOCALENAME_L = 0]
-lock                   [test $HAVE_GETLOCALENAME_L = 0]
-bool                   [test $HAVE_GETLOCALENAME_L = 0]
-thread-optim           [test $HAVE_GETLOCALENAME_L = 0]
+getlocalename_l-unsafe [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
+flexmember             [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
+lock                   [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
+bool                   [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
+thread-optim           [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 
 configure.ac:
 gl_FUNC_GETLOCALENAME_L_SIMPLE
-gl_CONDITIONAL([GL_COND_OBJ_GETLOCALENAME_L], [test $HAVE_GETLOCALENAME_L = 0])
+gl_CONDITIONAL([GL_COND_OBJ_GETLOCALENAME_L],
+               [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1])
 AM_COND_IF([GL_COND_OBJ_GETLOCALENAME_L], [
   gl_PREREQ_GETLOCALENAME_L_SIMPLE
 ])

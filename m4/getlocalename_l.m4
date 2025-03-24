@@ -1,5 +1,5 @@
 # getlocalename_l.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,10 +27,41 @@ AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
   AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
   AC_CHECK_FUNCS_ONCE([getlocalename_l])
   if test $ac_cv_func_getlocalename_l = yes; then
-    GETLOCALENAME_L_LIB=
+    dnl Check against the Cygwin 3.6.0 bug: It returns an invalid pointer when
+    dnl the second argument is LC_GLOBAL_LOCALE.
+    AC_REQUIRE([AC_CANONICAL_HOST])
+    AC_CACHE_CHECK([whether getlocalename_l works],
+      [gl_cv_func_getlocalename_l_works],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+#include <locale.h>
+#include <string.h>
+int main ()
+{
+  const char *ret = getlocalename_l (LC_COLLATE, LC_GLOBAL_LOCALE);
+  return strlen (ret) == 0;
+}]])],
+         [gl_cv_func_getlocalename_l_works=yes],
+         [gl_cv_func_getlocalename_l_works=no],
+         [case "$host_os" in
+            cygwin*) # Guess no on Cygwin.
+              gl_cv_func_getlocalename_l_works="guessing no" ;;
+            *)       # Guess yes otherwise.
+              gl_cv_func_getlocalename_l_works="guessing yes" ;;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_getlocalename_l_works" in
+      *yes) ;;
+      *) REPLACE_GETLOCALENAME_L=1 ;;
+    esac
   else
     HAVE_GETLOCALENAME_L=0
+  fi
+  if test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1; then
     GETLOCALENAME_L_LIB="$SETLOCALE_NULL_LIB"
+  else
+    GETLOCALENAME_L_LIB=
   fi
   dnl GETLOCALENAME_L_LIB is expected to be '-pthread' or '-lpthread' on AIX
   dnl with gcc or xlc, and empty otherwise.
