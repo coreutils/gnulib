@@ -9,3 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-mountlist
 check_PROGRAMS += test-mountlist
+test_mountlist_LDADD = $(LDADD) @LIBINTL@
