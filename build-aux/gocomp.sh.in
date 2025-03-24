@@ -18,6 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Usage: /bin/sh gocomp.sh [OPTION] SOURCE.go ...
+#
+# Limitation: Go programs that make use of the C to Go interface ('cgo') are
+# unsupported.
 
 # Avoid error "CC environment variable is relative; must be absolute path"
 # on native Windows. Cf.
