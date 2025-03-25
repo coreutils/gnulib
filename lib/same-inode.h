@@ -77,12 +77,17 @@ extern "C" {
 #define SAME_INODE(a, b) PSAME_INODE (&(a), &(b))
 
 /* True if *A and *B represent the same file.  Unlike PSAME_INODE,
-   args are evaluated once and must point to struct stat.  */
+   args are evaluated once and must point to struct stat,
+   and this function works even on POSIX platforms where fstat etc. do
+   not return useful st_dev and st_ino values for shared memory
+   objects and typed memory objects.  */
 
 SAME_INODE_INLINE bool
 psame_inode (struct stat const *a, struct stat const *b)
 {
-  return PSAME_INODE (a, b);
+  return (! (S_TYPEISSHM (a) | S_TYPEISTMO (a)
+             | S_TYPEISSHM (b) | S_TYPEISTMO (b))
+          && PSAME_INODE (a, b));
 }
 
 
