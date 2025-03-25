@@ -551,7 +551,7 @@ html_ostream_get_destination (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream)
 }
 
 static inline html_ostream_t
-html_ostream_create (ostream_t destination)
+html_ostream_create (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t destination)
 {
   /* Not supported without the real libtextstyle.  */
   abort ();
