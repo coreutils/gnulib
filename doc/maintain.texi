@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 18, 2025
+@set lastupdate March 25, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -688,10 +688,12 @@ files.  If a file has been explicitly placed in the public domain, then
 instead of a copyright notice, it should have a notice saying explicitly
 that it is in the public domain.
 
-Even image files and sound files should contain copyright notices and
-license notices, if their format permits.  Some formats do not have
-room for textual annotations; for these files, state the copyright and
-copying permissions in a @file{README} file in the same directory.
+All files, including images, sound, and plain text, should contain
+copyright and license notices, if their formats allow them.  When the
+file format doesn't permit these notices or if adding a header would
+be very inconvenient, place the copyright and license notices in a
+@file{README} file, preferably in the same directory, and be clear in
+@file{README} which files those notices apply to.
 
 Change log files should have a copyright notice and license notice at
 the end, since new material is added at the beginning but the end
