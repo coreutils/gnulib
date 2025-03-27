@@ -1815,6 +1815,21 @@ sc_indent:
 	      exit 1; } || :;						\
 	fi
 
+# Check code spelling.
+# Example 'cfg.mk' settings for inspiration:
+# codespell_ignore_words_list = foo
+# exclude_file_name_regexp--sc_codespell = ^po/.*.po|doc/.*.pdf$$
+# codespell_extra_args = --summary --count
+# codespell_args = --ignore-words=doc/my-codespell-ignores.txt
+codespell_args ?= --ignore-words-list $(codespell_ignore_words_list) \
+	$(codespell_extra_args)
+sc_codespell:
+	@if ! command -v codespell > /dev/null; then			\
+	   echo 1>&2 '$(ME): sc_codespell: codespell is missing';	\
+	else								\
+	   codespell $(codespell_args) $$($(VC_LIST_EXCEPT));		\
+	fi
+
 # If you want to set UPDATE_COPYRIGHT_* environment variables,
 # put the assignments in this variable.
 update-copyright-env ?=
