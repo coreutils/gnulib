@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-02-16.12; # UTC
+scriptlibversion=2025-03-27.18; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -1300,7 +1300,7 @@ autogen()
 
   # Invoke autoreconf with --force --install to ensure upgrades of tools
   # such as ylwrap.
-  AUTORECONFFLAGS="--verbose --install --force -I $m4_base $ACLOCAL_FLAGS"
+  AUTORECONFFLAGS="--verbose --install --force $ACLOCAL_FLAGS"
   AUTORECONFFLAGS="$AUTORECONFFLAGS --no-recursive"
 
   # Tell autoreconf not to invoke autopoint or libtoolize; they were run above.
