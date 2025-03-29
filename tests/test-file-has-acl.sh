@@ -70,7 +70,7 @@ cd "$builddir" ||
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
     # Platforms with the getfacl and setfacl programs.
-    # Linux, FreeBSD, Solaris, Cygwin.
+    # Linux, FreeBSD, NetBSD >= 10, Solaris, Cygwin.
     if (setfacl --help >/dev/null) 2>/dev/null; then
       # Linux, Cygwin.
       if (LC_ALL=C setfacl --help | grep ' --test' >/dev/null) 2>/dev/null; then
@@ -80,9 +80,9 @@ cd "$builddir" ||
         acl_flavor=cygwin
       fi
     else
-      # FreeBSD, Solaris.
+      # FreeBSD, NetBSD >= 10, Solaris.
       if (LC_ALL=C setfacl 2>&1 | grep '\-x entries' >/dev/null) 2>/dev/null; then
-        # FreeBSD.
+        # FreeBSD, NetBSD >= 10.
         acl_flavor=freebsd
       else
         # Solaris.
