@@ -183,7 +183,9 @@ cd "$builddir" ||
             setfacl -m user:$auid:1 tmpfile0
             ;;
           cygwin)
-            setfacl -m group:0:1 tmpfile0
+            # Group 1 in Cygwin corresponds to the DIALUP users (cf.
+            # <https://learn.microsoft.com/en-us/windows/win32/secauthz/well-known-sids>).
+            setfacl -m group:1:1 tmpfile0
             ;;
           hpux)
             orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`
