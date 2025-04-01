@@ -30,8 +30,8 @@
 #   -Wl,OPTION  (for libtool compatility)
 
 # Find out which implementation we are using.
-case `@DC@ --version | sed -e 1q` in
-  gdc* | egdc*) flavor=gdc ;;
+case `@DC@ --version | sed -e 's/ .*//' -e 1q` in
+  gdc | *-gdc | egdc | *-egdc) flavor=gdc ;;
   LDC*) flavor=ldc ;;
   DMD*) flavor=dmd ;;
   *)

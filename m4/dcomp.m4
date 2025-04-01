@@ -1,5 +1,5 @@
 # dcomp.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,9 +43,9 @@ AC_DEFUN([gt_DCOMP],
   AC_MSG_RESULT([$ac_result])
   AC_SUBST([DC])
   if test -z "$DFLAGS" && test -n "$DC"; then
-    case `$DC --version | sed -e 1q` in
-      gdc* | egdc* | LDC*) DFLAGS="-g -O2" ;;
-      *)                   DFLAGS="-g -O" ;;
+    case `$DC --version | sed -e 's/ .*//' -e 1q` in
+      gdc | *-gdc | egdc | *-egdc | LDC*) DFLAGS="-g -O2" ;;
+      *)                                  DFLAGS="-g -O" ;;
     esac
   fi
   AC_SUBST([DFLAGS])
