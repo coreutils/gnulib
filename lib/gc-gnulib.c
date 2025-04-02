@@ -174,7 +174,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
   _gc_cipher_ctx *ctx;
   Gc_rc rc = GC_OK;
 
-  ctx = calloc (sizeof (*ctx), 1);
+  ctx = calloc (1, sizeof (*ctx));
   if (!ctx)
     return GC_MALLOC_ERROR;
 
@@ -563,7 +563,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
   if (mode != 0)
     return GC_INVALID_HASH;
 
-  ctx = calloc (sizeof (*ctx), 1);
+  ctx = calloc (1, sizeof (*ctx));
   if (!ctx)
     return GC_MALLOC_ERROR;
 
@@ -634,7 +634,7 @@ gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
   _gc_hash_ctx *in = handle;
   _gc_hash_ctx *out;
 
-  *outhandle = out = calloc (sizeof (*out), 1);
+  *outhandle = out = calloc (1, sizeof (*out));
   if (!out)
     return GC_MALLOC_ERROR;
 
