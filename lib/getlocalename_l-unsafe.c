@@ -543,6 +543,8 @@ getlocalename_l_unsafe (int category, locale_t locale)
           default: /* We shouldn't get here.  */
             return (struct string_with_storage) { "", STORAGE_INDEFINITE };
           }
+      /* We shouldn't get here.  */
+      return (struct string_with_storage) { "", STORAGE_INDEFINITE };
 # else
       /* Solaris 11 OpenIndiana.
          For the internal structure of locale objects, see
