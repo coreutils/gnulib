@@ -65,7 +65,7 @@ void
 base32_encode (const char *restrict in, idx_t inlen,
                char *restrict out, idx_t outlen)
 {
-  static const char b32str[32] =
+  static const char b32str[32] _GL_ATTRIBUTE_NONSTRING =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
   while (inlen && outlen)

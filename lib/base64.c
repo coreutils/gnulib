@@ -59,7 +59,7 @@ to_uchar (char ch)
   return ch;
 }
 
-static const char b64c[64] =
+static const char b64c[64] _GL_ATTRIBUTE_NONSTRING =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 /* Base64 encode IN array of size INLEN into OUT array. OUT needs

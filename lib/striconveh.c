@@ -792,7 +792,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
                         if (handler == iconveh_escape_sequence)
                           {
-                            static char const hex[16] = "0123456789ABCDEF";
+                            static char const hex[16] _GL_ATTRIBUTE_NONSTRING =
+                              "0123456789ABCDEF";
                             scratchlen = 0;
                             scratchbuf[scratchlen++] = '\\';
                             if (uc < 0x10000)

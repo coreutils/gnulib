@@ -46,7 +46,7 @@ struct special_casing_rule
 {
   /* The first two bytes are the code, in big-endian order.  The third byte
      only distinguishes different rules pertaining to the same code.  */
-  /*unsigned*/ char code[3];
+  /*unsigned*/ char code[3] _GL_ATTRIBUTE_NONSTRING;
 
   /* True when this rule is not the last one for the given code.  */
   /*bool*/ unsigned int has_next : 1;

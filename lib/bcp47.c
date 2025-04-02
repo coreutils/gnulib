@@ -91,8 +91,8 @@
 
 struct script
 {
-  char name[12]; /* Script name, lowercased, NUL-terminated */
-  char code[4];  /* Script code, not NUL-terminated */
+  char name[12];                        /* Script name, lowercased, NUL-terminated */
+  char code[4] _GL_ATTRIBUTE_NONSTRING; /* Script code, not NUL-terminated */
 };
 
 /* Table of script names and four-letter script codes.
