@@ -267,7 +267,7 @@ test -n "$EXEEXT" && test -n "$BASH_VERSION" && shopt -s expand_aliases
 # Create a temporary directory, much like mktemp -d does.
 # Written by Jim Meyering.
 #
-# Usage: mktempd_ /tmp phoey.XXXXXXXXXX
+# Usage: mktempd_ /tmp template.XXXXXXXXXX
 #
 # First, try to use the mktemp program.
 # Failing that, we'll roll our own mktemp-like function:
