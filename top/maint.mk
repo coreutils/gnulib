@@ -1741,7 +1741,7 @@ build-coverage:
 gen-coverage:
 	genhtml --output-directory $(COVERAGE_OUT) \
 		$(COVERAGE_OUT)/$(PACKAGE).info \
-		--highlight --frames --legend \
+		--frames --legend \
 		--title "$(PACKAGE_NAME)"
 
 coverage:
