@@ -2,7 +2,7 @@
 # This Makefile fragment tries to be general-purpose enough to be
 # used by many projects via the gnulib maintainer-makefile module.
 
-## Copyright (C) 2001-2024 Free Software Foundation, Inc.
+## Copyright (C) 2001-2025 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -1719,7 +1719,7 @@ build-coverage:
 gen-coverage:
 	genhtml --output-directory $(COVERAGE_OUT) \
 		$(COVERAGE_OUT)/$(PACKAGE).info \
-		--highlight --frames --legend \
+		--frames --legend \
 		--title "$(PACKAGE_NAME)"
 
 coverage:
