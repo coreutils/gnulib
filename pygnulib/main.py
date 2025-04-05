@@ -1486,7 +1486,7 @@ def main_with_exception_handling() -> None:
                 message += 'cannot find %s - make sure you run gnulib-tool from within your package\'s directory' % errinfo
             elif errno == 4:
                 message += 'minimum supported autoconf version is 2.64. Try adding'
-                message += 'AC_PREREQ([%s])' % DEFAULT_AUTOCONF_MINVERSION
+                message += ' AC_PREREQ([%s])' % DEFAULT_AUTOCONF_MINVERSION
                 message += ' to your configure.ac.'
             elif errno == 5:
                 message += '%s is expected to contain gl_M4_BASE([%s])' % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
