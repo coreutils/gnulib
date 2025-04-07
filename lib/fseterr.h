@@ -1,5 +1,5 @@
 /* Set the error indicator of a stream.
-   Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -29,6 +29,11 @@
    is cleared (together with the "end-of-file" indicator) by clearerr (FP).  */
 
 #if HAVE___FSETERR /* musl libc */
+
+/* Haiku has __fseterr but does not declare it.  */
+# if defined __HAIKU__
+extern void __fseterr (FILE *fp);
+# endif
 
 # include <stdio_ext.h>
 # define fseterr(fp) __fseterr (fp)
