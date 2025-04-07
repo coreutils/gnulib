@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -34,15 +34,18 @@ fbufmode (FILE *fp)
      <stdio.h>, because they need it for implementing getc() and putc() as
      fast macros.  */
 #if defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
+# if !defined __HAIKU__
+#  define fp_ fp
+# endif
   /* GNU libc, BeOS, Haiku, Linux libc5 */
 # if HAVE___FLBF                    /* glibc >= 2.2 */
   if (__flbf (fp))
     return _IOLBF;
 # else
-  if (fp->_flags & _IO_LINE_BUF)
+  if (fp_->_flags & _IO_LINE_BUF)
     return _IOLBF;
 # endif
-  if (fp->_flags & _IO_UNBUFFERED)
+  if (fp_->_flags & _IO_UNBUFFERED)
     return _IONBF;
   return _IOFBF;
 #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
