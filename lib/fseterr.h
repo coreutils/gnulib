@@ -30,6 +30,11 @@
 
 #if HAVE___FSETERR /* musl libc */
 
+/* Haiku has __fseterr but does not declare it.  */
+# if defined __HAIKU__
+extern void __fseterr (FILE *fp);
+# endif
+
 # include <stdio_ext.h>
 # define fseterr(fp) __fseterr (fp)
 
