@@ -59,8 +59,14 @@
                          int64_t _offset; \
                          /* More fields, not relevant here.  */ \
                        } *) fp)
+# if !defined _IO_UNBUFFERED
+#  define _IO_UNBUFFERED 0x2
+# endif
 # if !defined _IO_EOF_SEEN
 #  define _IO_EOF_SEEN 0x10
+# endif
+# if !defined _IO_LINE_BUF
+#  define _IO_LINE_BUF 0x200
 # endif
 #endif
 
