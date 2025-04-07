@@ -34,10 +34,10 @@ static void
 freadptrinc (FILE *fp, size_t increment)
 {
   /* Keep this code in sync with freadptr!  */
-#if HAVE___FREADPTRINC              /* musl libc */
+#if HAVE___FREADPTRINC              /* musl libc, Haiku >= hrev58760 */
   __freadptrinc (fp, increment);
 #elif defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
-  /* GNU libc, BeOS, Haiku, Linux libc5 */
+  /* GNU libc, BeOS, Haiku < hrev58760, Linux libc5 */
   fp->_IO_read_ptr += increment;
 #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */

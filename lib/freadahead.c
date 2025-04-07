@@ -28,7 +28,7 @@ extern size_t __sreadahead (FILE *);
 #endif
 
 /* This file is not used on systems that have the __freadahead function,
-   namely musl libc.  */
+   namely musl libc, Haiku >= hrev58760.  */
 
 size_t
 freadahead (FILE *fp)
