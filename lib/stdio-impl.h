@@ -65,6 +65,9 @@
 # if !defined _IO_EOF_SEEN
 #  define _IO_EOF_SEEN 0x10
 # endif
+# if !defined _IO_IN_BACKUP
+#  define _IO_IN_BACKUP 0x100
+# endif
 # if !defined _IO_LINE_BUF
 #  define _IO_LINE_BUF 0x200
 # endif
