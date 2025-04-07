@@ -33,12 +33,15 @@
 
 #if defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
 /* GNU libc, BeOS, Haiku, Linux libc5 */
+# if !defined __HAIKU__
+#  define fp_ fp
+# endif
 
 /* Clear the stream's ungetc buffer, preserving the value of ftello (fp).  */
 static void
 clear_ungetc_buffer_preserving_position (FILE *fp)
 {
-  if (fp->_flags & _IO_IN_BACKUP)
+  if (fp_->_flags & _IO_IN_BACKUP)
     /* _IO_free_backup_area is a bit complicated.  Simply call fseek.  */
     fseeko (fp, 0, SEEK_CUR);
 }
