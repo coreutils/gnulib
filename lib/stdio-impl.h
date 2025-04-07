@@ -30,6 +30,40 @@
 # endif
 #endif
 
+/* Haiku stdio implementation.  */
+#if defined __HAIKU__
+# include <stdint.h>
+/* This FILE structure was made into an incomplete type in 2025.
+   See <https://cgit.haiku-os.org/haiku/tree/src/system/libroot/posix/glibc/libio/libio.h>.  */
+#  define fp_ ((struct { int _flags; \
+                         char *_IO_read_ptr; \
+                         char *_IO_read_end; \
+                         char *_IO_read_base; \
+                         char *_IO_write_base; \
+                         char *_IO_write_ptr; \
+                         char *_IO_write_end; \
+                         char *_IO_buf_base; \
+                         char *_IO_buf_end; \
+                         char *_IO_save_base; \
+                         char *_IO_backup_base; \
+                         char *_IO_save_end; \
+                         void *_markers; \
+                         void *_chain; \
+                         int _fileno; \
+                         int _flags2; \
+                         off_t _old_offset; \
+                         unsigned short _cur_column; \
+                         signed char _vtable_offset; \
+                         char _shortbuf[1]; \
+                         void *_lock; \
+                         int64_t _offset; \
+                         /* More fields, not relevant here.  */ \
+                       } *) fp)
+# if !defined _IO_EOF_SEEN
+#  define _IO_EOF_SEEN 0x10
+# endif
+#endif
+
 /* BSD stdio derived implementations.  */
 
 #if defined __NetBSD__                         /* NetBSD */
