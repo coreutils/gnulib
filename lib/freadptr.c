@@ -24,7 +24,7 @@
 #include "stdio-impl.h"
 
 /* This file is not used on systems that have the __freadptr function,
-   namely musl libc.  */
+   namely musl libc, Haiku >= hrev58760.  */
 
 const char *
 freadptr (FILE *fp, size_t *sizep)

@@ -23,7 +23,7 @@
 
 /* This file is not used on systems that have the __fwriting function,
    namely glibc >= 2.2, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34,
-   Android API >= 29, musl libc.  */
+   Android API >= 29, musl libc, Haiku >= hrev58760.  */
 
 bool
 fwriting (FILE *fp)

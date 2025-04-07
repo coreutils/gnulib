@@ -38,7 +38,7 @@ fbufmode (FILE *fp)
 #  define fp_ fp
 # endif
   /* GNU libc, BeOS, Haiku, Linux libc5 */
-# if HAVE___FLBF                    /* glibc >= 2.2 */
+# if HAVE___FLBF                    /* glibc >= 2.2, Haiku >= hrev58760 */
   if (__flbf (fp))
     return _IOLBF;
 # else

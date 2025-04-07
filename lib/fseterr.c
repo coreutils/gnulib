@@ -24,7 +24,7 @@
 #include "stdio-impl.h"
 
 /* This file is not used on systems that have the __fseterr function,
-   namely musl libc.  */
+   namely musl libc, Haiku >= hrev58760.  */
 
 void
 fseterr (FILE *fp)
