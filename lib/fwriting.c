@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -23,7 +23,7 @@
 
 /* This file is not used on systems that have the __fwriting function,
    namely glibc >= 2.2, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34,
-   Android API >= 29, musl libc.  */
+   Android API >= 29, musl libc, Haiku >= hrev58760.  */
 
 bool
 fwriting (FILE *fp)

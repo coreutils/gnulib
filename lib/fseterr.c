@@ -1,5 +1,5 @@
 /* Set the error indicator of a stream.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -24,7 +24,7 @@
 #include "stdio-impl.h"
 
 /* This file is not used on systems that have the __fseterr function,
-   namely musl libc.  */
+   namely musl libc, Haiku >= hrev58760.  */
 
 void
 fseterr (FILE *fp)

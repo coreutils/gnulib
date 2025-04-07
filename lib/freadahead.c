@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -28,7 +28,7 @@ extern size_t __sreadahead (FILE *);
 #endif
 
 /* This file is not used on systems that have the __freadahead function,
-   namely musl libc.  */
+   namely musl libc, Haiku >= hrev58760.  */
 
 size_t
 freadahead (FILE *fp)
