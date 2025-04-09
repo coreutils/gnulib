@@ -1,5 +1,5 @@
 # stddef_h.m4
-# serial 18
+# serial 19
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,11 +94,12 @@ AC_DEFUN_ONCE([gl_STDDEF_H],
   dnl affects GCC 13 and 14.
   AC_CACHE_CHECK([whether <stddef.h> is idempotent],
     [gl_cv_stddef_idempotent],
-    [AC_COMPILE_IFELSE([
+    [AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+       [[
        #if __GNUC__ == 13 || __GNUC__ == 14
         #error "bug 114870 is present"
        #endif
-       ],
+       ]])],
        [gl_cv_stddef_idempotent="guessing yes"],
        [gl_cv_stddef_idempotent="guessing no"])
     ])
