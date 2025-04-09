@@ -1499,9 +1499,10 @@ _GL_CXXALIASWARN (strerror_l);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strerror_l
-/* Assume strerror_l is always declared.  */
+# if HAVE_RAW_DECL_STRERROR_L
 _GL_WARN_ON_USE (strerror_l, "strerror_l is unportable - "
                  "use gnulib module strerror_l for portability");
+# endif
 #endif
 
 /* Map any int, typically from errno, into an error message.  Multithread-safe,
