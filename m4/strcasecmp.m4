@@ -1,5 +1,5 @@
 # strcasecmp.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2002-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,7 +57,7 @@ int main ()
           gl_cv_func_strcasecmp_works=no
         fi
        ],
-       [])
+       [:])
     ])
 ])
 
