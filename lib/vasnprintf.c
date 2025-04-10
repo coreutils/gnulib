@@ -1,5 +1,5 @@
 /* vsprintf with automatic memory allocation.
-   Copyright (C) 1999, 2002-2024 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -6870,10 +6870,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 || *prec_ptr == ' '))
                           prefix_count = 1;
                         /* Put the additional zeroes after the 0x prefix if
-                           (flags & FLAG_ALT) || (dp->conversion == 'p').  */
+                           (flags & FLAG_ALT) || (dp->conversion == 'p'), or
+                           after the 0b prefix if (flags & FLAG_ALT).  */
                         else if (count >= 2
                                  && prec_ptr[0] == '0'
-                                 && (prec_ptr[1] == 'x' || prec_ptr[1] == 'X'))
+                                 && (prec_ptr[1] == 'x' || prec_ptr[1] == 'X'
+                                     || prec_ptr[1] == 'b'
+                                     || prec_ptr[1] == 'B'))
                           prefix_count = 2;
 
                         move = count - prefix_count;
