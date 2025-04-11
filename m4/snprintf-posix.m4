@@ -1,5 +1,5 @@
 # snprintf-posix.m4
-# serial 22
+# serial 23
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,8 @@ AC_DEFUN([gl_FUNC_SNPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_LC])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_INT_PRECISION])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_MULTIBYTE])
   AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
   AC_REQUIRE([gl_PRINTF_FLAG_ALT_PRECISION_ZERO])
@@ -72,29 +74,37 @@ AC_DEFUN([gl_FUNC_SNPRINTF_IS_POSIX],
                                                   *yes)
                                                     case "$gl_cv_func_printf_flag_grouping" in
                                                       *yes)
-                                                        case "$gl_cv_func_printf_flag_leftadjust" in
+                                                        case "$gl_cv_func_printf_flag_grouping_int_precision" in
                                                           *yes)
-                                                            case "$gl_cv_func_printf_flag_zero" in
+                                                            case "$gl_cv_func_printf_flag_grouping_multibyte" in
                                                               *yes)
-                                                                case "$gl_cv_func_printf_flag_alt_precision_zero" in
+                                                                case "$gl_cv_func_printf_flag_leftadjust" in
                                                                   *yes)
-                                                                    case "$gl_cv_func_printf_precision" in
+                                                                    case "$gl_cv_func_printf_flag_zero" in
                                                                       *yes)
-                                                                        case "$gl_cv_func_printf_enomem" in
+                                                                        case "$gl_cv_func_printf_flag_alt_precision_zero" in
                                                                           *yes)
-                                                                            case "$gl_cv_func_snprintf_truncation_c99" in
+                                                                            case "$gl_cv_func_printf_precision" in
                                                                               *yes)
-                                                                                case "$gl_cv_func_snprintf_retval_c99" in
+                                                                                case "$gl_cv_func_printf_enomem" in
                                                                                   *yes)
-                                                                                    case m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],["$gl_cv_func_snprintf_directive_n"],["yes"]) in
+                                                                                    case "$gl_cv_func_snprintf_truncation_c99" in
                                                                                       *yes)
-                                                                                        case "$gl_cv_func_snprintf_size1" in
+                                                                                        case "$gl_cv_func_snprintf_retval_c99" in
                                                                                           *yes)
-                                                                                            case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                                            case m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],["$gl_cv_func_snprintf_directive_n"],["yes"]) in
                                                                                               *yes)
-                                                                                                # snprintf exists and is
-                                                                                                # already POSIX compliant.
-                                                                                                gl_cv_func_snprintf_posix=yes
+                                                                                                case "$gl_cv_func_snprintf_size1" in
+                                                                                                  *yes)
+                                                                                                    case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                                                      *yes)
+                                                                                                        # snprintf exists and is
+                                                                                                        # already POSIX compliant.
+                                                                                                        gl_cv_func_snprintf_posix=yes
+                                                                                                        ;;
+                                                                                                    esac
+                                                                                                    ;;
+                                                                                                esac
                                                                                                 ;;
                                                                                             esac
                                                                                             ;;

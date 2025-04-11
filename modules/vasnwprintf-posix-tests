@@ -17,6 +17,7 @@ float-h
 nan
 snan
 setlocale
+localeconv
 wcscmp
 wcsspn
 wmemcmp

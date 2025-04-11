@@ -43,6 +43,14 @@ printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
 AIX 7.3, Solaris 11.4, mingw, MSVC 14.
 @item
+This function doesn't support the @code{'} flag together with a precision
+on an integer argument correctly on some platforms:
+glibc 2.36, FreeBSD 14.0, NetBSD 10.0, Solaris 11, Cygwin 3.6.0, Haiku.
+@item
+This function doesn't support the @code{'} flag correctly in locales where
+the thousands separator is a multibyte character on some platforms:
+NetBSD 10.0, Solaris 11 OpenIndiana.
+@item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 FreeBSD 5.2.1, OpenBSD 4.0, AIX 5.2, HP-UX 11,

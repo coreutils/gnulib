@@ -24,6 +24,14 @@ This function does not support size specifiers as in C23 (@code{w8},
 @code{wf64}) on some platforms:
 glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @item
+This function doesn't support the @code{'} flag together with a precision
+on an integer argument correctly on some platforms:
+glibc 2.36, FreeBSD 14.0, NetBSD 10.0, Solaris 11, Cygwin 3.6.0, Haiku.
+@item
+This function doesn't support the @code{'} flag correctly in locales where
+the thousands separator is a multibyte character on some platforms:
+NetBSD 10.0, Solaris 11 OpenIndiana.
+@item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
 glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5,

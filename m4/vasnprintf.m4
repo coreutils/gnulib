@@ -1,5 +1,5 @@
 # vasnprintf.m4
-# serial 54
+# serial 55
 dnl Copyright (C) 2002-2004, 2006-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -358,8 +358,19 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_LC],
 AC_DEFUN([gl_PREREQ_VASNPRINTF_FLAG_GROUPING],
 [
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
-  case "$gl_cv_func_printf_flag_grouping" in
-    *yes)
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_INT_PRECISION])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_MULTIBYTE])
+  case "$gl_cv_func_printf_flag_grouping,$gl_cv_func_printf_flag_grouping_multibyte" in
+    *yes,*yes)
+      case "$gl_cv_func_printf_flag_grouping_int_precision" in
+        *yes)
+          ;;
+        *)
+          AC_DEFINE([NEED_PRINTF_FLAG_GROUPING_INT], [1],
+            [Define if the vasnprintf implementation needs special code for the
+             ' flag, for integer directives only.])
+          ;;
+      esac
       ;;
     *)
       AC_DEFINE([NEED_PRINTF_FLAG_GROUPING], [1],

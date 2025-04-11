@@ -1,5 +1,5 @@
 # vfprintf-posix.m4
-# serial 21
+# serial 22
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,8 @@ AC_DEFUN([gl_FUNC_VFPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_LC])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_INT_PRECISION])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING_MULTIBYTE])
   AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
   AC_REQUIRE([gl_PRINTF_FLAG_ALT_PRECISION_ZERO])
@@ -65,19 +67,27 @@ AC_DEFUN([gl_FUNC_VFPRINTF_IS_POSIX],
                                                 *yes)
                                                   case "$gl_cv_func_printf_flag_grouping" in
                                                     *yes)
-                                                      case "$gl_cv_func_printf_flag_leftadjust" in
+                                                      case "$gl_cv_func_printf_flag_grouping_int_precision" in
                                                         *yes)
-                                                          case "$gl_cv_func_printf_flag_zero" in
+                                                          case "$gl_cv_func_printf_flag_grouping_multibyte" in
                                                             *yes)
-                                                              case "$gl_cv_func_printf_flag_alt_precision_zero" in
+                                                              case "$gl_cv_func_printf_flag_leftadjust" in
                                                                 *yes)
-                                                                  case "$gl_cv_func_printf_precision" in
+                                                                  case "$gl_cv_func_printf_flag_zero" in
                                                                     *yes)
-                                                                      case "$gl_cv_func_printf_enomem" in
+                                                                      case "$gl_cv_func_printf_flag_alt_precision_zero" in
                                                                         *yes)
-                                                                          # vfprintf exists and is
-                                                                          # already POSIX compliant.
-                                                                          gl_cv_func_vfprintf_posix=yes
+                                                                          case "$gl_cv_func_printf_precision" in
+                                                                            *yes)
+                                                                              case "$gl_cv_func_printf_enomem" in
+                                                                                *yes)
+                                                                                  # vfprintf exists and is
+                                                                                  # already POSIX compliant.
+                                                                                  gl_cv_func_vfprintf_posix=yes
+                                                                                  ;;
+                                                                              esac
+                                                                              ;;
+                                                                          esac
                                                                           ;;
                                                                       esac
                                                                       ;;

@@ -16,6 +16,7 @@ float-h
 nan
 snan
 setlocale
+localeconv
 
 configure.ac:
 AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
