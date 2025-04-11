@@ -33,6 +33,7 @@ memchr
 assert-h
 wchar-h
 mbszero
+mbsnlen
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

@@ -183,6 +183,13 @@
 #   define TCHAR_T char
 # endif
 #endif
+#ifndef DCHAR_MBSNLEN
+# if WIDE_CHAR_VERSION
+#  define DCHAR_MBSNLEN wcsnlen
+# else
+#  define DCHAR_MBSNLEN mbsnlen
+# endif
+#endif
 #if !WIDE_CHAR_VERSION || !DCHAR_IS_TCHAR
   /* TCHAR_T is char.  */
   /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
@@ -7100,6 +7107,23 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                            against the number of _characters_ of the converted
                            value.  */
                         w = DCHAR_MBSNLEN (result + length, count);
+# elif __GLIBC__ >= 2
+                        /* glibc prefers to compare the width against the number
+                           of characters as well, but only for numeric conversion
+                           specifiers.  See
+                           <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
+                           <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
+                           <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                        switch (dp->conversion)
+                          {
+                          case 'd': case 'i': case 'u':
+                          case 'f': case 'F': case 'g': case 'G':
+                            w = DCHAR_MBSNLEN (result + length, count);
+                            break;
+                          default:
+                            w = count;
+                            break;
+                          }
 # else
                         /* The width is compared against the number of _bytes_
                            of the converted value, says POSIX.  */

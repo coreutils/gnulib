@@ -36,6 +36,7 @@ errno-h
 memchr
 multiarch
 mbszero
+mbsnlen
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
