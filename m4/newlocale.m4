@@ -1,5 +1,5 @@
 # newlocale.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ int main ()
               gl_cv_func_newlocale_works=no
             fi
            ],
-           [])
+           [:])
         ])
       case "$gl_cv_func_newlocale_works" in
         *yes) ;;
