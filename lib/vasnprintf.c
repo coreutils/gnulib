@@ -2088,6 +2088,12 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       tmp_length = xsum (tmp_length, 2);
       break;
 
+    case 'e': case 'E':
+      tmp_length =
+        12; /* sign, decimal point, exponent etc. */
+      tmp_length = xsum (tmp_length, precision);
+      break;
+
     case 'f': case 'F':
       if (type == TYPE_LONGDOUBLE)
         tmp_length =
@@ -2108,10 +2114,13 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       tmp_length = xsum (tmp_length, precision);
       break;
 
-    case 'e': case 'E': case 'g': case 'G':
+    case 'g': case 'G':
       tmp_length =
         12; /* sign, decimal point, exponent etc. */
-      tmp_length = xsum (tmp_length, precision);
+      tmp_length = xsum (tmp_length,
+                         precision
+                         * 2 /* estimate for FLAG_GROUP */
+                        );
       break;
 
     case 'a': case 'A':
