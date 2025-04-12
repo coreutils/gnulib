@@ -1,12 +1,17 @@
 Files:
 tests/test-localeconv.c
+tests/test-localeconv-mt.c
 tests/signature.h
 tests/macros.h
 
 Depends-on:
+setlocale
+thread
+nanosleep
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-localeconv
-check_PROGRAMS += test-localeconv
+TESTS += test-localeconv test-localeconv-mt
+check_PROGRAMS += test-localeconv test-localeconv-mt
+test_localeconv_mt_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
