@@ -55,6 +55,14 @@ This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, MSVC 14.
 @item
+This function doesn't support the @code{'} flag at all on some platforms:
+mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14.
+@item
+This function doesn't support the @code{'} flag correctly for integers
+(it uses the decimal point instead of the thousands separator!)
+on some platforms:
+mingw with @code{__USE_MINGW_ANSI_STDIO}.
+@item
 This function doesn't support the @code{'} flag on some platforms:
 NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 14.
 @item

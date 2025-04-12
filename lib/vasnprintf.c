@@ -238,6 +238,11 @@
 # define IF_LINT(Code) /* empty */
 #endif
 
+/* Here we need only the most basic fields of 'struct lconv', and can
+   therefore use the system's localeconv() function, without needing a
+   dependency on module 'localeconv'.  */
+#undef localeconv
+
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() and remainder() functions.  */
 #undef exp
@@ -409,13 +414,18 @@ decimal_point_char (void)
 static const char *
 thousands_separator_char (char stackbuf[10])
 {
-  /* Determine it in a multithread-safe way.  We know nl_langinfo is
-     multithread-safe on glibc systems, on Mac OS X systems, and on NetBSD,
-     but is not required to be multithread-safe by POSIX.  sprintf(), however,
-     is multithread-safe.  localeconv() is rarely multithread-safe.  */
+  /* Determine it in a multithread-safe way.
+     We know nl_langinfo is multithread-safe on glibc systems, on Mac OS X
+     systems, and on NetBSD, but is not required to be multithread-safe by
+     POSIX.
+     localeconv() is not guaranteed to be multithread-safe by POSIX either;
+     however, on native Windows it is (cf. test-localeconv-mt).
+     sprintf(), however, is multithread-safe.  */
 #  if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__)
   return nl_langinfo (THOUSEP);
-#  elif 1
+#  elif defined _WIN32 && !defined __CYGWIN__
+  return localeconv () -> thousands_sep;
+#  else
   sprintf (stackbuf, "%'.0f", 1000.0);
   /* Now stackbuf = "1<thousep>000".  */
   stackbuf[strlen (stackbuf) - 3] = '\0';
@@ -425,8 +435,6 @@ thousands_separator_char (char stackbuf[10])
     strcpy (&stackbuf[1], MB_CUR_MAX > 1 ? "\302\240" : "\240");
 #   endif
   return &stackbuf[1];
-#  else
-  return localeconv () -> thousands_sep;
 #  endif
 }
 # endif
@@ -450,6 +458,20 @@ thousands_separator_wchar (wchar_t stackbuf[10])
   stackbuf[0] =
     (wchar_t) (unsigned long) nl_langinfo (_NL_NUMERIC_THOUSANDS_SEP_WC);
   stackbuf[1] = L'\0';
+  return stackbuf;
+#  elif defined _WIN32 && !defined __CYGWIN__
+  const char *tmp = localeconv () -> thousands_sep;
+  if (*tmp != '\0')
+    {
+      mbstate_t state;
+      mbszero (&state);
+      if ((int) mbrtowc (&stackbuf[0], tmp, strlen (tmp), &state) > 0)
+        stackbuf[1] = L'\0';
+      else
+        stackbuf[0] = L'\0';
+    }
+  else
+    stackbuf[0] = L'\0';
   return stackbuf;
 #  elif defined __sun
   /* Use sprintf, because swprintf retrieves a wrong value for the

@@ -28,6 +28,14 @@ printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
 AIX 7.3, Solaris 11.4.
 @item
+This function doesn't support the @code{'} flag at all on some platforms:
+mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14.
+@item
+This function doesn't support the @code{'} flag correctly for integers
+(it uses the decimal point instead of the thousands separator!)
+on some platforms:
+mingw with @code{__USE_MINGW_ANSI_STDIO}.
+@item
 This function doesn't support the @code{'} flag together with a precision
 on an integer argument correctly on some platforms:
 glibc 2.36, FreeBSD 14.0, NetBSD 10.0, Solaris 11, Cygwin 3.6.0, Haiku.

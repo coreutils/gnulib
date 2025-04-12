@@ -359,16 +359,28 @@ main (int argc, char *argv[])
       size_t length;
       char *result = asnprintf (NULL, &length, "%'.5g", 3141592653.5897932386);
       ASSERT (result != NULL);
-      ASSERT (length == 10);
-      ASSERT (strcmp (result, "3,1416e+09") == 0);
+      #if defined _WIN32 && !defined __CYGWIN__
+        /* Native Windows uses 3 digits for the exponent.  */
+        ASSERT (length == 11);
+        ASSERT (strcmp (result, "3,1416e+009") == 0);
+      #else
+        ASSERT (length == 10);
+        ASSERT (strcmp (result, "3,1416e+09") == 0);
+      #endif
       free (result);
     }
     {
       size_t length;
       char *result = asnprintf (NULL, &length, "%'.5g", -3141592653.5897932386);
       ASSERT (result != NULL);
-      ASSERT (length == 11);
-      ASSERT (strcmp (result, "-3,1416e+09") == 0);
+      #if defined _WIN32 && !defined __CYGWIN__
+        /* Native Windows uses 3 digits for the exponent.  */
+        ASSERT (length == 12);
+        ASSERT (strcmp (result, "-3,1416e+009") == 0);
+      #else
+        ASSERT (length == 11);
+        ASSERT (strcmp (result, "-3,1416e+09") == 0);
+      #endif
       free (result);
     }
     {

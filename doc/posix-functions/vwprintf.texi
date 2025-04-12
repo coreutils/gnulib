@@ -27,6 +27,14 @@ This function does not support size specifiers as in C23 (@code{w8},
 @code{wf64}) on some platforms:
 glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @item
+This function doesn't support the @code{'} flag at all on some platforms:
+mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14.
+@item
+This function doesn't support the @code{'} flag correctly for integers
+(it uses the decimal point instead of the thousands separator!)
+on some platforms:
+mingw with @code{__USE_MINGW_ANSI_STDIO}.
+@item
 This function doesn't support the @code{'} flag together with a precision
 on an integer argument correctly on some platforms:
 glibc 2.36, FreeBSD 14.0, NetBSD 10.0, Solaris 11, Cygwin 3.6.0, Haiku.
