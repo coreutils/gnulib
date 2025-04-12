@@ -111,12 +111,12 @@ main ()
         /* U+007F <control> */
         is = isprint_l ((unsigned char) '\177', locale);
         ASSERT (is == 0);
-      #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sgi || (defined _WIN32 && !defined __CYGWIN__))
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sgi || (defined _WIN32 && !defined __CYGWIN__))
         /* U+00A0 NO-BREAK SPACE */
         is = isprint_l ((unsigned char) '\240', locale);
         ASSERT (is != 0);
       #endif
-      #if !(defined __FreeBSD__ || defined __DragonFly__)
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00B8 CEDILLA */
         is = isprint_l ((unsigned char) '\270', locale);
         ASSERT (is != 0);

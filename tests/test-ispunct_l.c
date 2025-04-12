@@ -134,12 +134,12 @@ main ()
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         int is;
 
-      #if !(defined __FreeBSD__ || defined __DragonFly__)
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00BF INVERTED QUESTION MARK */
         is = ispunct_l ((unsigned char) '\277', locale);
         ASSERT (is != 0);
       #endif
-      #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+00D7 MULTIPLICATION SIGN */
         is = ispunct_l ((unsigned char) '\327', locale);
         ASSERT (is != 0);
