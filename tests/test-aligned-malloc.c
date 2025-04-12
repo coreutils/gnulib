@@ -22,6 +22,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/* Avoid redefinition on AIX.  */
+#ifdef ALIGNMENT
+# undef ALIGNMENT
+#endif
 #define ALIGNMENT 4
 #define aligned_malloc aligned4_malloc
 #define aligned_free aligned4_free
