@@ -626,17 +626,17 @@ main (int argc, char *argv[])
         ASSERT (fnmatch ("x[[:alnum:]]y", "x\330y", 0) == 0);
         /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
         ASSERT (fnmatch ("x[[:alpha:]]y", "x\330y", 0) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00B8 CEDILLA */
         ASSERT (fnmatch ("x[[:graph:]]y", "x\270y", 0) == 0);
         #endif
         /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
         ASSERT (fnmatch ("x[[:lower:]]y", "x\377y", 0) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00B8 CEDILLA */
         ASSERT (fnmatch ("x[[:print:]]y", "x\270y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00BF INVERTED QUESTION MARK */
         ASSERT (fnmatch ("x[[:punct:]]y", "x\277y", 0) == 0);
         #endif
@@ -794,7 +794,7 @@ main (int argc, char *argv[])
         /* U+00B8 CEDILLA */
         ASSERT (fnmatch ("x[[:print:]]y", "x\217\242\261y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+00D7 MULTIPLICATION SIGN */
         ASSERT (fnmatch ("x[[:punct:]]y", "x\241\337y", 0) == 0);
         #endif
@@ -863,15 +863,15 @@ main (int argc, char *argv[])
         ASSERT (fnmatch ("x?y", "x\250\271y", 0) == 0); /* "xüy" */
         ASSERT (fnmatch ("x?y", "x\201\060\211\070y", 0) == 0); /* "xßy" */
         ASSERT (fnmatch ("x?y", "x\224\071\375\067y", 0) == 0); /* "x😋y" */
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
         ASSERT (fnmatch ("x[[:alnum:]]y", "x\201\060\221\071y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
         ASSERT (fnmatch ("x[[:alpha:]]y", "x\201\060\221\071y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+00B8 CEDILLA */
         ASSERT (fnmatch ("x[[:graph:]]y", "x\201\060\206\060y", 0) == 0);
         #endif
@@ -879,7 +879,7 @@ main (int argc, char *argv[])
         /* U+20000 <CJK Ideograph> */
         ASSERT (fnmatch ("x[[:graph:]]y", "x\225\062\202\066y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
         ASSERT (fnmatch ("x[[:lower:]]y", "x\201\060\213\067y", 0) == 0);
         #endif
@@ -887,7 +887,7 @@ main (int argc, char *argv[])
         /* U+10441 DESERET SMALL LETTER EF */
         ASSERT (fnmatch ("x[[:lower:]]y", "x\220\060\355\071y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         /* U+00B8 CEDILLA */
         ASSERT (fnmatch ("x[[:print:]]y", "x\201\060\206\060y", 0) == 0);
         #endif
@@ -895,7 +895,7 @@ main (int argc, char *argv[])
         /* U+20000 <CJK Ideograph> */
         ASSERT (fnmatch ("x[[:print:]]y", "x\225\062\202\066y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
         /* U+00D7 MULTIPLICATION SIGN */
         ASSERT (fnmatch ("x[[:punct:]]y", "x\241\301y", 0) == 0);
         #endif
@@ -903,11 +903,11 @@ main (int argc, char *argv[])
         /* U+1D100 MUSICAL SYMBOL SINGLE BARLINE */
         ASSERT (fnmatch ("x[[:punct:]]y", "x\224\062\273\064y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+3000 IDEOGRAPHIC SPACE */
         ASSERT (fnmatch ("x[[:space:]]y", "x\241\241y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
         /* U+0429 CYRILLIC CAPITAL LETTER SHCHA */
         ASSERT (fnmatch ("x[[:upper:]]y", "x\247\273y", 0) == 0);
         #endif
