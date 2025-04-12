@@ -275,10 +275,8 @@ free_pages (uintptr_t pages, size_t size)
 
 # define ALLOC_PAGES alloc_pages
 # define FREE_PAGES free_pages
-/* Avoid redefined macro on AIX.  */
-# ifdef ALIGNMENT
-#  undef ALIGNMENT
-# endif
+/* AIX defines a macro ALIGNMENT in <sys/socket.h>.  Undefine it.  */
+# undef ALIGNMENT
 # define ALIGNMENT sizeof (void *)
 # define PAGE_RESERVED_HEADER_SIZE SHARED_LINK_HEADER_SIZE
 
