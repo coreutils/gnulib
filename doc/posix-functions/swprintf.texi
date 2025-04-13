@@ -61,7 +61,9 @@ musl libc 1.2.3,
 macOS 14, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, mingw.
 @item
 This function doesn't support the @code{'} flag at all on some platforms:
-mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14.
+mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14,
+@c https://dev.haiku-os.org/ticket/19522
+Haiku.
 @item
 This function doesn't support the @code{'} flag correctly for integers
 (it uses the decimal point instead of the thousands separator!)
