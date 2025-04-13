@@ -18,10 +18,13 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
 
 #include "signature.h"
 SIGNATURE_CHECK (getlogin, char *, (void));
+
+#include "xalloc.h"
 
 #include "test-getlogin.h"
 
@@ -42,7 +45,7 @@ main (void)
   test_getlogin_result (buf, err);
 
   /* Check that getlogin() does not merely return getenv ("LOGNAME").  */
-  putenv ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke");
+  putenv (xstrdup ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke"));
   buf = getlogin ();
   ASSERT (!(buf != NULL
             && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));

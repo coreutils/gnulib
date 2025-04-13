@@ -6,10 +6,11 @@ tests/macros.h
 
 Depends-on:
 bool
+xalloc
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-getlogin
 check_PROGRAMS += test-getlogin
-test_getlogin_LDADD = $(LDADD) $(GETLOGIN_LIB)
+test_getlogin_LDADD = $(LDADD) @LIBINTL@ $(GETLOGIN_LIB)
