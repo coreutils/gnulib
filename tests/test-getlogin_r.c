@@ -18,12 +18,15 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
 
 #include "signature.h"
 #if !defined __sun /* On Solaris, the second parameter is of type 'int'.  */
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
 #endif
+
+#include "xalloc.h"
 
 #include "test-getlogin.h"
 
@@ -69,7 +72,7 @@ main (void)
   }
 
   /* Check that getlogin_r() does not merely return getenv ("LOGNAME").  */
-  putenv ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke");
+  putenv (xstrdup ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke"));
   err = getlogin_r (buf, sizeof buf);
   ASSERT (!(err == 0 && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
 
