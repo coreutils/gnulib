@@ -5247,9 +5247,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             int h = *g;
                                             if (h <= 0)
                                               abort ();
-                                            int i;
-                                            for (i = h; i > 0; i--)
+                                            int i = h;
+                                            do
                                               *--p = *digitp++;
+                                            while (--i > 0);
 #   if WIDE_CHAR_VERSION
                                             *--p = thousep[0];
 #   else
@@ -5572,9 +5573,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     int h = *g;
                                                     if (h <= 0)
                                                       abort ();
-                                                    int i;
-                                                    for (i = h; i > 0; i--)
+                                                    int i = h;
+                                                    do
                                                       *--p = *digitp++;
+                                                    while (--i > 0);
 #   if WIDE_CHAR_VERSION
                                                     *--p = thousep[0];
 #   else
@@ -5846,9 +5848,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             int h = *g;
                                             if (h <= 0)
                                               abort ();
-                                            int i;
-                                            for (i = h; i > 0; i--)
+                                            int i = h;
+                                            do
                                               *--p = *digitp++;
+                                            while (--i > 0);
 #   if WIDE_CHAR_VERSION
                                             *--p = thousep[0];
 #   else
@@ -6179,9 +6182,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     int h = *g;
                                                     if (h <= 0)
                                                       abort ();
-                                                    int i;
-                                                    for (i = h; i > 0; i--)
+                                                    int i = h;
+                                                    do
                                                       *--p = *digitp++;
+                                                    while (--i > 0);
 #   if WIDE_CHAR_VERSION
                                                     *--p = thousep[0];
 #   else
@@ -7555,14 +7559,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                         int h = *g;
                                         if (h <= 0)
                                           abort ();
-                                        int i;
-                                        for (i = h; i > 0; i--)
+                                        int i = h;
+                                        do
                                           *--q = *--p;
+                                        while (--i > 0);
 # if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
-                                          *--q = *thousep;
+                                        *--q = *thousep;
 # else
-                                          q -= thousep_len;
-                                          memcpy (q, thousep, thousep_len);
+                                        q -= thousep_len;
+                                        memcpy (q, thousep, thousep_len);
 # endif
                                         insert--;
                                         if (insert == 0)
