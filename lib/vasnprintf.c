@@ -508,6 +508,77 @@ thousands_separator_wchar (wchar_t stackbuf[10])
    separator.  */
 #define THOUSEP_WCHAR_MAXLEN 1
 
+#if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) || (NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT)
+# ifndef grouping_rule_defined
+#  define grouping_rule_defined 1
+/* Determine the grouping rule.
+ * As specified in POSIX
+ * <https://pubs.opengroup.org/onlinepubs/9799919799/functions/localeconv.html>
+ * <https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap07.html#tag_07_03_04>
+ * it is a string whose elements are 'signed char' values, where
+ * "Each integer specifies the number of digits in each group, with the initial
+ *  integer defining the size of the group immediately preceding the decimal
+ *  delimiter, and the following integers defining the preceding groups.  If
+ *  the last integer is not -1, then the size of the previous group (if any)
+ *  shall be repeatedly used for the remainder of the digits.  If the last
+ *  integer is -1, then no further grouping shall be performed."
+ * Platforms that have locales with grouping:
+ *   glibc, FreeBSD, NetBSD, AIX, Solaris, Cygwin, Haiku.
+ * Platforms that don't:
+ *   musl libc, macOS, OpenBSD, Android, mingw, MSVC.
+ * Typical grouping rules on glibc:
+ *   136x 3     (fr_FR etc.)
+ *   4x 4       (cmn_TW etc.)
+ *   9x 3;2     (ta_IN etc.)
+ *   1x 2;2;2;3 (umn_US)
+ *   21x -1     (C etc.)
+ */
+static const signed char *
+grouping_rule (void)
+{
+  /* We know nl_langinfo is multithread-safe on glibc systems and on Cygwin,
+     but is not required to be multithread-safe by POSIX.
+     localeconv() is not guaranteed to be multithread-safe by POSIX either;
+     however, on all known systems it is (cf. test-localeconv-mt).  */
+#  if __GLIBC__ >= 2
+  return (const signed char *) nl_langinfo (GROUPING);
+#  elif defined __CYGWIN__
+  return (const signed char *) nl_langinfo (_NL_NUMERIC_GROUPING);
+#  else
+  return (const signed char *) localeconv () -> grouping;
+#  endif
+}
+/* Determines the number of thousands-separators to be inserted in a digit
+   sequence with ndigits digits (before the decimal point).  */
+static size_t
+num_thousands_separators (const signed char *grouping, size_t ndigits)
+{
+  const signed char *g = grouping;
+  int h = *g;
+  if (h <= 0 || ndigits == 0)
+    return 0;
+  size_t insert = 0;
+  for (;;)
+    {
+      /* Invariant: here h == *g, h > 0, ndigits > 0.  */
+      if (g[1] == 0)
+        /* h repeats endlessly.  */
+        return insert + (ndigits - 1) / h;
+      /* h does not repeat.  */
+      if (ndigits <= h)
+        return insert;
+      ndigits -= h;
+      insert++;
+      g++;
+      h = *g;
+      if (h < 0)
+        /* No further grouping.  */
+        return insert;
+    }
+}
+# endif
+#endif
+
 #if NEED_PRINTF_INFINITE_DOUBLE && !NEED_PRINTF_DOUBLE
 
 /* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
@@ -1965,10 +2036,12 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       /* Account for thousands separators.  */
       if (flags & FLAG_GROUP)
         {
+          /* A thousands separator needs to be inserted at most every 2 digits.
+             This is the case in the ta_IN locale.  */
 # if WIDE_CHAR_VERSION
-          tmp_length = xsum (tmp_length, tmp_length / 3 * THOUSEP_WCHAR_MAXLEN);
+          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
 # else
-          tmp_length = xsum (tmp_length, tmp_length / 3 * THOUSEP_CHAR_MAXLEN);
+          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
 # endif
         }
       /* Add 1, to account for a leading sign.  */
@@ -2229,7 +2302,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (LDBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 2 /* estimate for FLAG_GROUP */
+                          * 0.5 * 3 /* estimate for FLAG_GROUP */
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2237,7 +2310,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (DBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 2 /* estimate for FLAG_GROUP */
+                          * 0.5 * 3 /* estimate for FLAG_GROUP */
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2249,7 +2322,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         12; /* sign, decimal point, exponent etc. */
       tmp_length = xsum (tmp_length,
                          precision
-                         * 2 /* estimate for FLAG_GROUP */
+                         * 0.5 * 3 /* estimate for FLAG_GROUP */
                         );
       break;
 
@@ -5023,11 +5096,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 /* Account for thousands separators.  */
                 if (flags & FLAG_GROUP)
                   {
+                    /* A thousands separator needs to be inserted at most every 2 digits.
+                       This is the case in the ta_IN locale.  */
 # if WIDE_CHAR_VERSION
-                    tmp_length = xsum (tmp_length, tmp_length / 3 * THOUSEP_WCHAR_MAXLEN);
+                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
 # else
-
-                    tmp_length = xsum (tmp_length, tmp_length / 3 * THOUSEP_CHAR_MAXLEN);
+                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
 # endif
                   }
                 /* Account for sign, decimal point etc. */
@@ -5126,20 +5200,25 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                                 if (ndigits > precision)
                                   {
+                                    /* Number of digits before the decimal point.  */
+                                    size_t intpart_digits = ndigits - precision;
+
                                     const DCHAR_T *thousep = NULL;
                                     DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
                                     size_t thousep_len;
 #   endif
+                                    const signed char *grouping;
+                                    size_t insert = 0;
 
-                                    if ((flags & FLAG_GROUP)
-                                        && (ndigits - precision > 3))
+                                    if ((flags & FLAG_GROUP) && (intpart_digits > 1))
                                       {
-                                        /* Determine the thousands separator of the
-                                           current locale.  */
+                                        /* Determine the thousands separator and
+                                           the grouping rule of the current locale.  */
 #   if WIDE_CHAR_VERSION
                                         /* DCHAR_T is wchar_t.  */
                                         thousep = thousands_separator_wchar (thousep_buf);
+#                                       define thousep_len 1
 #   else
                                         /* DCHAR_T is char.  */
                                         thousep = thousands_separator_char (thousep_buf);
@@ -5147,26 +5226,52 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                                         if (*thousep == 0)
                                           thousep = NULL;
-                                      }
-
-                                    for (;;)
-                                      {
-                                        --ndigits;
-                                        *p++ = digits[ndigits];
-                                        if (ndigits == precision)
-                                          break;
-                                        if (thousep != NULL
-                                            /* implies (flags & FLAG_GROUP) */
-                                            && ((ndigits - precision) % 3) == 0)
+                                        if (thousep != NULL)
                                           {
-#   if WIDE_CHAR_VERSION
-                                            *p++ = thousep[0];
-#   else
-                                            memcpy (p, thousep, thousep_len);
-                                            p += thousep_len;
-#   endif
+                                            grouping = grouping_rule ();
+                                            insert =
+                                              num_thousands_separators (grouping,
+                                                                        ndigits - precision);
                                           }
                                       }
+
+                                    const char *digitp = digits + precision;
+                                    DCHAR_T *p_before_intpart = p;
+                                    p += intpart_digits + insert * thousep_len;
+                                    DCHAR_T *p_after_intpart = p;
+                                    if (insert > 0) /* implies (flag & FLAG_GROUP) && (thousep != NULL) */
+                                      {
+                                        const signed char *g = grouping;
+                                        for (;;)
+                                          {
+                                            int h = *g;
+                                            if (h <= 0)
+                                              abort ();
+                                            int i;
+                                            for (i = h; i > 0; i--)
+                                              *--p = *digitp++;
+#   if WIDE_CHAR_VERSION
+                                            *--p = thousep[0];
+#   else
+                                            p -= thousep_len;
+                                            memcpy (p, thousep, thousep_len);
+#   endif
+                                            insert--;
+                                            if (insert == 0)
+                                              break;
+                                            if (g[1] != 0)
+                                              g++;
+                                          }
+                                      }
+                                    for (;;)
+                                      {
+                                        *--p = *digitp++;
+                                        if (p == p_before_intpart)
+                                          break;
+                                      }
+                                    p = p_after_intpart;
+                                    ndigits = precision;
+#   undef thousep_len
                                   }
                                 else
                                   *p++ = '0';
@@ -5420,22 +5525,26 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                            digits without trailing zeroes.  */
                                         if (exponent >= 0)
                                           {
-                                            size_t ecount = exponent + 1;
-                                            /* Note: count <= precision = ndigits.  */
+                                            /* Number of digits before the decimal point.  */
+                                            size_t intpart_digits = exponent + 1;
+                                            /* Note: intpart_digits <= precision = ndigits.  */
 
                                             const DCHAR_T *thousep = NULL;
                                             DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
                                             size_t thousep_len;
 #   endif
+                                            const signed char *grouping;
+                                            size_t insert = 0;
 
-                                            if ((flags & FLAG_GROUP) && (ecount > 3))
+                                            if ((flags & FLAG_GROUP) && (intpart_digits > 1))
                                               {
-                                                /* Determine the thousands separator of the
-                                                   current locale.  */
+                                                /* Determine the thousands separator and
+                                                   the grouping rule of the current locale.  */
 #   if WIDE_CHAR_VERSION
                                                 /* DCHAR_T is wchar_t.  */
                                                 thousep = thousands_separator_wchar (thousep_buf);
+#                                               define thousep_len 1
 #   else
                                                 /* DCHAR_T is char.  */
                                                 thousep = thousands_separator_char (thousep_buf);
@@ -5443,27 +5552,51 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                                                 if (*thousep == 0)
                                                   thousep = NULL;
+                                                if (thousep != NULL)
+                                                  {
+                                                    grouping = grouping_rule ();
+                                                    insert =
+                                                      num_thousands_separators (grouping, intpart_digits);
+                                                  }
                                               }
 
-                                            if (ecount > 0)
-                                              for (;;)
-                                                {
-                                                  --ndigits;
-                                                  *p++ = digits[ndigits];
-                                                  if (--ecount == 0)
-                                                    break;
-                                                  if (thousep != NULL
-                                                      /* implies (flags & FLAG_GROUP) */
-                                                      && (ecount % 3) == 0)
-                                                    {
+                                            const char *digitp = digits + ndigits - intpart_digits;
+                                            DCHAR_T *p_before_intpart = p;
+                                            p += intpart_digits + insert * thousep_len;
+                                            DCHAR_T *p_after_intpart = p;
+                                            if (insert > 0) /* implies (flag & FLAG_GROUP) && (thousep != NULL) */
+                                              {
+                                                const signed char *g = grouping;
+                                                for (;;)
+                                                  {
+                                                    int h = *g;
+                                                    if (h <= 0)
+                                                      abort ();
+                                                    int i;
+                                                    for (i = h; i > 0; i--)
+                                                      *--p = *digitp++;
 #   if WIDE_CHAR_VERSION
-                                                      *p++ = thousep[0];
+                                                    *--p = thousep[0];
 #   else
-                                                      memcpy (p, thousep, thousep_len);
-                                                      p += thousep_len;
+                                                    p -= thousep_len;
+                                                    memcpy (p, thousep, thousep_len);
 #   endif
-                                                    }
-                                                }
+                                                    insert--;
+                                                    if (insert == 0)
+                                                      break;
+                                                    if (g[1] != 0)
+                                                      g++;
+                                                  }
+                                              }
+                                            for (;;)
+                                              {
+                                                *--p = *digitp++;
+                                                if (p == p_before_intpart)
+                                                  break;
+                                              }
+                                            p = p_after_intpart;
+                                            ndigits -= intpart_digits;
+#   undef thousep_len
 
                                             if ((flags & FLAG_ALT) || ndigits > nzeroes)
                                               {
@@ -5666,20 +5799,25 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                                 if (ndigits > precision)
                                   {
+                                    /* Number of digits before the decimal point.  */
+                                    size_t intpart_digits = ndigits - precision;
+
                                     const DCHAR_T *thousep = NULL;
                                     DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
                                     size_t thousep_len;
 #   endif
+                                    const signed char *grouping;
+                                    size_t insert = 0;
 
-                                    if ((flags & FLAG_GROUP)
-                                        && (ndigits - precision > 3))
+                                    if ((flags & FLAG_GROUP) && (intpart_digits > 1))
                                       {
-                                        /* Determine the thousands separator of the
-                                           current locale.  */
+                                        /* Determine the thousands separator and
+                                           the grouping rule of the current locale.  */
 #   if WIDE_CHAR_VERSION
                                         /* DCHAR_T is wchar_t.  */
                                         thousep = thousands_separator_wchar (thousep_buf);
+#                                       define thousep_len 1
 #   else
                                         /* DCHAR_T is char.  */
                                         thousep = thousands_separator_char (thousep_buf);
@@ -5687,26 +5825,52 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                                         if (*thousep == 0)
                                           thousep = NULL;
-                                      }
-
-                                    for (;;)
-                                      {
-                                        --ndigits;
-                                        *p++ = digits[ndigits];
-                                        if (ndigits == precision)
-                                          break;
-                                        if (thousep != NULL
-                                            /* implies (flags & FLAG_GROUP) */
-                                            && ((ndigits - precision) % 3) == 0)
+                                        if (thousep != NULL)
                                           {
-#   if WIDE_CHAR_VERSION
-                                            *p++ = thousep[0];
-#   else
-                                            memcpy (p, thousep, thousep_len);
-                                            p += thousep_len;
-#   endif
+                                            grouping = grouping_rule ();
+                                            insert =
+                                              num_thousands_separators (grouping,
+                                                                        ndigits - precision);
                                           }
                                       }
+
+                                    const char *digitp = digits + precision;
+                                    DCHAR_T *p_before_intpart = p;
+                                    p += intpart_digits + insert * thousep_len;
+                                    DCHAR_T *p_after_intpart = p;
+                                    if (insert > 0) /* implies (flag & FLAG_GROUP) && (thousep != NULL) */
+                                      {
+                                        const signed char *g = grouping;
+                                        for (;;)
+                                          {
+                                            int h = *g;
+                                            if (h <= 0)
+                                              abort ();
+                                            int i;
+                                            for (i = h; i > 0; i--)
+                                              *--p = *digitp++;
+#   if WIDE_CHAR_VERSION
+                                            *--p = thousep[0];
+#   else
+                                            p -= thousep_len;
+                                            memcpy (p, thousep, thousep_len);
+#   endif
+                                            insert--;
+                                            if (insert == 0)
+                                              break;
+                                            if (g[1] != 0)
+                                              g++;
+                                          }
+                                      }
+                                    for (;;)
+                                      {
+                                        *--p = *digitp++;
+                                        if (p == p_before_intpart)
+                                          break;
+                                      }
+                                    p = p_after_intpart;
+                                    ndigits = precision;
+#   undef thousep_len
                                   }
                                 else
                                   *p++ = '0';
@@ -5968,22 +6132,26 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                            digits without trailing zeroes.  */
                                         if (exponent >= 0)
                                           {
-                                            size_t ecount = exponent + 1;
-                                            /* Note: ecount <= precision = ndigits.  */
+                                            /* Number of digits before the decimal point.  */
+                                            size_t intpart_digits = exponent + 1;
+                                            /* Note: intpart_digits <= precision = ndigits.  */
 
                                             const DCHAR_T *thousep = NULL;
                                             DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
                                             size_t thousep_len;
 #   endif
+                                            const signed char *grouping;
+                                            size_t insert = 0;
 
-                                            if ((flags & FLAG_GROUP) && (ecount > 3))
+                                            if ((flags & FLAG_GROUP) && (intpart_digits > 1))
                                               {
-                                                /* Determine the thousands separator of the
-                                                   current locale.  */
+                                                /* Determine the thousands separator and
+                                                   the grouping rule of the current locale.  */
 #   if WIDE_CHAR_VERSION
                                                 /* DCHAR_T is wchar_t.  */
                                                 thousep = thousands_separator_wchar (thousep_buf);
+#                                               define thousep_len 1
 #   else
                                                 /* DCHAR_T is char.  */
                                                 thousep = thousands_separator_char (thousep_buf);
@@ -5991,27 +6159,51 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                                                 if (*thousep == 0)
                                                   thousep = NULL;
+                                                if (thousep != NULL)
+                                                  {
+                                                    grouping = grouping_rule ();
+                                                    insert =
+                                                      num_thousands_separators (grouping, intpart_digits);
+                                                  }
                                               }
 
-                                            if (ecount > 0)
-                                              for (;;)
-                                                {
-                                                  --ndigits;
-                                                  *p++ = digits[ndigits];
-                                                  if (--ecount == 0)
-                                                    break;
-                                                  if (thousep != NULL
-                                                      /* implies (flags & FLAG_GROUP) */
-                                                      && (ecount % 3) == 0)
-                                                    {
+                                            const char *digitp = digits + ndigits - intpart_digits;
+                                            DCHAR_T *p_before_intpart = p;
+                                            p += intpart_digits + insert * thousep_len;
+                                            DCHAR_T *p_after_intpart = p;
+                                            if (insert > 0) /* implies (flag & FLAG_GROUP) && (thousep != NULL) */
+                                              {
+                                                const signed char *g = grouping;
+                                                for (;;)
+                                                  {
+                                                    int h = *g;
+                                                    if (h <= 0)
+                                                      abort ();
+                                                    int i;
+                                                    for (i = h; i > 0; i--)
+                                                      *--p = *digitp++;
 #   if WIDE_CHAR_VERSION
-                                                      *p++ = thousep[0];
+                                                    *--p = thousep[0];
 #   else
-                                                      memcpy (p, thousep, thousep_len);
-                                                      p += thousep_len;
+                                                    p -= thousep_len;
+                                                    memcpy (p, thousep, thousep_len);
 #   endif
-                                                    }
-                                                }
+                                                    insert--;
+                                                    if (insert == 0)
+                                                      break;
+                                                    if (g[1] != 0)
+                                                      g++;
+                                                  }
+                                              }
+                                            for (;;)
+                                              {
+                                                *--p = *digitp++;
+                                                if (p == p_before_intpart)
+                                                  break;
+                                              }
+                                            p = p_after_intpart;
+                                            ndigits -= intpart_digits;
+#   undef thousep_len
 
                                             if ((flags & FLAG_ALT) || ndigits > nzeroes)
                                               {
@@ -7325,8 +7517,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                                 /* Determine the number of thousands separators
                                    to insert.  */
-                                size_t insert = digits_end_ptr - digits_ptr;
-                                insert = (insert > 0 ? (insert - 1) / 3 : 0);
+                                const signed char *grouping = grouping_rule ();
+                                size_t insert =
+                                  num_thousands_separators (grouping, digits_end_ptr - digits_ptr);
                                 if (insert > 0)
                                   {
 # if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
@@ -7356,17 +7549,26 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                     TCHAR_T *q = end_ptr + insert * thousep_len;
                                     while (p > digits_end_ptr)
                                       *--q = *--p;
-                                    for (; insert > 0; insert--)
+                                    const signed char *g = grouping;
+                                    for (;;)
                                       {
-                                        *--q = *--p;
-                                        *--q = *--p;
-                                        *--q = *--p;
+                                        int h = *g;
+                                        if (h <= 0)
+                                          abort ();
+                                        int i;
+                                        for (i = h; i > 0; i--)
+                                          *--q = *--p;
 # if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
-                                        *--q = *thousep;
+                                          *--q = *thousep;
 # else
-                                        q -= thousep_len;
-                                        memcpy (q, thousep, thousep_len);
+                                          q -= thousep_len;
+                                          memcpy (q, thousep, thousep_len);
 # endif
+                                        insert--;
+                                        if (insert == 0)
+                                          break;
+                                        if (g[1] != 0)
+                                          g++;
                                       }
                                     /* Here q == p.  Done with the insertions.  */
                                   }

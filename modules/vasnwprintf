@@ -36,6 +36,7 @@ errno-h
 memchr
 assert-h
 wchar-h
+localeconv
 mbszero
 mbrtowc
 wmemcpy

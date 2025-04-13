@@ -29,6 +29,7 @@ limits-h
 stdint-h
 xsize
 errno-h
+localeconv
 memchr
 assert-h
 wchar-h

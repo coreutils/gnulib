@@ -39,6 +39,7 @@ localcharset
 xsize
 errno-h
 free-posix
+localeconv
 memchr
 multiarch
 assert-h

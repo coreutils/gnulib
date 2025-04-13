@@ -33,6 +33,7 @@ printf-safe
 alloca-opt
 xsize
 errno-h
+localeconv
 memchr
 multiarch
 mbszero
