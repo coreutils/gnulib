@@ -523,8 +523,12 @@ typedef struct
 /* Declarations for routines.  */
 
 #ifndef _REGEX_NELTS
-# if (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__ \
-	&& !defined __STDC_NO_VLA__)
+/* The macro _REGEX_NELTS denotes the number of elements in a variable-length
+   array passed to a function.
+   It was meant to make use of ISO C99 variable-length arrays, but this does
+   not work: ISO C23 § 6.7.6.2.(5) requires the number of elements to be > 0,
+   but the NMATCH argument to regexec() is allowed to be 0.  */
+# if 0
 #  define _REGEX_NELTS(n) n
 # else
 #  define _REGEX_NELTS(n)
