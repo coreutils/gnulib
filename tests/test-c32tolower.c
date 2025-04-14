@@ -1,5 +1,5 @@
 /* Test of c32tolower() function.
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -349,7 +349,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\205\070", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\205\070", 4) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00C9 LATIN CAPITAL LETTER E WITH ACUTE */
           mb = for_character ("\201\060\207\067", 4);
           ASSERT (mb.nbytes == 2);
@@ -367,7 +367,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\213\067", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\213\067", 4) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
           mb = for_character ("\201\060\221\071", 4);
           ASSERT (mb.nbytes == 4);
@@ -377,7 +377,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\222\060", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\222\060", 4) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+0429 CYRILLIC CAPITAL LETTER SHCHA */
           mb = for_character ("\247\273", 2);
           ASSERT (mb.nbytes == 2);

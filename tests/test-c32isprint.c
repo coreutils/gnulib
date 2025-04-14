@@ -1,5 +1,5 @@
 /* Test of c32isprint() function.
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -118,12 +118,12 @@ main (int argc, char *argv[])
           /* U+007F <control> */
           is = for_character ("\177", 1);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sgi || (defined _WIN32 && !defined __CYGWIN__))
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sgi || (defined _WIN32 && !defined __CYGWIN__))
           /* U+00A0 NO-BREAK SPACE */
           is = for_character ("\240", 1);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+00B8 CEDILLA */
           is = for_character ("\270", 1);
           ASSERT (is != 0);
@@ -207,7 +207,7 @@ main (int argc, char *argv[])
           /* U+007F <control> */
           is = for_character ("\177", 1);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00A0 NO-BREAK SPACE */
           is = for_character ("\201\060\204\062", 4);
           ASSERT (is != 0);
@@ -223,7 +223,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\066\247\061", 4);
           ASSERT (is == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+3000 IDEOGRAPHIC SPACE */
           is = for_character ("\241\241", 2);
           ASSERT (is != 0);

@@ -1,5 +1,5 @@
 /* Test of c32isalpha() function.
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -220,7 +220,7 @@ main (int argc, char *argv[])
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\301", 2);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
           is = for_character ("\201\060\211\061", 4);
           ASSERT (is != 0);
