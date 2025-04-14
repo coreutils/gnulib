@@ -6,6 +6,8 @@ lib/isfinite.c
 m4/isfinite.m4
 m4/check-math-lib.m4
 m4/exponentl.m4
+m4/exponentd.m4
+m4/math_h.m4
 
 Depends-on:
 math-h

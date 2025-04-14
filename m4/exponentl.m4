@@ -1,5 +1,5 @@
 # exponentl.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,24 +81,94 @@ int main ()
         [gl_cv_cc_long_double_expbit0="unknown"],
         [
           dnl When cross-compiling, in general we don't know. It depends on the
-          dnl ABI and compiler version. There are too many cases.
-          gl_cv_cc_long_double_expbit0="unknown"
-          case "$host_os" in
-            mingw* | windows*)
-              # On native Windows (little-endian), we know the result
-              # in two cases: mingw, MSVC.
-              AC_EGREP_CPP([Known], [
-#ifdef __MINGW32__
- Known
-#endif
-                ], [gl_cv_cc_long_double_expbit0="word 2 bit 0"])
-              AC_EGREP_CPP([Known], [
-#ifdef _MSC_VER
- Known
-#endif
-                ], [gl_cv_cc_long_double_expbit0="word 1 bit 20"])
-              ;;
-          esac
+          dnl ABI and compiler version. But we know the results for specific
+          dnl CPUs.
+          AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+          if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+            gl_DOUBLE_EXPONENT_LOCATION
+            gl_cv_cc_long_double_expbit0="$gl_cv_cc_double_expbit0"
+            if test "$gl_cv_cc_double_expbit0" = unknown; then
+              case "$host_cpu" in
+                arm*)
+                  # See the comments in exponentd.m4.
+                  ;;
+                aarch64 | sh4)
+                  # little-endian IEEE 754 double-precision
+                  gl_cv_cc_long_double_expbit0='word 1 bit 20'
+                  ;;
+                hppa*)
+                  # big-endian IEEE 754 double-precision
+                  gl_cv_cc_long_double_expbit0='word 0 bit 20'
+                  ;;
+                mips*)
+                  AC_COMPILE_IFELSE(
+                    [AC_LANG_PROGRAM([[
+                       #if defined _MIPSEB /* equivalent: __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ */
+                       int big;
+                       #else
+                       #error little
+                       #endif
+                       ]], [[]])
+                    ],
+                    [# big-endian IEEE 754 double-precision
+                     gl_cv_cc_long_double_expbit0='word 0 bit 20'
+                    ],
+                    [# little-endian IEEE 754 double-precision
+                     gl_cv_cc_long_double_expbit0='word 1 bit 20'
+                    ])
+                  ;;
+              esac
+            fi
+          else
+            case "$host_cpu" in
+changequote(,)dnl
+              i[34567]86 | x86_64 | ia64*)
+changequote([,])dnl
+                # 80-bits "extended precision"
+                gl_cv_cc_long_double_expbit0='word 2 bit 0'
+                ;;
+              m68k*)
+                # big-endian, 80-bits padded to 96 bits, non-IEEE exponent
+                gl_cv_cc_long_double_expbit0='word 0 bit 16'
+                ;;
+              alpha* | arm* | aarch64 | loongarch64 | riscv32 | riscv64 | sh4)
+                # little-endian IEEE 754 quadruple-precision
+                gl_cv_cc_long_double_expbit0='word 3 bit 16'
+                ;;
+              s390* | sparc | sparc64)
+                # big-endian IEEE 754 quadruple-precision
+                gl_cv_cc_long_double_expbit0='word 0 bit 16'
+                ;;
+              mips*)
+                AC_COMPILE_IFELSE(
+                  [AC_LANG_PROGRAM([[
+                     #if defined _MIPSEB /* equivalent: __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ */
+                     int big;
+                     #else
+                     #error little
+                     #endif
+                     ]], [[]])
+                  ],
+                  [# big-endian IEEE 754 quadruple-precision
+                   gl_cv_cc_long_double_expbit0='word 0 bit 16'
+                  ],
+                  [# little-endian IEEE 754 quadruple-precision
+                   gl_cv_cc_long_double_expbit0='word 3 bit 16'
+                  ])
+                ;;
+              powerpc64le)
+                # little-endian double-double
+                gl_cv_cc_long_double_expbit0='word 1 bit 20'
+                ;;
+              powerpc* | rs6000)
+                # big-endian double-double
+                gl_cv_cc_long_double_expbit0='word 0 bit 20'
+                ;;
+              *)
+                gl_cv_cc_long_double_expbit0="unknown"
+                ;;
+            esac
+          fi
         ])
       rm -f conftest.out
     ])

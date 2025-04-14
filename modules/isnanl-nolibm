@@ -7,6 +7,7 @@ lib/isnanl.c
 lib/isnan.c
 lib/float+.h
 m4/exponentl.m4
+m4/exponentd.m4
 m4/isnanl.m4
 m4/math_h.m4
 
