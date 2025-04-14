@@ -522,24 +522,6 @@ typedef struct
 
 /* Declarations for routines.  */
 
-#ifndef _REGEX_NELTS
-/* The macro _REGEX_NELTS denotes the number of elements in a variable-length
-   array passed to a function.
-   It was meant to make use of ISO C99 variable-length arrays, but this does
-   not work: ISO C23 § 6.7.6.2.(5) requires the number of elements to be > 0,
-   but the NMATCH argument to regexec() is allowed to be 0.  */
-# if 0
-#  define _REGEX_NELTS(n) n
-# else
-#  define _REGEX_NELTS(n)
-# endif
-#endif
-
-#if defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wvla"
-#endif
-
 #ifndef _Attr_access_
 # ifdef __attr_access
 #  define _Attr_access_(arg) __attr_access (arg)
@@ -686,8 +668,7 @@ extern int regcomp (regex_t *_Restrict_ __preg,
 
 extern int regexec (const regex_t *_Restrict_ __preg,
 		    const char *_Restrict_ __String, size_t __nmatch,
-		    regmatch_t __pmatch[_Restrict_arr_
-					_REGEX_NELTS (__nmatch)],
+		    regmatch_t __pmatch[_Restrict_arr_],
 		    int __eflags);
 
 extern size_t regerror (int __errcode, const regex_t *_Restrict_ __preg,
@@ -695,10 +676,6 @@ extern size_t regerror (int __errcode, const regex_t *_Restrict_ __preg,
     _Attr_access_ ((__write_only__, 3, 4));
 
 extern void regfree (regex_t *__preg);
-
-#if defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
-# pragma GCC diagnostic pop
-#endif
 
 #ifdef __cplusplus
 }
