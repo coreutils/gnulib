@@ -316,7 +316,8 @@ regular expressions.
 The predefined syntaxes---taken directly from @file{regex.h}---are:
 
 @smallexample
-#define RE_SYNTAX_EMACS 0
+# define RE_SYNTAX_EMACS                                                \
+  (RE_CHAR_CLASSES | RE_INTERVALS)
 
 #define RE_SYNTAX_AWK                                                   \
   (RE_BACKSLASH_ESCAPE_IN_LISTS | RE_DOT_NOT_NULL                       \

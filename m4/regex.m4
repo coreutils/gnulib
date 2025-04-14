@@ -1,5 +1,5 @@
 # regex.m4
-# serial 78
+# serial 79
 dnl Copyright (C) 1996-2001, 2003-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,6 +52,10 @@ AC_DEFUN([gl_REGEX],
             #if defined __HAIKU__ || defined M_CHECK_ACTION
             /* Exit with distinguishable exit code.  */
             static void sigabrt_no_core (int sig) { raise (SIGTERM); }
+            #endif
+
+            #if RE_SYNTAX_EMACS != (RE_CHAR_CLASSES | RE_INTERVALS)
+            # error "RE_SYNTAX_EMACS does not match Emacs behavior"
             #endif
           ]],
           [[int result = 0;

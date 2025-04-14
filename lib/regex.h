@@ -66,9 +66,8 @@ typedef unsigned long int active_reg_t;
 
 /* The following bits are used to determine the regexp syntax we
    recognize.  The set/not-set meanings are chosen so that Emacs syntax
-   remains the value 0.  The bits are given in alphabetical order, and
-   the definitions shifted by one from the previous bit; thus, when we
-   add or remove a bit, only one other definition need change.  */
+   is the value 0 for Emacs 20 (2000) and earlier, and the value
+   RE_SYNTAX_EMACS for Emacs 21 (2001) and later.  */
 typedef unsigned long int reg_syntax_t;
 
 #ifdef __USE_GNU
@@ -215,7 +214,8 @@ extern reg_syntax_t re_syntax_options;
    (The [[[ comments delimit what gets put into the Texinfo file, so
    don't delete them!)  */
 /* [[[begin syntaxes]]] */
-# define RE_SYNTAX_EMACS 0
+# define RE_SYNTAX_EMACS						\
+  (RE_CHAR_CLASSES | RE_INTERVALS)
 
 # define RE_SYNTAX_AWK							\
   (RE_BACKSLASH_ESCAPE_IN_LISTS   | RE_DOT_NOT_NULL			\

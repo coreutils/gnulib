@@ -68,7 +68,7 @@ $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc
 #$LIBCSRC misc/sys/cdefs.h		lib
 #$LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
-$LIBCSRC posix/regex.h			lib
+#$LIBCSRC posix/regex.h			lib
 #$LIBCSRC posix/regex_internal.c	lib
 #$LIBCSRC posix/regex_internal.h	lib
 #$LIBCSRC posix/regexec.c		lib
