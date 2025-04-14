@@ -73,7 +73,7 @@ typedef unsigned long int reg_syntax_t;
 #ifdef __USE_GNU
 /* If this bit is not set, then \ inside a bracket expression is literal.
    If set, then such a \ quotes the following character.  */
-# define RE_BACKSLASH_ESCAPE_IN_LISTS ((unsigned long int) 1)
+# define RE_BACKSLASH_ESCAPE_IN_LISTS 1ul
 
 /* If this bit is not set, then + and ? are operators, and \+ and \? are
      literals.
