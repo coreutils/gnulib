@@ -371,7 +371,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\211\070", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\211\070", 4) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00E9 LATIN SMALL LETTER E WITH ACUTE */
           mb = for_character ("\250\246", 2);
           ASSERT (mb.nbytes == 4);
@@ -385,7 +385,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\221\071", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\221\071", 4) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+0142 LATIN SMALL LETTER L WITH STROKE */
           mb = for_character ("\201\060\222\060", 4);
           ASSERT (mb.nbytes == 4);
@@ -395,7 +395,7 @@ main (int argc, char *argv[])
           mb = for_character ("\247\273", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\247\273", 2) == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+0449 CYRILLIC SMALL LETTER SHCHA */
           mb = for_character ("\247\353", 2);
           ASSERT (mb.nbytes == 2);

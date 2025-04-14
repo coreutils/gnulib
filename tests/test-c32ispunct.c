@@ -150,12 +150,12 @@ main (int argc, char *argv[])
       case '1':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         {
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+00BF INVERTED QUESTION MARK */
           is = for_character ("\277", 1);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\327", 1);
           ASSERT (is != 0);
@@ -177,7 +177,7 @@ main (int argc, char *argv[])
           is = for_character ("\217\242\304", 3);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\337", 2);
           ASSERT (is != 0);
@@ -216,7 +216,7 @@ main (int argc, char *argv[])
           /* U+00BF INVERTED QUESTION MARK */
           is = for_character ("\302\277", 2);
           ASSERT (is != 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\303\227", 2);
           ASSERT (is != 0);
@@ -233,7 +233,7 @@ main (int argc, char *argv[])
           /* U+05F3 HEBREW PUNCTUATION GERESH */
           is = for_character ("\327\263", 2);
           ASSERT (is != 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun || (defined _WIN32 && !defined __CYGWIN__))
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || (defined _WIN32 && !defined __CYGWIN__))
           /* U+2192 RIGHTWARDS ARROW */
           is = for_character ("\342\206\222", 3);
           ASSERT (is != 0);
@@ -250,7 +250,7 @@ main (int argc, char *argv[])
           /* U+10330 GOTHIC LETTER AHSA */
           is = for_character ("\360\220\214\260", 4);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+1D100 MUSICAL SYMBOL SINGLE BARLINE */
           is = for_character ("\360\235\204\200", 4);
           ASSERT (is != 0);
@@ -272,12 +272,12 @@ main (int argc, char *argv[])
         return 77;
         #endif
         {
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00BF INVERTED QUESTION MARK */
           is = for_character ("\201\060\206\067", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\301", 2);
           ASSERT (is != 0);
@@ -291,12 +291,12 @@ main (int argc, char *argv[])
           /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
           is = for_character ("\201\060\221\071", 4);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+05F3 HEBREW PUNCTUATION GERESH */
           is = for_character ("\201\060\374\067", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+2192 RIGHTWARDS ARROW */
           is = for_character ("\241\372", 2);
           ASSERT (is != 0);

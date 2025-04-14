@@ -272,7 +272,7 @@ main (int argc, char *argv[])
           /* U+00B5 MICRO SIGN */
           is = for_character ("\201\060\205\070", 4);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00C9 LATIN CAPITAL LETTER E WITH ACUTE */
           is = for_character ("\201\060\207\067", 4);
           ASSERT (is != 0);
@@ -286,7 +286,7 @@ main (int argc, char *argv[])
           /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
           is = for_character ("\201\060\213\067", 4);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
           is = for_character ("\201\060\221\071", 4);
           ASSERT (is != 0);
@@ -294,7 +294,7 @@ main (int argc, char *argv[])
           /* U+0142 LATIN SMALL LETTER L WITH STROKE */
           is = for_character ("\201\060\222\060", 4);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+0429 CYRILLIC CAPITAL LETTER SHCHA */
           is = for_character ("\247\273", 2);
           ASSERT (is != 0);

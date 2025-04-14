@@ -220,7 +220,7 @@ main (int argc, char *argv[])
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\301", 2);
           ASSERT (is == 0);
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
           is = for_character ("\201\060\211\061", 4);
           ASSERT (is != 0);
