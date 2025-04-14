@@ -6,6 +6,8 @@ lib/getpayloadl.c
 m4/mathfunc.m4
 m4/getpayload.m4
 m4/exponentl.m4
+m4/exponentd.m4
+m4/math_h.m4
 
 Depends-on:
 math-h
