@@ -4,6 +4,10 @@ tmpfiles=""
 trap 'rm -fr $tmpfiles' HUP INT QUIT TERM
 
 tmpfiles="t-c-stack2.tmp"
+# Prepare to clean up a core dump file, assuming the most common naming
+# conventions for such files. (Core dump file names may be customized
+# through /proc/sys/kernel/core_pattern or 'coredumpctl'.)
+tmpfiles="$tmpfiles core test-c-stack.core"
 
 # Sanitize exit status within a subshell, since some shells fail to
 # redirect stderr on their message about death due to signal.
