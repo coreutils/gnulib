@@ -131,13 +131,30 @@ changequote([,])dnl
                 # big-endian, 80-bits padded to 96 bits, non-IEEE exponent
                 gl_cv_cc_long_double_expbit0='word 0 bit 16'
                 ;;
-              alpha* | arm* | aarch64 | loongarch64 | riscv32 | riscv64 | sh4)
+              alpha* | aarch64 | loongarch64 | riscv32 | riscv64 | sh4)
                 # little-endian IEEE 754 quadruple-precision
                 gl_cv_cc_long_double_expbit0='word 3 bit 16'
                 ;;
               s390* | sparc | sparc64)
                 # big-endian IEEE 754 quadruple-precision
                 gl_cv_cc_long_double_expbit0='word 0 bit 16'
+                ;;
+              arm*)
+                AC_COMPILE_IFELSE(
+                  [AC_LANG_PROGRAM([[
+                     #if defined _ARMEL
+                     int little;
+                     #else
+                     #error big
+                     #endif
+                     ]], [[]])
+                  ],
+                  [# little-endian IEEE 754 quadruple-precision
+                   gl_cv_cc_long_double_expbit0='word 3 bit 16'
+                  ],
+                  [# big-endian IEEE 754 quadruple-precision
+                   gl_cv_cc_long_double_expbit0='word 0 bit 16'
+                  ])
                 ;;
               mips*)
                 AC_COMPILE_IFELSE(
