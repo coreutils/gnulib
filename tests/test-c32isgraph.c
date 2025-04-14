@@ -124,7 +124,7 @@ main (int argc, char *argv[])
           is = for_character ("\240", 1);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+00B8 CEDILLA */
           is = for_character ("\270", 1);
           ASSERT (is != 0);
@@ -209,7 +209,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\060\204\062", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00B8 CEDILLA */
           is = for_character ("\201\060\206\060", 4);
           ASSERT (is != 0);
