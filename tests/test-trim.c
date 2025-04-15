@@ -137,6 +137,10 @@ main (int argc, char *argv[])
 
       case '3':
         /* Locale encoding is GB18030.  */
+        #if (defined __APPLE__ && defined __MACH__) /* As of macOS 15.4 */
+        fputs ("Skipping test: The character properties in the GB18030 locale on this system are broken.\n", stderr);
+        return 77;
+        #endif
         #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         { /* U+2002 EN SPACE */
           char *result = trim ("\201\066\243\070\241\244foo\201\066\243\070");
