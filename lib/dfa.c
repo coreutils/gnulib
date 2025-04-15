@@ -2699,6 +2699,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
   addtok (d, CAT);
   idx_t tindex = d->tindex;
+  assume (0 < tindex);
 
 #ifdef DEBUG
   fprintf (stderr, "dfaanalyze:\n");
