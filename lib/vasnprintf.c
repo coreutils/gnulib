@@ -5230,8 +5230,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                           {
                                             grouping = grouping_rule ();
                                             insert =
-                                              num_thousands_separators (grouping,
-                                                                        ndigits - precision);
+                                              num_thousands_separators (grouping, intpart_digits);
                                           }
                                       }
 
@@ -5831,8 +5830,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                           {
                                             grouping = grouping_rule ();
                                             insert =
-                                              num_thousands_separators (grouping,
-                                                                        ndigits - precision);
+                                              num_thousands_separators (grouping, intpart_digits);
                                           }
                                       }
 
