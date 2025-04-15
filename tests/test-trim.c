@@ -1,5 +1,5 @@
 /* Tests of removing leading and/or trailing whitespaces.
-   Copyright (C) 2023-2024 Free Software Foundation, Inc.
+   Copyright (C) 2023-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -137,14 +137,14 @@ main (int argc, char *argv[])
 
       case '3':
         /* Locale encoding is GB18030.  */
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
         { /* U+2002 EN SPACE */
           char *result = trim ("\201\066\243\070\241\244foo\201\066\243\070");
           ASSERT (strcmp (result, "\241\244foo") == 0);
           free (result);
         }
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
         { /* U+3000 IDEOGRAPHIC SPACE */
           char *result = trim ("\241\241\241\244foo\241\241");
           ASSERT (strcmp (result, "\241\244foo") == 0);
