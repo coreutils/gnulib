@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2024 Free Software Foundation, Inc.
+# Copyright (C) 2002-2025 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -228,7 +228,12 @@ class GLImport:
                     data = file.read()
                 regex = r'AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)' % self.cache['macro_prefix']
                 pattern = re.compile(regex, re.S | re.M)
-                self.cache.setFiles(pattern.findall(data)[-1].strip().split())
+                matches = pattern.findall(data)
+                if matches:
+                    files = matches[-1].strip().split()
+                else:
+                    files = []
+                self.cache.setFiles(files)
 
         # The self.config['localpath'] defaults to the cached one. Recall that
         # the cached one is relative to self.config['destdir'], whereas the one
