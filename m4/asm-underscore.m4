@@ -1,5 +1,5 @@
 # asm-underscore.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,7 @@ EOF
      else
        gl_cv_prog_as_underscore=no
      fi
-     rm -f conftest*
+     rm -fr conftest*
     ])
   if test $gl_cv_prog_as_underscore = yes; then
     USER_LABEL_PREFIX=_
@@ -67,7 +67,7 @@ MicrosoftCompiler
     ],
     [dnl Microsoft's 'cl' and 'clang-cl' produce an .asm file, whereas 'clang'
      dnl produces a .s file. Need to distinguish 'clang' and 'clang-cl'.
-     rm -f conftest*
+     rm -fr conftest*
      echo 'int dummy;' > conftest.c
      AC_TRY_COMMAND(${CC-cc} $CFLAGS $CPPFLAGS -c conftest.c) >/dev/null 2>&1
      if test -f conftest.o; then
@@ -77,7 +77,7 @@ MicrosoftCompiler
        gl_asmext='asm'
        gl_c_asm_opt='-c -Fa'
      fi
-     rm -f conftest*
+     rm -fr conftest*
     ],
     [gl_asmext='s'
      gl_c_asm_opt='-S'
