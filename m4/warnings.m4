@@ -1,6 +1,6 @@
 # warnings.m4
-# serial 20
-dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
+# serial 21
+dnl Copyright (C) 2008-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -113,7 +113,7 @@ AC_DEFUN([gl_CC_INHIBIT_WARNINGS],
   AC_REQUIRE([AC_PROG_CC])
   AC_CACHE_CHECK([for C compiler option to inhibit all warnings],
     [gl_cv_cc_winhibit],
-    [rm -f conftest*
+    [rm -fr conftest*
      echo 'int dummy;' > conftest.c
      AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS -c conftest.c 2>conftest1.err]) >/dev/null
      AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS -w -c conftest.c 2>conftest2.err]) >/dev/null
@@ -122,7 +122,7 @@ AC_DEFUN([gl_CC_INHIBIT_WARNINGS],
      else
        gl_cv_cc_winhibit=none
      fi
-     rm -f conftest*
+     rm -fr conftest*
     ])
   case "$gl_cv_cc_winhibit" in
     none) GL_CFLAG_INHIBIT_WARNINGS='' ;;
@@ -145,7 +145,7 @@ AC_DEFUN([gl_CXX_INHIBIT_WARNINGS],
   if test -n "$CXX" && test "$CXX" != no; then
     AC_CACHE_CHECK([for C++ compiler option to inhibit all warnings],
       [gl_cv_cxx_winhibit],
-      [rm -f conftest*
+      [rm -fr conftest*
        echo 'int dummy;' > conftest.cc
        AC_TRY_COMMAND([${CXX-c++} $CXXFLAGS $CPPFLAGS -c conftest.cc 2>conftest1.err]) >/dev/null
        AC_TRY_COMMAND([${CXX-c++} $CXXFLAGS $CPPFLAGS -w -c conftest.cc 2>conftest2.err]) >/dev/null
@@ -154,7 +154,7 @@ AC_DEFUN([gl_CXX_INHIBIT_WARNINGS],
        else
          gl_cv_cxx_winhibit=none
        fi
-       rm -f conftest*
+       rm -fr conftest*
       ])
     case "$gl_cv_cxx_winhibit" in
       none) GL_CXXFLAG_INHIBIT_WARNINGS='' ;;
