@@ -38,7 +38,7 @@ main (int argc, char *argv[])
 
   if (argc > 1)
     {
-      static const char input[1] = "\303";
+      static const char input[1] = {'\303'};
       wchar_t wc;
       size_t ret;
 

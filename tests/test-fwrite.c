@@ -48,7 +48,7 @@ main ()
   #if !defined __ANDROID__ /* fdsan */
   {
     FILE *fp = fopen (filename, "w");
-    char buf[5] = "world";
+    char buf[5] _GL_ATTRIBUTE_NONSTRING = "world";
     ASSERT (fp != NULL);
     setvbuf (fp, NULL, _IONBF, 0);
     ASSERT (close (fileno (fp)) == 0);
@@ -66,7 +66,7 @@ main ()
     FILE *fp = fdopen (-1, "w");
     if (fp != NULL)
       {
-        char buf[5] = "world";
+        char buf[5] _GL_ATTRIBUTE_NONSTRING = "world";
         setvbuf (fp, NULL, _IONBF, 0);
         errno = 0;
         ASSERT (fwrite (buf, 1, sizeof (buf), fp) == 0);
@@ -81,7 +81,7 @@ main ()
     fp = fdopen (99, "w");
     if (fp != NULL)
       {
-        char buf[5] = "world";
+        char buf[5] _GL_ATTRIBUTE_NONSTRING = "world";
         setvbuf (fp, NULL, _IONBF, 0);
         errno = 0;
         ASSERT (fwrite (buf, 1, sizeof (buf), fp) == 0);
