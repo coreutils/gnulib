@@ -26,8 +26,7 @@ AH_VERBATIM([unitypes_restrict], [
 #  define _UC_RESTRICT restrict
 # else
 #  define _UC_RESTRICT
-# endif
-])
+# endif])
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
