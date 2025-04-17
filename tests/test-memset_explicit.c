@@ -19,6 +19,10 @@
 
 #include <config.h>
 
+#if _GL_GNUC_PREREQ (12, 1)
+# pragma GCC diagnostic ignored "-Wuse-after-free"
+#endif
+
 /* Specification.  */
 #include <string.h>
 
