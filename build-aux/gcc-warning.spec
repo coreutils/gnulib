@@ -2,6 +2,7 @@
 --all-warnings				alias for -Wall
 --extra-warnings			alias for -Wextra
 -W					alias for -Wextra
+-WNSObject-attribute			objc and objc++
 -Wabi					this is now a no-op
 -Wabi-tag				c++
 -Wabi=					c++
@@ -20,6 +21,7 @@
 -Walloca-larger-than=<number>		FIXME: choose something sane?
 -Wampersand				fortran
 -Wanalyzer-allocation-size		enabled by -fanalyzer
+-Wanalyzer-undefined-behavior-ptrdiff	enabled by -fanalyzer
 -Wanalyzer-deref-before-check		enabled by -fanalyzer
 -Wanalyzer-double-fclose		enabled by -fanalyzer
 -Wanalyzer-double-free			enabled by -fanalyzer
@@ -102,6 +104,7 @@
 -Wc++2a-compat				c++
 -Wc-binding-type			fortran
 -Wc11-c23-compat			c compatibility
+-Wc23-c2y-compat			c compatibility
 -Wc90-c99-compat			c compatibility
 -Wc99-c11-compat			c compatibility
 -Wcalloc-transposed-args		enabled by -Wextra
@@ -110,6 +113,7 @@
 -Wcast-function-type			enabled by -Wextra
 -Wcast-qual				FIXME maybe? too much noise; encourages bad changes
 -Wcast-result				D
+-Wcast-user-defined			default
 -Wcatch-value				c++
 -Wcatch-value=<0,3>			c++
 -Wchanges-meaning			c++
@@ -128,6 +132,7 @@
 -Wconditionally-supported		c++ and objc++
 -Wconversion				FIXME maybe? too much noise; encourages bad changes
 -Wcoverage-too-many-conditions		default
+-Wcoverage-too-many-paths		default
 -Wconversion-extra			fortran
 -Wconversion-null			c++ and objc++
 -Wcoverage-invalid-line-number		default if --coverage
@@ -141,6 +146,7 @@
 -Wdangling-reference			c++ and objc++
 -Wdeclaration-after-statement		needed only for pre-C99, so obsolete
 -Wdeclaration-missing-parameter-type	default
+-Wdefaulted-function-deleted		default, c++ and objc++
 -Wdelete-incomplete			c++ and objc++
 -Wdelete-non-virtual-dtor		c++
 -Wdeprecated				default
@@ -149,6 +155,9 @@
 -Wdeprecated-declarations		default
 -Wdeprecated-enum-enum-conversion	c++ and objc++
 -Wdeprecated-enum-float-conversion	c++ and objc++
+-Wdeprecated-literal-operator		c++ and objc++
+-Wdeprecated-non-prototype		c compatibility
+-Wdeprecated-variadic-comma-omission	c++ and objc+++ compatibility
 -Wdesignated-init			default
 -Wdiscarded-array-qualifiers		default
 -Wdiscarded-qualifiers			default
@@ -165,6 +174,7 @@
 -Werror-implicit-function-declaration	deprecated
 -Wexceptions				c++ and objc++
 -Wexpansion-to-defined			enabled by -Wextra
+-Wexternal-argument-mismatch		fortran
 -Wextra-semi				c++
 -Wfloat-conversion			FIXME maybe? borderline.  some will want this
 -Wfloat-equal				FIXME maybe? borderline.  some will want this
@@ -183,10 +193,12 @@
 -Wformat=<0,2>				gcc --help=warnings artifact
 -Wframe-address				enabled by -Wall
 -Wframe-larger-than=<byte-size>		FIXME: choose something sane?
+-Wfree-labels				c and objc compatibility
 -Wfree-nonheap-object			default
 -Wfunction-elimination			fortran
 -Wglobal-module				default, c++ and objc++
 -Whardened				default
+-Wheader-guard				enabled by -Wall
 -Whsa					default
 -Wif-not-aligned			default
 -Wignored-attributes			default
@@ -218,6 +230,7 @@
 -Wjump-misses-init			only useful for code meant to be compiled by a C++ compiler
 -Wlarger-than-				gcc --help=warnings artifact
 -Wlarger-than=<byte-size>		FIXME: choose something sane?
+-Wleading-whitespace=			specific to project coding style
 -Wline-truncation			fortran
 -Wliteral-suffix			c++ and objc++
 -Wlogical-not-parentheses		enabled by -Wall
@@ -228,6 +241,7 @@
 -Wmemset-elt-size			enabled by -Wall
 -Wmemset-transposed-args		enabled by -Wall
 -Wmisleading-indentation		enabled by -Wall
+-Wmissing-parameter-name		c and objc compatibility
 -Wmismatched-dealloc			default
 -Wmismatched-new-delete			default, c++ and objc++
 -Wmismatched-special-enum		d
@@ -260,7 +274,7 @@
 -Wnonnull-compare			enabled by -Wall
 -Wnormalized				default
 -Wnormalized=[none|id|nfc|nfkc]		defaults to nfc
--WNSObject-attribute			objc and objc++
+-Wnrvo					c++ and objc++
 -Wobjc-root-class			objc and objc++
 -Wodr					default
 -Wold-style-cast			c++ and objc++
@@ -285,6 +299,7 @@
 -Wpointer-compare			default
 -Wpointer-sign				enabled by -Wall
 -Wpointer-to-int-cast			default
+-Wpragma-once-outside-header		default
 -Wpragmas				default
 -Wprio-ctor-dtor			c++
 -Wproperty-assign-default		objc++
@@ -352,11 +367,15 @@
 -Wtabs					fortran
 -Wtarget-lifetime			fortran
 -Wtautological-compare			enabled by -Wall
+-Wtemplate-body				default, c++ and objc++
 -Wtemplate-id-cdtor			default, c++ and objc++
+-Wtemplate-names-tu-local		enabled by -Wextra, c++
 -Wtemplates				c++ and objc++
 -Wterminate				c++ and objc++
 -Wtraditional				obsolescent
 -Wtraditional-conversion		obsolescent
+-Wtrailing-whitespace			specific to project coding style
+-Wtrailing-whitespace=			specific to project coding style
 -Wtrigraphs				enabled by -Wall
 -Wtrivial-auto-var-init			subsumed by -Wmaybe-uninitialized
 -Wtsan					default
@@ -368,6 +387,7 @@
 -Wunicode				default
 -Wunreachable-code			obsolescent no-op
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
+-Wunterminated-string-initialization	enabled by -Wextra
 -Wunused				enabled by -Wall
 -Wunused-but-set-parameter		enabled by -Wunused
 -Wunused-but-set-variable		enabled by -Wunused
