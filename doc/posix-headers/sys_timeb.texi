@@ -1,7 +1,8 @@
 @node sys/timeb.h
 @section @file{sys/timeb.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/009695399/basedefs/sys/timeb.h.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification:@* @url{https://pubs.opengroup.org/onlinepubs/009695399/basedefs/sys/timeb.h.html}
 
 Gnulib module: ---
 

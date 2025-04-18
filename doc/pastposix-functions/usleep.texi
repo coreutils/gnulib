@@ -3,7 +3,7 @@
 @findex usleep
 
 Removed in POSIX.1-2008.
-POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/usleep.html}
+POSIX.1-2004 specification:@* @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/usleep.html}
 
 Gnulib module: usleep
 @mindex usleep
