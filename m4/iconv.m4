@@ -1,5 +1,5 @@
 # iconv.m4
-# serial 29
+# serial 30
 dnl Copyright (C) 2000-2002, 2007-2014, 2016-2025 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -82,7 +82,7 @@ AC_DEFUN([AM_ICONV_LINK],
         LIBS="$LIBS $LIBICONV"
       fi
       am_cv_func_iconv_works=no
-      for ac_iconv_const in '/*empty*/' 'const'; do
+      for ac_iconv_const in '' 'const'; do
         AC_RUN_IFELSE(
           [AC_LANG_PROGRAM(
              [[
@@ -292,7 +292,7 @@ size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, si
     gl_cv_iconv_nonconst=yes
   fi
   if test $gl_cv_iconv_nonconst = yes; then
-    iconv_arg1="/*empty*/"
+    iconv_arg1=""
   else
     iconv_arg1="const"
   fi
@@ -301,7 +301,10 @@ size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, si
   dnl Also substitute ICONV_CONST in the gnulib generated <iconv.h>.
   m4_ifdef([gl_ICONV_H_DEFAULTS],
     [AC_REQUIRE([gl_ICONV_H_DEFAULTS])
-     ICONV_CONST=$iconv_arg1])
+     if test $gl_cv_iconv_nonconst != yes; then
+       ICONV_CONST="const"
+     fi
+    ])
 
   dnl A summary result, for those packages which want to print a summary at the
   dnl end of the configuration.
