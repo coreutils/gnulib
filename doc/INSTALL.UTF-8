@@ -104,6 +104,19 @@ editing ‘configure’ directly.
   9. If the package follows the GNU Coding Standards, you can type ‘make
      uninstall’ to remove the installed files.
 
+Installation Prerequisites
+==========================
+
+   Installation requires a POSIX-like environment with a shell and at
+least the following standard utilities:
+
+     awk cat cp diff echo expr false
+     grep ls mkdir mv printf pwd
+     rm rmdir sed sort test tr
+
+This package’s installation may need other standard utilities such as
+‘cmp’, ‘make’, ‘sleep’ and ‘touch’, along with compilers like ‘gcc’.
+
 Compilers and Options
 =====================
 
@@ -359,7 +372,7 @@ more details.
 Copyright notice
 ================
 
-   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2024 Free Software
+   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2025 Free Software
 Foundation, Inc.
 
    Copying and distribution of this file, with or without modification,
