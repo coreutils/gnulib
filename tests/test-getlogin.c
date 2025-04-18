@@ -43,11 +43,13 @@ main (void)
   test_getlogin_result (buf, err);
 
   /* Check that getlogin() does not merely return getenv ("LOGNAME").  */
-  static char set_LOGNAME[] = "LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke";
-  putenv (set_LOGNAME);
-  buf = getlogin ();
-  ASSERT (!(buf != NULL
-            && strcmp (buf, set_LOGNAME + sizeof "LOGNAME") == 0));
+  {
+    static char set_LOGNAME[] = "LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke";
+    putenv (set_LOGNAME);
+    buf = getlogin ();
+    ASSERT (!(buf != NULL
+              && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
+  }
 
   return test_exit_status;
 }

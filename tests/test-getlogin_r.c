@@ -26,8 +26,6 @@
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
 #endif
 
-#include "xalloc.h"
-
 #include "test-getlogin.h"
 
 int
@@ -72,9 +70,12 @@ main (void)
   }
 
   /* Check that getlogin_r() does not merely return getenv ("LOGNAME").  */
-  putenv (xstrdup ("LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke"));
-  err = getlogin_r (buf, sizeof buf);
-  ASSERT (!(err == 0 && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
+  {
+    static char set_LOGNAME[] = "LOGNAME=ygvfibmslhkmvoetbrcegzwydorcke";
+    putenv (set_LOGNAME);
+    err = getlogin_r (buf, sizeof buf);
+    ASSERT (!(err == 0 && strcmp (buf, "ygvfibmslhkmvoetbrcegzwydorcke") == 0));
+  }
 
   return test_exit_status;
 }
