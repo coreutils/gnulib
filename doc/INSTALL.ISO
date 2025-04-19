@@ -110,12 +110,11 @@ Installation Prerequisites
    Installation requires a POSIX-like environment with a shell and at
 least the following standard utilities:
 
-     awk cat cp diff echo expr false
-     grep ls mkdir mv printf pwd
-     rm rmdir sed sort test tr
+     awk cat cp diff echo expr false ls mkdir mv printf pwd rm rmdir sed
+     sort test tr
 
 This package's installation may need other standard utilities such as
-'cmp', 'make', 'sleep' and 'touch', along with compilers like 'gcc'.
+'grep', 'make', 'sleep' and 'touch', along with compilers like 'gcc'.
 
 Compilers and Options
 =====================

@@ -138,15 +138,15 @@ you can type @samp{make uninstall} to remove the installed files.
 Installation requires a POSIX-like environment
 with a shell and at least the following standard utilities:
 
-@example
-awk cat cp diff echo expr false
-grep ls mkdir mv printf pwd
-rm rmdir sed sort test tr
-@end example
+@quotation
+@t{awk cat cp diff echo expr false
+ls mkdir mv printf pwd
+rm rmdir sed sort test tr}
+@end quotation
 
 @noindent
 This package's installation may need other standard utilities such as
-@command{cmp}, @command{make}, @command{sleep} and @command{touch},
+@command{grep}, @command{make}, @command{sleep} and @command{touch},
 along with compilers like @command{gcc}.
 
 @node Compilers and Options
