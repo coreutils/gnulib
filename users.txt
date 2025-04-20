@@ -36,6 +36,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gnuit           https://git.savannah.gnu.org/gitweb/?p=gnuit.git;a=tree
   gnutls          https://www.gnutls.org/
                   https://gitlab.com/gnutls/gnutls.git
+  gperf           https://git.savannah.gnu.org/gitweb/?p=gperf.git;a=tree
   grep            https://git.savannah.gnu.org/gitweb/?p=grep.git;a=tree
   groff           https://git.savannah.gnu.org/gitweb/?p=groff.git;a=tree
   grub            https://git.savannah.gnu.org/gitweb/?p=grub.git;a=tree
