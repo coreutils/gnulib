@@ -499,8 +499,9 @@ getloadavg (double loadavg[], int nelem)
   }
 # endif
 
-# if !defined (LDAV_DONE) && (defined __linux__ || defined __ANDROID__)
-                                      /* Linux without glibc, Android, Cygwin */
+# if (!defined LDAV_DONE \
+      && (defined __ANDROID__ ? 13 <= __ANDROID_API__ : __defined __linux__))
+                    /* non-Android Linux without glibc, Android 3.2+, Cygwin */
 #  define LDAV_DONE
 #  undef LOAD_AVE_TYPE
 
@@ -513,7 +514,7 @@ getloadavg (double loadavg[], int nelem)
     loadavg[2] = info.loads[2] / (double)(1U << SI_LOAD_SHIFT);
     elem = 3;
   }
-# endif /* __linux__ || __ANDROID__ */
+# endif /* __ANDROID__ ? 13 <= __ANDROID_API__ : __linux__ */
 
 # if !defined (LDAV_DONE) && defined __CYGWIN__
                                       /* Cygwin */
