@@ -28,5 +28,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item This function returns @code{const char *} instead of @code{char *} on
 some platforms:
-cygwin 1.5.25.
+@c https://dev.haiku-os.org/ticket/19537
+cygwin 1.5.25, Haiku.
 @end itemize

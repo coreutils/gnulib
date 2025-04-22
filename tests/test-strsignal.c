@@ -21,7 +21,9 @@
 #include <string.h>
 
 #include "signature.h"
+#if !defined __HAIKU__
 SIGNATURE_CHECK (strsignal, char *, (int));
+#endif
 
 #include <signal.h>
 
