@@ -500,7 +500,7 @@ getloadavg (double loadavg[], int nelem)
 # endif
 
 # if (!defined LDAV_DONE \
-      && (defined __ANDROID__ ? 13 <= __ANDROID_API__ : __defined __linux__))
+      && (defined __ANDROID__ ? 13 <= __ANDROID_API__ : defined __linux__))
                     /* non-Android Linux without glibc, Android 3.2+, Cygwin */
 #  define LDAV_DONE
 #  undef LOAD_AVE_TYPE
