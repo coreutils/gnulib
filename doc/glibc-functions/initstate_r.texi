@@ -39,5 +39,5 @@ glibc 2.36/sparc.
 @item
 This function has a slightly different (but compatible) declaration on some
 platforms:
-Haiku 2017.
+Haiku.
 @end itemize
