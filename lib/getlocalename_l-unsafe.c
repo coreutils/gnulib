@@ -14,6 +14,10 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the locale == NULL tests below.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <config.h>
 
 /* Specification.  */
