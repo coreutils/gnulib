@@ -1,5 +1,5 @@
 /* Test program for tsearch et al.
-   Copyright (C) 1997, 2000-2001, 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2000-2001, 2007-2025 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software: you can redistribute it and/or
@@ -22,8 +22,10 @@
 #include "signature.h"
 SIGNATURE_CHECK (tdelete, void *, (void const *, void **,
                                    int (*) (void const *, void const *)));
+#if !defined __CYGWIN__
 SIGNATURE_CHECK (tfind, void *, (void const *, void * const *,
                                  int (*) (void const *, void const *)));
+#endif
 SIGNATURE_CHECK (tsearch, void *, (void const *, void **,
                                    int (*) (void const *, void const *)));
 SIGNATURE_CHECK (twalk, void, (void const *,
