@@ -1,0 +1,18 @@
+Description:
+Support for compiling Modula-2 programs.
+
+Files:
+m4/modula2comp.m4
+
+Depends-on:
+
+configure.ac:
+AC_REQUIRE([gt_MODULA2COMP])
+
+Makefile.am:
+
+License:
+GPLed build tool
+
+Maintainer:
+all
