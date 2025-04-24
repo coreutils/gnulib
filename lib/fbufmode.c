@@ -33,12 +33,12 @@ fbufmode (FILE *fp)
   /* Most systems provide FILE as a struct and the necessary bitmask in
      <stdio.h>, because they need it for implementing getc() and putc() as
      fast macros.  */
-#if defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
+#if (defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1) && !(defined __HAIKU__ && HAVE___FLBF && HAVE___FBUFSIZE)
+  /* GNU libc, BeOS, Haiku < hrev58760, Linux libc5 */
 # if !defined __HAIKU__
 #  define fp_ fp
 # endif
-  /* GNU libc, BeOS, Haiku, Linux libc5 */
-# if HAVE___FLBF                    /* glibc >= 2.2, Haiku >= hrev58760 */
+# if HAVE___FLBF                    /* glibc >= 2.2 */
   if (__flbf (fp))
     return _IOLBF;
 # else
@@ -93,7 +93,7 @@ fbufmode (FILE *fp)
   if (fp->__linebuf)
     return _IOLBF;
   return (fp->__bufsize > 0 ? _IOFBF : _IONBF);
-#elif HAVE___FLBF && HAVE___FBUFSIZE /* musl libc */
+#elif HAVE___FLBF && HAVE___FBUFSIZE /* musl libc, Haiku >= hrev58760 */
   if (__flbf (fp))
     return _IOLBF;
   return (__fbufsize (fp) > 0 ? _IOFBF : _IONBF);
