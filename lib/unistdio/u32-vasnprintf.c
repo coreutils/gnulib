@@ -49,6 +49,7 @@
 #define DCHAR_T uint32_t
 #define DCHAR_CPY u32_cpy
 #define DCHAR_SET u32_set
+#define DCHAR_STRLEN u32_strlen
 #define DCHAR_MBSNLEN u32_mbsnlen
 #define DCHAR_IS_UINT32_T 1
 #define U8_TO_DCHAR u8_to_u32

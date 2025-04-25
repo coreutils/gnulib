@@ -49,6 +49,7 @@
 #define DCHAR_T char
 #define DCHAR_CPY memcpy
 #define DCHAR_SET memset
+#define DCHAR_STRLEN strlen
 #define DCHAR_MBSNLEN mbsnlen
 #define TCHAR_T char
 #define DCHAR_IS_TCHAR 1

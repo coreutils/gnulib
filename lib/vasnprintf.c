@@ -29,6 +29,7 @@
                         Depends on FCHAR_T.
      DCHAR_CPY          memcpy like function for DCHAR_T[] arrays.
      DCHAR_SET          memset like function for DCHAR_T[] arrays.
+     DCHAR_STRLEN       strlen like function for DCHAR_T[] arrays.
      DCHAR_MBSNLEN      mbsnlen like function for DCHAR_T[] arrays.
      SNPRINTF           The system's snprintf (or similar) function.
                         This may be either snprintf or swprintf.
@@ -181,6 +182,13 @@
 # else
    /* Old platforms such as NetBSD 3.0, OpenBSD 3.8, HP-UX 11.00, IRIX 6.5.  */
 #   define TCHAR_T char
+# endif
+#endif
+#ifndef DCHAR_STRLEN
+# if WIDE_CHAR_VERSION
+#  define DCHAR_STRLEN local_wcslen
+# else
+#  define DCHAR_STRLEN strlen
 # endif
 #endif
 #ifndef DCHAR_MBSNLEN
@@ -439,8 +447,43 @@ thousands_separator_char (char stackbuf[10])
 }
 # endif
 #endif
-/* Maximum number of 'char' in the char[] representation of the thousands
-   separator.  */
+#if !WIDE_CHAR_VERSION && defined DCHAR_CONV_FROM_ENCODING && (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE)
+/* Determine the thousands-separator character, as a DCHAR_T[] array,
+   according to the current locale.
+   It is a single Unicode character.  */
+# ifndef thousands_separator_DCHAR_defined
+#  define thousands_separator_DCHAR_defined 1
+static const DCHAR_T *
+thousands_separator_DCHAR (DCHAR_T stackbuf[10])
+{
+  /* Determine it in a multithread-safe way.  */
+  char tmpbuf[10];
+  const char *tmp = thousands_separator_char (tmpbuf);
+  if (*tmp != '\0')
+    {
+      /* Convert it from char[] to DCHAR_T[].  */
+      size_t converted_len = 10;
+      DCHAR_T *converted =
+        DCHAR_CONV_FROM_ENCODING (locale_charset (),
+                                  iconveh_question_mark,
+                                  tmp, strlen (tmp) + 1,
+                                  NULL,
+                                  stackbuf, &converted_len);
+      if (converted != NULL)
+        {
+          if (converted != stackbuf)
+            /* It should not be so long.  */
+            abort ();
+          return stackbuf;
+        }
+    }
+  stackbuf[0] = 0;
+  return stackbuf;
+}
+# endif
+#endif
+/* Maximum number of 'char' in the char[] or DCHAR_T[] representation of the
+   thousands separator.  */
 #define THOUSEP_CHAR_MAXLEN 3
 
 #if WIDE_CHAR_VERSION && ((NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) || ((NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT) && DCHAR_IS_TCHAR))
@@ -5219,6 +5262,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                         /* DCHAR_T is wchar_t.  */
                                         thousep = thousands_separator_wchar (thousep_buf);
 #                                       define thousep_len 1
+#   elif defined DCHAR_CONV_FROM_ENCODING
+                                        /* DCHAR_T is uintN_t.  */
+                                        thousep = thousands_separator_DCHAR (thousep_buf);
+                                        thousep_len = DCHAR_STRLEN (thousep);
 #   else
                                         /* DCHAR_T is char.  */
                                         thousep = thousands_separator_char (thousep_buf);
@@ -5254,7 +5301,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             *--p = thousep[0];
 #   else
                                             p -= thousep_len;
-                                            memcpy (p, thousep, thousep_len);
+                                            DCHAR_CPY (p, thousep, thousep_len);
 #   endif
                                             insert--;
                                             if (insert == 0)
@@ -5545,6 +5592,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                 /* DCHAR_T is wchar_t.  */
                                                 thousep = thousands_separator_wchar (thousep_buf);
 #                                               define thousep_len 1
+#   elif defined DCHAR_CONV_FROM_ENCODING
+                                                /* DCHAR_T is uintN_t.  */
+                                                thousep = thousands_separator_DCHAR (thousep_buf);
+                                                thousep_len = DCHAR_STRLEN (thousep);
 #   else
                                                 /* DCHAR_T is char.  */
                                                 thousep = thousands_separator_char (thousep_buf);
@@ -5580,7 +5631,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     *--p = thousep[0];
 #   else
                                                     p -= thousep_len;
-                                                    memcpy (p, thousep, thousep_len);
+                                                    DCHAR_CPY (p, thousep, thousep_len);
 #   endif
                                                     insert--;
                                                     if (insert == 0)
@@ -5819,6 +5870,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                         /* DCHAR_T is wchar_t.  */
                                         thousep = thousands_separator_wchar (thousep_buf);
 #                                       define thousep_len 1
+#   elif defined DCHAR_CONV_FROM_ENCODING
+                                        /* DCHAR_T is uintN_t.  */
+                                        thousep = thousands_separator_DCHAR (thousep_buf);
+                                        thousep_len = DCHAR_STRLEN (thousep);
 #   else
                                         /* DCHAR_T is char.  */
                                         thousep = thousands_separator_char (thousep_buf);
@@ -5854,7 +5909,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             *--p = thousep[0];
 #   else
                                             p -= thousep_len;
-                                            memcpy (p, thousep, thousep_len);
+                                            DCHAR_CPY (p, thousep, thousep_len);
 #   endif
                                             insert--;
                                             if (insert == 0)
@@ -6153,6 +6208,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                 /* DCHAR_T is wchar_t.  */
                                                 thousep = thousands_separator_wchar (thousep_buf);
 #                                               define thousep_len 1
+#   elif defined DCHAR_CONV_FROM_ENCODING
+                                                /* DCHAR_T is uintN_t.  */
+                                                thousep = thousands_separator_DCHAR (thousep_buf);
+                                                thousep_len = DCHAR_STRLEN (thousep);
 #   else
                                                 /* DCHAR_T is char.  */
                                                 thousep = thousands_separator_char (thousep_buf);
@@ -6188,7 +6247,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     *--p = thousep[0];
 #   else
                                                     p -= thousep_len;
-                                                    memcpy (p, thousep, thousep_len);
+                                                    DCHAR_CPY (p, thousep, thousep_len);
 #   endif
                                                     insert--;
                                                     if (insert == 0)

@@ -49,6 +49,7 @@
 #define DCHAR_T uint16_t
 #define DCHAR_CPY u16_cpy
 #define DCHAR_SET u16_set
+#define DCHAR_STRLEN u16_strlen
 #define DCHAR_MBSNLEN u16_mbsnlen
 #define DCHAR_IS_UINT16_T 1
 #define U8_TO_DCHAR u8_to_u16
