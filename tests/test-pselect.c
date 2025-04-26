@@ -20,9 +20,11 @@
 
 #include "signature.h"
 
+#if !defined _AIX
 SIGNATURE_CHECK (pselect, int,
                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
                   struct timespec const *restrict, const sigset_t *restrict));
+#endif
 
 #define TEST_PORT 12347
 #include "test-select.h"
