@@ -1,5 +1,5 @@
 /* Test of pselect() substitute.
-   Copyright (C) 2011-2024 Free Software Foundation, Inc.
+   Copyright (C) 2011-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,9 +20,11 @@
 
 #include "signature.h"
 
+#if !defined _AIX
 SIGNATURE_CHECK (pselect, int,
                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
                   struct timespec const *restrict, const sigset_t *restrict));
+#endif
 
 #define TEST_PORT 12347
 #include "test-select.h"
