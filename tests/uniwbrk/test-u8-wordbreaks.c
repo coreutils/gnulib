@@ -31,7 +31,7 @@ main ()
   u8_wordbreaks (NULL, 0, NULL);
 
   {
-    static const uint8_t input[91] =
+    static const uint8_t input[91] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gr\303\274\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\271\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\355\225\234\352\270\200\n";
     char *p = (char *) malloc (SIZEOF (input));
@@ -58,7 +58,7 @@ main ()
 
   {
     /* Same input string, decomposed.  */
-    static const uint8_t input[106] =
+    static const uint8_t input[106] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gru\314\210\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\270\314\206\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\341\204\222\341\205\241\341\206\253\341\204\200\341\205\263\341\206\257\n";
     char *p = (char *) malloc (SIZEOF (input));
@@ -85,7 +85,7 @@ main ()
 
   /* CR LF handling.  */
   {
-    static const uint8_t input[8] = "a\nb\rc\r\nd";
+    static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING = "a\nb\rc\r\nd";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
@@ -101,7 +101,7 @@ main ()
 
   /* Test regional indicators.  */
   {
-    static const uint8_t input[18] =
+    static const uint8_t input[18] _GL_ATTRIBUTE_NONSTRING =
       ".\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267.";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;

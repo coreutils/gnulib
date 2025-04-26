@@ -33,7 +33,7 @@ test_function (void (*my_ulc_possible_linebreaks) (const char *, size_t, const c
 
 #if HAVE_ICONV
   {
-    static const char input[36] =
+    static const char input[36] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
     char *p = (char *) malloc (SIZEOF (input));
@@ -52,7 +52,8 @@ test_function (void (*my_ulc_possible_linebreaks) (const char *, size_t, const c
 
   /* Test line breaking in a string with HTML markup.  */
   {
-    static const char input[21] = "<P>Some sentence.</P>";
+    static const char input[21] _GL_ATTRIBUTE_NONSTRING =
+      "<P>Some sentence.</P>";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 

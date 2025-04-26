@@ -32,7 +32,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   my_u8_possible_linebreaks (NULL, 0, "GB18030", NULL);
 
   {
-    static const uint8_t input[91] =
+    static const uint8_t input[91] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gr\303\274\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\271\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\355\225\234\352\270\200\n";
 
@@ -77,7 +77,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* CR LF handling.  */
   {
-    static const uint8_t input[8] = "a\nb\rc\r\nd";
+    static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING = "a\nb\rc\r\nd";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
@@ -94,7 +94,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   /* Test that a break is possible after a zero-width space followed by some
      regular spaces (rule LB8 in Unicode TR#14 revision 26).  */
   {
-    static const uint8_t input[6] = "x\342\200\213 y";
+    static const uint8_t input[6] _GL_ATTRIBUTE_NONSTRING = "x\342\200\213 y";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
@@ -108,7 +108,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test line breaking in a string with HTML markup.  */
   {
-    static const uint8_t input[21] = "<P>Some sentence.</P>";
+    static const uint8_t input[21] _GL_ATTRIBUTE_NONSTRING = "<P>Some sentence.</P>";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
@@ -123,7 +123,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test line breaking of combining marks.  */
   {
-    static const uint8_t input[24] =
+    static const uint8_t input[24] _GL_ATTRIBUTE_NONSTRING =
       "a\314\200\314\201e\314\200 \314\201o \314\200 o\302\240\314\200\n"
       "\314\200";
     char *p = (char *) malloc (SIZEOF (input));
@@ -141,7 +141,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test line breaking of zero-width joiners (U+200D).  */
   {
-    static const uint8_t input[101] =
+    static const uint8_t input[101] _GL_ATTRIBUTE_NONSTRING =
       "\346\234\211\347\204\241\347\252\256\345\244\232\345\200\213\347\264\240\346\225\270\343\200\202\n" /* "有無窮多個素數。" */
       "\346\234\211\342\200\215\347\204\241\342\200\215\347\252\256\345\244\232\345\200\213\347\264\240\342\200\215\346\225\270\343\200\202\n"
       "\344\275\240\342\200\224\344\270\215\n" /* "你—不" */
@@ -168,7 +168,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test line breaking of regional indicators.  */
   {
-    static const uint8_t input[16] =
+    static const uint8_t input[16] _GL_ATTRIBUTE_NONSTRING =
       "\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
@@ -184,7 +184,7 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   /* Test special behaviour of hyphen/break-after character after
      Hebrew letter.  */
   {
-    static const uint8_t input[15] = /* "ab-אב-αβ-ω" */
+    static const uint8_t input[15] _GL_ATTRIBUTE_NONSTRING = /* "ab-אב-αβ-ω" */
       "ab-\327\220\327\221-\316\261\316\262-\317\211";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
@@ -200,7 +200,8 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test special behaviour before East Asian opening parenthesis (LB30).  */
   {
-    static const uint8_t input[49] = /* "日中韓統合漢字拡張G「ユニコード」" */
+    static const uint8_t input[49] _GL_ATTRIBUTE_NONSTRING =
+      /* "日中韓統合漢字拡張G「ユニコード」" */
       "\346\227\245\344\270\255\351\237\223\347\265\261\345\220\210\346\274\242"
       "\345\255\227\346\213\241\345\274\265G\343\200\214\343\203\246"
       "\343\203\213\343\202\263\343\203\274\343\203\211\343\200\215";
@@ -221,7 +222,8 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
   /* Test special behaviour of potential future emoji (LB30b).  */
   {
-    static const uint8_t input[8] = "\360\237\277\274\360\237\217\277";
+    static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING =
+      "\360\237\277\274\360\237\217\277";
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 

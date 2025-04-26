@@ -37,7 +37,7 @@ main ()
 
 #if HAVE_ICONV
   {
-    static const char input[36] =
+    static const char input[36] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
     char *p = (char *) malloc (SIZEOF (input));

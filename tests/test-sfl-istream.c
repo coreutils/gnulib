@@ -90,7 +90,7 @@ test_open_stream (sfl_istream_t *stream)
 int
 main ()
 {
-  char const contents[CONTENTS_LEN] = CONTENTS;
+  char const contents[CONTENTS_LEN] _GL_ATTRIBUTE_NONSTRING = CONTENTS;
 
   /* Test reading from a file.  */
   {

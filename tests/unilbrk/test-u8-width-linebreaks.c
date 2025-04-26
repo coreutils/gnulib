@@ -32,7 +32,7 @@ test_function (int (*my_u8_width_linebreaks) (const uint8_t *, size_t, int, int,
   my_u8_width_linebreaks (NULL, 0, 80, 0, 0, NULL, "GB18030", NULL);
 
   {
-    static const uint8_t input[91] =
+    static const uint8_t input[91] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gr\303\274\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\271\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\355\225\234\352\270\200\n";
 
