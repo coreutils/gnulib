@@ -926,7 +926,7 @@ vbitset_free (bitset bset)
 
 
 /* Vector of operations for multiple word bitsets.  */
-struct bitset_vtable vbitset_vtable = {
+static struct bitset_vtable vbitset_vtable = {
   vbitset_set,
   vbitset_reset,
   bitset_toggle_,

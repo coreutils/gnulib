@@ -1194,7 +1194,7 @@ lbitset_xor (bitset dst, bitset src1, bitset src2)
 
 
 /* Vector of operations for linked-list bitsets.  */
-struct bitset_vtable lbitset_vtable = {
+static struct bitset_vtable lbitset_vtable = {
   lbitset_set,
   lbitset_reset,
   bitset_toggle_,

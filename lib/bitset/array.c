@@ -625,7 +625,7 @@ abitset_copy (bitset dst, bitset src)
 
 
 /* Vector of operations for single word bitsets.  */
-struct bitset_vtable abitset_small_vtable = {
+static struct bitset_vtable abitset_small_vtable = {
   abitset_set,
   abitset_reset,
   bitset_toggle_,
@@ -663,7 +663,7 @@ struct bitset_vtable abitset_small_vtable = {
 
 
 /* Vector of operations for multiple word bitsets.  */
-struct bitset_vtable abitset_vtable = {
+static struct bitset_vtable abitset_vtable = {
   abitset_set,
   abitset_reset,
   bitset_toggle_,

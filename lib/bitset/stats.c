@@ -98,8 +98,8 @@ struct bitset_stats_info_struct
 };
 
 
-struct bitset_stats_info_struct bitset_stats_info_data;
-struct bitset_stats_info_struct *bitset_stats_info;
+static struct bitset_stats_info_struct bitset_stats_info_data;
+static struct bitset_stats_info_struct *bitset_stats_info;
 bool bitset_stats_enabled = false;
 
 
@@ -636,7 +636,7 @@ bitset_stats_free (bitset bset)
 }
 
 
-struct bitset_vtable bitset_stats_vtable = {
+static struct bitset_vtable bitset_stats_vtable = {
   bitset_stats_set,
   bitset_stats_reset,
   bitset_stats_toggle,

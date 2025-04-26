@@ -1093,7 +1093,7 @@ tbitset_copy (bitset dst, bitset src)
 
 
 /* Vector of operations for linked-list bitsets.  */
-struct bitset_vtable tbitset_vtable = {
+static struct bitset_vtable tbitset_vtable = {
   tbitset_set,
   tbitset_reset,
   bitset_toggle_,
