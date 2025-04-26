@@ -16,6 +16,13 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+/* Specification.  */
+#include "argp.h"
+
 /* If set by the user program, it should point to string that is the
    bug-reporting address for the program.  It will be printed by argp_help if
    the ARGP_HELP_BUG_ADDR flag is set (as it is by various standard help
