@@ -26,6 +26,12 @@
 #include <unistd.h>
 #include <errno.h>
 
+/* It is normal that stdopen() opens file descriptors without closing them.
+   Tell GCC not to warn about it.  */
+#if _GL_GNUC_PREREQ (13, 1)
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 /* Try to ensure that all of the standard file numbers (0, 1, 2)
    are in use.  Without this, each application would have to guard
    every call to open, dup, fopen, etc. with tests to ensure they
