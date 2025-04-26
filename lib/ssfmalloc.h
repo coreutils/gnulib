@@ -503,7 +503,7 @@ free_small_block_in_page (uintptr_t block, uintptr_t page)
 }
 
 /* Management of pages of small blocks.  */
-struct page_pool small_block_pages =
+static struct page_pool small_block_pages =
   {
     init_small_block_page_pool,
     init_small_block_page,
@@ -672,7 +672,7 @@ free_medium_block_in_page (uintptr_t block, uintptr_t page)
 }
 
 /* Management of pages of medium blocks.  */
-struct page_pool medium_block_pages =
+static struct page_pool medium_block_pages =
   {
     init_medium_block_page_pool,
     init_medium_block_page,
