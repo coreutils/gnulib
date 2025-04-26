@@ -38,7 +38,7 @@
  * the slice-by-8 algorithm which uses 8 tables from in 8-bit
  * increments from make_crc_table(8) to make_crc_table(64)
  */
-unsigned long crc_table[256];
+static unsigned long crc_table[256];
 
 static void
 make_crc_table (int bits)
