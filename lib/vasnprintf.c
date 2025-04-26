@@ -2517,7 +2517,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     TCHAR_T *buf;
     TCHAR_T *buf_malloced;
     const FCHAR_T *cp;
-    size_t i;
+    size_t di;
     DIRECTIVE *dp;
     /* Output string accumulator.  */
     DCHAR_T *result;
@@ -2581,7 +2581,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #define ENSURE_ALLOCATION(needed) \
   ENSURE_ALLOCATION_ELSE((needed), goto out_of_memory; )
 
-    for (cp = format, i = 0, dp = &d.dir[0]; ; cp = dp->dir_end, i++, dp++)
+    for (cp = format, di = 0, dp = &d.dir[0]; ; cp = dp->dir_end, di++, dp++)
       {
         if (cp != dp->dir_start)
           {
@@ -2604,7 +2604,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 while (--n > 0);
               }
           }
-        if (i == d.count)
+        if (di == d.count)
           break;
 
         /* Execute a single directive.  */
