@@ -117,6 +117,9 @@ AC_DEFUN([gl_COMMON_BODY], [
 #  define _GL_HAS_ATTRIBUTE(attr) __has_attribute (__##attr##__)
 # else
 #  define _GL_HAS_ATTRIBUTE(attr) _GL_ATTR_##attr
+/* The following lines list the first GCC version that supports the attribute.
+   Although the lines are not used in GCC 5 and later (as GCC 5 introduced
+   __has_attribute support), list GCC versions 5+ anyway for completeness.  */
 #  define _GL_ATTR_alloc_size _GL_GNUC_PREREQ (4, 3)
 #  define _GL_ATTR_always_inline _GL_GNUC_PREREQ (3, 2)
 #  define _GL_ATTR_artificial _GL_GNUC_PREREQ (4, 3)
@@ -141,10 +144,10 @@ AC_DEFUN([gl_COMMON_BODY], [
 #  define _GL_ATTR_nothrow _GL_GNUC_PREREQ (3, 3)
 #  define _GL_ATTR_packed _GL_GNUC_PREREQ (2, 7)
 #  define _GL_ATTR_pure _GL_GNUC_PREREQ (2, 96)
-#  define _GL_ATTR_reproducible 0 /* not yet supported, as of GCC 14 */
+#  define _GL_ATTR_reproducible _GL_GNUC_PREREQ (15, 1)
 #  define _GL_ATTR_returns_nonnull _GL_GNUC_PREREQ (4, 9)
 #  define _GL_ATTR_sentinel _GL_GNUC_PREREQ (4, 0)
-#  define _GL_ATTR_unsequenced 0 /* not yet supported, as of GCC 14 */
+#  define _GL_ATTR_unsequenced _GL_GNUC_PREREQ (15, 1)
 #  define _GL_ATTR_unused _GL_GNUC_PREREQ (2, 7)
 #  define _GL_ATTR_warn_unused_result _GL_GNUC_PREREQ (3, 4)
 # endif

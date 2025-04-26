@@ -1076,7 +1076,7 @@ limitations.
 
 @item
 GCC 14 defines @code{nullptr_t} even when @code{<stddef.h>} is not
-included.  This bug should be fixed in GCC 15.
+included.  This bug is fixed in GCC 15.
 @end itemize
 
 @node static_assert
