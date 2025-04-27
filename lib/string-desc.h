@@ -20,7 +20,7 @@
 #define _STRING_DESC_H 1
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
-   _GL_ATTRIBUTE_NODISCARD.  */
+   _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NONNULL_IF_NONZERO.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -124,7 +124,8 @@ extern ptrdiff_t sd_contains (string_desc_t haystack, string_desc_t needle);
 extern string_desc_t sd_new_empty (void);
 
 /* Construct and return a string of length N, at the given memory address.  */
-extern string_desc_t sd_new_addr (idx_t n, char *addr);
+extern string_desc_t sd_new_addr (idx_t n, char *addr)
+  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
 
 /* Return a string that represents the C string S, of length strlen (S).  */
 extern string_desc_t sd_from_c (const char *s);
