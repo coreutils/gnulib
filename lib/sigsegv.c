@@ -684,7 +684,12 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
      - 'ucontext_t' and 'struct __darwin_ucontext' in <sys/_structs.h>,
      - 'struct __darwin_mcontext' in <ppc/_structs.h>, and
      - 'struct __darwin_ppc_thread_state' in <mach/ppc/_structs.h>.  */
-#  define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext->__ss.__r1
+#  if !(defined _STRUCT_MCONTEXT || defined _STRUCT_MCONTEXT32 || defined _STRUCT_MCONTEXT64)
+/* Mac OS X 10.4 and earlier omitted the underscores.  */
+#   define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext->ss.r1
+#  else
+#   define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext->__ss.__r1
+#  endif
 
 # endif
 
