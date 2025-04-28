@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 44
+# serial 45
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -529,7 +529,7 @@ AC_DEFUN([gl_THREADLIB_BODY],
         AS_IF([test $gl_pthread_api = yes], [
           AS_IF([test "$gl_use_threads" = isoc+posix &&
                  test "$gl_have_isoc_threads" = yes], [
-            gl_threads_api=isoc+posix
+            gl_threads_api="isoc+posix"
             AC_DEFINE([USE_ISOC_AND_POSIX_THREADS], [1],
               [Define if the combination of the ISO C and POSIX multithreading APIs can be used.])
             LIBTHREAD= LTLIBTHREAD=
@@ -564,16 +564,16 @@ AC_DEFUN([gl_THREADLIB_BODY],
           ])
         ])
        ])
-    AS_CASE([$gl_threads_api@$gl_use_threads@$gl_have_isoc_threads],
-      [none@isoc@yes],
-       [
+    AS_IF([test $gl_threads_api = none], [
+      AS_IF([test "$gl_use_threads" = isoc && test "$gl_have_isoc_threads" = yes], [
         gl_STDTHREADLIB_BODY
         LIBTHREAD=$LIBSTDTHREAD LTLIBTHREAD=$LIBSTDTHREAD
         LIBMULTITHREAD=$LIBSTDTHREAD LTLIBMULTITHREAD=$LIBSTDTHREAD
         gl_threads_api=isoc
         AC_DEFINE([USE_ISOC_THREADS], [1],
           [Define if the ISO C multithreading library can be used.])
-       ])
+      ])
+    ])
     AS_IF([test $gl_threads_api = none], [
       # The "win32" is for backward compatibility.
       AS_CASE([$gl_use_threads],
