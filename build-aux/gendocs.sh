@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2025-01-01.00
+scriptversion=2025-04-26.12
 
 # Copyright 2003-2025 Free Software Foundation, Inc.
 #
@@ -232,8 +232,8 @@ fi
 # Function to return size of $1 in something resembling kilobytes.
 calcsize()
 {
-  size=`ls -ksl $1 | awk '{print $1}'`
-  echo $size
+  set `ls -ks "$1"`
+  echo $1
 }
 
 # copy_images OUTDIR HTML-FILE...
