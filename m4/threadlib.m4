@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 43
+# serial 44
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -103,7 +103,7 @@ AC_DEFUN([gl_WEAK_SYMBOLS],
               ]],
               [[xyzzy();]])],
            [gl_cv_have_weak=maybe])
-         if test $gl_cv_have_weak = maybe; then
+         AS_IF([test $gl_cv_have_weak = maybe], [
            dnl Second, test whether it actually works. On Cygwin 1.7.2, with
            dnl gcc 4.3, symbols declared weak always evaluate to the address 0.
            AC_RUN_IFELSE(
@@ -126,7 +126,7 @@ int main ()
                 [gl_cv_have_weak="guessing yes"],
                 [gl_cv_have_weak="guessing no"])
              ])
-         fi
+         ])
         ])
      dnl But when linking statically, weak symbols do not work.
      AS_CASE([" $LDFLAGS "],
@@ -184,7 +184,7 @@ dnl The guts of gl_PTHREADLIB. Needs to be expanded only once.
 AC_DEFUN([gl_PTHREADLIB_BODY],
 [
   AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
-  if test -z "$gl_pthreadlib_body_done"; then
+  AS_IF([test -z "$gl_pthreadlib_body_done"], [
     gl_pthread_api=no
     LIBPTHREAD=
     LIBPMULTITHREAD=
@@ -192,7 +192,7 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
     # it groks <pthread.h>. It is added above, in gl_ANYTHREADLIB_EARLY.
     AC_CHECK_HEADER([pthread.h],
       [gl_have_pthread_h=yes], [gl_have_pthread_h=no])
-    if test "$gl_have_pthread_h" = yes; then
+    AS_IF([test "$gl_have_pthread_h" = yes], [
       # Other possible tests:
       #   -lpthreads (FSU threads, PCthreads)
       #   -lgthreads
@@ -242,13 +242,13 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
 
       # Test for libpthread by looking for pthread_kill. (Not pthread_self,
       # since it is defined as a macro on OSF/1.)
-      if test $gl_pthread_api = yes && test -z "$LIBPTHREAD"; then
+      AS_IF([test $gl_pthread_api = yes && test -z "$LIBPTHREAD"], [
         # The program links fine without libpthread. But it may actually
         # need to link with libpthread in order to create multiple threads.
         AC_CHECK_LIB([pthread], [pthread_kill],
-          [if test $gl_pthread_in_glibc = yes; then
+          [AS_IF([test $gl_pthread_in_glibc = yes], [
              LIBPMULTITHREAD=
-           else
+           ], [
              LIBPMULTITHREAD=-lpthread
              # On Solaris and HP-UX, most pthread functions exist also in libc.
              # Therefore pthread_in_use() needs to actually try to create a
@@ -262,7 +262,7 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
                  AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], [1],
                    [Define if the pthread_in_use() detection is hard.])
                 ])
-           fi
+           ])
           ],
           [dnl This is needed on FreeBSD 5.2.1.
            AC_CHECK_LIB([thr], [pthread_kill],
@@ -273,30 +273,30 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
               fi
              ])
           ])
-      elif test $gl_pthread_api != yes; then
+      ], [test $gl_pthread_api != yes], [
         # Some library is needed. Try libpthread and libc_r.
         AC_CHECK_LIB([pthread], [pthread_kill],
           [gl_pthread_api=yes
            LIBPTHREAD=-lpthread
            LIBPMULTITHREAD=-lpthread])
-        if test $gl_pthread_api != yes; then
+        AS_IF([test $gl_pthread_api != yes], [
           # For FreeBSD 4.
           AC_CHECK_LIB([c_r], [pthread_kill],
             [gl_pthread_api=yes
              LIBPTHREAD=-lc_r
              LIBPMULTITHREAD=-lc_r])
-        fi
-      fi
+        ])
+      ])
       echo "$as_me:__oline__: LIBPMULTITHREAD=$LIBPMULTITHREAD" >&AS_MESSAGE_LOG_FD
-    fi
+    ])
     AC_MSG_CHECKING([whether POSIX threads API is available])
     AC_MSG_RESULT([$gl_pthread_api])
     AC_SUBST([LIBPTHREAD])
     AC_SUBST([LIBPMULTITHREAD])
-    if test $gl_pthread_api = yes; then
+    AS_IF([test $gl_pthread_api = yes], [
       AC_DEFINE([HAVE_PTHREAD_API], [1],
         [Define if you have the <pthread.h> header and the POSIX threads API.])
-    fi
+    ])
 
     dnl On some systems, sched_yield is in librt, rather than in libpthread.
     AC_LINK_IFELSE(
@@ -317,7 +317,7 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
     AC_SUBST([LIB_SCHED_YIELD])
 
     gl_pthreadlib_body_done=done
-  fi
+  ])
 ])
 
 AC_DEFUN([gl_PTHREADLIB],
@@ -344,7 +344,7 @@ AC_DEFUN([gl_STDTHREADLIB_BODY],
 [
   AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  if test -z "$gl_stdthreadlib_body_done"; then
+  AS_IF([test -z "$gl_stdthreadlib_body_done"], [
     AC_CHECK_HEADERS_ONCE([threads.h])
 
     AS_CASE([$host_os],
@@ -354,7 +354,7 @@ AC_DEFUN([gl_STDTHREADLIB_BODY],
        ],
        [
         gl_PTHREADLIB_BODY
-        if test $ac_cv_header_threads_h = yes; then
+        AS_IF([test $ac_cv_header_threads_h = yes], [
           dnl glibc >= 2.29 has thrd_create in libpthread.
           dnl FreeBSD >= 10 has thrd_create in libstdthreads; this library depends
           dnl on libpthread (for the symbol pthread_mutexattr_gettype).
@@ -362,27 +362,27 @@ AC_DEFUN([gl_STDTHREADLIB_BODY],
           dnl libc.
           gl_CHECK_FUNCS_ANDROID([thrd_create], [[#include <threads.h>
                                                 ]])
-          if test $ac_cv_func_thrd_create = yes; then
+          AS_IF([test $ac_cv_func_thrd_create = yes], [
             LIBSTDTHREAD=
-          else
+          ], [
             AC_CHECK_LIB([stdthreads], [thrd_create], [
               LIBSTDTHREAD="-lstdthreads -lpthread"
             ], [
               dnl Guess that thrd_create is in libpthread.
               LIBSTDTHREAD="$LIBPMULTITHREAD"
             ])
-          fi
-        else
+          ])
+        ], [
           dnl Libraries needed by thrd.c, mtx.c, cnd.c, tss.c.
           LIBSTDTHREAD="$LIBPMULTITHREAD $SCHED_YIELD_LIB"
-        fi
+        ])
        ])
     AC_SUBST([LIBSTDTHREAD])
 
     AC_MSG_CHECKING([whether ISO C threads API is available])
     AC_MSG_RESULT([$ac_cv_header_threads_h])
     gl_stdthreadlib_body_done=done
-  fi
+  ])
 ])
 
 AC_DEFUN([gl_STDTHREADLIB],
@@ -475,13 +475,10 @@ AS_HELP_STRING([[--disable-threads]], [build without multithread safety])]),
          [gl_use_threads=yes])
      fi
     ])
-  if test "$gl_use_threads" = yes \
-     || test "$gl_use_threads" = isoc \
-     || test "$gl_use_threads" = posix \
-     || test "$gl_use_threads" = isoc+posix; then
+  AS_CASE([$gl_use_threads], [yes | isoc | posix | isoc+posix], [
     # For using <threads.h> or <pthread.h>:
     gl_ANYTHREADLIB_EARLY
-  fi
+  ])
 ])
 
 dnl The guts of gl_THREADLIB. Needs to be expanded only once.
@@ -494,7 +491,10 @@ AC_DEFUN([gl_THREADLIB_BODY],
   LTLIBTHREAD=
   LIBMULTITHREAD=
   LTLIBMULTITHREAD=
-  if test "$gl_use_threads" != no; then
+  AS_IF([test "$gl_use_threads" = no],
+   [AC_DEFINE([AVOID_ANY_THREADS], [1],
+      [Define if no multithread safety and no multithreading is desired.])],
+   [
     dnl Check whether the compiler and linker support weak declarations.
     gl_WEAK_SYMBOLS
     AS_CASE([$gl_cv_have_weak], [*yes], [
@@ -504,30 +504,29 @@ AC_DEFUN([gl_THREADLIB_BODY],
       AC_CHECK_HEADERS_ONCE([threads.h])
       :
     ])
-    if test "$gl_use_threads" = isoc || test "$gl_use_threads" = isoc+posix; then
+    AS_CASE([$gl_use_threads], [isoc | isoc+posix], [
       AC_CHECK_HEADERS_ONCE([threads.h])
       gl_have_isoc_threads="$ac_cv_header_threads_h"
-    fi
-    if test "$gl_use_threads" = yes \
-       || test "$gl_use_threads" = posix \
-       || test "$gl_use_threads" = isoc+posix; then
+    ])
+    AS_CASE([$gl_use_threads], [yes | posix | isoc+posix], [
       gl_PTHREADLIB_BODY
       LIBTHREAD=$LIBPTHREAD LTLIBTHREAD=$LIBPTHREAD
       LIBMULTITHREAD=$LIBPMULTITHREAD LTLIBMULTITHREAD=$LIBPMULTITHREAD
-      if test $gl_pthread_api = yes; then
-        if test "$gl_use_threads" = isoc+posix && test "$gl_have_isoc_threads" = yes; then
+      AS_IF([test $gl_pthread_api = yes], [
+        AS_IF([test "$gl_use_threads" = isoc+posix &&
+               test "$gl_have_isoc_threads" = yes], [
           gl_threads_api=isoc+posix
           AC_DEFINE([USE_ISOC_AND_POSIX_THREADS], [1],
             [Define if the combination of the ISO C and POSIX multithreading APIs can be used.])
           LIBTHREAD= LTLIBTHREAD=
-        else
+        ], [
           gl_threads_api=posix
           AC_DEFINE([USE_POSIX_THREADS], [1],
             [Define if the POSIX multithreading library can be used.])
-          if test -z "$LIBMULTITHREAD" && test -z "$LTLIBMULTITHREAD"; then
+          AS_IF([test -z "$LIBMULTITHREAD" && test -z "$LTLIBMULTITHREAD"], [
             AC_DEFINE([USE_POSIX_THREADS_FROM_LIBC], [1],
               [Define if references to the POSIX multithreading library are satisfied by libc.])
-          else
+          ], [
             AS_CASE([$gl_cv_have_weak], [*yes],
              [
               AC_DEFINE([USE_POSIX_THREADS_WEAK], [1],
@@ -537,29 +536,29 @@ AC_DEFUN([gl_THREADLIB_BODY],
              [AS_CASE([$host_os],
                [freebsd* | dragonfly* | midnightbsd*],
                  [
-                  if test "x$LIBTHREAD" != "x$LIBMULTITHREAD"; then
+                  AS_IF([test "x$LIBTHREAD" != "x$LIBMULTITHREAD"], [
                     dnl If weak symbols cannot tell whether
                     dnl pthread_create(), dnl pthread_key_create()
                     dnl etc. will succeed, we need a runtime test.
                     AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], [1],
                       [Define if the pthread_in_use() detection is hard.])
-                  fi
+                  ])
                  ])])
-          fi
-        fi
-      fi
-    fi
-    if test $gl_threads_api = none; then
-      if test "$gl_use_threads" = isoc && test "$gl_have_isoc_threads" = yes; then
+          ])
+        ])
+      ])
+    ])
+    AS_CASE([$gl_threads_api@$gl_use_threads@$gl_have_isoc_threads],
+      [none@isoc@yes],
+       [
         gl_STDTHREADLIB_BODY
         LIBTHREAD=$LIBSTDTHREAD LTLIBTHREAD=$LIBSTDTHREAD
         LIBMULTITHREAD=$LIBSTDTHREAD LTLIBMULTITHREAD=$LIBSTDTHREAD
         gl_threads_api=isoc
         AC_DEFINE([USE_ISOC_THREADS], [1],
           [Define if the ISO C multithreading library can be used.])
-      fi
-    fi
-    if test $gl_threads_api = none; then
+       ])
+    AS_IF([test $gl_threads_api = none], [
       # The "win32" is for backward compatibility.
       AS_CASE([$gl_use_threads], [yes | windows | win32],
         [AS_CASE([$host_os], [mingw* | windows*],
@@ -568,12 +567,8 @@ AC_DEFUN([gl_THREADLIB_BODY],
             AC_DEFINE([USE_WINDOWS_THREADS], [1],
               [Define if the native Windows multithreading API can be used.])
            ])])
-    fi
-  else
-    dnl "$gl_use_threads" is "no".
-    AC_DEFINE([AVOID_ANY_THREADS], [1],
-      [Define if no multithread safety and no multithreading is desired.])
-  fi
+    ])
+   ])
   AC_MSG_CHECKING([for multithread API to use])
   AC_MSG_RESULT([$gl_threads_api])
   AC_SUBST([LIBTHREAD])
