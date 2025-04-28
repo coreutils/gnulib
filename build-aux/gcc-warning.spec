@@ -159,6 +159,7 @@
 -Wdeprecated-non-prototype		c compatibility
 -Wdeprecated-variadic-comma-omission	c++ and objc+++ compatibility
 -Wdesignated-init			default
+-Wdisabled-optimization			warns about compiler not about program
 -Wdiscarded-array-qualifiers		default
 -Wdiscarded-qualifiers			default
 -Wdo-subscript				fortran

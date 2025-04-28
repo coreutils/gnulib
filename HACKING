@@ -192,7 +192,6 @@ there are three possible approaches:
       -Warith-conversion
       -Wcast-align=strict
       -Wdate-time
-      -Wdisabled-optimization
       -Wduplicated-cond
       -Wextra
       -Wformat-signedness
@@ -274,7 +273,6 @@ there are three possible approaches:
       -Warith-conversion
       -Wcast-align=strict
       -Wdate-time
-      -Wdisabled-optimization
       -Wduplicated-cond
       -Wextra
       -Wformat-signedness
