@@ -130,20 +130,35 @@ typedef bool (*Hash_processor) (void *entry, void *processor_data);
 extern size_t hash_do_for_each (const Hash_table *table,
                                 Hash_processor processor, void *processor_data);
 
-/*
- * Allocation and clean-up.
- */
-
 /* Return a hash index for a NUL-terminated STRING between 0 and N_BUCKETS-1.
    This is a convenience routine for constructing other hashing functions.  */
 extern size_t hash_string (const char *string, size_t n_buckets)
        _GL_ATTRIBUTE_PURE;
 
-extern void hash_reset_tuning (Hash_tuning *tuning);
-
+/* Return a hash code of ENTRY, in the range 0..TABLE_SIZE-1.
+   This hash code function must have the property that if the comparator of
+   ENTRY1 and ENTRY2 returns true, the hasher returns the same value for ENTRY1
+   and for ENTRY2.
+   The hash code function typically computes an unsigned integer and at the end
+   performs a % TABLE_SIZE modulo operation.  This modulo operation is performed
+   as part of this hash code function, not by the caller, because in some cases
+   the unsigned integer will be a 'size_t', in other cases an 'uintmax_t' or
+   even larger.  */
 typedef size_t (*Hash_hasher) (const void *entry, size_t table_size);
+
+/* Compare two entries, ENTRY1 (being looked up or being inserted) and
+   ENTRY2 (already in the table) for equality.  Return true for equal,
+   false otherwise.  */
 typedef bool (*Hash_comparator) (const void *entry1, const void *entry2);
+
+/* This function is invoked when an ENTRY is removed from the hash table.  */
 typedef void (*Hash_data_freer) (void *entry);
+
+/*
+ * Allocation and clean-up.
+ */
+
+extern void hash_reset_tuning (Hash_tuning *tuning);
 
 /* Reclaim all storage associated with a hash table.  If a data_freer
    function has been supplied by the user when the hash table was created,
