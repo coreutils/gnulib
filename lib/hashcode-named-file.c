@@ -19,7 +19,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "hash-triple.h"
+#include "hashcode-file.h"
 
 #include <stdlib.h>
 #include <string.h>

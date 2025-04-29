@@ -19,7 +19,7 @@
 #include <config.h>
 #include "file-set.h"
 
-#include "hash-triple.h"
+#include "hashcode-file.h"
 #include "xalloc.h"
 
 /* Record file, FILE, and dev/ino from *STATS, in the hash table, HT.

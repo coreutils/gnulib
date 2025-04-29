@@ -17,7 +17,7 @@ configure.ac:
 Makefile.am:
 
 Include:
-"hash-triple.h"
+"hashcode-file.h"
 
 License:
 GPL

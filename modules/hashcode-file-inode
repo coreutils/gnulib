@@ -15,7 +15,7 @@ Makefile.am:
 lib_SOURCES += hashcode-file-inode.c
 
 Include:
-"hash-triple.h"
+"hashcode-file.h"
 
 License:
 GPL

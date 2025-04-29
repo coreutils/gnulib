@@ -31,7 +31,7 @@
 
 #include "attribute.h"
 #include "file-set.h"
-#include "hash-triple.h"
+#include "hashcode-file.h"
 #include "xalloc.h"
 
 /* Suppress bogus GCC -Wmaybe-uninitialized warnings.  */

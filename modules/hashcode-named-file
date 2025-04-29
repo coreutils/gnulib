@@ -3,6 +3,7 @@ Hash functions for file-related triples: name, device, inode.
 
 Files:
 lib/hashcode-named-file.c
+lib/hashcode-file.h
 lib/hash-triple.h
 
 Depends-on:
@@ -16,7 +17,7 @@ Makefile.am:
 lib_SOURCES += hashcode-named-file.c
 
 Include:
-"hash-triple.h"
+"hashcode-file.h"
 
 License:
 GPL
