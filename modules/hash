@@ -10,6 +10,7 @@ bitrotate
 calloc-posix
 free-posix
 malloc-posix
+next-prime
 bool
 stdint-h
 xalloc-oversized

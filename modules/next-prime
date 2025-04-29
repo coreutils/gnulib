@@ -1,0 +1,24 @@
+Description:
+Finding the next prime >= a given small integer.
+
+Files:
+lib/next-prime.h
+lib/next-prime.c
+
+Depends-on:
+bool
+stdint-h
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += next-prime.h next-prime.c
+
+Include:
+"next-prime.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

@@ -27,6 +27,7 @@
 #include "hash.h"
 
 #include "bitrotate.h"
+#include "next-prime.h"
 #include "xalloc-oversized.h"
 
 #include <errno.h>
@@ -389,44 +390,6 @@ hash_string (const char *string, size_t n_buckets)
 }
 
 #endif /* not USE_DIFF_HASH */
-
-/* Return true if CANDIDATE is a prime number.  CANDIDATE should be an odd
-   number at least equal to 11.  */
-
-static bool _GL_ATTRIBUTE_CONST
-is_prime (size_t candidate)
-{
-  size_t divisor = 3;
-  size_t square = divisor * divisor;
-
-  while (square < candidate && (candidate % divisor))
-    {
-      divisor++;
-      square += 4 * divisor;
-      divisor++;
-    }
-
-  return (candidate % divisor ? true : false);
-}
-
-/* Round a given CANDIDATE number up to the nearest prime, and return that
-   prime.  Primes lower than 10 are merely skipped.  */
-
-static size_t _GL_ATTRIBUTE_CONST
-next_prime (size_t candidate)
-{
-  /* Skip small primes.  */
-  if (candidate < 10)
-    candidate = 10;
-
-  /* Make it definitely odd.  */
-  candidate |= 1;
-
-  while (SIZE_MAX != candidate && !is_prime (candidate))
-    candidate += 2;
-
-  return candidate;
-}
 
 void
 hash_reset_tuning (Hash_tuning *tuning)
