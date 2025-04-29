@@ -1,20 +1,17 @@
 Description:
 Compute a hash value for a NUL-terminated string.
 
-Status:
-deprecated
-
-Notice:
-This module is deprecated. Use the module 'hashcode-string' instead.
-
 Files:
+lib/hashcode-string.h
+lib/hashcode-string.c
+lib/hash-pjw.h
 
 Depends-on:
-hashcode-string
 
 configure.ac:
 
 Makefile.am:
+lib_SOURCES += hashcode-string.h hashcode-string.c
 
 Include:
 "hashcode-string.h"
@@ -23,3 +20,4 @@ License:
 LGPLv2+
 
 Maintainer:
+Jim Meyering

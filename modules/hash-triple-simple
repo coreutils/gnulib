@@ -6,7 +6,7 @@ lib/hash-triple-simple.c
 lib/hash-triple.h
 
 Depends-on:
-hash-pjw
+hashcode-string
 same-inode
 bool
 
