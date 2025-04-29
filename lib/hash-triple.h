@@ -40,7 +40,7 @@ struct F_triple
   dev_t st_dev;
 };
 
-/* Defined in module 'hash-triple-simple'.  */
+/* Defined in module 'hashcode-named-file'.  */
 
 extern size_t triple_hash (void const *x, size_t table_size) _GL_ATTRIBUTE_PURE;
 extern bool triple_compare_ino_str (void const *x, void const *y)

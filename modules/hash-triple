@@ -5,7 +5,7 @@ Files:
 lib/hash-triple.c
 
 Depends-on:
-hash-triple-simple
+hashcode-named-file
 same
 same-inode
 

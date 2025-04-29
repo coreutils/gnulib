@@ -74,6 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-04-29  hash-triple-simple  This module is renamed to hashcode-named-file.
+
 2025-01-02  string-desc     The function prefix is changed from string_desc_
             xstring-desc    to sd_, and from xstring_desc_ to xsd_.
             string-desc-quotearg

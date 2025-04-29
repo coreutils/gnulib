@@ -2,7 +2,7 @@ Description:
 Hash functions for file-related triples: name, device, inode.
 
 Files:
-lib/hash-triple-simple.c
+lib/hashcode-named-file.c
 lib/hash-triple.h
 
 Depends-on:
@@ -13,7 +13,7 @@ bool
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += hash-triple-simple.c
+lib_SOURCES += hashcode-named-file.c
 
 Include:
 "hash-triple.h"

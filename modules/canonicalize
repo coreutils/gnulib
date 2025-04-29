@@ -16,7 +16,7 @@ fcntl-h
 file-set
 filename
 getcwd
-hash-triple-simple
+hashcode-named-file
 idx
 intprops
 memmove
