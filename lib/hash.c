@@ -1085,12 +1085,6 @@ hash_remove (Hash_table *table, const void *entry)
   return data;
 }
 
-void *
-hash_delete (Hash_table *table, const void *entry)
-{
-  return hash_remove (table, entry);
-}
-
 /* Testing.  */
 
 #if TESTING
