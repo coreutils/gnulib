@@ -1,22 +1,25 @@
 Description:
 Compute a hash value for a buffer of known size.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'hashcode-mem' instead.
+
 Files:
-lib/hash-pjw-bare.h
-lib/hash-pjw-bare.c
 
 Depends-on:
+hashcode-mem
 
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += hash-pjw-bare.h hash-pjw-bare.c
 
 Include:
-"hash-pjw-bare.h"
+"hashcode-mem.h"
 
 License:
 LGPLv2+
 
 Maintainer:
-Jim Meyering

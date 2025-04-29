@@ -2096,7 +2096,7 @@ func_all_modules ()
   func_module obstack-printf
   func_module obstack-printf-posix
   func_module hash-pjw
-  func_module hash-pjw-bare
+  func_module hashcode-mem
   func_module hash
   func_module hamt
   func_module readline

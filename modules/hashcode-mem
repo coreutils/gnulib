@@ -1,0 +1,23 @@
+Description:
+Compute a hash value for a buffer of known size.
+
+Files:
+lib/hashcode-mem.h
+lib/hashcode-mem.c
+lib/hash-pjw-bare.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += hashcode-mem.h hashcode-mem.c
+
+Include:
+"hashcode-mem.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Jim Meyering
