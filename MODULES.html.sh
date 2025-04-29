@@ -2870,7 +2870,7 @@ func_all_modules ()
   func_module cycle-check
   func_module dev-ino
   func_module file-set
-  func_module hash-triple
+  func_module hashcode-file-inode
   func_module i-ring
   func_module same-inode
   func_end_table

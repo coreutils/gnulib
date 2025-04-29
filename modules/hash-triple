@@ -1,18 +1,20 @@
 Description:
 Hash functions for file-related triples: name, device, inode.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'hashcode-file-inode' instead.
+
 Files:
-lib/hash-triple.c
 
 Depends-on:
-hashcode-named-file
-same
-same-inode
+hashcode-file-inode
 
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += hash-triple.c
 
 Include:
 "hash-triple.h"
@@ -21,4 +23,3 @@ License:
 GPL
 
 Maintainer:
-Jim Meyering

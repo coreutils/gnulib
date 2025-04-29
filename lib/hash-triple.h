@@ -47,7 +47,7 @@ extern bool triple_compare_ino_str (void const *x, void const *y)
   _GL_ATTRIBUTE_PURE;
 extern void triple_free (void *x);
 
-/* Defined in module 'hash-triple'.  */
+/* Defined in module 'hashcode-file-inode'.  */
 extern size_t triple_hash_no_name (void const *x, size_t table_size)
   _GL_ATTRIBUTE_PURE;
 extern bool triple_compare (void const *x, void const *y);
