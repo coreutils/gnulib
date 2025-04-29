@@ -1,0 +1,23 @@
+Description:
+Support for using a string as a hash key in the hash-set and hash-map modules.
+
+Files:
+lib/hashkey-string.h
+lib/hashkey-string.c
+
+Depends-on:
+bool
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += hashkey-string.h hashkey-string.c
+
+Include:
+"hashkey-string.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

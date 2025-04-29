@@ -19,6 +19,7 @@ error
 fatal-signal
 rmdir
 linkedhash-list
+hashkey-string
 gettext-h
 gnulib-i18n
 
