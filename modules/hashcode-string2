@@ -2,8 +2,8 @@ Description:
 Compute a hash value for a NUL-terminated string.
 
 Files:
-lib/hashcode-string.h
-lib/hashcode-string.c
+lib/hashcode-string2.h
+lib/hashcode-string2.c
 lib/hash-pjw.h
 
 Depends-on:
@@ -11,10 +11,10 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += hashcode-string.h hashcode-string.c
+lib_SOURCES += hashcode-string2.h hashcode-string2.c
 
 Include:
-"hashcode-string.h"
+"hashcode-string2.h"
 
 License:
 LGPLv2+

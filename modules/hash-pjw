@@ -5,19 +5,19 @@ Status:
 deprecated
 
 Notice:
-This module is deprecated. Use the module 'hashcode-string' instead.
+This module is deprecated. Use the module 'hashcode-string2' instead.
 
 Files:
 
 Depends-on:
-hashcode-string
+hashcode-string2
 
 configure.ac:
 
 Makefile.am:
 
 Include:
-"hashcode-string.h"
+"hashcode-string2.h"
 
 License:
 LGPLv2+

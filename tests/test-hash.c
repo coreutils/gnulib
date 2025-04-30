@@ -18,7 +18,7 @@
 #include <config.h>
 
 #include "hash.h"
-#include "hashcode-string.h"
+#include "hashcode-string2.h"
 #include "inttostr.h"
 
 #include <stdio.h>

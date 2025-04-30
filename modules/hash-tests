@@ -3,7 +3,7 @@ tests/test-hash.c
 tests/macros.h
 
 Depends-on:
-hashcode-string
+hashcode-string2
 inttostr
 bool
 

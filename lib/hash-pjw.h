@@ -14,8 +14,8 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include "hashcode-string.h"
+#include "hashcode-string2.h"
 
 #if __GNUC__ || (__clang_major__ >= 4)
-# warning "The include file hash-pjw.h is deprecated. Use hashcode-string.h instead."
+# warning "The include file hash-pjw.h is deprecated. Use hashcode-string2.h instead."
 #endif

@@ -728,8 +728,8 @@ sc_prohibit_posixver_without_use:
 sc_prohibit_same_without_use:
 	@h='same.h' re='\<same_name(at)? *\(' $(_sc_header_without_use)
 
-sc_prohibit_hashcode_string_without_use:
-	@h='hashcode-string.h' \
+sc_prohibit_hashcode_string2_without_use:
+	@h='hashcode-string2.h' \
 	re='\<hash_pjw\>' \
 	  $(_sc_header_without_use)
 

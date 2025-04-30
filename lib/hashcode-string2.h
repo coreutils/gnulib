@@ -1,4 +1,4 @@
-/* hashcode-string.h -- declaration for a simple hash function
+/* hashcode-string2.h -- declaration for a simple hash function
    Copyright (C) 2001, 2003, 2009-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify

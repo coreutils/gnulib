@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hashcode-string.h"
+#include "hashcode-string2.h"
 #include "same-inode.h"
 
 #define STREQ(a, b) (strcmp (a, b) == 0)

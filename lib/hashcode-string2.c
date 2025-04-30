@@ -1,4 +1,4 @@
-/* hashcode-string.c -- compute a hash value from a NUL-terminated string.
+/* hashcode-string2.c -- compute a hash value from a NUL-terminated string.
 
    Copyright (C) 2001, 2003, 2006, 2009-2025 Free Software Foundation, Inc.
 
@@ -18,7 +18,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "hashcode-string.h"
+#include "hashcode-string2.h"
 
 #include <limits.h>
 

@@ -2095,7 +2095,7 @@ func_all_modules ()
   func_module obstack
   func_module obstack-printf
   func_module obstack-printf-posix
-  func_module hashcode-string
+  func_module hashcode-string2
   func_module hashcode-mem
   func_module hash
   func_module hamt
