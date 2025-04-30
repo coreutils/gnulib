@@ -45,6 +45,7 @@
 #include "xmalloca.h"
 #include "glthread/lock.h"
 #include "thread-optim.h"
+#include "hashkey-string.h"
 #include "gl_xlist.h"
 #include "gl_linkedhash_list.h"
 #include "gl_linked_list.h"
@@ -219,11 +220,11 @@ create_temp_dir (const char *prefix, const char *parentdir,
   tmpdir->cleanup_verbose = cleanup_verbose;
   tmpdir->subdirs =
     gl_list_create_empty (GL_LINKEDHASH_LIST,
-                          clean_temp_string_equals, clean_temp_string_hash,
+                          hashkey_string_equals, hashkey_string_hash,
                           NULL, false);
   tmpdir->files =
     gl_list_create_empty (GL_LINKEDHASH_LIST,
-                          clean_temp_string_equals, clean_temp_string_hash,
+                          hashkey_string_equals, hashkey_string_hash,
                           NULL, false);
 
   /* Create the temporary directory.  */

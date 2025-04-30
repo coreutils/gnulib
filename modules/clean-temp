@@ -24,6 +24,7 @@ rmdir
 xalloc
 xalloc-die
 xmalloca
+hashkey-string
 linkedhash-list
 linked-list
 xlist
