@@ -105,9 +105,12 @@
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
-/* This file uses _Noreturn, _GL_ATTRIBUTE_PURE.  */
-#if !_GL_CONFIG_H_INCLUDED
- #error "Please include config.h first."
+#if defined __GL_GNULIB_HEADER
+/* Gnulib usage.  */
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+# if !_GL_CONFIG_H_INCLUDED
+  #error "Please include config.h first."
+# endif
 #endif
 
 #include <stddef.h>             /* For size_t and ptrdiff_t.  */
@@ -122,15 +125,16 @@
 
 /* These macros highlight the places where this implementation
    is different from the one in GNU libc.  */
-#ifdef _LIBC
-# define _OBSTACK_SIZE_T unsigned int
-# define _CHUNK_SIZE_T unsigned long
-# define _OBSTACK_CAST(type, expr) ((type) (expr))
-#else
+#if defined __GL_GNULIB_HEADER
 /* In Gnulib, we use sane types, especially for 64-bit hosts.  */
 # define _OBSTACK_SIZE_T size_t
 # define _CHUNK_SIZE_T size_t
 # define _OBSTACK_CAST(type, expr) (expr)
+#else
+/* glibc usage.  */
+# define _OBSTACK_SIZE_T unsigned int
+# define _CHUNK_SIZE_T unsigned long
+# define _OBSTACK_CAST(type, expr) ((type) (expr))
 #endif
 
 /* __PTR_ALIGN(B, P, A) returns the result of aligning P to the next multiple
@@ -139,7 +143,7 @@
    If ptrdiff_t is narrower than a pointer (e.g., the AS/400), play it
    safe and compute the alignment relative to B.  Otherwise, use the
    faster strategy of computing the alignment through uintptr_t.  */
-#if @SMALL_PTRDIFF_T@
+#if defined __GL_SMALL_PTRDIFF_T__
 # define __PTR_ALIGN(B, P, A) \
    ((B) + (((P) - (B) + (A)) & ~(A)))
 #else
@@ -210,7 +214,7 @@ struct obstack          /* control current object in current chunk */
 
 /* Declare the external functions we use; they are in obstack.c.  */
 
-#if @REPLACE_OBSTACK@
+#if defined __GL_REPLACE_OBSTACK__
 # define _obstack_newchunk rpl_obstack_newchunk
 # define _obstack_free rpl_obstack_free
 # define _obstack_begin rpl_obstack_begin

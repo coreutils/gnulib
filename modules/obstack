@@ -31,8 +31,9 @@ if GL_GENERATE_OBSTACK_H
 obstack.h: obstack.in.h $(top_builddir)/config.status
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
-	      -e 's|@''REPLACE_OBSTACK''@|$(REPLACE_OBSTACK)|g' \
-	      -e 's|@''SMALL_PTRDIFF_T''@|$(SMALL_PTRDIFF_T)|g' \
+	      -e 's/defined __GL_GNULIB_HEADER/1/g' \
+	      -e 's|defined __GL_REPLACE_OBSTACK__|$(REPLACE_OBSTACK)|g' \
+	      -e 's|defined __GL_SMALL_PTRDIFF_T__|$(SMALL_PTRDIFF_T)|g' \
 	      $(srcdir)/obstack.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 else
