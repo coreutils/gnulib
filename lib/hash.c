@@ -668,8 +668,8 @@ free_entry (Hash_table *table, struct hash_entry *entry)
    the table, unlink the matching entry.  */
 
 static void *
-hash_find_entry (Hash_table *table, const void *entry,
-                 struct hash_entry **bucket_head, bool delete)
+find_entry (Hash_table *table, const void *entry,
+            struct hash_entry **bucket_head, bool delete)
 {
   struct hash_entry *bucket = safe_hasher (table, entry);
   struct hash_entry *cursor;
@@ -901,13 +901,13 @@ hash_insert_if_absent (Hash_table *table, void const *entry,
   struct hash_entry *bucket;
 
   /* The caller cannot insert a NULL entry, since hash_lookup returns NULL
-     to indicate "not found", and hash_find_entry uses "bucket->data == NULL"
+     to indicate "not found", and find_entry uses "bucket->data == NULL"
      to indicate an empty bucket.  */
   if (! entry)
     abort ();
 
   /* If there's a matching entry already in the table, return that.  */
-  if ((data = hash_find_entry (table, entry, &bucket, false)) != NULL)
+  if ((data = find_entry (table, entry, &bucket, false)) != NULL)
     {
       if (matched_ent)
         *matched_ent = data;
@@ -946,7 +946,7 @@ hash_insert_if_absent (Hash_table *table, void const *entry,
             return -1;
 
           /* Update the bucket we are interested in.  */
-          if (hash_find_entry (table, entry, &bucket, false) != NULL)
+          if (find_entry (table, entry, &bucket, false) != NULL)
             abort ();
         }
     }
@@ -994,7 +994,7 @@ hash_remove (Hash_table *table, const void *entry)
   void *data;
   struct hash_entry *bucket;
 
-  data = hash_find_entry (table, entry, &bucket, true);
+  data = find_entry (table, entry, &bucket, true);
   if (!data)
     return NULL;
 
