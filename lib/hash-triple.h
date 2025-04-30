@@ -14,7 +14,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include "hashcode-string.h"
+#include "hashcode-file.h"
 
 #if __GNUC__ || (__clang_major__ >= 4)
 # warning "The include file hash-triple.h is deprecated. Use hashcode-file.h instead."
