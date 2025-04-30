@@ -1,0 +1,9 @@
+Files:
+tests/test-next-prime.c
+tests/macros.h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-next-prime
+check_PROGRAMS += test-next-prime
