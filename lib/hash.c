@@ -345,57 +345,6 @@ hash_do_for_each (const Hash_table *table, Hash_processor processor,
   return counter;
 }
 
-/* Allocation and clean-up.  */
-
-#if USE_DIFF_HASH
-
-/* About hashings, Paul Eggert writes to me (FP), on 1994-01-01: "Please see
-   B. J. McKenzie, R. Harries & T. Bell, Selecting a hashing algorithm,
-   Software--practice & experience 20, 2 (Feb 1990), 209-224.  Good hash
-   algorithms tend to be domain-specific, so what's good for [diffutils'] io.c
-   may not be good for your application."  */
-
-size_t
-hash_string (const char *string, size_t n_buckets)
-{
-# define HASH_ONE_CHAR(Value, Byte) \
-  ((Byte) + rotl_sz (Value, 7))
-
-  size_t value = 0;
-  unsigned char ch;
-
-  for (; (ch = *string); string++)
-    value = HASH_ONE_CHAR (value, ch);
-  return value % n_buckets;
-
-# undef HASH_ONE_CHAR
-}
-
-#else /* not USE_DIFF_HASH */
-
-/* This one comes from 'recode', and performs a bit better than the above as
-   per a few experiments.  It is inspired from a hashing routine found in the
-   very old Cyber 'snoop', itself written in typical Greg Mansfield style.
-   (By the way, what happened to this excellent man?  Is he still alive?)  */
-
-size_t
-hash_string (const char *string, size_t n_buckets)
-{
-  size_t value = 0;
-  unsigned char ch;
-
-  for (; (ch = *string); string++)
-    value = (value * 31 + ch) % n_buckets;
-  return value;
-}
-
-#endif /* not USE_DIFF_HASH */
-
-void
-hash_reset_tuning (Hash_tuning *tuning)
-{
-  *tuning = default_tuning;
-}
 
 /* If the user passes a NULL hasher, we hash the raw pointer.  */
 static size_t
@@ -417,6 +366,14 @@ raw_comparator (const void *a, const void *b)
   return a == b;
 }
 
+
+/* Allocation and clean-up.  */
+
+void
+hash_reset_tuning (Hash_tuning *tuning)
+{
+  *tuning = default_tuning;
+}
 
 /* For the given hash TABLE, check the user supplied tuning structure for
    reasonable values, and return true if there is no gross error with it.

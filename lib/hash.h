@@ -130,11 +130,6 @@ typedef bool (*Hash_processor) (void *entry, void *processor_data);
 extern size_t hash_do_for_each (const Hash_table *table,
                                 Hash_processor processor, void *processor_data);
 
-/* Return a hash index for a NUL-terminated STRING between 0 and N_BUCKETS-1.
-   This is a convenience routine for constructing other hashing functions.  */
-extern size_t hash_string (const char *string, size_t n_buckets)
-       _GL_ATTRIBUTE_PURE;
-
 /* Return a hash code of ENTRY, in the range 0..TABLE_SIZE-1.
    This hash code function must have the property that if the comparator of
    ENTRY1 and ENTRY2 returns true, the hasher returns the same value for ENTRY1
@@ -275,6 +270,12 @@ extern int hash_insert_if_absent (Hash_table *table, const void *entry,
    data (the user may want to deallocate its storage).  If ENTRY is not in the
    table, don't modify the table and return NULL.  */
 extern void *hash_remove (Hash_table *table, const void *entry);
+
+
+# if GNULIB_HASHCODE_STRING1
+/* Include declarations of module 'hashcode-string1'.  */
+#  include "hashcode-string1.h"
+# endif
 
 # ifdef __cplusplus
 }

@@ -36,6 +36,7 @@
 #include "filename.h"
 #include <fnmatch.h>
 #include "hash.h"
+#include "hashcode-string1.h"
 #if GNULIB_MCEL_PREFER
 # include "mcel.h"
 #else

@@ -1,0 +1,24 @@
+Description:
+Compute a hash value for a NUL-terminated string.
+
+Files:
+lib/hashcode-string1.h
+lib/hashcode-string1.c
+
+Depends-on:
+bitrotate
+
+configure.ac:
+gl_MODULE_INDICATOR([hashcode-string1])
+
+Makefile.am:
+lib_SOURCES += hashcode-string1.h hashcode-string1.c
+
+Include:
+"hashcode-string1.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Jim Meyering

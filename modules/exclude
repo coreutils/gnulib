@@ -12,6 +12,7 @@ filename
 fnmatch
 fopen-gnu
 hash
+hashcode-string1
 mbscasecmp
 mbuiter               [test "$GNULIB_MCEL_PREFER" != yes]
 nullptr
