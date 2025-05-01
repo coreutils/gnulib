@@ -332,8 +332,9 @@ of @code{<ctype.h>}, @code{<errno.h>}, @code{<fcntl.h>},
 @code{<locale.h>}, @code{<signal.h>}, @code{<stdio.h>},
 @code{<stdlib.h>}, @code{<string.h>}, and @code{<time.h>}.  Similarly,
 many modules include @code{<sys/types.h>} even though it's not
-in the C standard; that's OK since @code{<sys/types.h>} has been around nearly
-forever.
+in the C standard; that's OK since @code{<sys/types.h>} has been around
+@c https://minnie.tuhs.org/cgi-bin/utree.pl?file=V7/usr/include/sys/types.h
+since Seventh Edition Unix (1979).
 
 Even if the include files exist, they may not conform to the C standard.
 However, GCC has a @command{fixincludes} script that attempts to fix most
