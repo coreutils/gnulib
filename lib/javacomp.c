@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003, 2006-2024 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -359,6 +359,8 @@ execute_and_read_line (const char *progname,
   if (linelen == (size_t)(-1))
     {
       error (0, 0, _("%s subprocess I/O error"), progname);
+      fclose (fp);
+      wait_subprocess (child, progname, true, false, true, false, NULL);
       return NULL;
     }
   if (linelen > 0 && line[linelen - 1] == '\n')
