@@ -16,6 +16,17 @@ error
 getline
 xstrtol
 stat-time
+filename
+xalloc
+xgetcwd
+canonicalize-lgpl
+xvasprintf
+str_startswith
+map
+xmap
+hash-map
+hashkey-string
+getdelim
 gettext-h
 gnulib-i18n
 

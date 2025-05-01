@@ -90,6 +90,13 @@ extern "C" {
    Upon failure, it returns -1.  */
 extern int vc_mtime (struct timespec *mtime, const char *filename);
 
+/* Determines the maximum of the version-controlled modification times of
+   FILENAMES[0..NFILES-1], and returns 0.
+   Upon failure, it returns -1.
+   NFILES must be > 0.  */
+extern int max_vc_mtime (struct timespec *max_of_mtimes,
+                         size_t nfiles, const char * const *filenames);
+
 #ifdef __cplusplus
 }
 #endif
