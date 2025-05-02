@@ -53,7 +53,9 @@
 
 /* ========================================================================== */
 
-/* Determines whether git is present.  */
+static const char *git_version;
+
+/* Determines whether git is present, and sets git_version if so.  */
 static bool
 is_git_present (void)
 {
@@ -63,17 +65,67 @@ is_git_present (void)
   if (!git_tested)
     {
       /* Test for presence of git:
-         "git --version >/dev/null 2>/dev/null"  */
+         "git --version 2>/dev/null"  */
       const char *argv[3];
-      int exitstatus;
+      pid_t child;
+      int fd[1];
 
       argv[0] = "git";
       argv[1] = "--version";
       argv[2] = NULL;
-      exitstatus = execute ("git", "git", argv, NULL, NULL,
-                            false, false, true, true,
-                            true, false, NULL);
-      git_present = (exitstatus == 0);
+      child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                              DEV_NULL, true, true, false, fd);
+      if (child == -1)
+        git_present = false;
+      else
+        {
+          /* Retrieve its result.  */
+          FILE *fp = fdopen (fd[0], "r");
+          if (fp == NULL)
+            error (EXIT_FAILURE, errno, _("fdopen() failed"));
+
+          char *line = NULL;
+          size_t linesize = 0;
+          size_t linelen = getline (&line, &linesize, fp);
+          if (linelen == (size_t)(-1))
+            {
+              fclose (fp);
+              wait_subprocess (child, "git", true, true, true, false, NULL);
+              git_present = false;
+            }
+          else
+            {
+              if (linelen > 0 && line[linelen - 1] == '\n')
+                line[linelen - 1] = '\0';
+
+              /* Read until EOF (otherwise the child process may get a SIGPIPE
+                 signal).  */
+              while (getc (fp) != EOF)
+                ;
+
+              fclose (fp);
+
+              /* Remove zombie process from process list, and retrieve exit
+                 status.  */
+              int exitstatus =
+                wait_subprocess (child, "git", true, true, true, false, NULL);
+              if (exitstatus != 0)
+                {
+                  free (line);
+                  git_present = false;
+                }
+              else
+                {
+                  /* The version starts at the first digit in the line.  */
+                  const char *p = line;
+                  for (; *p != '0'; p++)
+                    if (*p >= '0' && *p <= '9')
+                      break;
+                  git_version = p;
+                  git_present = true;
+                }
+            }
+        }
       git_tested = true;
     }
 
@@ -662,7 +714,21 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                     argv[i++] = "git";
                     argv[i++] = "diff";
                     argv[i++] = "--name-only";
-                    argv[i++] = "--no-relative";
+                    /* With git versions >= 2.28, we pass option --no-relative,
+                       in order to neutralize any possible customization of the
+                       "diff.relative" property.  With git versions < 2.28, this
+                       is not needed, and the option --no-relative does not
+                       exist.  */
+                    if (!(git_version[0] <= '1'
+                          || (git_version[0] == '2' && git_version[1] == '.'
+                              && ((git_version[2] >= '0' && git_version[2] <= '9'
+                                   && !(git_version[3] >= '0' && git_version[3] <= '9'))
+                                  || (((git_version[2] == '1'
+                                        && git_version[3] >= '0' && git_version[3] <= '9')
+                                       || (git_version[2] == '2'
+                                           && git_version[3] >= '0' && git_version[3] <= '7'))
+                                      && !(git_version[4] >= '0' && git_version[4] <= '9'))))))
+                      argv[i++] = "--no-relative";
                     argv[i++] = "-z";
                     argv[i++] = "HEAD";
                     argv[i++] = "--";
