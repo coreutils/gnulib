@@ -560,17 +560,14 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                     size_t n = n0;
                     size_t cmd_len = 25;
                     for (; n < nfiles; n++)
-                      {
-                        if (vc_controlled[n] == 1)
-                          {
-                            if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                                && i > i0)
-                              break;
-                            argv[i++] = currdir_relative_filenames[n];
-                            cmd_len += 1 + strlen (currdir_relative_filenames[n]);
-                          }
-                        n++;
-                      }
+                      if (vc_controlled[n] == 1)
+                        {
+                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                              && i > i0)
+                            break;
+                          argv[i++] = currdir_relative_filenames[n];
+                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                        }
                     if (i > i0)
                       {
                         pid_t child;
@@ -674,17 +671,14 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                     size_t n = n0;
                     size_t cmd_len = 46;
                     for (; n < nfiles; n++)
-                      {
-                        if (vc_controlled[n] == 1)
-                          {
-                            if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                                && i > i0)
-                              break;
-                            argv[i++] = currdir_relative_filenames[n];
-                            cmd_len += 1 + strlen (currdir_relative_filenames[n]);
-                          }
-                        n++;
-                      }
+                      if (vc_controlled[n] == 1)
+                        {
+                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                              && i > i0)
+                            break;
+                          argv[i++] = currdir_relative_filenames[n];
+                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                        }
                     if (i > i0)
                       {
                         pid_t child;
@@ -770,17 +764,14 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                     size_t n = n0;
                     size_t cmd_len = 27;
                     for (; n < nfiles; n++)
-                      {
-                        if (vc_controlled[n] == 1)
-                          {
-                            if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                                && i > i0)
-                              break;
-                            argv[i++] = currdir_relative_filenames[n];
-                            cmd_len += 1 + strlen (currdir_relative_filenames[n]);
-                          }
-                        n++;
-                      }
+                      if (vc_controlled[n] == 1)
+                        {
+                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                              && i > i0)
+                            break;
+                          argv[i++] = currdir_relative_filenames[n];
+                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                        }
                     if (i > i0)
                       {
                         pid_t child;
