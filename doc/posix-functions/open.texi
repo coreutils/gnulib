@@ -60,12 +60,12 @@ Haiku.
 @code{open ("symlink", O_NOFOLLOW ...)} fails with @code{errno} set to
 @code{EMLINK} instead of the POSIX-required @code{ELOOP} on some
 platforms:
-FreeBSD 10.1.
+FreeBSD 14.2.
 @item
 @code{open ("symlink", O_NOFOLLOW ...)} fails with @code{errno} set to
 @code{EFTYPE} instead of the POSIX-required @code{ELOOP} on some
 platforms:
-NetBSD 6.1.
+NetBSD 10.0.
 @item
 On Windows, this function returns a file handle in @code{O_TEXT} mode by
 default; this means that it translates @code{'\n'} to CR/LF by default.  Use the
