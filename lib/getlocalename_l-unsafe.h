@@ -45,7 +45,7 @@ enum storage
   STORAGE_OBJECT
 };
 
-/* Return type of getlocalename_l_unlocked.  */
+/* Return type of getlocalename_l_unsafe.  */
 struct string_with_storage
 {
   const char *value;
