@@ -46,7 +46,7 @@ static_assert (TYPE_SIGNED (off_t));
 static_assert (TYPE_SIGNED (off64_t));
 
 /* POSIX requires that blksize_t is a signed integer type.  */
-#if !defined __ANDROID__
+#if !(defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__))
 static_assert (TYPE_SIGNED (blksize_t));
 #endif
 
