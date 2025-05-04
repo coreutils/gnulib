@@ -518,421 +518,424 @@ max_vc_mtime (struct timespec *max_of_mtimes,
       if (git_checkout != NULL)
         {
           char *currdir = xgetcwd ();
-          /* git_checkout is expected to be an ancestor directory of the
-             current directory.  */
-          long ancestor = ancestor_level (git_checkout, currdir);
-          if (ancestor >= 0)
+          if (currdir != NULL)
             {
-              char **canonical_filenames = XNMALLOC (nfiles, char *);
-              for (size_t n = 0; n < nfiles; n++)
+              /* git_checkout is expected to be an ancestor directory of the
+                 current directory.  */
+              long ancestor = ancestor_level (git_checkout, currdir);
+              if (ancestor >= 0)
                 {
-                  char *canonical = canonicalize_file_name (filenames[n]);
-                  if (canonical == NULL)
+                  char **canonical_filenames = XNMALLOC (nfiles, char *);
+                  for (size_t n = 0; n < nfiles; n++)
                     {
-                      if (errno == ENOMEM)
-                        xalloc_die ();
-                      /* The file filenames[n] does not exist.  */
-                      for (size_t k = n; k > 0; )
-                        free (canonical_filenames[--k]);
-                      free (canonical_filenames);
-                      free (currdir);
-                      free (git_checkout);
-                      free (vc_controlled);
-                      return -1;
-                    }
-                  canonical_filenames[n] = canonical;
-                }
-
-              /* Test which of these absolute file names are outside of the
-                 git_checkout.  */
-              char *git_checkout_slash =
-                (strcmp (git_checkout, "/") == 0
-                 ? xstrdup (git_checkout)
-                 : xasprintf ("%s/", git_checkout));
-
-              char **checkout_relative_filenames = XNMALLOC (nfiles, char *);
-              char **currdir_relative_filenames = XNMALLOC (nfiles, char *);
-              for (size_t n = 0; n < nfiles; n++)
-                {
-                  if (str_startswith (canonical_filenames[n], git_checkout_slash))
-                    {
-                      vc_controlled[n] = 1;
-                      checkout_relative_filenames[n] =
-                        relativize (canonical_filenames[n],
-                                    0, git_checkout, git_checkout);
-                      currdir_relative_filenames[n] =
-                        relativize (canonical_filenames[n],
-                                    ancestor, git_checkout, currdir);
-                    }
-                  else
-                    {
-                      vc_controlled[n] = 0;
-                      checkout_relative_filenames[n] = NULL;
-                      currdir_relative_filenames[n] = NULL;
-                    }
-                }
-
-              /* Room for passing arguments to git commands.  */
-              const char **argv = XNMALLOC (7 + nfiles + 1, const char *);
-
-              {
-                /* Put the relative file names into a hash table.  This is needed
-                   because 'git ls-files' returns the files in a different order
-                   than the one we provide in the command.  */
-                gl_map_t relative_filenames_ht =
-                  gl_map_create_empty (GL_HASH_MAP,
-                                       hashkey_string_equals, hashkey_string_hash,
-                                       NULL, NULL);
-                for (size_t n = 0; n < nfiles; n++)
-                  if (currdir_relative_filenames[n] != NULL)
-                    {
-                      if (gl_map_get (relative_filenames_ht, currdir_relative_filenames[n]) != NULL)
+                      char *canonical = canonicalize_file_name (filenames[n]);
+                      if (canonical == NULL)
                         {
-                          /* It's already in the table.  */
-                          vc_controlled[n] = -1;
+                          if (errno == ENOMEM)
+                            xalloc_die ();
+                          /* The file filenames[n] does not exist.  */
+                          for (size_t k = n; k > 0; )
+                            free (canonical_filenames[--k]);
+                          free (canonical_filenames);
+                          free (currdir);
+                          free (git_checkout);
+                          free (vc_controlled);
+                          return -1;
+                        }
+                      canonical_filenames[n] = canonical;
+                    }
+
+                  /* Test which of these absolute file names are outside of the
+                     git_checkout.  */
+                  char *git_checkout_slash =
+                    (strcmp (git_checkout, "/") == 0
+                     ? xstrdup (git_checkout)
+                     : xasprintf ("%s/", git_checkout));
+
+                  char **checkout_relative_filenames = XNMALLOC (nfiles, char *);
+                  char **currdir_relative_filenames = XNMALLOC (nfiles, char *);
+                  for (size_t n = 0; n < nfiles; n++)
+                    {
+                      if (str_startswith (canonical_filenames[n], git_checkout_slash))
+                        {
+                          vc_controlled[n] = 1;
+                          checkout_relative_filenames[n] =
+                            relativize (canonical_filenames[n],
+                                        0, git_checkout, git_checkout);
+                          currdir_relative_filenames[n] =
+                            relativize (canonical_filenames[n],
+                                        ancestor, git_checkout, currdir);
                         }
                       else
-                        gl_map_put (relative_filenames_ht, currdir_relative_filenames[n], &vc_controlled[n]);
+                        {
+                          vc_controlled[n] = 0;
+                          checkout_relative_filenames[n] = NULL;
+                          currdir_relative_filenames[n] = NULL;
+                        }
                     }
 
-                /* Run "git ls-files -c -o -t -z FILE1..." for as many files as
-                   possible, and inspect the output.  */
-                size_t n0 = 0;
-                do
+                  /* Room for passing arguments to git commands.  */
+                  const char **argv = XNMALLOC (7 + nfiles + 1, const char *);
+
                   {
-                    size_t i = 0;
-                    argv[i++] = "git";
-                    argv[i++] = "ls-files";
-                    argv[i++] = "-c";
-                    argv[i++] = "-o";
-                    argv[i++] = "-t";
-                    argv[i++] = "-z";
-                    size_t i0 = i;
-
-                    size_t n = n0;
-                    size_t cmd_len = 25;
-                    for (; n < nfiles; n++)
-                      if (vc_controlled[n] == 1)
+                    /* Put the relative file names into a hash table.  This is needed
+                       because 'git ls-files' returns the files in a different order
+                       than the one we provide in the command.  */
+                    gl_map_t relative_filenames_ht =
+                      gl_map_create_empty (GL_HASH_MAP,
+                                           hashkey_string_equals, hashkey_string_hash,
+                                           NULL, NULL);
+                    for (size_t n = 0; n < nfiles; n++)
+                      if (currdir_relative_filenames[n] != NULL)
                         {
-                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                              && i > i0)
-                            break;
-                          argv[i++] = currdir_relative_filenames[n];
-                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                          if (gl_map_get (relative_filenames_ht, currdir_relative_filenames[n]) != NULL)
+                            {
+                              /* It's already in the table.  */
+                              vc_controlled[n] = -1;
+                            }
+                          else
+                            gl_map_put (relative_filenames_ht, currdir_relative_filenames[n], &vc_controlled[n]);
                         }
-                    if (i > i0)
+
+                    /* Run "git ls-files -c -o -t -z FILE1..." for as many files as
+                       possible, and inspect the output.  */
+                    size_t n0 = 0;
+                    do
                       {
-                        pid_t child;
-                        int fd[1];
+                        size_t i = 0;
+                        argv[i++] = "git";
+                        argv[i++] = "ls-files";
+                        argv[i++] = "-c";
+                        argv[i++] = "-o";
+                        argv[i++] = "-t";
+                        argv[i++] = "-z";
+                        size_t i0 = i;
 
-                        argv[i] = NULL;
-                        child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                DEV_NULL, true, true, false, fd);
-                        if (child == -1)
-                          break;
-
-                        /* Read the subprocess output.  It is expected to be of the form
-                             T1 <space> <currdir_relative_filename1> NUL
-                             T2 <space> <currdir_relative_filename2> NUL
-                             ...
-                           where the relative filenames correspond to the given file
-                           names (because we have already relativized them).  */
-                        FILE *fp = fdopen (fd[0], "r");
-                        if (fp == NULL)
-                          error (EXIT_FAILURE, errno, _("fdopen() failed"));
-
-                        char *fn = NULL;
-                        size_t fn_size = 0;
-                        for (;;)
-                          {
-                            int status = fgetc (fp);
-                            if (status == EOF)
-                              break;
-                            /* status is a status tag, as documented in
-                               "man git-ls-files".  */
-
-                            int space = fgetc (fp);
-                            if (space != ' ')
-                              {
-                                fprintf (stderr, "vc-mtime: git ls-files output not as expected\n");
+                        size_t n = n0;
+                        size_t cmd_len = 25;
+                        for (; n < nfiles; n++)
+                          if (vc_controlled[n] == 1)
+                            {
+                              if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                                  && i > i0)
                                 break;
+                              argv[i++] = currdir_relative_filenames[n];
+                              cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                            }
+                        if (i > i0)
+                          {
+                            pid_t child;
+                            int fd[1];
+
+                            argv[i] = NULL;
+                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                    DEV_NULL, true, true, false, fd);
+                            if (child == -1)
+                              break;
+
+                            /* Read the subprocess output.  It is expected to be of the form
+                                 T1 <space> <currdir_relative_filename1> NUL
+                                 T2 <space> <currdir_relative_filename2> NUL
+                                 ...
+                               where the relative filenames correspond to the given file
+                               names (because we have already relativized them).  */
+                            FILE *fp = fdopen (fd[0], "r");
+                            if (fp == NULL)
+                              error (EXIT_FAILURE, errno, _("fdopen() failed"));
+
+                            char *fn = NULL;
+                            size_t fn_size = 0;
+                            for (;;)
+                              {
+                                int status = fgetc (fp);
+                                if (status == EOF)
+                                  break;
+                                /* status is a status tag, as documented in
+                                   "man git-ls-files".  */
+
+                                int space = fgetc (fp);
+                                if (space != ' ')
+                                  {
+                                    fprintf (stderr, "vc-mtime: git ls-files output not as expected\n");
+                                    break;
+                                  }
+
+                                if (getdelim (&fn, &fn_size, '\0', fp) == -1)
+                                  {
+                                    if (errno == ENOMEM)
+                                      xalloc_die ();
+                                    fprintf (stderr, "vc-mtime: failed to read git ls-files output\n");
+                                    break;
+                                  }
+                                signed char *vc_controlled_p =
+                                  (signed char *) gl_map_get (relative_filenames_ht, fn);
+                                if (vc_controlled_p == NULL)
+                                  fprintf (stderr, "vc-mtime: git ls-files returned an unexpected file name: %s\n", fn);
+                                else
+                                  *vc_controlled_p = (status == 'H' ? 1 : 0);
                               }
 
-                            if (getdelim (&fn, &fn_size, '\0', fp) == -1)
+                            free (fn);
+                            fclose (fp);
+
+                            /* Remove zombie process from process list, and retrieve exit status.  */
+                            int exitstatus =
+                              wait_subprocess (child, "git", false, true, true, false, NULL);
+                            if (exitstatus != 0)
+                              fprintf (stderr, "vc-mtime: git ls-files failed with exit code %d\n", exitstatus);
+                          }
+                        n0 = n;
+                      }
+                    while (n0 < nfiles);
+
+                    gl_map_free (relative_filenames_ht);
+                  }
+
+                  {
+                    /* Put the relative file names into a hash table.  This is needed
+                       because 'git diff' returns the files in a different order
+                       than the one we provide in the command.  */
+                    gl_map_t relative_filenames_ht =
+                      gl_map_create_empty (GL_HASH_MAP,
+                                           hashkey_string_equals, hashkey_string_hash,
+                                           NULL, NULL);
+                    for (size_t n = 0; n < nfiles; n++)
+                      if (vc_controlled[n] == 1)
+                        {
+                          /* No need to test for duplicates here.  We have already set
+                             vc_controlled[n] to -1 for duplicates, above.  */
+                          gl_map_put (relative_filenames_ht, checkout_relative_filenames[n], &vc_controlled[n]);
+                        }
+
+                    /* Run "git diff --name-only --no-relative -z HEAD -- FILE1..." for
+                       as many files as possible, and inspect the output.  */
+                    size_t n0 = 0;
+                    do
+                      {
+                        size_t i = 0;
+                        argv[i++] = "git";
+                        argv[i++] = "diff";
+                        argv[i++] = "--name-only";
+                        /* With git versions >= 2.28, we pass option --no-relative,
+                           in order to neutralize any possible customization of the
+                           "diff.relative" property.  With git versions < 2.28, this
+                           is not needed, and the option --no-relative does not
+                           exist.  */
+                        if (!(git_version[0] <= '1'
+                              || (git_version[0] == '2' && git_version[1] == '.'
+                                  && ((git_version[2] >= '0' && git_version[2] <= '9'
+                                       && !(git_version[3] >= '0' && git_version[3] <= '9'))
+                                      || (((git_version[2] == '1'
+                                            && git_version[3] >= '0' && git_version[3] <= '9')
+                                           || (git_version[2] == '2'
+                                               && git_version[3] >= '0' && git_version[3] <= '7'))
+                                          && !(git_version[4] >= '0' && git_version[4] <= '9'))))))
+                          argv[i++] = "--no-relative";
+                        argv[i++] = "-z";
+                        argv[i++] = "HEAD";
+                        argv[i++] = "--";
+                        size_t i0 = i;
+
+                        size_t n = n0;
+                        size_t cmd_len = 46;
+                        for (; n < nfiles; n++)
+                          if (vc_controlled[n] == 1)
+                            {
+                              if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                                  && i > i0)
+                                break;
+                              argv[i++] = currdir_relative_filenames[n];
+                              cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                            }
+                        if (i > i0)
+                          {
+                            pid_t child;
+                            int fd[1];
+
+                            argv[i] = NULL;
+                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                    DEV_NULL, true, true, false, fd);
+                            if (child == -1)
+                              break;
+
+                            /* Read the subprocess output.  It is expected to be of the form
+                                 <checkout_relative_filename1> NUL
+                                 <checkout_relative_filename2> NUL
+                                 ...
+                               where the relative filenames are relative to the git
+                               checkout dir, not to currdir!  */
+                            FILE *fp = fdopen (fd[0], "r");
+                            if (fp == NULL)
+                              error (EXIT_FAILURE, errno, _("fdopen() failed"));
+
+                            char *fn = NULL;
+                            size_t fn_size = 0;
+                            for (;;)
+                              {
+                                /* Test for EOF.  */
+                                int c = fgetc (fp);
+                                if (c == EOF)
+                                  break;
+                                ungetc (c, fp);
+
+                                if (getdelim (&fn, &fn_size, '\0', fp) == -1)
+                                  {
+                                    if (errno == ENOMEM)
+                                      xalloc_die ();
+                                    fprintf (stderr, "vc-mtime: failed to read git diff output\n");
+                                    break;
+                                  }
+                                signed char *vc_controlled_p =
+                                  (signed char *) gl_map_get (relative_filenames_ht, fn);
+                                if (vc_controlled_p == NULL)
+                                  fprintf (stderr, "vc-mtime: git diff returned an unexpected file name: %s\n", fn);
+                                else
+                                  /* filenames[n] is under version control but is modified.
+                                     Treat it like a file not under version control.  */
+                                  *vc_controlled_p = 0;
+                              }
+
+                            free (fn);
+                            fclose (fp);
+
+                            /* Remove zombie process from process list, and retrieve exit status.  */
+                            int exitstatus =
+                              wait_subprocess (child, "git", false, true, true, false, NULL);
+                            if (exitstatus != 0)
+                              fprintf (stderr, "vc-mtime: git diff failed with exit code %d\n", exitstatus);
+                          }
+                        n0 = n;
+                      }
+                    while (n0 < nfiles);
+
+                    gl_map_free (relative_filenames_ht);
+                  }
+
+                  {
+                    /* Run "git log -1 --format=%ct -- FILE1...".  It prints the
+                       time of last modification (the 'CommitDate', not the
+                       'AuthorDate' which merely represents the time at which the
+                       author locally committed the first version of the change),
+                       as the number of seconds since the Epoch.  The '--' option
+                       is for the case that the specified file was removed.  */
+                    size_t n0 = 0;
+                    do
+                      {
+                        size_t i = 0;
+                        argv[i++] = "git";
+                        argv[i++] = "log";
+                        argv[i++] = "-1";
+                        argv[i++] = "--format=%ct";
+                        argv[i++] = "--";
+                        size_t i0 = i;
+
+                        size_t n = n0;
+                        size_t cmd_len = 27;
+                        for (; n < nfiles; n++)
+                          if (vc_controlled[n] == 1)
+                            {
+                              if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
+                                  && i > i0)
+                                break;
+                              argv[i++] = currdir_relative_filenames[n];
+                              cmd_len += 1 + strlen (currdir_relative_filenames[n]);
+                            }
+                        if (i > i0)
+                          {
+                            pid_t child;
+                            int fd[1];
+
+                            argv[i] = NULL;
+                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                    DEV_NULL, true, true, false, fd);
+                            if (child == -1)
+                              break;
+
+                            /* Read the subprocess output.  It is expected to be a
+                               single line, containing a positive integer.  */
+                            FILE *fp = fdopen (fd[0], "r");
+                            if (fp == NULL)
+                              error (EXIT_FAILURE, errno, _("fdopen() failed"));
+
+                            char *line = NULL;
+                            size_t linesize = 0;
+                            size_t linelen = getline (&line, &linesize, fp);
+                            if (linelen == (size_t)(-1))
                               {
                                 if (errno == ENOMEM)
                                   xalloc_die ();
-                                fprintf (stderr, "vc-mtime: failed to read git ls-files output\n");
-                                break;
+                                fprintf (stderr, "vc-mtime: failed to read git log output\n");
+                               git_log_fail1:
+                                free (line);
+                                fclose (fp);
+                                wait_subprocess (child, "git", true, false, true, false, NULL);
+                               git_log_fail2:
+                                free (argv);
+                                for (size_t k = nfiles; k > 0; )
+                                  free (currdir_relative_filenames[--k]);
+                                free (currdir_relative_filenames);
+                                for (size_t k = nfiles; k > 0; )
+                                  free (checkout_relative_filenames[--k]);
+                                free (checkout_relative_filenames);
+                                free (git_checkout_slash);
+                                for (size_t k = nfiles; k > 0; )
+                                  free (canonical_filenames[--k]);
+                                free (canonical_filenames);
+                                free (currdir);
+                                free (git_checkout);
+                                free (vc_controlled);
+                                return -1;
                               }
-                            signed char *vc_controlled_p =
-                              (signed char *) gl_map_get (relative_filenames_ht, fn);
-                            if (vc_controlled_p == NULL)
-                              fprintf (stderr, "vc-mtime: git ls-files returned an unexpected file name: %s\n", fn);
-                            else
-                              *vc_controlled_p = (status == 'H' ? 1 : 0);
-                          }
+                            if (linelen > 0 && line[linelen - 1] == '\n')
+                              line[linelen - 1] = '\0';
 
-                        free (fn);
-                        fclose (fp);
-
-                        /* Remove zombie process from process list, and retrieve exit status.  */
-                        int exitstatus =
-                          wait_subprocess (child, "git", false, true, true, false, NULL);
-                        if (exitstatus != 0)
-                          fprintf (stderr, "vc-mtime: git ls-files failed with exit code %d\n", exitstatus);
-                      }
-                    n0 = n;
-                  }
-                while (n0 < nfiles);
-
-                gl_map_free (relative_filenames_ht);
-              }
-
-              {
-                /* Put the relative file names into a hash table.  This is needed
-                   because 'git diff' returns the files in a different order
-                   than the one we provide in the command.  */
-                gl_map_t relative_filenames_ht =
-                  gl_map_create_empty (GL_HASH_MAP,
-                                       hashkey_string_equals, hashkey_string_hash,
-                                       NULL, NULL);
-                for (size_t n = 0; n < nfiles; n++)
-                  if (vc_controlled[n] == 1)
-                    {
-                      /* No need to test for duplicates here.  We have already set
-                         vc_controlled[n] to -1 for duplicates, above.  */
-                      gl_map_put (relative_filenames_ht, checkout_relative_filenames[n], &vc_controlled[n]);
-                    }
-
-                /* Run "git diff --name-only --no-relative -z HEAD -- FILE1..." for
-                   as many files as possible, and inspect the output.  */
-                size_t n0 = 0;
-                do
-                  {
-                    size_t i = 0;
-                    argv[i++] = "git";
-                    argv[i++] = "diff";
-                    argv[i++] = "--name-only";
-                    /* With git versions >= 2.28, we pass option --no-relative,
-                       in order to neutralize any possible customization of the
-                       "diff.relative" property.  With git versions < 2.28, this
-                       is not needed, and the option --no-relative does not
-                       exist.  */
-                    if (!(git_version[0] <= '1'
-                          || (git_version[0] == '2' && git_version[1] == '.'
-                              && ((git_version[2] >= '0' && git_version[2] <= '9'
-                                   && !(git_version[3] >= '0' && git_version[3] <= '9'))
-                                  || (((git_version[2] == '1'
-                                        && git_version[3] >= '0' && git_version[3] <= '9')
-                                       || (git_version[2] == '2'
-                                           && git_version[3] >= '0' && git_version[3] <= '7'))
-                                      && !(git_version[4] >= '0' && git_version[4] <= '9'))))))
-                      argv[i++] = "--no-relative";
-                    argv[i++] = "-z";
-                    argv[i++] = "HEAD";
-                    argv[i++] = "--";
-                    size_t i0 = i;
-
-                    size_t n = n0;
-                    size_t cmd_len = 46;
-                    for (; n < nfiles; n++)
-                      if (vc_controlled[n] == 1)
-                        {
-                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                              && i > i0)
-                            break;
-                          argv[i++] = currdir_relative_filenames[n];
-                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
-                        }
-                    if (i > i0)
-                      {
-                        pid_t child;
-                        int fd[1];
-
-                        argv[i] = NULL;
-                        child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                DEV_NULL, true, true, false, fd);
-                        if (child == -1)
-                          break;
-
-                        /* Read the subprocess output.  It is expected to be of the form
-                             <checkout_relative_filename1> NUL
-                             <checkout_relative_filename2> NUL
-                             ...
-                           where the relative filenames are relative to the git
-                           checkout dir, not to currdir!  */
-                        FILE *fp = fdopen (fd[0], "r");
-                        if (fp == NULL)
-                          error (EXIT_FAILURE, errno, _("fdopen() failed"));
-
-                        char *fn = NULL;
-                        size_t fn_size = 0;
-                        for (;;)
-                          {
-                            /* Test for EOF.  */
-                            int c = fgetc (fp);
-                            if (c == EOF)
-                              break;
-                            ungetc (c, fp);
-
-                            if (getdelim (&fn, &fn_size, '\0', fp) == -1)
+                            char *endptr;
+                            unsigned long git_log_time;
+                            if (!(xstrtoul (line, &endptr, 10, &git_log_time, NULL) == LONGINT_OK
+                                  && endptr == line + strlen (line)))
                               {
-                                if (errno == ENOMEM)
-                                  xalloc_die ();
-                                fprintf (stderr, "vc-mtime: failed to read git diff output\n");
-                                break;
+                                fprintf (stderr, "vc-mtime: git log output not as expected\n");
+                                goto git_log_fail1;
                               }
-                            signed char *vc_controlled_p =
-                              (signed char *) gl_map_get (relative_filenames_ht, fn);
-                            if (vc_controlled_p == NULL)
-                              fprintf (stderr, "vc-mtime: git diff returned an unexpected file name: %s\n", fn);
-                            else
-                              /* filenames[n] is under version control but is modified.
-                                 Treat it like a file not under version control.  */
-                              *vc_controlled_p = 0;
-                          }
 
-                        free (fn);
-                        fclose (fp);
+                            struct timespec mtime;
+                            mtime.tv_sec = git_log_time;
+                            mtime.tv_nsec = 0;
+                            accumulate (&accu, mtime);
 
-                        /* Remove zombie process from process list, and retrieve exit status.  */
-                        int exitstatus =
-                          wait_subprocess (child, "git", false, true, true, false, NULL);
-                        if (exitstatus != 0)
-                          fprintf (stderr, "vc-mtime: git diff failed with exit code %d\n", exitstatus);
-                      }
-                    n0 = n;
-                  }
-                while (n0 < nfiles);
-
-                gl_map_free (relative_filenames_ht);
-              }
-
-              {
-                /* Run "git log -1 --format=%ct -- FILE1...".  It prints the
-                   time of last modification (the 'CommitDate', not the
-                   'AuthorDate' which merely represents the time at which the
-                   author locally committed the first version of the change),
-                   as the number of seconds since the Epoch.  The '--' option
-                   is for the case that the specified file was removed.  */
-                size_t n0 = 0;
-                do
-                  {
-                    size_t i = 0;
-                    argv[i++] = "git";
-                    argv[i++] = "log";
-                    argv[i++] = "-1";
-                    argv[i++] = "--format=%ct";
-                    argv[i++] = "--";
-                    size_t i0 = i;
-
-                    size_t n = n0;
-                    size_t cmd_len = 27;
-                    for (; n < nfiles; n++)
-                      if (vc_controlled[n] == 1)
-                        {
-                          if (cmd_len + strlen (currdir_relative_filenames[n]) >= MAX_CMD_LEN
-                              && i > i0)
-                            break;
-                          argv[i++] = currdir_relative_filenames[n];
-                          cmd_len += 1 + strlen (currdir_relative_filenames[n]);
-                        }
-                    if (i > i0)
-                      {
-                        pid_t child;
-                        int fd[1];
-
-                        argv[i] = NULL;
-                        child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                DEV_NULL, true, true, false, fd);
-                        if (child == -1)
-                          break;
-
-                        /* Read the subprocess output.  It is expected to be a
-                           single line, containing a positive integer.  */
-                        FILE *fp = fdopen (fd[0], "r");
-                        if (fp == NULL)
-                          error (EXIT_FAILURE, errno, _("fdopen() failed"));
-
-                        char *line = NULL;
-                        size_t linesize = 0;
-                        size_t linelen = getline (&line, &linesize, fp);
-                        if (linelen == (size_t)(-1))
-                          {
-                            if (errno == ENOMEM)
-                              xalloc_die ();
-                            fprintf (stderr, "vc-mtime: failed to read git log output\n");
-                           git_log_fail1:
                             free (line);
                             fclose (fp);
-                            wait_subprocess (child, "git", true, false, true, false, NULL);
-                           git_log_fail2:
-                            free (argv);
-                            for (size_t k = nfiles; k > 0; )
-                              free (currdir_relative_filenames[--k]);
-                            free (currdir_relative_filenames);
-                            for (size_t k = nfiles; k > 0; )
-                              free (checkout_relative_filenames[--k]);
-                            free (checkout_relative_filenames);
-                            free (git_checkout_slash);
-                            for (size_t k = nfiles; k > 0; )
-                              free (canonical_filenames[--k]);
-                            free (canonical_filenames);
-                            free (currdir);
-                            free (git_checkout);
-                            free (vc_controlled);
-                            return -1;
+
+                            /* Remove zombie process from process list, and retrieve exit status.  */
+                            int exitstatus =
+                              wait_subprocess (child, "git", false, true, true, false, NULL);
+                            if (exitstatus != 0)
+                              {
+                                fprintf (stderr, "vc-mtime: git log failed with exit code %d\n", exitstatus);
+                                goto git_log_fail2;
+                              }
                           }
-                        if (linelen > 0 && line[linelen - 1] == '\n')
-                          line[linelen - 1] = '\0';
-
-                        char *endptr;
-                        unsigned long git_log_time;
-                        if (!(xstrtoul (line, &endptr, 10, &git_log_time, NULL) == LONGINT_OK
-                              && endptr == line + strlen (line)))
-                          {
-                            fprintf (stderr, "vc-mtime: git log output not as expected\n");
-                            goto git_log_fail1;
-                          }
-
-                        struct timespec mtime;
-                        mtime.tv_sec = git_log_time;
-                        mtime.tv_nsec = 0;
-                        accumulate (&accu, mtime);
-
-                        free (line);
-                        fclose (fp);
-
-                        /* Remove zombie process from process list, and retrieve exit status.  */
-                        int exitstatus =
-                          wait_subprocess (child, "git", false, true, true, false, NULL);
-                        if (exitstatus != 0)
-                          {
-                            fprintf (stderr, "vc-mtime: git log failed with exit code %d\n", exitstatus);
-                            goto git_log_fail2;
-                          }
+                        n0 = n;
                       }
-                    n0 = n;
+                    while (n0 < nfiles);
                   }
-                while (n0 < nfiles);
-              }
 
-              free (argv);
-              for (size_t k = nfiles; k > 0; )
-                free (currdir_relative_filenames[--k]);
-              free (currdir_relative_filenames);
-              for (size_t k = nfiles; k > 0; )
-                free (checkout_relative_filenames[--k]);
-              free (checkout_relative_filenames);
-              free (git_checkout_slash);
-              for (size_t k = nfiles; k > 0; )
-                free (canonical_filenames[--k]);
-              free (canonical_filenames);
+                  free (argv);
+                  for (size_t k = nfiles; k > 0; )
+                    free (currdir_relative_filenames[--k]);
+                  free (currdir_relative_filenames);
+                  for (size_t k = nfiles; k > 0; )
+                    free (checkout_relative_filenames[--k]);
+                  free (checkout_relative_filenames);
+                  free (git_checkout_slash);
+                  for (size_t k = nfiles; k > 0; )
+                    free (canonical_filenames[--k]);
+                  free (canonical_filenames);
+                }
+              free (currdir);
             }
-          free (currdir);
+          free (git_checkout);
         }
-      free (git_checkout);
     }
 
   /* For the files that are not under version control, or that are modified
