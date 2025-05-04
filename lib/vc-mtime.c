@@ -573,7 +573,7 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                 }
 
               /* Room for passing arguments to git commands.  */
-              const char **argv = XNMALLOC (6 + nfiles + 1, const char *);
+              const char **argv = XNMALLOC (7 + nfiles + 1, const char *);
 
               {
                 /* Put the relative file names into a hash table.  This is needed
