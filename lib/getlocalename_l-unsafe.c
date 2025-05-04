@@ -550,8 +550,14 @@ getlocalename_l_unsafe (int category, locale_t locale)
       /* We shouldn't get here.  */
       return (struct string_with_storage) { "", STORAGE_INDEFINITE };
 # else
-      /* Solaris 11 OpenIndiana.
-         For the internal structure of locale objects, see
+      /* Solaris 11 OpenIndiana or Solaris 11 OmniOS.  */
+#  if HAVE_GETLOCALENAME_L
+      /* illumos after April 2025.  */
+#   undef getlocalename_l
+      const char *name = getlocalename_l (category, locale);
+      return (struct string_with_storage) { name, STORAGE_OBJECT };
+#  else
+      /* For the internal structure of locale objects, see
          https://github.com/OpenIndiana/illumos-gate/blob/master/usr/src/lib/libc/port/locale/localeimpl.h  */
       switch (category)
         {
@@ -568,6 +574,7 @@ getlocalename_l_unsafe (int category, locale_t locale)
         default: /* We shouldn't get here.  */
           return (struct string_with_storage) { "", STORAGE_INDEFINITE };
         }
+#  endif
 # endif
 #elif HAVE_NAMELESS_LOCALES
       /* OpenBSD >= 6.2, AIX >= 7.1 */
