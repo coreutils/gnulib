@@ -139,7 +139,7 @@ _obstack_begin_worker (struct obstack *h,
 int
 _obstack_begin (struct obstack *h,
                 _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment,
-                void *(*chunkfun) (size_t),
+                void *(*chunkfun) (_OBSTACK_CHUNK_SIZE_T),
                 void (*freefun) (void *))
 {
   h->chunkfun.plain = chunkfun;
@@ -151,7 +151,7 @@ _obstack_begin (struct obstack *h,
 int
 _obstack_begin_1 (struct obstack *h,
                   _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment,
-                  void *(*chunkfun) (void *, size_t),
+                  void *(*chunkfun) (void *, _OBSTACK_CHUNK_SIZE_T),
                   void (*freefun) (void *, void *),
                   void *arg)
 {
