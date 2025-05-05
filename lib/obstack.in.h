@@ -235,14 +235,15 @@ struct obstack          /* control current object in current chunk */
 
 #if defined __GL_REPLACE_OBSTACK__
 # define _obstack_newchunk rpl_obstack_newchunk
-# define _obstack_free rpl_obstack_free
+# define __obstack_free rpl_obstack_free
 # define _obstack_begin rpl_obstack_begin
 # define _obstack_begin_1 rpl_obstack_begin_1
 # define _obstack_memory_used rpl_obstack_memory_used
 # define _obstack_allocated_p rpl_obstack_allocated_p
+#elif !defined __obstack_free /* for old Gnulib */
+# define __obstack_free obstack_free
 #endif
 extern void _obstack_newchunk (struct obstack *, _OBSTACK_INDEX_T);
-extern void _obstack_free (struct obstack *, void *);
 extern int _obstack_begin (struct obstack *,
                            _OBSTACK_INDEX_T, _OBSTACK_INDEX_T,
                            void *(*) (_OBSTACK_CHUNK_SIZE_T),
@@ -253,6 +254,7 @@ extern int _obstack_begin_1 (struct obstack *,
                              void (*) (void *, void *), void *);
 extern _OBSTACK_INDEX_T _obstack_memory_used (struct obstack *)
   __attribute_pure__;
+extern void __obstack_free (struct obstack *, void *);
 
 
 /* Error handler called when 'obstack_chunk_alloc' failed to allocate
@@ -473,7 +475,7 @@ extern int obstack_exit_failure;
        if (__obj > (void *) __o->chunk && __obj < (void *) __o->chunk_limit)  \
          __o->next_free = __o->object_base = (char *) __obj;		      \
        else								      \
-         _obstack_free (__o, __obj); })
+         __obstack_free (__o, __obj); })
 
 #else /* not __GNUC__ */
 
@@ -575,7 +577,7 @@ extern int obstack_exit_failure;
    (((h)->temp.tempptr > (void *) (h)->chunk				      \
      && (h)->temp.tempptr < (void *) (h)->chunk_limit)			      \
     ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
-    : _obstack_free ((h), (h)->temp.tempptr)))
+    : __obstack_free ((h), (h)->temp.tempptr)))
 
 #endif /* not __GNUC__ */
 
