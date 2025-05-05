@@ -348,7 +348,7 @@ extern int obstack_exit_failure;
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
        _OBSTACK_SIZE_T __len = (length);				      \
-       if (obstack_room (__o) < __len + 1)				      \
+       if (obstack_room (__o) <= __len)					      \
          _obstack_newchunk (__o, __len + 1);				      \
        memcpy (__o->next_free, where, __len);				      \
        __o->next_free += __len;						      \
@@ -484,7 +484,7 @@ extern int obstack_exit_failure;
 
 # define obstack_grow0(h, where, length)				      \
   ((h)->temp.i = (length),						      \
-   ((obstack_room (h) < (h)->temp.i + 1)				      \
+   ((obstack_room (h) <= (h)->temp.i)					      \
    ? (_obstack_newchunk ((h), (h)->temp.i + 1), 0) : 0),		      \
    memcpy ((h)->next_free, where, (h)->temp.i),				      \
    (h)->next_free += (h)->temp.i,					      \

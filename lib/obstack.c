@@ -34,8 +34,19 @@
 # include <alignof.h>
 # define __alignof__(type) alignof_type (type)
 #endif
-#include <stdlib.h>
+
+#include <limits.h>
 #include <stdint.h>
+#include <stdlib.h>
+
+/* Some work would need to be done to port this module
+   to unusual platforms where size_t fits in int.
+   For now, document the assumption that INT_MAX < SIZE_MAX,
+   and therefore size_t calculations are modulo SIZE_MAX + 1
+   instead of having undefined behavior on overflow.  */
+#if SIZE_MAX <= INT_MAX
+ #error "SIZE_MAX <= INT_MAX"
+#endif
 
 #ifndef MAX
 # define MAX(a,b) ((a) > (b) ? (a) : (b))
@@ -154,6 +165,7 @@ _obstack_begin_1 (struct obstack *h,
 /* Allocate a new current chunk for the obstack *H
    on the assumption that LENGTH bytes need to be added
    to the current object, or a new object of length LENGTH allocated.
+   Fail if LENGTH <= 0, as this means obstack_grow0's length overflowed.
    Copies any partial object from the end of the old chunk
    to the beginning of the new one.  */
 
@@ -174,8 +186,9 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
   if (new_size < h->chunk_size)
     new_size = h->chunk_size;
 
-  /* Allocate and initialize the new chunk.  */
-  if (obj_size <= sum1 && sum1 <= sum2)
+  /* Allocate and initialize the new chunk,
+     checking for overflow and for nonpositive LENGTH.  */
+  if (obj_size < sum1 && sum1 <= sum2)
     new_chunk = call_chunkfun (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
