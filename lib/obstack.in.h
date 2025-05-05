@@ -149,7 +149,7 @@
 /* For backward compatibility, glibc limits object sizes to int range.  */
 # define _OBSTACK_INDEX_T int
 # define _OBSTACK_SIZE_T unsigned int
-# define _OBSTACK_CHUNK_SIZE_T unsigned long
+# define _OBSTACK_CHUNK_SIZE_T long int
 # define _OBSTACK_CAST(type, expr) ((type) (expr))
 # define _OBSTACK_CHUNK_CONTENTS_SIZE 4
 #endif
