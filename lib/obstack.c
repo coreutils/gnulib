@@ -97,7 +97,7 @@ call_freefun (struct obstack *h, void *old_chunk)
 
 static int
 _obstack_begin_worker (struct obstack *h,
-                       _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment)
+                       _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
 
@@ -138,7 +138,7 @@ _obstack_begin_worker (struct obstack *h,
 
 int
 _obstack_begin (struct obstack *h,
-                _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
+                _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment,
                 void *(*chunkfun) (size_t),
                 void (*freefun) (void *))
 {
@@ -150,7 +150,7 @@ _obstack_begin (struct obstack *h,
 
 int
 _obstack_begin_1 (struct obstack *h,
-                  _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
+                  _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment,
                   void *(*chunkfun) (void *, size_t),
                   void (*freefun) (void *, void *),
                   void *arg)
@@ -170,7 +170,7 @@ _obstack_begin_1 (struct obstack *h,
    to the beginning of the new one.  */
 
 void
-_obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
+_obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
 {
   struct _obstack_chunk *old_chunk = h->chunk;
   struct _obstack_chunk *new_chunk = NULL;
@@ -280,11 +280,11 @@ _obstack_free (struct obstack *h, void *obj)
     abort ();
 }
 
-_OBSTACK_SIZE_T
+_OBSTACK_INDEX_T
 _obstack_memory_used (struct obstack *h)
 {
   struct _obstack_chunk *lp;
-  _OBSTACK_SIZE_T nbytes = 0;
+  _OBSTACK_INDEX_T nbytes = 0;
 
   for (lp = h->chunk; lp != NULL; lp = lp->prev)
     {

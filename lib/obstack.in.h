@@ -142,12 +142,14 @@
    is different from the one in GNU libc.  */
 #if defined __GL_GNULIB_HEADER
 /* In Gnulib, we use sane types, especially for 64-bit hosts.  */
+# define _OBSTACK_INDEX_T size_t
 # define _OBSTACK_SIZE_T size_t
 # define _CHUNK_SIZE_T size_t
 # define _OBSTACK_CAST(type, expr) (expr)
 # define _OBSTACK_CHUNK_CONTENTS_SIZE FLEXIBLE_ARRAY_MEMBER
 #else
-/* glibc usage.  */
+/* For backward compatibility, glibc limits object sizes to int range.  */
+# define _OBSTACK_INDEX_T int
 # define _OBSTACK_SIZE_T unsigned int
 # define _CHUNK_SIZE_T unsigned long
 # define _OBSTACK_CAST(type, expr) ((type) (expr))
@@ -203,7 +205,7 @@ struct obstack          /* control current object in current chunk */
     _OBSTACK_SIZE_T i;
     void *p;
   } temp;                       /* Temporary for some macros.  */
-  _OBSTACK_SIZE_T alignment_mask;  /* Mask of alignment for each object. */
+  _OBSTACK_INDEX_T alignment_mask;  /* Mask of alignment for each object. */
 
   /* These prototypes vary based on 'use_extra_arg'.  */
   union
@@ -238,16 +240,16 @@ struct obstack          /* control current object in current chunk */
 # define _obstack_memory_used rpl_obstack_memory_used
 # define _obstack_allocated_p rpl_obstack_allocated_p
 #endif
-extern void _obstack_newchunk (struct obstack *, _OBSTACK_SIZE_T);
+extern void _obstack_newchunk (struct obstack *, _OBSTACK_INDEX_T);
 extern void _obstack_free (struct obstack *, void *);
 extern int _obstack_begin (struct obstack *,
-                           _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
+                           _OBSTACK_INDEX_T, _OBSTACK_INDEX_T,
                            void *(*) (size_t), void (*) (void *));
 extern int _obstack_begin_1 (struct obstack *,
-                             _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
+                             _OBSTACK_INDEX_T, _OBSTACK_INDEX_T,
                              void *(*) (void *, size_t),
                              void (*) (void *, void *), void *);
-extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *)
+extern _OBSTACK_INDEX_T _obstack_memory_used (struct obstack *)
   __attribute_pure__;
 
 
@@ -337,7 +339,7 @@ extern int obstack_exit_failure;
 # define obstack_make_room(OBSTACK, length)				      \
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
-       _OBSTACK_SIZE_T __len = (length);				      \
+       _OBSTACK_INDEX_T __len = length;					      \
        if (obstack_room (__o) < __len)					      \
          _obstack_newchunk (__o, __len);				      \
        (void) 0; })
@@ -353,7 +355,7 @@ extern int obstack_exit_failure;
 # define obstack_grow(OBSTACK, where, length)				      \
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
-       _OBSTACK_SIZE_T __len = (length);				      \
+       _OBSTACK_INDEX_T __len = length;					      \
        if (obstack_room (__o) < __len)					      \
          _obstack_newchunk (__o, __len);				      \
        memcpy (__o->next_free, where, __len);				      \
@@ -363,7 +365,7 @@ extern int obstack_exit_failure;
 # define obstack_grow0(OBSTACK, where, length)				      \
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
-       _OBSTACK_SIZE_T __len = (length);				      \
+       _OBSTACK_INDEX_T __len = length;					      \
        if (obstack_room (__o) <= __len)					      \
          _obstack_newchunk (__o, __len + 1);				      \
        memcpy (__o->next_free, where, __len);				      \
@@ -415,7 +417,7 @@ extern int obstack_exit_failure;
 # define obstack_blank(OBSTACK, length)					      \
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
-       _OBSTACK_SIZE_T __len = (length);				      \
+       _OBSTACK_INDEX_T __len = length;					      \
        if (obstack_room (__o) < __len)					      \
          _obstack_newchunk (__o, __len);				      \
        obstack_blank_fast (__o, __len); })
