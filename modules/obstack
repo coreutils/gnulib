@@ -50,7 +50,7 @@ Include:
 "obstack.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all, glibc
