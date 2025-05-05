@@ -144,14 +144,14 @@
 /* In Gnulib, we use sane types, especially for 64-bit hosts.  */
 # define _OBSTACK_INDEX_T size_t
 # define _OBSTACK_SIZE_T size_t
-# define _CHUNK_SIZE_T size_t
+# define _OBSTACK_CHUNK_SIZE_T size_t
 # define _OBSTACK_CAST(type, expr) (expr)
 # define _OBSTACK_CHUNK_CONTENTS_SIZE FLEXIBLE_ARRAY_MEMBER
 #else
 /* For backward compatibility, glibc limits object sizes to int range.  */
 # define _OBSTACK_INDEX_T int
 # define _OBSTACK_SIZE_T unsigned int
-# define _CHUNK_SIZE_T unsigned long
+# define _OBSTACK_CHUNK_SIZE_T unsigned long
 # define _OBSTACK_CAST(type, expr) ((type) (expr))
 # define _OBSTACK_CHUNK_CONTENTS_SIZE 4
 #endif
@@ -195,7 +195,7 @@ struct _obstack_chunk           /* Lives at front of each chunk. */
 
 struct obstack          /* control current object in current chunk */
 {
-  _CHUNK_SIZE_T chunk_size;     /* preferred size to allocate chunks in */
+  _OBSTACK_CHUNK_SIZE_T chunk_size;  /* preferred size to allocate chunks in */
   struct _obstack_chunk *chunk; /* address of current struct obstack_chunk */
   char *object_base;            /* address of object we are building */
   char *next_free;              /* where to add next char to current object */
