@@ -19,8 +19,9 @@
 
 #ifdef _LIBC
 # include <obstack.h>
+# include <shlib-compat.h>
 #else
-# include <config.h>
+# include <libc-config.h>
 # include "obstack.h"
 #endif
 
@@ -47,6 +48,36 @@
    instead of having undefined behavior on overflow.  */
 #if SIZE_MAX <= INT_MAX
  #error "SIZE_MAX <= INT_MAX"
+#endif
+
+#ifndef _OBSTACK_NO_ERROR_HANDLER
+
+/* The functions allocating more room by calling 'obstack_chunk_alloc'
+   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
+   This can be set to a user defined function which should either
+   abort gracefully or use longjump - but shouldn't return.  This
+   variable by default points to the internal function
+   'print_and_abort'.  */
+static __attribute_noreturn__ void print_and_abort (void);
+__attribute_noreturn__ void (*obstack_alloc_failed_handler) (void)
+  = print_and_abort;
+
+/* Exit value used when 'print_and_abort' is used.  */
+# ifdef _LIBC
+int obstack_exit_failure = EXIT_FAILURE;
+# else
+#  include "exitfail.h"
+#  define obstack_exit_failure exit_failure
+# endif
+
+#endif /* !_OBSTACK_NO_ERROR_HANDLER */
+
+#if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_3_4)
+/* A looong time ago (before 1994, anyway; we're not sure) this global variable
+   was used by non-GNU-C macros to avoid multiple evaluation.  The GNU C
+   library still exports it because somebody might use it.  */
+struct obstack *_obstack_compat = NULL;
+compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
 #endif
 
 /* Return the least multiple of MASK + 1 that is not less than SIZE.
@@ -226,6 +257,7 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
   /* The new chunk certainly contains no empty object yet.  */
   h->maybe_empty_object = 0;
 }
+libc_hidden_def (_obstack_newchunk)
 
 /* Return nonzero if object OBJ has been allocated from obstack H.
    This is here for debugging.
@@ -288,6 +320,10 @@ __obstack_free (struct obstack *h, void *obj)
     abort ();
 }
 
+/* Older versions of libc used a function _obstack_free intended to be
+   called by non-GCC compilers.  */
+strong_alias (obstack_free, _obstack_free)
+
 _OBSTACK_INDEX_T
 _obstack_memory_used (struct obstack *h)
 {
@@ -304,14 +340,6 @@ _obstack_memory_used (struct obstack *h)
 #ifndef _OBSTACK_NO_ERROR_HANDLER
 /* Define the error handler.  */
 # include <stdio.h>
-
-/* Exit value used when 'print_and_abort' is used.  */
-# ifdef _LIBC
-int obstack_exit_failure = EXIT_FAILURE;
-# else
-#  include "exitfail.h"
-#  define obstack_exit_failure exit_failure
-# endif
 
 # ifdef _LIBC
 #  include <libintl.h>
@@ -344,13 +372,4 @@ print_and_abort (void)
 # endif
   exit (obstack_exit_failure);
 }
-
-/* The functions allocating more room by calling 'obstack_chunk_alloc'
-   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
-   This can be set to a user defined function which should either
-   abort gracefully or use longjump - but shouldn't return.  This
-   variable by default points to the internal function
-   'print_and_abort'.  */
-__attribute_noreturn__ void (*obstack_alloc_failed_handler) (void)
-  = print_and_abort;
 #endif /* !_OBSTACK_NO_ERROR_HANDLER */
