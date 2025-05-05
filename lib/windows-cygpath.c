@@ -121,9 +121,16 @@ windows_cygpath_w (const char *filename)
       return line;
     }
   else
-    /* It's a relative file name, or an absolute native Windows file name.
-       No conversion is needed.  */
-    return xstrdup (filename);
+    {
+      /* It's a relative file name, or an absolute native Windows file name.
+         All we need to do is to convert slashes to backslahes, e.g.
+         'C:/Users' -> 'C:\Users'.  */
+      size_t len = strlen (filename) + 1;
+      char *copy = XNMALLOC (len, char);
+      for (size_t i = 0; i < len; i++)
+        copy[i] = (filename[i] == '/' ? '\\' : filename[i]);
+      return copy;
+    }
 }
 
 #else
