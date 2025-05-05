@@ -125,7 +125,17 @@
 # define PTR_INT_TYPE ptrdiff_t
 #endif
 
-#include <stdint.h>             /* For uintptr_t.  */
+/* An integer type wide enough to hold a pointer value,
+   if such a type is available.  */
+#ifdef __UINTPTR_TYPE__
+# define _OBSTACK_UINTPTR_TYPE __UINTPTR_TYPE__
+#elif defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__
+# include <stdint.h>
+# ifdef UINTPTR_MAX
+#  define _OBSTACK_UINTPTR_TYPE uintptr_t
+# endif
+#endif
+
 #include <string.h>             /* For memcpy, size_t.  */
 
 /* These macros highlight the places where this implementation
@@ -144,18 +154,17 @@
 # define _OBSTACK_CHUNK_CONTENTS_SIZE 4
 #endif
 
-/* __PTR_ALIGN(B, P, A) returns the result of aligning P to the next multiple
-   of A + 1.  B must be the base of an object addressed by P.  B and P must be
-   of type char *.  A + 1 must be a power of 2.
-   If ptrdiff_t is narrower than a pointer (e.g., the AS/400), play it
+/* If B is the base of an object addressed by P, return the result of
+   aligning P to the next multiple of A + 1.  B and P must be of type
+   char *.  A + 1 must be a power of 2.  With no uintptr_t, play it
    safe and compute the alignment relative to B.  Otherwise, use the
    faster strategy of computing the alignment through uintptr_t.  */
-#if defined __GL_SMALL_PTRDIFF_T__
+#ifndef _OBSTACK_UINTPTR_TYPE
 # define __PTR_ALIGN(B, P, A) \
    ((B) + (((P) - (B) + (A)) & ~(A)))
 #else
 # define __PTR_ALIGN(B, P, A) \
-   ((P) + ((- (uintptr_t) (P)) & (A)))
+   ((P) + ((- (_OBSTACK_UINTPTR_TYPE) (P)) & (A)))
 #endif
 
 #ifndef __attribute_pure__
