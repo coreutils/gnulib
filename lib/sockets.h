@@ -52,7 +52,7 @@ int gl_sockets_cleanup (void)
 #endif
 
 
-/* This function is useful it you create a socket using gnulib's
+/* This function is useful if you create a socket using gnulib's
    Winsock wrappers but needs to pass on the socket handle to some
    other library that only accepts sockets. */
 #ifdef WINDOWS_SOCKETS
