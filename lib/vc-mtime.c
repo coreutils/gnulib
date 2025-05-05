@@ -35,6 +35,7 @@
 #include "safe-read.h"
 #include "xstrtol.h"
 #include "stat-time.h"
+#include "windows-cygpath.h"
 #include "filename.h"
 #include "xalloc.h"
 #include "xgetcwd.h"
@@ -357,7 +358,11 @@ abs_git_checkout (void)
       exitstatus =
         wait_subprocess (child, "git", true, true, true, false, NULL);
       if (exitstatus == 0)
-        return line;
+        {
+          char *line_converted = windows_cygpath_w (line);
+          free (line);
+          return line_converted;
+        }
     }
   free (line);
   return NULL;

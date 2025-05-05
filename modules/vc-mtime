@@ -16,6 +16,7 @@ error
 getline
 xstrtol
 stat-time
+windows-cygpath
 filename
 xalloc
 xgetcwd
