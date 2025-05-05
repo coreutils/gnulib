@@ -1,0 +1,29 @@
+Description:
+Convert file names between Cygwin syntax and Windows syntax.
+
+Files:
+lib/windows-cygpath.h
+lib/windows-cygpath.c
+
+Depends-on:
+spawn-pipe
+wait-process
+getline
+xalloc
+free-posix
+gettext-h
+gnulib-i18n
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += windows-cygpath.c
+
+Include:
+"windows-cygpath.h"
+
+License:
+GPL
+
+Maintainer:
+all
