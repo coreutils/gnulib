@@ -31,8 +31,7 @@
    use the already-supplied __alignof__.  Otherwise, this must be Gnulib
    (as glibc assumes GCC); defer to Gnulib's alignof_type.  */
 #if !defined __GNUC__ && !defined __alignof__
-# include <alignof.h>
-# define __alignof__(type) alignof_type (type)
+# define __alignof__(type) alignof (type)
 #endif
 
 #include <limits.h>
