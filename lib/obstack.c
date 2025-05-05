@@ -57,24 +57,6 @@ align_size_up (size_t mask, size_t size)
   return size + (mask & -size);
 }
 
-#ifndef MAX
-# define MAX(a,b) ((a) > (b) ? (a) : (b))
-#endif
-
-/* Determine default alignment.  */
-
-/* If malloc were really smart, it would round addresses to DEFAULT_ALIGNMENT.
-   But in fact it might be less smart and round addresses to as much as
-   DEFAULT_ROUNDING.  So we prepare for it to do that.
-
-   DEFAULT_ALIGNMENT cannot be an enum constant; see gnulib's alignof.h.  */
-#define DEFAULT_ALIGNMENT MAX (__alignof__ (long double),		      \
-                               MAX (__alignof__ (uintmax_t),		      \
-                                    __alignof__ (void *)))
-#define DEFAULT_ROUNDING MAX (sizeof (long double),			      \
-                               MAX (sizeof (uintmax_t),			      \
-                                    sizeof (void *)))
-
 /* Call functions with either the traditional malloc/free calling
    interface, or the mmalloc/mfree interface (that adds an extra first
    argument), based on the value of use_extra_arg.  */
@@ -111,7 +93,7 @@ _obstack_begin_worker (struct obstack *h,
   struct _obstack_chunk *chunk; /* points to new chunk */
 
   if (alignment == 0)
-    alignment = DEFAULT_ALIGNMENT;
+    alignment = __alignof__ (max_align_t);
 
   /* The minimum size to request from the allocator, such that the
      result is guaranteed to have enough room to start with the struct
@@ -131,20 +113,8 @@ _obstack_begin_worker (struct obstack *h,
       size = aligned_prefix_size;
 
       /* For speed in the typical case, allocate at least a "good" size.  */
-
-      /* 12 is sizeof (mhead) and 4 is EXTRA from GNU malloc.
-         Use the values for range checking, because if range checking is off,
-         the extra bytes won't be missed terribly, but if range checking is on
-         and we used a larger request, a whole extra 4096 bytes would be
-         allocated.
-
-         These number are irrelevant to the new GNU malloc.  I suspect it is
-         less sensitive to the size of the request.  */
-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
-                    + 4 + DEFAULT_ROUNDING - 1)
-                   & ~(DEFAULT_ROUNDING - 1));
-      int good_size = 4096 - extra;
-      if (0 <= good_size && size < good_size)
+      int good_size = 4000;
+      if (size < good_size)
         size = good_size;
     }
 
