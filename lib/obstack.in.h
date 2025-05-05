@@ -136,8 +136,6 @@
 # endif
 #endif
 
-#include <string.h>             /* For memcpy, size_t.  */
-
 /* These macros highlight the places where this implementation
    is different from the one in GNU libc.  */
 #if defined __GL_GNULIB_HEADER
@@ -168,6 +166,9 @@
 # define __PTR_ALIGN(B, P, A) \
    ((P) + ((- (_OBSTACK_UINTPTR_TYPE) (P)) & (A)))
 #endif
+
+/* For memcpy, size_t.  */
+#include <string.h>
 
 #ifndef __attribute_pure__
 # define __attribute_pure__ _GL_ATTRIBUTE_PURE
