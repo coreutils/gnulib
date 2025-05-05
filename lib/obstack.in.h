@@ -324,8 +324,7 @@ extern int obstack_exit_failure;
 #define obstack_memory_used(h) _obstack_memory_used (h)
 
 #if defined __GNUC__ || defined __clang__
-# if !(defined __GNUC_MINOR__ && __GNUC__ * 1000 + __GNUC_MINOR__ >= 2008 \
-       || defined __clang__)
+# if ! (2 < __GNUC__ + (8 <= __GNUC_MINOR__) || defined __clang__)
 #  define __extension__
 # endif
 
