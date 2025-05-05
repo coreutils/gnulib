@@ -106,8 +106,7 @@
 #define _OBSTACK_H 1
 
 #if defined __GL_GNULIB_HEADER
-/* Gnulib usage.  */
-/* This file uses _GL_ATTRIBUTE_PURE.  */
+/* This file uses _GL_ATTRIBUTE_PURE, FLEXIBLE_ARRAY_MEMBER.  */
 # if !_GL_CONFIG_H_INCLUDED
   #error "Please include config.h first."
 # endif
@@ -117,12 +116,6 @@
 #include <stdint.h>             /* For uintptr_t.  */
 #include <string.h>             /* For memcpy.  */
 
-#if __STDC_VERSION__ < 199901L || defined __HP_cc
-# define __FLEXIBLE_ARRAY_MEMBER 1
-#else
-# define __FLEXIBLE_ARRAY_MEMBER
-#endif
-
 /* These macros highlight the places where this implementation
    is different from the one in GNU libc.  */
 #if defined __GL_GNULIB_HEADER
@@ -130,11 +123,13 @@
 # define _OBSTACK_SIZE_T size_t
 # define _CHUNK_SIZE_T size_t
 # define _OBSTACK_CAST(type, expr) (expr)
+# define _OBSTACK_CHUNK_CONTENTS_SIZE FLEXIBLE_ARRAY_MEMBER
 #else
 /* glibc usage.  */
 # define _OBSTACK_SIZE_T unsigned int
 # define _CHUNK_SIZE_T unsigned long
 # define _OBSTACK_CAST(type, expr) ((type) (expr))
+# define _OBSTACK_CHUNK_CONTENTS_SIZE 4
 #endif
 
 /* __PTR_ALIGN(B, P, A) returns the result of aligning P to the next multiple
@@ -172,7 +167,7 @@ struct _obstack_chunk           /* Lives at front of each chunk. */
 {
   char *limit;                  /* 1 past end of this chunk */
   struct _obstack_chunk *prev;  /* address of prior chunk or NULL */
-  char contents[__FLEXIBLE_ARRAY_MEMBER]; /* objects begin here */
+  char contents[_OBSTACK_CHUNK_CONTENTS_SIZE]; /* objects begin here */
 };
 
 struct obstack          /* control current object in current chunk */
