@@ -203,8 +203,8 @@ struct obstack          /* control current object in current chunk */
   char *chunk_limit;            /* address of char after current chunk */
   union
   {
-    _OBSTACK_SIZE_T i;
-    void *p;
+    _OBSTACK_SIZE_T tempint;
+    void *tempptr;
   } temp;                       /* Temporary for some macros.  */
   _OBSTACK_INDEX_T alignment_mask;  /* Mask of alignment for each object. */
 
@@ -496,25 +496,25 @@ extern int obstack_exit_failure;
    but some compilers won't accept it.  */
 
 # define obstack_make_room(h, length)					      \
-  ((h)->temp.i = (length),						      \
-   ((obstack_room (h) < (h)->temp.i)					      \
-    ? (_obstack_newchunk (h, (h)->temp.i), 0) : 0),			      \
+  ((h)->temp.tempint = (length),					      \
+   ((obstack_room (h) < (h)->temp.tempint)				      \
+    ? (_obstack_newchunk (h, (h)->temp.tempint), 0) : 0),		      \
    (void) 0)
 
 # define obstack_grow(h, where, length)					      \
-  ((h)->temp.i = (length),						      \
-   ((obstack_room (h) < (h)->temp.i)					      \
-   ? (_obstack_newchunk ((h), (h)->temp.i), 0) : 0),			      \
-   memcpy ((h)->next_free, where, (h)->temp.i),				      \
-   (h)->next_free += (h)->temp.i,					      \
+  ((h)->temp.tempint = (length),					      \
+   ((obstack_room (h) < (h)->temp.tempint)				      \
+   ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0),		      \
+   memcpy ((h)->next_free, where, (h)->temp.tempint),			      \
+   (h)->next_free += (h)->temp.tempint,					      \
    (void) 0)
 
 # define obstack_grow0(h, where, length)				      \
-  ((h)->temp.i = (length),						      \
-   ((obstack_room (h) <= (h)->temp.i)					      \
-   ? (_obstack_newchunk ((h), (h)->temp.i + 1), 0) : 0),		      \
-   memcpy ((h)->next_free, where, (h)->temp.i),				      \
-   (h)->next_free += (h)->temp.i,					      \
+  ((h)->temp.tempint = (length),					      \
+   ((obstack_room (h) <= (h)->temp.tempint)				      \
+   ? (_obstack_newchunk ((h), (h)->temp.tempint + 1), 0) : 0),		      \
+   memcpy ((h)->next_free, where, (h)->temp.tempint),			      \
+   (h)->next_free += (h)->temp.tempint,					      \
    *((h)->next_free)++ = 0,						      \
    (void) 0)
 
@@ -542,10 +542,10 @@ extern int obstack_exit_failure;
    (void) 0)
 
 # define obstack_blank(h, length)					      \
-  ((h)->temp.i = (length),						      \
-   ((obstack_room (h) < (h)->temp.i)					      \
-   ? (_obstack_newchunk ((h), (h)->temp.i), 0) : 0),			      \
-   obstack_blank_fast (h, (h)->temp.i))
+  ((h)->temp.tempint = (length),					      \
+   ((obstack_room (h) < (h)->temp.tempint)				      \
+   ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0),		      \
+   obstack_blank_fast (h, (h)->temp.tempint))
 
 # define obstack_alloc(h, length)					      \
   (obstack_blank ((h), (length)), obstack_finish ((h)))
@@ -560,7 +560,7 @@ extern int obstack_exit_failure;
   (((h)->next_free == (h)->object_base					      \
     ? (((h)->maybe_empty_object = 1), 0)				      \
     : 0),								      \
-   (h)->temp.p = (h)->object_base,					      \
+   (h)->temp.tempptr = (h)->object_base,				      \
    (h)->next_free							      \
      = __PTR_ALIGN ((h)->object_base, (h)->next_free,			      \
                     (h)->alignment_mask),				      \
@@ -568,14 +568,14 @@ extern int obstack_exit_failure;
      > (size_t) ((h)->chunk_limit - (char *) (h)->chunk))		      \
    ? ((h)->next_free = (h)->chunk_limit) : 0),				      \
    (h)->object_base = (h)->next_free,					      \
-   (h)->temp.p)
+   (h)->temp.tempptr)
 
 # define obstack_free(h, obj)						      \
-  ((h)->temp.p = (void *) (obj),					      \
-   (((h)->temp.p > (void *) (h)->chunk					      \
-     && (h)->temp.p < (void *) (h)->chunk_limit)			      \
-    ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.p)       \
-    : _obstack_free ((h), (h)->temp.p)))
+  ((h)->temp.tempptr = (void *) (obj),					      \
+   (((h)->temp.tempptr > (void *) (h)->chunk				      \
+     && (h)->temp.tempptr < (void *) (h)->chunk_limit)			      \
+    ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
+    : _obstack_free ((h), (h)->temp.tempptr)))
 
 #endif /* not __GNUC__ */
 
