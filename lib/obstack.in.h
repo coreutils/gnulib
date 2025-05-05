@@ -113,9 +113,20 @@
 # endif
 #endif
 
-#include <stddef.h>             /* For size_t and ptrdiff_t.  */
+/* For backward compatibility with older glibc,
+   define the otherwise-unused macro PTR_INT_TYPE.  If __PTRDIFF_TYPE__ is
+   defined, as with GNU C, use that; that way we don't pollute the
+   namespace with <stddef.h>'s symbols.  Otherwise, include <stddef.h>
+   and use ptrdiff_t.  */
+#ifdef __PTRDIFF_TYPE__
+# define PTR_INT_TYPE __PTRDIFF_TYPE__
+#else
+# include <stddef.h>
+# define PTR_INT_TYPE ptrdiff_t
+#endif
+
 #include <stdint.h>             /* For uintptr_t.  */
-#include <string.h>             /* For memcpy.  */
+#include <string.h>             /* For memcpy, size_t.  */
 
 /* These macros highlight the places where this implementation
    is different from the one in GNU libc.  */
