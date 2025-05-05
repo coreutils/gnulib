@@ -305,6 +305,13 @@ vc_mtime (struct timespec *mtime, const char *filename)
 /* Keep some safe distance to this maximum.  */
 #define MAX_CMD_LEN ((int) (MAX_COMMAND_LENGTH * 0.8))
 
+/* The directory separator in canonicalized file names.  */
+#if defined _WIN32 && !defined __CYGWIN__
+# define SLASH '\\'
+#else
+# define SLASH '/'
+#endif
+
 /* Returns the directory name of the git checkout that contains tha current
    directory, as an absolute file name, or NULL if the current directory is
    not in a git checkout.  */
@@ -555,7 +562,7 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                   char *git_checkout_slash =
                     (strcmp (git_checkout, "/") == 0
                      ? xstrdup (git_checkout)
-                     : xasprintf ("%s/", git_checkout));
+                     : xasprintf ("%s%c", git_checkout, SLASH));
 
                   char **checkout_relative_filenames = XNMALLOC (nfiles, char *);
                   char **currdir_relative_filenames = XNMALLOC (nfiles, char *);
