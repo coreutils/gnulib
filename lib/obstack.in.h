@@ -463,9 +463,6 @@ extern int obstack_exit_failure;
        __o1->next_free							      \
          = __PTR_ALIGN (__o1->object_base, __o1->next_free,		      \
                         __o1->alignment_mask);				      \
-       if ((size_t) (__o1->next_free - (char *) __o1->chunk)		      \
-           > (size_t) (__o1->chunk_limit - (char *) __o1->chunk))	      \
-         __o1->next_free = __o1->chunk_limit;				      \
        __o1->object_base = __o1->next_free;				      \
        __value; })
 
@@ -569,9 +566,6 @@ extern int obstack_exit_failure;
    (h)->next_free							      \
      = __PTR_ALIGN ((h)->object_base, (h)->next_free,			      \
                     (h)->alignment_mask),				      \
-   (((size_t) ((h)->next_free - (char *) (h)->chunk)			      \
-     > (size_t) ((h)->chunk_limit - (char *) (h)->chunk))		      \
-   ? ((h)->next_free = (h)->chunk_limit) : 0),				      \
    (h)->object_base = (h)->next_free,					      \
    (h)->temp.tempptr)
 

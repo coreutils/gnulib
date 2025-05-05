@@ -36,6 +36,7 @@
 #endif
 
 #include <limits.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -47,6 +48,14 @@
 #if SIZE_MAX <= INT_MAX
  #error "SIZE_MAX <= INT_MAX"
 #endif
+
+/* Return the least multiple of MASK + 1 that is not less than SIZE.
+   MASK + 1 must be a power of 2.  On overflow, return zero.  */
+static size_t
+align_size_up (size_t mask, size_t size)
+{
+  return size + (mask & -size);
+}
 
 #ifndef MAX
 # define MAX(a,b) ((a) > (b) ? (a) : (b))
@@ -89,7 +98,7 @@ call_freefun (struct obstack *h, void *old_chunk)
 }
 
 
-/* Initialize an obstack H for use.  Specify chunk size SIZE (0 means default).
+/* Initialize an obstack H for use, with given CHUNK_SIZE (0 means default).
    Objects start on multiples of ALIGNMENT (0 means use default).
 
    Return nonzero if successful, calls obstack_alloc_failed_handler if
@@ -97,15 +106,32 @@ call_freefun (struct obstack *h, void *old_chunk)
 
 static int
 _obstack_begin_worker (struct obstack *h,
-                       _OBSTACK_INDEX_T size, _OBSTACK_INDEX_T alignment)
+                       _OBSTACK_INDEX_T chunk_size, _OBSTACK_INDEX_T alignment)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
 
   if (alignment == 0)
     alignment = DEFAULT_ALIGNMENT;
-  if (size == 0)
-    /* Default size is what GNU malloc can fit in a 4096-byte block.  */
+
+  /* The minimum size to request from the allocator, such that the
+     result is guaranteed to have enough room to start with the struct
+     _obstack_chunk sans contents, followed by minimal padding, up to
+     but possibly not including the start of an aligned object.
+     This value is zero if no size is large enough.  */
+  size_t aligned_prefix_size
+    = align_size_up (alignment - 1,
+                     (alignment - 1
+                      + offsetof (struct _obstack_chunk, contents)));
+
+  size_t size = chunk_size;
+  if (!aligned_prefix_size)
+    size = 0;
+  else if (size < aligned_prefix_size)
     {
+      size = aligned_prefix_size;
+
+      /* For speed in the typical case, allocate at least a "good" size.  */
+
       /* 12 is sizeof (mhead) and 4 is EXTRA from GNU malloc.
          Use the values for range checking, because if range checking is off,
          the extra bytes won't be missed terribly, but if range checking is on
@@ -117,18 +143,23 @@ _obstack_begin_worker (struct obstack *h,
       int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
                     + 4 + DEFAULT_ROUNDING - 1)
                    & ~(DEFAULT_ROUNDING - 1));
-      size = 4096 - extra;
+      int good_size = 4096 - extra;
+      if (0 <= good_size && size < good_size)
+        size = good_size;
     }
 
   h->chunk_size = size;
   h->alignment_mask = alignment - 1;
 
-  chunk = h->chunk = call_chunkfun (h, h->chunk_size);
+  chunk = h->chunk = (0 < h->chunk_size && h->chunk_size == size
+                      ? call_chunkfun (h, size) : NULL);
   if (!chunk)
     (*obstack_alloc_failed_handler) ();
   h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
                                                alignment - 1);
-  h->chunk_limit = chunk->limit = (char *) chunk + h->chunk_size;
+  h->chunk_limit = chunk->limit =
+    __PTR_ALIGN ((char *) chunk, (char *) chunk + size - (alignment - 1),
+                 alignment - 1);
   chunk->prev = NULL;
   /* The initial chunk now contains no empty object.  */
   h->maybe_empty_object = 0;
@@ -179,7 +210,9 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
 
   /* Compute size for new chunk.  */
   size_t sum1 = obj_size + length;
-  size_t sum2 = sum1 + h->alignment_mask;
+  size_t sum1a = align_size_up (h->alignment_mask, sum1);
+  size_t sum2 = (offsetof (struct _obstack_chunk, contents)
+                 + h->alignment_mask + sum1a);
   size_t new_size = sum2 + (obj_size >> 3) + 100;
   if (new_size < sum2)
     new_size = sum2;
@@ -188,13 +221,16 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
 
   /* Allocate and initialize the new chunk,
      checking for overflow and for nonpositive LENGTH.  */
-  if (obj_size < sum1 && sum1 <= sum2)
+  if (obj_size < sum1 && sum1a && sum1a < sum2)
     new_chunk = call_chunkfun (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
   h->chunk = new_chunk;
   new_chunk->prev = old_chunk;
-  new_chunk->limit = h->chunk_limit = (char *) new_chunk + new_size;
+  new_chunk->limit = h->chunk_limit =
+    __PTR_ALIGN ((char *) new_chunk,
+                 (char *) new_chunk + new_size - h->alignment_mask,
+                 h->alignment_mask);
 
   /* Compute an aligned object_base in the new chunk */
   object_base =
