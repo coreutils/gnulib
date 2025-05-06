@@ -36,19 +36,10 @@
 # define __alignof__(type) alignof (type)
 #endif
 
-#include <limits.h>
+#include <stdckdint.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-/* Some work would need to be done to port this module
-   to unusual platforms where size_t fits in int.
-   For now, document the assumption that INT_MAX < SIZE_MAX,
-   and therefore size_t calculations are modulo SIZE_MAX + 1
-   instead of having undefined behavior on overflow.  */
-#if SIZE_MAX <= INT_MAX
- #error "SIZE_MAX <= INT_MAX"
-#endif
 
 #ifndef _OBSTACK_NO_ERROR_HANDLER
 
@@ -80,12 +71,14 @@ struct obstack *_obstack_compat = NULL;
 compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
 #endif
 
-/* Return the least multiple of MASK + 1 that is not less than SIZE.
-   MASK + 1 must be a power of 2.  On overflow, return zero.  */
-static size_t
-align_size_up (size_t mask, size_t size)
+/* Set *R to the least multiple of MASK + 1 that is not less than SIZE.
+   MASK + 1 must be a power of 2.  Return true (setting *R = 0)
+   if the result overflows, false otherwise.  */
+static bool
+align_chunk_size_up (_OBSTACK_CHUNK_SIZE_T *r, size_t mask,
+                     _OBSTACK_CHUNK_SIZE_T size)
 {
-  return size + (mask & -size);
+  return ckd_add (r, mask & -size, size);
 }
 
 /* Call functions with either the traditional malloc/free calling
@@ -93,7 +86,7 @@ align_size_up (size_t mask, size_t size)
    argument), based on the value of use_extra_arg.  */
 
 static void *
-call_chunkfun (struct obstack *h, size_t size)
+call_chunkfun (struct obstack *h, _OBSTACK_CHUNK_SIZE_T size)
 {
   if (h->use_extra_arg)
     return h->chunkfun.extra (h->extra_arg, size);
@@ -131,15 +124,12 @@ _obstack_begin_worker (struct obstack *h,
      _obstack_chunk sans contents, followed by minimal padding, up to
      but possibly not including the start of an aligned object.
      This value is zero if no size is large enough.  */
-  size_t aligned_prefix_size
-    = align_size_up (alignment - 1,
-                     (alignment - 1
-                      + offsetof (struct _obstack_chunk, contents)));
+  _OBSTACK_CHUNK_SIZE_T aligned_prefix_size;
+  bool v = align_chunk_size_up (&aligned_prefix_size, alignment - 1,
+                                offsetof (struct _obstack_chunk, contents));
 
-  size_t size = chunk_size;
-  if (!aligned_prefix_size)
-    size = 0;
-  else if (size < aligned_prefix_size)
+  _OBSTACK_CHUNK_SIZE_T size = chunk_size;
+  if (size < aligned_prefix_size)
     {
       size = aligned_prefix_size;
 
@@ -152,8 +142,7 @@ _obstack_begin_worker (struct obstack *h,
   h->chunk_size = size;
   h->alignment_mask = alignment - 1;
 
-  chunk = h->chunk = (0 < h->chunk_size && h->chunk_size == size
-                      ? call_chunkfun (h, size) : NULL);
+  chunk = h->chunk = v ? NULL : call_chunkfun (h, size);
   if (!chunk)
     (*obstack_alloc_failed_handler) ();
   h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
@@ -205,25 +194,25 @@ void
 _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
 {
   struct _obstack_chunk *old_chunk = h->chunk;
-  struct _obstack_chunk *new_chunk = NULL;
+  struct _obstack_chunk *new_chunk;
   size_t obj_size = h->next_free - h->object_base;
   char *object_base;
 
   /* Compute size for new chunk.  */
-  size_t sum1 = obj_size + length;
-  size_t sum1a = align_size_up (h->alignment_mask, sum1);
-  size_t sum2 = (offsetof (struct _obstack_chunk, contents)
-                 + h->alignment_mask + sum1a);
-  size_t new_size = sum2 + (obj_size >> 3) + 100;
-  if (new_size < sum2)
-    new_size = sum2;
+  _OBSTACK_CHUNK_SIZE_T s, new_size;
+  bool v = length < 0;
+  v |= ckd_add (&s, obj_size, length);
+  v |= align_chunk_size_up (&s, h->alignment_mask, s);
+  v |= ckd_add (&s, s,
+                (offsetof (struct _obstack_chunk, contents)
+                 + h->alignment_mask));
+  if (ckd_add (&new_size, s, (obj_size >> 3) + 100))
+    new_size = s;
   if (new_size < h->chunk_size)
     new_size = h->chunk_size;
 
-  /* Allocate and initialize the new chunk,
-     checking for overflow and for nonpositive LENGTH.  */
-  if (obj_size < sum1 && sum1a && sum1a < sum2)
-    new_chunk = call_chunkfun (h, new_size);
+  /* Allocate and initialize the new chunk.  */
+  new_chunk = v ? NULL : call_chunkfun (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
   h->chunk = new_chunk;
