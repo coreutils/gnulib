@@ -31,7 +31,7 @@
 
 /* If GCC, or if an oddball (testing?) host that #defines __alignof__,
    use the already-supplied __alignof__.  Otherwise, this must be Gnulib
-   (as glibc assumes GCC); defer to Gnulib's alignof_type.  */
+   (as glibc assumes GCC); defer to Gnulib's alignof.  */
 #if !defined __GNUC__ && !defined __alignof__
 # define __alignof__(type) alignof (type)
 #endif
