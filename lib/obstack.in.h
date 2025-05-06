@@ -233,16 +233,23 @@ struct obstack          /* control current object in current chunk */
 
 /* Declare the external functions we use; they are in obstack.c.  */
 
-#if defined __GL_REPLACE_OBSTACK__
-# define _obstack_newchunk rpl_obstack_newchunk
-# define __obstack_free rpl_obstack_free
-# define _obstack_begin rpl_obstack_begin
-# define _obstack_begin_1 rpl_obstack_begin_1
-# define _obstack_memory_used rpl_obstack_memory_used
-# define _obstack_allocated_p rpl_obstack_allocated_p
-#elif !defined __obstack_free /* for old Gnulib */
-# define __obstack_free obstack_free
+#if defined __GL_GNULIB_HEADER
+/* Symbol mapping for gnulib.  */
+# if defined __GL_REPLACE_OBSTACK__
+#  define _obstack_newchunk rpl_obstack_newchunk
+#  define __obstack_free rpl_obstack_free
+#  define _obstack_begin rpl_obstack_begin
+#  define _obstack_begin_1 rpl_obstack_begin_1
+#  define _obstack_memory_used rpl_obstack_memory_used
+#  define _obstack_allocated_p rpl_obstack_allocated_p
+# else
+#  define __obstack_free _obstack_free
+# endif
+#else
+/* Symbol mapping for glibc.  */
+# define __obstack_free _obstack_free
 #endif
+
 extern void _obstack_newchunk (struct obstack *, _OBSTACK_INDEX_T);
 extern int _obstack_begin (struct obstack *,
                            _OBSTACK_INDEX_T, _OBSTACK_INDEX_T,

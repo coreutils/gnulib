@@ -288,8 +288,6 @@ _obstack_allocated_p (struct obstack *h, void *obj)
 /* Free objects in obstack H, including OBJ and everything allocate
    more recently than OBJ.  If OBJ is zero, free everything in H.  */
 
-#undef obstack_free
-
 void
 __obstack_free (struct obstack *h, void *obj)
 {
@@ -322,7 +320,8 @@ __obstack_free (struct obstack *h, void *obj)
 
 /* Older versions of libc used a function _obstack_free intended to be
    called by non-GCC compilers.  */
-strong_alias (obstack_free, _obstack_free)
+#undef obstack_free
+strong_alias (_obstack_free, obstack_free)
 
 _OBSTACK_INDEX_T
 _obstack_memory_used (struct obstack *h)
