@@ -233,20 +233,19 @@ struct obstack          /* control current object in current chunk */
 
 /* Declare the external functions we use; they are in obstack.c.  */
 
-#if defined __GL_GNULIB_HEADER
 /* Symbol mapping for gnulib.  */
-# if defined __GL_REPLACE_OBSTACK__
-#  define _obstack_newchunk rpl_obstack_newchunk
-#  define __obstack_free rpl_obstack_free
-#  define _obstack_begin rpl_obstack_begin
-#  define _obstack_begin_1 rpl_obstack_begin_1
-#  define _obstack_memory_used rpl_obstack_memory_used
-#  define _obstack_allocated_p rpl_obstack_allocated_p
-# else
-#  define __obstack_free _obstack_free
-# endif
-#else
-/* Symbol mapping for glibc.  */
+#if defined __GL_GNULIB_HEADER && defined __GL_REPLACE_OBSTACK__
+# define _obstack_newchunk rpl_obstack_newchunk
+# define __obstack_free rpl_obstack_free
+# define _obstack_begin rpl_obstack_begin
+# define _obstack_begin_1 rpl_obstack_begin_1
+# define _obstack_memory_used rpl_obstack_memory_used
+# define _obstack_allocated_p rpl_obstack_allocated_p
+#endif
+
+/* The default name of the function for freeing a chunk is '_obstack_free',
+   but gnulib overrides this by defining '__obstack_free' above.  */
+#ifndef __obstack_free
 # define __obstack_free _obstack_free
 #endif
 
