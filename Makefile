@@ -70,6 +70,38 @@ misspelled_compiler_predefs =\
   __GNUC_MAJOR__	\
   __GNUC_MINOR		\
 
+# Cf. <https://github.com/cpredef/predef/blob/master/OperatingSystems.md>
+sc_prohibit_misspelled_os_predefs:
+	if test -d .git; then						\
+	  git ls-files m4 lib tests					\
+	    | xargs grep -Ew '($(misspelled_os_predefs_or))'		\
+	    && { printf '*** %s\n' 'misspelled predefs' 1>&2; exit 1; }	\
+	    || :							\
+	else :; fi
+misspelled_os_predefs_or = $(shell echo $(misspelled_os_predefs) | tr -s ' ' '|')
+misspelled_os_predefs =	\
+  __AIX__		\
+  __FreeBSD		\
+  __NetBSD		\
+  __OpenBSD		\
+  __CYGWIN		\
+  __CYGWIN32__		\
+  __MINGW__		\
+  __WIN32__		\
+  __WIN64__		\
+  __GNU__		\
+  __HAIKU		\
+  __hpux__		\
+  __IRIX__		\
+  __sgi__		\
+  __linux		\
+  __minix__		\
+  __sun__		\
+  __unix		\
+  __unix__		\
+  __ZOS__		\
+  __zOS__		\
+
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	if test -d .git; then						\
 	  url=https://lists.gnu.org/r/bug-gnulib/2010-09/msg00064.html; \

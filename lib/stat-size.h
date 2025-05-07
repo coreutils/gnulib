@@ -68,7 +68,7 @@
 # define STP_BLKSIZE(st) ((0 < (st)->st_blksize \
                            && (st)->st_blksize <= (size_t) -1 / 8 + 1)  \
                           ? (st)->st_blksize : DEV_BSIZE)
-# if defined hpux || defined __hpux__ || defined __hpux
+# if defined __hpux
   /* HP-UX counts st_blocks in 1024-byte units.
      This loses when mixing HP-UX and BSD file systems with NFS.  */
 #  define ST_NBLOCKSIZE 1024

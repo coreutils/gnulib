@@ -568,7 +568,7 @@ read_file_system_list (bool need_fs_type)
           goto free_then_fail;
       }
     else /* fallback to /proc/self/mounts (/etc/mtab).  */
-# endif /* __linux __ || __ANDROID__ */
+# endif /* __linux__ || __ANDROID__ */
       {
         struct mntent *mnt;
         char const *table = MOUNTED;
