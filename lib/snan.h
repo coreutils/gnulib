@@ -17,6 +17,11 @@
 #ifndef _SNAN_H
 #define _SNAN_H
 
+/* This file uses _GL_UNUSED.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <float.h>
 #include <limits.h>
 #include <math.h>

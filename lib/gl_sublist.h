@@ -18,6 +18,11 @@
 #ifndef _GL_SUBLIST_H
 #define _GL_SUBLIST_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "gl_list.h"
 
 #ifdef __cplusplus

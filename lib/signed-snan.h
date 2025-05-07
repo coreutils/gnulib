@@ -17,6 +17,11 @@
 #ifndef _SIGNED_SNAN_H
 #define _SIGNED_SNAN_H
 
+/* This file uses _GL_UNUSED.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "signed-nan.h"
 #include "snan.h"
 

@@ -19,6 +19,11 @@
 #ifndef CRC_H
 #define CRC_H 1
 
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
 

@@ -157,6 +157,7 @@ config_h_MACROS2 = \
   _GL_ATTRIBUTE_COLD \
   _GL_ATTRIBUTE_CONST \
   _GL_ATTRIBUTE_DEALLOC \
+  _GL_ATTRIBUTE_DEALLOC_FREE \
   _GL_ATTRIBUTE_DEPRECATED \
   _GL_ATTRIBUTE_ERROR \
   _GL_ATTRIBUTE_WARNING \
@@ -171,14 +172,20 @@ config_h_MACROS2 = \
   _GL_ATTRIBUTE_NODISCARD \
   _GL_ATTRIBUTE_NOINLINE \
   _GL_ATTRIBUTE_NONNULL \
+  _GL_ATTRIBUTE_NONNULL_IF_NONZERO \
   _GL_ATTRIBUTE_NONSTRING \
   _GL_ATTRIBUTE_NOTHROW \
   _GL_ATTRIBUTE_PACKED \
   _GL_ATTRIBUTE_PURE \
+  _GL_ATTRIBUTE_REPRODUCIBLE \
   _GL_ATTRIBUTE_RETURNS_NONNULL \
   _GL_ATTRIBUTE_SENTINEL \
+  _GL_ATTRIBUTE_UNSEQUENCED \
   _GL_ATTRIBUTE_UNUSED \
   _GL_UNUSED_LABEL \
+  _GL_ATTRIBUTE_CAPABILITY_TYPE \
+  _GL_ATTRIBUTE_ACQUIRE_CAPABILITY \
+  _GL_ATTRIBUTE_RELEASE_CAPABILITY \
   _GL_BEGIN_C_LINKAGE \
   _GL_END_C_LINKAGE \
   _GL_ASYNC_SAFE \
@@ -212,7 +219,8 @@ config_h_MACROS = \
 # include <config.h>.
 sc_check_config_h_reminder:
 	fail=0; \
-	for file in `grep -l -F -w -f <(for macro in $(config_h_MACROS); do echo $$macro; done) lib/*.h lib/*/*.h`; do \
+	for file in `grep -l -F -w -f <(for macro in $(config_h_MACROS); do echo $$macro; done) lib/*.h lib/*/*.h \
+	             | grep -vE '$(exclude_file_name_regexp--sc_check_config_h_reminder)'`; do \
 	  : "Filter out .h files that are not public header files of their respective module."; \
 	  include_pattern='[<"]'`echo $$file | sed -e 's,^lib/,,' -e 's,[.]in[.]h,.h,' -e 's,_,[/_],g' -e 's,[.],[.],g'`'[>"]' ; \
 	  if ./gnulib-tool --extract-include-directive `./gnulib-tool --find $$file` | grep "$$include_pattern" >/dev/null; then \
@@ -228,6 +236,8 @@ sc_check_config_h_reminder:
 	  fi; \
 	done; \
 	exit $$fail
+exclude_file_name_regexp--sc_check_config_h_reminder = \
+  ^lib/(noreturn\.h|(uninorm|unistr)\.in\.h)
 
 
 # Ensure that .h files that invoke _GL_INLINE_HEADER_BEGIN also invoke

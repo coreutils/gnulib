@@ -18,6 +18,11 @@
 
 /* Written by Jim Meyering <jim@meyering.net>  */
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC_FREE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 #ifdef __cplusplus

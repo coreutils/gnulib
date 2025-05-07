@@ -77,6 +77,11 @@
      #include "minmax.h"
  */
 
+/* This file uses _GL_GNUC_PREREQ.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Maximum value of type OFFSET.  */
 #ifndef OFFSET_MAX
 # define OFFSET_MAX \
