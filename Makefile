@@ -73,12 +73,13 @@ sc_prohibit_sc_omitted_at:
 		 1>&2; exit 1; } || :					\
 	else :; fi
 
-# Run all maint.mk syntax-check tests on gnulib's sources.
-sc_maint:
-	@rm -f maint.mk; ln -s top/maint.mk maint.mk
-	$(MAKE) -s srcdir=. gnulib_dir=. _build-aux=build-aux \
-	        -f cfg.mk -f maint.mk syntax-check
-	rm -f maint.mk
+## Unmaintained. When removing this rule, also remove cfg.mk.
+## # Run all maint.mk syntax-check tests on gnulib's sources.
+## sc_maint:
+## 	@rm -f maint.mk; ln -s top/maint.mk maint.mk
+## 	$(MAKE) -s srcdir=. gnulib_dir=. _build-aux=build-aux \
+## 	        -f cfg.mk -f maint.mk syntax-check
+## 	rm -f maint.mk
 
 sc_prohibit_AC_LIBOBJ_in_m4:
 	url=https://lists.gnu.org/r/bug-gnulib/2011-06/msg00051.html; \
@@ -119,26 +120,6 @@ sc_pragma_columns:
 		   'without also using @PRAGMA_COLUMNS@' 1>&2;		\
 		 exit 1; } || :;					\
 	else :; fi
-
-# Verify that certain (for now, only Jim Meyering and Eric Blake's)
-# *.c files are consistently cpp indented.
-sc_cpp_indent_check:
-	@./gnulib-tool --extract-filelist \
-	    $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
-	  | sort -u \
-	  | grep '\.c$$' \
-	  | grep -vE '/(stdio-(read|write)|getloadavg)\.c$$' \
-	  | xargs cppi -c
-
-# Ensure that the list of symbols checked for by the
-# sc_prohibit_intprops_without_use rule match those in the actual file.
-# Extract the symbols from the .h file and compare with the list of
-# symbols extracted from the rule in maint.mk.
-sc_check_sym_list:
-	@i=lib/intprops.h; \
-	diff -u <(perl -lne '/^# *define ([A-Z]\w+)\(/ and print $$1' $$i|fmt) \
-	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
-	    |sed '/^_/d;s/^  //;s/	*\\$$//')
 
 
 # List of C macros defined through AH_VERBATIM in m4/extern-inline.m4:
