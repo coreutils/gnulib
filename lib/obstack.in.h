@@ -176,7 +176,9 @@
 
 /* Not the same as _Noreturn, since it also works with function pointers.  */
 #ifndef __attribute_noreturn__
-# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__) || defined __clang__ || 0x5110 <= __SUNPRO_C
+# if ((defined __GNUC__ && 2 < __GNUC__ + (8 <= __GNUC_MINOR__)) \
+      || defined __clang__ \
+      || (defined __SUNPRO_C && 0x5110 <= __SUNPRO_C))
 #  define __attribute_noreturn__ __attribute__ ((__noreturn__))
 # else
 #  define __attribute_noreturn__
@@ -329,9 +331,9 @@ extern int obstack_exit_failure;
 
 #define obstack_memory_used(h) _obstack_memory_used (h)
 
-#if defined __GNUC__ || defined __clang__
-# if ! (2 < __GNUC__ + (8 <= __GNUC_MINOR__) || defined __clang__ \
-        || 0x5150 <= __SUNPRO_C)
+#if (defined __GNUC__ || defined __clang__ \
+     || (defined __SUNPRO_C && 0x5150 <= __SUNPRO_C))
+# if defined __GNUC__ && ! (2 < __GNUC__ + (8 <= __GNUC_MINOR__))
 #  define __extension__
 # endif
 
@@ -481,7 +483,7 @@ extern int obstack_exit_failure;
        else								      \
          __obstack_free (__o, __obj); })
 
-#else /* not __GNUC__ */
+#else /* not __GNUC__-like */
 
 # define obstack_object_size(h)						      \
   ((_OBSTACK_SIZE_T) ((h)->next_free - (h)->object_base))
@@ -580,9 +582,9 @@ extern int obstack_exit_failure;
    (((h)->temp.tempptr > (void *) (h)->chunk				      \
      && (h)->temp.tempptr < (void *) (h)->chunk_limit)			      \
     ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
-    : __obstack_free (h, (h)->temp.tempptr)))
+    : __obstack_free ((h), (h)->temp.tempptr)))
 
-#endif /* not __GNUC__ */
+#endif /* not __GNUC__-like */
 
 #ifdef __cplusplus
 }       /* C++ */
