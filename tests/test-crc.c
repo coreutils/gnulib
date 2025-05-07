@@ -105,11 +105,11 @@ main (void)
     {
       p = crc32_update_no_xor (0, randomb, MAX_ALIGNMENT + i);
       if (p != trailing_unaligned_byte_hashes[i])
-	{
-	  printf ("aligned c at %lu length %lu got %lx\n", (size_t) 0,
-		  MAX_ALIGNMENT + i, (unsigned long) p);
-	  return 1;
-	}
+        {
+          printf ("aligned c at %lu length %lu got %lx\n", (size_t) 0,
+                  MAX_ALIGNMENT + i, (unsigned long) p);
+          return 1;
+        }
     }
 
   /* Test for leading unaligned bytes */
@@ -118,11 +118,11 @@ main (void)
     {
       p = crc32_update_no_xor (0, randomb + i, (MAX_ALIGNMENT * 2) - i);
       if (p != leading_unaligned_byte_hashes[i])
-	{
-	  printf ("aligned c at %lu length %lu got %lx\n", i,
-		  (MAX_ALIGNMENT * 2) - i, (unsigned long) p);
-	  return 1;
-	}
+        {
+          printf ("aligned c at %lu length %lu got %lx\n", i,
+                  (MAX_ALIGNMENT * 2) - i, (unsigned long) p);
+          return 1;
+        }
     }
 
   /* Combined test of multiple lengths at multiple alignments */
@@ -130,14 +130,14 @@ main (void)
   for (i = 0; i < MAX_ALIGNMENT; i++)
     for (j = 0; j < MAX_ALIGNMENT; j++)
       {
-	memcpy (data + i, randomb, MAX_ALIGNMENT * 2);
-	p = crc32_update_no_xor (0, data + i, j);
-	if (p != variable_alignment_variable_length_hashes[j])
-	  {
-	    printf ("aligned c at %lu length %lu got %lx\n", i, j,
-		    (unsigned long) p);
-	    return 1;
-	  }
+        memcpy (data + i, randomb, MAX_ALIGNMENT * 2);
+        p = crc32_update_no_xor (0, data + i, j);
+        if (p != variable_alignment_variable_length_hashes[j])
+          {
+            printf ("aligned c at %lu length %lu got %lx\n", i, j,
+                    (unsigned long) p);
+            return 1;
+          }
       }
 
 

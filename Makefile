@@ -41,11 +41,13 @@ sc_prefer_ac_check_funcs_once:
 sc_prohibit_leading_TABs:
 	@if test -d .git; then						\
 	  git grep -l '^ *	' lib m4 tests				\
-	    | grep -Ev '^lib/reg|Makefile|test-update-copyright'	\
+	    | grep -Ev '$(exclude_file_name_regexp--sc_prohibit_leading_TABs)' \
 	    | grep .							\
 	    && { printf '*** %s\n' 'indent with spaces, not TABs;'	\
 		 1>&2; exit 1; } || :					\
 	else :; fi
+exclude_file_name_regexp--sc_prohibit_leading_TABs = \
+  ^(lib/(cdefs\.h|getopt|ieee754|malloc/|mini-|mktime\.c|qsort\.c|reg|strverscmp\.c)|m4/(largefile|std-gnu)|m4/libgcrypt|tests/from-glibc/|tests/test-update-copyright|Makefile|.*/Makefile)
 
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	@if test -d .git; then						\

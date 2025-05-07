@@ -48,15 +48,15 @@ trap 'rm -rf "${tmp}"' EXIT
 tmpf="${tmp}/tests.txt"
 
 # Tests where we expect success.
-cat > "${tmpf}" <<- _EOF_
-	1 Y 2 M 3 W 4 d 5 h 6 m 7 s
-	P 00010225 T 05:06:07
-	P 1Y2M3W4D T 5H6M7S
-	1 Y 2 M 25 D 5:6:7
-	1 Y 2 M 25 d 5h 6:7
-	1 Y 2 M 25 d 5h 6m 7
-	P 1-2-25 T 5:6:7
-	_EOF_
+cat > "${tmpf}" <<_EOF_
+1 Y 2 M 3 W 4 d 5 h 6 m 7 s
+P 00010225 T 05:06:07
+P 1Y2M3W4D T 5H6M7S
+1 Y 2 M 25 D 5:6:7
+1 Y 2 M 25 d 5h 6:7
+1 Y 2 M 25 d 5h 6m 7
+P 1-2-25 T 5:6:7
+_EOF_
 
 exec 3< "${tmpf}"
 while read line <&3
@@ -68,14 +68,14 @@ done
 exec 3>&-
 
 # Tests where we expect failure.
-cat > "${tmpf}" <<- _EOF_
-	T-00302
-	T-0:3:2
-	T-0 H 3 M 2 S
-	P+04 Y 03 M 02 D
-	P04 Y +03 M 02 D
-	P04 Y 03 M +02 D
-	_EOF_
+cat > "${tmpf}" <<_EOF_
+T-00302
+T-0:3:2
+T-0 H 3 M 2 S
+P+04 Y 03 M 02 D
+P04 Y +03 M 02 D
+P04 Y 03 M +02 D
+_EOF_
 
 fail=0
 exec 3< "${tmpf}"

@@ -74,35 +74,35 @@ crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
       in1 = _mm_xor_si128 (in1, xor_crc);
 
       while (bytes_remaining >= 128)
-	{
-	  /* Load up second set of 512 bits */
-	  in5 = _mm_loadu_si128 (data + 4);
-	  in6 = _mm_loadu_si128 (data + 5);
-	  in7 = _mm_loadu_si128 (data + 6);
-	  in8 = _mm_loadu_si128 (data + 7);
+        {
+          /* Load up second set of 512 bits */
+          in5 = _mm_loadu_si128 (data + 4);
+          in6 = _mm_loadu_si128 (data + 5);
+          in7 = _mm_loadu_si128 (data + 6);
+          in8 = _mm_loadu_si128 (data + 7);
 
-	  /* We shift the high QWORD forward 544 bits and the
-	     low QWORD 480 bits */
-	  fold_high = _mm_clmulepi64_si128 (in1, shift544_shift480, 0x11);
-	  fold_low = _mm_clmulepi64_si128 (in1, shift544_shift480, 0x00);
-	  in1 = _mm_xor_si128 (in5, fold_high);
-	  in1 = _mm_xor_si128 (in1, fold_low);
-	  fold_high = _mm_clmulepi64_si128 (in2, shift544_shift480, 0x11);
-	  fold_low = _mm_clmulepi64_si128 (in2, shift544_shift480, 0x00);
-	  in2 = _mm_xor_si128 (in6, fold_high);
-	  in2 = _mm_xor_si128 (in2, fold_low);
-	  fold_high = _mm_clmulepi64_si128 (in3, shift544_shift480, 0x11);
-	  fold_low = _mm_clmulepi64_si128 (in3, shift544_shift480, 0x00);
-	  in3 = _mm_xor_si128 (in7, fold_high);
-	  in3 = _mm_xor_si128 (in3, fold_low);
-	  fold_high = _mm_clmulepi64_si128 (in4, shift544_shift480, 0x11);
-	  fold_low = _mm_clmulepi64_si128 (in4, shift544_shift480, 0x00);
-	  in4 = _mm_xor_si128 (in8, fold_high);
-	  in4 = _mm_xor_si128 (in4, fold_low);
+          /* We shift the high QWORD forward 544 bits and the
+             low QWORD 480 bits */
+          fold_high = _mm_clmulepi64_si128 (in1, shift544_shift480, 0x11);
+          fold_low = _mm_clmulepi64_si128 (in1, shift544_shift480, 0x00);
+          in1 = _mm_xor_si128 (in5, fold_high);
+          in1 = _mm_xor_si128 (in1, fold_low);
+          fold_high = _mm_clmulepi64_si128 (in2, shift544_shift480, 0x11);
+          fold_low = _mm_clmulepi64_si128 (in2, shift544_shift480, 0x00);
+          in2 = _mm_xor_si128 (in6, fold_high);
+          in2 = _mm_xor_si128 (in2, fold_low);
+          fold_high = _mm_clmulepi64_si128 (in3, shift544_shift480, 0x11);
+          fold_low = _mm_clmulepi64_si128 (in3, shift544_shift480, 0x00);
+          in3 = _mm_xor_si128 (in7, fold_high);
+          in3 = _mm_xor_si128 (in3, fold_low);
+          fold_high = _mm_clmulepi64_si128 (in4, shift544_shift480, 0x11);
+          fold_low = _mm_clmulepi64_si128 (in4, shift544_shift480, 0x00);
+          in4 = _mm_xor_si128 (in8, fold_high);
+          in4 = _mm_xor_si128 (in4, fold_low);
 
-	  bytes_remaining -= 64;
-	  data += 4;
-	}
+          bytes_remaining -= 64;
+          data += 4;
+        }
 
       _mm_storeu_si128 (final_buf, in1);
       _mm_storeu_si128 (final_buf + 1, in2);
@@ -158,7 +158,7 @@ crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
 
       /* Read in at an offset so we get the shift for free */
       memcpy (((char *) in256) + (32 - bytes_remaining), datarw,
-	      bytes_remaining);
+              bytes_remaining);
       in1 = _mm_loadu_si128 (in256);
       in2 = _mm_loadu_si128 (in256 + 1);
 
