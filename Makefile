@@ -80,22 +80,24 @@ sc_maint:
 	        -f cfg.mk -f maint.mk syntax-check
 	rm -f maint.mk
 
-# Files in m4/ that (exceptionally) may use AC_LIBOBJ.
-# Do not include their ".m4" suffix.
+sc_prohibit_AC_LIBOBJ_in_m4:
+	url=https://lists.gnu.org/r/bug-gnulib/2011-06/msg00051.html; \
+	if test -d .git; then						\
+	  git ls-files m4						\
+	     | grep -Ev '^m4/($(allow_AC_LIBOBJ_or))\.m4$$'		\
+	     | xargs grep '^ *AC_LIBOBJ('				\
+	    && { printf '%s\n' 'Do not use AC_LIBOBJ in m4/*.m4;'	\
+		 "see <$$url>"; exit 1; } || :;				\
+	else :; fi
+allow_AC_LIBOBJ_or = $(shell echo $(allow_AC_LIBOBJ) | tr -s ' ' '|')
+# Files in m4/ that (exceptionally) may use AC_LIBOBJ, without their ".m4"
+# suffix.
 allow_AC_LIBOBJ =	\
-  close			\
   dprintf		\
-  dup2			\
-  faccessat		\
-  fchdir		\
-  fclose		\
-  fcntl			\
   fprintf-posix		\
-  open			\
   printf-posix		\
   snprintf		\
   sprintf-posix		\
-  stdio_h		\
   termcap		\
   terminfo		\
   vasnprintf		\
@@ -105,18 +107,6 @@ allow_AC_LIBOBJ =	\
   vprintf-posix		\
   vsnprintf		\
   vsprintf-posix
-
-allow_AC_LIBOBJ_or := $(shell echo $(allow_AC_LIBOBJ) | tr -s ' ' '|')
-
-sc_prohibit_AC_LIBOBJ_in_m4:
-	@url=https://lists.gnu.org/r/bug-gnulib/2011-06/msg00051.html; \
-	if test -d .git; then						\
-	  git ls-files m4						\
-	     | grep -Ev '^m4/($(allow_AC_LIBOBJ_or))\.m4$$'		\
-	     | xargs grep '^ *AC_LIBOBJ('				\
-	    && { printf '%s\n' 'Do not use AC_LIBOBJ in m4/*.m4;'	\
-		 "see <$$url>"; exit 1; } || :;				\
-	else :; fi
 
 sc_pragma_columns:
 	if test -d .git; then						\
