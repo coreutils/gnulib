@@ -33,10 +33,14 @@ check: $(syntax-check-rules)
 
 sc_prefer_ac_check_funcs_once:
 	@if test -d .git; then						\
-	  git grep -w -l AC_CHECK_FUNCS modules				\
+	  git grep -l -w AC_CHECK_FUNCS modules				\
+	    | grep -Ev '$(exclude_file_name_regexp--sc_prefer_ac_check_funcs_once)' \
+	    | grep .							\
 	    && { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS	\
 		   in modules/ 1>&2; exit 1; } || :			\
 	else :; fi
+exclude_file_name_regexp--sc_prefer_ac_check_funcs_once = \
+  ^modules/(jit/cache)
 
 sc_prohibit_leading_TABs:
 	@if test -d .git; then						\
