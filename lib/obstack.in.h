@@ -136,6 +136,16 @@
 # endif
 #endif
 
+/* A type suitable for comparing pointers regardless of whether they
+   point into the same object, e.g., (_OBSTACK_CPTR) p < (_OBSTACK_CPTR) q.
+   If possible, use uintptr_t to avoid undefined behavior and pacify
+   sanitizers.  Otherwise, use a pointer directly and hope for the best.  */
+#ifdef _OBSTACK_UINTPTR_TYPE
+typedef _OBSTACK_UINTPTR_TYPE _OBSTACK_CPTR;
+#else
+typedef char *_OBSTACK_CPTR;
+#endif
+
 /* These macros highlight the places where this implementation
    is different from the one in GNU libc.  */
 #if defined __GL_GNULIB_HEADER
@@ -478,7 +488,8 @@ extern int obstack_exit_failure;
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
        void *__obj = (void *) (OBJ);					      \
-       if (__obj > (void *) __o->chunk && __obj < (void *) __o->chunk_limit)  \
+       if ((_OBSTACK_CPTR) __o->chunk < (_OBSTACK_CPTR) __obj		      \
+           && (_OBSTACK_CPTR) __obj < (_OBSTACK_CPTR) __o->chunk_limit)	      \
          __o->next_free = __o->object_base = (char *) __obj;		      \
        else								      \
          __obstack_free (__o, __obj); })
@@ -579,8 +590,8 @@ extern int obstack_exit_failure;
 
 # define obstack_free(h, obj)						      \
   ((h)->temp.tempptr = (void *) (obj),					      \
-   (((h)->temp.tempptr > (void *) (h)->chunk				      \
-     && (h)->temp.tempptr < (void *) (h)->chunk_limit)			      \
+   (((_OBSTACK_CPTR) (h)->chunk < (OBSTACK_CPTR) (h)->temp.tempptr	      \
+     && (_OBSTACK_CPTR) (h)->temp.tempptr < (_OBSTACK_CPTR) (h)->chunk_limit) \
     ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
     : __obstack_free ((h), (h)->temp.tempptr)))
 
