@@ -1,5 +1,5 @@
 # exponentd.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2007-2008, 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,7 +85,7 @@ int main ()
           dnl The newer VFP instructions assume little-endian order
           dnl consistently.
           AC_EGREP_CPP([mixed_endianness], [
-#if defined arm || defined __arm || defined __arm__
+#if defined __arm__
   mixed_endianness
 #endif
             ],

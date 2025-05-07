@@ -115,10 +115,10 @@ main (int argc, char *argv[])
            This test does not work on Cygwin 2.9.0/i386. Cause unknown.
            This test does not work on MSVC/i386, because of the general IA-32
            problem (see above) and 'long double' == 'double'.  */
-        #if !((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36 && defined __alpha__) \
+        #if !((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36 && defined __alpha) \
               || (__GLIBC__ >= 2 && defined __loongarch__) \
               || (((__GLIBC__ == 2 && __GLIBC_MINOR__ < 19 && defined __mips64) \
-                   || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __mips64__ || defined __sparc__))) \
+                   || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __mips64__ || defined __sparc))) \
                   && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE) \
               || (defined __CYGWIN__ && defined __i386) \
               || (((defined __i386 || defined _M_IX86) \

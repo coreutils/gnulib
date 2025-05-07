@@ -140,7 +140,7 @@
 #  define SUNOS_5
 # endif
 
-# if defined (__osf__) && (defined (__alpha) || defined (__alpha__))
+# if defined (__osf__) && defined (__alpha)
 #  define OSF_ALPHA
 #  include <sys/mbuf.h>
 #  include <sys/socket.h>

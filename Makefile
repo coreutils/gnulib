@@ -70,6 +70,36 @@ misspelled_compiler_predefs =\
   __GNUC_MAJOR__	\
   __GNUC_MINOR		\
 
+# Cf. <https://github.com/cpredef/predef/blob/master/Architectures.md>
+# Only the users of module 'host-cpu-c-abi' are allowed to use __${arch}__
+# for all architectures.
+sc_prohibit_misspelled_cpu_predefs:
+	if test -d .git; then						\
+	  git ls-files m4 lib tests					\
+	    | grep -Ev '^(m4/host-cpu-c-abi\.m4|lib/sigsegv\.(in\.h|c)|tests/test-sigsegv.*|tests/jit/test-cache\.c)$$' \
+	    | xargs grep -Ew '($(misspelled_cpu_predefs_or))'		\
+	    && { printf '*** %s\n' 'misspelled predefs' 1>&2; exit 1; }	\
+	    || :							\
+	else :; fi
+misspelled_cpu_predefs_or = $(shell echo $(misspelled_cpu_predefs) | tr -s ' ' '|')
+misspelled_cpu_predefs =\
+  __alpha__		\
+  __amd64		\
+  __x86_64		\
+  __arm			\
+  __arm64		\
+  __arm64__		\
+  __aarch64		\
+  __hppa__		\
+  __loongarch64__	\
+  __m68k		\
+  __riscv__		\
+  __riscv64		\
+  __riscv64__		\
+  __sparc__		\
+  __sparc64		\
+  __sparc64__		\
+
 # Cf. <https://github.com/cpredef/predef/blob/master/OperatingSystems.md>
 sc_prohibit_misspelled_os_predefs:
 	if test -d .git; then						\

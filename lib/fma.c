@@ -72,7 +72,7 @@
 #endif
 
 /* Work around GCC 4.2.1 bug on OpenBSD 5.1/SPARC64.  */
-#if defined __GNUC__ && defined __sparc__
+#if defined __GNUC__ && defined __sparc
 # define VOLATILE volatile
 #else
 # define VOLATILE

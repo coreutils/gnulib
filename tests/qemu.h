@@ -65,7 +65,7 @@ is_running_under_qemu_user (void)
       if (n > 0)
         {
           buf[n] = '\0';
-# if defined __hppa__
+# if defined __hppa
           if (strstr (buf, "QEMU") != NULL)
             return true;
 # endif
@@ -79,7 +79,7 @@ is_running_under_qemu_user (void)
               || strcasestr (buf, "aarch64") != NULL)
             return true;
 # endif
-# if !defined __sparc__
+# if !defined __sparc
           if (strcasestr (buf, "SPARC") != NULL)
             return true;
 # endif

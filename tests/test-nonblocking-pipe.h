@@ -37,7 +37,7 @@
  */
 #if defined __MVS__ || defined __osf__ || (defined __linux__ && (defined __ia64__ || defined __mips__))
 # define PIPE_DATA_BLOCK_SIZE 270000
-#elif defined __linux__ && defined __sparc__
+#elif defined __linux__ && defined __sparc
 # define PIPE_DATA_BLOCK_SIZE 140000
 #elif defined __linux__ && defined __powerpc__
 # define PIPE_DATA_BLOCK_SIZE 1100000
