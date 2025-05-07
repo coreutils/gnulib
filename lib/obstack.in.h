@@ -580,7 +580,7 @@ extern int obstack_exit_failure;
    (((h)->temp.tempptr > (void *) (h)->chunk				      \
      && (h)->temp.tempptr < (void *) (h)->chunk_limit)			      \
     ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
-    : __obstack_free ((h), (h)->temp.tempptr)))
+    : __obstack_free (h, (h)->temp.tempptr)))
 
 #endif /* not __GNUC__ */
 
