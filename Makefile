@@ -32,7 +32,7 @@ syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p'\
 check: $(syntax-check-rules)
 
 sc_prefer_ac_check_funcs_once:
-	@if test -d .git; then						\
+	if test -d .git; then						\
 	  git grep -l -w AC_CHECK_FUNCS modules				\
 	    | grep -Ev '$(exclude_file_name_regexp--sc_prefer_ac_check_funcs_once)' \
 	    | grep .							\
@@ -43,7 +43,7 @@ exclude_file_name_regexp--sc_prefer_ac_check_funcs_once = \
   ^modules/(jit/cache)
 
 sc_prohibit_leading_TABs:
-	@if test -d .git; then						\
+	if test -d .git; then						\
 	  git grep -l '^ *	' lib m4 tests				\
 	    | grep -Ev '$(exclude_file_name_regexp--sc_prohibit_leading_TABs)' \
 	    | grep .							\
@@ -54,7 +54,7 @@ exclude_file_name_regexp--sc_prohibit_leading_TABs = \
   ^(lib/(cdefs\.h|getopt|ieee754|malloc/|mini-|mktime\.c|qsort\.c|reg|strverscmp\.c)|m4/(largefile|std-gnu)|m4/libgcrypt|tests/from-glibc/|tests/test-update-copyright|Makefile|.*/Makefile)
 
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
-	@if test -d .git; then						\
+	if test -d .git; then						\
 	  url=https://lists.gnu.org/r/bug-gnulib/2010-09/msg00064.html; \
 	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
 	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
@@ -62,12 +62,12 @@ sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	else :; fi
 
 # It's easy to forget the noise-suppressing "@" at the beginning
-# of each sc_ rule.  Check for it both in maint.mk and in this file.
+# of each sc_ rule.  Check for it in maint.mk.
 sc_prohibit_sc_omitted_at:
-	@if test -d .git; then						\
-	  git grep -n -A1 '^sc_[[:alnum:]_-]*:' top/maint.mk Makefile	\
-            | grep -vE ':sc_|[0-9][-]	@|--$$'				\
-            | sed 's/-\([0-9][0-9]*\)-/:\1:/'				\
+	if test -d .git; then						\
+	  git grep -n -A1 '^sc_[[:alnum:]_-]*:' top/maint.mk		\
+	    | grep -vE ':sc_|[0-9][-]	@|--$$'				\
+	    | sed 's/-\([0-9][0-9]*\)-/:\1:/'				\
 	    | grep .							\
 	    && { printf '*** %s\n' 'oops; missing "@"'			\
 		 1>&2; exit 1; } || :					\
@@ -119,7 +119,7 @@ sc_prohibit_AC_LIBOBJ_in_m4:
 	else :; fi
 
 sc_pragma_columns:
-	@if test -d .git; then						\
+	if test -d .git; then						\
 	  git ls-files|grep '\.in\.h$$'					\
 	      | xargs grep -l '^@PRAGMA_SYSTEM_HEADER@'			\
 	      | xargs grep -L '^@PRAGMA_COLUMNS@'			\
