@@ -53,6 +53,23 @@ sc_prohibit_leading_TABs:
 exclude_file_name_regexp--sc_prohibit_leading_TABs = \
   ^(lib/(cdefs\.h|getopt|ieee754|malloc/|mini-|mktime\.c|qsort\.c|reg|strverscmp\.c)|m4/(largefile|std-gnu)|m4/libgcrypt|tests/from-glibc/|tests/test-update-copyright|Makefile|.*/Makefile)
 
+# Cf. <https://github.com/cpredef/predef/blob/master/Compilers.md>
+sc_prohibit_misspelled_compiler_predefs:
+	if test -d .git; then						\
+	  git ls-files m4 lib tests					\
+	    | xargs grep -Ew '($(misspelled_compiler_predefs_or))'		\
+	    && { printf '*** %s\n' 'misspelled predefs' 1>&2; exit 1; }	\
+	    || :							\
+	else :; fi
+misspelled_compiler_predefs_or = $(shell echo $(misspelled_compiler_predefs) | tr -s ' ' '|')
+misspelled_compiler_predefs =\
+  __clang_major		\
+  __clang_minor		\
+  __GNUC		\
+  __GNUC_MAJOR		\
+  __GNUC_MAJOR__	\
+  __GNUC_MINOR		\
+
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	if test -d .git; then						\
 	  url=https://lists.gnu.org/r/bug-gnulib/2010-09/msg00064.html; \
