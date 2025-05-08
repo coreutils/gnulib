@@ -36,7 +36,7 @@
    AIX 7.3.1 has a corrected thrd_start_t.  But the thrd_join function still
    never stores an exit code.  */
 
-/* The Thread-Specific Storage (TSS) key that allows to access each thread's
+/* The Thread-Specific Storage (TSS) key that allows accessing each thread's
    'struct thrd_with_exitcode *' pointer.  */
 static tss_t thrd_with_exitcode_key;
 

@@ -53,5 +53,5 @@ On OS/2, this function does not work on an opened file.
 
 @mindex utimens
 Extension: Gnulib provides a module @samp{utimens} that works around these
-problems and allows to set the time with nanosecond resolution (as far as
+problems and can set the time with nanosecond resolution (as far as
 supported by the file system).

@@ -29,7 +29,7 @@
 #include "windows-once.h"
 #include "windows-tls.h"
 
-/* The Thread-Local Storage (TLS) key that allows to access each thread's
+/* The Thread-Local Storage (TLS) key that allows accessing each thread's
    'struct glwthread_thread_struct *' pointer.  */
 static DWORD self_key = (DWORD)-1;
 

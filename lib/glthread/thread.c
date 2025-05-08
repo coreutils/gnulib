@@ -34,7 +34,7 @@ struct thrd_with_exitvalue
   void * volatile exitvalue;
 };
 
-/* The Thread-Specific Storage (TSS) key that allows to access each thread's
+/* The Thread-Specific Storage (TSS) key that allows accessing each thread's
    'struct thrd_with_exitvalue *' pointer.  */
 static tss_t thrd_with_exitvalue_key;
 

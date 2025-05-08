@@ -579,8 +579,8 @@ vma_iterate (struct callback_locals *locals)
 
 /* =========================== stackvma-mincore.c =========================== */
 
-/* mincore() is a system call that allows to inquire the status of a
-   range of pages of virtual memory.  In particular, it allows to inquire
+/* mincore() is a system call that supports inquiring the status of a
+   range of pages of virtual memory.  In particular, it supports inquiring
    whether a page is mapped at all (except on Mac OS X, where mincore
    returns 0 even for unmapped addresses).
    As of 2006, mincore() is supported by:        possible bits:
@@ -593,7 +593,7 @@ vma_iterate (struct callback_locals *locals)
      - AIX,     since AIX 5.3,                   1
    As of 2019, also on
      - Hurd.
-   However, while the API allows to easily determine the bounds of mapped
+   However, while the API allows easily determining the bounds of mapped
    virtual memory, it does not make it easy to find the bounds of _unmapped_
    virtual memory ranges.  We try to work around this, but it may still be
    slow.  */
@@ -1150,8 +1150,8 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
 /* --------------------------- stackvma-mquery.c --------------------------- */
 
-/* mquery() is a system call that allows to inquire the status of a
-   range of pages of virtual memory.  In particular, it allows to inquire
+/* mquery() is a system call that supports inquiring the status of a
+   range of pages of virtual memory.  In particular, it supports inquiring
    whether a page is mapped at all, and where is the next unmapped page
    after a given address.
    As of 2021, mquery() is supported by:

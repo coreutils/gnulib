@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 
-/* STRCASEEQ allows to optimize string comparison with a small literal string.
+/* STRCASEEQ optimizes string comparison with a small literal string.
      STRCASEEQ (s, "UTF-8", 'U','T','F','-','8',0,0,0,0)
    is semantically equivalent to
      c_strcasecmp (s, "UTF-8") == 0

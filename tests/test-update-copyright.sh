@@ -34,7 +34,7 @@ s=$TMP-script
 cat <<\EOF > $s
 #!/bin/sh
 #! -*-perl-*-
-# This is a prologue that allows to run a perl script as an executable
+# This prologue allows running a perl script as an executable
 # on systems that are compliant to a POSIX version before POSIX:2017.
 # On such systems, the usual invocation of an executable through execlp()
 # or execvp() fails with ENOEXEC if it is a script that does not start
