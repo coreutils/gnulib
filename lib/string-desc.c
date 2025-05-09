@@ -173,7 +173,7 @@ sd_substring (string_desc_t s, idx_t start, idx_t end)
 {
   string_desc_t result;
 
-  if (!(start >= 0 && start <= end))
+  if (!(start >= 0 && start <= end && end <= s._nbytes))
     /* Invalid arguments.  */
     abort ();
 
