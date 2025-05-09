@@ -105,7 +105,7 @@ dnl MINIMUM-VERSION is a string with the version number optionally prefixed
 dnl with the API version to also check the API compatibility. Example:
 dnl a MINIMUM-VERSION of 1:1.2.5 won't pass the test unless the installed
 dnl version of libgcrypt is at least 1.2.5 *and* the API number is 1.  Using
-dnl this feature can prevent builds against newer versions of libgcrypt
+dnl this features allows to prevent build against newer versions of libgcrypt
 dnl with a changed API.
 dnl
 dnl If a prefix option is not used, the config script is first
