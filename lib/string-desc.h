@@ -20,7 +20,8 @@
 #define _STRING_DESC_H 1
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
-   _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NONNULL_IF_NONZERO.  */
+   _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NONNULL,
+   _GL_ATTRIBUTE_NONNULL_IF_NONZERO.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -318,7 +319,7 @@ sd_length (string_desc_t s)
    })
 GL_STRING_DESC_INLINE char
 _sd_char_at (idx_t s_nbytes, const char *s_data, idx_t i)
-  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
+  _GL_ATTRIBUTE_NONNULL ((2))
 {
   if (!(i >= 0 && i < s_nbytes))
     /* Invalid argument.  */
