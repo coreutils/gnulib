@@ -100,7 +100,11 @@ GL_XSTRING_DESC_INLINE
 _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_RETURNS_NONNULL
 char *
 _xsd_c (idx_t s_nbytes, const char *s_data)
-  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
+  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
+GL_XSTRING_DESC_INLINE
+_GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_RETURNS_NONNULL
+char *
+_xsd_c (idx_t s_nbytes, const char *s_data)
 {
   char *result = _sd_c (s_nbytes, s_data);
   if (result == NULL)

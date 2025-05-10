@@ -319,7 +319,9 @@ sd_length (string_desc_t s)
    })
 GL_STRING_DESC_INLINE char
 _sd_char_at (idx_t s_nbytes, const char *s_data, idx_t i)
-  _GL_ATTRIBUTE_NONNULL ((2))
+  _GL_ATTRIBUTE_NONNULL ((2));
+GL_STRING_DESC_INLINE char
+_sd_char_at (idx_t s_nbytes, const char *s_data, idx_t i)
 {
   if (!(i >= 0 && i < s_nbytes))
     /* Invalid argument.  */
