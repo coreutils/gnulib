@@ -182,11 +182,11 @@ there are three possible approaches:
   You should generally fix all compiler warnings that you see from this
   approach.
 
-* If you are developing on a glibc system and have GCC version 13 binaries
+* If you are developing on a glibc system and have GCC version 15 binaries
   available, here's a recipe that will find more mistakes, but is nearly
   as easy to use. Here, different warning options are needed for C and
   for C++:
-    $ WARN_GCC13=`echo '
+    $ WARN_GCC15=`echo '
       -fanalyzer
       -Wall
       -Warith-conversion
@@ -194,10 +194,12 @@ there are three possible approaches:
       -Wdate-time
       -Wduplicated-cond
       -Wextra
+      -Wflex-array-member-not-at-end
       -Wformat-signedness
       -Winit-self
       -Winvalid-pch
       -Wlogical-op
+      -Wmaybe-musttail-local-addr
       -Wmissing-include-dirs
       -Wopenmp-simd
       -Woverlength-strings
@@ -256,18 +258,18 @@ there are three possible approaches:
       -Wno-type-limits
       -Wno-unused-parameter
     ' | tr -d '\n' | sed -e 's/  */ /g'`
-    $ WARN_CFLAGS_GCC13="$WARN_GCC13 -Wnested-externs -Wshadow=local -Wno-discarded-qualifiers"
-    $ WARN_CXXFLAGS_GCC13="$WARN_GCC13 -Wno-cpp"
-    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC13" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC13"
+    $ WARN_CFLAGS_GCC15="$WARN_GCC15 -Wmissing-variable-declarations -Wnested-externs -Wshadow=local -Wno-discarded-qualifiers"
+    $ WARN_CXXFLAGS_GCC15="$WARN_GCC15 -Wno-cpp"
+    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC15" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC15"
     $ make
   You should generally fix all compiler warnings that you see from this
   approach, or report when this approach produced a pointless warning
-  (so that we can fix the value of WARN_GCC13 above).
+  (so that we can fix the value of WARN_GCC15 above).
 
-* If you are developing on a glibc system and have GCC version 13 binaries
+* If you are developing on a glibc system and have GCC version 15 binaries
   available: Here's a recipe that will find even more mistakes, but it
   requires that you are willing to filter out and ignore pointless warnings.
-    $ WARN_GCC13=`echo '
+    $ WARN_GCC15=`echo '
       -fanalyzer
       -Wall
       -Warith-conversion
@@ -275,10 +277,12 @@ there are three possible approaches:
       -Wdate-time
       -Wduplicated-cond
       -Wextra
+      -Wflex-array-member-not-at-end
       -Wformat-signedness
       -Winit-self
       -Winvalid-pch
       -Wlogical-op
+      -Wmaybe-musttail-local-addr
       -Wmissing-include-dirs
       -Wnull-dereference
       -Wopenmp-simd
@@ -323,9 +327,9 @@ there are three possible approaches:
       -Wno-type-limits
       -Wno-unused-parameter
     ' | tr -d '\n' | sed -e 's/  */ /g'`
-    $ WARN_CFLAGS_GCC13="$WARN_GCC13 -Wnested-externs -Wshadow=local"
-    $ WARN_CXXFLAGS_GCC13="$WARN_GCC13 -Wno-cpp"
-    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC13" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC13"
+    $ WARN_CFLAGS_GCC15="$WARN_GCC15 -Wmissing-variable-declarations -Wnested-externs -Wshadow=local"
+    $ WARN_CXXFLAGS_GCC15="$WARN_GCC15 -Wno-cpp"
+    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC15" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC15"
     $ make
   With this approach, use your own judgement whether to fix warnings
   arising from your new code or not.
@@ -335,24 +339,28 @@ there are three possible approaches:
       these warnings, we prefer to report them in the GCC bug tracker
       and wait until they are fixed in a future GCC release.
 
-Similarly, for clang version 16 you can use the following recipe, that uses
+Similarly, for clang version 20 you can use the following recipe, that uses
 selected warning options from
-https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
-  $ WARN_CLANG16=`echo '
+https://releases.llvm.org/20.1.0/tools/clang/docs/DiagnosticsReference.html :
+  $ WARN_CLANG20=`echo '
     -Wall
     -Wanon-enum-enum-conversion
     -Warc-repeated-use-of-weak
     -Warray-bounds-pointer-arithmetic
     -Warray-parameter
     -Watomic-properties
+    -Wauto-decl-extensions
     -Wbinary-literal
     -Wbit-int-extension
     -Wbitfield-enum-conversion
     -Wbitwise-op-parentheses
     -Wbool-operation
     -Wc++-compat
+    -Wc23-compat
+    -Wc23-extensions
     -Wc2x-compat
     -Wc2x-extensions
+    -Wc23-extensions
     -Wc99-compat
     -Wc99-designator
     -Wc99-extensions
@@ -398,7 +406,6 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wexplicit-ownership-type
     -Wextra
     -Wextra-semi
-    -Wfixed-enum-extension
     -Wflexible-array-extensions
     -Wfloat-overflow-conversion
     -Wfloat-zero-conversion
@@ -506,7 +513,10 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wpragma-pack
     -Wpragma-pack-suspicious-include
     -Wpragmas
+    -Wpre-c11-compat
+    -Wpre-c23-compat
     -Wpre-c2x-compat
+    -Wpre-c2y-compat
     -Wpre-openmp-51-compat
     -Wprofile-instr-missing
     -Wquoted-include-in-framework-header
@@ -518,6 +528,7 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wredundant-parens
     -Wreorder
     -Wreorder-ctor
+    -Wreserved-attribute-identifier
     -Wreserved-user-defined-literal
     -Wretained-language-linkage
     -Wselector
@@ -534,6 +545,7 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wshift-sign-overflow
     -Wsigned-enum-bitfield
     -Wsometimes-uninitialized
+    -Wsource-uses-openacc
     -Wsource-uses-openmp
     -Wspir-compat
     -Wstatic-in-inline
@@ -547,6 +559,7 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wtautological-bitwise-compare
     -Wtautological-compare
     -Wtautological-constant-in-range-compare
+    -Wtautological-negation-compare
     -Wtautological-overlap-compare
     -Wtautological-type-limit-compare
     -Wtautological-unsigned-char-zero-compare
@@ -594,6 +607,7 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wunused-variable
     -Wvariadic-macros
     -Wvector-conversion
+    -Wvla-cxx-extension
     -Wweak-template-vtables
     -Wweak-vtables
     -Wzero-length-array
@@ -623,7 +637,7 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
     -Wno-unused-command-line-argument
     -Wno-user-defined-warnings
   ' | tr -d '\n' | sed -e 's/  */ /g'`
-  $ ./configure CFLAGS="-O2 -g $WARN_CLANG16" CXXFLAGS="-O2 -g $WARN_CLANG16"
+  $ ./configure CFLAGS="-O2 -g $WARN_CLANG20" CXXFLAGS="-O2 -g $WARN_CLANG20"
   $ make
 Again, use your own judgement to determine whether to fix or ignore a
 specific warning.
