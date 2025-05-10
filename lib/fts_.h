@@ -62,17 +62,34 @@
 #   define __FLEXIBLE_ARRAY_MEMBER
 #  endif
 # else
+#  if HAVE_SYS_CDEFS_H
+#   include <sys/cdefs.h>
+#  endif
 #  define __FLEXIBLE_ARRAY_MEMBER FLEXIBLE_ARRAY_MEMBER
-#  undef __THROW
-#  define __THROW
-#  undef __BEGIN_DECLS
-#  undef __END_DECLS
-#  ifdef __cplusplus
-#   define __BEGIN_DECLS extern "C" {
-#   define __END_DECLS }
-#  else
-#   define __BEGIN_DECLS
-#   define __END_DECLS
+#  ifndef __THROW
+#   if defined __cplusplus && (__GNUC_PREREQ (2,8) || __clang_major__ >= 4)
+#    if __cplusplus >= 201103L
+#     define __THROW      noexcept (true)
+#    else
+#     define __THROW      throw ()
+#    endif
+#   else
+#    define __THROW
+#   endif
+#  endif
+#  ifndef __BEGIN_DECLS
+#   ifdef __cplusplus
+#    define __BEGIN_DECLS extern "C" {
+#   else
+#    define __BEGIN_DECLS /* nothing */
+#   endif
+#  endif
+#  ifndef __END_DECLS
+#   ifdef __cplusplus
+#    define __END_DECLS }
+#   else
+#    define __END_DECLS /* nothing */
+#   endif
 #  endif
 # endif
 
