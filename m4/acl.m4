@@ -1,5 +1,5 @@
 # acl.m4
-# serial 36
+# serial 37
 dnl Copyright (C) 2002, 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -230,10 +230,11 @@ AC_DEFUN([gl_FILE_HAS_ACL],
 AC_DEFUN([gl_QCOPY_ACL],
 [
   AC_REQUIRE([gl_FUNC_ACL])
+  AC_REQUIRE([gl_FILE_HAS_ACL])
   AC_CHECK_HEADERS_ONCE([linux/xattr.h])
   gl_FUNC_XATTR
   if test "$use_xattr" = yes; then
-    QCOPY_ACL_LIB="$LIB_XATTR"
+    QCOPY_ACL_LIB="$LIB_XATTR $FILE_HAS_ACL_LIB"
   else
     QCOPY_ACL_LIB="$LIB_ACL"
   fi
