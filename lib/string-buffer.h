@@ -129,7 +129,7 @@ extern const char * sb_contents_c (struct string_buffer *buffer);
 /* Returns the contents of BUFFER and frees all other memory held by BUFFER.
    Returns NULL upon failure or if there was an error earlier.
    It is the responsibility of the caller to sd_free() the result.  */
-extern string_desc_t sb_dupfree (struct string_buffer *buffer)
+extern rw_string_desc_t sb_dupfree (struct string_buffer *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 /* Returns the contents of BUFFER (with an added trailing NUL, that is,
@@ -200,7 +200,7 @@ extern const char * sb_xcontents_c (struct string_buffer *buffer)
 /* Returns the contents of BUFFER and frees all other memory held by BUFFER.
    Returns (0, NULL) if there was an error earlier.
    It is the responsibility of the caller to sd_free() the result.  */
-extern string_desc_t sb_xdupfree (struct string_buffer *buffer)
+extern rw_string_desc_t sb_xdupfree (struct string_buffer *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 /* Returns the contents of BUFFER (with an added trailing NUL, that is,

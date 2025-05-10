@@ -53,15 +53,15 @@ sb_xcontents_c (struct string_buffer *buffer)
   return contents;
 }
 
-string_desc_t
+rw_string_desc_t
 sb_xdupfree (struct string_buffer *buffer)
 {
   if (buffer->error)
     {
       sb_free (buffer);
-      return sd_new_addr (0, NULL);
+      return sd_new_addr (0, (char *) NULL);
     }
-  string_desc_t contents = sb_dupfree (buffer);
+  rw_string_desc_t contents = sb_dupfree (buffer);
   if (sd_data (contents) == NULL)
     xalloc_die ();
   return contents;

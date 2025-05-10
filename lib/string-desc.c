@@ -39,94 +39,95 @@
 
 /* Return true if A and B are equal.  */
 bool
-sd_equals (string_desc_t a, string_desc_t b)
+_sd_equals (idx_t a_nbytes, const char *a_data,
+            idx_t b_nbytes, const char *b_data)
 {
-  return (a._nbytes == b._nbytes
-          && (a._nbytes == 0 || memcmp (a._data, b._data, a._nbytes) == 0));
+  return (a_nbytes == b_nbytes
+          && (a_nbytes == 0 || memcmp (a_data, b_data, a_nbytes) == 0));
 }
 
 bool
-sd_startswith (string_desc_t s, string_desc_t prefix)
+_sd_startswith (idx_t s_nbytes, const char *s_data,
+                idx_t prefix_nbytes, const char *prefix_data)
 {
-  return (s._nbytes >= prefix._nbytes
-          && (prefix._nbytes == 0
-              || memcmp (s._data, prefix._data, prefix._nbytes) == 0));
+  return (s_nbytes >= prefix_nbytes
+          && (prefix_nbytes == 0
+              || memcmp (s_data, prefix_data, prefix_nbytes) == 0));
 }
 
 bool
-sd_endswith (string_desc_t s, string_desc_t suffix)
+_sd_endswith (idx_t s_nbytes, const char *s_data,
+                idx_t suffix_nbytes, const char *suffix_data)
 {
-  return (s._nbytes >= suffix._nbytes
-          && (suffix._nbytes == 0
-              || memcmp (s._data + (s._nbytes - suffix._nbytes), suffix._data,
-                         suffix._nbytes) == 0));
+  return (s_nbytes >= suffix_nbytes
+          && (suffix_nbytes == 0
+              || memcmp (s_data + (s_nbytes - suffix_nbytes), suffix_data,
+                         suffix_nbytes) == 0));
 }
 
 int
-sd_cmp (string_desc_t a, string_desc_t b)
+_sd_cmp (idx_t a_nbytes, const char *a_data,
+         idx_t b_nbytes, const char *b_data)
 {
-  if (a._nbytes > b._nbytes)
+  if (a_nbytes > b_nbytes)
     {
-      if (b._nbytes == 0)
+      if (b_nbytes == 0)
         return 1;
-      return (memcmp (a._data, b._data, b._nbytes) < 0 ? -1 : 1);
+      return (memcmp (a_data, b_data, b_nbytes) < 0 ? -1 : 1);
     }
-  else if (a._nbytes < b._nbytes)
+  else if (a_nbytes < b_nbytes)
     {
-      if (a._nbytes == 0)
+      if (a_nbytes == 0)
         return -1;
-      return (memcmp (a._data, b._data, a._nbytes) > 0 ? 1 : -1);
+      return (memcmp (a_data, b_data, a_nbytes) > 0 ? 1 : -1);
     }
-  else /* a._nbytes == b._nbytes */
+  else /* a_nbytes == b_nbytes */
     {
-      if (a._nbytes == 0)
+      if (a_nbytes == 0)
         return 0;
-      return memcmp (a._data, b._data, a._nbytes);
+      return memcmp (a_data, b_data, a_nbytes);
     }
 }
 
 int
-sd_c_casecmp (string_desc_t a, string_desc_t b)
+_sd_c_casecmp (idx_t a_nbytes, const char *a_data,
+               idx_t b_nbytes, const char *b_data)
 {
   /* Don't use memcasecmp here, since it uses the current locale, not the
      "C" locale.  */
-  idx_t an = sd_length (a);
-  idx_t bn = sd_length (b);
-  const char *ap = sd_data (a);
-  const char *bp = sd_data (b);
-  idx_t n = (an < bn ? an : bn);
+  idx_t n = (a_nbytes < b_nbytes ? a_nbytes : b_nbytes);
   idx_t i;
   for (i = 0; i < n; i++)
     {
-      int ac = c_tolower ((unsigned char) ap[i]);
-      int bc = c_tolower ((unsigned char) bp[i]);
+      int ac = c_tolower ((unsigned char) a_data[i]);
+      int bc = c_tolower ((unsigned char) b_data[i]);
       if (ac != bc)
         return (UCHAR_MAX <= INT_MAX ? ac - bc : _GL_CMP (ac, bc));
     }
-  /* Here i = n = min (an, bn).  */
-  return _GL_CMP (an, bn);
+  /* Here i = n = min (a_nbytes, b_nbytes).  */
+  return _GL_CMP (a_nbytes, b_nbytes);
 }
 
 ptrdiff_t
-sd_index (string_desc_t s, char c)
+_sd_index (idx_t s_nbytes, const char *s_data, char c)
 {
-  if (s._nbytes > 0)
+  if (s_nbytes > 0)
     {
-      void *found = memchr (s._data, (unsigned char) c, s._nbytes);
+      void *found = memchr (s_data, (unsigned char) c, s_nbytes);
       if (found != NULL)
-        return (char *) found - s._data;
+        return (char *) found - s_data;
     }
   return -1;
 }
 
 ptrdiff_t
-sd_last_index (string_desc_t s, char c)
+_sd_last_index (idx_t s_nbytes, const char *s_data, char c)
 {
-  if (s._nbytes > 0)
+  if (s_nbytes > 0)
     {
-      void *found = memrchr (s._data, (unsigned char) c, s._nbytes);
+      void *found = memrchr (s_data, (unsigned char) c, s_nbytes);
       if (found != NULL)
-        return (char *) found - s._data;
+        return (char *) found - s_data;
     }
   return -1;
 }
@@ -140,11 +141,15 @@ sd_new_empty (void)
   result._data = NULL;
 
   return result;
-
 }
 
+#if __GNUC__ >= 5
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+#endif
+
 string_desc_t
-sd_new_addr (idx_t n, char *addr)
+_sd_new_addr (idx_t n, const char *addr)
 {
   string_desc_t result;
 
@@ -152,7 +157,20 @@ sd_new_addr (idx_t n, char *addr)
   if (n == 0)
     result._data = NULL;
   else
-    result._data = addr;
+    result._data = (char *) addr;
+
+  return result;
+}
+rw_string_desc_t
+_rwsd_new_addr (idx_t n, /*!*/const/*!*/ char *addr)
+{
+  rw_string_desc_t result;
+
+  result._nbytes = n;
+  if (n == 0)
+    result._data = NULL;
+  else
+    result._data = (char *) addr;
 
   return result;
 }
@@ -168,36 +186,25 @@ sd_from_c (const char *s)
   return result;
 }
 
-string_desc_t
-sd_substring (string_desc_t s, idx_t start, idx_t end)
-{
-  string_desc_t result;
-
-  if (!(start >= 0 && start <= end && end <= s._nbytes))
-    /* Invalid arguments.  */
-    abort ();
-
-  result._nbytes = end - start;
-  result._data = s._data + start;
-
-  return result;
-}
+#if __GNUC__ >= 5
+# pragma GCC diagnostic pop
+#endif
 
 int
-sd_write (int fd, string_desc_t s)
+_sd_write (int fd, idx_t s_nbytes, const char *s_data)
 {
-  if (s._nbytes > 0)
-    if (full_write (fd, s._data, s._nbytes) != s._nbytes)
+  if (s_nbytes > 0)
+    if (full_write (fd, s_data, s_nbytes) != s_nbytes)
       /* errno is set here.  */
       return -1;
   return 0;
 }
 
 int
-sd_fwrite (FILE *fp, string_desc_t s)
+_sd_fwrite (FILE *fp, idx_t s_nbytes, const char *s_data)
 {
-  if (s._nbytes > 0)
-    if (fwrite (s._data, 1, s._nbytes, fp) != s._nbytes)
+  if (s_nbytes > 0)
+    if (fwrite (s_data, 1, s_nbytes, fp) != s_nbytes)
       return -1;
   return 0;
 }
@@ -206,9 +213,9 @@ sd_fwrite (FILE *fp, string_desc_t s)
 /* ==== Memory-allocating operations on string descriptors ==== */
 
 int
-sd_new (string_desc_t *resultp, idx_t n)
+sd_new (rw_string_desc_t *resultp, idx_t n)
 {
-  string_desc_t result;
+  rw_string_desc_t result;
 
   if (!(n >= 0))
     /* Invalid argument.  */
@@ -230,9 +237,9 @@ sd_new (string_desc_t *resultp, idx_t n)
 }
 
 int
-sd_new_filled (string_desc_t *resultp, idx_t n, char c)
+sd_new_filled (rw_string_desc_t *resultp, idx_t n, char c)
 {
-  string_desc_t result;
+  rw_string_desc_t result;
 
   result._nbytes = n;
   if (n == 0)
@@ -251,10 +258,10 @@ sd_new_filled (string_desc_t *resultp, idx_t n, char c)
 }
 
 int
-sd_copy (string_desc_t *resultp, string_desc_t s)
+_sd_copy (rw_string_desc_t *resultp, idx_t s_nbytes, const char *s_data)
 {
-  string_desc_t result;
-  idx_t n = s._nbytes;
+  rw_string_desc_t result;
+  idx_t n = s_nbytes;
 
   result._nbytes = n;
   if (n == 0)
@@ -265,7 +272,7 @@ sd_copy (string_desc_t *resultp, string_desc_t s)
       if (result._data == NULL)
         /* errno is set here.  */
         return -1;
-      memcpy (result._data, s._data, n);
+      memcpy (result._data, s_data, n);
     }
 
   *resultp = result;
@@ -273,52 +280,58 @@ sd_copy (string_desc_t *resultp, string_desc_t s)
 }
 
 int
-sd_concat (string_desc_t *resultp, idx_t n, string_desc_t string1, ...)
+sd_concat (rw_string_desc_t *resultp, idx_t n, /* [rw_]string_desc_t string1, */ ...)
 {
   if (n <= 0)
     /* Invalid argument.  */
     abort ();
 
   idx_t total = 0;
-  total += string1._nbytes;
-  if (n > 1)
-    {
-      va_list other_strings;
-      idx_t i;
+  {
+    va_list strings;
+    va_start (strings, n);
+    string_desc_t string1 = va_arg (strings, string_desc_t);
+    total += string1._nbytes;
+    if (n > 1)
+      {
+        idx_t i;
 
-      va_start (other_strings, string1);
-      for (i = n - 1; i > 0; i--)
-        {
-          string_desc_t arg = va_arg (other_strings, string_desc_t);
-          total += arg._nbytes;
-        }
-      va_end (other_strings);
-    }
+        for (i = n - 1; i > 0; i--)
+          {
+            string_desc_t arg = va_arg (strings, string_desc_t);
+            total += arg._nbytes;
+          }
+      }
+    va_end (strings);
+  }
 
   char *combined = (char *) imalloc (total);
   if (combined == NULL)
     /* errno is set here.  */
     return -1;
   idx_t pos = 0;
-  memcpy (combined, string1._data, string1._nbytes);
-  pos += string1._nbytes;
-  if (n > 1)
-    {
-      va_list other_strings;
-      idx_t i;
+  {
+    va_list strings;
+    va_start (strings, n);
+    string_desc_t string1 = va_arg (strings, string_desc_t);
+    memcpy (combined, string1._data, string1._nbytes);
+    pos += string1._nbytes;
+    if (n > 1)
+      {
+        idx_t i;
 
-      va_start (other_strings, string1);
-      for (i = n - 1; i > 0; i--)
-        {
-          string_desc_t arg = va_arg (other_strings, string_desc_t);
-          if (arg._nbytes > 0)
-            memcpy (combined + pos, arg._data, arg._nbytes);
-          pos += arg._nbytes;
-        }
-      va_end (other_strings);
-    }
+        for (i = n - 1; i > 0; i--)
+          {
+            string_desc_t arg = va_arg (strings, string_desc_t);
+            if (arg._nbytes > 0)
+              memcpy (combined + pos, arg._data, arg._nbytes);
+            pos += arg._nbytes;
+          }
+      }
+    va_end (strings);
+  }
 
-  string_desc_t result;
+  rw_string_desc_t result;
   result._nbytes = total;
   result._data = combined;
 
@@ -327,15 +340,15 @@ sd_concat (string_desc_t *resultp, idx_t n, string_desc_t string1, ...)
 }
 
 char *
-sd_c (string_desc_t s)
+_sd_c (idx_t s_nbytes, const char *s_data)
 {
-  idx_t n = s._nbytes;
+  idx_t n = s_nbytes;
   char *result = (char *) imalloc (n + 1);
   if (result == NULL)
     /* errno is set here.  */
     return NULL;
   if (n > 0)
-    memcpy (result, s._data, n);
+    memcpy (result, s_data, n);
   result[n] = '\0';
 
   return result;
@@ -345,7 +358,7 @@ sd_c (string_desc_t s)
 /* ==== Operations with side effects on string descriptors ==== */
 
 void
-sd_set_char_at (string_desc_t s, idx_t i, char c)
+sd_set_char_at (rw_string_desc_t s, idx_t i, char c)
 {
   if (!(i >= 0 && i < s._nbytes))
     /* Invalid argument.  */
@@ -354,7 +367,7 @@ sd_set_char_at (string_desc_t s, idx_t i, char c)
 }
 
 void
-sd_fill (string_desc_t s, idx_t start, idx_t end, char c)
+sd_fill (rw_string_desc_t s, idx_t start, idx_t end, char c)
 {
   if (!(start >= 0 && start <= end))
     /* Invalid arguments.  */
@@ -365,18 +378,18 @@ sd_fill (string_desc_t s, idx_t start, idx_t end, char c)
 }
 
 void
-sd_overwrite (string_desc_t s, idx_t start, string_desc_t t)
+_sd_overwrite (rw_string_desc_t s, idx_t start, idx_t t_nbytes, const char *t_data)
 {
-  if (!(start >= 0 && start + t._nbytes <= s._nbytes))
+  if (!(start >= 0 && start + t_nbytes <= s._nbytes))
     /* Invalid arguments.  */
     abort ();
 
-  if (t._nbytes > 0)
-    memcpy (s._data + start, t._data, t._nbytes);
+  if (t_nbytes > 0)
+    memcpy (s._data + start, t_data, t_nbytes);
 }
 
 void
-sd_free (string_desc_t s)
+sd_free (rw_string_desc_t s)
 {
   free (s._data);
 }

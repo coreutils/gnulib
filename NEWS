@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-05-09  string-desc     These modules now distinguish between read-only
+            xstring-desc    string descriptors (type string_desc_t) and
+                            writable string descriptors (type rw_string_desc_t).
+
 2025-05-09  copy-acl        The mode_t arguments of qcopy_acl and xcopy_acl
             qcopy-acl       should be the full st_mode of the source,
                             not merely st_mode's permission bits.

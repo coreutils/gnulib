@@ -137,7 +137,7 @@ sb_free (struct string_buffer *buffer)
 string_desc_t
 sb_contents (struct string_buffer *buffer)
 {
-  return sd_new_addr (buffer->length, buffer->data);
+  return sd_new_addr (buffer->length, (const char *) buffer->data);
 }
 
 const char *
@@ -150,7 +150,7 @@ sb_contents_c (struct string_buffer *buffer)
   return buffer->data;
 }
 
-string_desc_t
+rw_string_desc_t
 sb_dupfree (struct string_buffer *buffer)
 {
   if (buffer->oom || buffer->error)
@@ -180,7 +180,7 @@ sb_dupfree (struct string_buffer *buffer)
 
  fail:
   sb_free (buffer);
-  return sd_new_addr (0, NULL);
+  return sd_new_addr (0, (char *) NULL);
 }
 
 char *

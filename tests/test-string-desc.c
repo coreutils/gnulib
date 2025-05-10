@@ -142,7 +142,7 @@ main (int argc, char *argv[])
   ASSERT (sd_fwrite (stdout, s2) == 0);
 
   /* Test sd_new, sd_set_char_at, sd_fill.  */
-  string_desc_t s4;
+  rw_string_desc_t s4;
   ASSERT (sd_new (&s4, 5) == 0);
   sd_set_char_at (s4, 0, 'H');
   sd_set_char_at (s4, 4, 'o');
@@ -152,7 +152,7 @@ main (int argc, char *argv[])
   ASSERT (sd_startswith (s1, s4));
 
   /* Test sd_new_filled, sd_set_char_at.  */
-  string_desc_t s5;
+  rw_string_desc_t s5;
   ASSERT (sd_new_filled (&s5, 5, 'l') == 0);
   sd_set_char_at (s5, 0, 'H');
   sd_set_char_at (s5, 4, 'o');
@@ -166,13 +166,13 @@ main (int argc, char *argv[])
 
   /* Test sd_copy, sd_free.  */
   {
-    string_desc_t s6;
+    rw_string_desc_t s6;
     ASSERT (sd_copy (&s6, s0) == 0);
     ASSERT (sd_is_empty (s6));
     sd_free (s6);
   }
   {
-    string_desc_t s6;
+    rw_string_desc_t s6;
     ASSERT (sd_copy (&s6, s2) == 0);
     ASSERT (sd_equals (s6, s2));
     sd_free (s6);
@@ -180,7 +180,7 @@ main (int argc, char *argv[])
 
   /* Test sd_overwrite.  */
   {
-    string_desc_t s7;
+    rw_string_desc_t s7;
     ASSERT (sd_copy (&s7, s2) == 0);
     sd_overwrite (s7, 4, s1);
     ASSERT (sd_equals (s7, sd_new_addr (21, "The\0Hello world!\0fox")));
@@ -188,7 +188,7 @@ main (int argc, char *argv[])
 
   /* Test sd_concat.  */
   {
-    string_desc_t s8;
+    rw_string_desc_t s8;
     ASSERT (sd_concat (&s8, 3, sd_new_addr (10, "The\0quick"),
                                sd_new_addr (7, "brown\0"),
                                sd_new_addr (4, "fox"),

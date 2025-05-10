@@ -21,52 +21,58 @@
 
 #include "ialloc.h"
 
-string_desc_t
-xsd_concat (idx_t n, string_desc_t string1, ...)
+rw_string_desc_t
+xsd_concat (idx_t n, /* [rw_]string_desc_t string1, */ ...)
 {
   if (n <= 0)
     /* Invalid argument.  */
     abort ();
 
   idx_t total = 0;
-  total += string1._nbytes;
-  if (n > 1)
-    {
-      va_list other_strings;
-      idx_t i;
+  {
+    va_list strings;
+    va_start (strings, n);
+    string_desc_t string1 = va_arg (strings, string_desc_t);
+    total += string1._nbytes;
+    if (n > 1)
+      {
+        idx_t i;
 
-      va_start (other_strings, string1);
-      for (i = n - 1; i > 0; i--)
-        {
-          string_desc_t arg = va_arg (other_strings, string_desc_t);
-          total += arg._nbytes;
-        }
-      va_end (other_strings);
-    }
+        for (i = n - 1; i > 0; i--)
+          {
+            string_desc_t arg = va_arg (strings, string_desc_t);
+            total += arg._nbytes;
+          }
+      }
+    va_end (strings);
+  }
 
   char *combined = (char *) imalloc (total);
   if (combined == NULL)
     xalloc_die ();
   idx_t pos = 0;
-  memcpy (combined, string1._data, string1._nbytes);
-  pos += string1._nbytes;
-  if (n > 1)
-    {
-      va_list other_strings;
-      idx_t i;
+  {
+    va_list strings;
+    va_start (strings, n);
+    string_desc_t string1 = va_arg (strings, string_desc_t);
+    memcpy (combined, string1._data, string1._nbytes);
+    pos += string1._nbytes;
+    if (n > 1)
+      {
+        idx_t i;
 
-      va_start (other_strings, string1);
-      for (i = n - 1; i > 0; i--)
-        {
-          string_desc_t arg = va_arg (other_strings, string_desc_t);
-          if (arg._nbytes > 0)
-            memcpy (combined + pos, arg._data, arg._nbytes);
-          pos += arg._nbytes;
-        }
-      va_end (other_strings);
-    }
+        for (i = n - 1; i > 0; i--)
+          {
+            string_desc_t arg = va_arg (strings, string_desc_t);
+            if (arg._nbytes > 0)
+              memcpy (combined + pos, arg._data, arg._nbytes);
+            pos += arg._nbytes;
+          }
+      }
+    va_end (strings);
+  }
 
-  string_desc_t result;
+  rw_string_desc_t result;
   result._nbytes = total;
   result._data = combined;
 

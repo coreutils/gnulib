@@ -115,8 +115,7 @@ main ()
   {
     sfl_istream_t stream;
     sfl_istream_init_from_string_desc (&stream,
-                                       sd_new_addr (CONTENTS_LEN,
-                                                    (char *) contents));
+                                       sd_new_addr (CONTENTS_LEN, contents));
     test_open_stream (&stream);
     sfl_free (&stream);
   }

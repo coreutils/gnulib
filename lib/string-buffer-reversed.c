@@ -148,7 +148,7 @@ string_desc_t
 sbr_contents (struct string_buffer_reversed *buffer)
 {
   return sd_new_addr (buffer->length - 1,
-                      buffer->data + buffer->allocated - buffer->length);
+                      (const char *) buffer->data + buffer->allocated - buffer->length);
 }
 
 const char *
@@ -157,7 +157,7 @@ sbr_contents_c (struct string_buffer_reversed *buffer)
   return buffer->data + buffer->allocated - buffer->length;
 }
 
-string_desc_t
+rw_string_desc_t
 sbr_dupfree (struct string_buffer_reversed *buffer)
 {
   if (buffer->oom || buffer->error)
@@ -185,7 +185,7 @@ sbr_dupfree (struct string_buffer_reversed *buffer)
 
  fail:
   sbr_free (buffer);
-  return sd_new_addr (0, NULL);
+  return sd_new_addr (0, (char *) NULL);
 }
 
 char *

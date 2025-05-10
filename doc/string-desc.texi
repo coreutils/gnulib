@@ -53,12 +53,26 @@ memory, is not included in this byte count.  This type implements the
 same concept as @code{std::string_view} in C++, or the @code{String}
 type in Java.
 
-A @code{string_desc_t} can be passed to a function as an argument, or
+@code{string_desc_t} is a string descriptor to a string that cannot
+be written to.  There is also a type @code{rw_string_desc_t}, that is
+a descriptor for a writable string.
+@code{rw_string_desc_t} compares to @code{string_desc_t}, like the
+pointer type @samp{char *} compares to the pointer type
+@samp{const char *}.
+
+A @code{string_desc_t} or @code{rw_string_desc_t}
+can be passed to a function as an argument, or
 can be the return value of a function.  This is type-safe: If, by
 mistake, a programmer passes a @code{string_desc_t} to a function that
 expects a @code{char *} argument, or vice versa, or assigns a
 @code{string_desc_t} value to a variable of type @code{char *}, or
 vice versa, the compiler will report an error.
+
+Unfortunately, @code{string_desc_t} and @code{rw_string_desc_t}
+being different types, there is no implicit conversion from
+@code{rw_string_desc_t} to @code{string_desc_t}.  In places
+where such a conversion is desired, the (inline) function
+@code{sd_readonly} needs to be called.
 
 Functions related to string descriptors are provided:
 @itemize

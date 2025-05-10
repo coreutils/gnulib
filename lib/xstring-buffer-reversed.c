@@ -44,15 +44,15 @@ sbr_xprepend_c (struct string_buffer_reversed *buffer, const char *str)
     xalloc_die ();
 }
 
-string_desc_t
+rw_string_desc_t
 sbr_xdupfree (struct string_buffer_reversed *buffer)
 {
   if (buffer->error)
     {
       sbr_free (buffer);
-      return sd_new_addr (0, NULL);
+      return sd_new_addr (0, (char *) NULL);
     }
-  string_desc_t contents = sbr_dupfree (buffer);
+  rw_string_desc_t contents = sbr_dupfree (buffer);
   if (sd_data (contents) == NULL)
     xalloc_die ();
   return contents;

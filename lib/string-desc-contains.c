@@ -31,16 +31,17 @@
    which — depending on platforms — costs up to 2 KB of binary code.  */
 
 ptrdiff_t
-sd_contains (string_desc_t haystack, string_desc_t needle)
+_sd_contains (idx_t haystack_nbytes, const char *haystack_data,
+              idx_t needle_nbytes, const char *needle_data)
 {
-  if (needle._nbytes == 0)
+  if (needle_nbytes == 0)
     return 0;
-  if (haystack._nbytes == 0)
+  if (haystack_nbytes == 0)
     return -1;
   void *found =
-    memmem (haystack._data, haystack._nbytes, needle._data, needle._nbytes);
+    memmem (haystack_data, haystack_nbytes, needle_data, needle_nbytes);
   if (found != NULL)
-    return (char *) found - haystack._data;
+    return (char *) found - haystack_data;
   else
     return -1;
 }

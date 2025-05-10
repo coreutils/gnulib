@@ -33,7 +33,7 @@ main (void)
   string_desc_t s2 = sd_new_addr (21, "The\0quick\0brown\0\0fox");
 
   /* Test xsd_new.  */
-  string_desc_t s4 = xsd_new (5);
+  rw_string_desc_t s4 = xsd_new (5);
   sd_set_char_at (s4, 0, 'H');
   sd_set_char_at (s4, 4, 'o');
   sd_set_char_at (s4, 1, 'e');
@@ -42,7 +42,7 @@ main (void)
   ASSERT (sd_startswith (s1, s4));
 
   /* Test xsd_new_filled.  */
-  string_desc_t s5 = xsd_new_filled (5, 'l');
+  rw_string_desc_t s5 = xsd_new_filled (5, 'l');
   sd_set_char_at (s5, 0, 'H');
   sd_set_char_at (s5, 4, 'o');
   sd_set_char_at (s5, 1, 'e');
@@ -51,19 +51,19 @@ main (void)
 
   /* Test xsd_copy.  */
   {
-    string_desc_t s6 = xsd_copy (s0);
+    rw_string_desc_t s6 = xsd_copy (s0);
     ASSERT (sd_is_empty (s6));
     sd_free (s6);
   }
   {
-    string_desc_t s6 = xsd_copy (s2);
+    rw_string_desc_t s6 = xsd_copy (s2);
     ASSERT (sd_equals (s6, s2));
     sd_free (s6);
   }
 
   /* Test xsd_concat.  */
   {
-    string_desc_t s8 =
+    rw_string_desc_t s8 =
       xsd_concat (3, sd_new_addr (10, "The\0quick"),
                      sd_new_addr (7, "brown\0"),
                      sd_new_addr (4, "fox"),
