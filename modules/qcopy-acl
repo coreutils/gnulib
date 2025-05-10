@@ -7,7 +7,9 @@ m4/acl.m4
 m4/xattr.m4
 
 Depends-on:
-acl-permissions [test "$use_xattr" != yes]
+acl-permissions
+dirent-h        [test "$use_xattr" = yes]
+file-has-acl    [test "$use_xattr" = yes]
 
 configure.ac:
 gl_QCOPY_ACL

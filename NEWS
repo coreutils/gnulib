@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-05-09  copy-acl        The mode_t arguments of qcopy_acl and xcopy_acl
+            qcopy-acl       should be the full st_mode of the source,
+                            not merely st_mode's permission bits.
+
 2025-04-29  hash-triple-simple  This module is renamed to hashcode-named-file.
 
 2025-01-02  string-desc     The function prefix is changed from string_desc_

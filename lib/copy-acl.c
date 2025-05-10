@@ -33,6 +33,7 @@
    a valid file descriptor, use file descriptor operations, else use
    filename based operations on SRC_NAME. Likewise for DEST_DESC and
    DST_NAME.
+   MODE should be the source file's st_mode.
    If access control lists are not available, fchmod the target file to
    MODE.  Also sets the non-permission bits of the destination file
    (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
