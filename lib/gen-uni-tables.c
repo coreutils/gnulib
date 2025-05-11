@@ -51,6 +51,24 @@
 
 /* ========================================================================= */
 
+/* Utility functions.  */
+
+static bool
+str_startswith (const char *string, const char *prefix)
+{
+  return strncmp (string, prefix, strlen (prefix)) == 0;
+}
+
+static bool
+str_endswith (const char *string, const char *suffix)
+{
+  size_t len = strlen (string);
+  size_t n = strlen (suffix);
+  return len >= n && strcmp (string + len - n, suffix) == 0;
+}
+
+/* ========================================================================= */
+
 /* Reading UnicodeData.txt.  */
 /* See UCD.html.  */
 
