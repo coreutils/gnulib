@@ -3901,7 +3901,7 @@ is_property_composite (unsigned int ch)
           if (decomp[0] == ' ')
             decomp++;
         }
-      return strchr (decomp, ' ') != NULL && str_startswith (decomp, "0020 ");
+      return strchr (decomp, ' ') != NULL && !str_startswith (decomp, "0020 ");
     }
   return false;
 }
