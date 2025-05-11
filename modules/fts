@@ -2,12 +2,14 @@ Description:
 Traverse a file hierarchy.
 
 Files:
-lib/fts_.h
+lib/fts.in.h
 lib/fts.c
 lib/fts-cycle.c
 m4/fts.m4
+m4/sys_cdefs_h.m4
 
 Depends-on:
+gen-header
 alignasof
 attribute
 c99
@@ -45,9 +47,18 @@ dnl NetBSD versions have bugs and/or unnecessary limitations.
 gl_CONDITIONAL([GL_COND_OBJ_FTS], [true])
 
 Makefile.am:
+BUILT_SOURCES += fts_.h
 if GL_COND_OBJ_FTS
 lib_SOURCES += fts.c
 endif
+
+fts_.h: fts.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
+	      $(srcdir)/fts.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+MOSTLYCLEANFILES += fts_.h fts_.h-t
 
 Include:
 "fts_.h"

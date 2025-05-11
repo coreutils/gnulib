@@ -62,7 +62,7 @@
 #   define __FLEXIBLE_ARRAY_MEMBER
 #  endif
 # else
-#  if HAVE_SYS_CDEFS_H
+#  if @HAVE_SYS_CDEFS_H@
 #   include <sys/cdefs.h>
 #  endif
 #  define __FLEXIBLE_ARRAY_MEMBER FLEXIBLE_ARRAY_MEMBER
