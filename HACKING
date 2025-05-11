@@ -643,6 +643,49 @@ Again, use your own judgement to determine whether to fix or ignore a
 specific warning.
 
 
+Maintaining link dependencies
+=============================
+
+Each module has a section "Link:", that contains the linker options that
+a program, that makes use of the module, needs to use, in order to avoid
+a link error. Unless empty, this field contains one or more variable
+references, because linker options are platform dependent. A gnulib-tool
+invocation lists these linker options to the package maintainer, so that
+they can make use of these options in the *_LDFLAGS in their package's
+Makefile.am.
+
+Of course, the unit tests uses these linker options.
+
+Often the link dependencies for module 'foo' follows this naming
+convention: $(FOO_LIB). For example, there are variables references
+$(MBRTOWC_LIB) $(SETLOCALE_LIB).
+
+Typically, when you make a code change in a module and accordingly
+define a variable for its linker options in the corresponding *.m4 file,
+you also need to update the linker options of all modules that depend
+on it:
+  $ ./gnulib-tool --extract-dependents foo
+and the linker options of all modules that depend on these, etc.:
+  $ ./gnulib-tool --extract-recursive-dependents foo
+
+The use of a variable per module avoids the need for an avalanche of
+changes.
+
+When you notice a link error of a program, you typically fix it in three
+steps:
+  1. Ask "Which library does the program need to link with?"
+     You answer this by consulting documentation and man pages, as well
+     as by use of "nm --dynamic /lib/libxyz.so".
+  2. Ask "From which autoconf variable do I get this library option?"
+     You answer this by searching the *LIB* values in config.status:
+     $ grep LIB config.status
+  3. Finally you add a reference to that variable to the *_LIB variable
+     of your module. Or, if your module does not have such a variable
+     so far, you introduce such a variable and make sure to update all
+     dependents to make use of it (see above).
+
+
+
 Information for gnulib-tool maintenance
 ***************************************
 
