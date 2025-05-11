@@ -59,7 +59,7 @@ sb_xdupfree (struct string_buffer *buffer)
   if (buffer->error)
     {
       sb_free (buffer);
-      return sd_new_addr (0, (char *) NULL);
+      return sd_readwrite (sd_new_empty ());
     }
   rw_string_desc_t contents = sb_dupfree (buffer);
   if (sd_data (contents) == NULL)

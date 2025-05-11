@@ -38,10 +38,54 @@
 /* Get idx_t.  */
 #include "idx.h"
 
-/* Whether the compiler supports statement-expressions.  */
+/* Whether the compiler supports statement-expressions.
+   Test program:
+     int f (int x) { return ({ x; x; }); }
+ */
 #if defined __GNUC__ || defined __clang__ \
     || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150)
 # define HAVE_STATEMENT_EXPRESSIONS 1
+#endif
+
+/* Whether the compiler supports _Generic.
+   Test program:
+     int f (int x) { return _Generic (x, char *: 2, int: 3); }
+ */
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
+    || (defined __clang__ && __clang_major__ >= 3) \
+    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150)
+# define HAVE__GENERIC 1
+#endif
+
+/* Whether the compiler supports __builtin_choose_expr.
+   _Generic and __builtin_choose_expr are like conditional expressions,
+   except that the return types of the branches need not match: They avoid an
+   "error: type mismatch in conditional expression".
+   Test program:
+     int f (int x) { return __builtin_choose_expr (sizeof (x) == 4, 2, 3); }
+ */
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) \
+    || (defined __clang__ && __clang_major__ >= 3)
+# define HAVE_BUILTIN_CHOOSE_EXPR 1
+#endif
+
+/* Whether the compiler supports __builtin_constant_p and whether that built-in
+   returns true for string literals.
+   _Generic has an antiquated treatment of string literals: It treats string
+   literals like 'char *', not 'const char *'.  To compensate for this, we need
+   __builtin_constant_p.
+   Test program:
+     int i, v[__builtin_constant_p ("x") > __builtin_constant_p (i) ? 1 : -1];
+ */
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) \
+    || (defined __clang__ && __clang_major__ >= 4)
+# define HAVE_BUILTIN_CONSTANT_P 1
+#endif
+
+/* Whether we support rw_string_desc_t as distinct from string_desc_t.  */
+#if HAVE_STATEMENT_EXPRESSIONS && HAVE__GENERIC && HAVE_BUILTIN_CHOOSE_EXPR \
+    && HAVE_BUILTIN_CONSTANT_P
+# define HAVE_RW_STRING_DESC 1
 #endif
 
 _GL_INLINE_HEADER_BEGIN
@@ -69,7 +113,7 @@ struct rw_string_desc_t
   idx_t _nbytes;
   char *_data;
 };
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 typedef struct string_desc_t string_desc_t;
 struct string_desc_t
 {
@@ -273,7 +317,7 @@ extern void sd_free (rw_string_desc_t s);
 
 /* ==== Inline function definitions ==== */
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 GL_STRING_DESC_INLINE string_desc_t
 sd_readonly (rw_string_desc_t s)
 {
@@ -286,7 +330,7 @@ sd_readonly (rw_string_desc_t s)
 # define sd_readonly(s) (s)
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 GL_STRING_DESC_INLINE rw_string_desc_t
 sd_readwrite (string_desc_t s)
 {
@@ -299,7 +343,7 @@ sd_readwrite (string_desc_t s)
 # define sd_readwrite(s) (s)
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_length(s) \
    _Generic (s, \
              string_desc_t    : (s)._nbytes, \
@@ -312,7 +356,7 @@ sd_length (string_desc_t s)
 }
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_char_at(s, i) \
    ({typeof (s) _s_ = (s); \
      _sd_char_at (_s_._nbytes, _s_._data, i); \
@@ -339,7 +383,7 @@ sd_char_at (string_desc_t s, idx_t i)
 }
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_data(s) \
    _Generic (s, \
              string_desc_t    : (s)._data, \
@@ -352,7 +396,7 @@ sd_data (string_desc_t s)
 }
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_is_empty(s) \
    _Generic (s, \
              string_desc_t    : (s)._nbytes == 0, \
@@ -369,7 +413,7 @@ extern bool _sd_equals (idx_t a_nbytes, const char *a_data,
                         idx_t b_nbytes, const char *b_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_equals(a, b) \
    ({typeof (a) _a_ = (a); \
      typeof (b) _b_ = (b); \
@@ -387,7 +431,7 @@ extern bool _sd_startswith (idx_t s_nbytes, const char *s_data,
                             idx_t prefix_nbytes, const char *prefix_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_startswith(s, prefix) \
    ({typeof (s) _s_ = (s); \
      typeof (prefix) _prefix_ = (prefix); \
@@ -405,7 +449,7 @@ extern bool _sd_endswith (idx_t s_nbytes, const char *s_data,
                           idx_t suffix_nbytes, const char *suffix_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_endswith(s, suffix) \
    ({typeof (s) _s_ = (s); \
      typeof (suffix) _suffix_ = (suffix); \
@@ -423,7 +467,7 @@ extern int _sd_cmp (idx_t a_nbytes, const char *a_data,
                     idx_t b_nbytes, const char *b_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_cmp(a, b) \
    ({typeof (a) _a_ = (a); \
      typeof (b) _b_ = (b); \
@@ -441,7 +485,7 @@ extern int _sd_c_casecmp (idx_t a_nbytes, const char *a_data,
                           idx_t b_nbytes, const char *b_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_c_casecmp(a, b) \
    ({typeof (a) _a_ = (a); \
      typeof (b) _b_ = (b); \
@@ -457,7 +501,7 @@ sd_c_casecmp (string_desc_t a, string_desc_t b)
 
 extern ptrdiff_t _sd_index (idx_t s_nbytes, const char *s_data, char c)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_index(s, c) \
    ({typeof (s) _s_ = (s); \
      _sd_index (_s_._nbytes, _s_._data, c); \
@@ -472,7 +516,7 @@ sd_index (string_desc_t s, char c)
 
 extern ptrdiff_t _sd_last_index (idx_t s_nbytes, const char *s_data, char c)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_last_index(s, c) \
    ({typeof (s) _s_ = (s); \
      _sd_last_index (_s_._nbytes, _s_._data, c); \
@@ -489,7 +533,7 @@ extern ptrdiff_t _sd_contains (idx_t haystack_nbytes, const char *haystack_data,
                                idx_t needle_nbytes, const char *needle_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_contains(haystack, needle) \
    ({typeof (haystack) _haystack_ = (haystack); \
      typeof (needle) _needle_ = (needle); \
@@ -509,17 +553,20 @@ extern string_desc_t _sd_new_addr (idx_t n, const char *addr)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
 extern rw_string_desc_t _rwsd_new_addr (idx_t n, /*!*/const/*!*/ char *addr)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_new_addr(n, addr) \
    _Generic (addr, \
              const char * : _sd_new_addr (n, addr), \
-             char *       : _rwsd_new_addr (n, addr))
+             char * : /* Treat string literals like 'const char *'.  */ \
+                      __builtin_choose_expr (__builtin_constant_p (addr), \
+                                             _sd_new_addr (n, addr), \
+                                             _rwsd_new_addr (n, addr)))
 #else
 # define sd_new_addr(n, addr) \
    _rwsd_new_addr (n, addr)
 #endif
 
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_substring(s, start, end) \
    ({typeof (s) _s_ = (s); \
      idx_t _start_ = (start); \
@@ -548,7 +595,7 @@ sd_substring (string_desc_t s, idx_t start, idx_t end)
 
 extern int _sd_write (int fd, idx_t s_nbytes, const char *s_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (3, 2);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_write(fd, s) \
    ({int _fd_ = (fd); \
      typeof (s) _s_ = (s); \
@@ -564,7 +611,7 @@ sd_write (int fd, string_desc_t s)
 
 extern int _sd_fwrite (FILE *fp, idx_t s_nbytes, const char *s_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (3, 2);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_fwrite(fp, s) \
    ({FILE *_fp_ = (fp); \
      typeof (s) _s_ = (s); \
@@ -581,7 +628,7 @@ sd_fwrite (FILE *fp, string_desc_t s)
 extern int _sd_copy (rw_string_desc_t *resultp,
                      idx_t s_nbytes, const char *s_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (3, 2);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_copy(resultp, s) \
    ({rw_string_desc_t *_resultp_ = (resultp); \
      typeof (s) _s_ = (s); \
@@ -597,7 +644,7 @@ sd_copy (rw_string_desc_t *resultp, string_desc_t s)
 
 extern char *_sd_c (idx_t s_nbytes, const char *s_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_c(s) \
    ({typeof (s) _s_ = (s); \
      _sd_c (_s_._nbytes, _s_._data); \
@@ -613,7 +660,7 @@ sd_c (string_desc_t s)
 extern void _sd_overwrite (rw_string_desc_t s, idx_t start,
                            idx_t t_nbytes, const char *t_data)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (4, 3);
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define sd_overwrite(s, start, t) \
    ({rw_string_desc_t _s_ = (s); \
      idx_t _start_ = (start); \

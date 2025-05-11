@@ -50,7 +50,7 @@ sbr_xdupfree (struct string_buffer_reversed *buffer)
   if (buffer->error)
     {
       sbr_free (buffer);
-      return sd_new_addr (0, (char *) NULL);
+      return sd_readwrite (sd_new_empty ());
     }
   rw_string_desc_t contents = sbr_dupfree (buffer);
   if (sd_data (contents) == NULL)

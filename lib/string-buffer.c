@@ -180,7 +180,7 @@ sb_dupfree (struct string_buffer *buffer)
 
  fail:
   sb_free (buffer);
-  return sd_new_addr (0, (char *) NULL);
+  return sd_readwrite (sd_new_empty ());
 }
 
 char *

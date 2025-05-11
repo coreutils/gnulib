@@ -111,7 +111,7 @@ _xsd_c (idx_t s_nbytes, const char *s_data)
     xalloc_die ();
   return result;
 }
-#if HAVE_STATEMENT_EXPRESSIONS
+#if HAVE_RW_STRING_DESC
 # define xsd_c(s) \
    ({typeof (s) _xs_ = (s); \
      _xsd_c (_xs_._nbytes, _xs_._data); \
