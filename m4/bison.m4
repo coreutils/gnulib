@@ -1,5 +1,5 @@
 # bison.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2002-2006, 2008-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ _ACEOF
     AC_MSG_CHECKING([for bison $2 or newer])
     ac_prog_version=`$$1 --version 2>&1 | sed -n 's/^.*GNU Bison.* \([[0-9]]*\.[[0-9.]]*\).*$/\1/p'`
     : ${ac_prog_version:='v. ?.??'}
-    if $$1 conftest.y -o conftest.c 2>/dev/null; then
+    if $$1 -o conftest.c conftest.y 2>/dev/null; then
       ac_prog_version="$ac_prog_version, ok"
       ac_verc_fail=no
     else
