@@ -2,7 +2,7 @@
 /* Canonical composition of Unicode characters.  */
 /* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
 
-/* Copyright (C) 2009-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2009-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -17,7 +17,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-struct composition_rule { char codes[6]; };
+struct composition_rule { char codes[6] _GL_ATTRIBUTE_NONSTRING; unsigned int combined; };
 %struct-type
 %language=ANSI-C
 %define slot-name codes

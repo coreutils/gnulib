@@ -10930,7 +10930,7 @@ output_composition_tables (const char *filename, const char *filename2,
      1527, which is quite good (60% filled).  It requires an auxiliary table
      lookup in a table of size 0.5 KB.  The total tables size is 11 KB.  */
 
-  fprintf (stream, "struct composition_rule { char codes[6]; };\n");
+  fprintf (stream, "struct composition_rule { char codes[6] _GL_ATTRIBUTE_NONSTRING; unsigned int combined; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
   fprintf (stream, "%%define slot-name codes\n");

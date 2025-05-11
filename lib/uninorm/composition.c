@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-struct composition_rule { char codes[6]; unsigned int combined; };
+struct composition_rule { char codes[6] _GL_ATTRIBUTE_NONSTRING; unsigned int combined; };
 
 #include "composition-table.h"
 #include "composition-table-bounds.h"
