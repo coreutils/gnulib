@@ -382,10 +382,11 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
 }
 #endif
 
-#if (!USE_LINUX_XATTR && USE_ACL && !HAVE_ACL_EXTENDED_FILE \
-     && !HAVE_ACL_TYPE_EXTENDED)
+#if (!USE_LINUX_XATTR && USE_ACL && HAVE_ACL_GET_FILE \
+     && !HAVE_ACL_EXTENDED_FILE && !HAVE_ACL_TYPE_EXTENDED)
+/* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
 
-# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP
+# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP /* IRIX, Tru64, Cygwin >= 2.5 */
 #  include <fcntl.h>
 #  ifdef O_PATH
 #   define acl_get_fd_np(fd, type) acl_get_fd (fd)
