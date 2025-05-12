@@ -590,7 +590,7 @@ extern int obstack_exit_failure;
 
 # define obstack_free(h, obj)						      \
   ((h)->temp.tempptr = (void *) (obj),					      \
-   (((_OBSTACK_CPTR) (h)->chunk < (OBSTACK_CPTR) (h)->temp.tempptr	      \
+   (((_OBSTACK_CPTR) (h)->chunk < (_OBSTACK_CPTR) (h)->temp.tempptr	      \
      && (_OBSTACK_CPTR) (h)->temp.tempptr < (_OBSTACK_CPTR) (h)->chunk_limit) \
     ? (void) ((h)->next_free = (h)->object_base = (char *) (h)->temp.tempptr) \
     : __obstack_free (h, (h)->temp.tempptr)))
