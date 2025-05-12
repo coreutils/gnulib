@@ -281,20 +281,38 @@ _GL_EXTERN_C void free (void *);
 /* Declarations for ISO C N3322.  */
 #if defined __GNUC__ && __GNUC__ >= 15 && !defined __clang__
 _GL_EXTERN_C wchar_t *wmemcpy (wchar_t *__dest, const wchar_t *__src, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 _GL_EXTERN_C wchar_t *wmemmove (wchar_t *__dest, const wchar_t *__src, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 _GL_EXTERN_C wchar_t *wcsncpy (wchar_t *__dest, const wchar_t *__src, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 _GL_EXTERN_C wchar_t *wcsncat (wchar_t *__dest, const wchar_t *__src, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 _GL_EXTERN_C int wmemcmp (const wchar_t *__s1, const wchar_t *__s2, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 _GL_EXTERN_C int wcsncmp (const wchar_t *__s1, const wchar_t *__s2, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 # ifndef __cplusplus
@@ -302,6 +320,9 @@ _GL_EXTERN_C wchar_t *wmemchr (const wchar_t *__s, wchar_t __wc, size_t __n)
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3);
 # endif
 _GL_EXTERN_C wchar_t *wmemset (wchar_t *__s, wchar_t __wc, size_t __n)
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+  _GL_ATTRIBUTE_NOTHROW
+# endif
   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3);
 #endif
 
