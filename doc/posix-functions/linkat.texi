@@ -32,5 +32,5 @@ Portability problems not fixed by Gnulib:
 to @code{EINVAL} instead of @code{EEXIST} or @code{ENOTDIR} on some
 platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=32569
-GNU/Hurd.
+GNU/Hurd with glibc 2.41.
 @end itemize

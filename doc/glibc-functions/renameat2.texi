@@ -24,7 +24,7 @@ Cygwin 3.4.6.
 instead of failing and setting @code{errno} to @code{ENOTDIR}, on some
 platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=32570
-GNU/Hurd.
+GNU/Hurd with glibc 2.41.
 @end itemize
 
 @mindex renameatu
