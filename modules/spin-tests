@@ -1,0 +1,21 @@
+Files:
+tests/test-spin1.c
+tests/test-spin2.c
+tests/atomic-int-gnulib.h
+m4/semaphore.m4
+
+Depends-on:
+thread
+lock
+yield
+random
+
+configure.ac:
+AC_CHECK_HEADERS_ONCE([semaphore.h])
+AC_CHECK_DECLS_ONCE([alarm])
+AC_REQUIRE([gl_SEMAPHORE])
+
+Makefile.am:
+TESTS += test-spin1 test-spin2
+check_PROGRAMS += test-spin1 test-spin2
+test_spin2_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@ @LIB_SEMAPHORE@
