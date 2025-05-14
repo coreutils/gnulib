@@ -107,7 +107,7 @@ clumsy: You have to initialize it through a once-only function.
 Here are guidelines for determining which multithreading API is best for
 your code.
 
-In programs that use advanced POSIX APIs, such as spin locks,
+In programs that use advanced POSIX APIs, such as
 detached threads (@code{pthread_detach}),
 signal blocking (@code{pthread_sigmask}),
 priorities (@code{pthread_setschedparam}),
@@ -204,6 +204,8 @@ The Gnulib multithreading API is documented in the respective include files:
 @code{<glthread/tls.h>}
 @item
 @code{<glthread/yield.h>}
+@item
+@code{<glthread/spin.h>}
 @end itemize
 
 To make use of Gnulib multithreading, use the following Gnulib modules:
@@ -213,6 +215,7 @@ To make use of Gnulib multithreading, use the following Gnulib modules:
 @mindex cond
 @mindex tls
 @mindex yield
+@mindex spin
 @multitable @columnfractions .85 .15
 @headitem Purpose @tab Module
 @item For thread creation and management:@tie{} @tab @code{thread}
@@ -222,6 +225,7 @@ To make use of Gnulib multithreading, use the following Gnulib modules:
 @item For ``condition variables'' (wait queues):@tie{} @tab @code{cond}
 @item For thread-local storage:@tie{} @tab @code{tls}
 @item For relinquishing control:@tie{} @tab @code{yield}
+@item For spin locks:@tie{} @tab @code{spin}
 @end multitable
 
 The Gnulib multithreading supports a configure option

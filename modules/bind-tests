@@ -14,3 +14,4 @@ Makefile.am:
 TESTS += test-bind
 check_PROGRAMS += test-bind
 test_bind_LDADD = $(LDADD) @LIBSOCKET@ $(INET_PTON_LIB)
+test_bind_LDFLAGS = $(LDFLAGS)  @LIBSOCKET@ $(INET_PTON_LIB)
