@@ -4,19 +4,13 @@ Spin locks for communication between threads and signal handlers.
 Files:
 lib/asyncsafe-spin.h
 lib/asyncsafe-spin.c
-m4/atomic-cas.m4
 
 Depends-on:
 signal-h
-bool
 sigprocmask
-windows-spin
-sparcv8+
+spin
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
-AC_CHECK_HEADERS_ONCE([pthread.h])
-AC_REQUIRE([gl_ATOMIC_COMPARE_AND_SWAP])
 
 Makefile.am:
 lib_SOURCES += asyncsafe-spin.c

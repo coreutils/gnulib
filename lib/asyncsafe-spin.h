@@ -42,14 +42,10 @@
 
 #include <signal.h>
 
-#if defined _WIN32 && ! defined __CYGWIN__
-# include "windows-spin.h"
-typedef glwthread_spinlock_t asyncsafe_spinlock_t;
-# define ASYNCSAFE_SPIN_INIT GLWTHREAD_SPIN_INIT
-#else
-typedef unsigned int asyncsafe_spinlock_t;
-# define ASYNCSAFE_SPIN_INIT 0
-#endif
+#include "glthread/spin.h"
+
+typedef gl_spinlock_t asyncsafe_spinlock_t;
+#define ASYNCSAFE_SPIN_INIT gl_spinlock_initializer
 
 #ifdef __cplusplus
 extern "C" {
