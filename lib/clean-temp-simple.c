@@ -1,5 +1,5 @@
 /* Temporary files with automatic cleanup.
-   Copyright (C) 2006-2024 Free Software Foundation, Inc.
+   Copyright (C) 2006-2025 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This file is free software: you can redistribute it and/or modify
@@ -156,7 +156,7 @@ clean_temp_asyncsafe_close (struct closeable_fd *element)
   int ret;
   int saved_errno;
 
-  asyncsafe_spin_lock (&element->lock, fatal_signal_set, &saved_mask);
+  asyncsafe_spin_lock (&element->lock, true, fatal_signal_set, &saved_mask);
   if (!element->closed)
     {
       ret = close (element->fd);
@@ -168,7 +168,7 @@ clean_temp_asyncsafe_close (struct closeable_fd *element)
       ret = 0;
       saved_errno = 0;
     }
-  asyncsafe_spin_unlock (&element->lock, &saved_mask);
+  asyncsafe_spin_unlock (&element->lock, true, &saved_mask);
   element->done = true;
 
   errno = saved_errno;

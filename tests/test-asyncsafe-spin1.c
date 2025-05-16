@@ -1,5 +1,5 @@
 /* Test of spin locks for communication between threads and signal handlers.
-   Copyright (C) 2005, 2008-2024 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ main (void)
   /* Check a spin-lock initialized through the constant initializer.  */
   {
     sigset_t saved_set;
-    asyncsafe_spin_lock (&global_spin_lock, &set, &saved_set);
-    asyncsafe_spin_unlock (&global_spin_lock, &saved_set);
+    asyncsafe_spin_lock (&global_spin_lock, false, &set, &saved_set);
+    asyncsafe_spin_unlock (&global_spin_lock, false, &saved_set);
   }
 
   /* Check a spin-lock initialized through asyncsafe_spin_init.  */
@@ -50,8 +50,8 @@ main (void)
     for (i = 0; i < 10; i++)
       {
         sigset_t saved_set;
-        asyncsafe_spin_lock (&local_spin_lock, &set, &saved_set);
-        asyncsafe_spin_unlock (&local_spin_lock, &saved_set);
+        asyncsafe_spin_lock (&local_spin_lock, false, &set, &saved_set);
+        asyncsafe_spin_unlock (&local_spin_lock, false, &saved_set);
       }
 
     asyncsafe_spin_destroy (&local_spin_lock);

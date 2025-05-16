@@ -1,5 +1,5 @@
 /* Spin locks for communication between threads and signal handlers.
-   Copyright (C) 2020-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -28,9 +28,9 @@
    both in regular multithreaded code and in signal handlers:
 
        sigset_t saved_mask;
-       asyncsafe_spin_lock (&lock, &mask, &saved_mask);
+       asyncsafe_spin_lock (&lock, from_signal_handler, &mask, &saved_mask);
        do_something_contentious ();
-       asyncsafe_spin_unlock (&lock, &saved_mask);
+       asyncsafe_spin_unlock (&lock, from_signal_handler, &saved_mask);
 
    The mask you specify here is the set of signals whose handlers might want to
    take the same lock.
@@ -57,8 +57,10 @@ extern "C" {
 
 extern void asyncsafe_spin_init (asyncsafe_spinlock_t *lock);
 extern void asyncsafe_spin_lock (asyncsafe_spinlock_t *lock,
+                                 bool from_signal_handler,
                                  const sigset_t *mask, sigset_t *saved_mask);
 extern void asyncsafe_spin_unlock (asyncsafe_spinlock_t *lock,
+                                   bool from_signal_handler,
                                    const sigset_t *saved_mask);
 extern void asyncsafe_spin_destroy (asyncsafe_spinlock_t *lock);
 
