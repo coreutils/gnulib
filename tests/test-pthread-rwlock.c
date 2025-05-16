@@ -16,6 +16,15 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.  */
 
+/* This test fails when writer starvation occurs
+   <https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem>.
+   It depends on the implementation of pthread rwlocks, cf.
+   <https://gitweb.git.savannah.gnu.org/gitweb/?p=gnulib/maint-tools.git;a=tree;f=test-programs/pthread-rwlock>,
+   as well as on the number of CPUs (because when there are >= 2*THREAD_COUNT
+   CPUs, the checker threads are more "efficient" at not giving away the
+   reader lock).
+   A failure was seen with musl libc/riscv64 on a machine with 64 CPUs.  */
+
 #include <config.h>
 
 #if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
