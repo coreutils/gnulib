@@ -8,6 +8,7 @@ m4/signalblocking.m4
 Depends-on:
 signal-h
 stdint          [test $HAVE_POSIX_SIGNALBLOCKING = 0]
+lock            [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 raise           [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 msvc-inval      [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
