@@ -28,3 +28,9 @@ multi-threaded programs, in practice it is essentially equivalent to
 return convention.  It's simpler to use @code{sigprocmask}, since it does
 not require linking with @code{-lpthread} on some platforms:
 glibc, NetBSD, OpenBSD, AIX.
+
+Note: While on POSIX platforms, @code{sigprocmask} is multithread-safe
+and async-signal safe (cf. POSIX section ``Signal Actions''
+@url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03}),
+the gnulib replacement on native Windows is only multithread-safe,
+not async-signal safe.
