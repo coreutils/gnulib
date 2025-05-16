@@ -157,7 +157,7 @@ clean_temp_asyncsafe_close (struct closeable_fd *element)
   int ret;
   int saved_errno;
 
-  asyncsafe_spin_lock (&element->lock, fatal_signal_set, &saved_mask);
+  asyncsafe_spin_lock (&element->lock, true, fatal_signal_set, &saved_mask);
   if (!element->closed)
     {
       ret = close (element->fd);
@@ -169,7 +169,7 @@ clean_temp_asyncsafe_close (struct closeable_fd *element)
       ret = 0;
       saved_errno = 0;
     }
-  asyncsafe_spin_unlock (&element->lock, &saved_mask);
+  asyncsafe_spin_unlock (&element->lock, true, &saved_mask);
   element->done = true;
 
   errno = saved_errno;

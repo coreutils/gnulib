@@ -339,15 +339,42 @@ asyncsafe_spin_destroy (asyncsafe_spinlock_t *lock)
 
 void
 asyncsafe_spin_lock (asyncsafe_spinlock_t *lock,
+                     bool from_signal_handler,
                      const sigset_t *mask, sigset_t *saved_mask)
 {
-  sigprocmask (SIG_BLOCK, mask, saved_mask); /* equivalent to pthread_sigmask */
+  /* On all platforms, when not running in a signal handler, we need to block
+     the signals until the corresponding asyncsafe_spin_unlock() invocation.
+     This is needed because if, during that period, a signal occurred and it
+     happened to run in the current thread and it were to wait on this spin
+     lock, it would hang.
+     On platforms other than native Windows, it is useful to do the same
+     thing also within a signal handler, since signals may remain enabled
+     while a signal handler runs.  It is possible to do this because
+     sigprocmask() is safe to call from within a signal handler, see
+     POSIX section "Signal Actions"
+     <https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03>.
+     (In other words, sigprocmask() is atomic, because it is implemented as a
+     system call.)
+     Whereas on native Windows, sigprocmask() is not atomic, because it
+     manipulates global variables.  Therefore in this case, we are *not*
+     allowed to call it from within a signal handler.  */
+#if defined _WIN32 && !defined __CYGWIN__
+  if (!from_signal_handler)
+#endif
+    sigprocmask (SIG_BLOCK, mask, saved_mask); /* equivalent to pthread_sigmask */
+
   do_lock (lock);
 }
 
 void
-asyncsafe_spin_unlock (asyncsafe_spinlock_t *lock, const sigset_t *saved_mask)
+asyncsafe_spin_unlock (asyncsafe_spinlock_t *lock,
+                       bool from_signal_handler,
+                       const sigset_t *saved_mask)
 {
   do_unlock (lock);
-  sigprocmask (SIG_SETMASK, saved_mask, NULL); /* equivalent to pthread_sigmask */
+
+#if defined _WIN32 && !defined __CYGWIN__
+  if (!from_signal_handler)
+#endif
+    sigprocmask (SIG_SETMASK, saved_mask, NULL); /* equivalent to pthread_sigmask */
 }

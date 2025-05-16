@@ -56,10 +56,10 @@
 #include "asyncsafe-spin.h"
 #if !ENABLE_LOCKING
 # define asyncsafe_spin_init(lock) (void)(lock)
-# define asyncsafe_spin_lock(lock, mask, saved_mask) \
-    ((void)(lock), (void)(mask), (void)(saved_mask))
-# define asyncsafe_spin_unlock(lock, saved_mask) \
-    ((void)(lock), (void)(saved_mask))
+# define asyncsafe_spin_lock(lock, from, mask, saved_mask) \
+    ((void)(lock), (void)(from), (void)(mask), (void)(saved_mask))
+# define asyncsafe_spin_unlock(lock, from, saved_mask) \
+    ((void)(lock), (void)(from), (void)(saved_mask))
 # define asyncsafe_spin_destroy(lock) (void)(lock)
 #endif
 
@@ -130,7 +130,7 @@ lock_mutator_thread (void *arg)
       int i1, i2, value;
 
       dbgprintf ("Mutator %p before lock\n", gl_thread_self_pointer ());
-      asyncsafe_spin_lock (&my_lock, &signals_to_block, &saved_signals);
+      asyncsafe_spin_lock (&my_lock, false, &signals_to_block, &saved_signals);
       dbgprintf ("Mutator %p after  lock\n", gl_thread_self_pointer ());
 
       i1 = random_account ();
@@ -140,13 +140,13 @@ lock_mutator_thread (void *arg)
       account[i2] -= value;
 
       dbgprintf ("Mutator %p before unlock\n", gl_thread_self_pointer ());
-      asyncsafe_spin_unlock (&my_lock, &saved_signals);
+      asyncsafe_spin_unlock (&my_lock, false, &saved_signals);
       dbgprintf ("Mutator %p after  unlock\n", gl_thread_self_pointer ());
 
       dbgprintf ("Mutator %p before check lock\n", gl_thread_self_pointer ());
-      asyncsafe_spin_lock (&my_lock, &signals_to_block, &saved_signals);
+      asyncsafe_spin_lock (&my_lock, false, &signals_to_block, &saved_signals);
       check_accounts ();
-      asyncsafe_spin_unlock (&my_lock, &saved_signals);
+      asyncsafe_spin_unlock (&my_lock, false, &saved_signals);
       dbgprintf ("Mutator %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
@@ -166,9 +166,9 @@ lock_checker_thread (void *arg)
       sigset_t saved_signals;
 
       dbgprintf ("Checker %p before check lock\n", gl_thread_self_pointer ());
-      asyncsafe_spin_lock (&my_lock, &signals_to_block, &saved_signals);
+      asyncsafe_spin_lock (&my_lock, false, &signals_to_block, &saved_signals);
       check_accounts ();
-      asyncsafe_spin_unlock (&my_lock, &saved_signals);
+      asyncsafe_spin_unlock (&my_lock, false, &saved_signals);
       dbgprintf ("Checker %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
