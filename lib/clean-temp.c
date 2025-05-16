@@ -109,7 +109,8 @@ asyncsafe_fclose_variant (struct closeable_fd *element, FILE *fp,
   int ret;
   int saved_errno;
 
-  asyncsafe_spin_lock (&element->lock, get_fatal_signal_set (), &saved_mask);
+  asyncsafe_spin_lock (&element->lock, false,
+                       get_fatal_signal_set (), &saved_mask);
   if (!element->closed)
     {
       ret = fclose_variant (fp); /* invokes close (element->fd) */
@@ -121,7 +122,8 @@ asyncsafe_fclose_variant (struct closeable_fd *element, FILE *fp,
       ret = 0;
       saved_errno = 0;
     }
-  asyncsafe_spin_unlock (&element->lock, &saved_mask);
+  asyncsafe_spin_unlock (&element->lock, false,
+                         &saved_mask);
   element->done = true;
 
   errno = saved_errno;
