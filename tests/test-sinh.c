@@ -23,6 +23,9 @@
 #include "signature.h"
 SIGNATURE_CHECK (sinh, double, (double));
 
+#include <stdio.h>
+#include <string.h>
+
 #include "macros.h"
 
 volatile double x;
@@ -35,6 +38,15 @@ main ()
   x = 0.6;
   y = sinh (x);
   ASSERT (y >= 0.6366535821 && y <= 0.6366535822);
+
+  /* Another particular value.  */
+  {
+    char buf[80];
+    x = 5.152978147453169098;
+    y = sinh (x);
+    sprintf (buf, "%.2f", y);
+    ASSERT (strcmp (buf, "86.47") == 0);
+  }
 
   return test_exit_status;
 }
