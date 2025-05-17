@@ -57,7 +57,7 @@ extern "C" {
    is done entirely automatically by the functions of this module.
 
    Limitations: Files or directories can still be left over if
-     - the program is dies from a fatal signal such as SIGQUIT, SIGKILL, or
+     - the program dies from a fatal signal such as SIGQUIT, SIGKILL, or
        SIGABRT, SIGSEGV, SIGBUS, SIGILL, SIGFPE, or
      - in a multithreaded program, the fatal signal handler is already running
        while another thread of the program creates a new temporary directory
