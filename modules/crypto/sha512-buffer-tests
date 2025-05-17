@@ -1,4 +1,6 @@
 Files:
+tests/test-sha384-buffer.c
+tests/test-sha512-buffer.c
 tests/bench-sha384.c
 tests/bench-sha512.c
 tests/bench-digest.h
@@ -12,7 +14,11 @@ gettimeofday
 configure.ac:
 
 Makefile.am:
+TESTS += test-sha384-buffer test-sha512-buffer
+check_PROGRAMS += test-sha384-buffer test-sha512-buffer
 noinst_PROGRAMS += bench-sha384 bench-sha512
+test_sha384_buffer_LDADD = $(LDADD) @LIB_CRYPTO@
+test_sha512_buffer_LDADD = $(LDADD) @LIB_CRYPTO@
 bench_sha384_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
 bench_sha384_LDADD = $(LDADD) @LIB_CRYPTO@
 bench_sha512_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
