@@ -34,6 +34,8 @@ main ()
   ASSERT (next_prime (12) == 13);
   ASSERT (next_prime (640) == 641);
 
+  ASSERT (next_prime (8647) == 8647);
+
   ASSERT (next_prime (9551) == 9551);
   ASSERT (next_prime (9552) == 9587);
 
