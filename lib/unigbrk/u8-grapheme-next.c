@@ -1,6 +1,5 @@
 /* Next grapheme cluster function.
    Copyright (C) 2010-2025 Free Software Foundation, Inc.
-   Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -23,6 +22,8 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
+
 /* Don't use the const-improved function macros in this compilation unit.  */
 #define _LIBUNISTRING_NO_CONST_GENERICS
 
@@ -31,27 +32,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint8_t *
-u8_grapheme_next (const uint8_t *s, const uint8_t *end)
-{
-  ucs4_t prev;
-  int mblen;
-
-  if (s == end)
-    return NULL;
-
-  for (s += u8_mbtouc (&prev, s, end - s); s != end; s += mblen)
-    {
-      ucs4_t next;
-
-      mblen = u8_mbtouc (&next, s, end - s);
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      prev = next;
-    }
-
-  return s;
-}
+#define FUNC u8_grapheme_next
+#define UNIT uint8_t
+#define U_MBTOUC u8_mbtouc
+#include "u-grapheme-next.h"
