@@ -28,27 +28,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint8_t *
-u8_grapheme_next (const uint8_t *s, const uint8_t *end)
-{
-  ucs4_t prev;
-  int mblen;
-
-  if (s == end)
-    return NULL;
-
-  for (s += u8_mbtouc (&prev, s, end - s); s != end; s += mblen)
-    {
-      ucs4_t next;
-
-      mblen = u8_mbtouc (&next, s, end - s);
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      prev = next;
-    }
-
-  return s;
-}
+#define FUNC u8_grapheme_next
+#define UNIT uint8_t
+#define U_MBTOUC u8_mbtouc
+#include "u-grapheme-next.h"

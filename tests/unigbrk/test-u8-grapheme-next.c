@@ -76,5 +76,16 @@ main (void)
   test_u8_grapheme_next ("e"ACUTE"x", 4, 3);
   test_u8_grapheme_next ("e"ACUTE "e"ACUTE, 6, 3);
 
+  /* CR LF handling.  */
+  test_u8_grapheme_next ("\r\nd", 3, 2);
+
+  /* Emoji modifier / ZWJ sequence. */
+  test_u8_grapheme_next ("\342\230\205\314\205\315\207\342\200\215\342\230\200",
+                         13, 13);
+
+  /* Regional indicators. */
+  test_u8_grapheme_next ("\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267",
+                         16, 8);
+
   return test_exit_status;
 }
