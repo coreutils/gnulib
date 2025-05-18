@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 25, 2025
+@set lastupdate May 18, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -1040,7 +1040,22 @@ license for these macros.
 These kinds of files can also be put in the public domain.  If
 publishing in the US, it is enough to insert a notice saying so.
 Otherwise, use Creative Commons's CC0---See
-@url{https://creativecommons.org/choose/zero/}.
+@url{https://creativecommons.org/choose/zero/}.  But don't use
+CC0 for software code; it is not designed for such material.
+
+If you use CC0, please include a copy of its ``legal text''
+in a file named COPYING.CC0.  See
+@url{https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt}.
+Unfortunately, that file doesn't include licensing terms for the
+text of CC0, so please add this at the top of that file:
+
+@smallexample
+According to Creative Commons
+(https://creativecommons.org/publicdomain/zero/1.0/legalcode.en):
+
+The text of the Creative Commons public licenses is dedicated to the public
+domain under the CC0 Public Domain Dedication.
++@end smallexample
 
 @node External Libraries
 @section External Libraries
