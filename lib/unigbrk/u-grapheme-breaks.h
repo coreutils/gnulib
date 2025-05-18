@@ -1,6 +1,5 @@
 /* Grapheme cluster break function.
    Copyright (C) 2010-2025 Free Software Foundation, Inc.
-   Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -22,6 +21,8 @@
    You should have received a copy of the GNU Lesser General Public
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Ben Pfaff, Daiki Ueno, Bruno Haible.  */
 
 /* This file implements section 3 "Grapheme Cluster Boundaries"
    of Unicode Standard Annex #29 <https://www.unicode.org/reports/tr29/>.  */
@@ -61,8 +62,9 @@ FUNC (const UNIT *s, size_t n, char *p)
       /* Don't break inside multibyte characters.  */
       memset (p, 0, n);
 
-      while (s < s_end)
+      do
         {
+          /* Invariant: Here s < s_end.  */
           ucs4_t uc;
           int count = U_MBTOUC (&uc, s, s_end - s);
           int prop = uc_graphemeclusterbreak_property (uc);
@@ -157,5 +159,6 @@ FUNC (const UNIT *s, size_t n, char *p)
           s += count;
           p += count;
         }
+      while (s < s_end);
     }
 }
