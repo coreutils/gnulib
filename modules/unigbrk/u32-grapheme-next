@@ -3,15 +3,20 @@ Find start of next grapheme cluster in UTF-32 string.
 
 Files:
 lib/unigbrk/u32-grapheme-next.c
+lib/unigbrk/u-grapheme-next.h
 tests/macros.h
 
 Depends-on:
-unigbrk/uc-is-grapheme-break
+unigbrk/base
+unigbrk/uc-gbrk-prop
+unictype/incb-of
+unictype/property-extended-pictographic
 unistr/u32-mbtouc
+bool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u32-grapheme-next])
-gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u32-grapheme-next])
+gl_LIBUNISTRING_MODULE([1.4], [unigbrk/u32-grapheme-next])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U32_GRAPHEME_NEXT
