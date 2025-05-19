@@ -3,15 +3,20 @@ Find start of previous grapheme cluster in UTF-8 string.
 
 Files:
 lib/unigbrk/u8-grapheme-prev.c
+lib/unigbrk/u-grapheme-prev.h
 tests/macros.h
 
 Depends-on:
-unigbrk/uc-is-grapheme-break
+unigbrk/base
+unigbrk/uc-gbrk-prop
+unictype/incb-of
+unictype/property-extended-pictographic
 unistr/u8-prev
+bool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u8-grapheme-prev])
-gl_LIBUNISTRING_MODULE([1.3], [unigbrk/u8-grapheme-prev])
+gl_LIBUNISTRING_MODULE([1.4], [unigbrk/u8-grapheme-prev])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U8_GRAPHEME_PREV
