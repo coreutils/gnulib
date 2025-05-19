@@ -1,6 +1,5 @@
 /* Previous grapheme cluster function.
    Copyright (C) 2010-2025 Free Software Foundation, Inc.
-   Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -23,6 +22,8 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
+
 /* Don't use the const-improved function macros in this compilation unit.  */
 #define _LIBUNISTRING_NO_CONST_GENERICS
 
@@ -31,32 +32,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint32_t *
-u32_grapheme_prev (const uint32_t *s, const uint32_t *start)
-{
-  ucs4_t next;
-
-  if (s == start)
-    return NULL;
-
-  u32_prev (&next, s, start);
-  for (s--; s != start; s--)
-    {
-      ucs4_t prev;
-
-      if (u32_prev (&prev, s, start) == NULL)
-        {
-          /* Ill-formed UTF-32 encoding. */
-          return start;
-        }
-
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      next = prev;
-    }
-
-  return s;
-}
+#define FUNC u32_grapheme_prev
+#define UNIT uint32_t
+#define U_PREV u32_prev
+#include "u-grapheme-prev.h"

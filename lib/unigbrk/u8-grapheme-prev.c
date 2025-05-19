@@ -1,6 +1,5 @@
 /* Previous grapheme cluster function.
    Copyright (C) 2010-2025 Free Software Foundation, Inc.
-   Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -23,6 +22,8 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
+
 /* Don't use the const-improved function macros in this compilation unit.  */
 #define _LIBUNISTRING_NO_CONST_GENERICS
 
@@ -31,35 +32,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint8_t *
-u8_grapheme_prev (const uint8_t *s, const uint8_t *start)
-{
-  ucs4_t next;
-
-  if (s == start)
-    return NULL;
-
-  s = u8_prev (&next, s, start);
-  while (s != start)
-    {
-      const uint8_t *prev_s;
-      ucs4_t prev;
-
-      prev_s = u8_prev (&prev, s, start);
-      if (prev_s == NULL)
-        {
-          /* Ill-formed UTF-8 encoding. */
-          return start;
-        }
-
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      s = prev_s;
-      next = prev;
-    }
-
-  return s;
-}
+#define FUNC u8_grapheme_prev
+#define UNIT uint8_t
+#define U_PREV u8_prev
+#include "u-grapheme-prev.h"
