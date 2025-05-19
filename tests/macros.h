@@ -56,9 +56,8 @@
    Set to EXIT_FAILURE when an ASSERT or ASSERT_NO_STDIO fails.  */
 /* To satisfy the "one definition rule", we define the variable in the
    compilation unit that contains the main() function.  */
-#ifdef NO_MAIN_HERE
 extern int volatile test_exit_status;
-#else
+#ifndef NO_MAIN_HERE
 int volatile test_exit_status = EXIT_SUCCESS;
 #endif
 
