@@ -28,32 +28,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint32_t *
-u32_grapheme_prev (const uint32_t *s, const uint32_t *start)
-{
-  ucs4_t next;
-
-  if (s == start)
-    return NULL;
-
-  u32_prev (&next, s, start);
-  for (s--; s != start; s--)
-    {
-      ucs4_t prev;
-
-      if (u32_prev (&prev, s, start) == NULL)
-        {
-          /* Ill-formed UTF-32 encoding. */
-          return start;
-        }
-
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      next = prev;
-    }
-
-  return s;
-}
+#define FUNC u32_grapheme_prev
+#define UNIT uint32_t
+#define U_PREV u32_prev
+#include "u-grapheme-prev.h"

@@ -28,35 +28,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include "unictype.h"
 #include "unistr.h"
 
-const uint8_t *
-u8_grapheme_prev (const uint8_t *s, const uint8_t *start)
-{
-  ucs4_t next;
-
-  if (s == start)
-    return NULL;
-
-  s = u8_prev (&next, s, start);
-  while (s != start)
-    {
-      const uint8_t *prev_s;
-      ucs4_t prev;
-
-      prev_s = u8_prev (&prev, s, start);
-      if (prev_s == NULL)
-        {
-          /* Ill-formed UTF-8 encoding. */
-          return start;
-        }
-
-      if (uc_is_grapheme_break (prev, next))
-        break;
-
-      s = prev_s;
-      next = prev;
-    }
-
-  return s;
-}
+#define FUNC u8_grapheme_prev
+#define UNIT uint8_t
+#define U_PREV u8_prev
+#include "u-grapheme-prev.h"

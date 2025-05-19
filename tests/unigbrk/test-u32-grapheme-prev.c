@@ -97,6 +97,15 @@ main (void)
   test_u32_grapheme_prev (1, 'e', ACUTE, 'x', -1);
   test_u32_grapheme_prev (2, 'e', ACUTE, 'e', ACUTE, -1);
 
+  /* CR LF handling.  */
+  test_u32_grapheme_prev (2, 'c', '\r', '\n', -1);
+
+  /* Emoji modifier / ZWJ sequence. */
+  test_u32_grapheme_prev (5, 0x2605, 0x0305, 0x0347, 0x200D, 0x2600, -1);
+
+  /* Regional indicators. */
+  test_u32_grapheme_prev (2, 0x1F1E9, 0x1F1EA, 0x1F1EB, 0x1F1F7, -1);
+
   /* Outside BMP. */
 #define NEUTRAL_FACE 0x1f610    /* 😐: neutral face. */
   test_u32_grapheme_prev (1, NEUTRAL_FACE, -1);
