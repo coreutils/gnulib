@@ -65,7 +65,7 @@ x86, arm, mips (o32 or n32 ABI), powerpc32, sparc32, s390, hppa, m68k, sh, csky,
 @item
 Linux kernel 5.1 (2019) and later with musl libc 1.2 (2020) and later on x86,
 @item
-Linux on arc, loong32, ork1, riscv32 and x86_64-x32,
+Linux on arc, loong32, or1k, riscv32 and x86_64-x32,
 @item
 NetBSD 6.0 (2012) and later on x86 and sparc,
 @item
