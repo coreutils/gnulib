@@ -12,7 +12,11 @@ bool
 configure.ac:
 AC_CHECK_HEADERS_ONCE([stdckdint.h])
 if test $ac_cv_header_stdckdint_h = yes; then
-  GL_GENERATE_STDCKDINT_H=false
+  if test -n "$CXX" && test "$CXX" != no; then
+    GL_GENERATE_STDCKDINT_H=true
+  else
+    GL_GENERATE_STDCKDINT_H=false
+  fi
 else
   GL_GENERATE_STDCKDINT_H=true
 fi
