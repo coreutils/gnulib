@@ -25,4 +25,10 @@
 int
 main ()
 {
+  /* We only check that the macros can be invoked here.  The actual tests are
+     performed by the C program.  */
+  int r;
+  int a = 1;
+  int b = 1;
+  return !!(ckd_add (&r, a, b) || ckd_sub (&r, a, b) || ckd_mul (&r, a, b));
 }
