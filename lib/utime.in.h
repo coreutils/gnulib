@@ -106,7 +106,9 @@ _GL_WARN_ON_USE (utime,
 #   undef utime
 #   define utime _utime
 #  endif
-_GL_CXXALIAS_MDA (utime, int, (const char *filename, const struct utimbuf *ts));
+/* Need to cast, because on MSVC, the second parameter is of type
+   'struct _utimbuf *'.  */
+_GL_CXXALIAS_MDA_CAST (utime, int, (const char *filename, const struct utimbuf *ts));
 # else
 _GL_CXXALIAS_SYS (utime, int, (const char *filename, const struct utimbuf *ts));
 # endif
