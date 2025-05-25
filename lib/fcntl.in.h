@@ -201,7 +201,9 @@ _GL_WARN_ON_USE (open, "open is not always POSIX compliant - "
 #   undef open
 #   define open _open
 #  endif
-_GL_CXXALIAS_MDA (open, int, (const char *filename, int flags, ...));
+/* Need to cast, because in MSVC the parameter list of _open as a C++ function
+   is (const char *, int, int = 0).  */
+_GL_CXXALIAS_MDA_CAST (open, int, (const char *filename, int flags, ...));
 # else
 _GL_CXXALIAS_SYS (open, int, (const char *filename, int flags, ...));
 # endif
