@@ -33,7 +33,7 @@
 #   error "Please include config.h first."
 #  endif
 
-#  include <sys/types.h>
+#  include <sys/types.h> /* for mode_t */
 #  include <errno.h>
 
 _GL_INLINE_HEADER_BEGIN
