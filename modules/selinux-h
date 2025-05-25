@@ -15,6 +15,7 @@ m4/selinux-selinux-h.m4
 
 Depends-on:
 errno
+sys_types
 extern-inline
 gen-header
 
