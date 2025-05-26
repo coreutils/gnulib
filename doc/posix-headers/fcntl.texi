@@ -116,6 +116,15 @@ Portability problems not fixed by Gnulib:
 @itemize
 
 @item
+On some platforms, @samp{O_NOATIME} and @samp{O_NOFOLLOW}
+are defined but do not work.
+To help work around the resulting portability problems,
+the fcntl-h module defines @samp{HAVE_WORKING_O_NOATIME} to 1
+on platforms where @samp{O_NOATIME} is known to work, and to 0 otherwise;
+and similarly for @samp{HAVE_WORKING_O_NOFOLLOW} and @samp{O_NOFOLLOW}:
+Mac OS X 10.3.
+
+@item
 @samp{O_PATH} is not defined on some platforms:
 glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
 
