@@ -290,8 +290,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
         char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
 
         for (i = 0; i < keylen; i++)
-          sprintf (&keyMaterial[2 * i], "%02x",
-                   (unsigned int) (key[i] & 0xFF));
+          sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFFU);
 
         rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
                               keylen * 8, keyMaterial);
@@ -349,8 +348,7 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
             char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
 
             for (i = 0; i < ivlen; i++)
-              sprintf (&ivMaterial[2 * i], "%02x",
-                       (unsigned int) (iv[i] & 0xFF));
+              sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFFU);
 
             rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
                                      ivMaterial);
