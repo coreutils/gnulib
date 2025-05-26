@@ -81,6 +81,8 @@ def _patch_test_driver() -> None:
             os.remove(f'{test_driver}.rej')
     if not patched:
         raise GLError(20, None)
+    if os.path.isfile(f'{test_driver}.orig'):
+        os.remove(f'{test_driver}.orig')
 
 
 #===============================================================================

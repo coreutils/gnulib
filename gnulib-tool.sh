@@ -7177,6 +7177,7 @@ func_create_testdir ()
                  func_fatal_error "could not patch test-driver script"
                }
           }
+     rm -f build-aux/test-driver.orig
    fi
   ) || func_exit 1
 }
