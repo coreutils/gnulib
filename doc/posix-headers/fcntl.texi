@@ -124,7 +124,7 @@ Portability problems not fixed by Gnulib:
 On some platforms, @samp{O_NOATIME} and @samp{O_NOFOLLOW}
 are defined but do not work.
 To help work around the resulting portability problems,
-the fcntl-h module defines @samp{HAVE_WORKING_O_NOATIME} to 1
+the @code{fcntl-h} module defines @samp{HAVE_WORKING_O_NOATIME} to 1
 on platforms where @samp{O_NOATIME} is known to work, and to 0 otherwise;
 and similarly for @samp{HAVE_WORKING_O_NOFOLLOW} and @samp{O_NOFOLLOW}:
 Mac OS X 10.3.
