@@ -17,12 +17,4 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2019.  */
 
 #define GNULIB_NAMESPACE gnulib
-#include <config.h>
-
-#include <stddef.h>
-
-
-int
-main ()
-{
-}
+#include "test-stddef-h.c"

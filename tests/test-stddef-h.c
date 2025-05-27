@@ -24,11 +24,15 @@
 wchar_t a = 'c';
 ptrdiff_t b = 1;
 size_t c = 2;
+#if !defined __cplusplus || __cplusplus >= 201103
 max_align_t mat;
+#endif
 
+#if !(defined __cplusplus && defined _MSC_VER)
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
 static_assert (sizeof NULL == sizeof (void *));
+#endif
 
 /* Check that offsetof produces integer constants with correct type.  */
 struct d
@@ -43,6 +47,7 @@ struct d
 static_assert (sizeof (offsetof (struct d, e)) == sizeof (size_t));
 static_assert (offsetof (struct d, f) == 1);
 
+#if !defined __cplusplus || __cplusplus >= 201103
 /* Check max_align_t's alignment.  */
 static_assert (alignof (double) <= alignof (max_align_t));
 static_assert (alignof (int) <= alignof (max_align_t));
@@ -52,7 +57,7 @@ static_assert (alignof (ptrdiff_t) <= alignof (max_align_t));
 static_assert (alignof (size_t) <= alignof (max_align_t));
 static_assert (alignof (wchar_t) <= alignof (max_align_t));
 static_assert (alignof (struct d) <= alignof (max_align_t));
-#if defined __GNUC__ || defined __clang__ || defined __IBM__ALIGNOF__
+# if defined __GNUC__ || defined __clang__ || defined __IBM__ALIGNOF__
 static_assert (__alignof__ (double) <= __alignof__ (max_align_t));
 static_assert (__alignof__ (int) <= __alignof__ (max_align_t));
 static_assert (__alignof__ (long double) <= __alignof__ (max_align_t));
@@ -61,6 +66,7 @@ static_assert (__alignof__ (ptrdiff_t) <= __alignof__ (max_align_t));
 static_assert (__alignof__ (size_t) <= __alignof__ (max_align_t));
 static_assert (__alignof__ (wchar_t) <= __alignof__ (max_align_t));
 static_assert (__alignof__ (struct d) <= __alignof__ (max_align_t));
+# endif
 #endif
 
 int test_unreachable_optimization (int x);
