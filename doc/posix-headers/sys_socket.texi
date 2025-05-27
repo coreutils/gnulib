@@ -57,6 +57,9 @@ This header file does not define the macro @code{MSG_CMSG_CLOEXEC}
 on some platforms:
 Solaris 11 OmniOS.
 @item
+Although POSIX.1-2024 standardized @code{SOCK_CLOFORK} and
+@code{MSG_CMSG_CLOFORK}, no known platform supports them.
+@item
 This header file does not define the macro @code{SO_DOMAIN} on some platforms:
 macOS 15, NetBSD 10.0, AIX 7.3, Cygwin 3.5, mingw, MSVC 14.
 @item

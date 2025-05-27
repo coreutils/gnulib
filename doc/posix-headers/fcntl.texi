@@ -134,6 +134,13 @@ Mac OS X 10.3.
 glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
 
 @item
+Although POSIX.1-2024 standardized @code{O_CLOFORK},
+@code{FD_CLOFORK} and @code{F_DUPFD_CLOFORK},
+they are not defined on most platforms:
+glibc 2.41, musl libc, macOS 15.5, FreeBSD 14.2, NetBSD 10.1, OpenBSD 7.7,
+Minix 3.3.0, AIX 7.1, Solaris 11.3, Cygwin 3.6.2, mingw, MSVC 14.
+
+@item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
 @samp{F_SETLK}, @samp{F_SETLKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
 are not defined on some platforms:
