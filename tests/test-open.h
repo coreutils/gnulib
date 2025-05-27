@@ -69,6 +69,11 @@ test_open (int (*func) (char const *, int, ...), bool print)
   ASSERT (func (BASE "file/", O_RDONLY) == -1);
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 
+  /* Cannot open non-directory with O_DIRECTORY.  */
+  errno = 0;
+  ASSERT (func (BASE "file", O_RDONLY | O_DIRECTORY) == -1);
+  ASSERT (errno == ENOTDIR);
+
   /* Directories cannot be opened for writing.  */
   errno = 0;
   ASSERT (func (".", O_WRONLY) == -1);

@@ -315,7 +315,7 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 #endif
 
 #ifndef O_DIRECTORY
-# define O_DIRECTORY 0
+# define O_DIRECTORY 0x20000000 /* Try to not collide with system O_* flags.  */
 #endif
 
 #ifndef O_DSYNC

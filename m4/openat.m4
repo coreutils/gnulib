@@ -1,5 +1,5 @@
 # openat.m4
-# serial 46
+# serial 47
 dnl Copyright (C) 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,21 +15,14 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([openat])
+  AC_REQUIRE([gl_FCNTL_O_FLAGS])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   AC_REQUIRE([gl_PREPROC_O_CLOEXEC])
-  case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink+$gl_cv_macro_O_CLOEXEC in
-  yes+*yes+yes)
-    ;;
-  yes+*)
-    # Solaris 10 lacks O_CLOEXEC.
-    # Solaris 9 has *at functions, but uniformly mishandles trailing
-    # slash in all of them.
-    REPLACE_OPENAT=1
-    ;;
-  *)
-    HAVE_OPENAT=0
-    ;;
-  esac
+  AS_CASE([$ac_cv_func_openat+$gl_cv_header_working_fcntl_h+$gl_cv_func_lstat_dereferences_slashed_symlink+$gl_cv_macro_O_CLOEXEC],
+    [yes+*O_DIRECTORY*+*+* | yes+*no+*+*], [REPLACE_OPENAT=1],
+    [yes+*+*yes+yes], [],
+    [yes+*], [REPLACE_OPENAT=1],
+    [HAVE_OPENAT=0])
 ])
 
 # Prerequisites of lib/openat.c.

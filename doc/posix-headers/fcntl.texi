@@ -25,7 +25,7 @@ macOS 14, FreeBSD 10.4, NetBSD 10.0, OpenBSD 7.5, MSVC 14, Cygwin, Haiku, Minix 
 Mac OS X 10.6, FreeBSD 8.4, NetBSD 5.1, OpenBSD 4.9, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 10, Cygwin 1.7.1, mingw, MSVC 14.
 
 @item
-@samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
+@samp{O_DSYNC}, @samp{O_NOCTTY},
 @samp{O_NOFOLLOW}, @samp{O_RSYNC}, @samp{O_SYNC},
 and @samp{O_TTY_INIT} are not defined on some platforms.
 When not otherwise defined, Gnulib defines these macros to 0,
@@ -90,6 +90,11 @@ AIX 7.1 with XL C 12.1.
 on some platforms but not on others.
 When not otherwise defined, Gnulib defines these macros to 0,
 which is generally safe.
+
+@item
+@samp{O_DIRECTORY} is not defined on some platforms:
+mingw, MSVC 14, glibc 2.0, OS X 10.9, FreeBSD 7.4, NetBSD 4.0.1, OpenBSD 4.9,
+AIX 7.1, HP-UX 11, Solaris 10.
 
 @item
 @samp{FD_CLOEXEC}, @samp{F_DUPFD}, and @samp{F_GETFD} are not defined
