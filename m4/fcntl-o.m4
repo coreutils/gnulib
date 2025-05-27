@@ -1,5 +1,5 @@
 # fcntl-o.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -140,10 +140,9 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
        [AS_CASE([$host_os,$gl_cross_guess_normal],
           # The O_DIRECTORY test is known to fail on Mac OS X 10.4.11 (2007)
           # (see <https://bugs.gnu.org/78509#95>)
-          # and to succeed on macOS 12.6 [darwin21.6.0] (2021).
-          # For now, guess it fails on macOS 12.5 and earlier.
-          [darwin[[0-9]].*yes | darwin1[[0-9]]*.*yes | darwin20.*yes | \
-           darwin21.[[0-5]].*yes],
+          # and to succeed on Mac OS X 10.5.8 [darwin9.8.0] (2009).
+          # Guess it fails on Mac OS X 10.4.x and earlier.
+          [darwin[[0-8]].*yes],
              [gl_cv_header_working_fcntl_h="guessing no (bad O_DIRECTORY)"],
           # Known to be "no" on native MS-Windows.
           [mingw* | windows*],
@@ -151,17 +150,17 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
           [gl_cv_header_working_fcntl_h=$gl_cross_guess_normal])])])
 
   AS_CASE([$gl_cv_header_working_fcntl_h],
-    [*O_DIRECTORY* | *no], [ac_val=0], [ac_val=1])
-  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_DIRECTORY], [$ac_val],
+    [*O_DIRECTORY* | *no], [gl_val=0], [gl_val=1])
+  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_DIRECTORY], [$gl_val],
     [Define to 1 if O_DIRECTORY works, 0 otherwise.])
 
   AS_CASE([$gl_cv_header_working_fcntl_h],
-    [*O_NOATIME* | *no], [ac_val=0], [ac_val=1])
-  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOATIME], [$ac_val],
+    [*O_NOATIME* | *no], [gl_val=0], [gl_val=1])
+  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOATIME], [$gl_val],
     [Define to 1 if O_NOATIME works, 0 otherwise.])
 
   AS_CASE([$gl_cv_header_working_fcntl_h],
-    [*O_NOFOLLOW* | *no], [ac_val=0], [ac_val=1])
-  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOFOLLOW], [$ac_val],
+    [*O_NOFOLLOW* | *no], [gl_val=0], [gl_val=1])
+  AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOFOLLOW], [$gl_val],
     [Define to 1 if O_NOFOLLOW works, 0 otherwise.])
 ])
