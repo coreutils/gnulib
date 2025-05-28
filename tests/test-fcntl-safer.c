@@ -22,7 +22,12 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <unistd.h>
+
+#if HAVE_DECL_ALARM
+# include <signal.h>
+#endif
 
 #include "macros.h"
 
