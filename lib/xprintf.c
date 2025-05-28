@@ -45,7 +45,7 @@ xvprintf (char const *restrict format, va_list args)
 {
   off64_t retval = vzprintf (format, args);
   if (retval < 0 && ! ferror (stdout))
-    error (exit_failure, errno, "%s", _("cannot perform formatted output"));
+    error (exit_failure, errno, _("cannot perform formatted output"));
 
   return retval;
 }
@@ -67,7 +67,7 @@ xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
 {
   off64_t retval = vfzprintf (stream, format, args);
   if (retval < 0 && ! ferror (stream))
-    error (exit_failure, errno, "%s", _("cannot perform formatted output"));
+    error (exit_failure, errno, _("cannot perform formatted output"));
 
   return retval;
 }

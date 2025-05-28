@@ -33,7 +33,7 @@
 void
 sigpipe_die (void)
 {
-  error (exit_failure, 0, "%s",
+  error (exit_failure, 0,
          _("error writing to a closed pipe or socket"));
 
   /* Ensure that this function really does not return.  */
