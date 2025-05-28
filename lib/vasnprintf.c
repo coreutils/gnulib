@@ -5249,7 +5249,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                     const DCHAR_T *thousep = NULL;
                                     DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
-                                    size_t thousep_len;
+                                    size_t thousep_len = 0;
 #   endif
                                     const signed char *grouping;
                                     size_t insert = 0;
@@ -5579,7 +5579,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             const DCHAR_T *thousep = NULL;
                                             DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
-                                            size_t thousep_len;
+                                            size_t thousep_len = 0;
 #   endif
                                             const signed char *grouping;
                                             size_t insert = 0;
@@ -5857,7 +5857,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                     const DCHAR_T *thousep = NULL;
                                     DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
-                                    size_t thousep_len;
+                                    size_t thousep_len = 0;
 #   endif
                                     const signed char *grouping;
                                     size_t insert = 0;
@@ -6195,7 +6195,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                             const DCHAR_T *thousep = NULL;
                                             DCHAR_T thousep_buf[10];
 #   if !WIDE_CHAR_VERSION
-                                            size_t thousep_len;
+                                            size_t thousep_len = 0;
 #   endif
                                             const signed char *grouping;
                                             size_t insert = 0;
