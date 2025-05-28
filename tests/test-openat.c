@@ -26,7 +26,12 @@ SIGNATURE_CHECK (openat, int, (int, char const *, int, ...));
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <unistd.h>
+
+#if HAVE_DECL_ALARM
+# include <signal.h>
+#endif
 
 #include "macros.h"
 

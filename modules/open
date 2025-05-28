@@ -13,6 +13,7 @@ fcntl-h
 largefile
 cloexec         [test $REPLACE_OPEN = 1]
 fstat           [test $REPLACE_OPEN = 1]
+lstat           [test $REPLACE_OPEN = 1]
 stat            [test $REPLACE_OPEN = 1]
 
 configure.ac:

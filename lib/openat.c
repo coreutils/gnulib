@@ -35,6 +35,7 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 }
 #endif
 
+/* Specification.  */
 #ifdef __osf__
 /* Write "fcntl.h" here, not <fcntl.h>, otherwise OSF/1 5.1 DTK cc eliminates
    this include because of the preliminary #include <fcntl.h> above.  */
@@ -47,12 +48,12 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 
 #include "cloexec.h"
 
+#include <errno.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <errno.h>
 
 #ifndef OPEN_TRAILING_SLASH_BUG
 # define OPEN_TRAILING_SLASH_BUG false
@@ -97,15 +98,43 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
          directories,
        - if O_WRONLY or O_RDWR is specified, open() must fail because the
          file does not contain a '.' directory.  */
-  if (OPEN_TRAILING_SLASH_BUG
+  bool check_for_slash_bug;
+  if (OPEN_TRAILING_SLASH_BUG)
+    {
+      size_t len = strlen (filename);
+      check_for_slash_bug = len && filename[len - 1] == '/';
+    }
+  else
+    check_for_slash_bug = false;
+
+  if (check_for_slash_bug
       && (flags & O_CREAT
           || (flags & O_ACCMODE) == O_RDWR
           || (flags & O_ACCMODE) == O_WRONLY))
     {
-      size_t len = strlen (filename);
-      if (len > 0 && filename[len - 1] == '/')
+      errno = EISDIR;
+      return -1;
+    }
+
+  /* With the trailing slash bug or without working O_DIRECTORY, check with
+     stat first lest we hang trying to open a fifo.  Although there is
+     a race between this and opening the file, we can do no better.
+     After opening the file we will check again with fstat.  */
+  bool check_directory =
+    (check_for_slash_bug
+     || (!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY));
+  if (check_directory)
+    {
+      struct stat statbuf;
+      int fstatat_flags = flags & O_NOFOLLOW ? AT_SYMLINK_NOFOLLOW : 0;
+      if (fstatat (dfd, filename, &statbuf, fstatat_flags) < 0)
         {
-          errno = EISDIR;
+          if (! (flags & O_CREAT && errno == ENOENT))
+            return -1;
+        }
+      else if (!S_ISDIR (statbuf.st_mode))
+        {
+          errno = ENOTDIR;
           return -1;
         }
     }
@@ -137,8 +166,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
     }
 
 
-  /* If the filename ends in a slash or O_DIRECTORY is given,
-     then fail if fd does not refer to a directory.
+  /* If checking for directories, fail if fd does not refer to a directory.
      Rationale: A filename ending in slash cannot name a non-directory
      <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>:
        "A pathname that contains at least one non-<slash> character and that
@@ -147,23 +175,16 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
         <slash> characters names an existing directory"
      If the named file without the slash is not a directory, open() must fail
      with ENOTDIR.  */
-  if (((!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY)
-       || OPEN_TRAILING_SLASH_BUG)
-      && 0 <= fd)
+  if (check_directory && 0 <= fd)
     {
-      /* FILENAME must be nonempty, as open did not fail with ENOENT.  */
-      if ((!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY)
-          || filename[strlen (filename) - 1] == '/')
+      struct stat statbuf;
+      int r = fstat (fd, &statbuf);
+      if (r < 0 || !S_ISDIR (statbuf.st_mode))
         {
-          struct stat statbuf;
-          int r = fstat (fd, &statbuf);
-          if (r < 0 || !S_ISDIR (statbuf.st_mode))
-            {
-              int err = r < 0 ? errno : ENOTDIR;
-              close (fd);
-              errno = err;
-              return -1;
-            }
+          int err = r < 0 ? errno : ENOTDIR;
+          close (fd);
+          errno = err;
+          return -1;
         }
     }
 

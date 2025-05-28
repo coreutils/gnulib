@@ -63,6 +63,12 @@ orig_open (const char *filename, int flags, mode_t mode)
 # define REPLACE_OPEN_DIRECTORY false
 #endif
 
+static int
+lstatif (char const *filename, struct stat *st, int flags)
+{
+  return flags & O_NOFOLLOW ? lstat (filename, st) : stat (filename, st);
+}
+
 int
 open (const char *filename, int flags, ...)
 {
@@ -112,15 +118,42 @@ open (const char *filename, int flags, ...)
          directories,
        - if O_WRONLY or O_RDWR is specified, open() must fail because the
          file does not contain a '.' directory.  */
-  if (OPEN_TRAILING_SLASH_BUG
+  bool check_for_slash_bug;
+  if (OPEN_TRAILING_SLASH_BUG)
+    {
+      size_t len = strlen (filename);
+      check_for_slash_bug = len && filename[len - 1] == '/';
+    }
+  else
+    check_for_slash_bug = false;
+
+  if (check_for_slash_bug
       && (flags & O_CREAT
           || (flags & O_ACCMODE) == O_RDWR
           || (flags & O_ACCMODE) == O_WRONLY))
     {
-      size_t len = strlen (filename);
-      if (len > 0 && filename[len - 1] == '/')
+      errno = EISDIR;
+      return -1;
+    }
+
+  /* With the trailing slash bug or without working O_DIRECTORY, check with
+     stat first lest we hang trying to open a fifo.  Although there is
+     a race between this and opening the file, we can do no better.
+     After opening the file we will check again with fstat.  */
+  bool check_directory =
+    (check_for_slash_bug
+     || (!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY));
+  if (check_directory)
+    {
+      struct stat statbuf;
+      if (lstatif (filename, &statbuf, flags) < 0)
         {
-          errno = EISDIR;
+          if (! (flags & O_CREAT && errno == ENOENT))
+            return -1;
+        }
+      else if (!S_ISDIR (statbuf.st_mode))
+        {
+          errno = ENOTDIR;
           return -1;
         }
     }
@@ -155,16 +188,18 @@ open (const char *filename, int flags, ...)
 #if REPLACE_FCHDIR
   /* Implementing fchdir and fdopendir requires the ability to open a
      directory file descriptor.  If open doesn't support that (as on
-     mingw), we use a dummy file that behaves the same as directories
+     mingw), use a dummy file that behaves the same as directories
      on Linux (ie. always reports EOF on attempts to read()), and
-     override fstat() in fchdir.c to hide the fact that we have a
-     dummy.  */
+     override fstat in fchdir.c to hide the dummy.  */
   if (REPLACE_OPEN_DIRECTORY && fd < 0 && errno == EACCES
-      && ((flags & O_ACCMODE) == O_RDONLY
-          || (O_SEARCH != O_RDONLY && (flags & O_ACCMODE) == O_SEARCH)))
+      && ((flags & (O_ACCMODE | O_CREAT)) == O_RDONLY
+          || (O_SEARCH != O_RDONLY
+              && (flags & (O_ACCMODE | O_CREAT)) == O_SEARCH))
     {
       struct stat statbuf;
-      if (stat (filename, &statbuf) == 0 && S_ISDIR (statbuf.st_mode))
+      if (check_directory
+          || (lstatif (filename, &statbuf, flags) == 0
+              && S_ISDIR (statbuf.st_mode)))
         {
           /* Maximum recursion depth of 1.  */
           fd = open ("/dev/null", flags, mode);
@@ -176,8 +211,7 @@ open (const char *filename, int flags, ...)
     }
 #endif
 
-  /* If the filename ends in a slash or O_DIRECTORY is given,
-     then fail if fd does not refer to a directory.
+  /* If checking for directories, fail if fd does not refer to a directory.
      Rationale: A filename ending in slash cannot name a non-directory
      <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>:
        "A pathname that contains at least one non-<slash> character and that
@@ -186,23 +220,16 @@ open (const char *filename, int flags, ...)
         <slash> characters names an existing directory"
      If the named file without the slash is not a directory, open() must fail
      with ENOTDIR.  */
-  if (((!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY)
-       || OPEN_TRAILING_SLASH_BUG)
-      && 0 <= fd)
+  if (check_directory && 0 <= fd)
     {
-      /* FILENAME must be nonempty, as open did not fail with ENOENT.  */
-      if ((!HAVE_WORKING_O_DIRECTORY && flags & O_DIRECTORY)
-          || filename[strlen (filename) - 1] == '/')
+      struct stat statbuf;
+      int r = fstat (fd, &statbuf);
+      if (r < 0 || !S_ISDIR (statbuf.st_mode))
         {
-          struct stat statbuf;
-          int r = fstat (fd, &statbuf);
-          if (r < 0 || !S_ISDIR (statbuf.st_mode))
-            {
-              int err = r < 0 ? errno : ENOTDIR;
-              close (fd);
-              errno = err;
-              return -1;
-            }
+          int err = r < 0 ? errno : ENOTDIR;
+          close (fd);
+          errno = err;
+          return -1;
         }
     }
 

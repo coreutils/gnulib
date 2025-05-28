@@ -7,9 +7,11 @@ tests/macros.h
 Depends-on:
 bool
 fcntl
+mkfifo
 symlink
 
 configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
 
 Makefile.am:
 TESTS += test-open

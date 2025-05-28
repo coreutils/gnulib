@@ -41,9 +41,18 @@
 static ALWAYS_INLINE int
 test_open (int (*func) (char const *, int, ...), bool print)
 {
+#if HAVE_DECL_ALARM
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  */
+  int alarm_value = 5;
+  signal (SIGALRM, SIG_DFL);
+  alarm (alarm_value);
+#endif
+
   int fd;
 
   /* Remove anything from prior partial run.  */
+  unlink (BASE "fifo");
   unlink (BASE "file");
   unlink (BASE "e.exe");
   unlink (BASE "link");
@@ -69,10 +78,38 @@ test_open (int (*func) (char const *, int, ...), bool print)
   ASSERT (func (BASE "file/", O_RDONLY) == -1);
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 
-  /* Cannot open non-directory with O_DIRECTORY.  */
+  /* Cannot open regular file with O_DIRECTORY.  */
   errno = 0;
   ASSERT (func (BASE "file", O_RDONLY | O_DIRECTORY) == -1);
   ASSERT (errno == ENOTDIR);
+
+  /* Cannot open /dev/null with trailing slash or O_DIRECTORY.  */
+  errno = 0;
+  ASSERT (func ("/dev/null/", O_RDONLY) == -1);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+
+  errno = 0;
+  ASSERT (func ("/dev/null", O_RDONLY | O_DIRECTORY) == -1);
+  ASSERT (errno == ENOTDIR);
+
+  /* Cannot open /dev/tty with trailing slash or O_DIRECTORY,
+     though errno may differ as there may not be a controlling tty.  */
+  ASSERT (func ("/dev/tty/", O_RDONLY) == -1);
+  ASSERT (func ("/dev/tty", O_RDONLY | O_DIRECTORY) == -1);
+
+  /* Cannot open fifo with trailing slash or O_DIRECTORY.  */
+  if (mkfifo (BASE "fifo", 0666) == 0)
+    {
+      errno = 0;
+      ASSERT (func (BASE "fifo/", O_RDONLY) == -1);
+      ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+
+      errno = 0;
+      ASSERT (func (BASE "fifo", O_RDONLY | O_DIRECTORY) == -1);
+      ASSERT (errno == ENOTDIR);
+
+      ASSERT (unlink (BASE "fifo") == 0);
+    }
 
   /* Directories cannot be opened for writing.  */
   errno = 0;
