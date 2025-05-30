@@ -21,4 +21,8 @@ macOS 14.
 @item
 This function fails with @code{EACCES} on unreadable files accessed via NFS:
 Linux kernel 6.12.
+@item
+This function does not report synthetic @code{security.*} extended attributes
+on @code{tmpfs} and @code{kernfs}-based file systems:
+Linux kernel 6.14.
 @end itemize

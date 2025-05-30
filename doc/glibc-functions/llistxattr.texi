@@ -18,4 +18,8 @@ macOS 14, FreeBSD 14.0, NetBSD 5.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11,
 @item
 This function fails with @code{EACCES} on unreadable files accessed via NFS:
 Linux kernel 6.12.
+@item
+This function does not report synthetic @code{security.*} extended attributes
+on @code{tmpfs} and @code{kernfs}-based file systems:
+Linux kernel 6.14.
 @end itemize
