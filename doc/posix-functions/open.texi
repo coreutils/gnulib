@@ -55,6 +55,14 @@ On some platforms, @code{O_SEARCH} may reject directories
 where you have search access even though @code{O_SEARCH} is not replaced:
 macOS 12.6.
 @item
+When the file does not exist, POSIX says
+the behavior of @code{O_CREAT | O_DIRECTORY} is unspecified.
+Most platforms fail with @code{EINVAL} in this case.
+However, in Linux kernels 6.3 and earlier, this function
+creates a regular file and then either returns successfully
+(Linux kernel 5.6 and earlier) or fails with @code{ENOTDIR}
+(Linux kernels 5.7--6.3).
+@item
 @code{open ("symlink", O_CREAT ...)} fails when the argument points to a
 nonexistent file in an existing directory on some platforms:
 @c https://dev.haiku-os.org/ticket/18355
