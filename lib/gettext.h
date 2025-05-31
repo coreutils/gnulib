@@ -64,21 +64,32 @@
 /* Use inline functions, to avoid warnings
      warning: format not a string literal and no format arguments
    that don't occur with enabled NLS.  */
+/* The return type 'const char *' serves the purpose of producing warnings
+   for invalid uses of the value returned from these functions.  */
 __attribute__ ((__always_inline__, __gnu_inline__)) extern inline
-const char *
+#  if !defined(__sun)
+const
+#  endif
+char *
 gettext (const char *msgid)
 {
   return msgid;
 }
 __attribute__ ((__always_inline__, __gnu_inline__)) extern inline
-const char *
+#  if !defined(__sun)
+const
+#  endif
+char *
 dgettext (const char *domain, const char *msgid)
 {
   (void) domain;
   return msgid;
 }
 __attribute__ ((__always_inline__, __gnu_inline__)) extern inline
-const char *
+#  if !defined(__sun)
+const
+#  endif
+char *
 dcgettext (const char *domain, const char *msgid, int category)
 {
   (void) domain;
