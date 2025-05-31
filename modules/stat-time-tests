@@ -10,6 +10,7 @@ time-h
 unistd-h
 xconcat-filename
 xgetcwd-lgpl
+stat-time-c++-tests
 
 configure.ac:
 
