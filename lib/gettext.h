@@ -66,6 +66,10 @@
    that don't occur with enabled NLS.  */
 /* The return type 'const char *' serves the purpose of producing warnings
    for invalid uses of the value returned from these functions.  */
+#  if __GNUC__ >= 9
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wbuiltin-declaration-mismatch"
+#  endif
 __attribute__ ((__always_inline__, __gnu_inline__)) extern inline
 #  if !defined(__sun)
 const
@@ -96,6 +100,9 @@ dcgettext (const char *domain, const char *msgid, int category)
   (void) category;
   return msgid;
 }
+#  if __GNUC__ >= 9
+#   pragma GCC diagnostic pop
+#  endif
 # else
 /* The casts to 'const char *' serve the purpose of producing warnings
    for invalid uses of the value returned from these functions.  */
