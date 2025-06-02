@@ -1,0 +1,12 @@
+Files:
+tests/test-stdcountof-h.c
+tests/macros.h
+
+Depends-on:
+stdcountof-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdcountof-h
+check_PROGRAMS += test-stdcountof-h

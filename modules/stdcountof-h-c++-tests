@@ -1,0 +1,17 @@
+Files:
+tests/test-stdcountof-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdcountof-h-c++
+check_PROGRAMS += test-stdcountof-h-c++
+test_stdcountof_h_c___SOURCES = test-stdcountof-h-c++.cc
+endif
