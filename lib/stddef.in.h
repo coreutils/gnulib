@@ -188,6 +188,17 @@ typedef union
 #endif
 
 /* ISO C 23 § 7.21.1 The unreachable macro  */
+/* This macro is only usable in C, not in C++.
+   There is no way to define it as a macro in C++, because that would break code
+   that does
+       #include <utility>
+       ... std::unreachable() ...
+   Similarly, there is no way to define it as an inline function in C++, because
+   that would break code that does
+       #include <utility>
+       using std::unreachable;
+   As a workaround, we define a macro gl_unreachable, that is like unreachable,
+   but is usable in both C and C++.  */
 
 /* Code borrowed from verify.h.  */
 #ifndef _GL_HAS_BUILTIN_UNREACHABLE
@@ -203,9 +214,11 @@ typedef union
 #endif
 
 #if _GL_HAS_BUILTIN_UNREACHABLE
-# define _gl_unreachable() __builtin_unreachable ()
+# define gl_unreachable() __builtin_unreachable ()
 #elif 1200 <= _MSC_VER
-# define _gl_unreachable() __assume (0)
+# define gl_unreachable() __assume (0)
+#elif !defined __cplusplus && @HAVE_C_UNREACHABLE@
+# define gl_unreachable() unreachable ()
 #else
 /* Declare abort(), without including <stdlib.h>.  */
 extern
@@ -218,36 +231,14 @@ void abort (void)
 _GL_ATTRIBUTE_NOTHROW
 # endif
 ;
-# define _gl_unreachable() abort ()
+# define gl_unreachable() abort ()
 #endif
 
-#ifndef __cplusplus
+#if !defined __cplusplus && !@HAVE_C_UNREACHABLE@
 /* In C, define unreachable as a macro.  */
 
 # ifndef unreachable
-#  define unreachable() _gl_unreachable ()
-# endif
-
-#else
-/* In C++, define unreachable as an inline function.  */
-
-/* With some versions of MSVC, the inclusion of <utility> here causes errors
-   when <cstddef> gets included:
-   type_traits(1164): error C2065: 'max_align_t': undeclared identifier  */
-# if !defined _MSC_VER
-extern "C++" { /* needed for Cygwin */
-#  include <utility>
-}
-# endif
-
-# if defined __cpp_lib_unreachable /* C++23 or newer */
-
-using std::unreachable;
-
-# else
-
-inline void unreachable () { _gl_unreachable (); }
-
+#  define unreachable() gl_unreachable ()
 # endif
 
 #endif

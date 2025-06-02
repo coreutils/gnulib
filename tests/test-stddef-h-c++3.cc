@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-/* Define unreachable.  */
+/* Define gl_unreachable.  */
 #include <stddef.h>
 /* Define std::unreachable (in C++23 or newer).  */
 #include <utility>
@@ -25,7 +25,7 @@ void
 test_cxx_unreachable_1 ()
 {
   if (2 < 1)
-    unreachable ();
+    gl_unreachable ();
 #if defined __cpp_lib_unreachable
   if (3 < 1)
     std::unreachable ();

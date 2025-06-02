@@ -39,7 +39,7 @@
 /* Get va_list.  */
 #include <stdarg.h>
 
-/* Get 'unreachable'.  */
+/* Get 'gl_unreachable'.  */
 #include <stddef.h>
 
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM.  */
@@ -57,11 +57,11 @@
    It evaluates its arguments only once.
    Test case: Compile copy-file.c with "gcc -Wimplicit-fallthrough".  */
 #if defined __GNUC__ || defined __clang__
-/* Use 'unreachable' to tell the compiler when the function call does not
+/* Use 'gl_unreachable' to tell the compiler when the function call does not
    return.  */
 # define __gl_error_call1(function, status, ...) \
     ((function) (status, __VA_ARGS__), \
-     (status) != 0 ? unreachable () : (void) 0)
+     (status) != 0 ? gl_unreachable () : (void) 0)
 /* If STATUS is a not a constant, the function call may or may not return;
    therefore -Wimplicit-fallthrough will produce a warning.  Use a compound
    statement in order to evaluate STATUS only once.

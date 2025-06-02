@@ -1,5 +1,5 @@
 # stddef_h.m4
-# serial 22
+# serial 23
 dnl Copyright (C) 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,32 +77,13 @@ AC_DEFUN_ONCE([gl_STDDEF_H],
     ])
   if test $gl_cv_c_func_unreachable = no; then
     GL_GENERATE_STDDEF_H=true
+    HAVE_C_UNREACHABLE=0
+  else
+    HAVE_C_UNREACHABLE=1
   fi
-  if test "$CXX" != no; then
-    dnl C++ <utility> has std::unreachable,
-    dnl see <https://en.cppreference.com/w/cpp/utility/unreachable>,
-    dnl but we want an unreachable() that is available from <stddef.h>,
-    dnl like in ISO C 23.
-    AC_CACHE_CHECK([for unreachable in <stddef.h> in C++],
-      [gl_cv_cxx_func_unreachable],
-      [dnl We can't use AC_LANG_PUSH([C++]) and AC_LANG_POP([C++]) here, due to
-       dnl an autoconf bug <https://savannah.gnu.org/support/?110294>.
-       cat > conftest.cpp <<\EOF
-#include <stddef.h>
-int main (void) { unreachable (); }
-EOF
-       gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
-       if AC_TRY_EVAL([gl_command]); then
-         gl_cv_cxx_func_unreachable=yes
-       else
-         gl_cv_cxx_func_unreachable=no
-       fi
-       rm -fr conftest*
-      ])
-    if test $gl_cv_cxx_func_unreachable = no; then
-      GL_GENERATE_STDDEF_H=true
-    fi
-  fi
+  AC_SUBST([HAVE_C_UNREACHABLE])
+  dnl Provide gl_unreachable() unconditionally.
+  GL_GENERATE_STDDEF_H=true
 
   dnl https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114869
   AC_CACHE_CHECK([whether nullptr_t needs <stddef.h>],

@@ -69,6 +69,11 @@ static_assert (__alignof__ (struct d) <= __alignof__ (max_align_t));
 # endif
 #endif
 
+
+#ifndef __cplusplus
+
+/* Test 'unreachable'.  */
+
 int test_unreachable_optimization (int x);
 _Noreturn void test_unreachable_noreturn (void);
 
@@ -92,6 +97,36 @@ test_unreachable_noreturn (void)
      This function should not elicit a warning.  */
   unreachable ();
 }
+
+#endif
+
+
+/* Test 'gl_unreachable'.  */
+
+int test_gl_unreachable_optimization (int x);
+_Noreturn void test_gl_unreachable_noreturn (void);
+
+int
+test_gl_unreachable_optimization (int x)
+{
+  /* Check that the compiler uses 'gl_unreachable' for optimization.
+     This function, when compiled with optimization, should have code
+     equivalent to
+       return x + 3;
+     Use 'objdump --disassemble test-stddef.o' to verify this.  */
+  if (x < 4)
+    gl_unreachable ();
+  return (x > 1 ? x + 3 : 2 * x + 10);
+}
+
+_Noreturn void
+test_gl_unreachable_noreturn (void)
+{
+  /* Check that the compiler's data-flow analysis recognizes
+     'gl_unreachable ()'.  This function should not elicit a warning.  */
+  gl_unreachable ();
+}
+
 
 #include <limits.h> /* INT_MAX */
 
