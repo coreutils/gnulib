@@ -194,7 +194,7 @@ open (const char *filename, int flags, ...)
   if (REPLACE_OPEN_DIRECTORY && fd < 0 && errno == EACCES
       && ((flags & (O_ACCMODE | O_CREAT)) == O_RDONLY
           || (O_SEARCH != O_RDONLY
-              && (flags & (O_ACCMODE | O_CREAT)) == O_SEARCH))
+              && (flags & (O_ACCMODE | O_CREAT)) == O_SEARCH)))
     {
       struct stat statbuf;
       if (check_directory
