@@ -33,7 +33,7 @@
      void func (int a[10]) { ... }
  */
 #define countof(a) \
-  (sizeof (a) / sizeof (a[0]) + 0 * _gl_verify_is_array (a))
+  (sizeof (a) / sizeof ((a)[0]) + 0 * _gl_verify_is_array (a))
 
 /* Attempts to verify that A is an array.  */
 #if defined __cplusplus
