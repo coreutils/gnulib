@@ -86,7 +86,11 @@ test_open (int (*func) (char const *, int, ...), bool print)
   /* Cannot open /dev/null with trailing slash or O_DIRECTORY.  */
   errno = 0;
   ASSERT (func ("/dev/null/", O_RDONLY) == -1);
+#if defined _WIN32 && !defined __CYGWIN__
+  ASSERT (errno == ENOENT);
+#else
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+#endif
 
   errno = 0;
   ASSERT (func ("/dev/null", O_RDONLY | O_DIRECTORY) == -1);
