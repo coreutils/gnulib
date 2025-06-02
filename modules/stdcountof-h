@@ -1,0 +1,39 @@
+Description:
+An <stdcountof.h> that is like C23.
+
+Files:
+lib/stdcountof.in.h
+m4/stdcountof_h.m4
+
+Depends-on:
+gen-header
+
+configure.ac:
+gl_STDCOUNTOF_H
+gl_CONDITIONAL_HEADER([stdcountof.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(STDCOUNTOF_H)
+
+# We need the following in order to create <stdcountof.h> when the system
+# doesn't have one that works with the given compiler.
+if GL_GENERATE_STDCOUNTOF_H
+stdcountof.h: stdcountof.in.h $(top_builddir)/config.status
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) $(srcdir)/stdcountof.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+stdcountof.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += stdcountof.h stdcountof.h-t
+
+Include:
+<stdcountof.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
