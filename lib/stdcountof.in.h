@@ -18,10 +18,8 @@
 #ifndef _GL_STDCOUNTOF_H
 #define _GL_STDCOUNTOF_H
 
-#ifndef __SIZE_TYPE__
-# include <stddef.h>
-# define __SIZE_TYPE__ size_t
-#endif
+/* Get size_t.  */
+#include <stddef.h>
 
 /* Returns the number of elements of the array A, as a value of type size_t.
    Example declarations of arrays:
@@ -33,7 +31,7 @@
      void func (int a[10]) { ... }
  */
 #define countof(a) \
-  ((__SIZE_TYPE__) (sizeof (a) / sizeof *(a) + 0 * _gl_verify_is_array (a)))
+  ((size_t) (sizeof (a) / sizeof ((a)[0]) + 0 * _gl_verify_is_array (a)))
 
 /* Attempts to verify that A is an array.  */
 #if defined __cplusplus
@@ -55,7 +53,7 @@ template <typename T>
 template <typename T>
   struct _gl_array_type_test<T[]> { static const int is_array = 1; };
 /* Bounded arrays.  */
-template <typename T, __SIZE_TYPE__ N>
+template <typename T, size_t N>
   struct _gl_array_type_test<T[N]> { static const int is_array = 1; };
 #   define _gl_verify_is_array(a) \
      sizeof (_gl_verify_type<_gl_array_type_test<decltype(a)>::is_array>)
@@ -69,7 +67,7 @@ template <typename T>
 template <typename T>
   struct _gl_array_type_test<T[]> { char small; };
 /* Bounded arrays.  */
-template <typename T, __SIZE_TYPE__ N>
+template <typename T, size_t N>
   struct _gl_array_type_test<T[N]> { char small; };
 /* The T& parameter is essential here: it prevents decay (array-to-pointer
    conversion).  */
