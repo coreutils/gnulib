@@ -464,7 +464,7 @@ static const struct table_entry language_table[] =
 
 /* Table from ISO 3166 country code to English name.
    Keep in sync with the gl_locale_name_from_win32_LANGID function in
-   localename.c!  */
+   localename-unsafe.c!  */
 static const struct table_entry country_table[] =
   {
     { "AE", "U.A.E." },
