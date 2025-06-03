@@ -20,15 +20,6 @@
 
 #include "macros.h"
 
-/* Whether the compiler supports __typeof__.  */
-#if ((defined __GNUC__ && 2 <= __GNUC__) \
-     || (defined __clang_major__ && 4 <= __clang_major__) \
-     || (defined __IBMC__ && 1210 <= __IBMC__ && defined __IBM__TYPEOF__) \
-     || (defined __SUNPRO_C && 0x5110 <= __SUNPRO_C && !__STDC__) \
-     || (defined _MSC_VER && 1939 <= _MSC_VER))
-# define HAVE___TYPEOF__ 1
-#endif
-
 /* Whether the compiler supports _Generic.
    Test program:
      int f (int x) { return _Generic (x, char *: 2, int: 3); }
@@ -68,10 +59,10 @@ test_func (int parameter[3])
 #endif
 
   /* Check that countof(...) is an expression of type size_t.  */
-#if !defined __cplusplus && HAVE___TYPEOF__ && HAVE__GENERIC
-  ASSERT (_Generic (__typeof__ (countof (bounded)),          size_t: 1, default: 0));
-  ASSERT (_Generic (__typeof__ (countof (multidimensional)), size_t: 1, default: 0));
-  ASSERT (_Generic (__typeof__ (countof (local_bounded)),    size_t: 1, default: 0));
+#if !defined __cplusplus && HAVE__GENERIC
+  ASSERT (_Generic (countof (bounded),          size_t: 1, default: 0));
+  ASSERT (_Generic (countof (multidimensional), size_t: 1, default: 0));
+  ASSERT (_Generic (countof (local_bounded),    size_t: 1, default: 0));
 #endif
 }
 
