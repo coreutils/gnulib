@@ -1,5 +1,5 @@
 # fcntl-o.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,42 +57,41 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
           ]],
           [[
             int result = !constants;
-
-            {
-              int fd = open ("confdefs.h", O_SEARCH | O_DIRECTORY);
-              result |= ! (fd < 0 && errno == ENOTDIR);
-              if (0 <= fd)
-                close (fd);
-            }
-
             #if HAVE_SYMLINK
             {
               static char const sym[] = "conftest.sym";
               if (symlink ("/dev/null", sym) != 0)
-                result |= 2;
+                result |= 1;
               else
                 {
                   int fd = open (sym, O_WRONLY | O_NOFOLLOW | O_CREAT, 0);
                   if (fd >= 0)
                     {
                       close (fd);
-                      result |= 4;
+                      result |= 2;
                     }
                 }
               if (unlink (sym) != 0 || symlink (".", sym) != 0)
-                result |= 2;
+                result |= 1;
               else
                 {
                   int fd = open (sym, O_RDONLY | O_NOFOLLOW);
                   if (fd >= 0)
                     {
                       close (fd);
-                      result |= 4;
+                      result |= 2;
                     }
                 }
               unlink (sym);
             }
             #endif
+            {
+              int fd = open ("confdefs.h", O_SEARCH | O_DIRECTORY);
+              if (!(fd < 0 && errno == ENOTDIR))
+                result |= 4;
+              if (0 <= fd)
+                close (fd);
+            }
             {
               static char const file[] = "confdefs.h";
               int fd = open (file, O_RDONLY | O_NOATIME);
@@ -129,13 +128,16 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
             return result;]])],
        [gl_cv_header_working_fcntl_h=yes],
        [AS_CASE([$?],
-          [ 1], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY)"],
-          [ 4], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW)"],
-          [ 5], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY, O_NOFOLLOW)"],
+          dnl We cannot catch exit code 1 here, because exit code 1 can occur
+          dnl through a compilation error (e.g. when O_NOCTTY, O_NONBLOCK, O_SYNC
+          dnl are not defined) or when result = 1.
+          [ 2], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW)"],
+          [ 4], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY)"],
+          [ 6], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY)"],
           [64], [gl_cv_header_working_fcntl_h="no (bad O_NOATIME)"],
-          [65], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY, O_NOATIME)"],
-          [68], [gl_cv_header_working_fcntl_h="no (bad O_NOATIME, O_NOFOLLOW)"],
-          [69], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY, O_NOATIME, O_NOFOLLOW)"],
+          [66], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_NOATIME)"],
+          [68], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY, O_NOATIME)"],
+          [70], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY, O_NOATIME)"],
           [gl_cv_header_working_fcntl_h="no"])],
        [AS_CASE([$host_os,$gl_cross_guess_normal],
           # The O_DIRECTORY test is known to fail on Mac OS X 10.4.11 (2007)

@@ -202,7 +202,7 @@ open (const char *filename, int flags, ...)
               && S_ISDIR (statbuf.st_mode)))
         {
           /* Maximum recursion depth of 1.  */
-          fd = open ("/dev/null", flags, mode);
+          fd = open ("/dev/null", flags & ~O_DIRECTORY, mode);
           if (0 <= fd)
             fd = _gl_register_fd (fd, filename);
         }
