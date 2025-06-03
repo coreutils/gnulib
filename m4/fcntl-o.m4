@@ -1,5 +1,5 @@
 # fcntl-o.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
            #else /* on Windows with MSVC */
            # include <io.h>
            # include <stdlib.h>
-           # defined sleep(n) _sleep ((n) * 1000)
+           # define sleep(n) _sleep ((n) * 1000)
            #endif
            #include <errno.h>
            #include <fcntl.h>
@@ -68,7 +68,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
                   if (fd >= 0)
                     {
                       close (fd);
-                      result |= 2;
+                      result |= 3;
                     }
                 }
               if (unlink (sym) != 0 || symlink (".", sym) != 0)
@@ -79,7 +79,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
                   if (fd >= 0)
                     {
                       close (fd);
-                      result |= 2;
+                      result |= 3;
                     }
                 }
               unlink (sym);
@@ -128,16 +128,20 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
             return result;]])],
        [gl_cv_header_working_fcntl_h=yes],
        [AS_CASE([$?],
-          dnl We cannot catch exit code 1 here, because exit code 1 can occur
-          dnl through a compilation error (e.g. when O_NOCTTY, O_NONBLOCK, O_SYNC
-          dnl are not defined) or when result = 1.
-          [ 2], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW)"],
+          dnl We cannot catch exit code 1 or 2 here, because
+          dnl - exit code 1 can occur through a compilation error on mingw (e.g.
+          dnl   when O_NOCTTY, O_NONBLOCK, O_SYNC are not defined) or when
+          dnl   result = 1, whereas
+          dnl - exit code 2 can occur through a compilation error on MSVC (e.g.
+          dnl   again when O_NOCTTY, O_NONBLOCK, O_SYNC are not defined) or when
+          dnl   result = 2.
+          [ 3], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW)"],
           [ 4], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY)"],
-          [ 6], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY)"],
+          [ 7], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY)"],
           [64], [gl_cv_header_working_fcntl_h="no (bad O_NOATIME)"],
-          [66], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_NOATIME)"],
+          [67], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_NOATIME)"],
           [68], [gl_cv_header_working_fcntl_h="no (bad O_DIRECTORY, O_NOATIME)"],
-          [70], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY, O_NOATIME)"],
+          [71], [gl_cv_header_working_fcntl_h="no (bad O_NOFOLLOW, O_DIRECTORY, O_NOATIME)"],
           [gl_cv_header_working_fcntl_h="no"])],
        [AS_CASE([$host_os,$gl_cross_guess_normal],
           # The O_DIRECTORY test is known to fail on Mac OS X 10.4.11 (2007)
