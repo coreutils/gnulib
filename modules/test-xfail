@@ -61,7 +61,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+GPLed build tool
 
 Maintainer:
 all
