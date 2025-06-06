@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 1, 2025
+@set lastupdate June 5, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -1055,7 +1055,7 @@ According to Creative Commons
 
 The text of the Creative Commons public licenses is dedicated to the public
 domain under the CC0 Public Domain Dedication.
-+@end smallexample
+@end smallexample
 
 @node External Libraries
 @section External Libraries
