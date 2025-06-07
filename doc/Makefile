@@ -86,7 +86,8 @@ updated-stamp: $(GNULIB_TEXI_FILES)
 
 # Dependencies. Search for @include to find them all.
 gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(GNULIB_TEXI_FILES) updated-stamp
-standards.info standards.html standards.dvi: standards.texi make-stds.texi fdl.texi
+standards.info standards.html standards.dvi standards.pdf: standards.texi make-stds.texi fdl.texi
+maintain.info maintain.html maintain.dvi maintain.pdf: maintain.texi fdl.texi
 
 mostlyclean:
 	rm -f *.aux *.cn *.cp *.cps *.fn *.ky *.log *.m *.pg *.toc *.tmp *.tp *.vr *.vrs
