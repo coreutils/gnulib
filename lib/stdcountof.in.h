@@ -81,7 +81,8 @@ template <typename T> _gl_array_type_test<T> _gl_array_type_test_helper(T&);
 # endif
 #else
 /* In C, we can use typeof and __builtin_types_compatible_p.  */
-# if _GL_GNUC_PREREQ (3, 1) || defined __clang__
+/* Work around clang bug <https://github.com/llvm/llvm-project/issues/143284>.  */
+# if _GL_GNUC_PREREQ (3, 1) && ! defined __clang__ /* || defined __clang__ */
 #  define _gl_verify_is_array(a) \
     sizeof (struct { unsigned int _gl_verify_error_if_negative : __builtin_types_compatible_p (typeof (a), typeof (&*(a))) ? -1 : 1; })
 # else
