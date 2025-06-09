@@ -1686,18 +1686,7 @@ static void
 debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
                      parser_control const *pc, bool time_zone_seen)
 {
-  /* TODO: handle t == -1 (as in 'mktime_ok').  */
   char tmp[DBGBUFSIZE];
-  int i;
-  const bool eq_sec   = (tm0->tm_sec  == tm1->tm_sec);
-  const bool eq_min   = (tm0->tm_min  == tm1->tm_min);
-  const bool eq_hour  = (tm0->tm_hour == tm1->tm_hour);
-  const bool eq_mday  = (tm0->tm_mday == tm1->tm_mday);
-  const bool eq_month = (tm0->tm_mon  == tm1->tm_mon);
-  const bool eq_year  = (tm0->tm_year == tm1->tm_year);
-
-  const bool dst_shift = eq_sec && eq_min && !eq_hour
-                         && eq_mday && eq_month && eq_year;
 
   if (!debugging (pc))
     return;
@@ -1705,35 +1694,33 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
   dbg_fputs (_("error: invalid date/time value:\n"));
   dbg_printf (_("    user provided time: '%s'\n"),
               debug_strfdatetime (tm0, pc, tmp, sizeof tmp));
-  dbg_printf (_("       normalized time: '%s'\n"),
-              debug_strfdatetime (tm1, pc, tmp, sizeof tmp));
-  /* The format must be aligned with debug_strfdatetime and the two
-     DEBUG statements above.  This string is not translated.  */
-  i = snprintf (tmp, sizeof tmp,
-                "                                 %4s %2s %2s %2s %2s %2s",
-                eq_year ? "" : "----",
-                eq_month ? "" : "--",
-                eq_mday ? "" : "--",
-                eq_hour ? "" : "--",
-                eq_min ? "" : "--",
-                eq_sec ? "" : "--");
-  /* Trim trailing whitespace.  */
-  if (0 <= i)
+  bool mktime_failed = tm1->tm_wday < 0;
+  if (mktime_failed)
+    dbg_fputs (_("    time could not be normalized\n"));
+  else
     {
-      if (sizeof tmp - 1 < i)
-        i = sizeof tmp - 1;
+      dbg_printf (_("       normalized time: '%s'\n"),
+                  debug_strfdatetime (tm1, pc, tmp, sizeof tmp));
+      /* The format must be aligned with debug_strfdatetime and the
+         dbg_printf statements above.  This string is not translated.  */
+      int i = sprintf (tmp, "%37s %2s %2s %2s %2s %2s",
+                       tm0->tm_year == tm1->tm_year ? "" : "----",
+                       tm0->tm_mon  == tm1->tm_mon  ? "" : "--",
+                       tm0->tm_mday == tm1->tm_mday ? "" : "--",
+                       tm0->tm_hour == tm1->tm_hour ? "" : "--",
+                       tm0->tm_min  == tm1->tm_min  ? "" : "--",
+                       tm0->tm_sec  == tm1->tm_sec  ? "" : "--");
+      /* Trim trailing whitespace.  */
       while (0 < i && tmp[i - 1] == ' ')
-        --i;
-      tmp[i] = '\0';
+        i--;
+      dbg_printf ("%.*s\n", i, tmp);
     }
-  dbg_printf ("%s\n", tmp);
 
   dbg_fputs (_("     possible reasons:\n"));
-  if (dst_shift)
-    dbg_fputs (_("       nonexistent due to daylight-saving time;\n"));
-  if (!eq_mday && !eq_month)
-    dbg_fputs (_("       invalid day/month combination;\n"));
-  dbg_fputs (_("       numeric values overflow;\n"));
+  dbg_fputs (_("       nonexistent due to daylight-saving time;\n"));
+  dbg_fputs (_("       invalid day/month combination;\n"));
+  if (mktime_failed)
+    dbg_fputs (_("       numeric values overflow;\n"));
   dbg_printf ("       %s\n", (time_zone_seen ? _("incorrect timezone")
                               : _("missing timezone")));
 }
