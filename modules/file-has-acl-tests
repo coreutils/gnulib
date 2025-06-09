@@ -15,6 +15,8 @@ AC_CHECK_DECLS_ONCE([alarm])
 Makefile.am:
 TESTS += \
   test-file-has-acl.sh test-file-has-acl-1.sh test-file-has-acl-2.sh
-TESTS_ENVIRONMENT += USE_ACL=$(USE_ACL)
+TESTS_ENVIRONMENT += \
+  USE_ACL=$(USE_ACL) \
+  host_os='@host_os@'
 check_PROGRAMS += test-file-has-acl
 test_file_has_acl_LDADD = $(LDADD) $(FILE_HAS_ACL_LIB)
