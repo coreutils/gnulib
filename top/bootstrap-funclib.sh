@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2025-03-27.18; # UTC
+scriptlibversion=2025-06-10.02; # UTC
 
 # Copyright (C) 2003-2025 Free Software Foundation, Inc.
 #
@@ -1376,7 +1376,7 @@ autogen()
 # Local Variables:
 # eval: (add-hook 'before-save-hook 'time-stamp nil t)
 # time-stamp-start: "scriptlibversion="
-# time-stamp-format: "%:y-%02m-%02d.%02H"
+# time-stamp-format: "%Y-%02m-%02d.%02H"
 # time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"
 # End:

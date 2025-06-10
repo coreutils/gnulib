@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2024-07-04.10; # UTC
+scriptversion=2025-06-10.02; # UTC
 
 # Copyright (C) 2006-2025 Free Software Foundation, Inc.
 
@@ -107,7 +107,7 @@ done
 # Local variables:
 # eval: (add-hook 'before-save-hook 'time-stamp nil t)
 # time-stamp-start: "scriptversion="
-# time-stamp-format: "%:y-%02m-%02d.%02H"
+# time-stamp-format: "%Y-%02m-%02d.%02H"
 # time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"
 # End:
