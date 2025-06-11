@@ -1,6 +1,6 @@
 # fenv-environment.m4
-# serial 4
-dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
+# serial 5
+dnl Copyright (C) 2023-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -178,10 +178,12 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
     esac
     dnl The fesetenv function does not work on FreeBSD 12.2/arm64 (see
     dnl <https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4>),
+    dnl on mingw 13 (where fesetenv (FE_DFL_ENV) does not reset the rounding
+    dnl direction),
     dnl on musl libc/{i386,x86_64} and AIX and Solaris and MSVC 14 (where it
     dnl fails to restore the exception trap bits),
-    dnl on mingw (where calling it with FE_DFL_ENV argument has no effect on
-    dnl the mxcsr register),
+    dnl on mingw < 13 (where calling it with FE_DFL_ENV argument has no effect
+    dnl on the mxcsr register),
     dnl and on NetBSD/m68k.
     AC_CACHE_CHECK([whether fesetenv works],
       [gl_cv_func_fesetenv_works],
@@ -310,7 +312,9 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
     dnl and on musl libc/{i386,x86_64} and AIX and Solaris and mingw 10 (where
     dnl it fails to restore the exception trap bits),
     dnl and on FreeBSD 12.2/arm64 (see
-    dnl <https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4>).
+    dnl <https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4>),
+    dnl and on mingw 13 (where feupdateenv (FE_DFL_ENV) does not restore the
+    dnl rounding direction).
     dnl On MSVC 14 it may even fail.
     AC_CACHE_CHECK([whether feupdateenv works],
       [gl_cv_func_feupdateenv_works],

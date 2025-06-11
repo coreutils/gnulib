@@ -1,5 +1,5 @@
 /* Functions for tracking which floating-point exceptions have occurred.
-   Copyright (C) 1997-2024 Free Software Foundation, Inc.
+   Copyright (C) 1997-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -33,8 +33,9 @@ fesetexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-#  if defined _MSC_VER
   exceptions = exceptions_to_x86hardware (exceptions);
+
+#  if defined _MSC_VER
 
   /* Set the flags in the SSE unit.  */
   unsigned int mxcsr, orig_mxcsr;
