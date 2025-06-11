@@ -33,9 +33,9 @@ feenableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-#  if defined _MSC_VER
-
   exceptions = exceptions_to_x86hardware (exceptions);
+
+#  if defined _MSC_VER
 
   /* Enable the traps only in the SSE unit.  */
   unsigned int mxcsr, orig_mxcsr;
@@ -45,7 +45,6 @@ feenableexcept (int exceptions)
     _FPU_SETSSECW (mxcsr);
 
   unsigned int trapbits = 0x3f & ~(orig_mxcsr >> 7);
-  return x86hardware_to_exceptions (trapbits);
 
 #  else
 
@@ -66,9 +65,11 @@ feenableexcept (int exceptions)
         _FPU_SETSSECW (mxcsr);
     }
 
-  return FE_ALL_EXCEPT & ~orig_fctrl;
+  unsigned int trapbits = 0x3f & ~orig_fctrl;
 
 #  endif
+
+  return x86hardware_to_exceptions (trapbits);
 }
 
 int
@@ -76,9 +77,9 @@ fedisableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-#  if defined _MSC_VER
-
   exceptions = exceptions_to_x86hardware (exceptions);
+
+#  if defined _MSC_VER
 
   /* Disable the traps only in the SSE unit.  */
   unsigned int mxcsr, orig_mxcsr;
@@ -88,7 +89,6 @@ fedisableexcept (int exceptions)
     _FPU_SETSSECW (mxcsr);
 
   unsigned int trapbits = 0x3f & ~(orig_mxcsr >> 7);
-  return x86hardware_to_exceptions (trapbits);
 
 #  else
 
@@ -109,9 +109,11 @@ fedisableexcept (int exceptions)
         _FPU_SETSSECW (mxcsr);
     }
 
-  return FE_ALL_EXCEPT & ~orig_fctrl;
+  unsigned int trapbits = 0x3f & ~orig_fctrl;
 
 #  endif
+
+  return x86hardware_to_exceptions (trapbits);
 }
 
 int
@@ -122,13 +124,14 @@ fegetexcept (void)
   unsigned int mxcsr;
   _FPU_GETSSECW (mxcsr);
   unsigned int trapbits = 0x3f & ~(mxcsr >> 7);
-  return x86hardware_to_exceptions (trapbits);
 #  else
   /* Look at the trap bits in the 387 unit.  */
   unsigned short fctrl;
   _FPU_GETCW (fctrl);
-  return FE_ALL_EXCEPT & ~fctrl;
+  unsigned int trapbits = 0x3f & ~fctrl;
 #  endif
+
+  return x86hardware_to_exceptions (trapbits);
 }
 
 # elif defined __aarch64__ /* arm64 */

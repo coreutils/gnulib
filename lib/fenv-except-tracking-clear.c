@@ -33,9 +33,9 @@ feclearexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-#  if defined _MSC_VER
-
   exceptions = exceptions_to_x86hardware (exceptions);
+
+#  if defined _MSC_VER
 
   /* Clear the bits only in the SSE unit.  */
   unsigned int mxcsr, orig_mxcsr;

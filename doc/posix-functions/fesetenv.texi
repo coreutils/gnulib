@@ -15,7 +15,9 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, Solaris 9, Cygwin 1.
 @item
 This function does not work on some platforms:
 @c https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4
-FreeBSD 12.2/arm64.
+FreeBSD 12.2/arm64,
+@c fesetenv (FE_DFL_ENV) does not reset the rounding direction.
+mingw 13.
 @item
 This function does not restore the floating-point exception trap bits
 on some platforms:
