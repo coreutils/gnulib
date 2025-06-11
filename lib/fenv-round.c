@@ -44,9 +44,9 @@ fegetround (void)
   unsigned short fctrl;
   _FPU_GETCW (fctrl);
 #  endif
-#  ifdef _MSC_VER
+#  if defined _MSC_VER || (defined __MINGW32__ && FE_INVALID != 0x01)
   /* The MSVC header files have different values for the rounding directions
-     than all the other platforms, and the even changed between MSVC 14 and
+     than all the other platforms, and they even changed between MSVC 14 and
      MSVC 14.30 (!).  Map
        0x0000 -> FE_TONEAREST = 0
        0x0400 -> FE_DOWNWARD
@@ -61,13 +61,13 @@ fegetround (void)
 int
 fesetround (int rounding_direction)
 {
-#  ifdef _MSC_VER
+#  if defined _MSC_VER || (defined __MINGW32__ && FE_INVALID != 0x01)
   /* The MSVC header files have different values for the rounding directions
      than all the other platforms.  */
   if ((rounding_direction & ~0x0300) != 0)
     return -1;
   /* The MSVC header files have different values for the rounding directions
-     than all the other platforms, and the even changed between MSVC 14 and
+     than all the other platforms, and they even changed between MSVC 14 and
      MSVC 14.30 (!).  Map
      FE_TONEAREST = 0                        -> 0x0000
      FE_DOWNWARD                             -> 0x0400

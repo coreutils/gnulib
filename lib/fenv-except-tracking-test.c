@@ -70,6 +70,7 @@ fetestexcept (int exceptions)
     }
 
   return x86hardware_to_exceptions (fstat | mxcsr) & FE_ALL_EXCEPT & exceptions;
+
 #  endif
 }
 

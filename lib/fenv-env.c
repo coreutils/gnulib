@@ -105,7 +105,8 @@ fesetenv (fenv_t const *envp)
 
 # if (defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)
 
-/* On all OSes except MSVC, macOS, Solaris, fenv_t is binary-equivalent to
+/* On all OSes except MSVC, mingw ≥ 13, macOS, Solaris, fenv_t is
+   binary-equivalent to
      - either a x86_387_fenv_t (7 'unsigned int' words)
        where mxcsr is stored:
          - for glibc/i386: in __eip = more[1].
@@ -118,6 +119,23 @@ fesetenv (fenv_t const *envp)
      _Fe_ctl bits 9..8 are the rounding direction,
      _Fe_ctl bits 4..0 are the exception trap bits (inverted),
      _Fe_stat bits 4..0 are the exception flags.
+   On mingw ≥ 13, it's a
+     struct { unsigned int _Fe_ctl, _Fe_stat; }, where
+     _Fe_ctl bits 9..8 are the rounding direction,
+     _Fe_ctl bits 23..22 are the rounding direction
+                             from the 387 compatible floating-point unit,
+     _Fe_ctl bits 31..30 are the rounding direction
+                             from the SSE compatible floating-point unit,
+     _Fe_ctl bits 4..0 are the exception trap bits (inverted),
+     _Fe_ctl bits 20..16 are the exception trap bits (inverted)
+                             from the 387 compatible floating-point unit,
+     _Fe_ctl bits 28..24 are the exception trap bits (inverted)
+                             from the SSE compatible floating-point unit,
+     _Fe_stat bits 4..0 are the exception flags,
+     _Fe_stat bits 20..16 are the exception flags
+                              from the 387 compatible floating-point unit,
+     _Fe_stat bits 28..24 are the exception flags
+                              from the SSE compatible floating-point unit.
    On macOS, it's a
      struct { unsigned short __control, __status; unsigned int __mxcsr; ... }.
    On Solaris, it's a
@@ -146,6 +164,38 @@ fegetenv (fenv_t *envp)
                    | (mxcsr & (1 << 3) ? FE_OVERFLOW : 0)
                    | (mxcsr & (1 << 4) ? FE_UNDERFLOW : 0)
                    | (mxcsr & (1 << 5) ? FE_INEXACT : 0);
+
+#  elif (defined __MINGW32__ && FE_INVALID != 0x01) /* mingw ≥ 13 */
+
+  x86_387_fenv_t env387;
+
+  __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env387));
+  /* Note: fnstenv masks all floating-point exceptions until the fldcw
+     below.  */
+  __asm__ __volatile__ ("fldcw %0" : : "m" (env387.__control_word));
+
+  /* rounding direction */
+  unsigned int round_387 = (env387.__control_word & 0x0C00) >> 2;
+  /* exception trap bits (inverted) */
+  unsigned int trapbits_387 = x86hardware_to_exceptions (env387.__control_word);
+  /* exception flags */
+  unsigned int excflags_387 = x86hardware_to_exceptions (env387.__status_word);
+
+  unsigned int mxcsr;
+  _FPU_GETSSECW (mxcsr);
+
+  /* rounding direction */
+  unsigned int round_sse = (mxcsr & 0x6000) >> 5;
+  /* exception trap bits (inverted) */
+  unsigned int trapbits_sse = x86hardware_to_exceptions (mxcsr >> 7);
+  /* exception flags */
+  unsigned int excflags_sse = x86hardware_to_exceptions (mxcsr);
+
+  envp->_Fe_ctl =
+      (round_sse << 22) | (round_387 << 14) | round_sse | round_387
+    | (trapbits_sse << 24) | (trapbits_387 << 16) | trapbits_sse | trapbits_387;
+  envp->_Fe_stat =
+    (excflags_sse << 24) | (excflags_387 << 16) | excflags_sse | excflags_387;
 
 #  elif defined __APPLE__ && defined __MACH__ /* macOS */
 
@@ -229,6 +279,50 @@ fesetenv (fenv_t const *envp)
             | (envp->_Fe_stat & FE_UNDERFLOW ? 1 << 4 : 0)
             | (envp->_Fe_stat & FE_INEXACT   ? 1 << 5 : 0);
   _FPU_SETSSECW (mxcsr);
+
+#  elif (defined __MINGW32__ && FE_INVALID != 0x01) /* mingw ≥ 13 */
+
+  unsigned short env_fctrl;
+  unsigned short env_fstat;
+  unsigned int env_mxcsr;
+  /* On mingw, FE_DFL_ENV is NULL.  */
+  if (envp == FE_DFL_ENV)
+    {
+      env_fctrl = 0x3F;
+      env_fstat = 0;
+      env_mxcsr = 0x3F << 7;
+    }
+  else
+    {
+      /* rounding direction */
+      unsigned int round_387 = (envp->_Fe_ctl >> 14) & 0x0300;
+      unsigned int round_sse = (envp->_Fe_ctl >> 22) & 0x0300;
+      /* exception trap bits (inverted) */
+      unsigned int trapbits_387 = (envp->_Fe_ctl >> 16) & 0x1F;
+      unsigned int trapbits_sse = (envp->_Fe_ctl >> 24) & 0x1F;
+      /* exception flags */
+      unsigned int excflags_387 = (envp->_Fe_stat >> 16) & 0x1F;
+      unsigned int excflags_sse = (envp->_Fe_stat >> 24) & 0x1F;
+
+      env_fctrl = (round_387 << 2) | exceptions_to_x86hardware (trapbits_387);
+      env_fstat = exceptions_to_x86hardware (excflags_387);
+      env_mxcsr = (round_sse << 5)
+                  | (exceptions_to_x86hardware (trapbits_sse) << 7)
+                  | exceptions_to_x86hardware (excflags_sse);
+    }
+
+  /* In the SSE unit.  */
+  unsigned int mxcsr = env_mxcsr;
+  _FPU_SETSSECW (mxcsr);
+
+  /* In the 387 unit.  */
+  x86_387_fenv_t env387;
+  __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env387));
+  /* Note: fnstenv masks all floating-point exceptions until the fldenv
+     below.  */
+  env387.__control_word = env_fctrl;
+  env387.__status_word = env_fstat;
+  __asm__ __volatile__ ("fldenv %0" : : "m" (*&env387));
 
 #  elif defined __APPLE__ && defined __MACH__ /* macOS */
 

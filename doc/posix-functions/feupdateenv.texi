@@ -22,7 +22,9 @@ This function does not work on some platforms:
 @c https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d
 glibc 2.5/ia64,
 @c https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4
-FreeBSD 12.2/arm64.
+FreeBSD 12.2/arm64,
+@c feupdateenv (FE_DFL_ENV) does not restore the rounding direction.
+mingw 13.
 @item
 This function forgets about the currently set floating-point exception flags
 on some platforms:
