@@ -23,11 +23,11 @@
 #   -c
 #   -g
 #   -O          (mapped to -O or -O2, depending on implementation)
-#   -o FILE     (for libtool compatility)
-#   -lLIBRARY   (for libtool compatility)
-#   -LDIR       (for libtool compatility)
-#   -pthread    (for libtool compatility)
-#   -Wl,OPTION  (for libtool compatility)
+#   -o FILE     (for libtool compatibility)
+#   -lLIBRARY   (for libtool compatibility)
+#   -LDIR       (for libtool compatibility)
+#   -pthread    (for libtool compatibility)
+#   -Wl,OPTION  (for libtool compatibility)
 
 # Find out which implementation we are using.
 case `@DC@ --version | sed -e 's/ .*//' -e 1q` in
