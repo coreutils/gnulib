@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (fstat, int, (int, struct stat *));
 
 #include <errno.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 #include "macros.h"
@@ -44,6 +45,22 @@ main ()
     errno = 0;
     ASSERT (fstat (99, &statbuf) == -1);
     ASSERT (errno == EBADF);
+  }
+
+  /* /dev/null is a character device.  */
+  {
+    int fd;
+    struct stat statbuf;
+
+#if defined _WIN32 && !defined __CYGWIN__
+    fd = open ("NUL", O_RDWR);
+#else
+    fd = open ("/dev/null", O_RDWR);
+#endif
+    ASSERT (fstat (fd, &statbuf) == 0);
+    close (fd);
+    ASSERT (!S_ISREG (statbuf.st_mode));
+    ASSERT (S_ISCHR (statbuf.st_mode));
   }
 
   return test_exit_status;
