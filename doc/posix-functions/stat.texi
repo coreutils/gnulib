@@ -36,6 +36,10 @@ On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:
 mingw, MSVC 14.
 @item
+@c https://sourceforge.net/p/mingw-w64/bugs/1009/
+On mingw, the @code{st_mode} field of @code{stat("NUL",buf)} is bogus,
+suggesting that @code{NUL} is a regular file.
+@item
 On macOS 12.6, when this function yields a timestamp with a
 nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
 @minus{}999999999..@minus{}1, representing a negative nanoseconds
