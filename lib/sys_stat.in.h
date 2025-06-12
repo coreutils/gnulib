@@ -1,5 +1,5 @@
 /* Provide a more complete sys/stat.h header file.
-   Copyright (C) 2005-2024 Free Software Foundation, Inc.
+   Copyright (C) 2005-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -847,7 +847,11 @@ _GL_WARN_ON_USE (mknodat, "mknodat is not portable - "
 #   elif @WINDOWS_64_BIT_ST_SIZE@
      /* Above, we define stat to _stati64.  */
 #    if defined __MINGW32__ && defined _stati64
-#     ifndef _USE_32BIT_TIME_T
+#     ifdef _USE_32BIT_TIME_T
+       /* The system headers possibly define _stati64 to _stat32i64.  */
+#      undef _stat32i64
+#      define _stat32i64(name, st) rpl_stat (name, st)
+#     else
        /* The system headers define _stati64 to _stat64.  */
 #      undef _stat64
 #      define _stat64(name, st) rpl_stat (name, st)
