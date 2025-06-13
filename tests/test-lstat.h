@@ -64,14 +64,17 @@ test_lstat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (func (BASE "file/", &st1) == -1);
   ASSERT (errno == ENOTDIR);
 
-  /* /dev/null is a character device.  */
+  /* /dev/null is a character device.
+     Except on Solaris, where it is a symlink.  */
 #if defined _WIN32 && !defined __CYGWIN__
   ASSERT (func ("NUL", &st1) == 0);
 #else
   ASSERT (func ("/dev/null", &st1) == 0);
 #endif
   ASSERT (!S_ISREG (st1.st_mode));
+#if !defined __sun
   ASSERT (S_ISCHR (st1.st_mode));
+#endif
 
   /* Now for some symlink tests, where supported.  We set up:
      link1 -> directory
