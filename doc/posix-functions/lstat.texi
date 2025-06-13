@@ -32,6 +32,9 @@ nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
 offset from @code{tv_sec}.  Solaris 11.4 is similar, except that
 @code{tv_sec} might also be @minus{}1000000000.
 @item
+On Windows platforms (excluding Cygwin), a different name has to be used
+for the null device, namely @code{"NUL"} instead of @code{"/dev/null"}.
+@item
 On Windows platforms (excluding Cygwin), symlinks are not supported, so
 @code{lstat} does not exist.
 @end itemize

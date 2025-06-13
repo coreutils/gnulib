@@ -40,6 +40,9 @@ nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
 @minus{}999999999..@minus{}1, representing a negative nanoseconds
 offset from @code{tv_sec}.  Solaris 11.4 is similar, except that
 @code{tv_sec} might also be @minus{}1000000000.
+@item
+On Windows platforms (excluding Cygwin), a different name has to be used
+for the null device, namely @code{"NUL"} instead of @code{"/dev/null"}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
