@@ -62,11 +62,7 @@ test_stat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (errno == ENOTDIR);
 
   /* /dev/null is a character device.  */
-#if defined _WIN32 && !defined __CYGWIN__
-  ASSERT (func ("NUL", &st1) == 0);
-#else
   ASSERT (func ("/dev/null", &st1) == 0);
-#endif
   ASSERT (!S_ISREG (st1.st_mode));
   ASSERT (S_ISCHR (st1.st_mode));
 

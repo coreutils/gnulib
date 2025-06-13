@@ -52,11 +52,7 @@ main ()
     int fd;
     struct stat statbuf;
 
-#if defined _WIN32 && !defined __CYGWIN__
-    fd = open ("NUL", O_RDWR);
-#else
     fd = open ("/dev/null", O_RDWR);
-#endif
     ASSERT (fstat (fd, &statbuf) == 0);
     close (fd);
     ASSERT (!S_ISREG (statbuf.st_mode));
