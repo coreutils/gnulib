@@ -1,5 +1,5 @@
 /* Test of controlling the floating-point environment.
-   Copyright (C) 2023-2024 Free Software Foundation, Inc.
+   Copyright (C) 2023-2025 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,14 @@
 #include "macros.h"
 
 /* Test the combination of fegetenv() with fesetenv().  */
+
+/* Some CPUs don't support FE_UPWARD and FE_DOWNWARD in hardware.  */
+#if defined __sh__
+# ifndef FE_UPWARD
+#  define FE_UPWARD   FE_TOWARDZERO
+#  define FE_DOWNWARD FE_TONEAREST
+# endif
+#endif
 
 /* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
 #ifndef FE_VXSOFT
