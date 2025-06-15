@@ -25,6 +25,14 @@
 
 /* Test the combination of feholdexcept() with feupdateenv().  */
 
+/* Some CPUs don't support FE_UPWARD and FE_DOWNWARD in hardware.  */
+#if defined __sh__
+# ifndef FE_UPWARD
+#  define FE_UPWARD   FE_TOWARDZERO
+#  define FE_DOWNWARD FE_TONEAREST
+# endif
+#endif
+
 /* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
 #ifndef FE_VXSOFT
 # define FE_VXSOFT 0
