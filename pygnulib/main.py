@@ -482,7 +482,11 @@ def main(temp_directory: str) -> None:
                         dest='vc_files',
                         default=None,
                         action='store_false')
-    # single-configure
+    # two-configures, single-configure
+    parser.add_argument('--two-configures',
+                        dest='single_configure',
+                        default=None,
+                        action='store_false')
     parser.add_argument('--single-configure',
                         dest='single_configure',
                         default=None,
@@ -703,7 +707,7 @@ def main(temp_directory: str) -> None:
     if ((mode in ['import', 'add-import', 'remove-import']
          and (cmdargs.excl_cxx_tests or cmdargs.excl_longrunning_tests
               or cmdargs.excl_privileged_tests or cmdargs.excl_unportable_tests
-              or cmdargs.single_configure))
+              or cmdargs.single_configure != None))
         or (mode == 'update'
             and (cmdargs.localpath != None or cmdargs.libname != None
                  or cmdargs.sourcebase != None or cmdargs.m4base != None
@@ -853,6 +857,9 @@ def main(temp_directory: str) -> None:
     copymode = cmdargs.copymode
     lcopymode = cmdargs.lcopymode
     single_configure = cmdargs.single_configure
+    # Canonicalize the single_configure variable.
+    if single_configure == None:
+        single_configure = True
 
     # Create pygnulib configuration.
     config = GLConfig(

@@ -29,7 +29,8 @@ situation of multiple @code{gnulib-tool} invocations in the scope of a
 single @code{configure} file.  This is because the question ``is module
 B present?'' does not have a unique answer in such situations.
 @code{gnulib-tool} has support for these techniques in the situation of
-@code{--create-testdir --single-configure}, which basically has two
+@code{--create-testdir} (without option @code{--two-configures}),
+which basically has two
 @code{gnulib-tool} invocations, one for a set of modules that end up in
 @code{gllib}, and one for the set of modules that end up in
 @code{gltests}.  But you should be aware that this does not cover the

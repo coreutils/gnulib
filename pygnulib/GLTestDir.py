@@ -169,8 +169,8 @@ class GLTestDir:
                     modules.add(module)
         specified_modules = sorted(modules)
 
-        # Test modules which invoke AC_CONFIG_FILES cannot be used with
-        # --with-tests --single-configure. Avoid them.
+        # Test modules which invoke AC_CONFIG_FILES cannot be used with --with-tests
+        # (without --two-configures). Avoid them.
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests and self.config.checkSingleConfigure():
             self.config.addAvoid('havelib-tests')

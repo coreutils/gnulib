@@ -323,8 +323,8 @@ Options for --import, --add/remove-import:
 
 Options for --create-[mega]testdir, --[mega]test:
 
-      --single-configure    Generate a single configure file, not a separate
-                            configure file for the tests directory.
+      --two-configures      Generate a separate configure file for the tests
+                            directory, not a single configure file.
 
 Options for --import, --add/remove-import, --update,
             --create-[mega]testdir, --[mega]test:
@@ -1145,7 +1145,7 @@ func_determine_path_separator
 #                          otherwise
 # - excl_unportable_tests  true if --without-unportable-tests was given, blank
 #                          otherwise
-# - single_configure  true if --single-configure was given, false otherwise
+# - single_configure  false if --two-configures was given, true otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - cond_dependencies  true if --conditional-dependencies was given, false if
 #                      --no-conditional-dependencies was given, blank otherwise
@@ -1195,7 +1195,7 @@ func_determine_path_separator
   excl_longrunning_tests=
   excl_privileged_tests=
   excl_unportable_tests=
-  single_configure=false
+  single_configure=
   avoidlist=
   cond_dependencies=
   lgpl=
@@ -1239,7 +1239,7 @@ func_determine_path_separator
       --create-megatestdir | --create-megatestdi | --create-megatestd | --create-megatest | --create-megates | --create-megate | --create-megat | --create-mega | --create-meg | --create-me | --create-m )
         mode=create-megatestdir
         shift ;;
-      --test | --tes | --te | --t )
+      --test | --tes | --te )
         mode=test
         shift ;;
       --megatest | --megates | --megate | --megat | --mega | --meg | --me | --m )
@@ -1391,6 +1391,9 @@ func_determine_path_separator
         shift ;;
       --without-unportable-tests | --without-unportable-test | --without-unportable-tes | --without-unportable-te | --without-unportable-t | --without-unportable- | --without-unportable | --without-unportabl | --without-unportab | --without-unporta | --without-unport | --without-unpor | --without-unpo | --without-unp | --without-un | --without-u)
         excl_unportable_tests=true
+        shift ;;
+      --two-configures | --two-configure | --two-configur | --two-configu | --two-config | --two-confi | --two-conf | --two-con | --two-co | --two-c | --two- | --two | --tw)
+        single_configure=false
         shift ;;
       --single-configure | --single-configur | --single-configu | --single-config | --single-confi | --single-conf | --single-con | --single-co | --single-c | --single- | --single | --singl | --sing | --sin | --si)
         single_configure=true
@@ -1553,7 +1556,7 @@ func_determine_path_separator
   if case "$mode" in import | add-import | remove-import) true;; *) false;; esac; then
     if test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
        || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests" \
-       || test "$single_configure" != false; then
+       || test -n "$single_configure"; then
       echo "gnulib-tool: invalid options for '$mode' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       func_exit 1
@@ -1616,6 +1619,10 @@ func_determine_path_separator
   esac
   # Now the only possible values of "$inctests" are true and false
   # (or blank but then it is irrelevant).
+  # Canonicalize the single_configure variable.
+  if test -z "$single_configure"; then
+    single_configure=true
+  fi
 
   # Determine the minimum supported autoconf version from the project's
   # configure.ac.
@@ -6571,8 +6578,8 @@ func_create_testdir ()
   # Canonicalize the list of specified modules.
   specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
 
-  # Test modules which invoke AC_CONFIG_FILES cannot be used with
-  # --with-tests --single-configure. Avoid them.
+  # Test modules which invoke AC_CONFIG_FILES cannot be used with --with-tests
+  # (without --two-configures). Avoid them.
   if $inctests && $single_configure; then
     avoidlist="$avoidlist havelib-tests"
   fi

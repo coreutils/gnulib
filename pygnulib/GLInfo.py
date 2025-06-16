@@ -302,8 +302,8 @@ Options for --import, --add/remove-import:
 
 Options for --create-[mega]testdir, --[mega]test:
 
-      --single-configure    Generate a single configure file, not a separate
-                            configure file for the tests directory.
+      --two-configures      Generate a separate configure file for the tests
+                            directory, not a single configure file.
 
 Options for --import, --add/remove-import, --update,
             --create-[mega]testdir, --[mega]test:
