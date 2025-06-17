@@ -25,4 +25,7 @@ Linux kernel 6.12.
 This function does not report synthetic @code{security.*} extended attributes
 on @code{tmpfs} and @code{kernfs}-based file systems:
 Linux kernel 6.14.
+@item
+This function can fail with @code{ERANGE} even if the buffer is large enough:
+Linux kernel 6.15.
 @end itemize
