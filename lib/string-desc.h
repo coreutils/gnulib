@@ -671,7 +671,7 @@ extern void _sd_overwrite (rw_string_desc_t s, idx_t start,
 GL_STRING_DESC_INLINE void
 sd_overwrite (rw_string_desc_t s, idx_t start, string_desc_t t)
 {
-  return _sd_overwrite (s, start, t._nbytes, t._data);
+  _sd_overwrite (s, start, t._nbytes, t._data);
 }
 #endif
 
