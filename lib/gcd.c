@@ -22,7 +22,7 @@
 #ifndef WORD_T
 /* Specification.  */
 # include "gcd.h"
-# define WORD_T unsigned long
+# define WORD_T GCD_WORD_T
 # define GCD gcd
 #endif
 

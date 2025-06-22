@@ -18,13 +18,25 @@
 #ifndef _GCD_H
 #define _GCD_H
 
+/* Before including this file, you may define:
+     GCD_WORD_T         The parameter type and result type of the gcd function.
+ */
+
+#ifdef GCD_WORD_T
+/* Make sure that GCD_WORD_T is defined as a type.  */
+# include <stddef.h>
+# include <stdint.h>
+#else
+# define GCD_WORD_T unsigned long
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
 /* Return the greatest common divisor of a > 0 and b > 0.  */
-extern unsigned long gcd (unsigned long a, unsigned long b);
+extern GCD_WORD_T gcd (GCD_WORD_T a, GCD_WORD_T b);
 
 
 #ifdef __cplusplus
