@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 13, 2024
+@set lastupdate June 22, 2025
 @c %**end of header
 
 @dircategory GNU organization
@@ -65,7 +65,7 @@ Texts.  A copy of the license is included in the section entitled
 * Writing C::                   Making the best use of C.
 * Documentation::               Documenting programs.
 * Managing Releases::           The release process.
-* References::                  Mentioning non-free software or documentation.
+* References::                  Mentioning nonfree software or documentation.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 
@@ -142,12 +142,13 @@ This chapter discusses how you can make sure that GNU software
 avoids legal difficulties, and other related issues.
 
 @menu
-* Reading Non-Free Code::       Referring to proprietary programs.
+* Reading Nonfree Code::       Referring to proprietary programs.
 * Contributions::               Accepting contributions.
 * Trademarks::                  How we deal with trademark issues.
+* Terms to Avoid::              Be careful of certain words!
 @end menu
 
-@node Reading Non-Free Code
+@node Reading Nonfree Code
 @section Referring to Proprietary Programs
 @cindex proprietary programs
 @cindex avoiding proprietary code
@@ -259,6 +260,14 @@ something a ``win'' is a form of praise.  You're free to praise
 Microsoft Windows on your own if you want, but please don't do so in
 GNU packages.  Please write ``Windows'' in full, or abbreviate it to
 ``w.''  @xref{System Portability}.
+
+@node Terms to Avoid
+@chapter Terms to Avoid
+
+Be careful---never use the word ``steward'' to refer to any person
+involved with developing any free software!  An EU directive, the CRA,
+gives that word a specific legal meaning which imposes requirements
+that are painful or even impossible.
 
 @node Design Advice
 @chapter General Program Design
@@ -4112,7 +4121,7 @@ This is sufficient in many cases.
 @node Reading other Manuals
 @section Reading other Manuals
 
-There may be non-free books or documentation files that describe the
+There may be nonfree books or documentation files that describe the
 program you are documenting.
 
 It is ok to use these documents for reference, just as the author of a
@@ -4120,7 +4129,7 @@ new algebra textbook can read other books on algebra.  A large portion
 of any non-fiction book consists of facts, in this case facts about how
 a certain program works, and these facts are necessarily the same for
 everyone who writes about the subject.  But be careful not to copy your
-outline structure, wording, tables or examples from preexisting non-free
+outline structure, wording, tables or examples from preexisting nonfree
 documentation.  Copying from free documentation may be ok; please check
 with the FSF about the individual case.
 
@@ -4451,11 +4460,11 @@ the expense of possible inconvenience to a user who doesn't know what
 other files to get.
 
 @node References
-@chapter References to Non-Free Software and Documentation
-@cindex references to non-free material
+@chapter References to Nonfree Software and Documentation
+@cindex references to nonfree material
 
 A GNU program should not recommend, promote, or grant legitimacy to
-the use of any non-free program.  Proprietary software is a social and
+the use of any nonfree program.  Proprietary software is a social and
 ethical problem, and our aim is to put an end to that problem.  We
 can't stop some people from writing proprietary programs, or stop
 other people from using them, but we can and should refuse to
@@ -4466,7 +4475,7 @@ The GNU definition of free software is found on the GNU web site at
 @url{https://www.gnu.org/@/philosophy/@/free-sw.html}, and the definition
 of free documentation is found at
 @url{https://www.gnu.org/@/philosophy/@/free-doc.html}.  The terms ``free''
-and ``non-free'', used in this document, refer to those definitions.
+and ``nonfree'', used in this document, refer to those definitions.
 
 A list of important licenses and whether they qualify as free is in
 @url{https://www.gnu.org/@/licenses/@/license-list.html}.  If it is not
@@ -4474,16 +4483,16 @@ clear whether a license qualifies as free, please ask the GNU Project
 by writing to @email{licensing@@gnu.org}.  We will answer, and if the
 license is an important one, we will add it to the list.
 
-When a non-free program or system is well known, you can mention it in
+When a nonfree program or system is well known, you can mention it in
 passing---that is harmless, since users who might want to use it
 probably already know about it.  For instance, it is fine to explain
-how to build your package on top of some widely used non-free
+how to build your package on top of some widely used nonfree
 operating system, or how to use it together with some widely used
-non-free program, after first explaining how to use it on the GNU
+nonfree program, after first explaining how to use it on the GNU
 system.
 
 However, you should give only the necessary information to help those
-who already use the non-free program to use your program with
+who already use the nonfree program to use your program with
 it---don't give, or refer to, any further information about the
 proprietary program, and don't imply that the proprietary program
 enhances your program, or that its existence is in any way a good
@@ -4493,73 +4502,73 @@ program with it, while people who don't already use the proprietary
 program will not see anything likely to lead them to take an interest
 in it.
 
-You shouldn't recommend any non-free add-ons for the non-free program,
+You shouldn't recommend any nonfree add-ons for the nonfree program,
 but it is ok to mention free add-ons that help it to work with your
 program, and how to install the free add-ons even if that requires
-running some non-free program.
+running some nonfree program.
 
-If a non-free program or system is obscure in your program's domain,
+If a nonfree program or system is obscure in your program's domain,
 your program should not mention or support it at all, since doing so
-would tend to popularize the non-free program more than it popularizes
+would tend to popularize the nonfree program more than it popularizes
 your program.  (You cannot hope to find many additional users for your
 program among the users of Foobar, if the existence of Foobar is not
 generally known among people who might want to use your program.)
 
 Sometimes a program is free software in itself but depends on a
-non-free platform in order to run.  For instance, it used to be the
-case that many Java programs depended on some non-free Java libraries.
+nonfree platform in order to run.  For instance, it used to be the
+case that many Java programs depended on some nonfree Java libraries.
 (See @uref{https://www.gnu.org/philosophy/java-trap.html}.)
 To recommend or promote such a program is to promote the other
 programs it needs; therefore, judge mentions of the former as if they
 were mentions of the latter.  For this reason, we were careful about
 listing Java programs in the Free Software Directory: we wanted to
-avoid promoting the non-free Java libraries.
+avoid promoting the nonfree Java libraries.
 
 Java no longer has this problem, but the general principle will remain
 the same: don't recommend, promote or legitimize programs that depend
-on non-free software to run.
+on nonfree software to run.
 
-Some free programs strongly encourage the use of non-free software.  A
+Some free programs strongly encourage the use of nonfree software.  A
 typical example is @command{mplayer}.  It is free software in itself,
 and the free code can handle some kinds of files.  However,
-@command{mplayer} recommends use of non-free codecs for other kinds of
+@command{mplayer} recommends use of nonfree codecs for other kinds of
 files, and users that install @command{mplayer} are very likely to
 install those codecs along with it.  To recommend @command{mplayer}
-is, in effect, to promote use of the non-free codecs.
+is, in effect, to promote use of the nonfree codecs.
 
 Thus, you should not recommend programs that strongly encourage the
-use of non-free software.  This is why we do not list
+use of nonfree software.  This is why we do not list
 @command{mplayer} in the Free Software Directory.
 
-A GNU package should not refer the user to any non-free documentation
+A GNU package should not refer the user to any nonfree documentation
 for free software.  Free documentation that can be included in free
 operating systems is essential for completing the GNU system, or any
 free operating system, so encouraging it is a priority; to recommend
 use of documentation that we are not allowed to include undermines the
 impetus for the community to produce documentation that we can
-include.  So GNU packages should never recommend non-free
+include.  So GNU packages should never recommend nonfree
 documentation.
 
 By contrast, it is ok to refer to journal articles and textbooks in
 the comments of a program for explanation of how it functions, even
-though they are non-free.  This is because we don't include such
+though they are nonfree.  This is because we don't include such
 things in the GNU system even if they are free---they are outside the
 scope of what a software distribution needs to include.
 
-Referring to a web site that describes or recommends a non-free
+Referring to a web site that describes or recommends a nonfree
 program is promoting that program, so please do not make links to (or
 mention by name) web sites that contain such material.  This policy is
 relevant particularly for the web pages for a GNU package.
 
 What about chains of links?  Following links from nearly any web site
-can lead eventually to promotion of non-free software; this is
+can lead eventually to promotion of nonfree software; this is
 inherent in the nature of the web.  Here's how we treat that.
 
 You should not refer to AT&T's web site if that recommends AT&T's
-non-free software packages; you should not refer to a page @var{p}
+nonfree software packages; you should not refer to a page @var{p}
 that links to AT&T's site presenting it as a place to get some
-non-free program, because that part of the page @var{p} itself
-recommends and legitimizes the non-free program.
+nonfree program, because that part of the page @var{p} itself
+recommends and legitimizes the nonfree program.
 
 However, if @var{p} contains a link to AT&T's web site for some other
 purpose (such as long-distance telephone service), that is no reason
@@ -4568,21 +4577,21 @@ you should not link to @var{p}.
 A web page recommends a program in an implicit but particularly strong
 way if it requires users to run that program in order to use the page.
 Many pages contain JavaScript code which they recommend in this way.
-This JavaScript code may be free or non-free, but non-free is the usual
+This JavaScript code may be free or nonfree, but nonfree is the usual
 case.
 
 If the purpose for which you would refer to the page cannot be carried
-out without running non-free JavaScript code, then you should not refer
+out without running nonfree JavaScript code, then you should not refer
 to it.  Thus, if the purpose of referring to the page is for people to
 view a video, or subscribing to a mailing list, and the viewing or
-subscribing fail to work if the user's browser blocks the non-free
+subscribing fail to work if the user's browser blocks the nonfree
 JavaScript code, then don't refer to that page.
 
-The extreme case is that of web sites which depend on non-free
+The extreme case is that of web sites which depend on nonfree
 JavaScript code even to @emph{see} the contents of the pages.  Any
 site hosted on @indicateurl{wix.com} has this problem, and so do some
 other sites.  Referring people to such pages to read their contents
-is, in effect, urging them to run those non-free programs---so please
+is, in effect, urging them to run those nonfree programs---so please
 don't refer to those pages.  (Such pages also break the Web, so they
 deserve condemnation for two reasons.)
 

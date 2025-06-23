@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 5, 2025
+@set lastupdate June 22, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -795,7 +795,7 @@ is optional.
 
 Every nontrivial file needs a license notice as well as the copyright
 notice.  (Without a license notice giving permission to copy and
-change the file, the file is non-free.)
+change the file, the file is nonfree.)
 
 The package itself should contain a full copy of GPL in plain text
 (conventionally in a file named @file{COPYING}) and the GNU Free
@@ -1219,7 +1219,7 @@ install them, but you don't have to.  If you feel the changes are
 complex and ugly, if you think that they will increase the burden of
 future maintenance, you can and should reject them.  This includes
 both free or mainly-free platforms such as OpenBSD, FreeBSD, and
-NetBSD, and non-free platforms such as Windows.
+NetBSD, and nonfree platforms such as Windows.
 
 @node Patches Not to Accept
 @chapter Patches Not to Accept
@@ -1235,7 +1235,7 @@ are fixed.
 
 @menu
 * Non-GNU-only Features::    Every feature in a GNU package should work on GNU.
-* Interoperation with Non-Free::    Don't interoperate better with non-free
+* Interoperation with Nonfree::    Don't interoperate better with nonfree
                                     than with free software.
 * Uninstalled Code in Repo:: Putting code in the package repo without
                                installing it.
@@ -1359,18 +1359,18 @@ like, to say no to these patches.  It aims to invite them to support
 the GNU system equally well in the new feature.  If there is no hope
 of that, just ``No thanks'' is enough.
 
-@node Interoperation with Non-Free
-@section Interoperation with Non-Free Applications
+@node Interoperation with Nonfree
+@section Interoperation with Nonfree Applications
 
 It is quite usual to implement features in GNU programs to make them
-work conveniently with widely used non-free tools and applications.
+work conveniently with widely used nonfree tools and applications.
 But there are situations where you should not implement cooperation
-with a non-free program, which we can refer to here as ShackleMe.
+with a nonfree program, which we can refer to here as ShackleMe.
 
 @itemize @bullet
 @item
 If ShackleMe is not well-known, reject the idea.  GNU packages should
-not even @emph{mention} an obscure non-free program
+not even @emph{mention} an obscure nonfree program
 (@pxref{References,,, standards, GNU Coding Standards}).
 
 @item
@@ -1402,7 +1402,7 @@ with ShackleMe, or better.
 
 @item
 You never have an obligation to write, install or maintain any sort of
-support for a non-free program.  If it is unmaintained and breaks, and
+support for a nonfree program.  If it is unmaintained and breaks, and
 nobody else wants to maintain it you can delete it.  Don't feel
 trapped into working on it!
 @end itemize
@@ -1751,7 +1751,7 @@ It's wise to test your patch by applying it to a copy of the old
 version, and checking that the result exactly matches the new version.
 
 @node Binary Distribution
-@section Binary Distribution for Non-Free Platforms
+@section Binary Distribution for Nonfree Platforms
 
 Some package maintainers release pre-compiled binaries for proprietary
 systems such as Microsoft Windows or MacOS@.  It's entirely up to you
@@ -1760,7 +1760,7 @@ Please do not let anyone make you feel you have an obligation to do
 this.
 
 If you distribute them, please inform their users prominently that
-those non-free platforms trample their freedom.  It is useful to refer
+those nonfree platforms trample their freedom.  It is useful to refer
 them to
 @url{https://www.gnu.org/philosophy/free-software-even-more-important.html}.
 You can say, ``This program respects your freedom, but Windows does
@@ -2454,8 +2454,8 @@ If you use a site other than @code{www.gnu.org}, please make sure that
 the site runs on free software alone.  (It is ok if the site uses
 unreleased custom software, since that is free in a trivial sense:
 there's only one user and it has the four freedoms.)  If the web site
-for a GNU package runs on non-free software, the public will see this,
-and it will have the effect of granting legitimacy to the non-free
+for a GNU package runs on nonfree software, the public will see this,
+and it will have the effect of granting legitimacy to the nonfree
 program.
 
 If you use multiple sites, they should all follow that criterion.
@@ -2690,32 +2690,32 @@ safe from patents, so we use the Ogg Theora and WebM formats for which
 no licensing consortium has been set up.  GNU programs and their web
 sites should not distribute video in MPEG-2 or MPEG 4 formats.
 
-A GNU package should not recommend use of any non-free program, nor
-should it require a non-free program (such as a non-free compiler or
+A GNU package should not recommend use of any nonfree program, nor
+should it require a nonfree program (such as a nonfree compiler or
 IDE) to build.  Thus, a GNU package cannot be written in a programming
 language that does not have a free software implementation.  Now that
 GNU/Linux systems are widely available, all GNU packages should
 provide full functionality on a 100% free GNU/Linux system, and should
-not require any non-free software to build or function.
+not require any nonfree software to build or function.
 The GNU Coding Standards say a lot more about this issue.
 
-Similarly, a GNU package should not require the use of non-free
+Similarly, a GNU package should not require the use of nonfree
 software, including JavaScript, for the coordination of its
 development.  For example, please don't use Transifex for translation
-of your software because it requires your translators to use non-free,
+of your software because it requires your translators to use nonfree,
 JavaScript-based editing tools.  Instead, a service without any
 ethical concerns should be used, such as The Translation Project
 (@url{https://translationproject.org}).
 
-A GNU package should not refer the user to any non-free documentation
+A GNU package should not refer the user to any nonfree documentation
 for free software.  The need for free documentation to come with free
 software is now a major focus of the GNU project; to show that we are
 serious about the need for free documentation, we must not contradict
 our position by recommending use of documentation that isn't free.
 
 Please don't host discussions about your package in a service that
-requires non-free software.  For instance, Google+ ``communities''
-require running a non-free JavaScript program to post a message, so
+requires nonfree software.  For instance, Google+ ``communities''
+require running a nonfree JavaScript program to post a message, so
 they can't be used in the Free World.  Google Groups has the same
 problem.  To host discussions there would be excluding people who live
 by free software principles.
@@ -2886,7 +2886,7 @@ Interviews and speeches about your package are an important channel
 for informing the public about the GNU system and the ideas of the
 free software movement.  Please avoid saying ``open source'' and avoid
 calling the GNU system ``Linux'', just as you would in the package
-itself (@pxref{Terminology}).  Likewise, avoid promoting non-free
+itself (@pxref{Terminology}).  Likewise, avoid promoting nonfree
 programs (@pxref{References,,, standards, GNU Coding
 Standards}) as you would in the package itself.
 
@@ -3029,7 +3029,7 @@ Thanks for your support!
 We don't recommend any specific payment service.  However, GNU
 developers should not use a service that requires them to sign a
 proprietary software license, such as Google's payment service.
-Please also avoid sites that requires users to run non-free software in
+Please also avoid sites that requires users to run nonfree software in
 order to donate.  (This includes JavaScript software, so try it with
 LibreJS or with JavaScript disabled.)
 
@@ -3131,12 +3131,12 @@ work on a proprietary operating system, ShackleOS.
 @quotation
 You've asked us to install support for doing XYZ on ShackleOS.  We can't
 do that until we have support for XYZ on the GNU system.  GNU Project
-policy is not to add special support for a non-free operating system
+policy is not to add special support for a nonfree operating system
 until we have equivalent support for the GNU system.
 
-A non-free system subjugates users.  You may not notice this if you
+A nonfree system subjugates users.  You may not notice this if you
 have become accustomed to such subjugation, but we do.  The Free Software
-Movement aims to liberate those users by replacing non-free systems
+Movement aims to liberate those users by replacing nonfree systems
 with free software such as the GNU system.
 
 This program does not aim to replace ShackleOS, but the GNU system does.
@@ -3152,14 +3152,14 @@ work with a proprietary program, ShackleMe.
 
 @quotation
 You've asked us to install a feature specifically to work with
-ShackleMe, but that program is non-free.  GNU Project policy is not to
-add special support for interoperation with a non-free program until we
+ShackleMe, but that program is nonfree.  GNU Project policy is not to
+add special support for interoperation with a nonfree program until we
 support interoperation with comparable free programs equally well or
 better.
 
-A non-free program subjugates users.  You may not notice this if you
+A nonfree program subjugates users.  You may not notice this if you
 have become accustomed to such subjugation, but we do.  The mission of
-the GNU Project is to liberate those users by replacing the non-free
+the GNU Project is to liberate those users by replacing the nonfree
 programs with free programs.
 
 This program does not aim to replace ShackleMe, but other free
