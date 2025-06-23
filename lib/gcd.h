@@ -21,7 +21,7 @@
 /* Before including this file, you may define:
      GCD_WORD_T         The parameter type and result type of the gcd function.
                         It should be an unsigned integer type that is either
-                        a built-in type or defined in <stdef.h> or <stdint.h>.
+                        a built-in type or defined in <stddef.h> or <stdint.h>.
 
    The definition of GCD_WORD_T needs to be the same across the entire
    application.  Therefore it is best placed in <config.h>.
