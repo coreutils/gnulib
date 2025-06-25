@@ -1,0 +1,33 @@
+Description:
+Searching for any of a given set of fixed strings in text.
+
+Files:
+lib/kwset.h
+lib/kwset.c
+
+Depends-on:
+idx
+memchr2
+minmax
+nullptr
+obstack
+snippet/arg-nonnull
+stdckdint-h
+stdint-h
+verify
+xalloc
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+
+Makefile.am:
+lib_SOURCES += kwset.c
+
+Include:
+"kwset.h"
+
+License:
+GPL
+
+Maintainer:
+all
