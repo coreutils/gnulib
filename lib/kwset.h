@@ -17,9 +17,22 @@
 
 /* Written August 1989 by Mike Haertel.  */
 
+#ifndef _KWSET_H
+#define _KWSET_H
+
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 
-#include <idx.h>
+#include "arg-nonnull.h"
+#include "idx.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct kwsmatch
 {
@@ -27,9 +40,6 @@ struct kwsmatch
   idx_t offset; /* Offset of match.  */
   idx_t size;   /* Length of match.  */
 };
-
-#include <arg-nonnull.h>
-#include <idx.h>
 
 struct kwset;
 typedef struct kwset *kwset_t;
@@ -42,3 +52,9 @@ extern ptrdiff_t kwsexec (kwset_t, char const *, idx_t,
                           struct kwsmatch *, bool)
   _GL_ARG_NONNULL ((4));
 extern void kwsfree (kwset_t);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _KWSET_H */
