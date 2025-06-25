@@ -1,0 +1,11 @@
+Files:
+tests/test-kwset.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-kwset
+check_PROGRAMS += test-kwset

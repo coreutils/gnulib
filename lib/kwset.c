@@ -916,10 +916,14 @@ acexec (kwset_t kwset, char const *text, idx_t size,
 
 /* Find the first instance of a KWSET member in TEXT, which has SIZE bytes.
    Return the offset (into TEXT) of the first byte of the matching substring,
-   or -1 if no match is found.  Upon a match, store details in
-   *KWSMATCH: index of matched keyword, start offset (same as the return
-   value), and length.  If LONGEST, find the longest match; otherwise
-   any match will do.  */
+   or -1 if no match is found.
+   Upon a match:
+     - Store details in *KWSMATCH: index of matched keyword, start offset
+       (same as the return value), and length.
+     - If LONGEST, find the longest match that starts at this offset;
+       otherwise any match that starts at this offset will do.
+   NOTE! LONGEST does *not* mean to search for the longest KWSET member
+   across the entire string.  */
 ptrdiff_t
 kwsexec (kwset_t kwset, char const *text, idx_t size,
          struct kwsmatch *kwsmatch, bool longest)
