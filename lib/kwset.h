@@ -20,7 +20,7 @@
 #ifndef _KWSET_H
 #define _KWSET_H
 
-/* This file uses _GL_ATTRIBUTE_PURE.  */
+/* This file uses _GL_ATTRIBUTE_PURE, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -45,17 +45,22 @@ struct kwset;
 typedef struct kwset *kwset_t;
 
 /* Return a newly allocated keyword set.  A nonnull TRANS specifies a
-   table of character translations to be applied to all pattern and
-   search text.  */
-extern kwset_t kwsalloc (char const *trans);
+   table (indexed by 'unsigned char' values: 0..UCHAR_MAX+1) of character
+   translations to be applied to all pattern and search text.  */
+extern kwset_t kwsalloc (char const *trans)
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 /* Add the given string to the contents of the keyword set.  */
-extern void kwsincr (kwset_t kwset, char const *text, idx_t len);
+extern void kwsincr (kwset_t kwset, char const *text, idx_t len)
+  _GL_ARG_NONNULL ((1, 2));
 
-extern idx_t kwswords (kwset_t kwset) _GL_ATTRIBUTE_PURE;
+/* Return the number of keywords in SET.  */
+extern idx_t kwswords (kwset_t kwset)
+  _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_PURE;
 
 /* Prepare a built keyword set for use.  */
-extern void kwsprep (kwset_t kwset);
+extern void kwsprep (kwset_t kwset)
+  _GL_ARG_NONNULL ((1));
 
 /* Find the first instance of a KWSET member in TEXT, which has SIZE bytes.
    Return the offset (into TEXT) of the first byte of the matching substring,
@@ -69,10 +74,11 @@ extern void kwsprep (kwset_t kwset);
    across the entire string.  */
 extern ptrdiff_t kwsexec (kwset_t kwset, char const *text, idx_t size,
                           struct kwsmatch *match, bool longest)
-  _GL_ARG_NONNULL ((4));
+  _GL_ARG_NONNULL ((1, 2, 4));
 
 /* Free the components of the given keyword set.  */
-extern void kwsfree (kwset_t kwset);
+extern void kwsfree (kwset_t kwset)
+  _GL_ARG_NONNULL ((1));
 
 #ifdef __cplusplus
 }
