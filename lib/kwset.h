@@ -44,14 +44,35 @@ struct kwsmatch
 struct kwset;
 typedef struct kwset *kwset_t;
 
-extern kwset_t kwsalloc (char const *);
-extern void kwsincr (kwset_t, char const *, idx_t);
-extern idx_t kwswords (kwset_t) _GL_ATTRIBUTE_PURE;
-extern void kwsprep (kwset_t);
-extern ptrdiff_t kwsexec (kwset_t, char const *, idx_t,
-                          struct kwsmatch *, bool)
+/* Return a newly allocated keyword set.  A nonnull TRANS specifies a
+   table of character translations to be applied to all pattern and
+   search text.  */
+extern kwset_t kwsalloc (char const *trans);
+
+/* Add the given string to the contents of the keyword set.  */
+extern void kwsincr (kwset_t kwset, char const *text, idx_t len);
+
+extern idx_t kwswords (kwset_t kwset) _GL_ATTRIBUTE_PURE;
+
+/* Prepare a built keyword set for use.  */
+extern void kwsprep (kwset_t kwset);
+
+/* Find the first instance of a KWSET member in TEXT, which has SIZE bytes.
+   Return the offset (into TEXT) of the first byte of the matching substring,
+   or -1 if no match is found.
+   Upon a match:
+     - Store details in *MATCH: index of matched keyword, start offset
+       (same as the return value), and length.
+     - If LONGEST, find the longest match that starts at this offset;
+       otherwise any match that starts at this offset will do.
+   NOTE! LONGEST does *not* mean to search for the longest KWSET member
+   across the entire string.  */
+extern ptrdiff_t kwsexec (kwset_t kwset, char const *text, idx_t size,
+                          struct kwsmatch *match, bool longest)
   _GL_ARG_NONNULL ((4));
-extern void kwsfree (kwset_t);
+
+/* Free the components of the given keyword set.  */
+extern void kwsfree (kwset_t kwset);
 
 #ifdef __cplusplus
 }

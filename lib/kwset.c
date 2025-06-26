@@ -148,9 +148,6 @@ static ptrdiff_t acexec (kwset_t, char const *, idx_t,
 static ptrdiff_t bmexec (kwset_t, char const *, idx_t,
                          struct kwsmatch *, bool);
 
-/* Return a newly allocated keyword set.  A nonnull TRANS specifies a
-   table of character translations to be applied to all pattern and
-   search text.  */
 kwset_t
 kwsalloc (char const *trans)
 {
@@ -178,7 +175,6 @@ kwsalloc (char const *trans)
    exact for CHAR_BIT in { 4..11, 13, 15, 17, 19 }.  */
 enum { DEPTH_SIZE = CHAR_BIT + CHAR_BIT / 2 };
 
-/* Add the given string to the contents of the keyword set.  */
 void
 kwsincr (kwset_t kwset, char const *text, idx_t len)
 {
@@ -423,7 +419,6 @@ treenext (struct tree const *tree, struct trie *next[])
   next[tree->label] = tree->trie;
 }
 
-/* Prepare a built keyword set for use.  */
 void
 kwsprep (kwset_t kwset)
 {
@@ -914,16 +909,6 @@ acexec (kwset_t kwset, char const *text, idx_t size,
            : acexec_trans (kwset, text, size, kwsmatch, longest)));
 }
 
-/* Find the first instance of a KWSET member in TEXT, which has SIZE bytes.
-   Return the offset (into TEXT) of the first byte of the matching substring,
-   or -1 if no match is found.
-   Upon a match:
-     - Store details in *KWSMATCH: index of matched keyword, start offset
-       (same as the return value), and length.
-     - If LONGEST, find the longest match that starts at this offset;
-       otherwise any match that starts at this offset will do.
-   NOTE! LONGEST does *not* mean to search for the longest KWSET member
-   across the entire string.  */
 ptrdiff_t
 kwsexec (kwset_t kwset, char const *text, idx_t size,
          struct kwsmatch *kwsmatch, bool longest)
@@ -931,7 +916,6 @@ kwsexec (kwset_t kwset, char const *text, idx_t size,
   return kwset->kwsexec (kwset, text, size, kwsmatch, longest);
 }
 
-/* Free the components of the given keyword set.  */
 void
 kwsfree (kwset_t kwset)
 {
