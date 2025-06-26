@@ -3280,6 +3280,7 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
   else
     {
       free_charset (mbcset);
+      mbcset = NULL;
       /* Build a tree for simple bracket.  */
       br_token.type = SIMPLE_BRACKET;
       br_token.opr.sbcset = sbcset;
@@ -3293,7 +3294,8 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
   *err = REG_ESPACE;
  parse_bracket_exp_free_return:
   re_free (sbcset);
-  free_charset (mbcset);
+  if (__glibc_likely (mbcset != NULL))
+    free_charset (mbcset);
   return NULL;
 }
 
