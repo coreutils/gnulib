@@ -2,7 +2,7 @@
 # Get modification time of a file or directory, or value of
 # $SOURCE_DATE_EPOCH, and pretty-print it, formatted like 1 January 2000.
 
-scriptversion=2025-06-18.21; # UTC
+scriptversion=2025-06-25.21; # UTC
 
 # Copyright (C) 1995-2025 Free Software Foundation, Inc.
 # written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, June 1995
@@ -49,10 +49,6 @@ Usage: mdate-sh [--help] [--version] FILE
 
 Pretty-print the modification day of FILE, in the format:
 1 January 1970
-
-If the environment variable SOURCE_DATE_EPOCH is set, use its value (in
-epoch-seconds) for the date instead of any FILE mtime.  The FILE
-argument is still required in this case, but ignored.
 
 Report bugs to <bug-automake@gnu.org>.
 GNU Automake home page: <https://www.gnu.org/software/automake/>.
@@ -107,55 +103,6 @@ export LC_TIME
 # Use UTC to get reproducible result.
 TZ=UTC0
 export TZ
-
-# 
-# https://reproducible-builds.org/docs/source-date-epoch/
-if test -n "$SOURCE_DATE_EPOCH"; then
-  epoch_ok=true # be optimistic
-  date_fmt="+%d %B %Y"
-  result=`date -u --date="@$SOURCE_DATE_EPOCH" "$date_fmt" 2>/dev/null`
-  if test -z "$result"; then
-    result=`date -u -r "$SOURCE_DATE_EPOCH" "$date_fmt" 2>/dev/null`
-    if test -z "$result"; then
-      # The date command on Solaris 10 and 11 doesn't support any way
-      # to do this. Fall back to Perl.
-      #
-      perlout=`perl -e 'print scalar gmtime($SOURCE_DATE_EPOCH)' 2>/dev/null`
-      # Output is, e.g., Thu Jan  1 00:00:00 1970. Split it apart,
-      # since we need to convert "Jan" to "January".
-      # (We could use cut, but surely if a system has perl, it has awk?)
-      day=`echo $perlout | awk '{print $3}'`
-      mon=`echo $perlout | awk '{print $2}'`
-      mon_to_month $mon # sets $month
-      year=`echo $perlout | awk '{print $5}'`
-      result="$day $month $year"
-      #
-      if test -z "$result"; then
-        echo "$0: warning: SOURCE_DATE_EPOCH was set, but can't convert, ignoring: $SOURCE_DATE_EPOCH" >&2
-        epoch_ok=false
-      fi
-    fi
-  fi
-  #
-  if $epoch_ok; then
-    # Remove leading spaces and zeros. We don't want to get into the
-    # various date options to control this. (Not quoting $result here
-    # isn't important, just another way to omit leading spaces.)
-    result=`echo $result | sed 's/^[ 0]*//'`
-    if test -z "$result"; then
-      echo "$0: SOURCE_DATE_EPOCH was set, but converted to empty: $SOURCE_DATE_EPOCH" >&2
-      epoch_ok=false
-    fi
-  fi
-  if $epoch_ok; then
-    echo $result
-    exit 0
-  else
-    echo "$0: SOURCE_DATE_EPOCH failed, falling back to using mtime on: $1" >&2
-  fi
-fi
-# end of SOURCE_DATE_EPOCH support, rest is about the normal case of
-# using the mtime of the specified file.
 
 # 
 # GNU ls changes its time format in response to the TIME_STYLE
