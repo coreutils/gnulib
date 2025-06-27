@@ -62,3 +62,106 @@ glibc 2.14.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+@mindex options
+Gnulib provides also a module @code{options}, that
+fixes the following shortcomings of the @code{getopt_long} API.
+
+These shortcomings are best illustrated with an example:
+
+@example
+static struct option const long_options[] =
+@{
+  @{ "width", required_argument, NULL, 'w' @},
+  @{ "help", no_argument, &show_help, 1 @},
+  @{ "version", no_argument, &show_version, 1 @},
+  @{ NULL, 0, NULL, 0 @}
+@};
+
+while ((optchar = getopt_long (argc, argv, "w:xhV", long_options, NULL))
+       != -1)
+  switch (optchar)
+    @{
+    case '\0':           /* Long option with flag != NULL.  */
+      break;
+    case 'w':
+      set_width (optarg);
+      break;
+    case 'x':
+      do_x = true;
+      break;
+    case 'h':
+      show_help = 1;     /* Action code duplication!  */
+      break;
+    case 'V':
+      show_version = 1;  /* Action code duplication!  */
+      break;
+    default:
+      usage (EXIT_FAILURE);
+    @}
+@end example
+
+@itemize
+@item
+The information whether an option takes a required vs.@: optional argument
+needs to be specified twice:
+in the @code{option[]} array for the long option
+and in the string argument for the short option.
+It is too easy to forget to
+add the @code{":"} or @code{"::"} part in the string argument
+and thus get inconsistent behaviour
+between the long option and the short option.
+@item
+This information needs to be specified twice, but in different ways:
+@multitable @columnfractions .3 .3
+@headitem In the array @tab In the string
+@item @code{no_argument} @tab @code{""}
+@item @code{required_argument} @tab @code{":"}
+@item @code{optional_argument} @tab @code{"::"}
+@end multitable
+@item
+For an action that merely sets an @code{int}-typed variable to a value,
+you can specify this action in the @code{options[]} array,
+and thus omit the handling in the @code{switch} statement.
+But this works only for options that are
+long options without a corresponding short option.
+As soon as the option has a corresponding short option,
+you do need to handle it in the @code{switch} statement.
+Here again, there is the opportunity for
+inconsistent behaviour between the long option and the short option.
+@item
+The @code{val} field in a @code{struct option} has different meanings,
+depending on another field:
+If the @code{flag} field is non-NULL,
+@code{val} is a value to be stored in a variable.
+If the @code{flag} field is NULL,
+@code{val} is a key to be returned from @code{getopt_long}
+and subject to the @code{switch} statement.
+@item
+The handling of non-option arguments is specified by
+prepending a certain character (@samp{+} or @samp{-}) to the string argument.
+This is not one of the usual ways to specify things in an API.
+The conventional way in an API is
+an argument of @code{enum} type, or a flags word.
+@item
+The handling of errors consists of two independent flags,
+and each of the flags has to be specified in a different way:
+one flag is specified by
+prepending a certain character (@samp{:}) to the string argument;
+the other flag is specified through the global variable @code{opterr}.
+@item
+The @code{struct option} is a misnomer:
+It cannot encode short options.
+Therefore, it would have better been called @code{struct long_option}.
+@item
+The @code{getopt_long} function is expected to
+receive the same arguments in each call, in the @code{while} loop.
+The effects are undefined if you don't follow this (unwritten!) constraint.
+@item
+The fifth argument to @code{getopt_long}, @var{indexptr}, is redundant, because
+when the @code{flag} is non-NULL,
+the @code{switch} statement does not need to handle the option,
+and when the @code{flag} is NULL,
+@code{getopt_long} returns the value of @code{val},
+as a way to identify which option was seen.
+@end itemize

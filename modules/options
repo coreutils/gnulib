@@ -1,0 +1,24 @@
+Description:
+Parsing program options.
+
+Files:
+lib/options.h
+lib/options.c
+
+Depends-on:
+getopt-gnu
+stdcountof-h
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += options.c
+
+Include:
+"options.h"
+
+License:
+GPL
+
+Maintainer:
+all
