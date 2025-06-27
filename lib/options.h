@@ -136,7 +136,7 @@
        handle the option, and when the 'flag' is NULL, getopt_long returns
        the value of 'val', as a way to identify which option was seen.
 
-   It keeps the following properties the getopt_long() API:
+   It keeps the following properties of the getopt_long() API:
 
      * The programmer writes in actions directly in the main() function.
        That is, the actions don't go into separate callback functions
