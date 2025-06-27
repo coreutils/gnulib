@@ -1,0 +1,16 @@
+Files:
+tests/test-options.c
+tests/test-options-prog.c
+tests/macros.h
+
+Depends-on:
+bool
+setenv
+unsetenv
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-options
+check_PROGRAMS += test-options
+noinst_PROGRAMS += test-options-prog
