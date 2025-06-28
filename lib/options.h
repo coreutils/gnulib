@@ -58,6 +58,7 @@
 
    you write
 
+     BEGIN_ALLOW_OMITTING_FIELD_INITIALIZERS
      static struct program_option const options[] =
      {
        { "width",   'w', required_argument },
@@ -65,6 +66,7 @@
        { "help",    'h', no_argument,      &show_help, 1 },
        { "version", 'V', no_argument,      &show_version, 1 },
      };
+     END_ALLOW_OMITTING_FIELD_INITIALIZERS
 
      start_options (argc, argv, options, MOVE_OPTIONS_FIRST, 0);
      while ((optchar = get_next_option ()) != -1)
@@ -179,6 +181,21 @@ struct program_option
   int *variable;
   int value;
 };
+
+/* These macros silence '-Wmissing-field-initializers' warnings from GCC and
+   clang in the definition of a 'struct program_option' array.
+   To be placed before and after the declaration of a 'struct program_option'
+   array.  */
+#if _GL_GNUC_PREREQ (4, 6) || defined __clang__
+# define BEGIN_ALLOW_OMITTING_FIELD_INITIALIZERS \
+    _Pragma("GCC diagnostic push") \
+    _Pragma("GCC diagnostic ignored \"-Wmissing-field-initializers\"")
+# define END_ALLOW_OMITTING_FIELD_INITIALIZERS \
+    _Pragma("GCC diagnostic pop")
+#else
+# define BEGIN_ALLOW_OMITTING_FIELD_INITIALIZERS
+# define END_ALLOW_OMITTING_FIELD_INITIALIZERS
+#endif
 
 /* Handling of non-option arguments.  */
 enum non_option_handling {
