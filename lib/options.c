@@ -121,7 +121,11 @@ _gl_start_options (int argc, char **argv,
 }
 
 int
+#ifdef __MINGW32__
+_gl_get_next_option (int *optind_p, char **optarg_p, int *optopt_p)
+#else
 get_next_option (void)
+#endif
 {
   if (state.argv == NULL)
     {
@@ -141,5 +145,19 @@ get_next_option (void)
               *(options[i].variable) = options[i].value;
           }
     }
+#ifdef __MINGW32__
+  /* On mingw, when this file is compiled into a shared library, it pulls
+     mingw's getopt.o file (that defines getopt_long, opterr, optind, optarg,
+     optopt) into the same shared library.  Since these variables are declared
+     and defined without any __declspec(dllexport) or __declspec(dllimport),
+     the effect is that there are two copies of the variables: one in the
+     shared library and one in the executable.  Upon return from this function,
+     we need to copy the values of the output variables (optind, optarg, optopt)
+     from the shared library into the executable, where the main() function will
+     pick them up.  */
+  *optind_p = optind;
+  *optarg_p = optarg;
+  *optopt_p = optopt;
+#endif
   return ret;
 }

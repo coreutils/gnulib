@@ -247,6 +247,10 @@ extern void _gl_start_options (int argc, /*const*/ char **argv,
    specified) ':'.
    If the processing is terminated, it returns -1.  */
 extern int get_next_option (void);
+#ifdef __MINGW32__
+extern int _gl_get_next_option (int *optind_p, char **optarg_p, int *optopt_p);
+# define get_next_option() _gl_get_next_option (&optind, &optarg, &optopt)
+#endif
 
 #ifdef __cplusplus
 }
