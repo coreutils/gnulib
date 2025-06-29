@@ -55,6 +55,10 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 #include <string.h>
 #include <sys/stat.h>
 
+#ifndef HAVE_WORKING_O_DIRECTORY
+# define HAVE_WORKING_O_DIRECTORY false
+#endif
+
 #ifndef OPEN_TRAILING_SLASH_BUG
 # define OPEN_TRAILING_SLASH_BUG false
 #endif
