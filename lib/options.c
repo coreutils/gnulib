@@ -132,6 +132,11 @@ get_next_option (void)
       fprintf (stderr, "fatal: start_options has not been invoked\n");
       abort ();
     }
+#ifdef __MINGW32__
+  /* See below for a general explanation.  optind is not only an output of
+     getopt_long(), but also an input.  */
+  optind = *optind_p;
+#endif
   int ret = getopt_long (state.argc, state.argv,
                          state.short_options, state.long_options, NULL);
   if (ret > 1)
