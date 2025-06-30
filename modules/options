@@ -17,6 +17,9 @@ lib_SOURCES += options.c
 Include:
 "options.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

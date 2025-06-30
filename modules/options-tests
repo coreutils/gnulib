@@ -13,4 +13,6 @@ configure.ac:
 Makefile.am:
 TESTS += test-options
 check_PROGRAMS += test-options
+test_options_LDADD = $(LDADD) $(LIBINTL)
 noinst_PROGRAMS += test-options-prog
+test_options_prog_LDADD = $(LDADD) $(LIBINTL)
