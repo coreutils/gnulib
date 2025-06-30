@@ -53,7 +53,7 @@ _Noreturn void
 openat_restore_fail (int errnum)
 {
 #ifndef GNULIB_LIBPOSIX
-  error (exit_failure, errnum,
+  error (exit_failure, errnum, "%s",
          _("failed to return to initial working directory"));
 #endif
 
