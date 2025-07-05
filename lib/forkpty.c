@@ -32,7 +32,7 @@ rpl_forkpty (int *amaster, char *name, struct termios const *termp,
                   (struct winsize *) winp);
 }
 
-#else /* AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw */
+#else /* AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10.  */
 
 # include <pty.h>
 # include <unistd.h>
