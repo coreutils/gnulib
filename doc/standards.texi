@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 22, 2025
+@set lastupdate July 5, 2025
 @c %**end of header
 
 @dircategory GNU organization
@@ -142,7 +142,7 @@ This chapter discusses how you can make sure that GNU software
 avoids legal difficulties, and other related issues.
 
 @menu
-* Reading Nonfree Code::       Referring to proprietary programs.
+* Reading Nonfree Code::        Referring to proprietary programs.
 * Contributions::               Accepting contributions.
 * Trademarks::                  How we deal with trademark issues.
 * Terms to Avoid::              Be careful of certain words!
@@ -262,7 +262,7 @@ GNU packages.  Please write ``Windows'' in full, or abbreviate it to
 ``w.''  @xref{System Portability}.
 
 @node Terms to Avoid
-@chapter Terms to Avoid
+@section Terms to Avoid
 
 Be careful---never use the word ``steward'' to refer to any person
 involved with developing any free software!  An EU directive, the CRA,
@@ -445,7 +445,7 @@ a compiler that has dropped support for the old K&R style.  Thus, to
 maximize portability, write function definitions in the Standard C
 style.
 
-You generally need a declaration for the function in addition to iss
+You generally need a declaration for the function in addition to its
 definition, usually in a header file, to get the benefit of prototypes
 in all the files where the function is called.
 
@@ -1909,14 +1909,11 @@ Used in various programs to inhibit warnings.
 @item nx
 Used in GDB.
 
-@item old-archive
-@samp{-o} in @code{tar}.
-
 @item old-file
 @samp{-o} in @code{make}.
 
 @item one-file-system
-@samp{-l} in @code{tar}, @code{cp}, and @code{du}.
+@samp{-x} in @code{cp} and @code{du}.
 
 @item only-file
 @samp{-o} in @code{ptx}.
@@ -1965,7 +1962,7 @@ Used in @code{makeinfo}.
 @samp{-P} in @code{finger}.
 
 @item portability
-@samp{-c} in @code{cpio} and @code{tar}.
+@samp{-c} in @code{cpio}.
 
 @item posix
 Used in @code{gawk}.
