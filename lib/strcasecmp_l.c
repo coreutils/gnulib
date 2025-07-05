@@ -23,9 +23,7 @@
 #include <limits.h>
 #include <string.h>
 
-#if GNULIB_defined_locale_t
-# include <c-strcase.h>
-#endif
+#include "c-strcase.h"
 
 int
 strcasecmp_l (const char *s1, const char *s2, locale_t locale)
