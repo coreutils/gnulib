@@ -23,6 +23,10 @@
 #include <limits.h>
 #include <string.h>
 
+#if GNULIB_defined_locale_t
+# include <c-strcase.h>
+#endif
+
 int
 strncasecmp_l (const char *s1, const char *s2, size_t n, locale_t locale)
 {
