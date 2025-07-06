@@ -170,17 +170,13 @@ static const unsigned short int __mon_yday[2][13] =
 # undef _NL_CURRENT_WORD
 # define _NL_CURRENT_WORD(category, item) \
   (current->values[_NL_ITEM_INDEX (item)].word)
-# define LOCALE_PARAM , locale
+# define LOCALE_PARAM , __locale_t locale
 # define LOCALE_ARG , locale
-# define LOCALE_PARAM_PROTO , __locale_t locale
-# define LOCALE_PARAM_DECL __locale_t locale;
 # define HELPER_LOCALE_ARG , current
 # define ISSPACE(Ch) __isspace_l (Ch, locale)
 #else
 # define LOCALE_PARAM
 # define LOCALE_ARG
-# define LOCALE_PARAM_DECL
-# define LOCALE_PARAM_PROTO
 # define HELPER_LOCALE_ARG
 # define ISSPACE(Ch) isspace (Ch)
 #endif
@@ -229,13 +225,9 @@ internal_function
 #else
 static char *
 #endif
-__strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
-     const char *rp;
-     const char *fmt;
-     struct tm *tm;
-     enum ptime_locale_status *decided;
-     int era_cnt;
-     LOCALE_PARAM_DECL
+__strptime_internal (const char *rp, const char *fmt, struct tm *tm,
+                     enum ptime_locale_status *decided,
+                     int era_cnt LOCALE_PARAM)
 {
 #ifdef _LIBC
   struct locale_data *const current = locale->__locales[LC_TIME];
@@ -1142,11 +1134,8 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 
 
 char *
-strptime (buf, format, tm LOCALE_PARAM)
-     const char *restrict buf;
-     const char *restrict format;
-     struct tm *restrict tm;
-     LOCALE_PARAM_DECL
+strptime (const char *restrict buf, const char *restrict format,
+          struct tm *restrict tm LOCALE_PARAM)
 {
   enum ptime_locale_status decided;
 
