@@ -101,6 +101,8 @@ long double ls = LDBL_SNAN; /* added in ISO C 23 */
 
 /* ------------------------------------------------------------------------- */
 
+#include <math.h>
+
 #include "fpucw.h"
 #include "isnanf-nolibm.h"
 #include "isnand-nolibm.h"
@@ -396,6 +398,30 @@ test_double (void)
 
 /* -------------------- Check macros for 'long double' -------------------- */
 
+/* Return X after normalization.  This makes a difference on PowerPC
+   platforms where long double uses a "double double" format that does
+   not conform to the C23 rules for floating point.  On such a platform,
+   FLT_RADIX = 2, LDBL_MANT_DIG = 106, LDBL_EPSILON = 2**-105, and
+   1 < 1 + e < 1 + LDBL_EPSILON, where e = 2**-106 and 1 + e is a
+   representable long double value that is not normalized.
+   On such a platform, normalize_long_double (1 + e) returns 1.  */
+static long double
+normalize_long_double (long double volatile x)
+{
+  if (FLT_RADIX == 2)
+    {
+      int xexp;
+      long double volatile xfrac = frexpl (x, &xexp);
+      x = ldexpl (floorl (ldexpl (xfrac, LDBL_MANT_DIG - xexp)),
+                  xexp - LDBL_MANT_DIG);
+    }
+  else
+    {
+      /* Hope that X is already normalized.  */
+    }
+  return x;
+}
+
 static void
 test_long_double (void)
 {
@@ -455,7 +481,7 @@ test_long_double (void)
     for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
       {
         volatile long double half_n = pow2l (- n); /* 2^-n */
-        volatile long double x = me - half_n;
+        volatile long double x = normalize_long_double (me - half_n);
         if (x < me)
           ASSERT (x <= 1.0L);
       }
