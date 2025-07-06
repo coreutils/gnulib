@@ -124,7 +124,7 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 # undef LDBL_MIN
 # define LDBL_MIN 2.22507385850720138309023271733240406422e-308L /* DBL_MIN = 2^-1022 */
 #endif
-#if (defined _ARCH_PPC || defined _POWER) && (defined _AIX || defined __linux__) && (LDBL_MANT_DIG == 106) && defined __GNUC__
+#if (defined _ARCH_PPC || defined _POWER) && (defined _AIX || defined __linux__) && (LDBL_MANT_DIG == 106) && defined __GNUC__ && !defined __LDBL_NORM_MAX__
 # undef LDBL_MAX
 /* LDBL_MAX is represented as { 0x7FEFFFFF, 0xFFFFFFFF, 0x7C8FFFFF, 0xFFFFFFFF }.
    It is not easy to define:
@@ -309,7 +309,13 @@ extern gl_DBL_SNAN_t gl_DBL_SNAN;
 # endif
 #endif
 #ifndef LDBL_NORM_MAX
-# define LDBL_NORM_MAX LDBL_MAX
+# ifdef __LDBL_NORM_MAX__
+#  define LDBL_NORM_MAX __LDBL_NORM_MAX__
+# elif FLT_RADIX == 2 && LDBL_MAX_EXP == 1024 && LDBL_MANT_DIG == 106
+#  define LDBL_NORM_MAX 8.98846567431157953864652595394501E+307L
+# else
+#  define LDBL_NORM_MAX LDBL_MAX
+# endif
 #endif
 #ifndef LDBL_SNAN
 /* For sh, beware of <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111814>.  */

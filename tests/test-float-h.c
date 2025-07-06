@@ -412,7 +412,7 @@ normalize_long_double (long double volatile x)
     {
       int xexp;
       long double volatile xfrac = frexpl (x, &xexp);
-      x = ldexpl (floorl (ldexpl (xfrac, LDBL_MANT_DIG - xexp)),
+      x = ldexpl (floorl (ldexpl (xfrac, LDBL_MANT_DIG)),
                   xexp - LDBL_MANT_DIG);
     }
   else
@@ -510,7 +510,7 @@ test_long_double (void)
 #endif
 
   /* Check the value of LDBL_NORM_MAX.  */
-  ASSERT (LDBL_NORM_MAX == LDBL_MAX);
+  ASSERT (LDBL_NORM_MAX == normalize_long_double (LDBL_MAX));
 
   /* Check the value of LDBL_SNAN.  */
   ASSERT (isnanl (LDBL_SNAN));
