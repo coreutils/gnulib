@@ -101,6 +101,8 @@ long double ls = LDBL_SNAN; /* added in ISO C 23 */
 
 /* ------------------------------------------------------------------------- */
 
+#include <math.h>
+
 #include "fpucw.h"
 #include "isnanf-nolibm.h"
 #include "isnand-nolibm.h"
@@ -396,6 +398,44 @@ test_double (void)
 
 /* -------------------- Check macros for 'long double' -------------------- */
 
+static int
+test_isfinitel (long double volatile x)
+{
+  if (x != x)
+    return 0;
+  long double volatile zero = x * 0;
+  return zero == 0;
+}
+
+/* Return X after normalization.  This makes a difference on platforms
+   where long double can represent unnormalized values.  For example,
+   suppose x = 1 + 2**-106 on PowerPC with IBM long double where
+   FLT_RADIX = 2, LDBL_MANT_DIG = 106, and LDBL_EPSILON = 2**-105.
+   Then 1 < x < 1 + LDBL_EPSILON, and normalize_long_double (x) returns 1.  */
+static long double
+normalize_long_double (long double volatile x)
+{
+  if (FLT_RADIX == 2 && test_isfinitel (x))
+    {
+      int xexp;
+      long double volatile
+        frac = frexpl (x, &xexp),
+        significand = frac * pow2l (LDBL_MANT_DIG),
+        normalized_significand = truncl (significand),
+        normalized_x = normalized_significand * pow2l (xexp - LDBL_MANT_DIG);
+
+      /* The test_isfinitel defends against PowerPC with IBM long double,
+         which fritzes out near LDBL_MAX.  */
+      if (test_isfinitel (normalized_x))
+        x = normalized_x;
+    }
+  else
+    {
+      /* Hope that X is already normalized.  */
+    }
+  return x;
+}
+
 static void
 test_long_double (void)
 {
@@ -455,7 +495,7 @@ test_long_double (void)
     for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
       {
         volatile long double half_n = pow2l (- n); /* 2^-n */
-        volatile long double x = me - half_n;
+        volatile long double x = normalize_long_double (me - half_n);
         if (x < me)
           ASSERT (x <= 1.0L);
       }
@@ -484,7 +524,7 @@ test_long_double (void)
 #endif
 
   /* Check the value of LDBL_NORM_MAX.  */
-  ASSERT (LDBL_NORM_MAX == LDBL_MAX);
+  ASSERT (LDBL_NORM_MAX == normalize_long_double (LDBL_MAX));
 
   /* Check the value of LDBL_SNAN.  */
   ASSERT (isnanl (LDBL_SNAN));
