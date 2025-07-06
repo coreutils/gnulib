@@ -113,44 +113,38 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 # define LDBL_MAX_10_EXP 4932
 #endif
 
-/* On AIX 7.1 with gcc 4.2, the values of LDBL_MIN_EXP, LDBL_MIN, LDBL_MAX are
-   wrong.
-   On Linux/PowerPC with gcc 4.4, the value of LDBL_MAX is wrong.  */
-#if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
+/* On PowerPC with gcc 15 when using __ibm128 long double, the value of
+   LDBL_MIN_EXP, LDBL_MIN, LDBL_MAX, and LDBL_NORM_MAX are wrong.  */
+#if ((defined _ARCH_PPC || defined _POWER) && LDBL_MANT_DIG == 106 \
+     && defined __GNUC__)
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
 # undef LDBL_MIN_10_EXP
 # define LDBL_MIN_10_EXP DBL_MIN_10_EXP
 # undef LDBL_MIN
 # define LDBL_MIN 2.22507385850720138309023271733240406422e-308L /* DBL_MIN = 2^-1022 */
-#endif
-#if (defined _ARCH_PPC || defined _POWER) && (defined _AIX || defined __linux__) && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MAX
-/* LDBL_MAX is represented as { 0x7FEFFFFF, 0xFFFFFFFF, 0x7C8FFFFF, 0xFFFFFFFF }.
-   It is not easy to define:
-     #define LDBL_MAX 1.79769313486231580793728971405302307166e308L
-   is too small, whereas
-     #define LDBL_MAX 1.79769313486231580793728971405302307167e308L
-   is too large.  Apparently a bug in GCC decimal-to-binary conversion.
-   Also, I can't get values larger than
-     #define LDBL63 ((long double) (1ULL << 63))
-     #define LDBL882 (LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63)
-     #define LDBL945 (LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63)
-     #define LDBL1008 (LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63 * LDBL63)
-     #define LDBL_MAX (LDBL1008 * 65535.0L + LDBL945 * (long double) 9223372036821221375ULL + LDBL882 * (long double) 4611686018427387904ULL)
-   which is represented as { 0x7FEFFFFF, 0xFFFFFFFF, 0x7C8FFFFF, 0xF8000000 }.
-   So, define it like this through a reference to an external variable
+/* LDBL_MAX is 2**1024 - 2**918, represented as: { 0x7FEFFFFF, 0xFFFFFFFF,
+                                                   0x7C9FFFFF, 0xFFFFFFFF }.
 
-     const double LDBL_MAX[2] = { DBL_MAX, DBL_MAX / (double)134217728UL / (double)134217728UL };
+   Do not write it as a constant expression, as GCC would likely treat
+   that as infinity due to the vagaries of this platform's funky arithmetic.
+   Instead, define it through a reference to an external variable.
+   Like the following, but using a union to avoid type mismatches:
+
+     const double LDBL_MAX[2] = { DBL_MAX, DBL_MAX / 0x1p53 };
      extern const long double LDBL_MAX;
 
-   or through a pointer cast
+   The following alternative would not work as well when GCC is optimizing:
 
-     #define LDBL_MAX \
-       (*(const long double *) (double[]) { DBL_MAX, DBL_MAX / (double)134217728UL / (double)134217728UL })
+     #define LDBL_MAX (*(long double const *) (double[])
+                       { DBL_MAX, DBL_MAX / 0x1p53 })
 
-   Unfortunately, this is not a constant expression, and the latter expression
-   does not work well when GCC is optimizing..  */
+   The following alternative would require GCC 6 or later:
+
+     #define LDBL_MAX __builtin_pack_longdouble (DBL_MAX, DBL_MAX / 0x1p53)
+
+   Unfortunately none of the alternatives are constant expressions.  */
 # if !GNULIB_defined_long_double_union
 union gl_long_double_union
   {
@@ -161,6 +155,8 @@ union gl_long_double_union
 # endif
 extern const union gl_long_double_union gl_LDBL_MAX;
 # define LDBL_MAX (gl_LDBL_MAX.ld)
+# undef LDBL_NORM_MAX
+# define LDBL_NORM_MAX LDBL_MAX
 #endif
 
 /* On IRIX 6.5, with cc, the value of LDBL_MANT_DIG is wrong.
@@ -324,7 +320,11 @@ extern gl_DBL_SNAN_t gl_DBL_SNAN;
 # endif
 #endif
 #ifndef LDBL_NORM_MAX
-# define LDBL_NORM_MAX LDBL_MAX
+# ifdef __LDBL_NORM_MAX__
+#  define LDBL_NORM_MAX __LDBL_NORM_MAX__
+# else
+#  define LDBL_NORM_MAX LDBL_MAX
+# endif
 #endif
 #ifndef LDBL_SNAN
 /* For sh, beware of <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111814>.  */

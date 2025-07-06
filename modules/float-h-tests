@@ -5,9 +5,11 @@ tests/macros.h
 Depends-on:
 fpieee
 fpucw
+frexpl
 isnanf-nolibm
 isnand-nolibm
 isnanl-nolibm
+truncl
 float-h-c++-tests
 
 configure.ac:
@@ -15,3 +17,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-float-h
 check_PROGRAMS += test-float-h
+test_float_h_LDADD = $(LDADD) @FREXPL_LIBM@ @TRUNCL_LIBM@
