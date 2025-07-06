@@ -17,6 +17,7 @@ open
 stdlib-h
 xalloc
 unistd-h
+stdint-h
 
 configure.ac:
 gl_PAGEALIGN_ALLOC

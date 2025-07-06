@@ -26,6 +26,7 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdint.h>
 
 #if HAVE_MMAP
 # include <sys/mman.h>
@@ -159,7 +160,7 @@ pagealign_alloc (size_t size)
       return NULL;
     }
   ret = (char *) unaligned_ptr
-        + ((- (unsigned long) unaligned_ptr) & (pagesize - 1));
+        + ((- (uintptr_t) unaligned_ptr) & (pagesize - 1));
   new_memnode (ret, unaligned_ptr);
 #endif /* HAVE_MMAP && HAVE_POSIX_MEMALIGN */
   return ret;
