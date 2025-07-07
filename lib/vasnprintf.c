@@ -6648,19 +6648,21 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #if !((WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST) && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT)
                 switch (dp->conversion)
                   {
-# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
+# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#  if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
                   /* If we need conversion from TCHAR_T[] to DCHAR_T[], we need
                      to perform the padding after this conversion.  Functions
                      with unistdio extensions perform the padding based on
                      character count rather than element count.  */
                   case 'c': case 's':
-# endif
-# if NEED_PRINTF_FLAG_ZERO
+#  endif
+#  if NEED_PRINTF_FLAG_ZERO
                   case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
                   case 'a': case 'A':
-# endif
+#  endif
                     pad_ourselves = 1;
                     break;
+# endif
                   default:
                     pad_ourselves = prec_ourselves | group_ourselves;
                     break;
