@@ -181,6 +181,21 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 # endif
 #endif
 
+/* On PowerPC platforms, 'long double' has a double-double representation.
+   Up to ISO C 17, this was outside the scope of ISO C because it can represent
+   numbers with mantissas of the form 1.<52 bits><many zeroes><52 bits>, such as
+   1.0L + 4.94065645841246544176568792868221e-324L = 1 + 2^-1074; see
+   ISO C 17 § 5.2.4.2.2.(3).
+   In ISO C 23, wording has been included that makes this 'long double'
+   representation compliant; see ISO C 23 § 5.2.5.3.3.(8)-(9).  In this setting,
+   numbers with mantissas of the form 1.<52 bits><many zeroes><52 bits> are
+   called "unnormalized".  And since LDBL_EPSILON must be normalized (per
+   ISO C 23 § 5.2.5.3.3.(33)), it must be 2^-105.  */
+#if defined __powerpc__ && LDBL_MANT_DIG == 106
+# undef LDBL_EPSILON
+# define LDBL_EPSILON 2.46519032881566189191165176650870696773e-32L /* 2^-105 */
+#endif
+
 /* ============================ ISO C11 support ============================ */
 
 /* 'float' properties */
