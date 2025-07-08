@@ -18,6 +18,11 @@
 #ifndef _GL_STDCOUNTOF_H
 #define _GL_STDCOUNTOF_H
 
+/* This file uses _GL_GNUC_PREREQ.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get size_t.  */
 #include <stddef.h>
 
