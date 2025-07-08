@@ -19,6 +19,11 @@
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
+/* This file uses _GL_GNUC_PREREQ.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* This file provides a more convenient API to parsing program options,
    based on GNU getopt_long() and thus compatible with the option parsing
    conventions for GNU programs
