@@ -19,7 +19,7 @@ On OpenBSD 4.0 and MirBSD 10, they are the same as the values of the
 @samp{double}.
 On FreeBSD/x86 6.4, they represent the incorrect 53-bit precision assumptions
 in the compiler, not the real 64-bit precision at runtime.
-On Linux/PowerPC with GCC 4.4, and on AIX 7.1 with GCC 4.2,
+On PowerPC with gcc 15 and the default @option{-mabi=ibmlongdouble},
 they don't reflect the ``double double'' representation of @code{long double}
 correctly.
 @item

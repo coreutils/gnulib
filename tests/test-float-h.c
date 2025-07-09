@@ -398,22 +398,36 @@ test_double (void)
 
 /* -------------------- Check macros for 'long double' -------------------- */
 
-/* Return X after normalization.  This makes a difference on PowerPC
-   platforms where long double uses a "double double" format that does
-   not conform to the C23 rules for floating point.  On such a platform,
-   FLT_RADIX = 2, LDBL_MANT_DIG = 106, LDBL_EPSILON = 2**-105, and
-   1 < 1 + e < 1 + LDBL_EPSILON, where e = 2**-106 and 1 + e is a
-   representable long double value that is not normalized.
-   On such a platform, normalize_long_double (1 + e) returns 1.  */
+static int
+test_isfinitel (long double volatile x)
+{
+  if (x != x)
+    return 0;
+  long double volatile zero = x * 0;
+  return zero == 0;
+}
+
+/* Return X after normalization.  This makes a difference on platforms
+   where long double can represent unnormalized values.  For example,
+   suppose x = 1 + 2**-106 on PowerPC with IBM long double where
+   FLT_RADIX = 2, LDBL_MANT_DIG = 106, and LDBL_EPSILON = 2**-105.
+   Then 1 < x < 1 + LDBL_EPSILON, and normalize_long_double (x) returns 1.  */
 static long double
 normalize_long_double (long double volatile x)
 {
-  if (FLT_RADIX == 2)
+  if (FLT_RADIX == 2 && test_isfinitel (x))
     {
       int xexp;
-      long double volatile xfrac = frexpl (x, &xexp);
-      x = ldexpl (floorl (ldexpl (xfrac, LDBL_MANT_DIG)),
-                  xexp - LDBL_MANT_DIG);
+      long double volatile
+        frac = frexpl (x, &xexp),
+        significand = frac * pow2l (LDBL_MANT_DIG),
+        normalized_significand = truncl (significand),
+        normalized_x = normalized_significand * pow2l (xexp - LDBL_MANT_DIG);
+
+      /* The test_isfinitel defends against PowerPC with IBM long double,
+         which fritzes out near LDBL_MAX.  */
+      if (test_isfinitel (normalized_x))
+        x = normalized_x;
     }
   else
     {
