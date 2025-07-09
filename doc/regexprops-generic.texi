@@ -1,18 +1,18 @@
-@c Copyright (C) 1994, 1996, 1998, 2000--2001, 2003--2007, 2009--2025 Free
-@c Software Foundation, Inc.
+@c Copyright (C) 1994--2025 Free Software Foundation, Inc.
 @c
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.3 or
 @c any later version published by the Free Software Foundation; with no
-@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
-@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+@c A copy of the license is included in the ``GNU Free
+@c Documentation License'' file as part of this distribution.
 
 @c this regular expression description is for: generic
 
 @menu
 * awk regular expression syntax::
-* egrep regular expression syntax::
 * ed regular expression syntax::
+* egrep regular expression syntax::
 * emacs regular expression syntax::
 * gnu-awk regular expression syntax::
 * grep regular expression syntax::
@@ -46,7 +46,9 @@ matches a @samp{?}.
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} can be used to quote the following character.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
 
+
 GNU extensions are not supported and so @samp{\w}, @samp{\W}, @samp{\<}, @samp{\>}, @samp{\b}, @samp{\B}, @samp{\`}, and @samp{\'} match @samp{w}, @samp{W}, @samp{<}, @samp{>}, @samp{b}, @samp{B}, @samp{`}, and @samp{'} respectively.
+
 
 Grouping is performed with parentheses @samp{()}.  An unmatched @samp{)} matches just itself.  A backslash followed by a digit matches that digit.
 
@@ -54,18 +56,111 @@ The alternation operator is @samp{|}.
 
 The characters @samp{^} and @samp{$} always represent the beginning and end of a string respectively, except within square brackets.  Within brackets, @samp{^} can be used to invert the membership of the character class being specified.
 
+
 @samp{*}, @samp{+} and @samp{?} are special at any point in a regular expression except:
 @enumerate
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{(}
+@item After an open-group, signified by @samp{(}
+
 @item After the alternation operator @samp{|}
 
 @end enumerate
 
 
+
+
+The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
+
+
+@node ed regular expression syntax
+@subsection @samp{ed} regular expression syntax
+
+
+The character @samp{.} matches any single character except the null character.
+
+
+@table @samp
+
+@item \+
+indicates that the regular expression should match one or more occurrences of the previous atom or regexp.
+@item \?
+indicates that the regular expression should match zero or one occurrence of the previous atom or regexp.
+@item + and ?
+match themselves.
+
+@end table
+
+
+Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
+
+
+GNU extensions are supported:
+@enumerate
+
+@item @samp{\w} matches a character within a word
+
+@item @samp{\W} matches a character which is not within a word
+
+@item @samp{\<} matches the beginning of a word
+
+@item @samp{\>} matches the end of a word
+
+@item @samp{\b} matches a word boundary
+
+@item @samp{\B} matches characters which are not a word boundary
+
+@item @samp{\`} matches the beginning of the whole input
+
+@item @samp{\'} matches the end of the whole input
+
+@end enumerate
+
+
+Grouping is performed with backslashes followed by parentheses @samp{\(}, @samp{\)}.  A backslash followed by a digit acts as a back-reference and matches the same thing as the previous grouped expression indicated by that number.  For example @samp{\2} matches the second group expression.  The order of group expressions is determined by the position of their opening parenthesis @samp{\(}.
+
+The alternation operator is @samp{\|}.
+
+The character @samp{^} only represents the beginning of a string when it appears:
+@enumerate
+
+@item At the beginning of a regular expression
+
+@item After an open-group, signified by @samp{\(}
+
+
+@item After the alternation operator @samp{\|}
+
+@end enumerate
+
+
+The character @samp{$} only represents the end of a string when it appears:
+@enumerate
+
+@item At the end of a regular expression
+
+@item Before a close-group, signified by @samp{\)}
+
+@item Before the alternation operator @samp{\|}
+
+@end enumerate
+
+
+@samp{\*}, @samp{\+} and @samp{\?} are special at any point in a regular expression except:
+@enumerate
+
+@item At the beginning of a regular expression
+
+@item After an open-group, signified by @samp{\(}
+
+@item After the alternation operator @samp{\|}
+
+@end enumerate
+
+
+Intervals are specified by @samp{\@{} and @samp{\@}}.
+Invalid intervals such as @samp{a\@{1z} are not accepted.
 
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
@@ -93,6 +188,7 @@ matches a @samp{?}.
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
 
+
 GNU extensions are supported:
 @enumerate
 
@@ -121,98 +217,12 @@ The alternation operator is @samp{|}.
 
 The characters @samp{^} and @samp{$} always represent the beginning and end of a string respectively, except within square brackets.  Within brackets, @samp{^} can be used to invert the membership of the character class being specified.
 
+
 The characters @samp{*}, @samp{+} and @samp{?} are special anywhere in a regular expression.
 
-Intervals are specified by @samp{@{} and @samp{@}}.  Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
 
-The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
-
-
-@node ed regular expression syntax
-@subsection @samp{ed} regular expression syntax
-
-
-The character @samp{.} matches any single character except the null character.
-
-
-@table @samp
-
-@item \+
-indicates that the regular expression should match one or more occurrences of the previous atom or regexp.
-@item \?
-indicates that the regular expression should match zero or one occurrence of the previous atom or regexp.
-@item + and ?
-match themselves.
-@end table
-
-
-Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
-
-GNU extensions are supported:
-@enumerate
-
-@item @samp{\w} matches a character within a word
-
-@item @samp{\W} matches a character which is not within a word
-
-@item @samp{\<} matches the beginning of a word
-
-@item @samp{\>} matches the end of a word
-
-@item @samp{\b} matches a word boundary
-
-@item @samp{\B} matches characters which are not a word boundary
-
-@item @samp{\`} matches the beginning of the whole input
-
-@item @samp{\'} matches the end of the whole input
-
-@end enumerate
-
-
-Grouping is performed with backslashes followed by parentheses @samp{\(}, @samp{\)}.  A backslash followed by a digit acts as a back-reference and matches the same thing as the previous grouped expression indicated by that number.  For example @samp{\2} matches the second group expression.  The order of group expressions is determined by the position of their opening parenthesis @samp{\(}.
-
-The alternation operator is @samp{\|}.
-
-The character @samp{^} only represents the beginning of a string when it appears:
-@enumerate
-
-@item
-At the beginning of a regular expression
-
-@item After an open-group, signified by
-@samp{\(}
-
-@item After the alternation operator @samp{\|}
-
-@end enumerate
-
-
-The character @samp{$} only represents the end of a string when it appears:
-@enumerate
-
-@item At the end of a regular expression
-
-@item Before a close-group, signified by
-@samp{\)}
-@item Before the alternation operator @samp{\|}
-
-@end enumerate
-
-
-@samp{\*}, @samp{\+} and @samp{\?} are special at any point in a regular expression except:
-@enumerate
-
-@item At the beginning of a regular expression
-
-@item After an open-group, signified by
-@samp{\(}
-@item After the alternation operator @samp{\|}
-
-@end enumerate
-
-
-Intervals are specified by @samp{\@{} and @samp{\@}}.  Invalid intervals such as @samp{a\@{1z} are not accepted.
+Intervals are specified by @samp{@{} and @samp{@}}.
+Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
@@ -237,7 +247,8 @@ matches a @samp{?}.
 @end table
 
 
-Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are ignored.  Within square brackets, @samp{\} is taken literally.  Character classes are not supported, so for example you would need to use @samp{[0-9]} instead of @samp{[[:digit:]]}.
+Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are ignored.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
+
 
 GNU extensions are supported:
 @enumerate
@@ -268,11 +279,10 @@ The alternation operator is @samp{\|}.
 The character @samp{^} only represents the beginning of a string when it appears:
 @enumerate
 
-@item
-At the beginning of a regular expression
+@item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{\(}
+@item After an open-group, signified by @samp{\(}
+
 
 @item After the alternation operator @samp{\|}
 
@@ -284,8 +294,8 @@ The character @samp{$} only represents the end of a string when it appears:
 
 @item At the end of a regular expression
 
-@item Before a close-group, signified by
-@samp{\)}
+@item Before a close-group, signified by @samp{\)}
+
 @item Before the alternation operator @samp{\|}
 
 @end enumerate
@@ -296,13 +306,15 @@ The character @samp{$} only represents the end of a string when it appears:
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{\(}
+@item After an open-group, signified by @samp{\(}
+
 @item After the alternation operator @samp{\|}
 
 @end enumerate
 
 
+Intervals are specified by @samp{\@{} and @samp{\@}}.
+Invalid intervals such as @samp{a\@{1z} are not accepted.
 
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
@@ -330,6 +342,7 @@ matches a @samp{?}.
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} can be used to quote the following character.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
 
+
 GNU extensions are supported:
 @enumerate
 
@@ -358,19 +371,21 @@ The alternation operator is @samp{|}.
 
 The characters @samp{^} and @samp{$} always represent the beginning and end of a string respectively, except within square brackets.  Within brackets, @samp{^} can be used to invert the membership of the character class being specified.
 
+
 @samp{*}, @samp{+} and @samp{?} are special at any point in a regular expression except:
 @enumerate
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{(}
+@item After an open-group, signified by @samp{(}
+
 @item After the alternation operator @samp{|}
 
 @end enumerate
 
 
-Intervals are specified by @samp{@{} and @samp{@}}.  Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
+Intervals are specified by @samp{@{} and @samp{@}}.
+Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
@@ -390,10 +405,12 @@ indicates that the regular expression should match one or more occurrences of th
 indicates that the regular expression should match zero or one occurrence of the previous atom or regexp.
 @item + and ?
 match themselves.
+
 @end table
 
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
+
 
 GNU extensions are supported:
 @enumerate
@@ -424,11 +441,10 @@ The alternation operator is @samp{\|}.
 The character @samp{^} only represents the beginning of a string when it appears:
 @enumerate
 
-@item
-At the beginning of a regular expression
+@item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{\(}
+@item After an open-group, signified by @samp{\(}
+
 
 @item After a newline
 
@@ -442,8 +458,8 @@ The character @samp{$} only represents the end of a string when it appears:
 
 @item At the end of a regular expression
 
-@item Before a close-group, signified by
-@samp{\)}
+@item Before a close-group, signified by @samp{\)}
+
 @item Before a newline
 
 @item Before the alternation operator @samp{\|}
@@ -456,8 +472,8 @@ The character @samp{$} only represents the end of a string when it appears:
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{\(}
+@item After an open-group, signified by @samp{\(}
+
 @item After a newline
 
 @item After the alternation operator @samp{\|}
@@ -465,7 +481,9 @@ The character @samp{$} only represents the end of a string when it appears:
 @end enumerate
 
 
-Intervals are specified by @samp{\@{} and @samp{\@}}.  Invalid intervals such as @samp{a\@{1z} are not accepted.
+Intervals are specified by @samp{\@{} and @samp{\@}}.
+Invalid intervals such as @samp{a\@{1z} are not accepted.
+
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
@@ -492,7 +510,9 @@ matches a @samp{?}.
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} can be used to quote the following character.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
 
+
 GNU extensions are not supported and so @samp{\w}, @samp{\W}, @samp{\<}, @samp{\>}, @samp{\b}, @samp{\B}, @samp{\`}, and @samp{\'} match @samp{w}, @samp{W}, @samp{<}, @samp{>}, @samp{b}, @samp{B}, @samp{`}, and @samp{'} respectively.
+
 
 Grouping is performed with parentheses @samp{()}.  An unmatched @samp{)} matches just itself.  A backslash followed by a digit acts as a back-reference and matches the same thing as the previous grouped expression indicated by that number.  For example @samp{\2} matches the second group expression.  The order of group expressions is determined by the position of their opening parenthesis @samp{(}.
 
@@ -500,19 +520,21 @@ The alternation operator is @samp{|}.
 
 The characters @samp{^} and @samp{$} always represent the beginning and end of a string respectively, except within square brackets.  Within brackets, @samp{^} can be used to invert the membership of the character class being specified.
 
+
 @samp{*}, @samp{+} and @samp{?} are special at any point in a regular expression except the following places, where they are not allowed:
 @enumerate
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{(}
+@item After an open-group, signified by @samp{(}
+
 @item After the alternation operator @samp{|}
 
 @end enumerate
 
 
-Intervals are specified by @samp{@{} and @samp{@}}.  Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
+Intervals are specified by @samp{@{} and @samp{@}}.
+Invalid intervals are treated as literals, for example @samp{a@{1} is treated as @samp{a\@{1}
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
@@ -545,6 +567,7 @@ matches a @samp{?}.
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
 
+
 GNU extensions are supported:
 @enumerate
 
@@ -573,19 +596,22 @@ The alternation operator is @samp{|}.
 
 The characters @samp{^} and @samp{$} always represent the beginning and end of a string respectively, except within square brackets.  Within brackets, @samp{^} can be used to invert the membership of the character class being specified.
 
+
 @samp{*}, @samp{+} and @samp{?} are special at any point in a regular expression except the following places, where they are not allowed:
 @enumerate
 
 @item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{(}
+@item After an open-group, signified by @samp{(}
+
 @item After the alternation operator @samp{|}
 
 @end enumerate
 
 
-Intervals are specified by @samp{@{} and @samp{@}}.  Invalid intervals such as @samp{a@{1z} are not accepted.
+Intervals are specified by @samp{@{} and @samp{@}}.
+Invalid intervals such as @samp{a@{1z} are not accepted.
+
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
@@ -599,6 +625,7 @@ The character @samp{.} matches any single character except the null character.
 
 
 Bracket expressions are used to match ranges of characters.  Bracket expressions where the range is backward, for example @samp{[z-a]}, are invalid.  Within square brackets, @samp{\} is taken literally.  Character classes are supported; for example @samp{[[:digit:]]} will match a single decimal digit.
+
 
 GNU extensions are supported:
 @enumerate
@@ -629,11 +656,10 @@ Grouping is performed with backslashes followed by parentheses @samp{\(}, @samp{
 The character @samp{^} only represents the beginning of a string when it appears:
 @enumerate
 
-@item
-At the beginning of a regular expression
+@item At the beginning of a regular expression
 
-@item After an open-group, signified by
-@samp{\(}
+@item After an open-group, signified by @samp{\(}
+
 
 @end enumerate
 
@@ -643,14 +669,16 @@ The character @samp{$} only represents the end of a string when it appears:
 
 @item At the end of a regular expression
 
-@item Before a close-group, signified by
-@samp{\)}
+@item Before a close-group, signified by @samp{\)}
+
 @end enumerate
 
 
 
 
-Intervals are specified by @samp{\@{} and @samp{\@}}.  Invalid intervals such as @samp{a\@{1z} are not accepted.
+Intervals are specified by @samp{\@{} and @samp{\@}}.
+Invalid intervals such as @samp{a\@{1z} are not accepted.
+
 
 The longest possible match is returned; this applies to the regular expression as a whole and (subject to this constraint) to subexpressions within groups.
 
