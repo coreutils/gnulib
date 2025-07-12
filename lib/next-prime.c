@@ -42,9 +42,11 @@ is_prime (size_t candidate)
 size_t _GL_ATTRIBUTE_CONST
 next_prime (size_t candidate)
 {
+#if !defined IN_LIBGETTEXTLIB
   /* Skip small primes.  */
   if (candidate < 10)
     candidate = 10;
+#endif
 
   /* Make it definitely odd.  */
   candidate |= 1;
