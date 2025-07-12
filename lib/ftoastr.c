@@ -114,6 +114,10 @@ FTOASTR (char *buf, size_t bufsize, int flags, int width, FLOAT x)
   /* The following method is simple but slow.
      For ideas about speeding things up, please see:
 
+     Jeon J. Dragonbox: a new floating-point binary-to-decimal
+     conversion algorithm. 2024. <https://github.com/jk-jeon/dragonbox/>.
+     Used in {fmt} <https://github.com/fmtlib/fmt>.
+
      Adams U. Ryū: fast float-to-string conversion.
      PLDI 2018. 270–282. <https://doi.org/10.1145/3192366.3192369>.  */
 
