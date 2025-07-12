@@ -1,5 +1,5 @@
 # obstack.m4
-# serial 2
+# serial 3
 dnl Copyright 1996-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ dnl This file is offered as-is, without any warranty.
 dnl Autoconf's AC_FUNC_OBSTACK is marked obsolete since version 2.70.
 dnl We provide our own macro here.
 
-AC_DEFUN([gl_FUNC_OBSTACK],
+AC_DEFUN_ONCE([gl_FUNC_OBSTACK],
 [
   AC_CHECK_HEADERS_ONCE([obstack.h])
   if test $ac_cv_header_obstack_h = yes; then
