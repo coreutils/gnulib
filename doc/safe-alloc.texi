@@ -7,6 +7,10 @@ number of common coding errors.  The @code{safe-alloc} module provides
 macros that make it easier to avoid many of them.  It still uses the
 standard C allocation functions behind the scenes.
 
+This module is obsolete, as it does not seem to have caught on in
+practice and some of its features could not be ported to unusual
+platforms.
+
 Some of the memory allocation mistakes that are commonly made are
 
 @itemize @bullet
@@ -67,18 +71,6 @@ Returns @minus{}1 on failure, 0 on success.
 Allocate an array of @code{count} elements, each @code{sizeof *ptr}
 bytes long, and store the address of allocated memory in
 @code{ptr}.  The allocated memory is not initialized.
-
-Returns @minus{}1 on failure, 0 on success.
-@end defmac
-
-@defmac {int} REALLOC_N (ptr, count)
-@findex REALLOC_N
-Reallocate the memory pointed to by @code{ptr} to be big enough to hold
-at least @code{count} elements, each @code{sizeof *ptr} bytes long,
-and store the address of allocated memory in @code{ptr}.  If
-reallocation fails, the @code{ptr} variable is not modified.
-If the new array is smaller than the old one, discard excess contents;
-if larger, the newly added storage is not initialized.
 
 Returns @minus{}1 on failure, 0 on success.
 @end defmac

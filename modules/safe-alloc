@@ -1,6 +1,12 @@
 Description:
 A set of macros to make calls to alloc/calloc/realloc safer.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/safe-alloc.h
 lib/safe-alloc.c

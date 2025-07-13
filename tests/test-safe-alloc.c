@@ -42,11 +42,6 @@ main ()
 
   ASSERT (p->a == 0 && p->b == 0);
 
-  p->a = p->b = 42;
-  r = REALLOC_N (p, 5);
-
-  ASSERT (p[0].a == 42 && p[0].b == 42);
-
   FREE (p);
   ASSERT (p == NULL);
 

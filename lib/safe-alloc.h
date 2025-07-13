@@ -87,20 +87,6 @@ safe_alloc_check (void *ptr)
   safe_alloc_check ((ptr) = reallocarray (NULL, count, sizeof *(ptr)))
 
 /**
- * REALLOC_N:
- * @ptr: pointer to allocated memory
- * @count: number of elements to allocate
- *
- * Re-allocate an array of 'count' elements, each sizeof *ptr
- * bytes long and store the address of allocated memory in
- * 'ptr'.  Fill the newly allocated memory with zeros.
- *
- * Return -1 on failure to reallocate, zero on success.
- */
-#define REALLOC_N(ptr, count) \
-  safe_alloc_check ((ptr) = reallocarray (ptr, count, sizeof *(ptr)))
-
-/**
  * FREE:
  * @ptr: pointer holding address to be freed
  *

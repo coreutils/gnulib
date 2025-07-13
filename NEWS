@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-07-13  safe-alloc      This module is now obsolete.  Also, it no longer
+                            defines the REALLOC_N macro.
+
 2025-05-09  string-desc     These modules now distinguish between read-only
             xstring-desc    string descriptors (type string_desc_t) and
                             writable string descriptors (type rw_string_desc_t).
