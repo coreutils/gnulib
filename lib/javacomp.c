@@ -94,18 +94,18 @@ default_target_version (void)
       /* Determine the version from the found JVM.  */
       java_version_cache = javaexec_version ();
       if (java_version_cache == NULL)
-        java_version_cache = "1.6";
+        java_version_cache = "1.8";
       else if (java_version_cache[0] == '1'
                && java_version_cache[1] == '.'
-               && java_version_cache[2] >= '1' && java_version_cache[2] <= '5'
+               && java_version_cache[2] >= '1' && java_version_cache[2] <= '7'
                && java_version_cache[3] == '\0')
         {
           error (0, 0, _("The java program is too old. Cannot compile Java code for this old version any more."));
-          java_version_cache = "1.6";
+          java_version_cache = "1.8";
         }
       else if ((java_version_cache[0] == '1'
                 && java_version_cache[1] == '.'
-                && java_version_cache[2] >= '6' && java_version_cache[2] <= '8'
+                && java_version_cache[2] == '8'
                 && java_version_cache[3] == '\0')
                || (java_version_cache[0] == '9'
                    && java_version_cache[1] == '\0')
@@ -120,7 +120,7 @@ default_target_version (void)
            determined from the JVM, we do that.  */
         ;
       else
-        java_version_cache = "1.6";
+        java_version_cache = "1.8";
     }
   return java_version_cache;
 }
@@ -128,22 +128,21 @@ default_target_version (void)
 /* ======================= Source version dependent ======================= */
 
 /* Convert a source version to an index.  */
-#define SOURCE_VERSION_BOUND 94 /* exclusive upper bound */
+#define SOURCE_VERSION_BOUND 92 /* exclusive upper bound */
 static unsigned int
 source_version_index (const char *source_version)
 {
   if (source_version[0] == '1' && source_version[1] == '.')
     {
-      if ((source_version[2] >= '6' && source_version[2] <= '8')
-          && source_version[3] == '\0')
-        return source_version[2] - '6';
+      if (source_version[2] == '8' && source_version[3] == '\0')
+        return 0;
     }
   else if (source_version[0] == '9' && source_version[1] == '\0')
-    return 3;
+    return 1;
   else if ((source_version[0] >= '1' && source_version[0] <= '9')
            && (source_version[1] >= '0' && source_version[1] <= '9')
            && source_version[2] == '\0')
-    return (source_version[0] - '1') * 10 + source_version[1] - '0' + 4;
+    return (source_version[0] - '1') * 10 + source_version[1] - '0' + 2;
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return 0;
 }
@@ -151,20 +150,19 @@ source_version_index (const char *source_version)
 /* ======================= Target version dependent ======================= */
 
 /* Convert a target version to an index.  */
-#define TARGET_VERSION_BOUND 94 /* exclusive upper bound */
+#define TARGET_VERSION_BOUND 92 /* exclusive upper bound */
 static unsigned int
 target_version_index (const char *target_version)
 {
   if (target_version[0] == '1' && target_version[1] == '.'
-      && (target_version[2] >= '6' && target_version[2] <= '8')
-      && target_version[3] == '\0')
-    return target_version[2] - '6';
+      && target_version[2] == '8' && target_version[3] == '\0')
+    return 0;
   else if (target_version[0] == '9' && target_version[1] == '\0')
-    return 3;
+    return 1;
   else if ((target_version[0] >= '1' && target_version[0] <= '9')
            && (target_version[1] >= '0' && target_version[1] <= '9')
            && target_version[2] == '\0')
-    return (target_version[0] - '1') * 10 + target_version[1] - '0' + 4;
+    return (target_version[0] - '1') * 10 + target_version[1] - '0' + 2;
   error (EXIT_FAILURE, 0, _("invalid target_version argument to compile_java_class"));
   return 0;
 }
@@ -414,7 +412,7 @@ get_compiler_version (const char *progname,
     version_end++;
   *version_end = '\0';
 
-  /* Map 1.6.0_85 to 6, 1.8.0_151 to 8.  Map 9.0.4 to 9, 10.0.2 to 10, etc.  */
+  /* Map 1.8.0_151 to 8.  Map 9.0.4 to 9, 10.0.2 to 10, etc.  */
   if (version_start[0] == '1' && version_start[1] == '.')
     version_start += 2;
   version_end = strchr (version_start, '.');
@@ -525,8 +523,8 @@ is_envjavac_usable (const char *javac,
     {
       /* Canonicalize source_version and target_version, for easier
          arithmetic.  */
-      int try_source_version = 6 + source_version_index (source_version);
-      int try_target_version = 6 + target_version_index (target_version);
+      int try_source_version = 8 + source_version_index (source_version);
+      int try_target_version = 8 + target_version_index (target_version);
       /* Sanity check.  */
       if (try_source_version <= try_target_version)
         {
@@ -801,8 +799,8 @@ is_javac_usable (const char *source_version, const char *target_version,
     {
       /* Canonicalize source_version and target_version, for easier
          arithmetic.  */
-      int try_source_version = 6 + source_version_index (source_version);
-      int try_target_version = 6 + target_version_index (target_version);
+      int try_source_version = 8 + source_version_index (source_version);
+      int try_target_version = 8 + target_version_index (target_version);
       /* Sanity check.  */
       if (try_source_version <= try_target_version)
         {
@@ -1013,18 +1011,18 @@ compile_java_class (const char * const *java_sources,
   bool err = false;
   char *old_JAVA_HOME;
 
-  /* Map source_version 1.1 ... 1.5 to 1.6.  */
+  /* Map source_version 1.1 ... 1.7 to 1.8.  */
   if (source_version[0] == '1' && source_version[1] == '.'
-      && (source_version[2] >= '1' && source_version[2] <= '5')
+      && (source_version[2] >= '1' && source_version[2] <= '7')
       && source_version[3] == '\0')
-    source_version = "1.6";
+    source_version = "1.8";
 
-  /* Map target_version 1.1 ... 1.5 to 1.6.  */
+  /* Map target_version 1.1 ... 1.7 to 1.8.  */
   if (target_version != NULL
       && target_version[0] == '1' && target_version[1] == '.'
-      && (target_version[2] >= '1' && target_version[2] <= '5')
+      && (target_version[2] >= '1' && target_version[2] <= '7')
       && target_version[3] == '\0')
-    target_version = "1.6";
+    target_version = "1.8";
 
   {
     const char *javac = getenv ("JAVAC");

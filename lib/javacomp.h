@@ -28,28 +28,27 @@ extern "C" {
    classpaths is a list of pathnames to be prepended to the CLASSPATH.
 
    source_version can be:    support for
-             1.6             assert keyword (1.4), generic classes and methods (1.5)
-             1.7             switch(string)
              1.8             lambdas
              9               private interface methods
             10               type inference for local variables
             11               'var' in parameters of lambda expressions
             ...
-   If source-version 1.3 or 1.4 or 1.5 is requested, it gets mapped to 1.6, for
-   backward compatibility. (Currently the minimum Java and javac version we need
-   to support is Java 1.6, since that's the default Java version on Solaris 10.)
+   If source-version 1.3 or 1.4 or 1.5 or 1.6 or 1.7 is requested, it gets
+   mapped to 1.8, for backward compatibility. (Currently the minimum Java and
+   javac version we need to support is Java 1.8, since older versions are
+   out-of-support, see
+   <https://en.wikipedia.org/wiki/Java_version_history#Release_table>.)
 
    target_version can be:  classfile version:
-             1.6                 50.0
-             1.7                 51.0
              1.8                 52.0
              9                   53.0
             10                   54.0
             11                   55.0
             ...                  ...
-   If a target-version below 1.6 is requested, it gets mapped to 1.6, for
-   backward compatibility. (Currently the minimum Java and javac version we need
-   to support is Java 1.6, since that's the default Java version on Solaris 10.)
+   If a target-version below 1.8 is requested, it gets mapped to 1.8, for
+   backward compatibility. (Currently the minimum Java and javac version we
+   need to support is Java 1.8, since older versions are out-of-support, see
+   <https://en.wikipedia.org/wiki/Java_version_history#Release_table>.)
    target_version can also be given as NULL. In this case, the required
    target_version is determined from the found JVM (see javaversion.h).
    Specifying target_version is useful when building a library (.jar) that is

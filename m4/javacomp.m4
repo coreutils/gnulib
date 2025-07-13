@@ -1,5 +1,5 @@
 # javacomp.m4
-# serial 26
+# serial 27
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2025 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -14,21 +14,19 @@ dnl This file is offered as-is, without any warranty.
 # target-version format.
 #
 # source-version can be:    support for
-#           1.6             assert keyword (1.4), generic classes and methods (1.5)
-#           1.7             switch(string)
 #           1.8             lambdas
 #           9               private interface methods
 #          10               type inference for local variables
 #          11               'var' in parameters of lambda expressions
 #          ...
 # (For reference, see <https://en.wikipedia.org/wiki/Java_version_history>.)
-# If source-version 1.3 or 1.4 or 1.5 is requested, it gets mapped to 1.6, for
-# backward compatibility. (Currently the minimum Java and javac version we need
-# to support is Java 1.6, since that's the default Java version on Solaris 10.)
+# If source-version 1.3 or 1.4 or 1.5 or 1.6 or 1.7 is requested, it gets mapped
+# to 1.8, for backward compatibility. (Currently the minimum Java and javac
+# version we need to support is Java 1.8, since older versions are
+# out-of-support, see
+# <https://en.wikipedia.org/wiki/Java_version_history#Release_table>.)
 #
 # target-version can be:  classfile version:
-#           1.6                 50.0
-#           1.7                 51.0
 #           1.8                 52.0
 #           9                   53.0
 #          10                   54.0
@@ -37,15 +35,14 @@ dnl This file is offered as-is, without any warranty.
 # The classfile version of a .class file can be determined through the "file"
 # command. More portably, the classfile major version can be determined through
 # "od -A n -t d1 -j 7 -N 1 classfile".
-# If a target-version below 1.6 is requested, it gets mapped to 1.6, for
+# If a target-version below 1.8 is requested, it gets mapped to 1.8, for
 # backward compatibility. (Currently the minimum Java and javac version we need
-# to support is Java 1.6, since that's the default Java version on Solaris 10.)
+# to support is Java 1.8, since older versions are out-of-support, see
+# <https://en.wikipedia.org/wiki/Java_version_history#Release_table>.)
 #
 # target-version can also be omitted. In this case, the required target-version
 # is determined from the found JVM (see macro gt_JAVAEXEC):
 #      target-version   for JVM
-#           1.6         JDK/JRE 6
-#           1.7         JDK/JRE 7
 #           1.8         JDK/JRE 8
 #           9           JDK/JRE 9
 #          10           JDK/JRE 10
@@ -85,7 +82,7 @@ AC_DEFUN([gt_JAVACOMP],
     AC_MSG_ERROR([missing source-version argument to gt_@&t@JAVACOMP])
   }
   case "$source_version" in
-    1.1 | 1.2 | 1.3 | 1.4 | 1.5) source_version='1.6' ;;
+    1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7) source_version='1.8' ;;
   esac
   m4_if([$2], [],
     [if test -n "$HAVE_JAVAEXEC"; then
@@ -123,11 +120,11 @@ changequote([,])dnl
            java_exec_version=1.1 ;;
        esac
        case "$java_exec_version" in
-         1.1 | 1.2 | 1.3 | 1.4 | 1.5)
+         1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7)
            AC_MSG_WARN([$CONF_JAVA is too old, cannot compile Java code for this old version any more])
-           target_version=1.6 ;;
+           target_version=1.8 ;;
 changequote(,)dnl
-         1.6 | 1.7 | 1.8 | 9 | [1-9][0-9])
+         1.8 | 9 | [1-9][0-9])
 changequote([,])dnl
            dnl Here we could choose any target_version between $source_version
            dnl and the $java_exec_version. (If it is too small, it will be
@@ -135,26 +132,26 @@ changequote([,])dnl
            dnl it is determined from the JVM, we do that:
            target_version="$java_exec_version" ;;
          *) AC_MSG_WARN([unknown target-version $target_version, please update gt_@&t@JAVACOMP macro])
-            target_version=1.6 ;;
+            target_version=1.8 ;;
        esac
      else
-       target_version="1.6"
+       target_version="1.8"
      fi
     ],
     [target_version=$2
      case "$target_version" in
-       1.1 | 1.2 | 1.3 | 1.4 | 1.5) target_version='1.6' ;;
+       1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7) target_version='1.8' ;;
      esac
     ])
   case "$source_version" in
 changequote(,)dnl
-    1.6 | 1.7 | 1.8 | 9 | [1-9][0-9]) ;;
+    1.8 | 9 | [1-9][0-9]) ;;
 changequote([,])dnl
     *) AC_MSG_ERROR([invalid source-version argument to gt_@&t@JAVACOMP: $source_version]) ;;
   esac
   case "$target_version" in
 changequote(,)dnl
-    1.6 | 1.7 | 1.8 | 9 | [1-9][0-9]) ;;
+    1.8 | 9 | [1-9][0-9]) ;;
 changequote([,])dnl
     *) AC_MSG_ERROR([invalid target-version argument to gt_@&t@JAVACOMP: $target_version]) ;;
   esac
@@ -176,19 +173,6 @@ changequote([,])dnl
   AC_MSG_CHECKING([for Java compiler])
   dnl
   dnl The support of Sun/Oracle javac for target-version and source-version:
-  dnl
-  dnl   javac 1.6:   -target 1.1 1.2 1.3 1.4 1.5 1.6   default: 1.6
-  dnl                -source 1.3 1.4 1.5 1.6           default: 1.5
-  dnl                -target 1.1/1.2/1.3 only possible with -source 1.3
-  dnl                -target 1.4 only possible with -source 1.3/1.4
-  dnl                -target 1.5 only possible with -source 1.3/1.4/1.5 or no -source
-  dnl
-  dnl   javac 1.7:   -target 1.1 1.2 1.3 1.4 1.5 1.6 1.7  default: 1.7
-  dnl                -source 1.3 1.4 1.5 1.6 1.7          default: 1.7
-  dnl                -target 1.1/1.2/1.3 only possible with -source 1.3
-  dnl                -target 1.4 only possible with -source 1.3/1.4
-  dnl                -target 1.5 only possible with -source 1.3/1.4/1.5
-  dnl                -target 1.6 only possible with -source 1.3/1.4/1.5/1.6
   dnl
   dnl   javac 1.8:   -target 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8  default: 1.8
   dnl                -source 1.3 1.4 1.5 1.6 1.7 1.8          default: 1.8
@@ -217,8 +201,6 @@ changequote([,])dnl
   dnl     javac     classfile         valid -source and   obsolete -source
   dnl     version   default version   -target values      and -target values
   dnl     -------   ---------------   -----------------   ------------------
-  dnl     1.6       50.0              1.2 .. 1.6
-  dnl     1.7       51.0              1.2 .. 1.7
   dnl     1.8       52.0              1.3 .. 1.8          1.3 .. 1.5
   dnl     9         53.0              1.6 .. 9            1.6
   dnl     10        54.0              1.6 .. 10           1.6
@@ -318,7 +300,7 @@ changequote(,)dnl
           compiler_version=`echo "$compiler_version" | sed -e 's/^[^0-9]*\([0-9][0-9.]*\).*/\1/'`
 changequote([,])dnl
           case "$compiler_version" in
-            1.*) dnl Map 1.6.0_85 to 6, 1.8.0_151 to 8.
+            1.*) dnl Map 1.8.0_151 to 8.
                  compiler_version=`echo "$compiler_version" | sed -e 's/^1\.//' -e 's/\..*//'`
                  ;;
             *) dnl Map 9.0.4 to 9, 10.0.2 to 10, etc.
@@ -340,11 +322,11 @@ changequote([,])dnl
               fi
               try_source_version=`expr $try_source_version + 1`
               expr $try_source_version '<=' $compiler_version >/dev/null || break
-              source_option=' -source '`case "$try_source_version" in 6|7|8) echo 1. ;; esac`"$try_source_version"
+              source_option=' -source '`case "$try_source_version" in 8) echo 1. ;; esac`"$try_source_version"
               if expr $try_target_version = $compiler_target_version >/dev/null; then
                 target_option=
               else
-                target_option=' -target '`case "$try_target_version" in 6|7|8) echo 1. ;; esac`"$try_target_version"
+                target_option=' -target '`case "$try_target_version" in 8) echo 1. ;; esac`"$try_target_version"
               fi
               if { echo "$as_me:__oline__: $JAVAC$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
                    $JAVAC$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
@@ -397,13 +379,13 @@ changequote([,])dnl
           dnl Also, javac may point to a shell script that already includes a
           dnl '-source' option.
           dnl Therefore, pass a '-source' option always.
-          source_option=' -source '`case "$source_version" in 6|7|8) echo 1. ;; esac`"$source_version"
+          source_option=' -source '`case "$source_version" in 8) echo 1. ;; esac`"$source_version"
           dnl And pass a '-target' option as well, if needed.
           dnl (All supported javac versions support both, see the table above.)
           if expr $target_version = $compiler_target_version >/dev/null; then
             target_option=
           else
-            target_option=' -target '`case "$target_version" in 6|7|8) echo 1. ;; esac`"$target_version"
+            target_option=' -target '`case "$target_version" in 8) echo 1. ;; esac`"$target_version"
           fi
           if { echo "$as_me:__oline__: javac$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
                javac$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
@@ -423,7 +405,7 @@ changequote(,)dnl
             compiler_version=`echo "$compiler_version" | sed -e 's/^[^0-9]*\([0-9][0-9.]*\).*/\1/'`
 changequote([,])dnl
             case "$compiler_version" in
-              1.*) dnl Map 1.6.0_85 to 6, 1.8.0_151 to 8.
+              1.*) dnl Map 1.8.0_151 to 8.
                    compiler_version=`echo "$compiler_version" | sed -e 's/^1\.//' -e 's/\..*//'`
                    ;;
               *) dnl Map 9.0.4 to 9, 10.0.2 to 10, etc.
@@ -445,11 +427,11 @@ changequote([,])dnl
                 fi
                 try_source_version=`expr $try_source_version + 1`
                 expr $try_source_version '<=' $compiler_version >/dev/null || break
-                source_option=' -source '`case "$try_source_version" in 6|7|8) echo 1. ;; esac`"$try_source_version"
+                source_option=' -source '`case "$try_source_version" in 8) echo 1. ;; esac`"$try_source_version"
                 if expr $try_target_version = $compiler_target_version >/dev/null; then
                   target_option=
                 else
-                  target_option=' -target '`case "$try_target_version" in 6|7|8) echo 1. ;; esac`"$try_target_version"
+                  target_option=' -target '`case "$try_target_version" in 8) echo 1. ;; esac`"$try_target_version"
                 fi
                 if { echo "$as_me:__oline__: javac$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
                      javac$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
