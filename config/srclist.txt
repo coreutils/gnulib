@@ -13,6 +13,7 @@ $AUTOMAKE lib/mdate-sh		build-aux
 $AUTOMAKE lib/mkinstalldirs	build-aux
 
 $TEXINFOTEX texinfo.tex		build-aux strip-trailing-space
+$TEXINFOTEX epsf.tex		build-aux
 
 # we generate INSTALL from this via a rule in doc/Makefile.
 $AUTOCONF doc/install.texi	doc

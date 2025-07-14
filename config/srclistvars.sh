@@ -36,4 +36,4 @@ esac
 : ${LIBCSRC=../libc}
 : ${LIBGCRYPT=../libgcrypt} # https://dev.gnupg.org/source/libgcrypt.git
 : ${LIBTOOL=../libtool}
-: ${TEXINFOTEX=../../ftp.gnu.org/gnu/texinfo}
+: ${TEXINFOTEX=../texinfo/doc}
