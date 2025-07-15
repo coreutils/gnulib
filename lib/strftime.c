@@ -78,14 +78,8 @@
    C library on the various platforms (UTF-8, GB2312, GBK, CP936,
    GB18030, EUC-TW, BIG5, BIG5-HKSCS, CP950, EUC-JP, EUC-KR, CP949,
    SHIFT_JIS, CP932, JOHAB) are safe for formats, because the byte '%'
-   cannot occur in a multibyte character except in the first byte.
-
-   The DEC-HANYU encoding used on OSF/1 is not safe for formats, but
-   this encoding has never been seen in real-life use, so we ignore
-   it.  */
-#if !(defined __osf__ && 0)
-# define MULTIBYTE_IS_FORMAT_SAFE 1
-#endif
+   cannot occur in a multibyte character except in the first byte.  */
+#define MULTIBYTE_IS_FORMAT_SAFE 1
 #define DO_MULTIBYTE (! MULTIBYTE_IS_FORMAT_SAFE)
 
 #if DO_MULTIBYTE
