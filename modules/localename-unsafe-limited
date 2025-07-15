@@ -1,18 +1,23 @@
 Description:
 Return current locale's name, according to glibc naming conventions,
 in thread-local (unsafe) storage.
-Only works on a limited set of platforms: on NetBSD and Solaris.
+Only works on a limited set of platforms: all except OpenBSD, AIX, Android.
 
 Files:
 lib/localename.h
 lib/localename-unsafe.c
 m4/localename.m4
 m4/intl-thread-locale.m4
+m4/intlmacosx.m4
 m4/lcmessage.m4
+m4/musl.m4
 
 Depends-on:
+localename-environ
 extensions
 locale-h
+strdup
+windows-mutex
 getlocalename_l-unsafe-limited
 setlocale-null-unlocked
 
@@ -20,7 +25,8 @@ configure.ac:
 gl_LOCALENAME_UNSAFE_LIMITED
 AC_REQUIRE([AC_CANONICAL_HOST])
 gl_CONDITIONAL([GL_COND_OBJ_LOCALENAME_UNSAFE_LIMITED],
-               [case "$host_os" in netbsd* | solaris*) true;; *) false;; esac])
+               [case "$host_os" in openbsd* | aix* | *-android*) false;; *) true;; esac])
+gl_MUSL_LIBC
 
 Makefile.am:
 if GL_COND_OBJ_LOCALENAME_UNSAFE_LIMITED
@@ -31,6 +37,7 @@ Include:
 "localename.h"
 
 Link:
+@INTL_MACOSX_LIBS@
 $(LIBTHREAD)
 
 License:
