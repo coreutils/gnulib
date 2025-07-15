@@ -1,5 +1,5 @@
 # getlocalename_l.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,7 @@ AC_DEFUN([gl_PREREQ_GETLOCALENAME_L_SIMPLE],
 
 AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
 [
+  AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
   AC_CHECK_FUNCS_ONCE([getlocalename_l])
   if test $ac_cv_func_getlocalename_l = yes; then
