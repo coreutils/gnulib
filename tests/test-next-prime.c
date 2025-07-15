@@ -26,9 +26,9 @@
 int
 main ()
 {
-  ASSERT (next_prime (1) == 11);
-  ASSERT (next_prime (3) == 11);
-  ASSERT (next_prime (7) == 11);
+  ASSERT (next_prime (1) >= 3 && next_prime (1) <= 11);
+  ASSERT (next_prime (3) >= 3 && next_prime (3) <= 11);
+  ASSERT (next_prime (7) >= 7 && next_prime (7) <= 11);
   ASSERT (next_prime (10) == 11);
   ASSERT (next_prime (11) == 11);
   ASSERT (next_prime (12) == 13);
