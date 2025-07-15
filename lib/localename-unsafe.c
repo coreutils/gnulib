@@ -51,7 +51,9 @@
 
 #if defined _WIN32 && !defined __CYGWIN__
 # define WINDOWS_NATIVE
-# include "glthread/lock.h"
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+# include "windows-mutex.h"
 #endif
 
 #if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
@@ -2540,12 +2542,12 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 
 # ifdef WINDOWS_NATIVE
 
-/* Two variables to interface between get_lcid and the EnumLocales
+/* Two variables to interface between get_lcid and the EnumSystemLocales
    callback function below.  */
 static LCID found_lcid;
 static char lname[LC_MAX * (LOCALE_NAME_MAX_LENGTH + 1) + 1];
 
-/* Callback function for EnumLocales.  */
+/* Callback function for EnumSystemLocales.  */
 static BOOL CALLBACK
 enum_locales_fn (LPSTR locale_num_str)
 {
@@ -2575,7 +2577,7 @@ enum_locales_fn (LPSTR locale_num_str)
 }
 
 /* This lock protects the get_lcid against multiple simultaneous calls.  */
-gl_lock_define_initialized(static, get_lcid_lock)
+static glwthread_mutex_t get_lcid_lock = GLWTHREAD_MUTEX_INIT;
 
 /* Return the Locale ID (LCID) number given the locale's name, a
    string, in LOCALE_NAME.  This works by enumerating all the locales
@@ -2590,10 +2592,10 @@ get_lcid (const char *locale_name)
 
   /* Lock while looking for an LCID, to protect access to static
      variables: last_lcid, last_locale, found_lcid, and lname.  */
-  gl_lock_lock (get_lcid_lock);
+  glwthread_mutex_lock (&get_lcid_lock);
   if (last_lcid > 0 && strcmp (locale_name, last_locale) == 0)
     {
-      gl_lock_unlock (get_lcid_lock);
+      glwthread_mutex_unlock (&get_lcid_lock);
       return last_lcid;
     }
   strncpy (lname, locale_name, sizeof (lname) - 1);
@@ -2605,7 +2607,7 @@ get_lcid (const char *locale_name)
       last_lcid = found_lcid;
       strcpy (last_locale, locale_name);
     }
-  gl_lock_unlock (get_lcid_lock);
+  glwthread_mutex_unlock (&get_lcid_lock);
   return found_lcid;
 }
 
