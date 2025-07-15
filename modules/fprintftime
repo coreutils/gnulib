@@ -19,6 +19,9 @@ lib_SOURCES += fprintftime.c
 Include:
 "fprintftime.h"
 
+Link:
+@INTL_MACOSX_LIBS@
+
 License:
 GPL
 

@@ -3,6 +3,10 @@ tests/test-nstrftime-1.sh
 tests/test-nstrftime-2.sh
 tests/test-nstrftime.c
 tests/test-nstrftime.h
+tests/test-nstrftime-DE.c
+tests/test-nstrftime-TH.c
+tests/test-nstrftime-IR.c
+tests/test-nstrftime-ET.c
 tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
@@ -12,6 +16,8 @@ Depends-on:
 atoll
 c99
 intprops
+localcharset
+setenv
 setlocale
 strerror
 
@@ -21,9 +27,24 @@ gt_LOCALE_FR_UTF8
 gl_MUSL_LIBC
 
 Makefile.am:
-TESTS += test-nstrftime-1.sh test-nstrftime-2.sh
+TESTS += \
+  test-nstrftime-1.sh \
+  test-nstrftime-2.sh \
+  test-nstrftime-DE \
+  test-nstrftime-TH \
+  test-nstrftime-IR \
+  test-nstrftime-ET
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
-check_PROGRAMS += test-nstrftime
-test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB)
+check_PROGRAMS += \
+  test-nstrftime \
+  test-nstrftime-DE \
+  test-nstrftime-TH \
+  test-nstrftime-IR \
+  test-nstrftime-ET
+test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@
+test_nstrftime_DE_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@
+test_nstrftime_TH_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@
+test_nstrftime_IR_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@
+test_nstrftime_ET_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@
