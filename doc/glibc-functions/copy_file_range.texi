@@ -24,12 +24,16 @@ Portability problems fixed by Gnulib:
 This function exists only on Linux and FreeBSD and is therefore
 missing on many platforms:
 glibc 2.26, macOS 14, FreeBSD 12.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android API level 33.
-But the replacement function is only a stub: It always fails with error ENOSYS.
+But the replacement function is only a stub: It always fails with error @code{ENOSYS}.
 
 @item
 This function has many problems on Linux kernel versions before 5.3.
 On these kernel versions, the replacement function always fails with
-error ENOSYS.
+error @code{ENOSYS}.
+
+@item
+This function is provided on GNU/Hurd but it is only a stub: It always
+fails with error @code{ENOSYS}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
