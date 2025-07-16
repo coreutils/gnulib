@@ -13,7 +13,7 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 HP-UX 11.23, Solaris 9, mingw, MSVC 14.
 @item
-On some platforms, this function does not fail with @samp{EINVAL} when
+On some platforms, this function does not fail with @code{EINVAL} when
 passed an empty string or a string containing @samp{=}:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 1.6, OpenBSD 7.5, Cygwin 1.5.x.
 @item

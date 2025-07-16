@@ -17,7 +17,7 @@ This function has the return type @samp{void} instead of @samp{int} on some
 platforms:
 FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8.
 @item
-On some platforms, this function does not fail with @samp{EINVAL} when
+On some platforms, this function does not fail with @code{EINVAL} when
 passed an empty string or a string containing @samp{=}:
 FreeBSD 6.0, NetBSD 1.6, OpenBSD 4.7.
 @item

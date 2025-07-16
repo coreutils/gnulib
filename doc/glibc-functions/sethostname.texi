@@ -25,7 +25,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Minix 3.1.8, Cygwin 1.7.x, mingw, MSVC 14, Android 5.1.
-Note that the Gnulib replacement may fail with ENOSYS on some platforms.
+Note that the Gnulib replacement may fail with @code{ENOSYS} on some platforms.
 @item
 This function is not declared on some platforms:
 AIX 7.1, Solaris 10.

@@ -26,7 +26,7 @@ macOS 14, AIX 7.1.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function always fails with @samp{ENOSYS} on platforms that don't
+This function always fails with @code{ENOSYS} on platforms that don't
 support symlinks:
 mingw, MSVC 14.
 @end itemize

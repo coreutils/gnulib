@@ -32,7 +32,7 @@ When this function fails, it returns -1 instead of the error code
 on some platforms:
 macOS 14, FreeBSD 14.0, Android 4.3.
 @item
-When this function fails with ERANGE, it stores an empty string as result
+When this function fails with @code{ERANGE}, it stores an empty string as result
 on some platforms:
 NetBSD 10.0, Solaris 11 OmniOS.
 @end itemize

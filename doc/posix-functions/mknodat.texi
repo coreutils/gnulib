@@ -26,7 +26,7 @@ Haiku.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-The gnulib replacement function always fails with @samp{ENOSYS} on
+The gnulib replacement function always fails with @code{ENOSYS} on
 some platforms:
 mingw, MSVC 14.
 @item
