@@ -49,6 +49,17 @@ main ()
     struct string_buffer buffer;
 
     sb_init (&buffer);
+    rw_string_desc_t contents = sb_dupfree (&buffer);
+    ASSERT (sd_is_empty (contents));
+    /* Here it is important to distinguish (0, NULL), which stands for an error,
+       from (0, non-NULL), which is a successful result.  */
+    ASSERT (sd_data (contents) != NULL);
+    sd_free (contents);
+  }
+  {
+    struct string_buffer buffer;
+
+    sb_init (&buffer);
     sb_append1 (&buffer, 'x');
     sb_append1 (&buffer, '\377');
     char *s = sb_dupfree_c (&buffer);

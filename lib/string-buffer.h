@@ -127,7 +127,7 @@ extern string_desc_t sb_contents (struct string_buffer *buffer);
 extern const char * sb_contents_c (struct string_buffer *buffer);
 
 /* Returns the contents of BUFFER and frees all other memory held by BUFFER.
-   Returns NULL upon failure or if there was an error earlier.
+   Returns (0, NULL) upon failure or if there was an error earlier.
    It is the responsibility of the caller to sd_free() the result.  */
 extern rw_string_desc_t sb_dupfree (struct string_buffer *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);

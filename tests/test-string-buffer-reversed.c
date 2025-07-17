@@ -50,6 +50,17 @@ main ()
     struct string_buffer_reversed buffer;
 
     sbr_init (&buffer);
+    rw_string_desc_t contents = sbr_dupfree (&buffer);
+    ASSERT (sd_is_empty (contents));
+    /* Here it is important to distinguish (0, NULL), which stands for an error,
+       from (0, non-NULL), which is a successful result.  */
+    ASSERT (sd_data (contents) != NULL);
+    sd_free (contents);
+  }
+  {
+    struct string_buffer_reversed buffer;
+
+    sbr_init (&buffer);
     sbr_prepend1 (&buffer, '\377');
     sbr_prepend1 (&buffer, 'x');
     char *s = sbr_dupfree_c (&buffer);

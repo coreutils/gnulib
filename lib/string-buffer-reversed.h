@@ -129,7 +129,7 @@ extern string_desc_t sbr_contents (struct string_buffer_reversed *buffer);
 extern const char * sbr_contents_c (struct string_buffer_reversed *buffer);
 
 /* Returns the contents of BUFFER and frees all other memory held by BUFFER.
-   Returns NULL upon failure or if there was an error earlier.
+   Returns (0, NULL) upon failure or if there was an error earlier.
    It is the responsibility of the caller to sd_free() the result.  */
 extern rw_string_desc_t sbr_dupfree (struct string_buffer_reversed *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
