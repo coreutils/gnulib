@@ -111,27 +111,34 @@ In the current implementation, only English is supported for words and
 abbreviations like @samp{AM}, @samp{DST}, @samp{EST}, @samp{first},
 @samp{January}, @samp{Sunday}, @samp{tomorrow}, and @samp{year}.
 
+@cindex calendar, in dates
+In the current implementation, only the Gregorian calendar is supported,
+regardless of the locale.
+
 @cindex language, in dates
+@cindex calendar, in dates
 @cindex time zone item
 The output of the @command{date} command
 is not always acceptable as a date string,
-not only because of the language problem, but also because there is no
+not only because of the language problem and of the calendar problem,
+but also because there is no
 standard meaning for time zone items like @samp{IST}@.  When using
 @command{date} to generate a date string intended to be parsed later,
-specify a date format that is independent of language and that does not
-use time zone items other than @samp{UTC} and @samp{Z}@.  Here are some
-ways to do this:
+specify a date format that is independent of language,
+that uses the Gregorian calendar,
+and that does not use time zone items other than @samp{UTC} and @samp{Z}@.
+Here are some ways to do this:
 
 @example
 $ LC_ALL=C TZ=UTC0 date
 Tue Nov 15 02:02:42 UTC 2022
-$ TZ=UTC0 date +'%Y-%m-%d %H:%M:%SZ'
+$ LC_ALL=C TZ=UTC0 date +'%Y-%m-%d %H:%M:%SZ'
 2022-11-15 02:02:42Z
 $ date --rfc-3339=ns  # --rfc-3339 is a GNU extension.
 2022-11-14 21:02:42.000000000-05:00
 $ date --rfc-email  # a GNU extension
 Mon, 14 Nov 2022 21:02:42 -0500
-$ date +'%Y-%m-%d %H:%M:%S %z'  # %z is a GNU extension.
+$ LC_ALL=C date +'%Y-%m-%d %H:%M:%S %z'  # %z is a GNU extension.
 2022-11-14 21:02:42 -0500
 $ date +'@@%s.%N'  # %s and %N are GNU extensions.
 @@1668477762.692722128
