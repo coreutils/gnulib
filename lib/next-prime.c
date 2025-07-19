@@ -21,22 +21,25 @@
 
 #include <stdint.h> /* for SIZE_MAX */
 
-/* Return true if CANDIDATE is a prime number.  CANDIDATE should be an odd
-   number at least equal to 11.  */
+/* Return true if CANDIDATE is a prime number or 1.
+   CANDIDATE should be an odd number >= 1.  */
 static bool _GL_ATTRIBUTE_CONST
 is_prime (size_t candidate)
 {
   size_t divisor = 3;
   size_t square = divisor * divisor;
 
-  while (square < candidate && (candidate % divisor))
+  for (;;)
     {
+      if (square > candidate)
+        return true;
+      if ((candidate % divisor) == 0)
+        return false;
+      /* Increment divisor by 2.  */
       divisor++;
       square += 4 * divisor;
       divisor++;
     }
-
-  return (candidate % divisor ? true : false);
 }
 
 size_t _GL_ATTRIBUTE_CONST
