@@ -42,6 +42,72 @@ of Gnulib is tailored to the package: A build tool, called
 @code{gnulib-tool}, is provided that copies a tailored subset of Gnulib
 into the package.
 
+@menu
+* Other source code libraries::
+@end menu
+
+@node Other source code libraries
+@subsection Comparison with other source code libraries
+
+Many programming languages nowadays have
+@itemize
+@item
+an ecosystem of reusable source code packages, available through a central site,
+@item
+together with a tool that downloads dependencies from this central site.
+@end itemize
+
+Here is a table of such source code libraries.
+
+@multitable @columnfractions .3 .35 .35
+@headitem Language @tab Central site @tab Download tool
+@item Python @tab @url{https://pypi.org,,pypi.org} @tab @samp{pip}
+@item Java @tab @url{https://mvnrepository.com,,mvnrepository.com} @tab @samp{maven}, @samp{gradle}
+@item C# @tab @url{https://nuget.org,,nuget.org} @tab @samp{nuget}
+@item JavaScript, TypeScript @tab @url{https://npmjs.com,,npmjs.com} @tab @samp{npm}, @samp{yarn}
+@item Common Lisp @tab @url{https://quicklisp.org,,quicklisp.org} @tab @samp{ql:quickload}
+@item Emacs Lisp @tab @url{https://elpa.gnu.org,,elpa.gnu.org} @tab @samp{M-x package-install}
+@item Rust @tab @url{https://crates.io,,crates.io} @tab @samp{cargo}
+@item Go @tab @url{https://pkg.go.dev,,pkg.go.dev} @tab @samp{go mod}
+@item Ruby @tab @url{https://rubygems.org,,rubygems.org} @tab @samp{gem}
+@item Lua @tab @url{https://luarocks.org,,luarocks.org} @tab @samp{luarocks}
+@item OCaml @tab @url{https://ocaml.org/packages,,ocaml.org/packages} @tab @samp{opam}
+@item D @tab @url{https://code.dlang.org,,code.dlang.org} @tab @samp{dub}
+@item Perl @tab @url{https://cpan.org,,cpan.org} @tab @samp{cpan}
+@item PHP @tab @url{https://packagist.org,,packagist.org} @tab @samp{composer}
+@item R @tab @url{https://cran.r-project.org,,cran.r-project.org} @tab @samp{R CMD INSTALL}
+@end multitable
+
+@cindex supply chain attacks
+Most of them are vulnerable to @emph{supply chain attacks}.
+These are cyber-attacks to the central site (library)
+or to one of the packages in the library,
+with the goal of attacking the packages that use that specific package
+as a (direct or indirect) dependency.
+
+Examples of such supply chain attacks:
+@itemize
+@item
+A disenchanted package maintainer may replace the code of their package
+with something that does not work any more.
+@item
+An attacker may plant a backdoor in a package.
+@item
+An attacker may register packages whose names only slightly differ
+from well-known and heavily used packages (``typo-squatting'').
+@end itemize
+
+While some mitigations exist, they are often cumbersome to put in place.
+For example, a developer could set up a partial mirror of the library,
+where adding a package to the mirror is a manual operation,
+together with a configuration or modification of the tool that
+redirects download or installation requests to the mirror.
+
+Gnulib is not vulnerable to such attacks, because
+all of its code is managed in a single repository,
+with a limited set of committers
+and with established code review practices.
+
 @node Portability and Application Code
 @section Portability and Application Code
 
