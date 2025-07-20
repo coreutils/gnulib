@@ -19,10 +19,6 @@ Here are most of the steps we (maintainers) follow when making a release.
 
     git push origin master
 
-* Check that the NixOS/Hydra autobuilder is reporting all is well:
-
-    https://hydra.nixos.org/project/gnu/@PACKAGE@-master
-
 * Run the following command to download any new translations:
 
     ./bootstrap && ./configure
