@@ -2487,7 +2487,7 @@ there.
 @cindex formats for documentation, desired
 
 The web pages for the package should include its manuals, in HTML,
-DVI, Info, PDF, plain ASCII, and the source Texinfo.  All of these can
+Info, PDF, plain ASCII, and the source Texinfo.  All of these can
 be generated automatically from Texinfo using Makeinfo and other
 programs.  If the Texinfo itself is generated from some other source
 format, include that too.
@@ -2558,7 +2558,7 @@ gendocs.sh --email bug-texinfo@@gnu.org texinfo "GNU Texinfo manual"
 
 @command{gendocs.sh} creates a subdirectory @file{manual/} containing
 the manual generated in all the standard output formats: Info, HTML,
-DVI, and so on, as well as the Texinfo source.  You then need to move
+and so on, as well as the Texinfo source.  You then need to move
 all those files, retaining the subdirectories, into the web pages for
 your package.
 
