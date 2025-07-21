@@ -68,7 +68,7 @@
 
    mbuif_next (state, iter)
      returns the next multibyte character.
-     It asssumes that the state is initialized and that *iter != '\0'.
+     It assumes that the state is initialized and that *iter != '\0'.
 
    Here are the function prototypes of the macros.
 

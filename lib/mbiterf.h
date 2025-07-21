@@ -61,7 +61,7 @@
 
    mbif_next (state, iter, endptr)
      returns the next multibyte character.
-     It asssumes that the state is initialized and that iter < endptr.
+     It assumes that the state is initialized and that iter < endptr.
 
    Here are the function prototypes of the macros.
 
