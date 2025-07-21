@@ -52,7 +52,7 @@ clear_ungetc_buffer_preserving_position (FILE *fp)
 static void
 clear_ungetc_buffer (FILE *fp)
 {
-# if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+# if defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   if (HASUB (fp))
     {
@@ -77,7 +77,7 @@ clear_ungetc_buffer (FILE *fp)
 #if ! (defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1)
 /* GNU libc, BeOS, Haiku, Linux libc5 */
 
-# if (defined __sferror || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
+# if (defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
 /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 
 static int
@@ -100,7 +100,7 @@ static void
 update_fpos_cache (_GL_ATTRIBUTE_MAYBE_UNUSED FILE *fp,
                    _GL_ATTRIBUTE_MAYBE_UNUSED off_t pos)
 {
-#  if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+#  if defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 #   if defined __CYGWIN__ || defined __ANDROID__
   /* fp_->_offset is typed as an integer.  */
@@ -205,7 +205,7 @@ rpl_fflush (FILE *stream)
         return result;
     }
 
-# if (defined __sferror || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
+# if (defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
     /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 
     {

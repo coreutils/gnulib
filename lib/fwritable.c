@@ -38,7 +38,7 @@ fwritable (FILE *fp)
 #if defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
   /* GNU libc, BeOS, Haiku, Linux libc5 */
   return (fp->_flags & _IO_NO_WRITES) == 0;
-#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+#elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin < 1.7.34, Minix 3, Android */
   return (fp_->_flags & (__SRW | __SWR)) != 0;
 #elif defined __EMX__               /* emx+gcc */
