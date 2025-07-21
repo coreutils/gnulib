@@ -45,7 +45,7 @@ fpurge (FILE *fp)
   extern int fpurge (FILE *);
 # endif
   int result = fpurge (fp);
-# if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+# if defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   if (result == 0)
     /* Correct the invariants that fpurge broke.
@@ -75,7 +75,7 @@ fpurge (FILE *fp)
       fp->_IO_save_base = NULL;
     }
   return 0;
-# elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+# elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   fp_->_p = fp_->_bf._base;
   fp_->_r = 0;
