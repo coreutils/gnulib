@@ -108,7 +108,7 @@
 #  define _flags pub._flags
 #  define _r pub._r
 #  define _w pub._w
-# elif defined __ANDROID__ || defined __OpenBSD__ /* Android & OpenBSD */
+# elif defined __ANDROID__ || defined __OpenBSD__ /* Android, OpenBSD */
 #  if defined __LP64__ && !defined __OpenBSD__
 #   define _gl_flags_file_t int
 #  else
@@ -165,7 +165,7 @@
       /* More fields, not relevant here.  */
     };
 #  define fp_ub ((struct __sfileext *) fp->_ext._base)->_ub
-# elif defined __ANDROID__ || defined __OpenBSD__ /* Android & OpenBSD */
+# elif defined __ANDROID__ || defined __OpenBSD__ /* Android, OpenBSD */
   struct __sfileext
     {
       struct { unsigned char *_base; size_t _size; } _ub; /* ungetc buffer */
@@ -178,7 +178,7 @@
 
 # define HASUB(fp) (fp_ub._base != NULL)
 
-# if defined __ANDROID__ || defined __OpenBSD__ /* Android & OpenBSD */
+# if defined __ANDROID__ || defined __OpenBSD__ /* Android, OpenBSD */
   /* Needed after this Android commit from 2016-01-25
      <https://android.googlesource.com/platform/bionic.git/+/e70e0e9267d069bf56a5078c99307e08a7280de7>
      And after this OpenBSD commit from 2025-07-16
