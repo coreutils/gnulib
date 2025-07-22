@@ -172,7 +172,7 @@ make_dir_parents (char *dir,
                               savewd_chdir_options, open_result);
               if (chdir_result < -1)
                 return true;
-              else
+              else if (chdir_result == 0 || errno == EACCES)
                 {
                   bool chdir_ok = (chdir_result == 0);
                   char const *subdir = (chdir_ok ? "." : dir + prefix_len);
@@ -192,6 +192,13 @@ make_dir_parents (char *dir,
                              quote (dir));
                       return false;
                     }
+                }
+              else
+                {
+                  if (mkdir_errno == 0)
+                    mkdir_errno = errno;
+                  if (0 <= open_result[0])
+                    close (open_result[0]);
                 }
             }
         }
