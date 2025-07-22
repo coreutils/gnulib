@@ -22,7 +22,7 @@ BUILT_SOURCES += $(SYS_UN_H)
 # doesn't have one.
 if GL_GENERATE_SYS_UN_H
 sys/un.h: sys_un.in.h $(top_builddir)/config.status
-@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
