@@ -17,12 +17,8 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-If the argument is a read-only file descriptor, this function fails
+If the argument is a file descriptor that lacks write access,
+such as a directory file descriptor, this function fails
 with @code{EBADF} on some platforms:
-AIX 7.2, Cygwin 2.9.
-
-@item
-If the argument is a directory file descriptor, this function fails with
-@code{EBADF} on some platforms:
-AIX 7.3.
+AIX 7.3, Cygwin 3.6.x.
 @end itemize
