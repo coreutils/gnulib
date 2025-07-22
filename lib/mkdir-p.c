@@ -144,11 +144,13 @@ make_dir_parents (char *dir,
               mkdir_mode = -1;
             }
 
-          if (preserve_existing)
+          if (mkdir_errno == ENOENT || mkdir_errno == ENOTDIR)
+            ;
+          else if (preserve_existing)
             {
               if (mkdir_errno == 0)
                 return true;
-              if (mkdir_errno != ENOENT && make_ancestor)
+              if (make_ancestor)
                 {
                   struct stat st;
                   if (stat (dir + prefix_len, &st) == 0)
@@ -182,8 +184,7 @@ make_dir_parents (char *dir,
                     return true;
 
                   if (mkdir_errno == 0
-                      || (mkdir_errno != ENOENT && make_ancestor
-                          && errno != ENOTDIR))
+                      || (make_ancestor && errno != ENOENT && errno != ENOTDIR))
                     {
                       error (0, errno,
                              _(keep_owner
