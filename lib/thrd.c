@@ -26,7 +26,7 @@
 #if HAVE_THREADS_H
 /* Provide workarounds.  */
 
-# if BROKEN_THRD_START_T_OR_JOIN
+# if BROKEN_THRD_START_T || BROKEN_THRD_JOIN
 
 #  undef thrd_t
 
@@ -70,7 +70,12 @@ typedef union
         }
         main_arg_t;
 
-static void *
+static
+#  if BROKEN_THRD_START_T
+void *
+#  else /* BROKEN_THRD_JOIN */
+int
+#  endif
 thrd_main_func (void *pmarg)
 {
   /* Unpack the object that combines mainfunc and arg.  */
@@ -91,7 +96,11 @@ thrd_main_func (void *pmarg)
         /* Clean up the thread, like thrd_join would do.  */
         free (&main_arg->t);
       }
+#  if BROKEN_THRD_START_T
     return NULL;
+#  else /* BROKEN_THRD_JOIN */
+    return 0;
+#  endif
   }
 }
 
