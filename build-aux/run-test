@@ -31,6 +31,8 @@ Usage: run-test [OPTION...] CHECKER PROGRAM [ARGUMENT...]
 Runs PROGRAM under the control of CHECKER.
 
 CHECKER may be empty or a valgrind command with some options, such as
+'valgrind --tool=memcheck --error-exitcode=9 --num-callers=20'
+or
 'valgrind --tool=memcheck --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes'.
 
 When CHECKER is not empty, it is recommended that the package has been
