@@ -107,9 +107,10 @@ main (int argc, _GL_UNUSED char *argv[])
 #endif
     }
 
-  /* Known Cygwin bug:
-     <https://cygwin.com/pipermail/cygwin/2024-May/255986.html>  */
-#if !defined __CYGWIN__
+  /* Known bug on Cygwin and Haiku:
+     <https://cygwin.com/pipermail/cygwin/2024-May/255986.html>
+     <https://dev.haiku-os.org/ticket/19692>.  */
+#if !(defined __CYGWIN__ || defined __HAIKU__)
   {
     char longname[HOST_NAME_MAX + 2];
 
