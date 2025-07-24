@@ -47,7 +47,7 @@ static struct posixtm_test const T[] =
     { "12131415",        LY, 1,            0}, /* ??? Dec 13 14:15:00 ???? */
 
 #if !((defined __APPLE__ && defined __MACH__) || defined __sun \
-      || (defined _WIN32 && !defined __CYGWIN__))
+      || defined __HAIKU__ || (defined _WIN32 && !defined __CYGWIN__))
     /* These two tests fail on 64-bit Mac OS X 10.5 and on 64-bit Solaris up
        through at least Solaris 11.3, which is off by one day for timestamps
        before 0001-01-01 00:00:00 UTC.  */
@@ -57,8 +57,10 @@ static struct posixtm_test const T[] =
                       - INT64_C (62135596801)},/* Fri Dec 31 23:59:59 0    */
 #endif
 #if !(defined _WIN32 && !defined __CYGWIN__)
+# if !defined __HAIKU__
     { "000101010000.00", LY, 1,
                       - INT64_C (62135596800)},/* Sat Jan  1 00:00:00 1    */
+# endif
     { "190112132045.51", LY, 1,
                        - INT64_C (2147483649)},/* Fri Dec 13 20:45:51 1901 */
     { "190112132045.52", LY, 1,
