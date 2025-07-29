@@ -1242,10 +1242,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                 {
                   /* An addition to the top of modified_file.
                      Apply it to the top of mainstream_file.  */
-                  idx_t j;
-                  for (j = edit->j2; j > edit->j1; )
+                  ptrdiff_t j;
+                  for (j = edit->j2; j >= edit->j1; j--)
                     {
-                      j--;
                       struct entry *added_entry = modified_file.entries[j];
                       gl_list_add_first (result_entries, added_entry);
                     }
@@ -1623,11 +1622,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                           {
                             gl_list_node_t node_for_insert =
                               result_entries_pointers[k_first];
-                            idx_t j;
+                            ptrdiff_t j;
                             idx_t i;
-                            for (j = edit->j2; j > edit->j1; )
+                            for (j = edit->j2; j >= edit->j1; j--)
                               {
-                                j--;
                                 struct entry *new_entry = modified_file.entries[j];
                                 gl_list_add_before (result_entries, node_for_insert, new_entry);
                               }
