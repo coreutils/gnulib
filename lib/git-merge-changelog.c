@@ -53,7 +53,7 @@
 
           [merge "merge-changelog"]
                   name = GNU-style ChangeLog merge driver
-                  driver = /usr/local/bin/git-merge-changelog %O %A %B
+                  driver = /usr/local/bin/git-merge-changelog %O %A %B "%Y"
 
      - Add to the top-level directory of the checkout a file '.gitattributes'
        with this line:
@@ -155,6 +155,7 @@
 
 #include <config.h>
 
+#include <errno.h>
 #include <getopt.h>
 #include <limits.h>
 #include <stdint.h>
@@ -167,6 +168,8 @@
 #include <error.h>
 #include "idx.h"
 #include "read-file.h"
+#include "spawn-pipe.h"
+#include "wait-process.h"
 #include "gl_xlist.h"
 #include "gl_array_list.h"
 #include "gl_linkedhash_list.h"
@@ -174,10 +177,15 @@
 #include "gl_linked_list.h"
 #include "xalloc.h"
 #include "xmalloca.h"
+#include "xvasprintf.h"
 #include "fstrcmp.h"
 #include "minmax.h"
+#include "c-ctype.h"
 #include "c-strstr.h"
 #include "fwriteerror.h"
+
+/* No internationalization here.  */
+#define _(msgid) msgid
 
 #define ASSERT(expr) \
   do                                                                         \
@@ -976,14 +984,72 @@ conflict_write (FILE *fp, struct conflict *c)
   fputs (">>>>>>> \n", fp);
 }
 
-/* Long options.  */
-static const struct option long_options[] =
+/* Executes a program.
+   Returns the first line of its output, as a freshly allocated string, or
+   NULL.  */
+static char *
+execute_and_read_line (const char *progname,
+                       const char *prog_path, const char * const *prog_argv)
 {
-  { "help", no_argument, NULL, 'h' },
-  { "split-merged-entry", no_argument, NULL, CHAR_MAX + 1 },
-  { "version", no_argument, NULL, 'V' },
-  { NULL, 0, NULL, 0 }
-};
+  pid_t child;
+  int fd[1];
+  FILE *fp;
+  char *line;
+  size_t linesize;
+  size_t linelen;
+
+  /* Open a pipe to the program.  */
+  child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
+                          DEV_NULL, false, true, false, fd);
+
+  if (child == -1)
+    return NULL;
+
+  /* Retrieve its result.  */
+  fp = fdopen (fd[0], "r");
+  if (fp == NULL)
+    error (EXIT_FAILURE, errno, _("fdopen() failed"));
+
+  line = NULL; linesize = 0;
+  linelen = getline (&line, &linesize, fp);
+  if (linelen == (size_t)(-1))
+    {
+      error (0, 0, _("%s subprocess I/O error"), progname);
+      fclose (fp);
+      wait_subprocess (child, progname, true, false, true, false, NULL);
+    }
+  else
+    {
+      int exitstatus;
+
+      if (linelen > 0 && line[linelen - 1] == '\n')
+        line[linelen - 1] = '\0';
+
+      /* Read until EOF (otherwise the child process may get a SIGPIPE signal).  */
+      while (getc (fp) != EOF)
+        ;
+
+      fclose (fp);
+
+      /* Remove zombie process from process list, and retrieve exit status.  */
+      exitstatus =
+        wait_subprocess (child, progname, true, false, true, false, NULL);
+      if (exitstatus == 0)
+        return line;
+    }
+  free (line);
+  return NULL;
+}
+
+/* Returns true if the given string consists only of hexadecimal digits.  */
+static bool
+is_all_hex_digits (const char *s)
+{
+  for (; *s != '\0'; s++)
+    if (!c_isxdigit (*s))
+      return false;
+  return true;
+}
 
 /* Print a usage message and exit.  */
 static void
@@ -1014,6 +1080,7 @@ usage (int status)
       printf ("\n");
       #endif
       printf ("Informative output:\n");
+      printf ("      --debug                 display debugging output\n");
       printf ("  -h, --help                  display this help and exit\n");
       printf ("  -V, --version               output version information and exit\n");
       printf ("\n");
@@ -1030,18 +1097,28 @@ main (int argc, char *argv[])
   int optchar;
   bool do_help;
   bool do_version;
+  bool debug;
   bool split_merged_entry;
 
   /* Set default values for variables.  */
   do_help = false;
   do_version = false;
+  debug = false;
   split_merged_entry = true;
 
   /* Parse command line options.  */
+  static const struct option long_options[] =
+  {
+    { "debug", no_argument, NULL, CHAR_MAX + 2 },
+    { "help", no_argument, NULL, 'h' },
+    { "split-merged-entry", no_argument, NULL, CHAR_MAX + 1 },
+    { "version", no_argument, NULL, 'V' },
+    { NULL, 0, NULL, 0 }
+  };
   while ((optchar = getopt_long (argc, argv, "hV", long_options, NULL)) != EOF)
     switch (optchar)
     {
-    case '\0':          /* Long option.  */
+    case '\0':          /* Long option with flag != NULL.  */
       break;
     case 'h':
       do_help = true;
@@ -1050,6 +1127,9 @@ main (int argc, char *argv[])
       do_version = true;
       break;
     case CHAR_MAX + 1:  /* --split-merged-entry */
+      break;
+    case CHAR_MAX + 2:  /* --debug */
+      debug = true;
       break;
     default:
       usage (EXIT_FAILURE);
@@ -1076,14 +1156,14 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     }
 
   /* Test argument count.  */
-  if (optind + 3 != argc)
+  if (!(argc >= optind + 3 && argc <= optind + 4))
     error (EXIT_FAILURE, 0, "expected three arguments");
 
   {
     const char *ancestor_file_name; /* O-FILE-NAME */
     const char *destination_file_name; /* A-FILE-NAME */
-    bool downstream;
     const char *other_file_name; /* B-FILE-NAME */
+    const char *other_conflict_label; /* %Y */
     const char *mainstream_file_name;
     const char *modified_file_name;
     struct changelog_file ancestor_file;
@@ -1099,6 +1179,12 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     ancestor_file_name = argv[optind];
     destination_file_name = argv[optind + 1];
     other_file_name = argv[optind + 2];
+    other_conflict_label = argv[optind + 3];
+    if (debug)
+      {
+        printf ("\n");
+        printf ("%%Y = |%s|\n", other_conflict_label);
+      }
 
     /* Heuristic to determine whether it's a pull in downstream direction
        (e.g. pull from a centralized server) or a pull in upstream direction
@@ -1138,13 +1224,25 @@ There is NO WARRANTY, to the extent permitted by law.\n\
        usage pattern: He manages local changes through stashes and uses
        "git pull" only to pull downstream.
 
-       How to distinguish these situation? There are several hints:
-         - During a "git stash apply", GIT_REFLOG_ACTION is not set.  During
-           a "git pull", it is set to 'pull '. During a "git pull --rebase",
-           it is set to 'pull --rebase'.  During a "git cherry-pick", it is
-           set to 'cherry-pick'.
+       How to distinguish these situations? There are several hints:
+         - During a "git stash apply", GIT_REFLOG_ACTION is not set.
+         - During a "git pull --rebase", it is set to 'pull --rebase'.
+         - During a "git pull", it is set to 'pull' or 'pull '.
+           But this pull may include a rebase, depending on the
+           configuration values of 'pull.rebase' and 'branch.<name>.rebase'.
+           To disambiguate this case, we look at the first line of %A and
+           of %B.
+         - During a "git cherry-pick", it is set to 'cherry-pick'.
          - During a "git stash apply", there is an environment variable of
-           the form GITHEAD_<40_hex_digits>='Stashed changes'.  */
+           the form GITHEAD_<40_hex_digits>='Stashed changes'.
+         - Looking at the value of %L is not useful: it's usually '7'.
+         - Looking at the value of %P is not useful: it's usually 'ChangeLog'.
+         - Looking at the value of %S is not useful: it's usually
+           "parent of ..." or (during 'git stash apply') "Stash base".
+         - Looking at the value of %X is not useful: it's usually "HEAD"
+           or (during 'git stash apply') "Updated upstream".
+     */
+    int downstream; /* true or false or -1 for ambiguous */
     {
       const char *var;
 
@@ -1159,37 +1257,115 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           else
             {
               var = getenv ("GIT_REFLOG_ACTION");
-              #if 0 /* Debugging code */
-              printf ("GIT_REFLOG_ACTION=|%s|\n", var);
-              #endif
-              if (var != NULL
-                  && ((str_startswith (var, "pull")
-                       && c_strstr (var, " --rebase") == NULL)
-                      || str_startswith (var, "merge origin")))
+              if (debug)
+                printf ("GIT_REFLOG_ACTION=|%s|\n", var);
+              if (var == NULL)
+                /* "git am -3", "git stash apply", "git rebase",
+                   "git cherry-pick" and similar.  */
+                downstream = false;
+              else if (str_startswith (var, "merge origin"))
                 downstream = true;
-              else
+              else if (str_startswith (var, "pull"))
                 {
-                  /* "git stash apply", "git rebase", "git cherry-pick" and
-                     similar.  */
-                  downstream = false;
+                  if (c_strstr (var, " --rebase") != NULL)
+                    downstream = false;
+                  else
+                    downstream = -1;
                 }
+              else
+                downstream = false;
             }
         }
     }
 
-    #if 0 /* Debugging code */
-    {
-      char buf[1000];
-      printf ("First line of %%A:\n");
-      sprintf (buf, "head -n 1 %s", destination_file_name); system (buf);
-      printf ("First line of %%B:\n");
-      sprintf (buf, "head -n 1 %s", other_file_name); system (buf);
-      printf ("Guessing calling convention: %s\n",
-              downstream
-              ? "%A = modified by user, %B = upstream"
-              : "%A = upstream, %B = modified by user");
-    }
-    #endif
+    if (downstream < 0)
+      {
+        char *user_name;
+        {
+          const char *git_argv[5];
+          git_argv[0] = "git";
+          git_argv[1] = "config";
+          git_argv[2] = "get";
+          git_argv[3] = "user.name";
+          git_argv[4] = NULL;
+          user_name = execute_and_read_line ("git", "git", git_argv);
+        }
+        if (user_name != NULL && user_name[0] != '\0')
+          {
+            user_name = xasprintf ("  %s  ", user_name);
+            /* Heuristic: Look at the first line of %A and %B.  */
+            char *first_line_of_destination_file;
+            char *first_line_of_other_file;
+            {
+              const char *head_argv[5];
+              head_argv[0] = "head";
+              head_argv[1] = "-n";
+              head_argv[2] = "1";
+              head_argv[4] = NULL;
+
+              head_argv[3] = destination_file_name;
+              first_line_of_destination_file =
+                execute_and_read_line ("head", "head", head_argv);
+
+              head_argv[3] = other_file_name;
+              first_line_of_other_file =
+                execute_and_read_line ("head", "head", head_argv);
+            }
+            if (first_line_of_destination_file != NULL
+                && first_line_of_other_file != NULL)
+              {
+                if (c_strstr (first_line_of_destination_file, user_name) != NULL)
+                  {
+                    if (c_strstr (first_line_of_other_file, user_name) == NULL)
+                      /* The user's name is in the first ChangeLog entry of %A
+                         but not in the first ChangeLog entry of %B.  */
+                      downstream = true;
+                  }
+                else
+                  {
+                    if (c_strstr (first_line_of_other_file, user_name) != NULL)
+                      /* The user's name is in the first ChangeLog entry of %B
+                         but not in the first ChangeLog entry of %A.  */
+                      downstream = false;
+                  }
+              }
+            free (first_line_of_other_file);
+            free (first_line_of_destination_file);
+          }
+        free (user_name);
+
+        if (downstream < 0)
+          {
+            /* Disambiguate using the value of %Y:
+               - If it consists of 40 hex-digits, the result will be a merge
+                 made by the 'ort' strategy.  This happens during "git pull"
+                 without rebase, when a long sequence of commits is being
+                 pulled.  In this case, we need downstream = true.
+               - In the other cases — "git pull" with rebase, and "git pull"
+                 without rebase but with a short sequence of commits — we need
+                 downstream = false.  */
+            if (other_conflict_label != NULL
+                && strcmp (other_conflict_label, "%Y") != 0
+                && strlen (other_conflict_label) >= 40
+                && is_all_hex_digits (other_conflict_label))
+              downstream = true;
+            else
+              downstream = false;
+          }
+      }
+
+    if (debug)
+      {
+        char buf[1000];
+        printf ("First line of %%A:\n"); fflush (stdout);
+        sprintf (buf, "head -n 1 %s", destination_file_name); system (buf);
+        printf ("First line of %%B:\n"); fflush (stdout);
+        sprintf (buf, "head -n 1 %s", other_file_name); system (buf);
+        printf ("Guessing calling convention: %s\n",
+                downstream
+                ? "%A = modified by user, %B = upstream"
+                : "%A = upstream, %B = modified by user");
+      }
 
     if (downstream)
       {

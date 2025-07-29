@@ -13,6 +13,8 @@ stdint-h
 stdlib-h
 error
 read-file
+spawn-pipe
+wait-process
 xlist
 array-list
 linkedhash-list
@@ -20,9 +22,11 @@ linked-list
 rbtreehash-list
 xalloc
 xmalloca
+xvasprintf
 fstrcmp
 minmax
 str_startswith
+c-ctype
 c-strstr
 fwriteerror
 memchr
