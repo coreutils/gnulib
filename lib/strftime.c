@@ -76,7 +76,8 @@
 # define SUPPORT_NON_GREG_CALENDARS_IN_STRFTIME true
 #endif
 #if defined _LIBC || (HAVE_ONLY_C_LOCALE || USE_C_LOCALE) \
-    || (defined __OpenBSD__ || defined _AIX || defined __ANDROID__)
+    || ((defined __OpenBSD__ || defined _AIX || defined __ANDROID__) \
+        && !GNULIB_NSTRFTIME)
 # undef SUPPORT_NON_GREG_CALENDARS_IN_STRFTIME
 # define SUPPORT_NON_GREG_CALENDARS_IN_STRFTIME false
 #endif

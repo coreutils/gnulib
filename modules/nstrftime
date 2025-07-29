@@ -13,6 +13,7 @@ m4/nstrftime.m4
 m4/tm_gmtoff.m4
 
 Depends-on:
+nstrftime-limited
 attribute
 c-ctype
 c99
@@ -21,22 +22,23 @@ extensions
 intprops
 libc-config
 localcharset
-localename-unsafe-limited
+localename-unsafe
 bool
 stdckdint-h
 time_rz
 
 configure.ac:
 gl_FUNC_GNU_STRFTIME
+gl_MODULE_INDICATOR([nstrftime])
 
 Makefile.am:
-lib_SOURCES += nstrftime.c
 
 Include:
 "strftime.h"
 
 Link:
 @INTL_MACOSX_LIBS@
+$(LIBTHREAD)
 
 License:
 LGPL
