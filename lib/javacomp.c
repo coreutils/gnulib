@@ -340,7 +340,6 @@ execute_and_read_line (const char *progname,
   char *line;
   size_t linesize;
   size_t linelen;
-  int exitstatus;
 
   /* Open a pipe to the program.  */
   child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
@@ -361,27 +360,28 @@ execute_and_read_line (const char *progname,
       error (0, 0, _("%s subprocess I/O error"), progname);
       fclose (fp);
       wait_subprocess (child, progname, true, false, true, false, NULL);
-      return NULL;
     }
-  if (linelen > 0 && line[linelen - 1] == '\n')
-    line[linelen - 1] = '\0';
-
-  /* Read until EOF (otherwise the child process may get a SIGPIPE signal).  */
-  while (getc (fp) != EOF)
-    ;
-
-  fclose (fp);
-
-  /* Remove zombie process from process list, and retrieve exit status.  */
-  exitstatus =
-    wait_subprocess (child, progname, true, false, true, false, NULL);
-  if (exitstatus != 0)
+  else
     {
-      free (line);
-      return NULL;
-    }
+      int exitstatus;
 
-  return line;
+      if (linelen > 0 && line[linelen - 1] == '\n')
+        line[linelen - 1] = '\0';
+
+      /* Read until EOF (otherwise the child process may get a SIGPIPE signal).  */
+      while (getc (fp) != EOF)
+        ;
+
+      fclose (fp);
+
+      /* Remove zombie process from process list, and retrieve exit status.  */
+      exitstatus =
+        wait_subprocess (child, progname, true, false, true, false, NULL);
+      if (exitstatus == 0)
+        return line;
+    }
+  free (line);
+  return NULL;
 }
 
 /* Executes a program, assumed to be a Java compiler with '-version' option.
