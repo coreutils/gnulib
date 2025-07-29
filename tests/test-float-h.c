@@ -460,21 +460,22 @@ test_long_double (void)
   ASSERT (LDBL_MAX_10_EXP == (int) (LDBL_MAX_EXP * 0.30103));
 
   /* Check the value of LDBL_MAX.  */
-  {
-    volatile long double m = LDBL_MAX;
-    int n;
+  if (LDBL_IS_IEC_60559)
+    {
+      volatile long double m = LDBL_MAX;
+      int n;
 
-    ASSERT (m + m > m);
-    for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
-      {
-        volatile long double pow2_n = pow2l (n); /* 2^n */
-        volatile long double x = m + (m / pow2_n);
-        if (x > m)
-          ASSERT (x + x == x);
-        else
-          ASSERT (!(x + x == x));
-      }
-  }
+      ASSERT (m + m > m);
+      for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
+        {
+          volatile long double pow2_n = pow2l (n); /* 2^n */
+          volatile long double x = m + (m / pow2_n);
+          if (x > m)
+            ASSERT (x + x == x);
+          else
+            ASSERT (!(x + x == x));
+        }
+    }
 
   /* Check the value of LDBL_MIN.  */
   {
@@ -524,7 +525,8 @@ test_long_double (void)
 #endif
 
   /* Check the value of LDBL_NORM_MAX.  */
-  ASSERT (LDBL_NORM_MAX == normalize_long_double (LDBL_MAX));
+  if (LDBL_IS_IEC_60559)
+    ASSERT (LDBL_NORM_MAX == normalize_long_double (LDBL_MAX));
 
   /* Check the value of LDBL_SNAN.  */
   ASSERT (isnanl (LDBL_SNAN));

@@ -19,9 +19,12 @@ On OpenBSD 4.0 and MirBSD 10, they are the same as the values of the
 @samp{double}.
 On FreeBSD/x86 6.4, they represent the incorrect 53-bit precision assumptions
 in the compiler, not the real 64-bit precision at runtime.
-On PowerPC with gcc 15 and the default @option{-mabi=ibmlongdouble},
+On PowerPC with gcc 8.3 and the default @option{-mabi=ibmlongdouble},
 they don't reflect the ``double double'' representation of @code{long double}
-correctly.
+correctly; the non-IEEE representation is tricky, as it is a pair of
+IEEE @code{double} values such that adding the two elements and
+rounding to even yields the high element of the pair, and arithmetic
+overflow has undefined behavior instead of reliably yielding infinity.
 @item
 The macros
 @code{FLT_HAS_SUBNORM}, @code{FLT_DECIMAL_DIG}, @code{FLT_TRUE_MIN},
