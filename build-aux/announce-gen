@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2025-06-10 02:43'; # UTC
+my $VERSION = '2025-07-30 01:47'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -50,7 +50,8 @@ use POSIX qw(strftime);
 (my $ME = $0) =~ s|.*/||;
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta stable);
-my @archive_suffixes = qw (tar.gz tar.bz2 tar.lz tar.lzma tar.xz);
+my @archive_suffixes = qw (tar.gz tar.bz2 tar.bz3 tar.lz tar.lzma tar.xz
+                           tar.zst zip);
 my $srcdir = '.';
 
 sub usage ($)
