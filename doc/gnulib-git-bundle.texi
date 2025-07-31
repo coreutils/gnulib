@@ -3,34 +3,21 @@
 
 To provide a serialized archival copy of the Gnulib Git repository we
 publish Git Bundles (@url{https://git-scm.com/docs/git-bundle}) of
-Gnulib at @url{https://ftp.gnu.org/gnu/gnulib/}.  These may be useful if
-Savannah happens to be offline or if you want to have a GnuPG signed
-confirmation of the Gnulib content.
+Gnulib at @url{https://ftp.gnu.org/gnu/gnulib/}.  These may be useful
+if Savannah happens to be offline or if you want to have a GnuPG
+signed confirmation of the Gnulib content.
 
 The files are named like @code{gnulib-YYYYMMDD.bundle}, for example
-@code{gnulib-20250303.bundle}, where @code{YYYYMMDD} corresponds to
+@code{gnulib-20250729.bundle}, where @code{YYYYMMDD} corresponds to
 the Git commit date (in UTC0) of the last commit on the @code{master}
 branch in the bundle.
-
-Next to the Git Bundle is a PGP signature on the file, named
-@code{gnulib-YYYYMMDD.bundle.sig}, which can be verified using GnuPG
-as usual:
-
-@example
-gpg --verify gnulib-20250303.bundle.sig
-@end example
-
-Or using the simpler @code{gpgv} tool like this:
-
-@example
-gpgv gnulib-20250303.bundle.sig gnulib-20250303.bundle
-@end example
 
 After downloading the Git bundle you may use it to create a local
 gnulib clone using normal Git commands:
 
 @example
-git clone /path/to/your/gnulib-20250303.bundle gnulib
+wget -nv https://ftp.gnu.org/gnu/gnulib/gnulib-20250729.bundle
+git clone gnulib-20250729.bundle gnulib
 cd gnulib
 @end example
 
@@ -38,9 +25,24 @@ Below are SHA-256 checksums of known releases:
 
 @example
 9dae009ef9dd7cff17b74c0cda5d7a423e2ed98b4f5b7aa29a970565b0591c06  gnulib-20250303.bundle
+f01e423a7ef6b48e947fabd24bb11744204f4549342416e15dc64f427caa32e2  gnulib-20250729.bundle
 @end example
 
-The following PGP keys have signed releases:
+Next to the Git Bundle is a GnuPG signature on the file, named
+@code{gnulib-YYYYMMDD.bundle.sig}, which can be verified using GnuPG
+as usual:
+
+@example
+gpg --verify gnulib-20250729.bundle.sig
+@end example
+
+Or using the simpler @code{gpgv} tool like this:
+
+@example
+gpgv gnulib-20250729.bundle.sig gnulib-20250729.bundle
+@end example
+
+The following GnuPG keys have signed releases:
 
 @example
 sec>  ed25519 2019-03-20 [SC] https://josefsson.org/key-20190320.txt
@@ -48,24 +50,30 @@ sec>  ed25519 2019-03-20 [SC] https://josefsson.org/key-20190320.txt
 uid           [ultimate] Simon Josefsson <simon@@josefsson.org>
 @end example
 
-We desire that the Gnulib Git bundles are bit-by-bit reproducible,
-however we do not know how to achieve this.  Currently gnulib
-maintainers may invoke the following commands to prepare and upload a
-Gnulib git bundle.  We appreciate ideas on how to improve these set of
-commands (or the upstream Git tool) so that the bundle may be
-bit-by-bit reproducible by anyone.
+We desire that the Gnulib Git bundles will be forever bit-by-bit
+reproducible for others from the official git repository.  Currently
+gnulib maintainers may invoke the following commands to prepare and
+upload a Gnulib git bundle.  We appreciate ideas on how to improve
+these set of commands (or the upstream Git tool) to make further
+supply-chain security related improvements.
 
 @example
 cd $(mktemp -d)
-REV=ac9dd0041307b1d3a68d26bf73567aa61222df54 # master branch commit to package
+REV=225973a89f50c2b494ad947399425182dd42618c   # master branch commit to package
+S1REV=475dd38289d33270d0080085084bf687ad77c74d # stable-202501 branch commit
+S2REV=e8cc0791e6bb0814cf4e88395c06d5e06655d8b5 # stable-202507 branch commit
 git clone https://git.savannah.gnu.org/git/gnulib.git
 cd gnulib
 git fsck # attempt to validate input
-# inspect that the new tree matches a trusted copy
+# Manually inspect that the new tree matches a trusted previous copy
 git checkout -B master $REV # put $REV at master
+# Add all stable-* branches locally:
 for b in $(git branch -r | grep origin/stable- | sort --version-sort); do git checkout $@{b#origin/@}; done
+git checkout -B stable-202501 $S1REV
+git checkout -B stable-202507 $S2REV
 git remote remove origin # drop some unrelated branches
-git gc --prune=now # drop any commits after $REV
+git gc --prune=now # drop any unrelated commits, not clear this helps
+git -c pack.threads=1 repack -adF
 git -c 'pack.threads=1' bundle create gnulib.bundle --all
 V=$(env TZ=UTC0 git show -s --date=format:%Y%m%d --pretty=%cd master)
 mv gnulib.bundle gnulib-$V.bundle
