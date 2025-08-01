@@ -3,6 +3,7 @@ Copy parts of files
 
 Files:
 lib/copy-file-range.c
+lib/sys-limits.h
 m4/copy-file-range.m4
 
 Depends-on:
