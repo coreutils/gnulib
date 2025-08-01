@@ -51,8 +51,8 @@ AC_DEFUN([gl_FUNC_COPY_FILE_RANGE],
       [Define to 1 if the function copy_file_range exists.])
 
     case $host_os in
-      linux*)
-        # See copy-file-range.c comment re Linux kernel bugs.
+      *-gnu* | gnu* | linux*)
+        # See copy-file-range.c comment re glibc and Linux kernel bugs.
         REPLACE_COPY_FILE_RANGE=1;;
     esac
   fi
