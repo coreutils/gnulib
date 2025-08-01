@@ -324,6 +324,13 @@ rof_close (struct rofile *rof)
 
 #endif
 
+/* ============================ stackvma-linux.c ============================ */
+
+#if defined __linux__ || defined __ANDROID__
+# include <sys/ioctl.h> /* ioctl */
+# include <linux/fs.h> /* PROCMAP_QUERY, struct procmap_query */
+#endif
+
 /* ========================== stackvma-vma-iter.c ========================== */
 /* Iterate through the virtual memory areas of the current process,
    by reading from the /proc file system.  */
@@ -539,6 +546,66 @@ vma_iterate_bsd (struct callback_locals *locals)
 # endif
 
 
+/* Support for reading the info from the Linux ioctl() PROCMAP_QUERY
+   system call.  */
+
+# if (defined __linux__ || defined __ANDROID__) && defined PROCMAP_QUERY /* Linux >= 6.11 */
+
+static int
+vma_iterate_procmap_query (struct callback_locals *locals)
+{
+  /* Documentation: <linux/fs.h>
+     This implementation is more than twice as fast as vma_iterate_proc.
+     It does not return the [vsyscall] memory area at 0xFFFFFFFFFF600000,
+     but this is not a serious drawback, since that memory area is not
+     controlled by userspace anyway.  */
+  int fd = open ("/proc/self/maps", O_RDONLY | O_CLOEXEC);
+  if (fd < 0)
+    return -1;
+
+  unsigned long addr = 0;
+  do
+    {
+      /* Clear all fields, just in case some 'in' fields are added later.  */
+      struct procmap_query pq = {0};
+      pq.size = sizeof (pq);
+      pq.query_flags = PROCMAP_QUERY_COVERING_OR_NEXT_VMA;
+      pq.query_addr = addr;
+      pq.vma_name_size = 0;
+      pq.vma_name_addr = 0;
+
+      int ret = ioctl (fd, PROCMAP_QUERY, &pq);
+      if (ret == -1)
+        {
+          if (addr == 0)
+            {
+              /* Likely errno == ENOTTY.  */
+              close (fd);
+              return -1;
+            }
+          else
+            /* Likely errno == ENOENT.  */
+            break;
+        }
+
+      if (callback (locals, pq.vma_start, pq.vma_end))
+        break;
+
+      addr = pq.vma_end;
+    }
+  while (addr != 0);
+
+  close (fd);
+  return 0;
+}
+
+# else
+
+#  define vma_iterate_procmap_query(locals) (-1)
+
+# endif
+
+
 /* Iterate over the virtual memory areas of the current process.
    If such iteration is supported, the callback is called once for every
    virtual memory area, in ascending order, with the following arguments:
@@ -553,6 +620,16 @@ vma_iterate_bsd (struct callback_locals *locals)
 static int
 vma_iterate (struct callback_locals *locals)
 {
+# if defined __linux__ || defined __ANDROID__
+  /* This implementation is more than twice as fast as vma_iterate_proc,
+     when supported by the kernel.  Therefore try it first.  */
+  {
+    int retval = vma_iterate_procmap_query (locals);
+    if (retval == 0)
+      return 0;
+  }
+# endif
+
 # if defined __FreeBSD__
   /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses linprocfs), the
      function vma_iterate_proc does not return the virtual memory areas that
@@ -561,7 +638,7 @@ vma_iterate (struct callback_locals *locals)
      So use vma_iterate_proc only as a fallback.  */
   int retval = vma_iterate_bsd (locals);
   if (retval == 0)
-      return 0;
+    return 0;
 
   return vma_iterate_proc (locals);
 # else
@@ -569,7 +646,7 @@ vma_iterate (struct callback_locals *locals)
      as a fallback.  */
   int retval = vma_iterate_proc (locals);
   if (retval == 0)
-      return 0;
+    return 0;
 
   return vma_iterate_bsd (locals);
 # endif
