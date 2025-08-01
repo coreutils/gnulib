@@ -24,6 +24,8 @@
 # include <sys/utsname.h>
 #endif
 
+#include "sys-limits.h"
+
 ssize_t
 copy_file_range (int infd, off_t *pinoff,
                  int outfd, off_t *poutoff,
@@ -56,7 +58,20 @@ copy_file_range (int infd, off_t *pinoff,
       }
 
     if (0 < ok)
-      return copy_file_range (infd, pinoff, outfd, poutoff, length, flags);
+      {
+# if defined __GLIBC__ && ! (2 < __GLIBC__ + (43 <= __GLIBC_MINOR__))
+        /* Work around glibc bug 33245
+           <https://sourceware.org/bugzilla/show_bug.cgi?id=33245>.
+           This bug is present in glibc 2.42 (2025) and fixed in 2.43,
+           so this workaround, and the configure-time check for glibc,
+           can be removed once glibc 2.42 and earlier is no longer a
+           consideration.  Perhaps in 2040.  */
+        if (SYS_BUFSIZE_MAX < length)
+          length = SYS_BUFSIZE_MAX;
+# endif
+
+        return copy_file_range (infd, pinoff, outfd, poutoff, length, flags);
+      }
 #endif
 
   /* There is little need to emulate copy_file_range with read+write,
