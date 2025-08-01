@@ -49,6 +49,11 @@
 # include <limits.h> /* PATH_MAX */
 #endif
 
+#if defined __linux__ || defined __ANDROID__
+# include <sys/ioctl.h> /* ioctl */
+# include <linux/fs.h> /* PROCMAP_QUERY, struct procmap_query */
+#endif
+
 #if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
@@ -872,9 +877,92 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 #endif
 
 
+/* Support for reading the info from the Linux ioctl() PROCMAP_QUERY
+   system call.  */
+
+#if (defined __linux__ || defined __ANDROID__) && defined PROCMAP_QUERY /* Linux >= 6.11 */
+
+static int
+vma_iterate_procmap_query (vma_iterate_callback_fn callback, void *data)
+{
+  /* Documentation: <linux/fs.h>
+     This implementation is more than twice as fast as vma_iterate_proc.
+     It does not return the [vsyscall] memory area at 0xFFFFFFFFFF600000,
+     but this is not a serious drawback, since that memory area is not
+     controlled by userspace anyway.  */
+  int fd = open ("/proc/self/maps", O_RDONLY | O_CLOEXEC);
+  if (fd < 0)
+    return -1;
+
+  unsigned long addr = 0;
+  do
+    {
+      /* Clear all fields, just in case some 'in' fields are added later.  */
+      struct procmap_query pq = {0};
+      pq.size = sizeof (pq);
+      pq.query_flags = PROCMAP_QUERY_COVERING_OR_NEXT_VMA;
+      pq.query_addr = addr;
+      pq.vma_name_size = 0;
+      pq.vma_name_addr = 0;
+
+      int ret = ioctl (fd, PROCMAP_QUERY, &pq);
+      if (ret == -1)
+        {
+          if (addr == 0)
+            {
+              /* Likely errno == ENOTTY.  */
+              close (fd);
+              return -1;
+            }
+          else
+            /* Likely errno == ENOENT.  */
+            break;
+        }
+
+      unsigned long start = pq.vma_start;
+      unsigned long end = pq.vma_end;
+      unsigned int flags = 0;
+      if (pq.vma_flags & PROCMAP_QUERY_VMA_READABLE)
+        flags |= VMA_PROT_READ;
+      if (pq.vma_flags & PROCMAP_QUERY_VMA_WRITABLE)
+        flags |= VMA_PROT_WRITE;
+      if (pq.vma_flags & PROCMAP_QUERY_VMA_EXECUTABLE)
+        flags |= VMA_PROT_EXECUTE;
+      if (callback (data, start, end, flags))
+        break;
+
+      addr = pq.vma_end;
+    }
+  while (addr != 0);
+
+  close (fd);
+  return 0;
+}
+
+#else
+
+static inline int
+vma_iterate_procmap_query (vma_iterate_callback_fn callback, void *data)
+{
+  return -1;
+}
+
+#endif
+
+
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
+#if defined __linux__ || defined __ANDROID__
+  /* This implementation is more than twice as fast as vma_iterate_proc,
+     when supported by the kernel.  Therefore try it first.  */
+  {
+    int retval = vma_iterate_procmap_query (callback, data);
+    if (retval == 0)
+      return 0;
+  }
+#endif
+
 #if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 
 # if defined __FreeBSD__
@@ -885,7 +973,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      So use vma_iterate_proc only as a fallback.  */
   int retval = vma_iterate_bsd (callback, data);
   if (retval == 0)
-      return 0;
+    return 0;
 
   return vma_iterate_proc (callback, data);
 # else
@@ -893,7 +981,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      as a fallback.  */
   int retval = vma_iterate_proc (callback, data);
   if (retval == 0)
-      return 0;
+    return 0;
 
   return vma_iterate_bsd (callback, data);
 # endif
