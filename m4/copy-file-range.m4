@@ -52,8 +52,7 @@ AC_DEFUN([gl_FUNC_COPY_FILE_RANGE],
 
     case $host_os in
       linux*)
-        # See copy-file-range.c comment re pre-5.3 Linux kernel bugs.
-        # We should be able to remove this hack in 2025.
+        # See copy-file-range.c comment re Linux kernel bugs.
         REPLACE_COPY_FILE_RANGE=1;;
     esac
   fi

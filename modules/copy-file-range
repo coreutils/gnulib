@@ -6,6 +6,7 @@ lib/copy-file-range.c
 m4/copy-file-range.m4
 
 Depends-on:
+bool
 largefile
 unistd-h
 
