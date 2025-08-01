@@ -149,9 +149,14 @@ string_desc_new_addr (idx_t n, char *addr)
   string_desc_t result;
 
   result._nbytes = n;
+  /* No, it is not a good idea to canonicalize (0, non-NULL) to (0, NULL).
+     Some functions that return a string_desc_t use a return value of (0, NULL)
+     to denote failure.  */
+#if 0
   if (n == 0)
     result._data = NULL;
   else
+#endif
     result._data = addr;
 
   return result;
