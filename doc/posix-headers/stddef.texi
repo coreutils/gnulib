@@ -46,7 +46,7 @@ GCC 12, Clang 15, and other pre-2023 C compilers.
 @item
 Some platforms define @code{nullptr_t} even when @code{<stddef.h>} is
 not included:
-@c https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114869
+@c https://gcc.gnu.org/PR114869
 GCC 14
 
 @item

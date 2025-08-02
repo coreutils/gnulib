@@ -16,7 +16,7 @@ AC_DEFUN([gl_NULLPTR],
        [AC_COMPILE_IFELSE(
           [AC_LANG_SOURCE([[int *p = nullptr;]])],
           [gl_cv_c_nullptr=yes
-           # Work around <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114780>.
+           # Work around <https://gcc.gnu.org/PR114780>.
            gl_saved_CFLAGS=$CFLAGS
            CFLAGS="$CFLAGS -Wall -Werror"
            AC_COMPILE_IFELSE(

@@ -53,7 +53,7 @@ extern "C" {
 #endif
 
 /* Work around AddressSanitizer bug.
-   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=104262
+   https://gcc.gnu.org/PR104262
    https://lists.llvm.org/pipermail/llvm-commits/Week-of-Mon-20220124/1001910.html
    */
 #ifdef __SANITIZE_ADDRESS__

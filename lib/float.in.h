@@ -135,7 +135,7 @@ extern const union gl_long_double_union gl_LDBL_MAX;
    which represents 0x1.fffffffffffff7ffffffffffff8p+1023L.
    Although computations can yield representations of numbers larger than this,
    these computations are considered to have overflowed and behavior is undefined.
-   See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=120993>.  */
+   See <https://gcc.gnu.org/PR120993>.  */
 # undef LDBL_MAX
 # define LDBL_MAX 0x1.fffffffffffff7ffffffffffff8p+1023L
 
@@ -234,7 +234,7 @@ extern const union gl_long_double_union gl_LDBL_TRUE_MIN;
 # define FLT_NORM_MAX FLT_MAX
 #endif
 #ifndef FLT_SNAN
-/* For sh, beware of <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111814>.  */
+/* For sh, beware of <https://gcc.gnu.org/PR111814>.  */
 # if ((__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__) && !defined __sh__
 #  define FLT_SNAN __builtin_nansf ("")
 # else
@@ -258,7 +258,7 @@ extern gl_FLT_SNAN_t gl_FLT_SNAN;
 # define DBL_NORM_MAX DBL_MAX
 #endif
 #ifndef DBL_SNAN
-/* For sh, beware of <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111814>.  */
+/* For sh, beware of <https://gcc.gnu.org/PR111814>.  */
 # if ((__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__) && !defined __sh__
 #  define DBL_SNAN __builtin_nans ("")
 # else
@@ -290,7 +290,7 @@ extern gl_DBL_SNAN_t gl_DBL_SNAN;
 # endif
 #endif
 #ifndef LDBL_SNAN
-/* For sh, beware of <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111814>.  */
+/* For sh, beware of <https://gcc.gnu.org/PR111814>.  */
 # if ((__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__) && !defined __sh__
 #  define LDBL_SNAN __builtin_nansl ("")
 # else

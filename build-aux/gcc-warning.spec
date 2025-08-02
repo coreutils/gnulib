@@ -354,7 +354,7 @@
 -Wstringop-overread			default
 -Wstringop-truncation			default
 -Wsubobject-linkage			c++ and objc++
--Wsuggest-attribute=returns_nonnull	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114833
+-Wsuggest-attribute=returns_nonnull	https://gcc.gnu.org/PR114833
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
 -Wswitch				enabled by -Wall

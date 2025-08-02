@@ -129,7 +129,7 @@ main (void)
     /* This test works only if the canonicalize_file_name implementation
        comes from gnulib.  If it comes from libc, we have no way to prevent
        gcc from "optimizing" the null_ptr function in invalid ways.  See
-       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93156>.  */
+       <https://gcc.gnu.org/PR93156>.  */
 #if GNULIB_defined_canonicalize_file_name
     errno = 0;
     result1 = canonicalize_file_name (null_ptr ());

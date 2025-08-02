@@ -95,7 +95,7 @@ test_errors (int fd, const char *slave)
   /* This test works only if the ptsname_r implementation comes from gnulib.
      If it comes from libc, we have no way to prevent gcc from "optimizing"
      the null_ptr function in invalid ways.  See
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93156>.  */
+     <https://gcc.gnu.org/PR93156>.  */
 #if GNULIB_defined_ptsname_r
   result = ptsname_r (fd, null_ptr (), 0);
   ASSERT (result != 0);

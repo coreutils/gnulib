@@ -60,7 +60,7 @@ totalorder (double const *x, double const *y)
 # if defined __GNUC__ || defined __clang__
   /* Prevent gcc and clang from reusing the values of *x and *y (fetched above)
      in optimized inlined memcpy expansions.
-     Seen with gcc <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114659>
+     Seen with gcc <https://gcc.gnu.org/PR114659>
      and with clang 16.0.6 on OpenBSD 7.5.  */
   __asm__ __volatile__ ("" : : : "memory");
 # endif

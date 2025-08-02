@@ -53,7 +53,7 @@ _GL_UNUSED static float
 positive_NaNf ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   float volatile nan = NaNf ();
   return (signbit (nan) ? minus_NaNf (nan) : nan);
 }
@@ -63,7 +63,7 @@ _GL_UNUSED static float
 negative_NaNf ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   float volatile nan = NaNf ();
   return (signbit (nan) ? nan : minus_NaNf (nan));
 }
@@ -91,7 +91,7 @@ _GL_UNUSED static double
 positive_NaNd ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   double volatile nan = NaNd ();
   return (signbit (nan) ? minus_NaNd (nan) : nan);
 }
@@ -101,7 +101,7 @@ _GL_UNUSED static double
 negative_NaNd ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   double volatile nan = NaNd ();
   return (signbit (nan) ? nan : minus_NaNd (nan));
 }
@@ -120,7 +120,7 @@ _GL_UNUSED static long double
 positive_NaNl ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   long double volatile nan = NaNl ();
   return (signbit (nan) ? minus_NaNl (nan) : nan);
 }
@@ -130,7 +130,7 @@ _GL_UNUSED static long double
 negative_NaNl ()
 {
   /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+     <https://gcc.gnu.org/PR111655>  */
   long double volatile nan = NaNl ();
   return (signbit (nan) ? nan : minus_NaNl (nan));
 }

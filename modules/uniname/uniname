@@ -19,7 +19,7 @@ gl_LIBUNISTRING_MODULE([1.3], [uniname/uniname])
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINAME_UNINAME
 # Note: Compilation of this file takes a long time with gcc ≥ 11 and option
-# -fanalyzer. See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110112>.
+# -fanalyzer. See <https://gcc.gnu.org/PR110112>.
 # The best workaround is to install GNU libunistring first, and use module
 # 'libunistring-optional' in your package.
 # An alternative workaround would be to pass the option -fno-analyzer, using

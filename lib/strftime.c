@@ -355,7 +355,7 @@ enum pad_style
 /* Avoid false GCC warning "'memset' specified size 18446744073709551615 exceeds
    maximum object size 9223372036854775807", caused by insufficient data flow
    analysis and value propagation of the 'width_add' expansion when GCC is not
-   optimizing.  Cf. <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88443>.  */
+   optimizing.  Cf. <https://gcc.gnu.org/PR88443>.  */
 #if _GL_GNUC_PREREQ (7, 0) && !__OPTIMIZE__
 # pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif

@@ -26,7 +26,7 @@
 # pragma GCC diagnostic ignored "-Wtype-limits"
 
 /* Work around a bug in GCC 6.1 and earlier; see:
-   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68971  */
+   https://gcc.gnu.org/PR68971  */
 # pragma GCC diagnostic ignored "-Woverflow"
 
 #endif
