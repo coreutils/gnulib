@@ -32,6 +32,11 @@ On these kernel versions, the replacement function always fails with
 error @code{ENOSYS}.
 
 @item
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=33245
+This function returns an incorrect value when the number of bytes copied
+exceeds @code{INT_MAX} on systems using glibc version 2.41 or 2.42.
+
+@item
 This function is provided on GNU/Hurd but it is only a stub: It always
 fails with error @code{ENOSYS}.
 @end itemize
