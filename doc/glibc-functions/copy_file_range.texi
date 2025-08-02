@@ -28,13 +28,16 @@ But the replacement function is only a stub: It always fails with error @code{EN
 
 @item
 This function has many problems on Linux kernel versions before 5.3.
+See @url{``Fixes for major copy_file_range() issues'',
+https://lwn.net/Articles/789527/}.
 On these kernel versions, the replacement function always fails with
 error @code{ENOSYS}.
 
 @item
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=33245
 This function returns an incorrect value when the number of bytes copied
 exceeds @code{INT_MAX} on systems using glibc version 2.41 or 2.42.
+See @url{glibc bug 33245,
+https://sourceware.org/bugzilla/show_bug.cgi?id=33245}.
 
 @item
 This function is provided on GNU/Hurd but it is only a stub: It always
@@ -43,4 +46,9 @@ fails with error @code{ENOSYS}.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+If built with include files for Linux kernel 5.3 or later,
+the Gnulib substitute may misbehave when run on Linux kernel 5.2 or earlier.
+A similar problem exists if built with include files for glibc 2.43 or later,
+and run on glibc 2.41 or 2.42.
 @end itemize

@@ -23,6 +23,11 @@
 #if defined __linux__ && HAVE_COPY_FILE_RANGE
 # include <linux/version.h>
 # include <sys/utsname.h>
+/* Although it can be dicey to use static checks for Linux kernel versions,
+   due to the dubious practice of building on newer kernels for older ones,
+   do it here anyway as the buggy kernels are rare (they are all EOLed)
+   and builders for them are unlikely to use the dubious practice.
+   Circa 2029 we should remove the old-kernel workarounds entirely.  */
 # if LINUX_VERSION_CODE < KERNEL_VERSION (5, 3, 0)
 #  define CHECK_LINUX_KERNEL_VERSION true
 # else
