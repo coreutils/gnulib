@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
   gl_CHECK_FUNCS_ANDROID([duplocale], [[#include <locale.h>]])
   if test $ac_cv_func_duplocale = yes; then
     dnl Check against glibc bug where duplocale crashes.
-    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
+    dnl See <https://sourceware.org/PR10969>.
     dnl Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
     dnl errno set to EINVAL.
     dnl Also, on NetBSD 7.0, duplocale(LC_GLOBAL_LOCALE) returns a locale that

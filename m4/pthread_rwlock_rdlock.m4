@@ -32,7 +32,7 @@ dnl https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rd
 dnl but this test verifies the guarantee regardless of TPS and regardless of
 dnl scheduling policy.
 dnl Glibc does not provide this guarantee (and never will on Linux), see
-dnl https://sourceware.org/bugzilla/show_bug.cgi?id=13701
+dnl https://sourceware.org/PR13701
 dnl https://bugzilla.redhat.com/show_bug.cgi?id=1410052
 AC_DEFUN([gl_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER],
 [

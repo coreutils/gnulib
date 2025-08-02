@@ -42,8 +42,8 @@
      in the U+3130..U+318F block, and these characters are mapped to legacy
      character sets, and traditional Japanese layout matters for them.
      2) glibc does the same thing, see
-     <https://sourceware.org/bugzilla/show_bug.cgi?id=21750>
-     <https://sourceware.org/bugzilla/show_bug.cgi?id=26120>
+     <https://sourceware.org/PR21750>
+     <https://sourceware.org/PR26120>
  */
 #include "uniwidth/width0.h"
 

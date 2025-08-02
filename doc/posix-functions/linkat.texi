@@ -31,6 +31,6 @@ Portability problems not fixed by Gnulib:
 @code{linkat (fd, "directory", fd, "symlink/" ...)} sets @code{errno}
 to @code{EINVAL} instead of @code{EEXIST} or @code{ENOTDIR} on some
 platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32569
+@c https://sourceware.org/PR32569
 GNU/Hurd with glibc 2.41.
 @end itemize

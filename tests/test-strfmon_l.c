@@ -52,7 +52,7 @@ main (void)
   }
 
   /* Test whether the decimal point comes from the right locale:
-     glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=19633>.  */
+     glibc bug <https://sourceware.org/PR19633>.  */
   if (setlocale (LC_ALL, "en_US.UTF-8") == NULL)
     {
       if (test_exit_status != EXIT_SUCCESS)

@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_GETPAYLOADF],
     HAVE_GETPAYLOADF=0
   else
     dnl glibc versions < 2.32 return a wrong value,
-    dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
+    dnl see <https://sourceware.org/PR26073>.
     AC_CACHE_CHECK([whether getpayloadf works],
       [gl_cv_func_getpayloadf_works],
       [
@@ -80,7 +80,7 @@ AC_DEFUN_ONCE([gl_FUNC_GETPAYLOAD],
     HAVE_GETPAYLOAD=0
   else
     dnl glibc versions < 2.32 return a wrong value,
-    dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
+    dnl see <https://sourceware.org/PR26073>.
     AC_CACHE_CHECK([whether getpayload works],
       [gl_cv_func_getpayload_works],
       [
@@ -143,7 +143,7 @@ AC_DEFUN([gl_FUNC_GETPAYLOADL],
     HAVE_GETPAYLOADL=0
   else
     dnl glibc versions < 2.32 return a wrong value,
-    dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
+    dnl see <https://sourceware.org/PR26073>.
     AC_CACHE_CHECK([whether getpayloadl works],
       [gl_cv_func_getpayloadl_works],
       [

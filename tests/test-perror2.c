@@ -126,7 +126,7 @@ main (void)
        https://sourceware.org/ml/newlib/2011/msg00228.html */
     ASSERT (errno > 0);
     /* Commented out until glibc behaves:
-       https://sourceware.org/bugzilla/show_bug.cgi?id=12792 */
+       https://sourceware.org/PR12792 */
     ASSERT (ferror (stderr));
 #endif
   }

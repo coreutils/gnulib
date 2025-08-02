@@ -36,7 +36,7 @@ MirBSD 10.
 @item
 The macro @code{WCOREDUMP} is not defined in this header file (only in
 @code{<sys/wait.h>}) on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32551
+@c https://sourceware.org/PR32551
 glibc 2.41.
 @end itemize
 

@@ -145,7 +145,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
       *) REPLACE_FEHOLDEXCEPT=1 ;;
     esac
     dnl The fegetenv function does not work on glibc 2.19/x86_64
-    dnl (see <https://sourceware.org/bugzilla/show_bug.cgi?id=16198>)
+    dnl (see <https://sourceware.org/PR16198>)
     dnl and Mac OS X 10.5/{i386,x86_64}.
     AC_CACHE_CHECK([whether fegetenv works],
       [gl_cv_func_fegetenv_works],
@@ -301,9 +301,9 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
       *) REPLACE_FESETENV=1 ;;
     esac
     dnl The feupdateenv function does not work on glibc 2.37/riscv64
-    dnl (see <https://sourceware.org/bugzilla/show_bug.cgi?id=31022>)
+    dnl (see <https://sourceware.org/PR31022>)
     dnl and on glibc 2.37/hppa
-    dnl (see <https://sourceware.org/bugzilla/show_bug.cgi?id=31023>)
+    dnl (see <https://sourceware.org/PR31023>)
     dnl and on glibc 2.5/{i386,x86_64,ia64} (see
     dnl <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d>)
     dnl and on Mac OS X 10.5/{i386,x86_64} (where it forgets about the currently

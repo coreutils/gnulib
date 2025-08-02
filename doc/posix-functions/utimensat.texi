@@ -37,7 +37,7 @@ Linux kernel 2.6.32, macOS 14, NetBSD 10.0, Solaris 11.1.
 Out-of-range values of @code{tv_nsec} do not lead to a failure on some
 platforms:
 Linux kernel 2.6.22.19 on hppa, NetBSD 10.0,
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32802
+@c https://sourceware.org/PR32802
 GNU/Hurd with glibc 2.41.
 @item
 On some platforms, this function mis-handles a trailing slash:

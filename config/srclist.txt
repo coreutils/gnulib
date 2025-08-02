@@ -116,7 +116,7 @@ $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
 #$LIBCSRC posix/getopt1.c		lib gpl
 #$LIBCSRC posix/getopt_int.h		lib gpl
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1293
+# https://sourceware.org/PR1293
 #$LIBCSRC libidn/iconvme.h		lib gpl
 #$LIBCSRC libidn/iconvme.c		lib gpl
 
@@ -127,7 +127,7 @@ $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
 # (gnulib needs config.h?) $LIBCSRC/string/memmem.c		lib gpl
 
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1439
+# https://sourceware.org/PR1439
 #$LIBCSRC crypt/md5.c			lib gpl
 #$LIBCSRC crypt/md5.h			lib gpl
 # These are close, but ...
@@ -137,10 +137,10 @@ $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
 #$LIBCSRC login/forkpty.c		lib gpl
 #$LIBCSRC login/programs/pt_chown.c	lib gpl
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=321
+# https://sourceware.org/PR321
 #$LIBCSRC malloc/obstack.c		lib gpl
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=321
+# https://sourceware.org/PR321
 #$LIBCSRC malloc/obstack.h		lib gpl
 #$LIBCSRC misc/error.c			lib gpl
 #$LIBCSRC misc/error.h			lib/error.in.h gpl
@@ -150,11 +150,11 @@ $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
 #$LIBCSRC posix/fnmatch.h		lib/fnmatch.in.h gpl
 #$LIBCSRC posix/fnmatch_loop.c		lib gpl
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1060
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1062
+# https://sourceware.org/PR1060
+# https://sourceware.org/PR1062
 #$LIBCSRC posix/glob.c			lib gpl
 #
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1060
+# https://sourceware.org/PR1060
 #$LIBCSRC posix/glob.h			lib/glob-libc.h gpl
 #
 #$LIBCSRC stdlib/putenv.c		lib gpl

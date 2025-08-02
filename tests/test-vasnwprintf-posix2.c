@@ -156,7 +156,7 @@ main (int argc, char *argv[])
         {
           /* But there are good arguments for adding the grouping character
              within the leading zeroes too.
-             <https://sourceware.org/bugzilla/show_bug.cgi?id=23432>  */
+             <https://sourceware.org/PR23432>  */
           ASSERT (length == 10 + 3 * separator_len);
           ASSERT (wmemcmp (result, L"0", 1) == 0
                   && wmemcmp (result + 1, separator, separator_len) == 0
@@ -185,7 +185,7 @@ main (int argc, char *argv[])
         {
           /* But there are good arguments for adding the grouping character
              within the leading zeroes too.
-             <https://sourceware.org/bugzilla/show_bug.cgi?id=23432>  */
+             <https://sourceware.org/PR23432>  */
           ASSERT (length == 11 + 3 * separator_len);
           ASSERT (wmemcmp (result, L"-0", 2) == 0
                   && wmemcmp (result + 2, separator, separator_len) == 0

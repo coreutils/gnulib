@@ -18,8 +18,8 @@ HP-UX 11, Solaris 11 2010-11.
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
+@c https://sourceware.org/PR19932
+@c https://sourceware.org/PR29511
 glibc 2.35.
 @item
 This function does not work when the first argument is NULL on some platforms:

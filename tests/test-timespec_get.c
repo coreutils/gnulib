@@ -48,7 +48,7 @@ main (void)
   /* Verify that the tv_sec field of the result is the same as time(NULL).  */
   /* Note: It's here that the dependency to the 'time' module is needed.
      Without it, this assertion would sometimes fail on glibc systems, see
-     https://sourceware.org/bugzilla/show_bug.cgi?id=30200  */
+     https://sourceware.org/PR30200  */
   ASSERT (ts1.tv_sec <= tt2);
   ASSERT (tt2 <= ts3.tv_sec);
   ASSERT (ts3.tv_sec <= tt4);

@@ -11,7 +11,7 @@ dnl From Bruno Haible.
 AC_DEFUN([gl_FUNC_TIME],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
-  dnl glibc has the bug https://sourceware.org/bugzilla/show_bug.cgi?id=30200 .
+  dnl glibc has the bug https://sourceware.org/PR30200 .
   AC_CACHE_CHECK([whether time() works],
     [gl_cv_func_time_works],
     [dnl Guess that it works except on

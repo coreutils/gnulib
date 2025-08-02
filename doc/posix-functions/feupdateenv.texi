@@ -15,7 +15,7 @@ FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, Solaris 9, Cygwin 
 @item
 This function crashes when given the argument @code{FE_DFL_ENV}
 on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=31022
+@c https://sourceware.org/PR31022
 glibc 2.37/riscv64.
 @item
 This function does not work on some platforms:
@@ -35,7 +35,7 @@ on some platforms:
 musl libc/i386, musl libc/x86_64, AIX 7.3, Solaris 10 and 11, mingw 10.
 @item
 This function does not trigger traps on
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=31023
+@c https://sourceware.org/PR31023
 glibc 2.37/hppa,
 musl libc/s390x,
 @c src/sys/arch/powerpc/include/fenv.h src/lib/libm/arch/powerpc/fenv.c

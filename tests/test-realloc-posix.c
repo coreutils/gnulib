@@ -61,7 +61,7 @@ main (int argc, _GL_UNUSED char **argv)
       void *r = realloc (p, PTRDIFF_MAX + one);
       ASSERT (r == NULL);
       /* Avoid a test failure due to glibc bug
-         <https://sourceware.org/bugzilla/show_bug.cgi?id=27870>.  */
+         <https://sourceware.org/PR27870>.  */
       if (!getenv ("MALLOC_CHECK_"))
         ASSERT (errno == ENOMEM);
     }

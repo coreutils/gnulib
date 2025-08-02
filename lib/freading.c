@@ -22,7 +22,7 @@
 #include "stdio-impl.h"
 
 /* Don't use glibc's __freading function in glibc < 2.7, see
-   <https://sourceware.org/bugzilla/show_bug.cgi?id=4359>  */
+   <https://sourceware.org/PR4359>  */
 #if !(HAVE___FREADING && (!defined __GLIBC__ || defined __UCLIBC__ || __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 7)))
 
 bool

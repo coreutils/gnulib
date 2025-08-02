@@ -604,7 +604,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 
   { /* Rounding can turn a ...FFF into a ...000.
        This shows a Mac OS X 10.3.9 (Darwin 7.9) bug and a
-       glibc 2.4 bug <https://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
+       glibc 2.4 bug <https://sourceware.org/PR2908>.  */
     int retval =
       my_snprintf (result, sizeof (result), "%.1La %d", 1.999L, 33, 44, 55);
     ASSERT (strcmp (result, "0x1.0p+1 33") == 0

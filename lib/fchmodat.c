@@ -90,7 +90,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
       /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
          follow symbolic links, if /proc is mounted.  O_PATH is used to
          avoid a failure if the file is not readable.
-         Cf. <https://sourceware.org/bugzilla/show_bug.cgi?id=14578>  */
+         Cf. <https://sourceware.org/PR14578>  */
       int fd = openat (dir, file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
       if (fd < 0)
         return fd;

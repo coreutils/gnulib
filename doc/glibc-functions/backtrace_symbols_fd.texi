@@ -35,7 +35,7 @@ FreeBSD, NetBSD, OpenBSD.
 @item
 The strings printed by this function not the same as the strings returned by
 @code{backtrace_symbols} on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=31730
+@c https://sourceware.org/PR31730
 glibc 2.39.
 @item
 On platforms where the function is missing,

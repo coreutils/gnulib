@@ -142,7 +142,7 @@ main (int argc, char *argv[])
         {
           /* But there are good arguments for adding the grouping character
              within the leading zeroes.
-             <https://sourceware.org/bugzilla/show_bug.cgi?id=23432>  */
+             <https://sourceware.org/PR23432>  */
           ASSERT (length == 10 + 3 * separator_len);
           ASSERT (memcmp (result, "0", 1) == 0
                   && memcmp (result + 1, separator, separator_len) == 0
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
         {
           /* But there are good arguments for adding the grouping character
              within the leading zeroes.
-             <https://sourceware.org/bugzilla/show_bug.cgi?id=23432>  */
+             <https://sourceware.org/PR23432>  */
           ASSERT (length == 11 + 3 * separator_len);
           ASSERT (memcmp (result, "-0", 2) == 0
                   && memcmp (result + 2, separator, separator_len) == 0
@@ -204,9 +204,9 @@ main (int argc, char *argv[])
             {
               /* Result according to glibc, which measures the width in
                  multibyte characters or column positions.
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                 <https://sourceware.org/PR28943>
+                 <https://sourceware.org/PR30883>
+                 <https://sourceware.org/PR31542>  */
               ASSERT (length == 9 + separator_len);
               ASSERT (memcmp (result, "     1", 6) == 0
                       && memcmp (result + 6, separator, separator_len) == 0
@@ -241,9 +241,9 @@ main (int argc, char *argv[])
             {
               /* Result according to glibc, which measures the width in
                  multibyte characters or column positions.
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                 <https://sourceware.org/PR28943>
+                 <https://sourceware.org/PR30883>
+                 <https://sourceware.org/PR31542>  */
               ASSERT (length == 9 + separator_len);
               ASSERT (memcmp (result, "    -1", 6) == 0
                       && memcmp (result + 6, separator, separator_len) == 0
@@ -318,9 +318,9 @@ main (int argc, char *argv[])
             {
               /* Result according to glibc, which measures the width in
                  multibyte characters or column positions.
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                 <https://sourceware.org/PR28943>
+                 <https://sourceware.org/PR30883>
+                 <https://sourceware.org/PR31542>  */
               ASSERT (length == 9 + separator_len);
               ASSERT (memcmp (result, "000001", 6) == 0
                       && memcmp (result + 6, separator, separator_len) == 0
@@ -424,9 +424,9 @@ main (int argc, char *argv[])
             {
               /* Result according to glibc, which measures the width in
                  multibyte characters or column positions.
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
-                 <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                 <https://sourceware.org/PR28943>
+                 <https://sourceware.org/PR30883>
+                 <https://sourceware.org/PR31542>  */
               ASSERT (length == 9 + separator_len);
               ASSERT (memcmp (result, "000001", 6) == 0
                       && memcmp (result + 6, separator, separator_len) == 0

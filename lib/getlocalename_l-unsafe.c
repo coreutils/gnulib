@@ -476,7 +476,7 @@ getlocalename_l_unsafe (int category, locale_t locale)
 #elif __GLIBC__ >= 2 && !defined __UCLIBC__
       /* Work around an incorrect definition of the _NL_LOCALE_NAME macro in
          glibc < 2.12.
-         See <https://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
+         See <https://sourceware.org/PR10968>.  */
       const char *name =
         nl_langinfo_l (_NL_ITEM ((category), _NL_ITEM_INDEX (-1)), locale);
       if (name[0] == '\0')

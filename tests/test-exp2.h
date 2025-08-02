@@ -35,7 +35,7 @@ test_function (void)
     DOUBLE y = EXP2 (x);
     ASSERT (y == L_(1.0));
   }
-  /* <https://sourceware.org/bugzilla/show_bug.cgi?id=13824> */
+  /* <https://sourceware.org/PR13824> */
 #if !(__GLIBC__ == 2 && __GLIBC_MINOR__ < 16 && (defined __sparc || defined __powerpc__))
   {
     int e;

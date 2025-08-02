@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is not consistent with @code{gettimeofday} and @code{timespec_get}
 on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=30200
+@c https://sourceware.org/PR30200
 glibc 2.31 or newer on Linux,
 @c Only seen on machines with 2 or more CPUs.
 FreeBSD 14.0,

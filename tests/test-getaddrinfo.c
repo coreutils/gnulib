@@ -223,7 +223,7 @@ int main (void)
 #endif
 #if !defined __GLIBC__
           /* avoid glibc bug, possibly
-             <https://sourceware.org/bugzilla/show_bug.cgi?id=32465> */
+             <https://sourceware.org/PR32465> */
           + simple (3, HOST1, SERV1)
           + simple (3, HOST2, SERV2)
           + simple (3, HOST3, SERV3)

@@ -14,7 +14,7 @@ This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, Solaris 9, Cygwin 1.7.7, MSVC 9, Android 4.4.
 @item
 This function clears all exception trap bits on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=16198
+@c https://sourceware.org/PR16198
 glibc 2.19/x86_64,
 Mac OS X 10.5/i386, Mac OS X 10.5/x86_64.
 @item

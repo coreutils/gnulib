@@ -12,8 +12,8 @@ Portability problems fixed by Gnulib:
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
+@c https://sourceware.org/PR19932
+@c https://sourceware.org/PR29511
 glibc 2.35.
 @end itemize
 

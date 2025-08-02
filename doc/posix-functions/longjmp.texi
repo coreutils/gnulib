@@ -25,6 +25,6 @@ structure managed by the kernel.
 @item
 This function may crash when the invoker code was compiled with option
 @code{-D_FORTIFY_SOURCE=2},
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32522
+@c https://sourceware.org/PR32522
 on Hurd.
 @end itemize

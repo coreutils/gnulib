@@ -567,7 +567,7 @@ test_function (float (*my_strtof) (const char *, char **))
     ASSERT (-FLT_MIN <= result && result <= 0.0f);
 #endif
     /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0f.
-       See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
+       See also <https://sourceware.org/PR5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* glibc-2.3.6, mingw */
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);

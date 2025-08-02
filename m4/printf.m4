@@ -659,7 +659,7 @@ int main ()
           && strcmp (buf, "0x8.0p-2") != 0))
     result |= 16;
   /* This catches the same Mac OS X 10.3.9 (Darwin 7.9) bug and also a
-     glibc 2.4 bug <https://sourceware.org/bugzilla/show_bug.cgi?id=2908>
+     glibc 2.4 bug <https://sourceware.org/PR2908>
      and a FreeBSD 6.4, NetBSD 10.0 bug.  */
   if (sprintf (buf, "%.1La", 1.999L) < 0
       || (strcmp (buf, "0x1.0p+1") != 0

@@ -16,18 +16,18 @@ This function is missing on most non-glibc platforms:
 glibc 2.15, macOS 14, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.3, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 3.4.x, mingw, MSVC 9, Android 4.4.
 @item
 This function may crash when the first argument is NULL on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=28898
+@c https://sourceware.org/PR28898
 glibc 2.36.
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
+@c https://sourceware.org/PR19932
+@c https://sourceware.org/PR29511
 glibc 2.36.
 @item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=16950
+@c https://sourceware.org/PR16950
 glibc 2.19,
 @c https://issuetracker.google.com/issues/289419880
 Android 11.

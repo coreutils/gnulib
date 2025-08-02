@@ -23,7 +23,7 @@ Cygwin 3.4.6.
 @code{renameat2 (AT_FDCWD, "file", AT_FDCWD, "new/" ...)} succeeds
 instead of failing and setting @code{errno} to @code{ENOTDIR}, on some
 platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32570
+@c https://sourceware.org/PR32570
 GNU/Hurd with glibc 2.41.
 @end itemize
 

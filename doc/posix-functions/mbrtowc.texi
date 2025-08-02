@@ -15,13 +15,13 @@ Minix 3.1.8, HP-UX 11.00, mingw.
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
+@c https://sourceware.org/PR19932
+@c https://sourceware.org/PR29511
 glibc 2.35.
 @item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=16950
+@c https://sourceware.org/PR16950
 glibc 2.19,
 mingw with UCRT, MSVC 14, Android 11.
 @item
@@ -51,8 +51,8 @@ Portability problems not fixed by Gnulib:
 @item
 In UTF-8 locales, this function may return wide characters up to 0x7FFFFFFF
 (that is, beyond 0x0010FFFF) on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=2373
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=26034
+@c https://sourceware.org/PR2373
+@c https://sourceware.org/PR26034
 glibc 2.34.
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and

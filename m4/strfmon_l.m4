@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_STRFMON_L],
 
   AC_CHECK_FUNCS_ONCE([strfmon_l])
   if test $ac_cv_func_strfmon_l = yes; then
-    dnl Test for bug <https://sourceware.org/bugzilla/show_bug.cgi?id=19633>
+    dnl Test for bug <https://sourceware.org/PR19633>
     dnl which was fixed in glibc-2.24.
     AC_CACHE_CHECK([whether strfmon_l works],
       [gl_cv_strfmon_l_works],

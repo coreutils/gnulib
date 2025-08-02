@@ -239,7 +239,7 @@ typedef pthread_rwlock_t gl_rwlock_t;
 #    endif
 #    define glthread_rwlock_init(LOCK) \
        (pthread_in_use () ? pthread_rwlock_init (LOCK, NULL) : 0)
-#   else /* glibc with bug https://sourceware.org/bugzilla/show_bug.cgi?id=13701 */
+#   else /* glibc with bug https://sourceware.org/PR13701 */
 #    define gl_rwlock_initializer \
        PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP
 #    define glthread_rwlock_init(LOCK) \

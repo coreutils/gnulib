@@ -7807,9 +7807,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         /* glibc prefers to compare the width against the number
                            of characters as well, but only for numeric conversion
                            specifiers.  See
-                           <https://sourceware.org/bugzilla/show_bug.cgi?id=28943>
-                           <https://sourceware.org/bugzilla/show_bug.cgi?id=30883>
-                           <https://sourceware.org/bugzilla/show_bug.cgi?id=31542>  */
+                           <https://sourceware.org/PR28943>
+                           <https://sourceware.org/PR30883>
+                           <https://sourceware.org/PR31542>  */
                         switch (dp->conversion)
                           {
                           case 'd': case 'i': case 'u':

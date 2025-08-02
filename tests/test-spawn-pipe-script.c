@@ -31,7 +31,7 @@ main ()
 {
   /* Check an invocation of an executable script.
      This should only be supported if the script has a '#!' marker; otherwise
-     it is unsecure: <https://sourceware.org/bugzilla/show_bug.cgi?id=13134>.
+     it is unsecure: <https://sourceware.org/PR13134>.
      POSIX says that the execlp() and execvp() functions support executing
      shell scripts
      <https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html>,

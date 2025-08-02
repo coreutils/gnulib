@@ -53,7 +53,7 @@ main (int argc, char *argv[])
      0x88 0xA5    U+00EA U+030C    LATIN SMALL LETTER E WITH CIRCUMFLEX AND CARON
 
      Test one of them.
-     See <https://sourceware.org/bugzilla/show_bug.cgi?id=30611>.  */
+     See <https://sourceware.org/PR30611>.  */
   mbstate_t state;
   memset (&state, '\0', sizeof (mbstate_t));
   char32_t c32 = (char32_t) 0xBADFACE;

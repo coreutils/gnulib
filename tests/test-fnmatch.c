@@ -574,7 +574,7 @@ main (int argc, char *argv[])
     ASSERT (fnmatch ("*x", ".x", FNM_PERIOD) == FNM_NOMATCH);
     if (argc == 1 || strcmp (argv[1], "1") == 0)
       {
-        /* glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=361>
+        /* glibc bug <https://sourceware.org/PR361>
            exists in glibc 2.3.3, fixed in glibc 2.5.  */
         ASSERT (fnmatch (Apat, "\\", 0) == 0);
         ASSERT (fnmatch (Apat, "A", 0) == 0);
@@ -589,7 +589,7 @@ main (int argc, char *argv[])
         ASSERT (fnmatch (Apat, bs01, 0) == ('A' < '\\' ? FNM_NOMATCH : 0));
         ASSERT (fnmatch (apat, bs01, 0) == ('a' < '\\' ? FNM_NOMATCH : 0));
       }
-    /* glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=12378>
+    /* glibc bug <https://sourceware.org/PR12378>
        exists in glibc 2.12, fixed in glibc 2.13.  */
     ASSERT (fnmatch ("[/b", "[/b", 0) == 0);
     /* This test fails on FreeBSD 13.2, NetBSD 9.3, Cygwin 3.4.6.  */

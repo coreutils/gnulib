@@ -38,7 +38,7 @@ On Windows, this function does not take a buffer size as second argument.
 @item
 This function produces wrong values for the @samp{La} directive
 on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=13726
+@c https://sourceware.org/PR13726
 glibc 2.15,
 @c https://dev.haiku-os.org/ticket/18353
 Haiku,

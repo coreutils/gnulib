@@ -33,7 +33,7 @@ duplocale (locale_t locale)
 {
   /* Implement duplocale(LC_GLOBAL_LOCALE) on platforms without locale_t.
      Also, work around crash in the duplocale function in glibc < 2.12.
-     See <https://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
+     See <https://sourceware.org/PR10969>.
      Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
      errno set to EINVAL.
      Also, on NetBSD 7.0, duplocale(LC_GLOBAL_LOCALE) returns a locale that

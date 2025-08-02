@@ -36,7 +36,7 @@ sigfpe_on_invalid ()
      Also, possibly a bug in glibc/sysdeps/m68k/fpu/feenablxcpt.c: it sets
      only bit 13, but should better set bits 15, 14, 13 of the control
      register together.  See
-     <https://sourceware.org/bugzilla/show_bug.cgi?id=30993>.  */
+     <https://sourceware.org/PR30993>.  */
   int ret = feenableexcept (FE_INVALID);
   if (ret == -1)
     return -1;

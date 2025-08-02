@@ -15,8 +15,8 @@ Minix 3.1.8, HP-UX 11.00, mingw.
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
+@c https://sourceware.org/PR19932
+@c https://sourceware.org/PR29511
 glibc 2.35.
 @item
 This function returns 0 instead of @code{(size_t) -2} when the input

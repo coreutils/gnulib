@@ -1150,11 +1150,11 @@ programs to return incorrect answers or even crash, and fixing these
 bugs has often been low-priority: for example, as of 2020 the
 @url{https://sourceware.org/bugzilla/,GNU C library bug database}
 contained back-reference bugs
-@url{https://sourceware.org/bugzilla/show_bug.cgi?id=52,,52},
-@url{https://sourceware.org/bugzilla/show_bug.cgi?id=10844,,10844},
-@url{https://sourceware.org/bugzilla/show_bug.cgi?id=11053,,11053},
-@url{https://sourceware.org/bugzilla/show_bug.cgi?id=24269,,24269}
-and @url{https://sourceware.org/bugzilla/show_bug.cgi?id=25322,,25322},
+@url{https://sourceware.org/PR52,,52},
+@url{https://sourceware.org/PR10844,,10844},
+@url{https://sourceware.org/PR11053,,11053},
+@url{https://sourceware.org/PR24269,,24269}
+and @url{https://sourceware.org/PR25322,,25322},
 with little sign of forthcoming fixes.  Luckily,
 back-references are rarely useful and it should be little trouble to
 avoid them in practical applications.

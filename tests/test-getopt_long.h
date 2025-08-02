@@ -315,7 +315,7 @@ test_getopt_long (void)
   }
 
   /* Test that 'W' does not dump core:
-     https://sourceware.org/bugzilla/show_bug.cgi?id=12922  */
+     https://sourceware.org/PR12922  */
   {
     int argc = 0;
     const char *argv[10];

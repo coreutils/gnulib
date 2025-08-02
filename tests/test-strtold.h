@@ -575,7 +575,7 @@ test_function (long double (*my_strtold) (const char *, char **))
     ASSERT (-LDBL_MIN <= result && result <= 0.0L);
 #endif
     /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0L.
-       See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
+       See also <https://sourceware.org/PR5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerol)); /* glibc-2.3.2, Haiku */
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);

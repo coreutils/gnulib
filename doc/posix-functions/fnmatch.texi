@@ -115,12 +115,12 @@ on some platforms:
 Solaris 11.4.
 @item
 Ranges that start or end with a backslash don't work right on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=361
+@c https://sourceware.org/PR361
 glibc 2.3.3.
 @item
 In the pattern, an opening bracket without closing bracket does not match
 a literal @code{'['} on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=12378
+@c https://sourceware.org/PR12378
 @c Failing test cases:
 @c fnmatch ("[[:alpha:]'[:alpha:]\0]", "a", 0) == FNM_NOMATCH
 @c fnmatch ("[a[.\0.]]", "a", 0) == FNM_NOMATCH

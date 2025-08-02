@@ -20,7 +20,7 @@
 
 /* On GNU/Hurd, when compiling with -D_FORTIFY_SOURCE=2, avoid an error
    "*** longjmp causes uninitialized stack frame ***: terminated".
-   Cf. <https://sourceware.org/bugzilla/show_bug.cgi?id=32522>  */
+   Cf. <https://sourceware.org/PR32522>  */
 #ifdef __gnu_hurd__
 # undef _FORTIFY_SOURCE
 # undef __USE_FORTIFY_LEVEL

@@ -120,7 +120,7 @@ ssize_t
 rpl_strfmon_l (char *s, size_t maxsize, locale_t locale, const char *format, ...)
 {
   /* Work around glibc 2.23 bug
-     <https://sourceware.org/bugzilla/show_bug.cgi?id=19633>.  */
+     <https://sourceware.org/PR19633>.  */
   va_list argptr;
   locale_t orig_locale;
   directives_t directives;

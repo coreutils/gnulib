@@ -258,7 +258,7 @@ num_processors_ignoring_omp (enum nproc_query query)
      the /sys and /proc file systems (see
      glibc/sysdeps/unix/sysv/linux/getsysstats.c).
      In some situations these file systems are not mounted, and the sysconf call
-     returns 1 or 2 (<https://sourceware.org/bugzilla/show_bug.cgi?id=21542>),
+     returns 1 or 2 (<https://sourceware.org/PR21542>),
      which does not reflect the reality.  */
 
   if (query == NPROC_CURRENT)

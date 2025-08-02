@@ -1368,7 +1368,7 @@ test_getopt (void)
     }
 
   /* Check that 'W' does not dump core:
-     https://sourceware.org/bugzilla/show_bug.cgi?id=12922
+     https://sourceware.org/PR12922
      Technically, POSIX says the presence of ';' in the opt-string
      gives unspecified behavior, so we only test this when GNU compliance
      is desired.  */

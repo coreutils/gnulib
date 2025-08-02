@@ -20,9 +20,9 @@ This function is missing on many platforms:
 glibc 2.31, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android API level 34.
 @item
 This function returns wrong values on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=26555
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=29545
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=31080
+@c https://sourceware.org/PR26555
+@c https://sourceware.org/PR29545
+@c https://sourceware.org/PR31080
 @c https://www.illumos.org/issues/17134
 glibc 2.37, Solaris 11 OmniOS.
 @end itemize

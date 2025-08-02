@@ -38,13 +38,13 @@ AC_DEFUN([gl_CHECK_STRERRORNAME_NP],
   if test $ac_cv_func_strerrorname_np = yes; then
     dnl In glibc 2.32, strerrorname_np returns English error descriptions, not
     dnl error names.
-    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=26555>.
+    dnl See <https://sourceware.org/PR26555>.
     dnl In glibc 2.36, strerrorname_np returns NULL for EDEADLOCK on powerpc and
     dnl sparc platforms.
-    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=29545>.
+    dnl See <https://sourceware.org/PR29545>.
     dnl In glibc 2.37, strerrorname_np returns NULL for ENOSYM and
     dnl EREMOTERELEASE on hppa platforms.
-    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=31080>.
+    dnl See <https://sourceware.org/PR31080>.
     dnl In Solaris 11 OmniOS, strerrorname_np returns NULL for ERESTART
     dnl and ESTRPIPE.
     dnl see <https://www.illumos.org/issues/17134>.

@@ -32,7 +32,7 @@ SIGNATURE_CHECK (random_r, int, (struct random_data *, int32_t *));
 #include "macros.h"
 
 /* Note: This test crashes on glibc/SPARC systems.
-   Reported at <https://sourceware.org/bugzilla/show_bug.cgi?id=30584>.  */
+   Reported at <https://sourceware.org/PR30584>.  */
 
 static int
 test_failed (int alignment)

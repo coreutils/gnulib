@@ -35,7 +35,7 @@ glibc 2.11, musl libc, Solaris 11.
 Out-of-range values of @code{tv_nsec} do not lead to a failure on some
 platforms:
 NetBSD 10.0,
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=32803
+@c https://sourceware.org/PR32803
 GNU/Hurd with glibc 2.41.
 @end itemize
 

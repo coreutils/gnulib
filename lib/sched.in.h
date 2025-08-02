@@ -46,7 +46,7 @@
 
 /* Get pid_t.
    This is needed on glibc 2.11 (see
-   glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=13198>)
+   glibc bug <https://sourceware.org/PR13198>)
    and Mac OS X 10.5.  */
 #include <sys/types.h>
 

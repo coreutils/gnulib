@@ -19,7 +19,7 @@ NetBSD 10.0, OpenBSD 7.2, Solaris 11.4.
 @item
 This function may return a wrong result if the two arguments are of different
 length, on some platforms:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=30620
+@c https://sourceware.org/PR30620
 glibc 2.37 on arm and arm64 CPUs,
 AIX 7.2 in 64-bit mode.
 @end itemize

@@ -32,7 +32,7 @@ which is supported by GNU @code{faccessat}.
 @item
 On some platforms, @code{faccessat} can mishandle @code{AT_EACCESS}
 after a process starts as root and then becomes non-root:
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=18683
+@c https://sourceware.org/PR18683
 GNU/Linux with glibc 2.32.
 @end itemize
 

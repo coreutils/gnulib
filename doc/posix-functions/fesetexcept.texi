@@ -20,9 +20,9 @@ This function is missing on all non-glibc platforms:
 glibc 2.24, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
 @item
 This function triggers floating-point exception traps although it shouldn't, on
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=30989
+@c https://sourceware.org/PR30989
 glibc 2.37/i386,
-@c https://sourceware.org/bugzilla/show_bug.cgi?id=30988
+@c https://sourceware.org/PR30988
 glibc 2.37/powerpc.
 @end itemize
 
