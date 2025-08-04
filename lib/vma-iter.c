@@ -939,21 +939,14 @@ vma_iterate_procmap_query (vma_iterate_callback_fn callback, void *data)
   return 0;
 }
 
-#else
-
-static inline int
-vma_iterate_procmap_query (vma_iterate_callback_fn callback, void *data)
-{
-  return -1;
-}
-
 #endif
 
 
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || defined __ANDROID__
+#if (defined __linux__ || defined __ANDROID__) && defined PROCMAP_QUERY
+  /* Linux >= 6.11 */
   /* This implementation is more than twice as fast as vma_iterate_proc,
      when supported by the kernel.  Therefore try it first.  */
   {
