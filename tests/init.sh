@@ -428,21 +428,13 @@ setup_ ()
   test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
     || fail_ "failed to create temporary directory in $initial_cwd_"
   cd "$test_dir_" || fail_ "failed to cd to temporary directory"
-  # Set variables srcdir, builddir, and optionally top_builddir,
-  # for the convenience of the test.
+  # Set variables srcdir, builddir, for the convenience of the test.
   case $srcdir in
     /* | ?:*) ;;
     *) srcdir="../$srcdir" ;;
   esac
   builddir=".."
   export srcdir builddir
-  if test -n "$top_builddir"; then
-    case $top_builddir in
-      /* | ?:*) ;;
-      *) top_builddir="../$top_builddir" ;;
-    esac
-    export top_builddir
-  fi
 
   # As autoconf-generated configure scripts do, ensure that IFS
   # is defined initially, so that saving and restoring $IFS works.
