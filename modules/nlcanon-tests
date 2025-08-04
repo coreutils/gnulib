@@ -1,0 +1,10 @@
+Files:
+tests/test-nlcanon.sh
+
+Depends-on:
+test-framework-sh
+
+Makefile.am:
+TESTS += test-nlcanon.sh
+TESTS_ENVIRONMENT += \
+  top_builddir='@top_builddir@'
