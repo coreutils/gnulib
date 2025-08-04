@@ -1,0 +1,130 @@
+#!/bin/sh
+# Execute a program, canonicalizing newlines in the standard output and/or
+# standard error.
+
+# Copyright (C) 2025 Free Software Foundation, Inc.
+# Written by Bruno Haible <bruno@clisp.org>, 2025.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# Usage: /bin/sh nlcanon.sh PLATFORMS STREAMS PROGRAM [ARGUMENTS]
+# where
+#   PLATFORMS is one of
+#             all             for all platforms
+#             windows-based   for Cygwin and native Windows
+#             windows         for native Windows
+#   STREAMS   is one of
+#             stdout          for standard output
+#             stderr          for standard error
+#             stdout,stderr   for both standard output and standard error
+#   PROGRAM [ARGUMENTS]   is the command to execute.
+
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : "${TMPDIR=/tmp}"
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gt$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    { (exit 1); exit 1; }
+  }
+}
+
+host_os='@host_os@'
+
+platforms="$1"
+streams="$2"
+shift
+shift
+
+case "$platforms" in
+  all | windows-based | windows) ;;
+  *) echo "nlcanon.sh: Invalid PLATFORMS argument" 1>&2; exit 1 ;;
+esac
+
+case "$streams" in
+  stdout | stderr | stdout,stderr | stderr,stdout ) ;;
+  *) echo "nlcanon.sh: Invalid STREAMS argument" 1>&2; exit 1 ;;
+esac
+
+if case "$platforms" in
+     all)
+       true
+       ;;
+     windows-based)
+       case "$host_os" in
+         cygwin* | mingw* | windows*) true ;;
+         *) false ;;
+       esac
+       ;;
+     windows)
+       case "$host_os" in
+         mingw* | windows*) true ;;
+         *) false ;;
+       esac
+       ;;
+   esac
+then
+
+  # We need a temporary file, to save the exit code.
+  # Since there is no portable atomic 'mktemp' command, and since the only
+  # safe non-atomic way to create a temporary file is in a temporary directory,
+  # we need a temporary directory.
+  func_tmpdir
+  func_cleanup_tmpfiles()
+  {
+    rm -rf "$tmp"
+  }
+  trap func_cleanup_tmpfiles HUP INT QUIT PIPE TERM
+  trap 'exit_status=$?; func_cleanup_tmpfiles; exit $exit_status' EXIT
+  exitcode_file="$tmp/exit"
+
+  # This is not a program. This is art. :D)
+  case "$streams" in
+    stdout)
+      { "$@"; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }
+      ;;
+    stderr)
+      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }; } 3>&1 1>&2
+      ;;
+    *) # both
+      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }; } 3>&1 1>&2 | { sed -e 's/\r$//' 2>/dev/null; }
+      ;;
+  esac
+  exit `cat "$exitcode_file"`
+
+else
+  # No newline canonicalization is requested.
+  exec "$@"
+fi

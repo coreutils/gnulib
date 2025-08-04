@@ -1,0 +1,22 @@
+Description:
+Execute a program, canonicalizing newlines in the standard output and/or
+standard error.
+
+Files:
+build-aux/nlcanon.sh.in
+
+Depends-on:
+
+configure.ac:
+AC_REQUIRE([AC_CANONICAL_HOST])
+AC_CONFIG_FILES([nlcanon.sh:build-aux/nlcanon.sh.in])
+
+Makefile.am:
+
+Include:
+
+License:
+GPLed build tool
+
+Maintainer:
+all
