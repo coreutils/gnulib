@@ -76,7 +76,7 @@ copy_file_range (int infd, off_t *pinoff,
 
   if (ok)
     {
-#   if defined __GLIBC__ && ! (2 < __GLIBC__ + (43 <= __GLIBC_MINOR__))
+# if defined __GLIBC__ && ! (2 < __GLIBC__ + (43 <= __GLIBC_MINOR__))
       /* Work around glibc bug 33245
          <https://sourceware.org/PR33245>.
          This bug is present in glibc 2.42 (2025) and fixed in 2.43,
