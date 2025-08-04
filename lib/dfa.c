@@ -1013,9 +1013,9 @@ parse_bracket_exp (struct dfa *dfa)
                 }
               str[len] = '\0';
 
-              /* Fetch bracket.  */
-              c = bracket_fetch_wc (dfa);
-              wc = dfa->lex.wctok;
+              /* Discard ']', reporting an error if no more input.  */
+              bracket_fetch_wc (dfa);
+
               if (c1 == ':')
                 /* Build character class.  POSIX allows character
                    classes to match multicharacter collating elements,
