@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-08-05  git-merge-changelog  This module is removed.  Use the package from
+                            https://git.savannah.gnu.org/git/vc-changelog.git
+                            instead.
+
 2025-07-13  safe-alloc      This module is now obsolete.  Also, it no longer
                             defines the REALLOC_N macro.
 
