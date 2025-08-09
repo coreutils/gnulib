@@ -825,6 +825,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\n'
         if not makefile_name:
             emit += 'SUBDIRS =\n'
+            emit += 'TESTS_ENVIRONMENT =\n'
             emit += 'noinst_HEADERS =\n'
             emit += 'noinst_LIBRARIES =\n'
             emit += 'noinst_LTLIBRARIES =\n'

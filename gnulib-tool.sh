@@ -3943,6 +3943,7 @@ func_emit_lib_Makefile_am ()
   echo
   if test -z "$makefile_name"; then
     echo "SUBDIRS ="
+    echo "TESTS_ENVIRONMENT ="
     echo "noinst_HEADERS ="
     echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
