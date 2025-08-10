@@ -1,6 +1,9 @@
 Description:
 Bourne-shell-based testing framework
 
+Applicability:
+all
+
 Files:
 tests/init.sh
 
