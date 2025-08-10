@@ -16,7 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
 
-#include "config.h"
+#include <config.h>
 
 /* Specification.  */
 #include <string.h>

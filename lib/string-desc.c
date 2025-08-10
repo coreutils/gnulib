@@ -16,9 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2023.  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include <config.h>
 
 #define GL_STRING_DESC_INLINE _GL_EXTERN_INLINE
 
