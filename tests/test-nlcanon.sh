@@ -1,11 +1,6 @@
 #!/bin/sh
 
-if test $# != 0; then
-  # Callee.
-  printf 'stdout-contents\r\n'
-  printf 'stderr-contents\r\n' 1>&2
-  exit $1
-else
+if test $# = 0 || { test $# = 1 && test "x$1" = "x--no-reexec"; }; then
   # Unit test.
   . "${srcdir=.}/init.sh"; path_prepend_ .
 
@@ -64,4 +59,9 @@ else
   test $? != 0 || Exit 37
 
   Exit 0
+else
+  # Callee.
+  printf 'stdout-contents\r\n'
+  printf 'stderr-contents\r\n' 1>&2
+  exit $1
 fi
