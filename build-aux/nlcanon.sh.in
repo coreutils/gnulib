@@ -110,16 +110,20 @@ then
   trap 'exit_status=$?; func_cleanup_tmpfiles; exit $exit_status' EXIT
   exitcode_file="$tmp/exit"
 
+  # Need to use printf, because OpenBSD and Solaris 'sed' don't interpret \r
+  # as an escape sequence.
+  sed_convert_crlf='s/'`printf '\r'`'$//'
+
   # This is not a program. This is art. :D)
   case "$streams" in
     stdout)
-      { "$@"; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }
+      { "$@"; echo "$?" > "$exitcode_file"; } | { sed -e "$sed_convert_crlf" 2>/dev/null; }
       ;;
     stderr)
-      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }; } 3>&1 1>&2
+      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e "$sed_convert_crlf" 2>/dev/null; }; } 3>&1 1>&2
       ;;
     *) # both
-      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e 's/\r$//' 2>/dev/null; }; } 3>&1 1>&2 | { sed -e 's/\r$//' 2>/dev/null; }
+      { { "$@" 2>&1 1>&3; echo "$?" > "$exitcode_file"; } | { sed -e "$sed_convert_crlf" 2>/dev/null; }; } 3>&1 1>&2 | { sed -e "$sed_convert_crlf" 2>/dev/null; }
       ;;
   esac
   exit `cat "$exitcode_file"`
