@@ -72,8 +72,8 @@ rpl_unlinkat (int fd, char const *name, int flag)
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
           char linkbuf[1];
-          if (len && (readlinkat (fd, short_name, linkbuf, 1) < 0
-                      || errno == EINVAL))
+          if (len && ! (readlinkat (fd, short_name, linkbuf, 1) < 0
+                        || errno == EINVAL))
             {
               free (short_name);
               errno = EPERM;
