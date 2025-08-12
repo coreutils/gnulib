@@ -670,9 +670,17 @@ lutimens (char const *file, struct timespec const timespec[2])
 # endif /* HAVE_LUTIMES && !HAVE_UTIMENSAT */
 
   /* Out of luck for symlinks, but we still handle regular files.  */
-  if (!(adjustment_needed || REPLACE_FUNC_STAT_FILE) && lstat (file, &st))
-    return -1;
-  if (!S_ISLNK (st.st_mode))
+  bool not_symlink;
+  if (adjustment_needed || REPLACE_FUNC_STAT_FILE)
+    not_symlink = !S_ISLNK (st.st_mode);
+  else
+    {
+      char linkbuf[1];
+      not_symlink = readlink (file, linkbuf, 1) < 0;
+      if (not_symlink && errno != EINVAL)
+        return -1;
+    }
+  if (not_symlink)
     return fdutimens (-1, file, ts);
   errno = ENOSYS;
   return -1;

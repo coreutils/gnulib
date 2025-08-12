@@ -389,13 +389,14 @@ rpl_rename (char const *src, char const *dst)
           goto out;
         }
       strip_trailing_slashes (src_temp);
-      if (lstat (src_temp, &src_st))
+      char linkbuf[1];
+      if (0 <= readlink (src_temp, linkbuf, 1))
+        goto out;
+      if (errno != EINVAL)
         {
           rename_errno = errno;
           goto out;
         }
-      if (S_ISLNK (src_st.st_mode))
-        goto out;
     }
   if (dst_slash)
     {
@@ -406,16 +407,14 @@ rpl_rename (char const *src, char const *dst)
           goto out;
         }
       strip_trailing_slashes (dst_temp);
-      if (lstat (dst_temp, &dst_st))
-        {
-          if (errno != ENOENT)
-            {
-              rename_errno = errno;
-              goto out;
-            }
-        }
-      else if (S_ISLNK (dst_st.st_mode))
+      char linkbuf[1];
+      if (0 <= readlink (dst_temp, linkbuf, 1))
         goto out;
+      if (errno != EINVAL && errno != ENOENT)
+        {
+          rename_errno = errno;
+          goto out;
+        }
     }
 # endif /* RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG
            || RENAME_HARD_LINK_BUG */

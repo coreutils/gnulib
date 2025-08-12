@@ -57,7 +57,7 @@ rpl_unlink (char const *name)
          symlink instead of the directory.  Technically, we could use
          realpath to find the canonical directory name to attempt
          deletion on.  But that is a lot of work for a corner case; so
-         we instead just use an lstat on the shortened name, and
+         we instead just use a readlink on the shortened name, and
          reject symlinks with trailing slashes.  The root user of
          unlink(1) will just have to live with the rule that they
          can't delete a directory via a symlink.  */
@@ -72,7 +72,9 @@ rpl_unlink (char const *name)
           memcpy (short_name, name, len);
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
-          if (len && (lstat (short_name, &st) || S_ISLNK (st.st_mode)))
+          char linkbuf[1];
+          if (len && ! (readlink (short_name, linkbuf, 1) < 0
+                        && errno == EINVAL))
             {
               free (short_name);
               errno = EPERM;

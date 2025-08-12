@@ -204,12 +204,16 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
           goto out;
         }
       strip_trailing_slashes (src_temp);
-      if (fstatat (fd1, src_temp, &src_st, AT_SYMLINK_NOFOLLOW))
+      char linkbuf[1];
+      if (readlinkat (fd1, src_temp, linkbuf, sizeof linkbuf) < 0)
         {
-          rename_errno = errno;
-          goto out;
+          if (errno != EINVAL)
+            {
+              rename_errno = errno;
+              goto out;
+            }
         }
-      if (S_ISLNK (src_st.st_mode))
+      else
         goto out;
     }
   if (dst_slash)
@@ -221,8 +225,8 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
           goto out;
         }
       strip_trailing_slashes (dst_temp);
-      char readlink_buf[1];
-      if (readlinkat (fd2, dst_temp, readlink_buf, sizeof readlink_buf) < 0)
+      char linkbuf[1];
+      if (readlinkat (fd2, dst_temp, linkbuf, sizeof linkbuf) < 0)
         {
           if (errno != ENOENT && errno != EINVAL)
             {

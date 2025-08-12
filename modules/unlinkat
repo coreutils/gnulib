@@ -21,6 +21,8 @@ openat-die      [test $HAVE_UNLINKAT = 0]
 rmdir           [test $HAVE_UNLINKAT = 0]
 save-cwd        [test $HAVE_UNLINKAT = 0]
 unlink          [test $HAVE_UNLINKAT = 0]
+fstatat         [test $REPLACE_UNLINKAT = 1]
+readlinkat      [test $REPLACE_UNLINKAT = 1]
 
 configure.ac:
 gl_FUNC_UNLINKAT

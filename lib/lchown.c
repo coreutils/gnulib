@@ -77,9 +77,19 @@ rpl_lchown (const char *file, uid_t uid, gid_t gid)
 
   if (gid != (gid_t) -1 || uid != (uid_t) -1)
     {
-      if (lstat (file, &st))
-        return -1;
+      /* Prefer readlink to lstat+S_ISLNK, to avoid EOVERFLOW issues
+         in the common case where FILE is a non-symlink.  */
+      char linkbuf[1];
+      int r = readlink (file, linkbuf, 1);
+      if (r < 0)
+        return errno == EINVAL ? chown (file, uid, gid) : r;
+
+      /* Later code can use the status, so get it if possible.  */
+      r = lstat (file, &st);
+      if (r < 0)
+        return r;
       stat_valid = true;
+      /* An easy check: did FILE change from a symlink to a non-symlink?  */
       if (!S_ISLNK (st.st_mode))
         return chown (file, uid, gid);
     }

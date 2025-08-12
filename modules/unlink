@@ -10,6 +10,7 @@ unistd-h
 filename        [test $REPLACE_UNLINK = 1]
 lstat           [test $REPLACE_UNLINK = 1]
 malloc-posix    [test $REPLACE_UNLINK = 1]
+readlink        [test $REPLACE_UNLINK = 1]
 
 configure.ac:
 gl_FUNC_UNLINK

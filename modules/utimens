@@ -15,6 +15,7 @@ fstat
 lstat
 gettime
 msvc-nothrow
+readlink
 stat
 stat-time
 bool

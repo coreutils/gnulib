@@ -71,8 +71,8 @@ rpl_unlinkat (int fd, char const *name, int flag)
           memcpy (short_name, name, len);
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
-          if (len && (fstatat (fd, short_name, &st, AT_SYMLINK_NOFOLLOW)
-                      || S_ISLNK (st.st_mode)))
+          if (len && (readlinkat (fd, short_name, linkbuf, 1) < 0
+                      || errno == EINVAL))
             {
               free (short_name);
               errno = EPERM;
