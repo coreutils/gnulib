@@ -238,6 +238,7 @@
 -Wlong-long				obsolescent
 -Wlto-type-mismatch			c++ and objc++
 -Wmain					enabled by -Wall
+-Wmaybe-musttail-local-addr		enabled by -Wextra
 -Wmaybe-uninitialized			enabled by -Wall or -Wextra
 -Wmemset-elt-size			enabled by -Wall
 -Wmemset-transposed-args		enabled by -Wall
@@ -256,6 +257,7 @@
 -Wmissing-profile			default
 -Wmissing-requires			default, c++
 -Wmissing-template-keyword		default, c++
+-Wmusttail-local-addr			default
 -Wmultichar				default
 -Wmultiple-inheritance			c++ and objc++
 -Wmultistatement-macros			enabled by -Wall
