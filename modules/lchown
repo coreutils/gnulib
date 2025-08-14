@@ -7,7 +7,7 @@ m4/lchown.m4
 
 Depends-on:
 unistd-h
-readlink        [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+issymlink       [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 chown           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 errno-h         [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 bool            [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]

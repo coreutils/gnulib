@@ -44,9 +44,7 @@ lchown (const char *file, uid_t uid, gid_t gid)
 {
 # if HAVE_CHOWN
 #  if ! CHOWN_MODIFIES_SYMLINK
-  char readlink_buf[1];
-
-  if (0 <= readlink (file, readlink_buf, sizeof readlink_buf))
+  if (issymlink (file) > 0)
     {
       errno = EOPNOTSUPP;
       return -1;
@@ -79,19 +77,22 @@ rpl_lchown (const char *file, uid_t uid, gid_t gid)
     {
       /* Prefer readlink to lstat+S_ISLNK, to avoid EOVERFLOW issues
          in the common case where FILE is a non-symlink.  */
-      char linkbuf[1];
-      int r = readlink (file, linkbuf, 1);
-      if (r < 0)
-        return errno == EINVAL ? chown (file, uid, gid) : r;
+      int ret = issymlink (file);
+      if (ret < 0)
+        return -1;
+      if (ret == 0)
+        /* FILE is not a symlink.  */
+        return chown (file, uid, gid);
 
       /* Later code can use the status, so get it if possible.  */
-      r = lstat (file, &st);
-      if (r < 0)
-        return r;
-      stat_valid = true;
+      ret = lstat (file, &st);
+      if (ret < 0)
+        return -1;
       /* An easy check: did FILE change from a symlink to a non-symlink?  */
       if (!S_ISLNK (st.st_mode))
         return chown (file, uid, gid);
+
+      stat_valid = true;
     }
 # endif
 
