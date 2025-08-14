@@ -14,7 +14,7 @@ fcntl-h
 filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 openat-h         [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 fstatat          [test $REPLACE_RENAMEAT = 1]
-readlinkat       [test $REPLACE_RENAMEAT = 1]
+issymlinkat      [test $REPLACE_RENAMEAT = 1]
 bool             [test $REPLACE_RENAMEAT = 1]
 at-internal      [test $HAVE_RENAMEAT = 0]
 filename         [test $HAVE_RENAMEAT = 0]
