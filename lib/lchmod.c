@@ -37,8 +37,6 @@
 int
 lchmod (char const *file, mode_t mode)
 {
-  char readlink_buf[1];
-
 #ifdef O_PATH
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
@@ -49,17 +47,20 @@ lchmod (char const *file, mode_t mode)
     return fd;
 
   int err;
-  if (0 <= readlinkat (fd, "", readlink_buf, sizeof readlink_buf))
-    err = EOPNOTSUPP;
-  else if (errno == EINVAL)
-    {
-      static char const fmt[] = "/proc/self/fd/%d";
-      char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
-      sprintf (buf, fmt, fd);
-      err = chmod (buf, mode) == 0 ? 0 : errno == ENOENT ? -1 : errno;
-    }
-  else
-    err = errno == ENOENT ? -1 : errno;
+  {
+    int ret = issymlinkat (fd, "");
+    if (ret > 0)
+      err = EOPNOTSUPP;
+    else if (ret == 0)
+      {
+        static char const fmt[] = "/proc/self/fd/%d";
+        char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
+        sprintf (buf, fmt, fd);
+        err = chmod (buf, mode) == 0 ? 0 : errno == ENOENT ? -1 : errno;
+      }
+    else
+      err = errno == ENOENT ? -1 : errno;
+  }
 
   close (fd);
 
@@ -83,7 +84,7 @@ lchmod (char const *file, mode_t mode)
 
   /* O_PATH + /proc is not supported.  */
 
-  if (0 <= readlink (file, readlink_buf, sizeof readlink_buf))
+  if (issymlink (file) > 0)
     {
       errno = EOPNOTSUPP;
       return -1;
