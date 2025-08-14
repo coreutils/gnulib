@@ -75,6 +75,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
       /* Stat file to get id(s) that should remain unchanged.  */
       if (!stat_valid && stat (file, &st))
         return -1;
+      stat_valid = true;
       if (gid == (gid_t) -1)
         gid = st.st_gid;
       if (uid == (uid_t) -1)
