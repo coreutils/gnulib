@@ -13,6 +13,8 @@ extensions
 fcntl-h         [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
 openat-h        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
 sys_stat-h      [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
+fstatat         [test $REPLACE_UNLINKAT = 1]
+issymlinkat     [test $REPLACE_UNLINKAT = 1]
 at-internal     [test $HAVE_UNLINKAT = 0]
 errno-h         [test $HAVE_UNLINKAT = 0]
 fchdir          [test $HAVE_UNLINKAT = 0]
@@ -21,8 +23,6 @@ openat-die      [test $HAVE_UNLINKAT = 0]
 rmdir           [test $HAVE_UNLINKAT = 0]
 save-cwd        [test $HAVE_UNLINKAT = 0]
 unlink          [test $HAVE_UNLINKAT = 0]
-fstatat         [test $REPLACE_UNLINKAT = 1]
-readlinkat      [test $REPLACE_UNLINKAT = 1]
 
 configure.ac:
 gl_FUNC_UNLINKAT
