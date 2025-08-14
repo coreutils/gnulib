@@ -9,6 +9,7 @@ m4/chown.m4
 Depends-on:
 unistd-h
 fstat           [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
+issymlink       [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 open            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 stat            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 bool            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]

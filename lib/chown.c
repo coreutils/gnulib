@@ -87,8 +87,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
      If the file is a symlink, open the file (following symlinks), and
      fchown the resulting descriptor.  Although the open might fail
      due to lack of permissions, it's the best we can easily do.  */
-  char linkbuf[1];
-  if (0 <= readlink (file, linkbuf, sizeof linkbuf))
+  if (issymlink (file) > 0)
     {
       int open_flags = O_NONBLOCK | O_NOCTTY | O_CLOEXEC;
       int fd = open (file, O_RDONLY | open_flags);
