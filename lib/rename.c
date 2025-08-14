@@ -389,10 +389,10 @@ rpl_rename (char const *src, char const *dst)
           goto out;
         }
       strip_trailing_slashes (src_temp);
-      char linkbuf[1];
-      if (0 <= readlink (src_temp, linkbuf, 1))
+      int ret = issymlink (src_temp);
+      if (ret > 0)
         goto out;
-      if (errno != EINVAL)
+      if (ret < 0)
         {
           rename_errno = errno;
           goto out;
@@ -407,10 +407,10 @@ rpl_rename (char const *src, char const *dst)
           goto out;
         }
       strip_trailing_slashes (dst_temp);
-      char linkbuf[1];
-      if (0 <= readlink (dst_temp, linkbuf, 1))
+      int ret = issymlink (dst_temp);
+      if (ret > 0)
         goto out;
-      if (errno != EINVAL && errno != ENOENT)
+      if (ret < 0 && errno != ENOENT)
         {
           rename_errno = errno;
           goto out;
