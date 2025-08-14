@@ -1,5 +1,5 @@
 # sys_stat_h.m4
-# serial 42   -*- Autoconf -*-
+# serial 43   -*- Autoconf -*-
 dnl Copyright (C) 2006-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,6 +80,8 @@ AC_DEFUN([gl_SYS_STAT_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FSTATAT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FUTIMENS])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETUMASK])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISSYMLINK])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISSYMLINKAT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LCHMOD])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LSTAT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MKDIR])

@@ -1,0 +1,25 @@
+Description:
+Test whether a file is a symbolic link.
+
+Files:
+lib/issymlink.c
+
+Depends-on:
+sys_stat-h
+fcntl-h
+readlink
+
+configure.ac:
+gl_SYS_STAT_MODULE_INDICATOR([issymlink])
+
+Makefile.am:
+lib_SOURCES += issymlink.c
+
+Include:
+<sys/stat.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

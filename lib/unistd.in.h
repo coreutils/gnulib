@@ -104,15 +104,12 @@
 # include <direct.h>
 #endif
 
-/* FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Solaris 11.4, and glibc 2.41
-   do not define O_CLOEXEC in <unistd.h>.  */
 /* Cygwin 1.7.1 and Android 4.3 declare unlinkat in <fcntl.h>, not in
    <unistd.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
-#if ! defined O_CLOEXEC \
-    || ((@GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK) \
-         && (defined __CYGWIN__ || defined __ANDROID__) \
-         && ! defined __GLIBC__)
+#if ((@GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK) \
+      && (defined __CYGWIN__ || defined __ANDROID__) \
+      && ! defined __GLIBC__)
 # include <fcntl.h>
 #endif
 
@@ -2492,6 +2489,12 @@ _GL_CXXALIASWARN (write);
 #endif
 
 _GL_INLINE_HEADER_END
+
+/* FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Solaris 11.4, and glibc 2.41
+   do not define O_CLOEXEC in <unistd.h>.  */
+#if ! defined O_CLOEXEC
+# include <fcntl.h>
+#endif
 
 #endif /* _@GUARD_PREFIX@_UNISTD_H */
 #endif /* _GL_INCLUDING_UNISTD_H */
