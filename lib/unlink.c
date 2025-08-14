@@ -72,9 +72,7 @@ rpl_unlink (char const *name)
           memcpy (short_name, name, len);
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
-          char linkbuf[1];
-          if (len && ! (readlink (short_name, linkbuf, 1) < 0
-                        && errno == EINVAL))
+          if (len && issymlink (short_name) != 0)
             {
               free (short_name);
               errno = EPERM;
