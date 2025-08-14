@@ -14,8 +14,8 @@ fcntl-h
 fstat
 lstat
 gettime
+issymlink
 msvc-nothrow
-readlink
 stat
 stat-time
 bool

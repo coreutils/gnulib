@@ -675,10 +675,10 @@ lutimens (char const *file, struct timespec const timespec[2])
     not_symlink = !S_ISLNK (st.st_mode);
   else
     {
-      char linkbuf[1];
-      not_symlink = readlink (file, linkbuf, 1) < 0;
-      if (not_symlink && errno != EINVAL)
+      int ret = issymlink (file);
+      if (ret < 0)
         return -1;
+      not_symlink = !ret;
     }
   if (not_symlink)
     return fdutimens (-1, file, ts);
