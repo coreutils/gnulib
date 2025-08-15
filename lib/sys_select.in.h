@@ -101,14 +101,6 @@
 #  include <sys/time.h>
 # endif
 
-/* On AIX 7 and Solaris 10, <sys/select.h> provides an FD_ZERO implementation
-   that relies on memset(), but without including <string.h>.
-   But in any case avoid namespace pollution on glibc systems.  */
-# if (defined __OpenBSD__ || defined _AIX || defined __sun || defined __osf__ || defined __BEOS__) \
-     && ! defined __GLIBC__
-#  include <string.h>
-# endif
-
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
 
@@ -352,5 +344,20 @@ _GL_WARN_ON_USE (select, "select is not always POSIX compliant - "
 
 
 #endif /* _@GUARD_PREFIX@_SYS_SELECT_H */
+
+
+/* Includes that provide only macros that don't need to be overridden.
+   (Includes that are needed for type definitions and function declarations
+   have their place above, before the function overrides.)  */
+
+/* On AIX 7 and Solaris 10, <sys/select.h> provides an FD_ZERO implementation
+   that relies on memset(), but without including <string.h>.
+   But in any case avoid namespace pollution on glibc systems.  */
+# if (defined __OpenBSD__ || defined _AIX || defined __sun || defined __osf__ || defined __BEOS__) \
+     && ! defined __GLIBC__
+#  include <string.h>
+# endif
+
+
 #endif /* _@GUARD_PREFIX@_SYS_SELECT_H */
 #endif /* OSF/1 */

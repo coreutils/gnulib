@@ -2490,11 +2490,17 @@ _GL_CXXALIASWARN (write);
 
 _GL_INLINE_HEADER_END
 
+
+/* Includes that provide only macros that don't need to be overridden.
+   (Includes that are needed for type definitions and function declarations
+   have their place above, before the function overrides.)  */
+
 /* FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Solaris 11.4, and glibc 2.41
    do not define O_CLOEXEC in <unistd.h>.  */
 #if ! defined O_CLOEXEC
 # include <fcntl.h>
 #endif
+
 
 #endif /* _@GUARD_PREFIX@_UNISTD_H */
 #endif /* _GL_INCLUDING_UNISTD_H */
