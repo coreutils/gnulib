@@ -28,6 +28,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "issymlink.h"
+
 #if !HAVE_CHOWN
 
 /* Simple stub that always fails with ENOSYS, for mingw.  */

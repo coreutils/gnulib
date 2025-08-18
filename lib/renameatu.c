@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "renameatu.h"
 
 #include <errno.h>
@@ -28,6 +29,8 @@
 #ifdef __linux__
 # include <sys/syscall.h>
 #endif
+
+#include "issymlink.h"
 
 static int
 errno_fail (int e)

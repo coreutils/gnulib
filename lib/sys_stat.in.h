@@ -56,7 +56,7 @@
 #define _@GUARD_PREFIX@_SYS_STAT_H
 
 /* This file uses _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NOTHROW,
-   _GL_INLINE, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -89,16 +89,6 @@
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
-
-
-_GL_INLINE_HEADER_BEGIN
-
-#ifndef _GL_ISSYMLINK_INLINE
-# define _GL_ISSYMLINK_INLINE _GL_INLINE
-#endif
-#ifndef _GL_ISSYMLINKAT_INLINE
-# define _GL_ISSYMLINKAT_INLINE _GL_INLINE
-#endif
 
 
 /* Before doing "#define mknod rpl_mknod" below, we need to include all
@@ -440,13 +430,6 @@ struct stat
 #endif
 
 
-#if @GNULIB_ISSYMLINK@ || @GNULIB_ISSYMLINKAT@
-/* For the inline definitions of issymlink, issymlinkat below.  */
-# include <errno.h>
-# include <unistd.h> /* for readlink, readlinkat */
-#endif
-
-
 #if @GNULIB_CHMOD@
 # if @REPLACE_CHMOD@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -639,71 +622,6 @@ _GL_CXXALIASWARN (getumask);
 # if HAVE_RAW_DECL_GETUMASK
 _GL_WARN_ON_USE (getumask, "getumask is not portable - "
                  "use gnulib module getumask for portability");
-# endif
-#endif
-
-
-#if @GNULIB_ISSYMLINK@
-/* Tests whether FILENAME represents a symbolic link.
-   This function is more reliable than lstat() / fstatat() followed by S_ISLNK,
-   because it avoids possible EOVERFLOW errors.
-   Returns
-     1                      if FILENAME is a symbolic link,
-     0                      if FILENAME exists and is not a symbolic link,
-    -1 with errno set       if determination failed, in particular
-    -1 with errno = ENOENT or ENOTDIR  if FILENAME does not exist.  */
-# ifdef __cplusplus
-extern "C" {
-# endif
-_GL_ISSYMLINK_INLINE int issymlink (const char *filename)
-     _GL_ARG_NONNULL ((1));
-_GL_ISSYMLINK_INLINE int
-issymlink (const char *filename)
-{
-  char linkbuf[1];
-  if (readlink (filename, linkbuf, sizeof (linkbuf)) >= 0)
-    return 1;
-  if (errno == EINVAL)
-    return 0;
-  else
-    return -1;
-}
-# ifdef __cplusplus
-}
-# endif
-#endif
-
-
-#if @GNULIB_ISSYMLINKAT@
-/* Tests whether FILENAME represents a symbolic link.
-   This function is more reliable than lstat() / fstatat() followed by S_ISLNK,
-   because it avoids possible EOVERFLOW errors.
-   If FILENAME is a relative file name, it is interpreted as relative to the
-   directory referred to by FD (where FD = AT_FDCWD denotes the current
-   directory).
-   Returns
-     1                      if FILENAME is a symbolic link,
-     0                      if FILENAME exists and is not a symbolic link,
-    -1 with errno set       if determination failed, in particular
-    -1 with errno = ENOENT or ENOTDIR  if FILENAME does not exist.  */
-# ifdef __cplusplus
-extern "C" {
-# endif
-_GL_ISSYMLINKAT_INLINE int issymlinkat (int fd, const char *filename)
-     _GL_ARG_NONNULL ((2));
-_GL_ISSYMLINKAT_INLINE int
-issymlinkat (int fd, const char *filename)
-{
-  char linkbuf[1];
-  if (readlinkat (fd, filename, linkbuf, sizeof (linkbuf)) >= 0)
-    return 1;
-  if (errno == EINVAL)
-    return 0;
-  else
-    return -1;
-}
-# ifdef __cplusplus
-}
 # endif
 #endif
 
@@ -1088,8 +1006,6 @@ _GL_WARN_ON_USE (utimensat, "utimensat is not portable - "
 # endif
 #endif
 
-
-_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_SYS_STAT_H */
 #endif /* _@GUARD_PREFIX@_SYS_STAT_H */

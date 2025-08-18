@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
 
 #include <errno.h>
@@ -29,6 +30,7 @@
 #include <stdlib.h>
 
 #include "filename.h"
+#include "issymlink.h"
 #include "openat.h"
 
 #if HAVE_UNLINKAT

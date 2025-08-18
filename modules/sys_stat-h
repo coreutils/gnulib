@@ -13,7 +13,6 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
-extern-inline
 sys_types-h
 time-h
 
@@ -43,8 +42,6 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's/@''GNULIB_FSTATAT''@/$(GNULIB_FSTATAT)/g' \
 	      -e 's/@''GNULIB_FUTIMENS''@/$(GNULIB_FUTIMENS)/g' \
 	      -e 's/@''GNULIB_GETUMASK''@/$(GNULIB_GETUMASK)/g' \
-	      -e 's/@''GNULIB_ISSYMLINK''@/$(GNULIB_ISSYMLINK)/g' \
-	      -e 's/@''GNULIB_ISSYMLINKAT''@/$(GNULIB_ISSYMLINKAT)/g' \
 	      -e 's/@''GNULIB_LCHMOD''@/$(GNULIB_LCHMOD)/g' \
 	      -e 's/@''GNULIB_LSTAT''@/$(GNULIB_LSTAT)/g' \
 	      -e 's/@''GNULIB_MKDIR''@/$(GNULIB_MKDIR)/g' \

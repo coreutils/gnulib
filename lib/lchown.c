@@ -20,11 +20,14 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
 
 #include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include "issymlink.h"
 
 #if !HAVE_LCHOWN
 

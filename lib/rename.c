@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdio.h>
 
 #undef rename
@@ -273,6 +274,7 @@ rpl_rename (char const *src, char const *dst)
 # include <unistd.h>
 
 # include "dirname.h"
+# include "issymlink.h"
 # include "same-inode.h"
 
 /* Rename the file SRC to DST, fixing any trailing slash bugs.  */

@@ -21,6 +21,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #define _GL_UTIMENS_INLINE _GL_EXTERN_INLINE
 #include "utimens.h"
 
@@ -32,6 +33,7 @@
 #include <unistd.h>
 #include <utime.h>
 
+#include "issymlink.h"
 #include "stat-time.h"
 #include "timespec.h"
 

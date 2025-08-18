@@ -17,6 +17,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
 
 #include <errno.h>
@@ -25,6 +26,7 @@
 #include <sys/stat.h>
 
 #include "filename.h"
+#include "issymlink.h"
 
 #undef unlink
 #if defined _WIN32 && !defined __CYGWIN__
