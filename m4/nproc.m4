@@ -17,7 +17,7 @@ AC_DEFUN([gl_PREREQ_NPROC],
   dnl Persuade glibc <sched.h> to declare CPU_SETSIZE, CPU_ISSET etc.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_HEADERS([sys/pstat.h sys/sysmp.h sys/param.h],,,
+  AC_CHECK_HEADERS([mntent.h sys/pstat.h sys/sysmp.h sys/param.h],,,
     [AC_INCLUDES_DEFAULT])
   dnl <sys/sysctl.h> requires <sys/param.h> on OpenBSD 4.0.
   AC_CHECK_HEADERS([sys/sysctl.h],,,
