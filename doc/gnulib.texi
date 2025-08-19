@@ -6127,6 +6127,7 @@ This list of functions is sorted according to the header that declares them.
 * pthread_getattr_default_np::
 * pthread_getattr_np::
 * pthread_getname_np::
+* pthread_gettid_np::
 * pthread_kill_other_threads_np::
 * pthread_rwlockattr_getkind_np::
 * pthread_rwlockattr_setkind_np::
@@ -6147,6 +6148,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_getattr_default_np.texi
 @include glibc-functions/pthread_getattr_np.texi
 @include glibc-functions/pthread_getname_np.texi
+@include glibc-functions/pthread_gettid_np.texi
 @include glibc-functions/pthread_kill_other_threads_np.texi
 @include glibc-functions/pthread_rwlockattr_getkind_np.texi
 @include glibc-functions/pthread_rwlockattr_setkind_np.texi

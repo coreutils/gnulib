@@ -110,5 +110,5 @@ Portability problems not fixed by Gnulib:
 When not growing an already-allocated region, i.e.,
 when @code{p} points to a region of size @code{psize} and @code{n <= psize},
 @code{realloc (p, n)} can fail and return a null pointer:
-glibc 2.41 and probably other platforms.
+glibc 2.42 and probably other platforms.
 @end itemize

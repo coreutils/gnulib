@@ -86,9 +86,9 @@ mingw, MSVC 14.
 @item
 This header file does not define the constant @code{SOCK_CLOFORK}
 on some platforms:
-glibc 2.41, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.3, Cygwin, mingw, MSVC, Android.
+glibc 2.42, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.3, Cygwin, mingw, MSVC, Android.
 @item
 This header file does not define the constant @code{MSG_CMSG_CLOFORK}
 on some platforms:
-glibc 2.41, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.4, Cygwin, mingw, MSVC, Android.
+glibc 2.42, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.4, Cygwin, mingw, MSVC, Android.
 @end itemize

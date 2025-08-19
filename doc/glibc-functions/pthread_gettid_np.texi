@@ -1,0 +1,30 @@
+@node pthread_gettid_np
+@subsection @code{pthread_gettid_np}
+@findex pthread_gettid_np
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Process Identification,,Process Identification,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Process-Identification.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_gettid_np.3.html,,man pthread_gettid_np}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function exists only on Linux and is therefore
+missing on most non-glibc platforms:
+glibc 2.41, macOS 15, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.7, Minix, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin, mingw, MSVC 14.
+@end itemize

@@ -39,7 +39,7 @@ non-zero value; otherwise, the gnulib replacement is 0.
 
 @item
 @samp{O_EXEC} is not defined on some platforms:
-glibc 2.41, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.5, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.42, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.5, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
 However, glibc does define @samp{O_EXEC} on GNU/Hurd.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
@@ -53,7 +53,7 @@ descriptor.
 
 @item
 @samp{O_SEARCH} is not defined on some platforms:
-glibc 2.41, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.42, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
 
@@ -136,7 +136,7 @@ glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.
 Although POSIX.1-2024 standardized @code{O_CLOFORK},
 @code{FD_CLOFORK} and @code{F_DUPFD_CLOFORK},
 they are not defined on most platforms:
-glibc 2.41, musl libc, macOS 15.5, FreeBSD 14.2, NetBSD 10.1, OpenBSD 7.7, Minix 3.3.0, AIX 7.3, Solaris 11.3, Cygwin 3.6.2, mingw, MSVC 14.
+glibc 2.42, musl libc, macOS 15.5, FreeBSD 14.2, NetBSD 10.1, OpenBSD 7.7, Minix 3.3.0, AIX 7.3, Solaris 11.3, Cygwin 3.6.2, mingw, MSVC 14.
 
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},

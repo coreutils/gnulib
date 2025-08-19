@@ -23,7 +23,7 @@ Minix 3.3.0, AIX 7.3, HP-UX 11, Solaris 11.4.
 On some systems that support GNU extensions, @code{RE_SYNTAX_EMACS} is 0
 even though it should be @code{(RE_CHAR_CLASSES | RE_INTERVALS)}
 to be compatible with Emacs 21 (2001) and later:
-glibc 2.41, Cygwin 2.6.x.
+glibc 2.42, Cygwin 2.6.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

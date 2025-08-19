@@ -20,7 +20,7 @@ called on an rwlock that is already taken by one or more readers, and
 another writer is already waiting to take it, this function may return
 successfully immediately) -- a behaviour that may lead to writer starvation --
 on some platforms:
-glibc 2.41.
+glibc 2.42.
 @end itemize
 
 Portability problems not fixed by Gnulib:

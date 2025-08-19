@@ -29,7 +29,7 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX
 @item
 If the alignment and size are absurdly large, this function crashes:
 @c https://sourceware.org/PR32301
-glibc 2.41.
+glibc 2.42.
 @end itemize
 
 @mindex aligned-malloc

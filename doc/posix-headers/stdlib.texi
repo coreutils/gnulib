@@ -37,7 +37,7 @@ MirBSD 10.
 The macro @code{WCOREDUMP} is not defined in this header file (only in
 @code{<sys/wait.h>}) on some platforms:
 @c https://sourceware.org/PR32551
-glibc 2.41.
+glibc 2.42.
 @end itemize
 
 Portability problems not fixed by Gnulib:

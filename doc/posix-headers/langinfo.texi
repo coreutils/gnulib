@@ -21,7 +21,7 @@ glibc 2.26, musl libc, macOS 11.1, NetBSD 8.0, OpenBSD 7.5, AIX 7.2, HP-UX 11.31
 @item
 The constants @code{ABALTMON_1} to @code{ABALTMON_12} are not defined on many
 platforms:
-glibc 2.41, musl libc, macOS 14, NetBSD 10.0, OpenBSD 7.6, AIX 7.3, HP-UX 11.31, Solaris 11.4, Haiku, Cygwin 3.5.
+glibc 2.42, musl libc, macOS 14, NetBSD 10.0, OpenBSD 7.6, AIX 7.3, HP-UX 11.31, Solaris 11.4, Haiku, Cygwin 3.5.
 @item
 The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
 @code{ERA_T_FMT}, @code{ALT_DIGITS} are not defined on some platforms:
