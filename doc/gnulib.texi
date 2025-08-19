@@ -5160,6 +5160,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc grp.h::
 * Glibc gshadow.h::
 * Glibc ifaddrs.h::
+* Glibc inttypes.h::
 * Glibc link.h::
 * Glibc malloc.h::
 * Glibc math.h::
@@ -5737,8 +5738,15 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getifaddrs.texi
 @include glibc-functions/freeifaddrs.texi
 
-@c @node Glibc inttypes.h
-@c @section Glibc Extensions to @code{<inttypes.h>}
+@node Glibc inttypes.h
+@section Glibc Extensions to @code{<inttypes.h>}
+
+@menu
+* uimaxabs::
+@end menu
+
+@include glibc-functions/uimaxabs.texi
+
 
 @c @node Glibc iso646.h
 @c @section Glibc Extensions to @code{<iso646.h>}
@@ -7118,6 +7126,9 @@ This list of functions is sorted according to the header that declares them.
 * strtoul_l::
 * strtoull_l::
 * strtouq::
+* uabs::
+* ulabs::
+* ullabs::
 * valloc::
 @end menu
 
@@ -7162,6 +7173,9 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/strtoul_l.texi
 @include glibc-functions/strtoull_l.texi
 @include glibc-functions/strtouq.texi
+@include glibc-functions/uabs.texi
+@include glibc-functions/ulabs.texi
+@include glibc-functions/ullabs.texi
 @include glibc-functions/valloc.texi
 
 @node Glibc string.h
