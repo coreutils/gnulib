@@ -35,7 +35,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function crashes if the state buffer is unaligned on some platforms:
 @c https://sourceware.org/PR30584
-glibc 2.36/sparc.
+glibc 2.40/sparc.
 @item
 This function has a slightly different (but compatible) declaration on some
 platforms:

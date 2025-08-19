@@ -22,7 +22,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function crashes if the state buffer is unaligned on some platforms:
 @c https://sourceware.org/PR30584
-glibc 2.36/sparc.
+glibc 2.40/sparc.
 @item
 The first parameter is @code{unsigned long} instead of @code{unsigned int} on
 some platforms:

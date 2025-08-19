@@ -6864,16 +6864,20 @@ This list of functions is sorted according to the header that declares them.
 * clone::
 * getcpu::
 * sched_getaffinity::
+* sched_getattr::
 * sched_getcpu::
 * sched_setaffinity::
+* sched_setattr::
 * setns::
 @end menu
 
 @include glibc-functions/clone.texi
 @include glibc-functions/getcpu.texi
 @include glibc-functions/sched_getaffinity.texi
+@include glibc-functions/sched_getattr.texi
 @include glibc-functions/sched_getcpu.texi
 @include glibc-functions/sched_setaffinity.texi
+@include glibc-functions/sched_setattr.texi
 @include glibc-functions/setns.texi
 
 @node Glibc search.h
