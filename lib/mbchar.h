@@ -262,9 +262,14 @@ mb_width_aux (char32_t wc)
 
 #if defined GNULIB_MBFILE
 /* Assignment.  */
-# define mb_setascii(mbc, sc) \
-   ((mbc)->ptr = (mbc)->buf, (mbc)->bytes = 1, (mbc)->wc_valid = 1, \
-    (mbc)->wc = (mbc)->buf[0] = (sc))
+MBCHAR_INLINE void
+mb_setascii (mbchar_t *mbc, char sc)
+{
+  mbc->ptr = mbc->buf;
+  mbc->bytes = 1;
+  mbc->wc_valid = true;
+  mbc->wc = mbc->buf[0] = sc;
+}
 #endif
 
 /* Copying a character.  */
