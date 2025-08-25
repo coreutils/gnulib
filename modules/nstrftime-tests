@@ -7,10 +7,15 @@ tests/test-nstrftime-DE.c
 tests/test-nstrftime-TH.c
 tests/test-nstrftime-IR.c
 tests/test-nstrftime-ET.c
+tests/test-nstrftime-w32utf8.sh
+tests/test-nstrftime-w32utf8.c
+tests/windows-utf8.rc
+tests/windows-utf8.manifest
 tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 m4/musl.m4
+m4/windows-rc.m4
 
 Depends-on:
 atoll
@@ -25,6 +30,7 @@ configure.ac:
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gl_MUSL_LIBC
+gl_WINDOWS_RC
 
 Makefile.am:
 TESTS += \
@@ -48,3 +54,12 @@ test_nstrftime_DE_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHRE
 test_nstrftime_TH_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
 test_nstrftime_IR_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
 test_nstrftime_ET_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
+
+if OS_IS_NATIVE_WINDOWS
+TESTS += test-nstrftime-w32utf8.sh
+noinst_PROGRAMS += test-nstrftime-w32utf8
+test_nstrftime_w32utf8_LDADD = $(LDADD) test-nstrftime-windows-utf8.res $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
+test-nstrftime-windows-utf8.res : $(srcdir)/windows-utf8.rc
+	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-nstrftime-windows-utf8.res --output-format=coff
+MOSTLYCLEANFILES += test-nstrftime-windows-utf8.res
+endif
