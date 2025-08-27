@@ -4515,6 +4515,11 @@ mpz_import (mpz_t r, size_t count, int order, size_t size, int endian,
   assert (order == 1 || order == -1);
   assert (endian >= -1 && endian <= 1);
 
+  if (count == 0)
+    {
+      r->_mp_size = 0;
+      return;
+    }
   if (endian == 0)
     endian = gmp_detect_endian ();
 
