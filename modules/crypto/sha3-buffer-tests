@@ -1,0 +1,30 @@
+Files:
+tests/test-sha3-224-buffer.c
+tests/test-sha3-256-buffer.c
+tests/test-sha3-384-buffer.c
+tests/test-sha3-512-buffer.c
+tests/bench-sha3-224.c
+tests/bench-sha3-256.c
+tests/bench-sha3-384.c
+tests/bench-sha3-512.c
+tests/bench-digest.h
+tests/bench.h
+
+Depends-on:
+c99
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sha3-224-buffer test-sha3-256-buffer
+TESTS += test-sha3-384-buffer test-sha3-512-buffer
+check_PROGRAMS += test-sha3-224-buffer test-sha3-256-buffer
+check_PROGRAMS += test-sha3-384-buffer test-sha3-512-buffer
+noinst_PROGRAMS += bench-sha3-224 bench-sha3-256
+noinst_PROGRAMS += bench-sha3-384 bench-sha3-512
+bench_sha3_224_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
+bench_sha3_256_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
+bench_sha3_384_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
+bench_sha3_512_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
