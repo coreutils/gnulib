@@ -17,6 +17,9 @@
 
 /* Written by Paul Eggert.  */
 
+#ifndef U64_H
+#define U64_H 1
+
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
@@ -209,3 +212,5 @@ u64rol (u64 x, int n)
 #endif
 
 _GL_INLINE_HEADER_END
+
+#endif
