@@ -46,7 +46,9 @@ typedef uint64_t u64;
 # define u64hilo(hi, lo) ((u64) (((u64) (hi) << 32) + (lo)))
 # define u64init(hi, lo) u64hilo (hi, lo)
 # define u64lo(x) ((u64) (x))
+# define u64getlo(x) ((uint32_t) ((x) & UINT32_MAX))
 # define u64size(x) u64lo (x)
+# define u64not(x) (~(x))
 # define u64lt(x, y) ((x) < (y))
 # define u64and(x, y) ((x) & (y))
 # define u64or(x, y) ((x) | (y))
@@ -95,6 +97,13 @@ u64lo (unsigned int lo)
   return r;
 }
 
+/* Return the low 32 bits of the u64 value X.  */
+_GL_U64_INLINE unsigned int
+u64getlo (u64 x)
+{
+  return x.lo & _GL_U64_MASK32;
+}
+
 /* Return a u64 value representing SIZE, where 0 <= SIZE < 2**64.  */
 _GL_U64_INLINE u64
 u64size (size_t size)
@@ -102,6 +111,16 @@ u64size (size_t size)
   u64 r;
   r.hi = size >> 31 >> 1;
   r.lo = size & _GL_U64_MASK32;
+  return r;
+}
+
+/* Return the bitwise NOT of X.  */
+_GL_U64_INLINE u64
+u64not (u64 x)
+{
+  u64 r;
+  r.hi = ~x.hi;
+  r.lo = ~x.lo;
   return r;
 }
 

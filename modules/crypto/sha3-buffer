@@ -1,0 +1,28 @@
+Description:
+Compute SHA-3 checksums.
+
+Files:
+lib/sha3.h
+lib/sha3.c
+
+Depends-on:
+byteswap
+c99
+stdint-h
+u64
+
+configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
+AC_REQUIRE([gl_BIGENDIAN])
+
+Makefile.am:
+lib_SOURCES += sha3.c
+
+Include:
+"sha3.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
