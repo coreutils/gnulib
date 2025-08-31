@@ -1,0 +1,23 @@
+Description:
+Compute SHA-3 checksums.
+
+Files:
+lib/sha3-stream.c
+
+Depends-on:
+crypto/af_alg
+crypto/sha3-buffer
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += sha3-stream.c
+
+Include:
+"sha3.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

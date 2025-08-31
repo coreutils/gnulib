@@ -94,6 +94,16 @@ extern void *sha3_384_buffer (const char *buffer, size_t len,
 extern void *sha3_512_buffer (const char *buffer, size_t len,
                               void *restrict resblock);
 
+/* Compute SHA-3 message digest for bytes read from STREAM.  STREAM is an open
+   file stream.  Regular files are handled more efficiently.  The contents of
+   STREAM from its current position to its end will be read.  The case that the
+   last operation on STREAM was an 'ungetc' is not supported.  The resulting
+   message digest number will be written into RESBLOCK.  */
+extern int sha3_224_stream (FILE *stream, void *resblock);
+extern int sha3_256_stream (FILE *stream, void *resblock);
+extern int sha3_384_stream (FILE *stream, void *resblock);
+extern int sha3_512_stream (FILE *stream, void *resblock);
+
 # ifdef __cplusplus
 }
 # endif
