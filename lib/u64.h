@@ -1,4 +1,4 @@
-/* uint64_t-like operations that work even on hosts lacking uint64_t
+/* Unsigned integers with arithmetic modulo 2**64
 
    Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 
@@ -22,6 +22,7 @@
  #error "Please include config.h first."
 #endif
 
+#include <limits.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -37,7 +38,7 @@ extern "C" {
 #endif
 
 
-#ifdef UINT64_MAX
+#if defined UINT64_MAX && INT_MAX < UINT64_MAX
 
 /* Native implementations are trivial.  See below for comments on what
    these operations do.  */

@@ -1,5 +1,5 @@
 Description:
-uint64_t-like operations that work even on hosts lacking uint64_t
+Unsigned integers with arithmetic modulo 2**64
 
 Files:
 lib/u64.h
