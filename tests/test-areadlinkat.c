@@ -73,7 +73,7 @@ main (void)
       ASSERT (strcmp (buf, "nowhere") == 0);
       free (buf);
       errno = 0;
-      ASSERT (areadlinkat (-1, BASE "link") == NULL);
+      ASSERT (areadlinkat (AT_FDCWD == -1 ? -2 : -1, BASE "link") == NULL);
       ASSERT (errno == EBADF);
       errno = 0;
       ASSERT (areadlinkat (AT_FDCWD, BASE "link") == NULL);

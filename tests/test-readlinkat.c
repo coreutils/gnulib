@@ -61,7 +61,8 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (readlinkat (-1, "foo", buf, sizeof buf) == -1);
+    ASSERT (readlinkat (AT_FDCWD == -1 ? -2 : -1, "foo", buf, sizeof buf)
+            == -1);
     ASSERT (errno == EBADF);
   }
   {

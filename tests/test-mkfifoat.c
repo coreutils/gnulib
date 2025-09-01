@@ -91,7 +91,7 @@ main (void)
       /* Test behaviour for invalid file descriptors.  */
       {
         errno = 0;
-        ASSERT (func (-1, "foo", 0600) == -1);
+        ASSERT (func (AT_FDCWD == -1 ? -2 : -1, "foo", 0600) == -1);
         ASSERT (errno == EBADF
                 || errno == ENOSYS /* seen on mingw */
                );

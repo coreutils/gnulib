@@ -78,7 +78,8 @@ main (_GL_UNUSED int argc, char *argv[])
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (fchownat (-1, "foo", getuid (), getgid (), 0) == -1);
+    ASSERT (fchownat (AT_FDCWD == -1 ? -2 : -1, "foo", getuid (), getgid (), 0)
+            == -1);
     ASSERT (errno == EBADF);
   }
   {

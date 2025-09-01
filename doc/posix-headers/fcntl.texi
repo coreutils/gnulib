@@ -149,4 +149,12 @@ mingw, MSVC 14.
 @samp{POSIX_FADV_NORMAL}, @samp{POSIX_FADV_RANDOM},
 @samp{POSIX_FADV_SEQUENTIAL}, and @samp{POSIX_FADV_WILLNEED} are not
 defined on some platforms.
+
+@item
+POSIX allows @samp{AT_FDCWD} to be @minus{}1, so it is unsafe to use
+@samp{AT_FDCWD} as an invalid directory file descriptor argument to
+functions like @samp{openat}.
+Instead, you can use @samp{AT_FDCWD == -1 ? -2 : -1}.
+@samp{AT_FDCWD} is @minus{}1 on some platforms:
+Haiku R1/Beta4.
 @end itemize
