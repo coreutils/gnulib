@@ -149,4 +149,11 @@ mingw, MSVC 14.
 @samp{POSIX_FADV_NORMAL}, @samp{POSIX_FADV_RANDOM},
 @samp{POSIX_FADV_SEQUENTIAL}, and @samp{POSIX_FADV_WILLNEED} are not
 defined on some platforms.
+
+@item
+POSIX allows @samp{AT_FDCWD} to be @minus{}1.
+Even though @samp{AT_FDCWD} is less than @minus{}1 on all
+known practical platforms,
+it is better to not assume that @minus{}1 is an invalid argument
+to functions like @samp{openat}.
 @end itemize
