@@ -44,7 +44,8 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 On some platforms the types @code{blksize_t} and @code{blkcnt_t} are unsigned:
-Android, glibc/HPPA.
+@c https://sourceware.org/PR33355
+Android, glibc/alpha.
 @item
 On some platforms the types @code{blksize_t} and @code{suseconds_t}
 are signed integer types that are wider than @code{long}:
