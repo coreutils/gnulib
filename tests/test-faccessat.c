@@ -34,7 +34,7 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (faccessat (-1, "foo", F_OK, 0) == -1);
+    ASSERT (faccessat (AT_FDCWD == -1 ? -2 : -1, "foo", F_OK, 0) == -1);
     ASSERT (errno == EBADF);
   }
   {

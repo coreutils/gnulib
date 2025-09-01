@@ -151,9 +151,10 @@ mingw, MSVC 14.
 defined on some platforms.
 
 @item
-POSIX allows @samp{AT_FDCWD} to be @minus{}1.
-Even though @samp{AT_FDCWD} is less than @minus{}1 on all
-known practical platforms,
-it is better to not assume that @minus{}1 is an invalid argument
-to functions like @samp{openat}.
+POSIX allows @samp{AT_FDCWD} to be @minus{}1, so it is unsafe to use
+@samp{AT_FDCWD} as an invalid directory file descriptor argument to
+functions like @samp{openat}.
+Instead, you can use @samp{AT_FDCWD == -1 ? -2 : -1}.
+@samp{AT_FDCWD} is @minus{}1 on some platforms:
+Haiku R1/Beta4.
 @end itemize

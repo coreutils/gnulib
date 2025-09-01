@@ -56,7 +56,7 @@ main (_GL_UNUSED int argc, char *argv[])
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (mkdirat (-1, "foo", 0700) == -1);
+    ASSERT (mkdirat (AT_FDCWD == -1 ? -2 : -1, "foo", 0700) == -1);
     ASSERT (errno == EBADF);
   }
   {

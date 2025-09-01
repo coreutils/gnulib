@@ -67,7 +67,7 @@ main ()
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (unlinkat (-1, "foo", 0) == -1);
+    ASSERT (unlinkat (AT_FDCWD == -1 ? -2 : -1, "foo", 0) == -1);
     ASSERT (errno == EBADF);
   }
   {

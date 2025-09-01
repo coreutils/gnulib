@@ -71,7 +71,7 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (utimensat (-1, "foo", NULL, 0) == -1);
+    ASSERT (utimensat (AT_FDCWD == -1 ? -2 : -1, "foo", NULL, 0) == -1);
     ASSERT (errno == EBADF);
   }
   {
