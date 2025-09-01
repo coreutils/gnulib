@@ -84,7 +84,7 @@ main (void)
           ASSERT (openat (dfd, "", O_RDONLY) == -1);
           ASSERT (errno == ENOENT);
           errno = 0;
-          ASSERT (openat (-1, ".", O_RDONLY) == -1);
+          ASSERT (openat (AT_FDCWD == -1 ? -2 : -1, ".", O_RDONLY) == -1);
           ASSERT (errno == EBADF);
 
           /* Check for trailing slash and /dev/null handling.  */
@@ -98,7 +98,7 @@ main (void)
           ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 #if defined __linux__ || defined __ANDROID__
           /* Using a bad directory is okay for absolute paths.  */
-          fd = openat (-1, "/dev/null", O_WRONLY);
+          fd = openat (AT_FDCWD == -1 ? -2 : -1, "/dev/null", O_WRONLY);
           ASSERT (STDERR_FILENO < fd);
 #endif
           /* Using a non-directory is wrong for relative paths.  */

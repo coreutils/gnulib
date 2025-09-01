@@ -64,7 +64,7 @@ main ()
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (openat (-1, "foo", O_RDONLY) == -1);
+    ASSERT (openat (AT_FDCWD == -1 ? -2 : -1, "foo", O_RDONLY) == -1);
     ASSERT (errno == EBADF);
   }
   {

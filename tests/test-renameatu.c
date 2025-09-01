@@ -66,7 +66,8 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (renameatu (-1, "foo", AT_FDCWD, "bar", 0) == -1);
+    ASSERT (renameatu (AT_FDCWD == -1 ? -2 : -1, "foo", AT_FDCWD, "bar", 0)
+            == -1);
     ASSERT (errno == EBADF);
   }
   {
@@ -78,7 +79,8 @@ main (void)
   ASSERT (close (creat (BASE "oo", 0600)) == 0);
   {
     errno = 0;
-    ASSERT (renameatu (AT_FDCWD, BASE "oo", -1, "bar", 0) == -1);
+    ASSERT (renameatu (AT_FDCWD, BASE "oo", AT_FDCWD == -1 ? -2 : -1, "bar", 0)
+            == -1);
     ASSERT (errno == EBADF);
   }
   {

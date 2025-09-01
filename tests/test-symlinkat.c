@@ -60,7 +60,7 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (symlinkat ("foo", -1, "bar") == -1);
+    ASSERT (symlinkat ("foo", AT_FDCWD == -1 ? -2 : -1, "bar") == -1);
     ASSERT (errno == EBADF
             || errno == ENOSYS /* seen on mingw */
            );
