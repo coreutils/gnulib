@@ -19,4 +19,4 @@ noinst_PROGRAMS += bench-mbswidth
 # global CPPFLAGS. For complete removal of assert() invocations, pass
 # CPPFLAGS="-DNDEBUG" when configuring the package.
 bench_mbswidth_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
-bench_mbswidth_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
+bench_mbswidth_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV) $(LIBICONV)
