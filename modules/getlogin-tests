@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getlogin
 check_PROGRAMS += test-getlogin
-test_getlogin_LDADD = $(LDADD) $(GETLOGIN_LIB)
+test_getlogin_LDADD = $(LDADD) $(GETLOGIN_LIB) $(LIBINTL)
