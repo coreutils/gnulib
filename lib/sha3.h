@@ -28,6 +28,12 @@
 extern "C" {
 # endif
 
+/* OpenSSL does not have the Init, Update, Final API for SHA-3.  We must use
+   the EVP API.  */
+# if HAVE_OPENSSL_SHA3
+#  include <openssl/evp.h>
+# endif
+
 /* Digest sizes in bytes.  */
 enum { SHA3_224_DIGEST_SIZE = 224 / 8 };
 enum { SHA3_256_DIGEST_SIZE = 256 / 8 };
@@ -43,11 +49,17 @@ enum { SHA3_512_BLOCK_SIZE = 576 / 8 };
 /* Structure to save state of computation between the single steps.  */
 struct sha3_ctx
 {
+# if HAVE_OPENSSL_SHA3
+  /* This is an incomplete type, so we can only place a pointer in the
+     struct.  */
+  EVP_MD_CTX *evp_ctx;
+# else
   u64 state[25];
   uint8_t buffer[144]; /* Up to BLOCKLEN in use.  */
   size_t buflen;       /* ≥ 0, ≤ BLOCKLEN  */
   size_t digestlen;    /* One of SHA3_{224,256,384,512}_DIGEST_SIZE.  */
   size_t blocklen;     /* One of SHA3_{224,256,384,512}_BLOCK_SIZE.  */
+# endif
 };
 
 /* Initialize structure containing state of computation.  */

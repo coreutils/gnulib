@@ -32,6 +32,8 @@
 # define SWAP(n) (n)
 #endif
 
+#if ! HAVE_OPENSSL_SHA3
+
 static const u64 rc[] = {
   u64init (0x00000000, 0x00000001), u64init (0x00000000, 0x00008082),
   u64init (0x80000000, 0x0000808A), u64init (0x80000000, 0x80008000),
@@ -314,3 +316,72 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
         }
     }
 }
+
+#else /* OpenSSL implementation.  */
+
+#define DEFINE_SHA3_INIT_CTX(SIZE)                                      \
+  void                                                                  \
+  sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
+  {                                                                     \
+    int rc;                                                             \
+    ctx->evp_ctx = EVP_MD_CTX_create ();                                \
+    if (ctx->evp_ctx == NULL)                                           \
+      abort ();                                                         \
+    rc = EVP_DigestInit_ex (ctx->evp_ctx, EVP_sha3_##SIZE (), NULL);    \
+    if (rc == 0)                                                        \
+      abort ();                                                         \
+  }
+
+DEFINE_SHA3_INIT_CTX (224)
+DEFINE_SHA3_INIT_CTX (256)
+DEFINE_SHA3_INIT_CTX (384)
+DEFINE_SHA3_INIT_CTX (512)
+
+void *
+sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
+{
+  /* Assume any unprocessed bytes in ctx are not to be ignored.  */
+  int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
+  if (result == 0)
+    abort ();
+  return resbuf;
+}
+
+void *
+sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
+{
+  void *result = sha3_read_ctx (ctx, resbuf);
+  EVP_MD_CTX_free (ctx->evp_ctx);
+  return resbuf;
+}
+
+#define DEFINE_SHA3_BUFFER(SIZE)                                        \
+  void *                                                                \
+  sha3_##SIZE##_buffer (const char *buffer, size_t len, void *resblock) \
+  {                                                                     \
+    struct sha3_ctx ctx;                                                \
+    sha3_##SIZE##_init_ctx (&ctx);                                      \
+    sha3_process_bytes (buffer, len, &ctx);                             \
+    return sha3_finish_ctx (&ctx, resblock);                            \
+  }
+
+DEFINE_SHA3_BUFFER (224)
+DEFINE_SHA3_BUFFER (256)
+DEFINE_SHA3_BUFFER (384)
+DEFINE_SHA3_BUFFER (512)
+
+void
+sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
+{
+  int result = EVP_DigestUpdate (ctx->evp_ctx, buffer, len);
+  if (result == 0)
+    abort ();
+}
+
+void
+sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
+{
+  sha3_process_bytes (buffer, len, ctx);
+}
+
+#endif

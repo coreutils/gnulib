@@ -4,6 +4,8 @@ Compute SHA-3 checksums.
 Files:
 lib/sha3.h
 lib/sha3.c
+m4/gl-openssl.m4
+m4/sha3.m4
 
 Depends-on:
 byteswap
@@ -13,13 +15,16 @@ u64
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
-AC_REQUIRE([gl_BIGENDIAN])
+gl_SHA3
 
 Makefile.am:
 lib_SOURCES += sha3.c
 
 Include:
 "sha3.h"
+
+Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+
