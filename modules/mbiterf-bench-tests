@@ -16,4 +16,4 @@ configure.ac:
 Makefile.am:
 noinst_PROGRAMS += bench-mbiterf
 bench_mbiterf_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
-bench_mbiterf_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
+bench_mbiterf_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV) $(LIBICONV)
