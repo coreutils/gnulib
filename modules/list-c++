@@ -15,6 +15,9 @@ Makefile.am:
 Include:
 "gl_list.hh"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

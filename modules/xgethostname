@@ -19,6 +19,9 @@ lib_SOURCES += xgethostname.h xgethostname.c
 Include:
 "xgethostname.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

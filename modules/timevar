@@ -26,6 +26,9 @@ lib_SOURCES += timevar.c timevar.def
 Include:
 "timevar.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPLv3+
 

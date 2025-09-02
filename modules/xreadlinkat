@@ -18,6 +18,9 @@ lib_SOURCES += xreadlinkat.c
 Include:
 "xreadlink.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

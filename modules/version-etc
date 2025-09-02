@@ -20,6 +20,9 @@ lib_SOURCES += version-etc.h version-etc.c
 Include:
 "version-etc.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 

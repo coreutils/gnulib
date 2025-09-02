@@ -19,6 +19,9 @@ lib_SOURCES += xstrndup.h xstrndup.c
 Include:
 "xstrndup.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

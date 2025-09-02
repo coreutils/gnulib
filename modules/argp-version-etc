@@ -15,6 +15,9 @@ lib_SOURCES += argp-version-etc.h argp-version-etc.c
 Include:
 "argp-version-etc.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

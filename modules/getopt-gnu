@@ -19,6 +19,9 @@ Makefile.am:
 Include:
 <getopt.h>
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPLv2+
 

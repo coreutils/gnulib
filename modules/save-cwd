@@ -22,6 +22,9 @@ lib_SOURCES += save-cwd.c
 Include:
 "save-cwd.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

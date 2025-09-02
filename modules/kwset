@@ -26,6 +26,9 @@ lib_SOURCES += kwset.c
 Include:
 "kwset.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

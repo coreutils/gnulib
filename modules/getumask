@@ -33,6 +33,7 @@ Link:
 $(GETRANDOM_LIB)
 $(CLOCK_TIME_LIB)
 $(LIBTHREAD)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL

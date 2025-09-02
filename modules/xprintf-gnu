@@ -23,6 +23,9 @@ Makefile.am:
 Include:
 "xprintf.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

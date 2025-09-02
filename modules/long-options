@@ -21,6 +21,9 @@ lib_SOURCES += long-options.c
 Include:
 "long-options.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

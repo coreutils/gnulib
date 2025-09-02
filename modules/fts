@@ -64,6 +64,9 @@ MOSTLYCLEANFILES += fts_.h fts_.h-t
 Include:
 "fts_.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

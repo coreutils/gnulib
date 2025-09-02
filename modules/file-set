@@ -20,6 +20,9 @@ lib_SOURCES += file-set.c
 Include:
 "file-set.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -18,6 +18,9 @@ lib_SOURCES += xconcat-filename.c
 Include:
 "concat-filename.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

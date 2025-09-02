@@ -19,6 +19,9 @@ lib_SOURCES += idcache.c
 Include:
 "idcache.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -22,6 +22,9 @@ lib_SOURCES += openat-safer.c
 Include:
 "fcntl-safer.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -44,6 +44,9 @@ Include:
 <fcntl.h>
 <sys/stat.h>
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

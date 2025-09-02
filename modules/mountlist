@@ -29,6 +29,9 @@ lib_SOURCES += mountlist.c
 Include:
 "mountlist.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

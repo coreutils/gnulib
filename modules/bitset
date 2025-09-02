@@ -38,6 +38,9 @@ lib_SOURCES += bitset.c bitset/array.c bitset/stats.c \
 Include:
 "bitset.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPLv3+
 

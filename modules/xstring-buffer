@@ -18,6 +18,9 @@ lib_SOURCES += xstring-buffer.c xstring-buffer-printf.c
 Include:
 "string-buffer.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

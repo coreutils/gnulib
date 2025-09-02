@@ -27,8 +27,9 @@ Include:
 "unicodeio.h"
 
 Link:
-$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
 $(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
 
 License:
 GPL

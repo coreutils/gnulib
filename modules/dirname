@@ -19,6 +19,9 @@ lib_SOURCES += dirname.c basename.c
 Include:
 "dirname.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

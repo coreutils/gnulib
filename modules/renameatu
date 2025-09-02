@@ -38,6 +38,9 @@ lib_SOURCES += renameatu.c
 Include:
 "renameatu.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

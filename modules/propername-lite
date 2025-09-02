@@ -20,6 +20,9 @@ lib_SOURCES += propername-lite.c propername.h
 Include:
 "propername.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 

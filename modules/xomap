@@ -19,6 +19,9 @@ lib_SOURCES += gl_xomap.h gl_xomap.c
 Include:
 "gl_xomap.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

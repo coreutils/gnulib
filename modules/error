@@ -35,6 +35,9 @@ endif
 Include:
 <error.h>
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPLv2+
 

@@ -16,6 +16,9 @@ lib_SOURCES += bitsetv.c
 Include:
 "bitsetv.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPLv3+
 

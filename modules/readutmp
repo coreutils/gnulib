@@ -31,6 +31,7 @@ Include:
 
 Link:
 $(READUTMP_LIB)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL

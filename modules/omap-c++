@@ -14,6 +14,9 @@ Makefile.am:
 Include:
 "gl_omap.hh"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

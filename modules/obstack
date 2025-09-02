@@ -53,6 +53,9 @@ endif
 Include:
 "obstack.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPLv2+
 

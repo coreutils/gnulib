@@ -22,6 +22,9 @@ lib_SOURCES += sigpipe-die.h sigpipe-die.c
 Include:
 "sigpipe-die.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

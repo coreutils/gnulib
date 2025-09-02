@@ -23,6 +23,9 @@ Makefile.am:
 Include:
 <stdio.h>
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

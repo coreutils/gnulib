@@ -20,6 +20,9 @@ lib_SOURCES += canon-host.c
 Include:
 "canon-host.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 

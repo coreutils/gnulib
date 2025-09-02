@@ -16,6 +16,9 @@ lib_SOURCES += chownat.c
 Include:
 "openat.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

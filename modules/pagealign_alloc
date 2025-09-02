@@ -28,6 +28,9 @@ lib_SOURCES += pagealign_alloc.c
 Include:
 "pagealign_alloc.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

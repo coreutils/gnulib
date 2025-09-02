@@ -22,6 +22,9 @@ lib_SOURCES += windows-cygpath.c
 Include:
 "windows-cygpath.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

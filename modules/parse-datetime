@@ -63,6 +63,9 @@ EXTRA_DIST += parse-datetime.c
 Include:
 "parse-datetime.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPLv2+
 

@@ -19,6 +19,9 @@ lib_SOURCES += gl_xoset.h gl_xoset.c
 Include:
 "gl_xoset.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -22,6 +22,9 @@ lib_SOURCES += mkancesdirs.c
 Include:
 "mkancesdirs.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -20,6 +20,9 @@ Include:
 <fcntl.h>
 "utimens.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

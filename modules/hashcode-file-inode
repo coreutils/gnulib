@@ -17,6 +17,9 @@ lib_SOURCES += hashcode-file-inode.c
 Include:
 "hashcode-file.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -36,6 +36,7 @@ Include:
 
 Link:
 $(MBRTOWC_LIB)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL

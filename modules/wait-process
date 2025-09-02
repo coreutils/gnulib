@@ -32,6 +32,7 @@ Include:
 
 Link:
 $(LIBTHREAD)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL

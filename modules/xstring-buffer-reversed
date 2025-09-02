@@ -18,6 +18,9 @@ lib_SOURCES += xstring-buffer-reversed.c xstring-buffer-reversed-printf.c
 Include:
 "string-buffer-reversed.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

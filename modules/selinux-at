@@ -28,6 +28,9 @@ lib_SOURCES += selinux-at.h selinux-at.c
 Include:
 "selinux-at.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -16,6 +16,9 @@ lib_SOURCES += xmemdup0.h xmemdup0.c
 Include:
 "xmemdup0.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

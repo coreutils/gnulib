@@ -19,6 +19,9 @@ lib_SOURCES += xgetdomainname.h xgetdomainname.c
 Include:
 "xgetdomainname.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

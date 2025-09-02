@@ -31,6 +31,9 @@ lib_SOURCES += xvasprintf.h xvasprintf.c xasprintf.c
 Include:
 "xvasprintf.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

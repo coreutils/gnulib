@@ -16,6 +16,9 @@ lib_SOURCES += xhash.c
 Include:
 "hash.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPLv3+
 

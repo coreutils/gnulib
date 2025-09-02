@@ -18,6 +18,9 @@ lib_SOURCES += gl_xsublist.h gl_xsublist.c
 Include:
 "gl_xsublist.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

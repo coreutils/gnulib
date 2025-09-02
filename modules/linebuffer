@@ -17,6 +17,9 @@ lib_SOURCES += linebuffer.h linebuffer.c
 Include:
 "linebuffer.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

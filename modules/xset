@@ -19,6 +19,9 @@ lib_SOURCES += gl_xset.h gl_xset.c
 Include:
 "gl_xset.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

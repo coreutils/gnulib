@@ -42,6 +42,7 @@ Include:
 Link:
 $(GETRANDOM_LIB)
 $(LIBTHREAD)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL

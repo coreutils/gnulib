@@ -19,6 +19,9 @@ lib_SOURCES += xgetcwd.c
 Include:
 "xgetcwd.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

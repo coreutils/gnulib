@@ -14,6 +14,9 @@ lib_SOURCES += version-etc-fsf.c
 
 Include:
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 

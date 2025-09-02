@@ -17,6 +17,9 @@ lib_SOURCES += readtokens0.h readtokens0.c
 Include:
 "readtokens0.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

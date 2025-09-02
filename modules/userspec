@@ -26,6 +26,9 @@ lib_SOURCES += userspec.c
 Include:
 "userspec.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

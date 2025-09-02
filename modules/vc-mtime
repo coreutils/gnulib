@@ -39,6 +39,9 @@ lib_SOURCES += vc-mtime.c
 Include:
 "vc-mtime.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -29,6 +29,9 @@ lib_SOURCES += xprintf.h xprintf.c
 Include:
 "xprintf.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

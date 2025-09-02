@@ -19,6 +19,9 @@ lib_SOURCES += file-type.c
 Include:
 "file-type.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

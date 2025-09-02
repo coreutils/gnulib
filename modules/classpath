@@ -18,6 +18,9 @@ lib_SOURCES += classpath.h classpath.c
 Include:
 "classpath.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

@@ -20,6 +20,9 @@ lib_SOURCES += opendirat.c
 Include:
 "opendirat.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 GPL
 

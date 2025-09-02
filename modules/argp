@@ -53,6 +53,9 @@ lib_SOURCES += argp.h argp-ba.c argp-eexst.c \
 Include:
 "argp.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 
