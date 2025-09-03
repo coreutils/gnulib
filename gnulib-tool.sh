@@ -4459,6 +4459,17 @@ func_emit_tests_Makefile_am ()
     # Enable or disable warnings as suitable for the Gnulib coding style.
     cflags_for_gnulib_code=" \$(GL_CFLAG_GNULIB_WARNINGS)"
   fi
+  # The primary place to add these options is AM_CFLAGS.
+  echo "AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code}"
+  if test -n "$uses_cxx"; then
+    echo "AM_CXXFLAGS += @GL_CXXFLAG_ALLOW_WARNINGS@"
+  fi
+  echo
+  # The secondary place to add these options is CFLAGS. This is less reliable,
+  # because the user can invoke e.g. "make CFLAGS=-O2"; see
+  # <https://www.gnu.org/software/automake/manual/html_node/User-Variables.html>
+  # But it is a protection against packages which do  AM_CFLAGS += -Werror
+  # after including this generated Makefile (such as GNU grep).
   echo "CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code} @CFLAGS@"
   if test -n "$uses_cxx"; then
     echo "CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@"

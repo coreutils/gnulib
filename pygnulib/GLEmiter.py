@@ -1242,6 +1242,16 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if not for_test:
             # Enable or disable warnings as suitable for the Gnulib coding style.
             cflags_for_gnulib_code = ' $(GL_CFLAG_GNULIB_WARNINGS)'
+        # The primary place to add these options is AM_CFLAGS.
+        emit += 'AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@%s\n' % (cflags_for_gnulib_code)
+        if uses_cxx:
+            emit += 'AM_CXXFLAGS += @GL_CXXFLAG_ALLOW_WARNINGS@\n'
+        emit += '\n'
+        # The secondary place to add these options is CFLAGS. This is less reliable,
+        # because the user can invoke e.g. "make CFLAGS=-O2"; see
+        # <https://www.gnu.org/software/automake/manual/html_node/User-Variables.html>
+        # But it is a protection against packages which do  AM_CFLAGS += -Werror
+        # after including this generated Makefile (such as GNU grep).
         emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@%s @CFLAGS@\n' % (cflags_for_gnulib_code)
         if uses_cxx:
             emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'

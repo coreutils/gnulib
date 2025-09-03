@@ -3,6 +3,10 @@ Important general notes
 
 Date        Modules         Changes
 
+2025-09-03  gnulib-tool     If you use --makefile-name with --with-tests, you
+                            now need to initialize AM_CFLAGS before the
+                            'include <gnulib-generated-makefile>' statement.
+
 2022-07-24  bootstrap       To specify a reference directory for the 'gnulib'
                             submodule, use the environment variable
                             GNULIB_REFDIR instead of GNULIB_SRCDIR or the

@@ -747,8 +747,11 @@ through a line such as
 @smallexample
 include Makefile.gnulib
 @end smallexample
-Before this include, you need to initialize this set of @code{Makefile.am}
-variables:
+Before this include, you need to initialize a set of @code{Makefile.am}
+variables.
+
+For the directory into which @code{gnulib-tool} copies the gnulib source files,
+the set of variables to initialize is:
 @itemize @bullet
 @item
 @code{AUTOMAKE_OPTIONS}
@@ -788,6 +791,17 @@ variables:
 The other variables can be initialized to empty.  However, you will most
 likely want to initialize some of them with non-empty values, in order
 to achieve the desired customization.
+
+For the directory into which @code{gnulib-tool} copies
+the gnulib unit test files
+(when option @samp{--with-tests} is used),
+the set of variables to initialize is:
+@itemize @bullet
+@item
+@code{AM_CFLAGS}
+@item
+@code{AM_CXXFLAGS} (when this directory contains some C++ code)
+@end itemize
 
 The other approach, the kitchen-sink module, is more advanced.  See
 chapter @ref{Extending Gnulib}.
