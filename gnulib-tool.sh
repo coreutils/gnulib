@@ -3840,6 +3840,7 @@ func_emit_lib_Makefile_am ()
   fi
   echo
   uses_subdirs=
+  uses_cxx=
   {
     for module in $modules; do
       func_verify_nontests_module
@@ -3919,12 +3920,17 @@ func_emit_lib_Makefile_am ()
           echo
         fi
         rm -f "$tmp"/amsnippet1 "$tmp"/amsnippet2
-        # Test whether there are some source files in subdirectories.
+        # Test whether there are some source files in subdirectories, and
+        # test whether there are some C++ source files.
         for f in `func_get_filelist "$module"`; do
           case $f in
             lib/*/*.c)
               uses_subdirs=yes
-              break
+              ;;
+          esac
+          case $f in
+            *.C | *.c++ | *.cc | *.cxx | *.cpp)
+              uses_cxx=yes
               ;;
           esac
         done
@@ -4049,6 +4055,9 @@ func_emit_lib_Makefile_am ()
   #   '-Werror'.
   if ! $for_test; then
     echo "${libname}_${libext}_CFLAGS = \$(AM_CFLAGS) \$(GL_CFLAG_GNULIB_WARNINGS) \$(GL_CFLAG_ALLOW_WARNINGS)"
+    if test -n "$uses_cxx"; then
+      echo "${libname}_${libext}_CXXFLAGS = \$(AM_CXXFLAGS) \$(GL_CXXFLAG_GNULIB_WARNINGS) \$(GL_CXXFLAG_ALLOW_WARNINGS)"
+    fi
   fi
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
   # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
@@ -4249,6 +4258,7 @@ func_emit_tests_Makefile_am ()
   func_emit_copyright_notice
   echo
   uses_subdirs=
+  uses_cxx=
   {
     for module in $modules; do
       if $for_test && ! $single_configure; then
@@ -4345,12 +4355,17 @@ func_emit_tests_Makefile_am ()
           } >&$ofd
         fi
         rm -f "$tmp"/amsnippet1 "$tmp"/amsnippet2
-        # Test whether there are some source files in subdirectories.
+        # Test whether there are some source files in subdirectories, and
+        # test whether there are some C++ source files.
         for f in `func_get_filelist "$module"`; do
           case $f in
             lib/*/*.c | tests/*/*.c)
               uses_subdirs=yes
-              break
+              ;;
+          esac
+          case $f in
+            *.C | *.c++ | *.cc | *.cxx | *.cpp)
+              uses_cxx=yes
               ;;
           esac
         done
@@ -4445,7 +4460,9 @@ func_emit_tests_Makefile_am ()
     cflags_for_gnulib_code=" \$(GL_CFLAG_GNULIB_WARNINGS)"
   fi
   echo "CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code} @CFLAGS@"
-  echo "CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@"
+  if test -n "$uses_cxx"; then
+    echo "CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@"
+  fi
   echo
   echo "AM_CPPFLAGS = \\"
   if $for_test; then

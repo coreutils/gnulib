@@ -737,6 +737,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += '# Reproduce by:\n%s\n' % actioncmd
         emit += '\n'
         uses_subdirs = False
+        uses_cxx = False
 
         # Compute allsnippets variable.
         allsnippets = ''
@@ -807,13 +808,19 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         allsnippets += 'endif\n'
                     allsnippets += '## end   gnulib module %s\n\n' % module.name
 
-                    # Test whether there are some source files in subdirectories.
+                    # Test whether there are some source files in subdirectories, and
+                    # test whether there are some C++ source files.
                     for file in module.getFiles():
                         if (file.startswith('lib/')
                                 and file.endswith('.c')
                                 and file.count('/') > 1):
                             uses_subdirs = True
-                            break
+                        if (file.endswith('.C')
+                                or file.endswith('.c++')
+                                or file.endswith('.cc')
+                                or file.endswith('.cxx')
+                                or file.endswith('.cpp')):
+                            uses_cxx = True
 
         if not makefile_name:
             subdir_options = ''
@@ -928,6 +935,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #   '-Werror'.
         if not for_test:
             emit += '%s_%s_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS) $(GL_CFLAG_ALLOW_WARNINGS)\n' % (libname, libext)
+            if uses_cxx:
+                emit += '%s_%s_CXXFLAGS = $(AM_CXXFLAGS) $(GL_CXXFLAG_GNULIB_WARNINGS) $(GL_CXXFLAG_ALLOW_WARNINGS)\n' % (libname, libext)
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
         if not for_test:
@@ -1063,6 +1072,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '%s\n' % self.copyright_notice()
 
         uses_subdirs = False
+        uses_cxx = False
         main_snippets = ''
         longrun_snippets = ''
         for module in modules:
@@ -1143,13 +1153,19 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     else:
                         main_snippets += snippet
 
-                    # Test whether there are some source files in subdirectories.
+                    # Test whether there are some source files in subdirectories, and
+                    # test whether there are some C++ source files.
                     for file in module.getFiles():
                         if ((file.startswith('lib/') or file.startswith('tests/'))
                                 and file.endswith('.c')
                                 and file.count('/') > 1):
                             uses_subdirs = True
-                            break
+                        if (file.endswith('.C')
+                                or file.endswith('.c++')
+                                or file.endswith('.cc')
+                                or file.endswith('.cxx')
+                                or file.endswith('.cpp')):
+                            uses_cxx = True
 
         # Generate dependencies here, since it eases the debugging of test failures.
         # If there are source files in subdirectories, prevent collision of the
@@ -1227,7 +1243,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # Enable or disable warnings as suitable for the Gnulib coding style.
             cflags_for_gnulib_code = ' $(GL_CFLAG_GNULIB_WARNINGS)'
         emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@%s @CFLAGS@\n' % (cflags_for_gnulib_code)
-        emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'
+        if uses_cxx:
+            emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'
         emit += '\n'
 
         emit += 'AM_CPPFLAGS = \\\n'
