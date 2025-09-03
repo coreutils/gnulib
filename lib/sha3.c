@@ -323,11 +323,11 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
   void                                                                  \
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
   {                                                                     \
-    int rc;                                                             \
-    ctx->evp_ctx = EVP_MD_CTX_create ();                                \
-    if (ctx->evp_ctx == NULL)                                           \
-      abort ();                                                         \
-    rc = EVP_DigestInit_ex (ctx->evp_ctx, EVP_sha3_##SIZE (), NULL);    \
+    /* EVP_DigestInit_ex expects all bytes to be zero.  */              \
+    memset (ctx, 0, sizeof *ctx);                                       \
+    EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;           \
+    int rc = EVP_DigestInit_ex (evp_ctx, EVP_sha3_##SIZE (), NULL);     \
+    /* This should never fail.  */                                      \
     if (rc == 0)                                                        \
       abort ();                                                         \
   }
@@ -341,17 +341,17 @@ void *
 sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
 {
   /* Assume any unprocessed bytes in ctx are not to be ignored.  */
-  int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
-  if (result == 0)
-    abort ();
-  return resbuf;
+  return sha3_finish_ctx ((struct sha3_ctx *) ctx, resbuf);
 }
 
 void *
 sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
 {
-  void *result = sha3_read_ctx (ctx, resbuf);
-  EVP_MD_CTX_free (ctx->evp_ctx);
+  EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;
+  /* This should never fail.  */
+  int result = EVP_DigestFinal_ex (evp_ctx, resbuf, NULL);
+  if (result == 0)
+    abort ();
   return resbuf;
 }
 
@@ -373,7 +373,8 @@ DEFINE_SHA3_BUFFER (512)
 void
 sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
-  int result = EVP_DigestUpdate (ctx->evp_ctx, buffer, len);
+  EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;
+  int result = EVP_DigestUpdate (evp_ctx, buffer, len);
   if (result == 0)
     abort ();
 }

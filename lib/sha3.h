@@ -19,6 +19,7 @@
 #ifndef SHA3_H
 # define SHA3_H 1
 
+# include <stddef.h>
 # include <stdio.h>
 # include <stdint.h>
 
@@ -50,9 +51,9 @@ enum { SHA3_512_BLOCK_SIZE = 576 / 8 };
 struct sha3_ctx
 {
 # if HAVE_OPENSSL_SHA3
-  /* This is an incomplete type, so we can only place a pointer in the
-     struct.  */
-  EVP_MD_CTX *evp_ctx;
+  /* EVP_MD_CTX is an incomplete type.  EVP_MD_CTX_create allocates 72 bytes of
+     memory as of 2025-09-02.  */
+  max_align_t evp_ctx_buffer[256 / sizeof (max_align_t)];
 # else
   u64 state[25];
   uint8_t buffer[144]; /* Up to BLOCKLEN in use.  */

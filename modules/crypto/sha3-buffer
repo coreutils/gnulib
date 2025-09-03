@@ -10,6 +10,7 @@ m4/sha3.m4
 Depends-on:
 byteswap
 c99
+stddef-h
 stdint-h
 u64
 
