@@ -97,6 +97,11 @@ you need different macros @code{AAA_FOO_INLINE} and @code{AAA_BAR_INLINE}.
 Use @code{AAA_FOO_INLINE} for the functions defined in @file{aaa-foo.c},
 and use @code{AAA_BAR_INLINE} for the functions defined in @file{aaa-bar.c}.
 
+Functions defined in this way should not refer to identifiers with
+static linkage, as C99 through C23 prohibit this.
+Although a future C standard will likely relax this restriction,
+it is still an issue on many practical platforms.
+
 @findex _GL_INLINE
 @code{_GL_INLINE} is a portable alternative to C99 plain @code{inline}.
 
