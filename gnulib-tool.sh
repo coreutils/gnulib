@@ -4454,23 +4454,22 @@ func_emit_tests_Makefile_am ()
   #   CFLAGS, they have asked for errors, they will get errors. But they have
   #   no right to complain about these errors, because Gnulib does not support
   #   '-Werror'.
+  if ! $for_test && { test -n "$tests_makefile_name" || test -n "$makefile_name"; }; then
+    # This function produces a makefile that is meant to be 'include'd.
+    am_set_or_augment='+='
+  else
+    # This function produces a makefile 'Makefile.am' that is standalone.
+    am_set_or_augment='='
+  fi
   cflags_for_gnulib_code=
   if ! $for_test; then
     # Enable or disable warnings as suitable for the Gnulib coding style.
     cflags_for_gnulib_code=" \$(GL_CFLAG_GNULIB_WARNINGS)"
-  else
-    # Make sure AM_CFLAGS is set or Automake will error when we append to it
-    # using '+='.
-    echo 'AM_CFLAGS ='
-    # Likewise for AM_CXXFLAGS.
-    if test -n "$uses_cxx"; then
-      echo 'AM_CXXFLAGS ='
-    fi
   fi
   # The primary place to add these options is AM_CFLAGS.
-  echo "AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code}"
+  echo "AM_CFLAGS ${am_set_or_augment} @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code}"
   if test -n "$uses_cxx"; then
-    echo "AM_CXXFLAGS += @GL_CXXFLAG_ALLOW_WARNINGS@"
+    echo "AM_CXXFLAGS ${am_set_or_augment} @GL_CXXFLAG_ALLOW_WARNINGS@"
   fi
   echo
   # The secondary place to add these options is CFLAGS. This is less reliable,

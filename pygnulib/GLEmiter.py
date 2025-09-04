@@ -1000,9 +1000,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
     def tests_Makefile_am(self, destfile: str, modules: list[GLModule], moduletable: GLModuleTable,
                           makefiletable: GLMakefileTable, witness_macro: str, for_test: bool) -> str:
         '''Emit the contents of the tests Makefile. Returns it as a string.
-        GLConfig: localpath, modules, libname, auxdir, makefile_name, libtool,
-        sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,
-        single_configure, libtests.
+        GLConfig: localpath, modules, libname, auxdir, makefile_name,
+        tests_makefile_name, libtool, sourcebase, m4base, testsbase,
+        macro_prefix, witness_c_macro, single_configure, libtests.
 
         destfile is a filename relative to destdir of Makefile being generated.
         witness_macro is a string which represents witness_c_macro with the suffix.
@@ -1034,6 +1034,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         m4base = self.config['m4base']
         testsbase = self.config['testsbase']
         gnu_make = self.config['gnu_make']
+        makefile_name = self.config['makefile_name']
+        tests_makefile_name = self.config['tests_makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
         conddeps = self.config['conddeps']
@@ -1238,21 +1240,20 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #   CFLAGS, they have asked for errors, they will get errors. But they have
         #   no right to complain about these errors, because Gnulib does not support
         #   '-Werror'.
+        if (not for_test) and (tests_makefile_name or makefile_name):
+            # This function produces a makefile that is meant to be 'include'd.
+            am_set_or_augment = '+='
+        else:
+            # This function produces a makefile 'Makefile.am' that is standalone.
+            am_set_or_augment = '='
         cflags_for_gnulib_code = ''
         if not for_test:
             # Enable or disable warnings as suitable for the Gnulib coding style.
             cflags_for_gnulib_code = ' $(GL_CFLAG_GNULIB_WARNINGS)'
-        else:
-            # Make sure AM_CFLAGS is set or Automake will error when we append to it
-            # using '+='.
-            emit += 'AM_CFLAGS =\n'
-            # Likewise for AM_CXXFLAGS.
-            if uses_cxx:
-                emit += 'AM_CXXFLAGS =\n'
         # The primary place to add these options is AM_CFLAGS.
-        emit += 'AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@%s\n' % (cflags_for_gnulib_code)
+        emit += 'AM_CFLAGS %s @GL_CFLAG_ALLOW_WARNINGS@%s\n' % (am_set_or_augment, cflags_for_gnulib_code)
         if uses_cxx:
-            emit += 'AM_CXXFLAGS += @GL_CXXFLAG_ALLOW_WARNINGS@\n'
+            emit += 'AM_CXXFLAGS %s @GL_CXXFLAG_ALLOW_WARNINGS@\n' % (am_set_or_augment)
         emit += '\n'
         # The secondary place to add these options is CFLAGS. This is less reliable,
         # because the user can invoke e.g. "make CFLAGS=-O2"; see
