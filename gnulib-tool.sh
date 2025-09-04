@@ -4458,6 +4458,14 @@ func_emit_tests_Makefile_am ()
   if ! $for_test; then
     # Enable or disable warnings as suitable for the Gnulib coding style.
     cflags_for_gnulib_code=" \$(GL_CFLAG_GNULIB_WARNINGS)"
+  else
+    # Make sure AM_CFLAGS is set or Automake will error when we append to it
+    # using '+='.
+    echo 'AM_CFLAGS ='
+    # Likewise for AM_CXXFLAGS.
+    if test -n "$uses_cxx"; then
+      echo 'AM_CXXFLAGS ='
+    fi
   fi
   # The primary place to add these options is AM_CFLAGS.
   echo "AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code}"

@@ -1242,6 +1242,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if not for_test:
             # Enable or disable warnings as suitable for the Gnulib coding style.
             cflags_for_gnulib_code = ' $(GL_CFLAG_GNULIB_WARNINGS)'
+        else:
+            # Make sure AM_CFLAGS is set or Automake will error when we append to it
+            # using '+='.
+            emit += 'AM_CFLAGS =\n'
+            # Likewise for AM_CXXFLAGS.
+            if uses_cxx:
+                emit += 'AM_CXXFLAGS =\n'
         # The primary place to add these options is AM_CFLAGS.
         emit += 'AM_CFLAGS += @GL_CFLAG_ALLOW_WARNINGS@%s\n' % (cflags_for_gnulib_code)
         if uses_cxx:
