@@ -21,17 +21,15 @@
 
 #include "gettext.h"
 
-#ifdef __has_include
-# if __has_include (<uchar.h>)
-#  include <uchar.h>
+#if HAVE_UCHAR_H
+# include <uchar.h>
 /* There is no need for the dependency hassle of replacing glibc mbrtoc32,
    as we don't care whether the C locale treats a byte with the high
    bit set as an encoding error.  */
-#  ifdef __GLIBC__
-#   undef mbrtoc32
-#  endif
-#  define USE_MBRTOC32
+# ifdef __GLIBC__
+#  undef mbrtoc32
 # endif
+# define USE_MBRTOC32
 #endif
 
 /* Return the localization of the name spelled NAME_ASCII in ASCII,
