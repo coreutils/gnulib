@@ -204,7 +204,7 @@ gettext_quote (char const *msgid, enum quoting_style s)
     return translation;
 
   /* For UTF-8, use single quotes U+2018 and U+2019.
-     Here is a list of other locales that include U+2018 and U+2019:
+     Here is a list of other locale encodings that include U+2018 and U+2019:
 
         ISO-8859-7   0xA1                 KOI8-T       0x91
         CP869        0x8B                 CP874        0x91
@@ -217,7 +217,7 @@ gettext_quote (char const *msgid, enum quoting_style s)
         EUC-JP       0xA1 0xC6            EUC-KR       0xA1 0xAE
         EUC-TW       0xA1 0xE4            BIG5         0xA1 0xA5
         BIG5-HKSCS   0xA1 0xA5            EUC-CN       0xA1 0xAE
-        GBK          0xA1 0xAE            GB-18030     0xA1 0xAE
+        GBK          0xA1 0xAE            GB18030      0xA1 0xAE
         Georgian-PS  0x91                 PT154        0x91
 
      These are not in wide use; using iconv is overkill,
