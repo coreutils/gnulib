@@ -229,8 +229,8 @@ gettext_quote (char const *msgid, enum quoting_style s)
      has other dependencies.  */
   static char const quote[][4] = { "\xe2\x80\x98", "\xe2\x80\x99" };
   char32_t w;
-  mbstate_t mbstate = {0,};
-  if (mbrtoc32 (&w, quote[0], 3, &mbstate) == 3 && w == 0x2018)
+  mbstate_t mbs; mbszero (&mbs);
+  if (mbrtoc32 (&w, quote[0], 3, &mbs) == 3 && w == 0x2018)
     return quote[msgid[0] == '\''];
 
   return (s == clocale_quoting_style ? "\"" : "'");
@@ -606,8 +606,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
               }
             else
               {
-                mbstate_t mbstate;
-                mbszero (&mbstate);
+                mbstate_t mbs; mbszero (&mbs);
 
                 m = 0;
                 printable = true;
@@ -618,7 +617,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                   {
                     char32_t w;
                     size_t bytes = mbrtoc32 (&w, &arg[i + m],
-                                             argsize - (i + m), &mbstate);
+                                             argsize - (i + m), &mbs);
                     if (bytes == 0)
                       break;
                     else if (bytes == (size_t) -1)
@@ -661,7 +660,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                         m += bytes;
                       }
                     #if !GNULIB_MBRTOC32_REGULAR
-                    if (mbsinit (&mbstate))
+                    if (mbsinit (&mbs))
                     #endif
                       break;
                   }

@@ -50,7 +50,7 @@
 # define c32tob wctob
 # define c32isprint iswprint
 # define c32isspace iswspace
-# define mbszero(p) memset ((p), 0, sizeof (mbstate_t))
+# define mbszero(p) memset (p, 0, sizeof (mbstate_t))
 #else
 /* Use ISO C 11 + gnulib API.  */
 # include <uchar.h>

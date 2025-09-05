@@ -32,6 +32,7 @@
 # define mbrtoc32 mbrtowc
 # define c32tolower towlower
 # define c32toupper towupper
+# define mbszero(p) memset (p, 0, sizeof (mbstate_t))
 #else
 /* Use ISO C 11 + gnulib API.  */
 # include <uchar.h>
@@ -46,7 +47,7 @@ static bool
 is_using_utf8 (void)
 {
   char32_t wc;
-  mbstate_t mbs = {0};
+  mbstate_t mbs; mbszero (&mbs);
   return mbrtoc32 (&wc, "\xc4\x80", 2, &mbs) == 2 && wc == 0x100;
 }
 
@@ -102,7 +103,7 @@ init_localeinfo (struct localeinfo *localeinfo)
     {
       char c = i;
       unsigned char uc = i;
-      mbstate_t s = {0};
+      mbstate_t s; mbszero (&s);
       char32_t wc;
       size_t len = mbrtoc32 (&wc, &c, 1, &s);
       localeinfo->sbclen[uc] = len <= 1 ? 1 : - (int) - len;

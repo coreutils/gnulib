@@ -45,8 +45,8 @@ proper_name_lite (char const *name_ascii, _GL_UNUSED char const *name_utf8)
   /* If DF BF decodes to 07FF, assume it is UTF-8.  */
   static char const utf07FF[] = { 0xDF, 0xBF };
   char32_t w;
-  mbstate_t mbstate = {0,};
-  if (mbrtoc32 (&w, utf07FF, 2, &mbstate) == 2 && w == 0x07FF)
+  mbstate_t mbs; mbszero (&mbs);
+  if (mbrtoc32 (&w, utf07FF, 2, &mbs) == 2 && w == 0x07FF)
     return name_utf8;
 #endif
 
