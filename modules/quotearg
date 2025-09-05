@@ -20,7 +20,6 @@ mbsinit
 memcmp
 minmax
 quotearg-simple
-localcharset
 bool
 stdint-h
 uchar-h

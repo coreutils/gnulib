@@ -33,7 +33,6 @@
 #include "minmax.h"
 #include "xalloc.h"
 #include "c-strcaseeq.h"
-#include "localcharset.h"
 
 #include <ctype.h>
 #include <errno.h>
@@ -204,7 +203,7 @@ gettext_quote (char const *msgid, enum quoting_style s)
   if (translation != msgid)
     return translation;
 
-  /* For UTF-8 and GB-18030, use single quotes U+2018 and U+2019.
+  /* For UTF-8, use single quotes U+2018 and U+2019.
      Here is a list of other locales that include U+2018 and U+2019:
 
         ISO-8859-7   0xA1                 KOI8-T       0x91
@@ -218,15 +217,21 @@ gettext_quote (char const *msgid, enum quoting_style s)
         EUC-JP       0xA1 0xC6            EUC-KR       0xA1 0xAE
         EUC-TW       0xA1 0xE4            BIG5         0xA1 0xA5
         BIG5-HKSCS   0xA1 0xA5            EUC-CN       0xA1 0xAE
-        GBK          0xA1 0xAE            Georgian-PS  0x91
-        PT154        0x91
+        GBK          0xA1 0xAE            GB-18030     0xA1 0xAE
+        Georgian-PS  0x91                 PT154        0x91
 
-     None of these is still in wide use; using iconv is overkill.  */
-  locale_code = locale_charset ();
-  if (STRCASEEQ (locale_code, "UTF-8", 'U','T','F','-','8',0,0,0,0))
-    return msgid[0] == '`' ? "\xe2\x80\x98": "\xe2\x80\x99";
-  if (STRCASEEQ (locale_code, "GB18030", 'G','B','1','8','0','3','0',0,0))
-    return msgid[0] == '`' ? "\xa1\ae": "\xa1\xaf";
+     These are not in wide use; using iconv is overkill,
+     and C-locale quotes might be better for these locales anyway.
+
+     If the current encoding is consistent with UTF-8 for U+2018,
+     assume that the locale uses UTF-8.  This is safe in practice,
+     and means we need not use a function like locale_charset that
+     has other dependencies.  */
+  static char const quote[][4] = { "\xe2\x80\x98", "\xe2\x80\x99" };
+  char32_t w;
+  mbstate_t mbstate = {0,};
+  if (mbrtoc32 (&w, quote[0], 3, &mbstate) == 3 && w == 0x2018)
+    return quote[msgid[0] == '\''];
 
   return (s == clocale_quoting_style ? "\"" : "'");
 }
