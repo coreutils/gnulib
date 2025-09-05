@@ -22,6 +22,7 @@
      set_program_name (argv[0]);
  */
 
+#include "arg-nonnull.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,7 +35,8 @@ extern const char *program_name;
 /* Set program_name, based on argv[0].
    argv0 must be a string allocated with indefinite extent, and must not be
    modified after this call.  */
-extern void set_program_name (const char *argv0);
+extern void set_program_name (const char *argv0)
+  _GL_ARG_NONNULL ((1));
 
 #if ENABLE_RELOCATABLE
 
