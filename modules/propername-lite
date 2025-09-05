@@ -6,8 +6,6 @@ lib/propername-lite.c
 lib/propername.h
 
 Depends-on:
-localcharset
-c-strcasecmp
 gettext-h
 
 configure.ac:
