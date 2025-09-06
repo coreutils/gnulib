@@ -41,7 +41,7 @@
    successful.  */
 static int
 sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
-                 ssize_t hashlen, void (*init_ctx) (struct sha3_ctx *))
+                 ssize_t hashlen, bool (*init_ctx) (struct sha3_ctx *))
 {
   switch (afalg_stream (stream, alg, resblock, hashlen))
     {
@@ -54,7 +54,11 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
     return 1;
 
   struct sha3_ctx ctx;
-  init_ctx (&ctx);
+  if (! init_ctx (&ctx))
+    {
+      free (buffer);
+      return 1;
+    }
   size_t sum;
 
   /* Iterate over full file contents.  */
@@ -92,6 +96,7 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
               if (ferror (stream))
                 {
                   free (buffer);
+                  sha3_free_ctx (&ctx);
                   return 1;
                 }
               goto process_partial_block;
@@ -101,18 +106,35 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
       /* Process buffer with BLOCKSIZE bytes.  Note that
                         BLOCKSIZE % ctx.blocklen == 0
        */
-      sha3_process_block (buffer, BLOCKSIZE, &ctx);
+      if (! sha3_process_block (buffer, BLOCKSIZE, &ctx))
+        {
+          free (buffer);
+          sha3_free_ctx (&ctx);
+          return 1;
+        }
     }
 
  process_partial_block:;
 
   /* Process any remaining bytes.  */
   if (sum > 0)
-    sha3_process_bytes (buffer, sum, &ctx);
+    {
+      if (! sha3_process_bytes (buffer, sum, &ctx))
+        {
+          free (buffer);
+          sha3_free_ctx (&ctx);
+          return 1;
+        }
+    }
+
+  free (buffer);
 
   /* Construct result in desired memory.  */
-  sha3_finish_ctx (&ctx, resblock);
-  free (buffer);
+  if (sha3_finish_ctx (&ctx, resblock) == NULL)
+    {
+      sha3_free_ctx (&ctx);
+      return 1;
+    }
   return 0;
 }
 

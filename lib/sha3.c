@@ -50,19 +50,26 @@ static const u64 rc[] = {
 };
 
 #define DEFINE_SHA3_INIT_CTX(SIZE)                                      \
-  void                                                                  \
+  bool                                                                  \
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
   {                                                                     \
     memset (&ctx->state, '\0', sizeof ctx->state);                      \
     ctx->buflen = 0;                                                    \
     ctx->digestlen = SHA3_##SIZE##_DIGEST_SIZE;                         \
     ctx->blocklen = SHA3_##SIZE##_BLOCK_SIZE;                           \
+    return true;                                                        \
   }
 
 DEFINE_SHA3_INIT_CTX (224)
 DEFINE_SHA3_INIT_CTX (256)
 DEFINE_SHA3_INIT_CTX (384)
 DEFINE_SHA3_INIT_CTX (512)
+
+void
+sha3_free_ctx (_GL_UNUSED struct sha3_ctx *ctx)
+{
+  /* Do nothing.  */
+}
 
 /* Copy the value from V into the memory location pointed to by *CP,
    If your architecture allows unaligned access, this is equivalent to
@@ -127,7 +134,7 @@ DEFINE_SHA3_BUFFER (256)
 DEFINE_SHA3_BUFFER (384)
 DEFINE_SHA3_BUFFER (512)
 
-void
+bool
 sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
   if (0 < ctx->buflen)
@@ -138,7 +145,7 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
           /* Not enough to fill a full block.  */
           memcpy (ctx->buffer + ctx->buflen, buffer, len);
           ctx->buflen += len;
-          return;
+          return true;
         }
       /* Process the block that already had bytes buffered.  */
       memcpy (ctx->buffer + ctx->buflen, buffer, left);
@@ -156,9 +163,10 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
       memcpy (ctx->buffer, buffer, len);
       ctx->buflen = len;
     }
+  return true;
 }
 
-void
+bool
 sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
   u64 *a = ctx->state;
@@ -315,27 +323,39 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
           a[0] = u64xor (a[0], rc[i]);
         }
     }
+  return true;
 }
 
 #else /* OpenSSL implementation.  */
 
 #define DEFINE_SHA3_INIT_CTX(SIZE)                                      \
-  void                                                                  \
+  bool                                                                  \
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
   {                                                                     \
-    /* EVP_DigestInit_ex expects all bytes to be zero.  */              \
-    memset (ctx, 0, sizeof *ctx);                                       \
-    EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;           \
-    int rc = EVP_DigestInit_ex (evp_ctx, EVP_sha3_##SIZE (), NULL);     \
-    /* This should never fail.  */                                      \
-    if (rc == 0)                                                        \
-      abort ();                                                         \
+    int result;                                                         \
+    ctx->evp_ctx = EVP_MD_CTX_create ();                                \
+    if (ctx->evp_ctx == NULL)                                           \
+      return false;                                                     \
+    result = EVP_DigestInit_ex (ctx->evp_ctx, EVP_sha3_##SIZE (),       \
+                                NULL);                                  \
+    if (result == 0)                                                    \
+      {                                                                 \
+        sha3_free_ctx (ctx);                                            \
+        return false;                                                   \
+      }                                                                 \
+    return true;                                                        \
   }
 
 DEFINE_SHA3_INIT_CTX (224)
 DEFINE_SHA3_INIT_CTX (256)
 DEFINE_SHA3_INIT_CTX (384)
 DEFINE_SHA3_INIT_CTX (512)
+
+void
+sha3_free_ctx (struct sha3_ctx *ctx)
+{
+  EVP_MD_CTX_free (ctx->evp_ctx);
+}
 
 void *
 sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
@@ -347,11 +367,10 @@ sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
 void *
 sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
 {
-  EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;
-  /* This should never fail.  */
-  int result = EVP_DigestFinal_ex (evp_ctx, resbuf, NULL);
+  int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
+  sha3_free_ctx (ctx);
   if (result == 0)
-    abort ();
+    return NULL;
   return resbuf;
 }
 
@@ -360,8 +379,10 @@ sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
   sha3_##SIZE##_buffer (const char *buffer, size_t len, void *resblock) \
   {                                                                     \
     struct sha3_ctx ctx;                                                \
-    sha3_##SIZE##_init_ctx (&ctx);                                      \
-    sha3_process_bytes (buffer, len, &ctx);                             \
+    if (! sha3_##SIZE##_init_ctx (&ctx))                                \
+      return NULL;                                                      \
+    if (! sha3_process_bytes (buffer, len, &ctx))                       \
+      return NULL;                                                      \
     return sha3_finish_ctx (&ctx, resblock);                            \
   }
 
@@ -370,19 +391,22 @@ DEFINE_SHA3_BUFFER (256)
 DEFINE_SHA3_BUFFER (384)
 DEFINE_SHA3_BUFFER (512)
 
-void
+bool
 sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
-  EVP_MD_CTX *evp_ctx = (EVP_MD_CTX *) ctx->evp_ctx_buffer;
-  int result = EVP_DigestUpdate (evp_ctx, buffer, len);
+  int result = EVP_DigestUpdate (ctx->evp_ctx, buffer, len);
   if (result == 0)
-    abort ();
+    {
+      sha3_free_ctx (ctx);
+      return false;
+    }
+  return true;
 }
 
-void
+bool
 sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
-  sha3_process_bytes (buffer, len, ctx);
+  return sha3_process_bytes (buffer, len, ctx);
 }
 
 #endif

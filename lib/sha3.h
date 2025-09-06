@@ -51,9 +51,8 @@ enum { SHA3_512_BLOCK_SIZE = 576 / 8 };
 struct sha3_ctx
 {
 # if HAVE_OPENSSL_SHA3
-  /* EVP_MD_CTX is an incomplete type.  EVP_MD_CTX_create allocates 72 bytes of
-     memory as of 2025-09-02.  */
-  max_align_t evp_ctx_buffer[256 / sizeof (max_align_t)];
+  /* EVP_MD_CTX is an incomplete type.  It cannot be placed on the stack.  */
+  EVP_MD_CTX *evp_ctx;
 # else
   u64 state[25];
   uint8_t buffer[144]; /* Up to BLOCKLEN in use.  */
@@ -64,40 +63,49 @@ struct sha3_ctx
 };
 
 /* Initialize structure containing state of computation.  */
-extern void sha3_224_init_ctx (struct sha3_ctx *ctx);
-extern void sha3_256_init_ctx (struct sha3_ctx *ctx);
-extern void sha3_384_init_ctx (struct sha3_ctx *ctx);
-extern void sha3_512_init_ctx (struct sha3_ctx *ctx);
+extern bool sha3_224_init_ctx (struct sha3_ctx *ctx);
+extern bool sha3_256_init_ctx (struct sha3_ctx *ctx);
+extern bool sha3_384_init_ctx (struct sha3_ctx *ctx);
+extern bool sha3_512_init_ctx (struct sha3_ctx *ctx);
+
+/* Free memory allocated by the init_structure.  This is only required if
+   OpenSSL is used.  */
+extern void sha3_free_ctx (struct sha3_ctx *ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
-   It is necessary that LEN is a multiple of the BLOCKLEN member of CTX!!!  */
-extern void sha3_process_block (const void *buffer, size_t len,
+   It is necessary that LEN is a multiple of the BLOCKLEN member of CTX!!!
+   Return false if an OpenSSL function fails.  */
+extern bool sha3_process_block (const void *buffer, size_t len,
                                 struct sha3_ctx *ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
-   It is NOT required that LEN is a multiple of the BLOCKLEN member of CTX.  */
-extern void sha3_process_bytes (const void *buffer, size_t len,
+   It is NOT required that LEN is a multiple of the BLOCKLEN member of CTX.
+   Return false if an OpenSSL function fails.  */
+extern bool sha3_process_bytes (const void *buffer, size_t len,
                                 struct sha3_ctx *ctx);
 
 /* Process the remaining bytes in the buffer and put result from CTX in RESBUF.
    The result is always in little endian byte order, so that a byte-wise output
-   yields to the wanted ASCII representation of the message digest.  */
+   yields to the wanted ASCII representation of the message digest.
+   Return NULL if an OpenSSL function fails.  */
 extern void *sha3_finish_ctx (struct sha3_ctx *ctx, void *restrict resbuf);
 
 /* Put result from CTX in RESBUF.  The result is always in little endian byte
    order, so that a byte-wise output yields to the wanted ASCII representation
-   of the message digest.  */
+   of the message digest.
+   Return NULL if an OpenSSL function fails.  */
 extern void *sha3_read_ctx (const struct sha3_ctx *ctx,
                             void *restrict resbuf);
 
 /* Compute a SHA-3 message digest for LEN bytes beginning at BUFFER.
    The result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
-   digest.  */
+   digest.
+   Return NULL if an OpenSSL function fails.  */
 extern void *sha3_224_buffer (const char *buffer, size_t len,
                               void *restrict resblock);
 extern void *sha3_256_buffer (const char *buffer, size_t len,

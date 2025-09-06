@@ -8,6 +8,7 @@ m4/gl-openssl.m4
 m4/sha3.m4
 
 Depends-on:
+bool
 byteswap
 c99
 stddef-h
