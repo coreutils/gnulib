@@ -328,6 +328,9 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
 
 #else /* OpenSSL implementation.  */
 
+/* We avoid using all of EVP error strings.  Just guess a reasonable errno.  */
+#include <errno.h>
+
 #define DEFINE_SHA3_INIT_CTX(SIZE)                                      \
   bool                                                                  \
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
@@ -335,11 +338,15 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
     int result;                                                         \
     ctx->evp_ctx = EVP_MD_CTX_create ();                                \
     if (ctx->evp_ctx == NULL)                                           \
-      return false;                                                     \
+      {                                                                 \
+        errno = ENOMEM;                                                 \
+        return false;                                                   \
+      }                                                                 \
     result = EVP_DigestInit_ex (ctx->evp_ctx, EVP_sha3_##SIZE (),       \
                                 NULL);                                  \
     if (result == 0)                                                    \
       {                                                                 \
+        errno = ENOMEM;                                                 \
         sha3_free_ctx (ctx);                                            \
         return false;                                                   \
       }                                                                 \
@@ -370,7 +377,10 @@ sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
   int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
   sha3_free_ctx (ctx);
   if (result == 0)
-    return NULL;
+    {
+      errno = EINVAL;
+      return NULL;
+    }
   return resbuf;
 }
 
@@ -397,6 +407,7 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
   int result = EVP_DigestUpdate (ctx->evp_ctx, buffer, len);
   if (result == 0)
     {
+      errno = EINVAL;
       sha3_free_ctx (ctx);
       return false;
     }
