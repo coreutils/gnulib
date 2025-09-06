@@ -57,6 +57,7 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
   if (! init_ctx (&ctx))
     {
       free (buffer);
+      sha3_free_ctx (ctx);
       return 1;
     }
   size_t sum;
@@ -135,6 +136,8 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
       sha3_free_ctx (&ctx);
       return 1;
     }
+
+  sha3_free_ctx (ctx);
   return 0;
 }
 

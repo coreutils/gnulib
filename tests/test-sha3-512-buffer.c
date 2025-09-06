@@ -101,5 +101,16 @@ main (void)
       free (large);
     }
 
+  /* Check that sha3_free_ctx can be called multiple times without
+     crashing.  */
+  {
+    struct sha3_ctx ctx;
+    if (sha3_512_init_ctx (&ctx))
+      {
+        sha3_free_ctx (&ctx);
+        sha3_free_ctx (&ctx);
+      }
+  }
+
   return 0;
 }

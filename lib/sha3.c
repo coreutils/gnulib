@@ -347,7 +347,6 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
     if (result == 0)                                                    \
       {                                                                 \
         errno = ENOMEM;                                                 \
-        sha3_free_ctx (ctx);                                            \
         return false;                                                   \
       }                                                                 \
     return true;                                                        \
@@ -361,7 +360,11 @@ DEFINE_SHA3_INIT_CTX (512)
 void
 sha3_free_ctx (struct sha3_ctx *ctx)
 {
-  EVP_MD_CTX_free (ctx->evp_ctx);
+  if (ctx->evp_ctx != NULL)
+    {
+      EVP_MD_CTX_free (ctx->evp_ctx);
+      ctx->evp_ctx = NULL;
+    }
 }
 
 void *
@@ -375,7 +378,6 @@ void *
 sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
 {
   int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
-  sha3_free_ctx (ctx);
   if (result == 0)
     {
       errno = EINVAL;
@@ -408,7 +410,6 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
   if (result == 0)
     {
       errno = EINVAL;
-      sha3_free_ctx (ctx);
       return false;
     }
   return true;

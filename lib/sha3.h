@@ -68,8 +68,7 @@ extern bool sha3_256_init_ctx (struct sha3_ctx *ctx);
 extern bool sha3_384_init_ctx (struct sha3_ctx *ctx);
 extern bool sha3_512_init_ctx (struct sha3_ctx *ctx);
 
-/* Free memory allocated by the init_structure.  This is only required if
-   OpenSSL is used.  */
+/* Free memory allocated by the init_structure.  */
 extern void sha3_free_ctx (struct sha3_ctx *ctx);
 
 /* Starting with the result of former calls of this function (or the
