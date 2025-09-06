@@ -198,7 +198,6 @@ static char const *
 gettext_quote (char const *msgid, enum quoting_style s)
 {
   char const *translation = _(msgid);
-  char const *locale_code;
 
   if (translation != msgid)
     return translation;
