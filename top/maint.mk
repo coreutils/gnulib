@@ -1454,10 +1454,13 @@ sc_prohibit_reversed_compare_failure:
 # That would be flagged by using -Wundef, however gnulib currently
 # tests many undefined macros, and so we can't enable that option.
 # So at least preclude common boolean strings as macro values.
+# Although this rule formerly also complained about 'true' and 'false',
+# that complaint is now incorrect given that C23 has blessed this practice
+# and the 'bool' module supports it.
 sc_Wundef_boolean:
-	@prohibit='^#define.*(yes|no|true|false)$$'			\
+	@prohibit='^#define.*(yes|no)$$'				\
 	in_files='$(CONFIG_INCLUDE)'					\
-	halt='Use 0 or 1 for macro values'				\
+	halt='Use 0/1 or false/true for macro values'			\
 	  $(_sc_search_regexp)
 
 # Even if you use pathmax.h to guarantee that PATH_MAX is defined, it might
