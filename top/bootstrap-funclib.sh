@@ -35,7 +35,7 @@ export LC_ALL
 # Honor $PERL, but work even if there is none.
 PERL="${PERL-perl}"
 
-default_gnulib_url=https://git.savannah.gnu.org/git/gnulib.git
+default_gnulib_url=https://https.git.savannah.gnu.org/git/gnulib.git
 
 # Copyright year, for the --version output.
 copyright_year=`echo "$scriptlibversion" | sed -e 's/[^0-9].*//'`
