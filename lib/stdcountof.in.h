@@ -15,8 +15,20 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2025.  */
 
-#ifndef _GL_STDCOUNTOF_H
-#define _GL_STDCOUNTOF_H
+#ifndef _@GUARD_PREFIX@_STDCOUNTOF_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+@PRAGMA_COLUMNS@
+
+/* The include_next requires a split double-inclusion guard.  */
+#if (defined __cplusplus ? @CXX_HAVE_STDCOUNTOF_H@ : @HAVE_STDCOUNTOF_H@)
+# @INCLUDE_NEXT@ @NEXT_STDCOUNTOF_H@
+#else
+
+#ifndef _@GUARD_PREFIX@_STDCOUNTOF_H
+#define _@GUARD_PREFIX@_STDCOUNTOF_H
 
 /* This file uses _GL_GNUC_PREREQ.  */
 #if !_GL_CONFIG_H_INCLUDED
@@ -96,4 +108,6 @@ template <typename T> _gl_array_type_test<T> _gl_array_type_test_helper(T&);
 # endif
 #endif
 
-#endif /* _GL_STDCOUNTOF_H */
+#endif /* _@GUARD_PREFIX@_STDCOUNTOF_H */
+#endif
+#endif /* _@GUARD_PREFIX@_STDCOUNTOF_H */

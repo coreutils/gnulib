@@ -7,6 +7,7 @@ m4/stdcountof_h.m4
 
 Depends-on:
 gen-header
+include_next
 
 configure.ac:
 gl_STDCOUNTOF_H
@@ -21,7 +22,15 @@ BUILT_SOURCES += $(STDCOUNTOF_H)
 if GL_GENERATE_STDCOUNTOF_H
 stdcountof.h: stdcountof.in.h $(top_builddir)/config.status
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_STDOUT) $(srcdir)/stdcountof.in.h > $@-t
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's/@''HAVE_STDCOUNTOF_H''@/$(HAVE_STDCOUNTOF_H)/g' \
+	      -e 's/@''CXX_HAVE_STDCOUNTOF_H''@/$(CXX_HAVE_STDCOUNTOF_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_STDCOUNTOF_H''@|$(NEXT_STDCOUNTOF_H)|g' \
+	      $(srcdir)/stdcountof.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 else
 stdcountof.h: $(top_builddir)/config.status
