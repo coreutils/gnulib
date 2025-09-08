@@ -42,17 +42,21 @@ test_func (int parameter[3])
 
   (void) local_bounded;
 
+#ifdef _gl_verify_is_array
   (void) _gl_verify_is_array (unbounded);
   (void) _gl_verify_is_array (bounded);
   (void) _gl_verify_is_array (multidimensional);
+#endif
 
   ASSERT (countof (bounded) == 10);
   ASSERT (countof (multidimensional) == 10);
   ASSERT (countof (local_bounded) == 20);
 
 #if 0 /* These produce compilation errors.  */
+# ifdef _gl_verify_is_array
   (void) _gl_verify_is_array (integer);
   (void) _gl_verify_is_array (parameter);
+# endif
 
   ASSERT (countof (integer) >= 0);
   ASSERT (countof (unbounded) >= 0);
