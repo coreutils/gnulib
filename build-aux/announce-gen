@@ -693,13 +693,13 @@ EOF
 
 This release is based on the $package_name git repository, available as
 
-  git clone https://git.savannah.gnu.org/git/$package_name.git
+  git clone https://https.git.savannah.gnu.org/git/$package_name.git
 
 with commit $this_commit_hash tagged as v$v1.
 
 For a summary of changes and contributors, see:
 
-  https://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
+  https://gitweb.git.savannah.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
 
 or run this command from a git-cloned $package_name directory:
 
