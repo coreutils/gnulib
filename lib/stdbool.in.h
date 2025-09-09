@@ -80,8 +80,6 @@
           "warning: _Bool is a keyword in ISO C99".
         Use of an enum type, with IRIX cc, leads to a stupid
           "warning(1185): enumerated type mixed with another type".
-        Even the existence of an enum type, without a typedef,
-          "Invalid enumerator. (badenum)" with HP-UX cc on Tru64.
         The only benefit of the enum, debuggability, is not important
         with these compilers.  So use 'signed char' and no enum.  */
 #  define _Bool signed char
