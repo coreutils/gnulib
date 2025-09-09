@@ -22,7 +22,7 @@
 
 extern mbstate_t _gl_wcsrtombs_state;
 
-#if HAVE_WCSRTOMBS && !WCSRTOMBS_TERMINATION_BUG && !defined GNULIB_defined_mbstate_t
+#if HAVE_WCSRTOMBS && !defined GNULIB_defined_mbstate_t
 /* Override the system's wcsrtombs() function.  */
 
 # undef wcsrtombs
