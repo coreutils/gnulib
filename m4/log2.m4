@@ -1,5 +1,5 @@
 # log2.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -131,7 +131,6 @@ int main (int argc, char *argv[])
 ])
 
 dnl Test whether log2() works.
-dnl On OSF/1 5.1, log2(-0.0) is NaN.
 dnl On Cygwin 1.7.9, log2(2^29) is not exactly 29.
 AC_DEFUN([gl_FUNC_LOG2_WORKS],
 [
@@ -154,23 +153,18 @@ volatile double y;
 int main ()
 {
   int result = 0;
-  /* This test fails on OSF/1 5.1.  */
-  x = -0.0;
-  y = log2 (x);
-  if (!(y + y == y))
-    result |= 1;
   /* This test fails on Cygwin 1.7.9.  */
   x = 536870912.0;
   y = log2 (x);
   if (!(y == 29.0))
-    result |= 2;
+    result |= 1;
   return result;
 }
 ]])],
         [gl_cv_func_log2_works=yes],
         [gl_cv_func_log2_works=no],
         [case "$host_os" in
-           cygwin* | osf*)    gl_cv_func_log2_works="guessing no" ;;
+           cygwin*)           gl_cv_func_log2_works="guessing no" ;;
                               # Guess yes on native Windows.
            mingw* | windows*) gl_cv_func_log2_works="guessing yes" ;;
            *)                 gl_cv_func_log2_works="guessing yes" ;;
