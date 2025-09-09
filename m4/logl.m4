@@ -1,5 +1,5 @@
 # logl.m4
-# serial 18
+# serial 19
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,7 +104,6 @@ AC_DEFUN([gl_FUNC_LOGL],
 ])
 
 dnl Test whether logl() works.
-dnl On OSF/1 5.1, logl(-0.0L) is NaN.
 dnl On NetBSD 9.3, the result is accurate to only 16 digits.
 AC_DEFUN([gl_FUNC_LOGL_WORKS],
 [
@@ -161,13 +160,6 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_logl) (long double) = argc ? logl : dummy;
   int result = 0;
-  /* This test fails on OSF/1 5.1.  */
-  {
-    gx = -0.0L;
-    gy = logl (gx);
-    if (!(gy + gy == gy))
-      result |= 1;
-  }
   /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.3.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
@@ -179,7 +171,7 @@ int main (int argc, char *argv[])
     long double x = 16.981137113807045L;
     long double err = (my_logl (x) + my_logl (1.0L / x)) * TWO_LDBL_MANT_DIG;
     if (!(err >= -100.0L && err <= 100.0L))
-      result |= 2;
+      result |= 1;
   }
 
   return result;

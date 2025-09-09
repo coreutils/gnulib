@@ -26,19 +26,6 @@ logl (long double x)
   return log (x);
 }
 
-#elif 0 /* was: HAVE_LOGL */
-
-long double
-logl (long double x)
-# undef logl
-{
-  /* Work around the OSF/1 5.1 bug.  */
-  if (x == 0.0L)
-    /* Return -Infinity.  */
-    return -1.0L / 0.0L;
-  return logl (x);
-}
-
 #else
 
 /* Code based on glibc/sysdeps/ieee754/ldbl-128/e_logl.c.  */
