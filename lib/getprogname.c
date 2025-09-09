@@ -42,7 +42,7 @@
 # include <string.h>
 #endif
 
-#if defined __sgi || defined __osf__
+#if defined __sgi
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -234,7 +234,7 @@ getprogname (void)
       free (buf.ps_pathptr);
     }
   return p;
-# elif defined __sgi || defined __osf__                     /* IRIX or Tru64 */
+# elif defined __sgi                                        /* IRIX */
   char filename[50];
   int fd;
 
