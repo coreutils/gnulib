@@ -1,5 +1,5 @@
 # ldd.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -173,17 +173,6 @@ changequote(,)dnl
           dnl         libc.so.6 => /lib/libc.so.6 (0x4002d000)
           dnl         /lib/ld-linux.so.2 (0x40000000)
           LDDPOSTPROC="2>/dev/null | sed -n -e 's,^	\\([^ 	][^ 	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
-          ;;
-        osf*)
-          LDDPROG="odump -Dl"
-          dnl The output of "odump -Dl program" looks like this:
-          dnl
-          dnl                         ***LIBRARY LIST SECTION***
-          dnl         Name             Time-Stamp        CheckSum   Flags Version
-          dnl program:
-          dnl         libc.so      Dec 30 00:09:30 1997 0x5e955f9b     0 osf.1
-          dnl
-          LDDPOSTPROC="2>/dev/null | sed -n -e 's,^	\\([^ 	][^ 	]*\\).*,\\1,p' | sed -e '/^Name\$/d' | sed -e 's,^.*/,,'"
           ;;
         solaris*)
           LDDPROG="ldd"
