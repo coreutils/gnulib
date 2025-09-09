@@ -73,7 +73,6 @@ test_ascii (int (*my_casecmp) (const char *, size_t, const char *, size_t))
 static void
 test_iso_8859_1 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool assume_byte_values)
 {
-  #if ! defined __osf__ /* This test fails on OSF/1 5.1.  */
   {
     static const char input1[] = { 'H', 0xF6, 'h', 'l', 'e' };
     static const char input2[] = { 'H', 0xD6, 'h', 'L', 'e' };
@@ -104,7 +103,6 @@ test_iso_8859_1 (int (*my_casecmp) (const char *, size_t, const char *, size_t),
         ASSERT (my_casecmp (input2, SIZEOF (input2), input5, SIZEOF (input5)) > 0);
       }
   }
-  #endif
 
   #if 0 /* This functionality requires ulc_casecmp.  */
   /* Uppercasing can increase the number of Unicode characters.  */

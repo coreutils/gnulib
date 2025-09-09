@@ -285,8 +285,8 @@ do_select_bad_fd_nowait (int fd, int ev, select_fn my_select)
 static void
 test_bad_fd (select_fn my_select)
 {
-  /* This tests fails on OSF/1 and native Windows, even with fd = 16.  */
-#if !(defined __osf__ || defined WINDOWS_NATIVE)
+  /* This tests fails on native Windows, even with fd = 16.  */
+#if !defined WINDOWS_NATIVE
   int fd;
 
   /* On Linux, Mac OS X, *BSD, values of fd like 99 or 399 are discarded

@@ -118,7 +118,7 @@ main ()
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
 # if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
-     || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
+     || !(defined _AIX || defined __sgi || defined __hpux || defined __sun)
   if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
       /* Test conversions from autodetect_jp to UTF-16.  */
