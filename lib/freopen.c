@@ -35,13 +35,7 @@ orig_freopen (const char *filename, const char *mode, FILE *stream)
 }
 
 /* Specification.  */
-#ifdef __osf__
-/* Write "stdio.h" here, not <stdio.h>, otherwise OSF/1 5.1 DTK cc eliminates
-   this include because of the preliminary #include <stdio.h> above.  */
-# include "stdio.h"
-#else
-# include <stdio.h>
-#endif
+#include <stdio.h>
 
 #include <fcntl.h>
 #include <string.h>
