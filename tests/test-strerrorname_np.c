@@ -281,10 +281,6 @@ main (void)
   #if defined EADV
   ASSERT (strcmp (strerrorname_np (EADV), "EADV") == 0);
   #endif
-  /* OSF/1 */
-  #if defined EAIO
-  ASSERT (strcmp (strerrorname_np (EAIO), "EAIO") == 0);
-  #endif
   /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EAUTH
   ASSERT (strcmp (strerrorname_np (EAUTH), "EAUTH") == 0);
@@ -345,7 +341,7 @@ main (void)
   #if defined EBADREQUEST
   ASSERT (strcmp (strerrorname_np (EBADREQUEST), "EBADREQUEST") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EBADRPC
   ASSERT (strcmp (strerrorname_np (EBADRPC), "EBADRPC") == 0);
   #endif
@@ -417,10 +413,6 @@ main (void)
   #if defined ECLOCKCPU
   ASSERT (strcmp (strerrorname_np (ECLOCKCPU), "ECLOCKCPU") == 0);
   #endif
-  /* OSF/1 */
-  #if defined ECLONEME && ECLONEME != ERESTART
-  ASSERT (strcmp (strerrorname_np (ECLONEME), "ECLONEME") == 0);
-  #endif
   /* Linux, HP-UX, IRIX, Solaris, Cygwin */
   #if defined ECOMM
   ASSERT (strcmp (strerrorname_np (ECOMM), "ECOMM") == 0);
@@ -477,10 +469,6 @@ main (void)
   #if defined EDIRIOCTL
   ASSERT (strcmp (strerrorname_np (EDIRIOCTL), "EDIRIOCTL") == 0);
   #endif
-  /* OSF/1 */
-  #if defined EDIRTY
-  ASSERT (strcmp (strerrorname_np (EDIRTY), "EDIRTY") == 0);
-  #endif
   /* IRIX */
   #if defined EDISJOINT
   ASSERT (strcmp (strerrorname_np (EDISJOINT), "EDISJOINT") == 0);
@@ -500,10 +488,6 @@ main (void)
   /* Linux, HP-UX, Cygwin */
   #if defined EDOTDOT
   ASSERT (strcmp (strerrorname_np (EDOTDOT), "EDOTDOT") == 0);
-  #endif
-  /* OSF/1 */
-  #if defined EDUPPKG
-  ASSERT (strcmp (strerrorname_np (EDUPPKG), "EDUPPKG") == 0);
   #endif
   /* GNU/Hurd */
   #if defined ED_ALREADY_OPEN
@@ -549,10 +533,6 @@ main (void)
   #if defined EEMPTY
   ASSERT (strcmp (strerrorname_np (EEMPTY), "EEMPTY") == 0);
   #endif
-  /* OSF/1 */
-  #if defined EEMULATE
-  ASSERT (strcmp (strerrorname_np (EEMULATE), "EEMULATE") == 0);
-  #endif
   /* IRIX */
   #if defined EENDOFMINOR
   ASSERT (strcmp (strerrorname_np (EENDOFMINOR), "EENDOFMINOR") == 0);
@@ -560,10 +540,6 @@ main (void)
   /* IRIX */
   #if defined EENQUEUED
   ASSERT (strcmp (strerrorname_np (EENQUEUED), "EENQUEUED") == 0);
-  #endif
-  /* OSF/1 */
-  #if defined EFAIL
-  ASSERT (strcmp (strerrorname_np (EFAIL), "EFAIL") == 0);
   #endif
   /* AIX */
   #if defined EFORMAT
@@ -581,7 +557,7 @@ main (void)
   #if defined EFSCORRUPTED
   ASSERT (strcmp (strerrorname_np (EFSCORRUPTED), "EFSCORRUPTED") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
   #if defined EFTYPE
   ASSERT (strcmp (strerrorname_np (EFTYPE), "EFTYPE") == 0);
   #endif
@@ -601,7 +577,7 @@ main (void)
   #if defined EGROUPLOOP
   ASSERT (strcmp (strerrorname_np (EGROUPLOOP), "EGROUPLOOP") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EHOSTDOWN
   ASSERT (strcmp (strerrorname_np (EHOSTDOWN), "EHOSTDOWN") == 0);
   #endif
@@ -616,10 +592,6 @@ main (void)
   /* IRIX */
   #if defined EINIT
   ASSERT (strcmp (strerrorname_np (EINIT), "EINIT") == 0);
-  #endif
-  /* OSF/1 */
-  #if defined EINPROG
-  ASSERT (strcmp (strerrorname_np (EINPROG), "EINPROG") == 0);
   #endif
   /* IRIX */
   #if defined EINVALMODE
@@ -649,7 +621,7 @@ main (void)
   #if defined EJOINED
   ASSERT (strcmp (strerrorname_np (EJOINED), "EJOINED") == 0);
   #endif
-  /* FreeBSD, OSF/1 */
+  /* FreeBSD */
   #if defined EJUSTRETURN
   ASSERT (strcmp (strerrorname_np (EJUSTRETURN), "EJUSTRETURN") == 0);
   #endif
@@ -941,7 +913,7 @@ main (void)
   #if defined EMACH_SEND_WILL_NOTIFY
   ASSERT (strcmp (strerrorname_np (EMACH_SEND_WILL_NOTIFY), "EMACH_SEND_WILL_NOTIFY") == 0);
   #endif
-  /* AIX, OSF/1 */
+  /* AIX */
   #if defined EMEDIA
   ASSERT (strcmp (strerrorname_np (EMEDIA), "EMEDIA") == 0);
   #endif
@@ -1000,10 +972,6 @@ main (void)
   /* GNU/Hurd */
   #if defined EMIG_TYPE_ERROR
   ASSERT (strcmp (strerrorname_np (EMIG_TYPE_ERROR), "EMIG_TYPE_ERROR") == 0);
-  #endif
-  /* OSF/1 */
-  #if defined EMTIMERS
-  ASSERT (strcmp (strerrorname_np (EMTIMERS), "EMTIMERS") == 0);
   #endif
   /* IRIX */
   #if defined EMUSTRUN
@@ -1101,7 +1069,7 @@ main (void)
   #if defined ENONET
   ASSERT (strcmp (strerrorname_np (ENONET), "ENONET") == 0);
   #endif
-  /* Linux, HP-UX, IRIX, OSF/1, Solaris, Cygwin */
+  /* Linux, HP-UX, IRIX, Solaris, Cygwin */
   #if defined ENOPKG
   ASSERT (strcmp (strerrorname_np (ENOPKG), "ENOPKG") == 0);
   #endif
@@ -1125,7 +1093,7 @@ main (void)
   #if defined ENOSHARE
   ASSERT (strcmp (strerrorname_np (ENOSHARE), "ENOSHARE") == 0);
   #endif
-  /* Linux, HP-UX, OSF/1 */
+  /* Linux, HP-UX */
   #if defined ENOSYM
   ASSERT (strcmp (strerrorname_np (ENOSYM), "ENOSYM") == 0);
   #endif
@@ -1133,7 +1101,7 @@ main (void)
   #if defined ENOTACTIVE
   ASSERT (strcmp (strerrorname_np (ENOTACTIVE), "ENOTACTIVE") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined ENOTBLK
   ASSERT (strcmp (strerrorname_np (ENOTBLK), "ENOTBLK") == 0);
   #endif
@@ -1193,23 +1161,23 @@ main (void)
   #if defined EPACKSIZE
   ASSERT (strcmp (strerrorname_np (EPACKSIZE), "EPACKSIZE") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EPFNOSUPPORT
   ASSERT (strcmp (strerrorname_np (EPFNOSUPPORT), "EPFNOSUPPORT") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, OSF/1, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, Minix, Cygwin */
   #if defined EPROCLIM
   ASSERT (strcmp (strerrorname_np (EPROCLIM), "EPROCLIM") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROCUNAVAIL
   ASSERT (strcmp (strerrorname_np (EPROCUNAVAIL), "EPROCUNAVAIL") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROGMISMATCH
   ASSERT (strcmp (strerrorname_np (EPROGMISMATCH), "EPROGMISMATCH") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROGUNAVAIL
   ASSERT (strcmp (strerrorname_np (EPROGUNAVAIL), "EPROGUNAVAIL") == 0);
   #endif
@@ -1225,10 +1193,6 @@ main (void)
   #if defined ERELOC
   ASSERT (strcmp (strerrorname_np (ERELOC), "ERELOC") == 0);
   #endif
-  /* OSF/1 */
-  #if defined ERELOCATED
-  ASSERT (strcmp (strerrorname_np (ERELOCATED), "ERELOCATED") == 0);
-  #endif
   /* FreeBSD */
   #if defined ERELOOKUP
   ASSERT (strcmp (strerrorname_np (ERELOOKUP), "ERELOOKUP") == 0);
@@ -1241,7 +1205,7 @@ main (void)
   #if defined EREMDEV
   ASSERT (strcmp (strerrorname_np (EREMDEV), "EREMDEV") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EREMOTE
   ASSERT (strcmp (strerrorname_np (EREMOTE), "EREMOTE") == 0);
   #endif
@@ -1253,7 +1217,7 @@ main (void)
   #if defined EREMOTERELEASE
   ASSERT (strcmp (strerrorname_np (EREMOTERELEASE), "EREMOTERELEASE") == 0);
   #endif
-  /* Linux, FreeBSD, AIX, IRIX, OSF/1, Solaris, Minix */
+  /* Linux, FreeBSD, AIX, IRIX, Solaris, Minix */
   #if defined ERESTART
   ASSERT (strcmp (strerrorname_np (ERESTART), "ERESTART") == 0);
   #endif
@@ -1261,7 +1225,7 @@ main (void)
   #if defined ERFKILL
   ASSERT (strcmp (strerrorname_np (ERFKILL), "ERFKILL") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined ERPCMISMATCH
   ASSERT (strcmp (strerrorname_np (ERPCMISMATCH), "ERPCMISMATCH") == 0);
   #endif
@@ -1273,7 +1237,7 @@ main (void)
   #if defined ESHLIBVERS
   ASSERT (strcmp (strerrorname_np (ESHLIBVERS), "ESHLIBVERS") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined ESHUTDOWN
   ASSERT (strcmp (strerrorname_np (ESHUTDOWN), "ESHUTDOWN") == 0);
   #endif
@@ -1281,11 +1245,11 @@ main (void)
   #if defined ESIGPARM
   ASSERT (strcmp (strerrorname_np (ESIGPARM), "ESIGPARM") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined ESOCKTNOSUPPORT
   ASSERT (strcmp (strerrorname_np (ESOCKTNOSUPPORT), "ESOCKTNOSUPPORT") == 0);
   #endif
-  /* AIX, OSF/1 */
+  /* AIX */
   #if defined ESOFT
   ASSERT (strcmp (strerrorname_np (ESOFT), "ESOFT") == 0);
   #endif
@@ -1297,15 +1261,11 @@ main (void)
   #if defined ESTRPIPE
   ASSERT (strcmp (strerrorname_np (ESTRPIPE), "ESTRPIPE") == 0);
   #endif
-  /* OSF/1 */
-  #if defined ESUCCESS
-  ASSERT (strcmp (strerrorname_np (ESUCCESS), "ESUCCESS") == 0);
-  #endif
   /* AIX */
   #if defined ESYSERROR
   ASSERT (strcmp (strerrorname_np (ESYSERROR), "ESYSERROR") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined ETOOMANYREFS
   ASSERT (strcmp (strerrorname_np (ETOOMANYREFS), "ETOOMANYREFS") == 0);
   #endif
@@ -1325,13 +1285,9 @@ main (void)
   #if defined EURG
   ASSERT (strcmp (strerrorname_np (EURG), "EURG") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined EUSERS
   ASSERT (strcmp (strerrorname_np (EUSERS), "EUSERS") == 0);
-  #endif
-  /* OSF/1 */
-  #if defined EVERSION
-  ASSERT (strcmp (strerrorname_np (EVERSION), "EVERSION") == 0);
   #endif
   /* IRIX */
   #if defined EWRONGFS

@@ -282,10 +282,6 @@ strerrorname_np (int errnum)
     #if defined EADV
     case EADV:            return "EADV";
     #endif
-    /* OSF/1 */
-    #if defined EAIO
-    case EAIO:            return "EAIO";
-    #endif
     /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined EAUTH
     case EAUTH:           return "EAUTH";
@@ -346,7 +342,7 @@ strerrorname_np (int errnum)
     #if defined EBADREQUEST
     case EBADREQUEST:     return "EBADREQUEST";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined EBADRPC
     case EBADRPC:         return "EBADRPC";
     #endif
@@ -418,10 +414,6 @@ strerrorname_np (int errnum)
     #if defined ECLOCKCPU
     case ECLOCKCPU:       return "ECLOCKCPU";
     #endif
-    /* OSF/1 */
-    #if defined ECLONEME && ECLONEME != ERESTART
-    case ECLONEME:        return "ECLONEME";
-    #endif
     /* Linux, HP-UX, IRIX, Solaris, Cygwin */
     #if defined ECOMM
     case ECOMM:           return "ECOMM";
@@ -478,10 +470,6 @@ strerrorname_np (int errnum)
     #if defined EDIRIOCTL
     case EDIRIOCTL:       return "EDIRIOCTL";
     #endif
-    /* OSF/1 */
-    #if defined EDIRTY
-    case EDIRTY:          return "EDIRTY";
-    #endif
     /* IRIX */
     #if defined EDISJOINT
     case EDISJOINT:       return "EDISJOINT";
@@ -501,10 +489,6 @@ strerrorname_np (int errnum)
     /* Linux, HP-UX, Cygwin */
     #if defined EDOTDOT
     case EDOTDOT:         return "EDOTDOT";
-    #endif
-    /* OSF/1 */
-    #if defined EDUPPKG
-    case EDUPPKG:         return "EDUPPKG";
     #endif
     /* GNU/Hurd */
     #if defined ED_ALREADY_OPEN
@@ -550,10 +534,6 @@ strerrorname_np (int errnum)
     #if defined EEMPTY
     case EEMPTY:          return "EEMPTY";
     #endif
-    /* OSF/1 */
-    #if defined EEMULATE
-    case EEMULATE:        return "EEMULATE";
-    #endif
     /* IRIX */
     #if defined EENDOFMINOR
     case EENDOFMINOR:     return "EENDOFMINOR";
@@ -561,10 +541,6 @@ strerrorname_np (int errnum)
     /* IRIX */
     #if defined EENQUEUED
     case EENQUEUED:       return "EENQUEUED";
-    #endif
-    /* OSF/1 */
-    #if defined EFAIL
-    case EFAIL:           return "EFAIL";
     #endif
     /* AIX */
     #if defined EFORMAT
@@ -582,7 +558,7 @@ strerrorname_np (int errnum)
     #if defined EFSCORRUPTED
     case EFSCORRUPTED:    return "EFSCORRUPTED";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix, Cygwin */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
     #if defined EFTYPE
     case EFTYPE:          return "EFTYPE";
     #endif
@@ -602,7 +578,7 @@ strerrorname_np (int errnum)
     #if defined EGROUPLOOP
     case EGROUPLOOP:      return "EGROUPLOOP";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
     #if defined EHOSTDOWN
     case EHOSTDOWN:       return "EHOSTDOWN";
     #endif
@@ -617,10 +593,6 @@ strerrorname_np (int errnum)
     /* IRIX */
     #if defined EINIT
     case EINIT:           return "EINIT";
-    #endif
-    /* OSF/1 */
-    #if defined EINPROG
-    case EINPROG:         return "EINPROG";
     #endif
     /* IRIX */
     #if defined EINVALMODE
@@ -650,7 +622,7 @@ strerrorname_np (int errnum)
     #if defined EJOINED
     case EJOINED:         return "EJOINED";
     #endif
-    /* FreeBSD, OSF/1 */
+    /* FreeBSD */
     #if defined EJUSTRETURN
     case EJUSTRETURN:     return "EJUSTRETURN";
     #endif
@@ -942,7 +914,7 @@ strerrorname_np (int errnum)
     #if defined EMACH_SEND_WILL_NOTIFY
     case EMACH_SEND_WILL_NOTIFY:return "EMACH_SEND_WILL_NOTIFY";
     #endif
-    /* AIX, OSF/1 */
+    /* AIX */
     #if defined EMEDIA
     case EMEDIA:          return "EMEDIA";
     #endif
@@ -1001,10 +973,6 @@ strerrorname_np (int errnum)
     /* GNU/Hurd */
     #if defined EMIG_TYPE_ERROR
     case EMIG_TYPE_ERROR: return "EMIG_TYPE_ERROR";
-    #endif
-    /* OSF/1 */
-    #if defined EMTIMERS
-    case EMTIMERS:        return "EMTIMERS";
     #endif
     /* IRIX */
     #if defined EMUSTRUN
@@ -1102,7 +1070,7 @@ strerrorname_np (int errnum)
     #if defined ENONET
     case ENONET:          return "ENONET";
     #endif
-    /* Linux, HP-UX, IRIX, OSF/1, Solaris, Cygwin */
+    /* Linux, HP-UX, IRIX, Solaris, Cygwin */
     #if defined ENOPKG
     case ENOPKG:          return "ENOPKG";
     #endif
@@ -1126,7 +1094,7 @@ strerrorname_np (int errnum)
     #if defined ENOSHARE
     case ENOSHARE:        return "ENOSHARE";
     #endif
-    /* Linux, HP-UX, OSF/1 */
+    /* Linux, HP-UX */
     #if defined ENOSYM
     case ENOSYM:          return "ENOSYM";
     #endif
@@ -1134,7 +1102,7 @@ strerrorname_np (int errnum)
     #if defined ENOTACTIVE
     case ENOTACTIVE:      return "ENOTACTIVE";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
     #if defined ENOTBLK
     case ENOTBLK:         return "ENOTBLK";
     #endif
@@ -1194,23 +1162,23 @@ strerrorname_np (int errnum)
     #if defined EPACKSIZE
     case EPACKSIZE:       return "EPACKSIZE";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
     #if defined EPFNOSUPPORT
     case EPFNOSUPPORT:    return "EPFNOSUPPORT";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, OSF/1, Minix, Cygwin */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, Minix, Cygwin */
     #if defined EPROCLIM
     case EPROCLIM:        return "EPROCLIM";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined EPROCUNAVAIL
     case EPROCUNAVAIL:    return "EPROCUNAVAIL";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined EPROGMISMATCH
     case EPROGMISMATCH:   return "EPROGMISMATCH";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined EPROGUNAVAIL
     case EPROGUNAVAIL:    return "EPROGUNAVAIL";
     #endif
@@ -1226,10 +1194,6 @@ strerrorname_np (int errnum)
     #if defined ERELOC
     case ERELOC:          return "ERELOC";
     #endif
-    /* OSF/1 */
-    #if defined ERELOCATED
-    case ERELOCATED:      return "ERELOCATED";
-    #endif
     /* FreeBSD */
     #if defined ERELOOKUP
     case ERELOOKUP:       return "ERELOOKUP";
@@ -1242,7 +1206,7 @@ strerrorname_np (int errnum)
     #if defined EREMDEV
     case EREMDEV:         return "EREMDEV";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
     #if defined EREMOTE
     case EREMOTE:         return "EREMOTE";
     #endif
@@ -1254,7 +1218,7 @@ strerrorname_np (int errnum)
     #if defined EREMOTERELEASE
     case EREMOTERELEASE:  return "EREMOTERELEASE";
     #endif
-    /* Linux, FreeBSD, AIX, IRIX, OSF/1, Solaris, Minix */
+    /* Linux, FreeBSD, AIX, IRIX, Solaris, Minix */
     #if defined ERESTART
     case ERESTART:        return "ERESTART";
     #endif
@@ -1262,7 +1226,7 @@ strerrorname_np (int errnum)
     #if defined ERFKILL
     case ERFKILL:         return "ERFKILL";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
     #if defined ERPCMISMATCH
     case ERPCMISMATCH:    return "ERPCMISMATCH";
     #endif
@@ -1274,7 +1238,7 @@ strerrorname_np (int errnum)
     #if defined ESHLIBVERS
     case ESHLIBVERS:      return "ESHLIBVERS";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
     #if defined ESHUTDOWN
     case ESHUTDOWN:       return "ESHUTDOWN";
     #endif
@@ -1282,7 +1246,7 @@ strerrorname_np (int errnum)
     #if defined ESIGPARM
     case ESIGPARM:        return "ESIGPARM";
     #endif
-    /* AIX, OSF/1 */
+    /* AIX */
     #if defined ESOFT
     case ESOFT:           return "ESOFT";
     #endif
@@ -1294,15 +1258,11 @@ strerrorname_np (int errnum)
     #if defined ESTRPIPE
     case ESTRPIPE:        return "ESTRPIPE";
     #endif
-    /* OSF/1 */
-    #if defined ESUCCESS
-    case ESUCCESS:        return "ESUCCESS";
-    #endif
     /* AIX */
     #if defined ESYSERROR
     case ESYSERROR:       return "ESYSERROR";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
     #if defined ETOOMANYREFS
     case ETOOMANYREFS:    return "ETOOMANYREFS";
     #endif
@@ -1322,13 +1282,9 @@ strerrorname_np (int errnum)
     #if defined EURG
     case EURG:            return "EURG";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
     #if defined EUSERS
     case EUSERS:          return "EUSERS";
-    #endif
-    /* OSF/1 */
-    #if defined EVERSION
-    case EVERSION:        return "EVERSION";
     #endif
     /* IRIX */
     #if defined EWRONGFS

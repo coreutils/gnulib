@@ -282,10 +282,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EADV
   if (callback (data, EADV)) return;
   #endif
-  /* OSF/1 */
-  #if defined EAIO
-  if (callback (data, EAIO)) return;
-  #endif
   /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EAUTH
   if (callback (data, EAUTH)) return;
@@ -346,7 +342,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EBADREQUEST
   if (callback (data, EBADREQUEST)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EBADRPC
   if (callback (data, EBADRPC)) return;
   #endif
@@ -418,10 +414,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ECLOCKCPU
   if (callback (data, ECLOCKCPU)) return;
   #endif
-  /* OSF/1 */
-  #if defined ECLONEME && ECLONEME != ERESTART
-  if (callback (data, ECLONEME)) return;
-  #endif
   /* Linux, HP-UX, IRIX, Solaris, Cygwin */
   #if defined ECOMM
   if (callback (data, ECOMM)) return;
@@ -478,10 +470,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EDIRIOCTL
   if (callback (data, EDIRIOCTL)) return;
   #endif
-  /* OSF/1 */
-  #if defined EDIRTY
-  if (callback (data, EDIRTY)) return;
-  #endif
   /* IRIX */
   #if defined EDISJOINT
   if (callback (data, EDISJOINT)) return;
@@ -501,10 +489,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   /* Linux, HP-UX, Cygwin */
   #if defined EDOTDOT
   if (callback (data, EDOTDOT)) return;
-  #endif
-  /* OSF/1 */
-  #if defined EDUPPKG
-  if (callback (data, EDUPPKG)) return;
   #endif
   /* GNU/Hurd */
   #if defined ED_ALREADY_OPEN
@@ -550,10 +534,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EEMPTY
   if (callback (data, EEMPTY)) return;
   #endif
-  /* OSF/1 */
-  #if defined EEMULATE
-  if (callback (data, EEMULATE)) return;
-  #endif
   /* IRIX */
   #if defined EENDOFMINOR
   if (callback (data, EENDOFMINOR)) return;
@@ -561,10 +541,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   /* IRIX */
   #if defined EENQUEUED
   if (callback (data, EENQUEUED)) return;
-  #endif
-  /* OSF/1 */
-  #if defined EFAIL
-  if (callback (data, EFAIL)) return;
   #endif
   /* AIX */
   #if defined EFORMAT
@@ -582,7 +558,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EFSCORRUPTED
   if (callback (data, EFSCORRUPTED)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
   #if defined EFTYPE
   if (callback (data, EFTYPE)) return;
   #endif
@@ -602,7 +578,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EGROUPLOOP
   if (callback (data, EGROUPLOOP)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EHOSTDOWN
   if (callback (data, EHOSTDOWN)) return;
   #endif
@@ -617,10 +593,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   /* IRIX */
   #if defined EINIT
   if (callback (data, EINIT)) return;
-  #endif
-  /* OSF/1 */
-  #if defined EINPROG
-  if (callback (data, EINPROG)) return;
   #endif
   /* IRIX */
   #if defined EINVALMODE
@@ -650,7 +622,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EJOINED
   if (callback (data, EJOINED)) return;
   #endif
-  /* FreeBSD, OSF/1 */
+  /* FreeBSD */
   #if defined EJUSTRETURN
   if (callback (data, EJUSTRETURN)) return;
   #endif
@@ -942,7 +914,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EMACH_SEND_WILL_NOTIFY
   if (callback (data, EMACH_SEND_WILL_NOTIFY)) return;
   #endif
-  /* AIX, OSF/1 */
+  /* AIX */
   #if defined EMEDIA
   if (callback (data, EMEDIA)) return;
   #endif
@@ -1001,10 +973,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   /* GNU/Hurd */
   #if defined EMIG_TYPE_ERROR
   if (callback (data, EMIG_TYPE_ERROR)) return;
-  #endif
-  /* OSF/1 */
-  #if defined EMTIMERS
-  if (callback (data, EMTIMERS)) return;
   #endif
   /* IRIX */
   #if defined EMUSTRUN
@@ -1102,7 +1070,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ENONET
   if (callback (data, ENONET)) return;
   #endif
-  /* Linux, HP-UX, IRIX, OSF/1, Solaris, Cygwin */
+  /* Linux, HP-UX, IRIX, Solaris, Cygwin */
   #if defined ENOPKG
   if (callback (data, ENOPKG)) return;
   #endif
@@ -1126,7 +1094,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ENOSHARE
   if (callback (data, ENOSHARE)) return;
   #endif
-  /* Linux, HP-UX, OSF/1 */
+  /* Linux, HP-UX */
   #if defined ENOSYM
   if (callback (data, ENOSYM)) return;
   #endif
@@ -1134,7 +1102,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ENOTACTIVE
   if (callback (data, ENOTACTIVE)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined ENOTBLK
   if (callback (data, ENOTBLK)) return;
   #endif
@@ -1194,23 +1162,23 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EPACKSIZE
   if (callback (data, EPACKSIZE)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EPFNOSUPPORT
   if (callback (data, EPFNOSUPPORT)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, OSF/1, Minix, Cygwin */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, Minix, Cygwin */
   #if defined EPROCLIM
   if (callback (data, EPROCLIM)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROCUNAVAIL
   if (callback (data, EPROCUNAVAIL)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROGMISMATCH
   if (callback (data, EPROGMISMATCH)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined EPROGUNAVAIL
   if (callback (data, EPROGUNAVAIL)) return;
   #endif
@@ -1226,10 +1194,6 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ERELOC
   if (callback (data, ERELOC)) return;
   #endif
-  /* OSF/1 */
-  #if defined ERELOCATED
-  if (callback (data, ERELOCATED)) return;
-  #endif
   /* FreeBSD */
   #if defined ERELOOKUP
   if (callback (data, ERELOOKUP)) return;
@@ -1242,7 +1206,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EREMDEV
   if (callback (data, EREMDEV)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined EREMOTE
   if (callback (data, EREMOTE)) return;
   #endif
@@ -1254,7 +1218,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EREMOTERELEASE
   if (callback (data, EREMOTERELEASE)) return;
   #endif
-  /* Linux, FreeBSD, AIX, IRIX, OSF/1, Solaris, Minix */
+  /* Linux, FreeBSD, AIX, IRIX, Solaris, Minix */
   #if defined ERESTART
   if (callback (data, ERESTART)) return;
   #endif
@@ -1262,7 +1226,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ERFKILL
   if (callback (data, ERFKILL)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, OSF/1, Minix */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined ERPCMISMATCH
   if (callback (data, ERPCMISMATCH)) return;
   #endif
@@ -1274,7 +1238,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ESHLIBVERS
   if (callback (data, ESHLIBVERS)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Haiku, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Haiku, Cygwin */
   #if defined ESHUTDOWN
   if (callback (data, ESHUTDOWN)) return;
   #endif
@@ -1282,7 +1246,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ESIGPARM
   if (callback (data, ESIGPARM)) return;
   #endif
-  /* AIX, OSF/1 */
+  /* AIX */
   #if defined ESOFT
   if (callback (data, ESOFT)) return;
   #endif
@@ -1294,15 +1258,11 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined ESTRPIPE
   if (callback (data, ESTRPIPE)) return;
   #endif
-  /* OSF/1 */
-  #if defined ESUCCESS
-  if (callback (data, ESUCCESS)) return;
-  #endif
   /* AIX */
   #if defined ESYSERROR
   if (callback (data, ESYSERROR)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined ETOOMANYREFS
   if (callback (data, ETOOMANYREFS)) return;
   #endif
@@ -1322,13 +1282,9 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EURG
   if (callback (data, EURG)) return;
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Minix, Cygwin */
   #if defined EUSERS
   if (callback (data, EUSERS)) return;
-  #endif
-  /* OSF/1 */
-  #if defined EVERSION
-  if (callback (data, EVERSION)) return;
   #endif
   /* IRIX */
   #if defined EWRONGFS
