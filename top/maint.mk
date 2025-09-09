@@ -1733,7 +1733,7 @@ init-coverage:
 	$(MAKE) $(AM_MAKEFLAGS) clean
 	lcov --directory . --zerocounters
 
-COVERAGE_CCOPTS ?= "-g --coverage"
+COVERAGE_CCOPTS ?= "-g --coverage -Wno-error"
 COVERAGE_OUT ?= doc/coverage
 
 build-coverage:
@@ -1741,12 +1741,13 @@ build-coverage:
 	$(MAKE) $(AM_MAKEFLAGS) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
 	mkdir -p $(COVERAGE_OUT)
 	lcov --directory . --output-file $(COVERAGE_OUT)/$(PACKAGE).info \
-		--capture
+		--capture --ignore-errors negative,source
 
 gen-coverage:
 	genhtml --output-directory $(COVERAGE_OUT) \
 		$(COVERAGE_OUT)/$(PACKAGE).info \
 		--frames --legend \
+		--ignore-errors source --synthesize-missing \
 		--title "$(PACKAGE_NAME)"
 
 coverage:
