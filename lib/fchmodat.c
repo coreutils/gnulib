@@ -22,7 +22,7 @@
 #define __need_system_sys_stat_h
 #include <config.h>
 
-/* Specification.  */
+/* Get the original definition of fchmodat.  */
 #include <sys/stat.h>
 #undef __need_system_sys_stat_h
 
@@ -41,14 +41,8 @@ orig_fchmodat (int dir, char const *file, mode_t mode, int flags)
 #include <string.h>
 #include <unistd.h>
 
-#ifdef __osf__
-/* Write "sys/stat.h" here, not <sys/stat.h>, otherwise OSF/1 5.1 DTK cc
-   eliminates this include because of the preliminary #include <sys/stat.h>
-   above.  */
-# include "sys/stat.h"
-#else
-# include <sys/stat.h>
-#endif
+/* Specification.  */
+#include <sys/stat.h>
 
 #include <intprops.h>
 
