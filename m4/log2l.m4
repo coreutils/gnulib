@@ -1,5 +1,5 @@
 # log2l.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,7 +73,6 @@ AC_DEFUN([gl_FUNC_LOG2L],
 ])
 
 dnl Test whether log2l() works.
-dnl On OSF/1 5.1, log2l(-0.0) is NaN.
 dnl On musl 1.2.2/{arm64,s390x}, the result is accurate to only 16 digits.
 dnl On musl 1.2.2/{arm64,s390x} and NetBSD 10.0, the result is Infinity for
 dnl some large finite arguments.
@@ -133,13 +132,6 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_log2l) (long double) = argc ? log2l : dummy;
   int result = 0;
-  /* This test fails on OSF/1 5.1.  */
-  {
-    gx = -0.0L;
-    gy = my_log2l (gx);
-    if (!(gy + gy == gy))
-      result |= 1;
-  }
   /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
@@ -153,7 +145,7 @@ int main (int argc, char *argv[])
     long double z = my_log2l (1.0L / x);
     long double err = (y + z) * TWO_LDBL_MANT_DIG;
     if (!(err >= -10000.0L && err <= 10000.0L))
-      result |= 2;
+      result |= 1;
   }
   /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 10.0.  */
   if (DBL_MAX_EXP < LDBL_MAX_EXP)
@@ -161,7 +153,7 @@ int main (int argc, char *argv[])
       long double x = ldexpl (1.0L, DBL_MAX_EXP); /* finite! */
       long double y = my_log2l (x);
       if (y > 0 && y + y == y) /* infinite? */
-        result |= 4;
+        result |= 2;
     }
   return result;
 }
@@ -173,8 +165,8 @@ int main (int argc, char *argv[])
            *-gnu* | gnu*)      gl_cv_func_log2l_works="guessing yes" ;;
                                # Guess no on musl systems.
            *-musl* | midipix*) gl_cv_func_log2l_works="guessing no" ;;
-                               # Guess no on NetBSD and OSF/1.
-           netbsd* | osf*)     gl_cv_func_log2l_works="guessing no" ;;
+                               # Guess no on NetBSD.
+           netbsd*)            gl_cv_func_log2l_works="guessing no" ;;
                                # Guess yes on native Windows.
            mingw* | windows*)  gl_cv_func_log2l_works="guessing yes" ;;
                                # If we don't know, obey --enable-cross-guesses.
