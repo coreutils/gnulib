@@ -26,17 +26,14 @@
  #error "Please include config.h first."
 #endif
 
-/* On OSF/1 and Solaris 2.6, <sys/types.h> and <sys/time.h>
-   both include <sys/select.h>.
+/* On Solaris 2.6, <sys/types.h> and <sys/time.h> both include <sys/select.h>.
    On Cygwin and OpenBSD, <sys/time.h> includes <sys/select.h>.
    Simply delegate to the system's header in this case.  */
 #if (@HAVE_SYS_SELECT_H@                                                \
      && !defined _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TYPES_H             \
-     && ((defined __osf__ && defined _SYS_TYPES_H_                      \
-          && defined _OSF_SOURCE)                                       \
-         || (defined __sun && defined _SYS_TYPES_H                      \
-             && (! (defined _XOPEN_SOURCE || defined _POSIX_C_SOURCE)   \
-                 || defined __EXTENSIONS__))))
+     && (defined __sun && defined _SYS_TYPES_H                          \
+         && (! (defined _XOPEN_SOURCE || defined _POSIX_C_SOURCE)       \
+             || defined __EXTENSIONS__)))
 
 # define _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TYPES_H
 # @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
@@ -44,9 +41,7 @@
 #elif (@HAVE_SYS_SELECT_H@                                              \
        && (defined _CYGWIN_SYS_TIME_H                                   \
            || (!defined _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TIME_H       \
-               && ((defined __osf__ && defined _SYS_TIME_H_             \
-                    && defined _OSF_SOURCE)                             \
-                   || (defined __OpenBSD__ && defined _SYS_TIME_H_)     \
+               && ((defined __OpenBSD__ && defined _SYS_TIME_H_)        \
                    || (defined __sun && defined _SYS_TIME_H             \
                        && (! (defined _XOPEN_SOURCE                     \
                               || defined _POSIX_C_SOURCE)               \
@@ -90,9 +85,7 @@
 
 #if @HAVE_SYS_SELECT_H@
 
-/* On OSF/1 4.0, <sys/select.h> provides only a forward declaration
-   of 'struct timeval', and no definition of this type.
-   Also, Mac OS X, AIX, HP-UX, IRIX, Solaris, Interix declare select()
+/* Mac OS X, AIX, HP-UX, IRIX, Solaris, Interix declare select()
    in <sys/time.h>.
    But avoid namespace pollution on glibc systems, a circular include
    <sys/select.h> -> <sys/time.h> -> <sys/select.h> on FreeBSD 13.1, and
@@ -353,11 +346,11 @@ _GL_WARN_ON_USE (select, "select is not always POSIX compliant - "
 /* On AIX 7 and Solaris 10, <sys/select.h> provides an FD_ZERO implementation
    that relies on memset(), but without including <string.h>.
    But in any case avoid namespace pollution on glibc systems.  */
-# if (defined __OpenBSD__ || defined _AIX || defined __sun || defined __osf__ || defined __BEOS__) \
+# if (defined __OpenBSD__ || defined _AIX || defined __sun || defined __BEOS__) \
      && ! defined __GLIBC__
 #  include <string.h>
 # endif
 
 
 #endif /* _@GUARD_PREFIX@_SYS_SELECT_H */
-#endif /* OSF/1 */
+#endif
