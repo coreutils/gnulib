@@ -65,7 +65,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, osf1, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, irix, none.
   # TODO: Support also native Windows platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -102,14 +102,8 @@ cd "$builddir" ||
       fi
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
-        # Tru64, NonStop Kernel.
-        if (getacl -m tmpfile0 >/dev/null) 2>/dev/null; then
-          # Tru64.
-          acl_flavor=osf1
-        else
-          # NonStop Kernel.
-          acl_flavor=nsk
-        fi
+        # NonStop Kernel.
+        acl_flavor=nsk
       else
         if (aclget tmpfile0 >/dev/null) 2>/dev/null; then
           # AIX.
@@ -195,9 +189,6 @@ cd "$builddir" ||
             orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`
             chacl -r "${orig}($auid.%,--x)" tmpfile0 \
               || setacl -m user:$auid:1 tmpfile0
-            ;;
-          osf1)
-            setacl -u user:$auid:1 tmpfile0
             ;;
           nsk)
             setacl -m user:$auid:1 tmpfile0

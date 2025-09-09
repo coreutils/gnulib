@@ -115,7 +115,7 @@ main (int argc, char *argv[])
       }
   }
   {
-#if HAVE_ACL_GET_FILE /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
+#if HAVE_ACL_GET_FILE /* Linux, FreeBSD, Mac OS X, IRIX */
     static const int types[] =
       {
         ACL_TYPE_ACCESS
