@@ -34,7 +34,6 @@
 #define ICONV_FLAVOR_AIX "iconv_open-aix.h"
 #define ICONV_FLAVOR_HPUX "iconv_open-hpux.h"
 #define ICONV_FLAVOR_IRIX "iconv_open-irix.h"
-#define ICONV_FLAVOR_OSF "iconv_open-osf.h"
 #define ICONV_FLAVOR_SOLARIS "iconv_open-solaris.h"
 #define ICONV_FLAVOR_ZOS "iconv_open-zos.h"
 
@@ -53,8 +52,6 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
 
 #if REPLACE_ICONV_UTF
   /* Special handling of conversion between UTF-8 and UTF-{16,32}{BE,LE}.
-     Do this here, before calling the real iconv_open(), because  OSF/1 5.1
-     iconv() to these encoding inserts a BOM, which is wrong.
      We do not need to handle conversion between arbitrary encodings and
      UTF-{16,32}{BE,LE}, because the 'striconveh' module implements two-step
      conversion through UTF-8.
@@ -115,8 +112,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
   }
 
   /* Convert the encodings to upper case, because
-       1. in the arguments of iconv_open() on AIX, HP-UX, and OSF/1 the case
-          matters,
+       1. in the arguments of iconv_open() on AIX and HP-UX, the case matters,
        2. it makes searching in the table faster.  */
   {
     const char *p = fromcode;

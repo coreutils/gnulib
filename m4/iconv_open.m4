@@ -1,5 +1,5 @@
 # iconv_open.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,6 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN],
         aix*)         iconv_flavor=ICONV_FLAVOR_AIX ;;
         irix*)        iconv_flavor=ICONV_FLAVOR_IRIX ;;
         hpux*)        iconv_flavor=ICONV_FLAVOR_HPUX ;;
-        osf*)         iconv_flavor=ICONV_FLAVOR_OSF ;;
         solaris*)     iconv_flavor=ICONV_FLAVOR_SOLARIS ;;
         openedition*) iconv_flavor=ICONV_FLAVOR_ZOS ;;
       esac
