@@ -1,5 +1,5 @@
 # ptsname_r.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,41 +17,15 @@ AC_DEFUN([gl_FUNC_PTSNAME_R],
   if test $ac_cv_func_ptsname_r = no; then
     HAVE_PTSNAME_R=0
   else
-    dnl On OSF/1 5.1, the type of the third argument is 'int', not 'size_t',
-    dnl and the declaration is missing if _REENTRANT is not defined.
-    AC_CACHE_CHECK([whether ptsname_r has the same signature as in glibc],
-      [gl_cv_func_ptsname_r_signature_ok],
-      [AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM(
-            [[#include <stddef.h>
-              #include <stdlib.h>
-              /* Test whether ptsname_r is declared at all.  */
-              int (*f) (int, char *, size_t) = ptsname_r;
-              /* Test whether it has the same declaration as in glibc.  */
-              #undef ptsname_r
-              extern
-              #ifdef __cplusplus
-              "C"
-              #endif
-              int ptsname_r (int, char *, size_t);
-            ]],
-            [[return f (0, NULL, 0);]])
-         ],
-         [gl_cv_func_ptsname_r_signature_ok=yes],
-         [gl_cv_func_ptsname_r_signature_ok=no])
-      ])
-    if test $gl_cv_func_ptsname_r_signature_ok = no; then
-      REPLACE_PTSNAME_R=1
-    else
-      AC_DEFINE([HAVE_ESSENTIALLY_WORKING_PTSNAME_R], [1],
-        [Define to 1 if ptsname_r() is essentially working.])
-      dnl On FreeBSD 13.0 and Android 4.3, when ptsname_r fails, it returns -1
-      dnl instead of the error code.
-      AC_REQUIRE([AC_CANONICAL_HOST])
-      AC_CACHE_CHECK([whether ptsname_r returns an error code],
-        [gl_cv_func_ptsname_r_retval_ok],
-        [AC_RUN_IFELSE(
-           [AC_LANG_SOURCE([[
+    AC_DEFINE([HAVE_ESSENTIALLY_WORKING_PTSNAME_R], [1],
+      [Define to 1 if ptsname_r() is essentially working.])
+    dnl On FreeBSD 13.0 and Android 4.3, when ptsname_r fails, it returns -1
+    dnl instead of the error code.
+    AC_REQUIRE([AC_CANONICAL_HOST])
+    AC_CACHE_CHECK([whether ptsname_r returns an error code],
+      [gl_cv_func_ptsname_r_retval_ok],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
 #include <stdlib.h>
 int
 main (void)
@@ -59,32 +33,31 @@ main (void)
   char buf[80];
   return ptsname_r (-1, buf, sizeof buf) == -1;
 }]])],
-           [gl_cv_func_ptsname_r_retval_ok=yes],
-           [gl_cv_func_ptsname_r_retval_ok=no],
-           [case "$host_os" in
-              dnl Guess no on FreeBSD, Android.
-              freebsd* | dragonfly* | midnightbsd* | linux*-android*)
-                gl_cv_func_ptsname_r_retval_ok="guessing no" ;;
-              dnl Guess yes otherwise.
-              *)
-                gl_cv_func_ptsname_r_retval_ok="guessing yes" ;;
-            esac
-           ])
-        ])
-      case "$gl_cv_func_ptsname_r_retval_ok" in
-        *yes) ;;
-        *) REPLACE_PTSNAME_R=1 ;;
-      esac
-      dnl On NetBSD 10.0, when ptsname_r fails with ERANGE, it clobbers the
-      dnl result buffer. We don't use an AC_RUN_IFELSE test here, because
-      dnl while the bug exists on all platforms, only NetBSD/i386 has the
-      dnl files /dev/ptyp[01] on which the bug becomes apparent.
-      dnl
-      dnl On Solaris 11 OmniOS the result buffer is clobbered as well.
-      case "$host_os" in
-        netbsd* | solaris*) REPLACE_PTSNAME_R=1 ;;
-      esac
-    fi
+         [gl_cv_func_ptsname_r_retval_ok=yes],
+         [gl_cv_func_ptsname_r_retval_ok=no],
+         [case "$host_os" in
+            dnl Guess no on FreeBSD, Android.
+            freebsd* | dragonfly* | midnightbsd* | linux*-android*)
+              gl_cv_func_ptsname_r_retval_ok="guessing no" ;;
+            dnl Guess yes otherwise.
+            *)
+              gl_cv_func_ptsname_r_retval_ok="guessing yes" ;;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_ptsname_r_retval_ok" in
+      *yes) ;;
+      *) REPLACE_PTSNAME_R=1 ;;
+    esac
+    dnl On NetBSD 10.0, when ptsname_r fails with ERANGE, it clobbers the
+    dnl result buffer. We don't use an AC_RUN_IFELSE test here, because
+    dnl while the bug exists on all platforms, only NetBSD/i386 has the
+    dnl files /dev/ptyp[01] on which the bug becomes apparent.
+    dnl
+    dnl On Solaris 11 OmniOS the result buffer is clobbered as well.
+    case "$host_os" in
+      netbsd* | solaris*) REPLACE_PTSNAME_R=1 ;;
+    esac
   fi
 
   AC_REQUIRE([AC_HEADER_MAJOR])

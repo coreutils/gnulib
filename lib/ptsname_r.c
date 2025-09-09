@@ -49,7 +49,7 @@
 # include <stdio.h>
 #endif
 
-#if defined _AIX || defined __osf__
+#if defined _AIX
 /* Get ioctl(), ISPTM.  */
 # include <sys/ioctl.h>
 # include <stdio.h>
@@ -173,7 +173,7 @@ ptsname_r (int fd, char *buf, size_t buflen)
       }
     memcpy (buf, tmpbuf, n + 1);
   }
-# elif defined _AIX || defined __osf__ /* AIX, OSF/1 */
+# elif defined _AIX /* AIX */
   /* This implementation returns /dev/pts/N, like ptsname() does.
      Whereas the generic implementation below returns /dev/ttypN.
      Both are correct, but let's be consistent with ptsname().  */
@@ -189,13 +189,7 @@ ptsname_r (int fd, char *buf, size_t buflen)
     int dev;
     char tmpbuf[9 + 10 + 1];
     int n;
-#  ifdef _AIX
     ret = ioctl (fd, ISPTM, &dev);
-#  endif
-#  ifdef __osf__
-    ret = ioctl (fd, ISPTM, NULL);
-    dev = ret;
-#  endif
     if (ret < 0)
       {
         errno = ENOTTY;
