@@ -1,5 +1,5 @@
 # getlogin_r.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
     esac
   else
     HAVE_GETLOGIN_R=1
-    dnl On Mac OS X 10.13 and OSF/1 5.1, getlogin_r returns a truncated result
+    dnl On Mac OS X 10.13, getlogin_r returns a truncated result
     dnl if the buffer is not large enough.
     dnl On musl libc, getlogin_r returns getenv ("LOGNAME").
     AC_REQUIRE([AC_CANONICAL_HOST])
@@ -43,8 +43,8 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
         dnl Initial guess, used when cross-compiling.
 changequote(,)dnl
         case "$host_os" in
-                              # Guess no on Mac OS X, OSF/1.
-          darwin* | osf*)     gl_cv_func_getlogin_r_works="guessing no" ;;
+                              # Guess no on Mac OS X.
+          darwin*)            gl_cv_func_getlogin_r_works="guessing no" ;;
                               # Guess no on musl libc.
           *-musl* | midipix*) gl_cv_func_getlogin_r_works="guessing no" ;;
                               # Guess yes otherwise.
