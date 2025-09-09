@@ -140,21 +140,6 @@
 #  define SUNOS_5
 # endif
 
-# if defined (__osf__) && defined (__alpha)
-#  define OSF_ALPHA
-#  include <sys/mbuf.h>
-#  include <sys/socket.h>
-#  include <net/route.h>
-#  include <sys/table.h>
-/* Tru64 4.0D's table.h redefines sys */
-#  undef sys
-# endif
-
-# if defined (__osf__) && (defined (mips) || defined (__mips__))
-#  define OSF_MIPS
-#  include <sys/table.h>
-# endif
-
 
 /* VAX C can't handle multi-line #ifs, or lines longer than 256 chars.  */
 # ifndef LOAD_AVE_TYPE
@@ -175,22 +160,11 @@
 #   define LOAD_AVE_TYPE long
 #  endif
 
-#  ifdef OSF_ALPHA
-#   define LOAD_AVE_TYPE long
-#  endif
-
 #  if defined _AIX && ! defined HAVE_LIBPERFSTAT
 #   define LOAD_AVE_TYPE long
 #  endif
 
 # endif /* No LOAD_AVE_TYPE.  */
-
-# ifdef OSF_ALPHA
-/* <sys/param.h> defines an incorrect value for FSCALE on Alpha OSF/1,
-   according to ghazi@noc.rutgers.edu.  */
-#  undef FSCALE
-#  define FSCALE 1024.0
-# endif
 
 
 # ifndef FSCALE
@@ -780,18 +754,6 @@ getloadavg (double loadavg[], int nelem)
       loadavg[elem] = 0.0;
     }
 # endif  /* __MSDOS__ || WINDOWS32 */
-
-# if !defined (LDAV_DONE) && defined (OSF_ALPHA)           /* OSF/1 */
-#  define LDAV_DONE
-
-  struct tbl_loadavg load_ave;
-  table (TBL_LOADAVG, 0, &load_ave, 1, sizeof (load_ave));
-  for (elem = 0; elem < nelem; elem++)
-    loadavg[elem]
-      = (load_ave.tl_lscale == 0
-         ? load_ave.tl_avenrun.d[elem]
-         : (load_ave.tl_avenrun.l[elem] / (double) load_ave.tl_lscale));
-# endif /* OSF_ALPHA */
 
 # if ! defined LDAV_DONE && defined __VMS                  /* VMS */
   /* VMS specific code -- read from the Load Ave driver.  */
