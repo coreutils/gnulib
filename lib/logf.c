@@ -24,16 +24,11 @@ logf (float x)
 #undef logf
 {
 #if HAVE_LOGF
-  if (x <= 0.0f)
+  if (x < 0.0f)
     {
-      /* Work around the OSF/1 5.1 bug.  */
-      if (x == 0.0f)
-        /* Return -Infinity.  */
-        return -1.0f / 0.0f;
       /* Work around the NetBSD 5.1 bug.  */
-      else /* x < 0.0 */
-        /* Return NaN.  */
-        return 0.0f / 0.0f;
+      /* Return NaN.  */
+      return 0.0f / 0.0f;
     }
   return logf (x);
 #else
