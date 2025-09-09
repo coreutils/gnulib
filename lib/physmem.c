@@ -35,16 +35,8 @@
 #endif
 
 #if HAVE_SYS_SYSINFO_H
-/* Linux, AIX, HP-UX, IRIX, OSF/1, Solaris, Cygwin, Android */
+/* Linux, AIX, HP-UX, IRIX, Solaris, Cygwin, Android */
 # include <sys/sysinfo.h>
-#endif
-
-#if HAVE_MACHINE_HAL_SYSINFO_H /* OSF/1 */
-# include <machine/hal_sysinfo.h>
-#endif
-
-#if HAVE_SYS_TABLE_H /* OSF/1 */
-# include <sys/table.h>
 #endif
 
 #include <sys/types.h>
@@ -140,21 +132,6 @@ physmem_total (void)
         double pages = realmem.physmem;
         if (0 <= pages && 0 <= pagesize)
           return pages * pagesize;
-      }
-  }
-#endif
-
-#if HAVE_GETSYSINFO && defined GSI_PHYSMEM
-  { /* This works on Tru64 UNIX V4/5.  */
-    int physmem;
-
-    if (getsysinfo (GSI_PHYSMEM, (caddr_t) &physmem, sizeof (physmem),
-                    NULL, NULL, NULL) == 1)
-      {
-        double kbytes = physmem;
-
-        if (0 <= kbytes)
-          return kbytes * 1024.0;
       }
   }
 #endif
@@ -325,21 +302,6 @@ physmem_claimable (double aggressivity)
       {
         double pagesize = sysconf (_SC_PAGESIZE);
         double pages = realmem.availrmem;
-        if (0 <= pages && 0 <= pagesize)
-          return pages * pagesize;
-      }
-  }
-#endif
-
-#if HAVE_TABLE && defined TBL_VMSTATS
-  { /* This works on Tru64 UNIX V4/5.  */
-    struct tbl_vmstats vmstats;
-
-    if (table (TBL_VMSTATS, 0, &vmstats, 1, sizeof (vmstats)) == 1)
-      {
-        double pages = vmstats.free_count;
-        double pagesize = vmstats.pagesize;
-
         if (0 <= pages && 0 <= pagesize)
           return pages * pagesize;
       }
