@@ -1,5 +1,5 @@
 # truncl.m4
-# serial 20
+# serial 21
 dnl Copyright (C) 2007-2008, 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,37 +49,8 @@ AC_DEFUN([gl_FUNC_TRUNCL],
     if test "$TRUNCL_LIBM" = "?"; then
       TRUNCL_LIBM=
     fi
-    dnl Test whether truncl() works. It crashes on OSF/1 4.0d.
-    saved_LIBS="$LIBS"
-    LIBS="$LIBS $TRUNCL_LIBM"
-    AC_CACHE_CHECK([whether truncl works], [gl_cv_func_truncl_works],
-      [
-        AC_RUN_IFELSE(
-          [AC_LANG_SOURCE([[
-#include <math.h>
-long double x;
-int main()
-{
-  x = truncl (0.0L);
-  return 0;
-}]])],
-          [gl_cv_func_truncl_works=yes],
-          [gl_cv_func_truncl_works=no],
-          [case "$host_os" in
-             osf4*)             gl_cv_func_truncl_works="guessing no" ;;
-                                # Guess yes on native Windows.
-             mingw* | windows*) gl_cv_func_truncl_works="guessing yes" ;;
-             *)                 gl_cv_func_truncl_works="guessing yes" ;;
-           esac
-          ])
-      ])
-    LIBS="$saved_LIBS"
-    case "$gl_cv_func_truncl_works" in
-      *yes) ;;
-      *) REPLACE_TRUNCL=1 ;;
-    esac
     m4_ifdef([gl_FUNC_TRUNCL_IEEE], [
-      if test $gl_truncl_required = ieee && test $REPLACE_TRUNCL = 0; then
+      if test $gl_truncl_required = ieee; then
         AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether truncl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_truncl_ieee],
