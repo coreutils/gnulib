@@ -384,9 +384,9 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
 
 #if (!USE_LINUX_XATTR && USE_ACL && HAVE_ACL_GET_FILE \
      && !HAVE_ACL_EXTENDED_FILE && !HAVE_ACL_TYPE_EXTENDED)
-/* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
+/* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
 
-# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP /* IRIX, Tru64, Cygwin >= 2.5 */
+# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP /* IRIX, Cygwin >= 2.5 */
 #  include <fcntl.h>
 #  ifdef O_PATH
 #   define acl_get_fd_np(fd, type) acl_get_fd (fd)
@@ -522,7 +522,7 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
 
   {
     /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-    /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
+    /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, IRIX, Cygwin >= 2.5 */
     int ret;
 
 #   if HAVE_ACL_EXTENDED_FILE /* Linux */
@@ -553,7 +553,7 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
       }
     else
       ret = -1;
-#   else /* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
+#   else /* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
 
     acl_t acl = acl_get_fdfile (fd, name, ACL_TYPE_ACCESS, flags);
     if (acl)
@@ -562,11 +562,6 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
         int saved_errno = errno;
         acl_free (acl);
         errno = saved_errno;
-#    if HAVE_ACL_FREE_TEXT /* Tru64 */
-        /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
-           returns NULL with errno not set.  There is no point in
-           making this call.  */
-#    else /* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
         /* On Linux, FreeBSD, NetBSD, IRIX,
                acl_get_file (name, ACL_TYPE_ACCESS)
            and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
@@ -580,26 +575,25 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
             acl = acl_get_fdfile (fd, name, ACL_TYPE_DEFAULT, flags);
             if (acl)
               {
-#     ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
                 ret = acl_access_nontrivial (acl);
                 saved_errno = errno;
                 acl_free (acl);
                 errno = saved_errno;
-#     else
+#    else
                 ret = (0 < acl_entries (acl));
                 acl_free (acl);
-#     endif
+#    endif
               }
             else
               {
                 ret = -1;
-#     ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
                 if (d_type == DT_UNKNOWN)
                   ret = 0;
-#     endif
+#    endif
               }
           }
-#    endif
       }
     else
       ret = -1;
