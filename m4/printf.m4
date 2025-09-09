@@ -1,5 +1,5 @@
 # printf.m4
-# serial 96
+# serial 97
 dnl Copyright (C) 2003, 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1591,8 +1591,6 @@ changequote(,)dnl
                            ;;
                            # Guess yes on IRIX.
           irix*)           gl_cv_func_printf_enomem="guessing yes";;
-                           # Guess yes on OSF/1.
-          osf*)            gl_cv_func_printf_enomem="guessing yes";;
                            # Guess yes on BeOS.
           beos*)           gl_cv_func_printf_enomem="guessing yes";;
                            # Guess yes on Haiku.
@@ -1686,9 +1684,6 @@ changequote(,)dnl
            hpux*)                gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on IRIX >= 6.5.
            irix6.5)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
-                                 # Guess yes on OSF/1 >= 5.
-           osf[3-4]*)            gl_cv_func_snprintf_truncation_c99="guessing no";;
-           osf*)                 gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_snprintf_truncation_c99="guessing no";;
@@ -1901,9 +1896,6 @@ changequote(,)dnl
            aix*)                 gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on IRIX >= 6.5.
            irix6.5)              gl_cv_func_snprintf_directive_n="guessing yes";;
-                                 # Guess yes on OSF/1 >= 5.
-           osf[3-4]*)            gl_cv_func_snprintf_directive_n="guessing no";;
-           osf*)                 gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_snprintf_directive_n="guessing no";;
