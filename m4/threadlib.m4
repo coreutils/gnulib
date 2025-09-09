@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 45
+# serial 46
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,16 +57,6 @@ AC_DEFUN([gl_ANYTHREADLIB_EARLY],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   if test -z "$gl_anythreadlib_early_done"; then
-    AS_CASE([$host_os],
-      [osf*],
-       [# On OSF/1, the compiler needs the flag -D_REENTRANT so that it
-        # groks <pthread.h>. cc also understands the flag -pthread, but
-        # we do not use it because 1. gcc-2.95 does not understand -pthread,
-        # 2. putting a flag into CPPFLAGS that has an effect on the linker
-        # causes the AC_LINK_IFELSE test below to succeed unexpectedly,
-        # leading to wrong values of LIBTHREAD and LTLIBTHREAD.
-        CPPFLAGS="$CPPFLAGS -D_REENTRANT"
-       ])
     # Some systems optimize for single-threaded programs by default, and
     # need special flags to disable these optimizations. For example, the
     # definition of errno in <errno.h>.
@@ -190,8 +180,6 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
     gl_pthread_api=no
     LIBPTHREAD=
     LIBPMULTITHREAD=
-    # On OSF/1, the compiler needs the flag -pthread or -D_REENTRANT so that
-    # it groks <pthread.h>. It is added above, in gl_ANYTHREADLIB_EARLY.
     AC_CHECK_HEADER([pthread.h],
       [gl_have_pthread_h=yes], [gl_have_pthread_h=no])
     AS_IF([test "$gl_have_pthread_h" = yes], [
@@ -244,8 +232,7 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
          ])
       echo "$as_me:__oline__: gl_pthread_in_glibc=$gl_pthread_in_glibc" >&AS_MESSAGE_LOG_FD
 
-      # Test for libpthread by looking for pthread_kill. (Not pthread_self,
-      # since it is defined as a macro on OSF/1.)
+      # Test for libpthread by looking for pthread_kill.
       AS_IF([test $gl_pthread_api = yes && test -z "$LIBPTHREAD"], [
         # The program links fine without libpthread. But it may actually
         # need to link with libpthread in order to create multiple threads.
@@ -459,10 +446,6 @@ AS_HELP_STRING([[--disable-threads]], [build without multithread safety])]),
        gl_use_threads="$gl_use_threads_default"
      else
        AS_CASE([$host_os],
-         dnl Disable multithreading by default on OSF/1, because it interferes
-         dnl with fork()/exec(): When msgexec is linked with -lpthread, its
-         dnl child process gets an endless segmentation fault inside execvp().
-         [osf*], [gl_use_threads=no],
          dnl Disable multithreading by default on Cygwin 1.5.x, because it has
          dnl bugs that lead to endless loops or crashes. See
          dnl <https://cygwin.com/ml/cygwin/2009-08/msg00283.html>.
