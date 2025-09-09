@@ -1,5 +1,5 @@
 # remainderl.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,68 +58,6 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
       *yes) ;;
       *) REPLACE_REMAINDERL=1 ;;
     esac
-
-    m4_ifdef([gl_FUNC_REMAINDERL_IEEE], [
-      if test $gl_remainderl_required = ieee && test $REPLACE_REMAINDERL = 0; then
-        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-        AC_CACHE_CHECK([whether remainderl works according to ISO C 99 with IEC 60559],
-          [gl_cv_func_remainderl_ieee],
-          [
-            saved_LIBS="$LIBS"
-            LIBS="$LIBS $REMAINDERL_LIBM"
-            AC_RUN_IFELSE(
-              [AC_LANG_SOURCE([[
-#ifndef __NO_MATH_INLINES
-# define __NO_MATH_INLINES 1 /* for glibc */
-#endif
-#include <math.h>
-extern
-#ifdef __cplusplus
-"C"
-#endif
-long double remainderl (long double, long double);
-/* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
-static int
-numeric_equal (long double x, long double y)
-{
-  return x == y;
-}
-static long double dummy (long double x, long double y) { return 0; }
-int main (int argc, char *argv[])
-{
-  long double (* volatile my_remainderl) (long double, long double) = argc ? remainderl : dummy;
-  long double f;
-  /* Test remainderl(...,0.0L).
-     This test fails on OSF/1 5.1.  */
-  f = my_remainderl (2.0L, 0.0L);
-  if (numeric_equal (f, f))
-    return 1;
-  return 0;
-}
-              ]])],
-              [gl_cv_func_remainderl_ieee=yes],
-              [gl_cv_func_remainderl_ieee=no],
-              [case "$host_os" in
-                                     # Guess yes on glibc systems.
-                 *-gnu* | gnu*)      gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                     # Guess yes on musl systems.
-                 *-musl* | midipix*) gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                     # Guess yes on native Windows.
-                 mingw* | windows*)  gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                     # If we don't know, obey --enable-cross-guesses.
-                 *)                  gl_cv_func_remainderl_ieee="$gl_cross_guess_normal" ;;
-               esac
-              ])
-            LIBS="$saved_LIBS"
-          ])
-        case "$gl_cv_func_remainderl_ieee" in
-          *yes) ;;
-          *) REPLACE_REMAINDERL=1 ;;
-        esac
-      fi
-    ])
   else
     HAVE_REMAINDERL=0
     HAVE_DECL_REMAINDERL=0
