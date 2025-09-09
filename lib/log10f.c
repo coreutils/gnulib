@@ -24,16 +24,11 @@ log10f (float x)
 #undef log10f
 {
 #if HAVE_LOG10F
-  if (x <= 0.0f)
+  if (x < 0.0f)
     {
-      /* Work around the OSF/1 5.1 bug.  */
-      if (x == 0.0f)
-        /* Return -Infinity.  */
-        return -1.0f / 0.0f;
       /* Work around the NetBSD 5.1 bug.  */
-      else /* x < 0.0 */
-        /* Return NaN.  */
-        return 0.0f / 0.0f;
+      /* Return NaN.  */
+      return 0.0f / 0.0f;
     }
   return log10f (x);
 #else

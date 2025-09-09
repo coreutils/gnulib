@@ -1,5 +1,5 @@
 # log10f.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,17 +24,8 @@ AC_DEFUN([gl_FUNC_LOG10F],
   if test $ac_cv_func_log10f = yes; then
     LOG10F_LIBM="$LOG10_LIBM"
 
-    saved_LIBS="$LIBS"
-    LIBS="$LIBS $LOG10F_LIBM"
-    gl_FUNC_LOG10F_WORKS
-    LIBS="$saved_LIBS"
-    case "$gl_cv_func_log10f_works" in
-      *yes) ;;
-      *) REPLACE_LOG10F=1 ;;
-    esac
-
     m4_ifdef([gl_FUNC_LOG10F_IEEE], [
-      if test $gl_log10f_required = ieee && test $REPLACE_LOG10F = 0; then
+      if test $gl_log10f_required = ieee; then
         AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether log10f works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log10f_ieee],
@@ -102,38 +93,4 @@ int main (int argc, char *argv[])
     fi
   fi
   AC_SUBST([LOG10F_LIBM])
-])
-
-dnl Test whether log10f() works.
-dnl On OSF/1 5.1, log10f(-0.0f) is NaN.
-AC_DEFUN([gl_FUNC_LOG10F_WORKS],
-[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CACHE_CHECK([whether log10f works], [gl_cv_func_log10f_works],
-    [
-      AC_RUN_IFELSE(
-        [AC_LANG_SOURCE([[
-#include <math.h>
-volatile float x;
-float y;
-int main ()
-{
-  x = -0.0f;
-  y = log10f (x);
-  if (!(y + y == y))
-    return 1;
-  return 0;
-}
-]])],
-        [gl_cv_func_log10f_works=yes],
-        [gl_cv_func_log10f_works=no],
-        [case "$host_os" in
-           osf*)              gl_cv_func_log10f_works="guessing no" ;;
-                              # Guess yes on native Windows.
-           mingw* | windows*) gl_cv_func_log10f_works="guessing yes" ;;
-           *)                 gl_cv_func_log10f_works="guessing yes" ;;
-         esac
-        ])
-    ])
 ])
