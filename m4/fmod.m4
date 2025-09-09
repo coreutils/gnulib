@@ -1,5 +1,5 @@
 # fmod.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,16 +44,11 @@ int main (int argc, char *argv[])
   double (* volatile my_fmod) (double, double) = argc ? fmod : dummy;
   int result = 0;
   double f;
-  /* Test fmod(...,0.0).
-     This test fails on OSF/1 5.1.  */
-  f = my_fmod (2.0, 0.0);
-  if (numeric_equal (f, f))
-    result |= 1;
   /* Test fmod(-0.0,...).
      This test fails on native Windows.  */
   f = my_fmod (minus_zerod, 2.0);
   if (!(f == 0.0) || (signbitd (minus_zerod) && !signbitd (f)))
-    result |= 2;
+    result |= 1;
   return result;
 }
             ]])],
