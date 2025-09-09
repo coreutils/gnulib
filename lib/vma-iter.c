@@ -82,7 +82,7 @@
 # include <sys/procfs.h> /* prmap_t */
 #endif
 
-#if defined __sgi || defined __osf__ /* IRIX, OSF/1 */
+#if defined __sgi /* IRIX */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
@@ -1191,7 +1191,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   close (fd);
   return 0;
 
-#elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
+#elif defined __sgi /* IRIX */
 
   size_t pagesize;
   char fnamebuf[6+10+1];
