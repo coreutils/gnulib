@@ -1,5 +1,5 @@
 # ttyname_r.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,8 +48,6 @@ AC_DEFUN([gl_FUNC_TTYNAME_R],
       dnl On Solaris 10, both ttyname_r functions (the one with the non-POSIX
       dnl declaration and the one with the POSIX declaration) refuse to do
       dnl anything when the output buffer is less than 128 bytes large.
-      dnl On OSF/1 5.1, ttyname_r ignores the buffer size and assumes the
-      dnl buffer is large enough.
       dnl On Android 4.3, ttyname_r is a stub that prints
       dnl "int ttyname_r(int, char*, size_t)(3) is not implemented on Android"
       dnl on stderr and returns -ERANGE.
@@ -92,8 +90,6 @@ changequote(,)dnl
             case "$host_os" in
                         # Guess no on Solaris.
               solaris*) gl_cv_func_ttyname_r_works="guessing no" ;;
-                        # Guess no on OSF/1.
-              osf*)     gl_cv_func_ttyname_r_works="guessing no" ;;
                         # Guess yes otherwise.
               *)        gl_cv_func_ttyname_r_works="guessing yes" ;;
             esac
