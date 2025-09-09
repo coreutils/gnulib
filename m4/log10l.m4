@@ -1,5 +1,5 @@
 # log10l.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,6 @@ AC_DEFUN([gl_FUNC_LOG10L],
 ])
 
 dnl Test whether log10l() works.
-dnl On OSF/1 5.1, log10l(-0.0L) is NaN.
 dnl On IRIX 6.5, log10l(-0.0L) is an unnormalized negative infinity
 dnl 0xFFF00000000000007FF0000000000000, should be
 dnl 0xFFF00000000000000000000000000000.
@@ -127,7 +126,7 @@ int main (int argc, char *argv[])
   /* Dummy call, to trigger the AIX 5.1 bug.  */
   gx = 0.6L;
   gy = log10l (gx);
-  /* This test fails on AIX 5.1, IRIX 6.5, OSF/1 5.1.  */
+  /* This test fails on AIX 5.1, IRIX 6.5.  */
   {
     gx = -0.0L;
     gy = log10l (gx);

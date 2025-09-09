@@ -1,5 +1,5 @@
 # semaphore.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2019-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,7 @@ AC_DEFUN([gl_SEMAPHORE],
   dnl   - in libc on macOS, FreeBSD, AIX, IRIX, Solaris 11, Haiku, Cygwin,
   dnl   - in libpthread on glibc systems, OpenBSD,
   dnl   - in libpthread or librt on NetBSD,
-  dnl   - in librt on HP-UX 11, OSF/1, Solaris 10.
+  dnl   - in librt on HP-UX 11, Solaris 10.
   dnl On the platforms where -lpthread is needed, it is contained in
   dnl $LIBMULTITHREAD. Therefore, the only library we need to test for is -lrt.
   AC_CACHE_CHECK([for library needed for semaphore functions],

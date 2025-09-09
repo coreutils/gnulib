@@ -41,7 +41,7 @@ fwriting (FILE *fp)
   return (fp->_flags & _IOWRT) != 0;
 #elif defined __minix               /* Minix */
   return (fp->_flags & _IOWRITING) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_flag & _IOWRT) != 0;
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & __FLAG_WRITING) != 0;

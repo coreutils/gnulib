@@ -241,8 +241,8 @@ wait_subprocess (pid_t child, const char *progname,
 {
 #if HAVE_WAITID && defined WNOWAIT && 0
   /* Commented out because waitid() without WEXITED and with WNOWAIT doesn't
-     work: On Solaris 7 and OSF/1 4.0, it returns -1 and sets errno = ECHILD,
-     and on HP-UX 10.20 it just hangs.  */
+     work: On Solaris 7, it returns -1 and sets errno = ECHILD, and on
+     HP-UX 10.20 it just hangs.  */
   /* Use of waitid() with WNOWAIT avoids a race condition: If slave_process is
      true, and this process sleeps a very long time between the return from
      waitpid() and the execution of unregister_slave_subprocess(), and

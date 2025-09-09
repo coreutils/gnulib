@@ -46,7 +46,7 @@ __fpending (FILE *fp)
   return fp->_ptr - fp->_buffer;
 #elif defined __minix                /* Minix */
   return fp_->_ptr - fp_->_buf;
-#elif defined _IOERR                 /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                 /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_ptr ? fp_->_ptr - fp_->_base : 0);
 #elif defined __UCLIBC__             /* uClibc */
   return (fp->__modeflags & __FLAG_WRITING ? fp->__bufpos - fp->__bufstart : 0);

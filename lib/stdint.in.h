@@ -584,11 +584,7 @@ typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
 # endif
 
 /* wchar_t limits */
-/* Get WCHAR_MIN, WCHAR_MAX.
-   This include is not on the top, above, because on OSF/1 4.0 we have a
-   sequence of nested includes
-   <wchar.h> -> <stdio.h> -> <getopt.h> -> <stdlib.h>, and the latter includes
-   <stdint.h> and assumes its types are already defined.  */
+/* Get WCHAR_MIN, WCHAR_MAX.  */
 # if @HAVE_WCHAR_H@ && ! (defined WCHAR_MIN && defined WCHAR_MAX)
 #  define _GL_JUST_INCLUDE_SYSTEM_WCHAR_H
 #  include <wchar.h>

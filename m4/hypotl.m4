@@ -1,5 +1,5 @@
 # hypotl.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
   long double (* volatile my_hypotl) (long double, long double) = argc ? hypotl : dummy;
   long double f;
   /* Test hypotl(NaN,Infinity).
-     This test fails on OSF/1 5.1 and native Windows.  */
+     This test fails on native Windows.  */
   f = my_hypotl (zero / zero, one / zero);
   if (!numeric_equal (f, f))
     return 1;

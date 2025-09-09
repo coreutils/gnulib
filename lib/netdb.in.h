@@ -41,7 +41,7 @@
  #error "Please include config.h first."
 #endif
 
-/* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and OSF/1 4.0 and
+/* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and
    'struct hostent' on MinGW.  */
 #include <sys/socket.h>
 

@@ -84,7 +84,7 @@ fseeko (FILE *fp, off_t offset, int whence)
 #elif defined __minix               /* Minix */
   if (fp_->_ptr == fp_->_buf
       && (fp_->_ptr == NULL || fp_->_count == 0))
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))
 #elif defined __UCLIBC__            /* uClibc */

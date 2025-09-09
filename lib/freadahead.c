@@ -62,7 +62,7 @@ freadahead (FILE *fp)
   if ((fp_->_flags & _IOWRITING) != 0)
     return 0;
   return fp_->_count;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   if ((fp_->_flag & _IOWRT) != 0)
     return 0;
   return fp_->_cnt;

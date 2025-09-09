@@ -1,5 +1,5 @@
 # imaxabs.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,6 @@ AC_DEFUN([gl_FUNC_IMAXABS],
 [
   AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
 
-  dnl On OSF/1 5.1 with cc, this function is declared but not defined.
   gl_CHECK_FUNCS_ANDROID([imaxabs], [[#include <inttypes.h>]])
   if test $ac_cv_func_imaxabs = no; then
     HAVE_IMAXABS=0

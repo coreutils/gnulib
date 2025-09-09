@@ -472,10 +472,10 @@ func_gnulib_dir ()
       # We use a canonicalized $pathx instead of $PATH, because empty PATH
       # elements are by definition equivalent to '.', however field splitting
       # according to IFS=: loses empty fields in many shells:
-      #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
-      #     beginning, at the end, and in the middle),
-      #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
-      #     at the beginning and at the end,
+      #   - /bin/sh on Solaris loses all empty fields (at the beginning, at
+      #     the end, and in the middle),
+      #   - /bin/sh on IRIX and /bin/ksh on IRIX lose empty fields at the
+      #     beginning and at the end,
       #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
       #     Solaris lose empty fields at the end.
       # The 'case' statement is an optimization, to avoid evaluating the
@@ -911,7 +911,7 @@ func_hardlink ()
 # - in zsh, when sh-emulation is not set,
 # - in ksh (e.g. AIX /bin/sh and Solaris /usr/xpg4/bin/sh are ksh instances,
 #           and HP-UX /bin/sh and IRIX /bin/sh behave similarly),
-# - in Solaris /bin/sh and OSF/1 /bin/sh.
+# - in Solaris /bin/sh.
 # We try the following workarounds:
 # - for all: respawn using $CONFIG_SHELL if that is set and works.
 # - for bash >= 2.04: unset the shell option xpg_echo.
@@ -920,8 +920,7 @@ func_hardlink ()
 # - for zsh: turn sh-emulation on.
 # - for ksh: alias echo to 'print -r'.
 # - for ksh: alias echo to a function that uses cat of a here document.
-# - for Solaris /bin/sh and OSF/1 /bin/sh: respawn using /bin/ksh and rely on
-#   the ksh workaround.
+# - for Solaris /bin/sh: respawn using /bin/ksh and rely on the ksh workaround.
 # - otherwise: respawn using /bin/sh and rely on the workarounds.
 # When respawning, we pass --no-reexec as first argument, so as to avoid
 # turning this script into a fork bomb in unlucky situations.
@@ -1031,7 +1030,7 @@ if test -z "$have_echo"; then
     unalias echo 2>/dev/null
   fi
 fi
-# For Solaris /bin/sh and OSF/1 /bin/sh: respawn using /bin/ksh.
+# For Solaris /bin/sh: respawn using /bin/ksh.
 if test -z "$have_echo" \
    && test "X$1" != "X--no-reexec" \
    && test -f /bin/ksh; then

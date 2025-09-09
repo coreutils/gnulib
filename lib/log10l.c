@@ -35,7 +35,7 @@ long double
 log10l (long double x)
 # undef log10l
 {
-  /* Work around the OSF/1 5.1 bug.  */
+  /* Work around the AIX, IRIX bug.  */
   if (x == 0.0L)
     /* Return -Infinity.  */
     return -1.0L / 0.0L;

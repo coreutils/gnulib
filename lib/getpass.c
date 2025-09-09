@@ -138,8 +138,8 @@ getpass (const char *prompt)
   /* According to the C standard, input may not be followed by output
      on the same stream without an intervening call to a file
      positioning function.  Suppose in == out; then without this fseek
-     call, on Solaris, HP-UX, AIX, OSF/1, the previous input gets
-     echoed, whereas on IRIX, the following newline is not output as
+     call, on Solaris, HP-UX, AIX, the previous input gets echoed,
+     whereas on IRIX, the following newline is not output as
      it should be.  POSIX imposes similar restrictions if fileno (in)
      == fileno (out).  The POSIX restrictions are tricky and change
      from POSIX version to POSIX version, so play it safe and invoke

@@ -33,7 +33,7 @@ login_tty (int slave_fd)
   setsid ();
 
   /* Make fd the controlling terminal for the current process.
-     On BSD and OSF/1: There is ioctl TIOCSCTTY for this purpose.
+     On BSD: There is ioctl TIOCSCTTY for this purpose.
      On Solaris:
        A terminal becomes the controlling terminal of a session
        if it is being open()ed, at a moment when

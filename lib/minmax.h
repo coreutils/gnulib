@@ -19,7 +19,7 @@
 #define _MINMAX_H
 
 /* Note: MIN, MAX are also defined in <sys/param.h> on some systems
-   (glibc, IRIX, HP-UX, OSF/1).  Therefore you might get warnings about
+   (glibc, IRIX, HP-UX).  Therefore you might get warnings about
    MIN, MAX macro redefinitions on some systems; the workaround is to
    #include this file as the last one among the #include list.  */
 

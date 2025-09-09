@@ -1,5 +1,5 @@
 # modfl.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -99,7 +99,7 @@ int main (int argc, char *argv[])
   long double i;
   long double f;
   /* Test modfl(-Inf,...).
-     This test fails on IRIX 6.5, OSF/1 5.1, mingw.  */
+     This test fails on IRIX 6.5, mingw.  */
   f = my_modfl (minus_one / zero, &i);
   if (!(f == 0.0L) || (signbitl (minus_zerol) && !signbitl (f)))
     return 1;

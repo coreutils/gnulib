@@ -31,7 +31,7 @@
 #include "cloexec.h"
 
 /* The code that uses CMSG_FIRSTHDR is enabled on
-   Linux, Mac OS X, FreeBSD, OpenBSD, NetBSD, AIX, OSF/1, Cygwin.
+   Linux, Mac OS X, FreeBSD, OpenBSD, NetBSD, AIX, Cygwin.
    The code that uses HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS is enabled on
    HP-UX, IRIX, Solaris.  */
 

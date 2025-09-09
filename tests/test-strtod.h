@@ -72,7 +72,7 @@ test_function (double (*my_strtod) (const char *, char **))
     result = my_strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
-    ASSERT (ptr == input);              /* IRIX 6.5, OSF/1 5.1 */
+    ASSERT (ptr == input);              /* IRIX 6.5 */
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
@@ -83,7 +83,7 @@ test_function (double (*my_strtod) (const char *, char **))
     result = my_strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
-    ASSERT (ptr == input);              /* IRIX 6.5, OSF/1 5.1 */
+    ASSERT (ptr == input);              /* IRIX 6.5 */
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
@@ -284,7 +284,7 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* IRIX 6.5, OSF/1 4.0 */
+    ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* IRIX 6.5 */
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -346,7 +346,7 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5, OSF/1 4.0 */
+    ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5 */
     ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
     ASSERT (errno == 0);
   }
@@ -379,7 +379,7 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* Mac OS X 10.3, FreeBSD 6.2, IRIX 6.5, OSF/1 4.0 */
+    ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* Mac OS X 10.3, FreeBSD 6.2, IRIX 6.5 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, AIX 7.1 */
     ASSERT (errno == 0);
   }
@@ -489,7 +489,7 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
-    ASSERT (ptr == input + 5);          /* OSF/1 5.1 */
+    ASSERT (ptr == input + 5);
     ASSERT (errno == ERANGE);
   }
   {
@@ -499,7 +499,7 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
-    ASSERT (ptr == input + 9);          /* OSF/1 5.1 */
+    ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
   }
   {
@@ -580,7 +580,7 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5, OSF/1 4.0 */
+    ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5 */
     ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
     ASSERT (errno == 0);
   }
@@ -590,8 +590,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
 
@@ -602,9 +602,9 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw */
-    ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
     const char input[] = "-InF";
@@ -612,9 +612,9 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == -HUGE_VAL);       /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 4);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 4.0, Solaris 9, mingw */
-    ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
+    ASSERT (result == -HUGE_VAL);       /* OpenBSD 4.0, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 4);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
     const char input[] = "infinite";
@@ -622,9 +622,9 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (errno == 0);                /* OSF/1 4.0 */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (errno == 0);
   }
   {
     const char input[] = "infinitY";
@@ -632,9 +632,9 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw */
-    ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
     const char input[] = "infinitY.";
@@ -642,9 +642,9 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (errno == 0);                /* OSF/1 4.0 */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (errno == 0);
   }
 
   /* NaN.  Some processors set the sign bit of the default NaN, so all
@@ -659,15 +659,15 @@ test_function (double (*my_strtod) (const char *, char **))
     result1 = my_strtod (input, &ptr1);
     result2 = my_strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnand (result1));          /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnand (result2));          /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, IRIX 6.5, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, IRIX 6.5, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
 # endif
-    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
-    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
+    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, Solaris 2.5.1, mingw */
+    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */
 #else
     ASSERT (result1 == 0.0);
@@ -689,11 +689,11 @@ test_function (double (*my_strtod) (const char *, char **))
     result1 = my_strtod (input, &ptr1);
     result2 = my_strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
     ASSERT (!!signbit (result1) == !!signbit (result2));
-    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
-    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
+    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, Solaris 2.5.1, mingw */
+    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0);
@@ -715,15 +715,15 @@ test_function (double (*my_strtod) (const char *, char **))
     result1 = my_strtod (input, &ptr1);
     result2 = my_strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
 # endif
-    ASSERT (ptr1 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr2 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (ptr1 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr2 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0);
@@ -742,8 +742,8 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnand (result));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr == input + 6);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr == input + 6);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result == 0.0);
@@ -765,15 +765,15 @@ test_function (double (*my_strtod) (const char *, char **))
     result1 = my_strtod (input, &ptr1);
     result2 = my_strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
 # endif
-    ASSERT (ptr1 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (ptr2 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (ptr1 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr2 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0);
@@ -793,8 +793,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -803,8 +803,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -813,8 +813,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -823,8 +823,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -833,8 +833,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -843,8 +843,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -853,8 +853,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -863,8 +863,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -873,8 +873,8 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
-    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
 
@@ -939,9 +939,9 @@ test_function (double (*my_strtod) (const char *, char **))
         input[m] = '\0';
         errno = 0;
         result = my_strtod (input, &ptr);
-        ASSERT (result == 1.0);         /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-        ASSERT (ptr == input + m);      /* OSF/1 5.1 */
-        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+        ASSERT (result == 1.0);         /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
+        ASSERT (ptr == input + m);
+        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
       }
     free (input);
   }
@@ -965,9 +965,9 @@ test_function (double (*my_strtod) (const char *, char **))
         input[m] = '\0';
         errno = 0;
         result = my_strtod (input, &ptr);
-        ASSERT (result == 1.0);         /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+        ASSERT (result == 1.0);         /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
         ASSERT (ptr == input + m);
-        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
       }
     free (input);
   }
@@ -988,7 +988,7 @@ test_function (double (*my_strtod) (const char *, char **))
         errno = 0;
         result = my_strtod (input, &ptr);
         ASSERT (result == 0.0);
-        ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* IRIX 6.5, OSF/1 4.0 */
+        ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* IRIX 6.5 */
         ASSERT (ptr == input + m);
         ASSERT (errno == 0);
       }

@@ -99,12 +99,6 @@
      b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP.
      Both methods agree,
 
-   OSF/1:
-     a) setrlimit with RLIMIT_AS works.
-     b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP.
-     The value returned by get_rusage_as_via_setrlimit() is 64 KB higher than
-     get_rusage_as_via_iterator().  It's not clear why.
-
    Solaris:
      a) setrlimit with RLIMIT_AS works.
      b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP, and the

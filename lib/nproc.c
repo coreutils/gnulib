@@ -279,8 +279,8 @@ num_processors_available (enum nproc_query query)
       }
 
 #if defined _SC_NPROCESSORS_ONLN
-      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-           Cygwin, Haiku.  */
+      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, Solaris, Cygwin,
+           Haiku.  */
         long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
         if (nprocs > 0)
           return nprocs;
@@ -290,8 +290,8 @@ num_processors_available (enum nproc_query query)
   else /* query == NPROC_ALL */
     {
 #if defined _SC_NPROCESSORS_CONF
-      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-           Cygwin, Haiku.  */
+      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, Solaris, Cygwin,
+           Haiku.  */
         long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
 
 # if __GLIBC__ >= 2 && defined __linux__

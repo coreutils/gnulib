@@ -639,7 +639,7 @@ emit_diff_u_header_ ()
 }
 
 # Arrange not to let diff or cmp operate on /dev/null,
-# since on some systems (at least OSF/1 5.1), that doesn't work.
+# since on some old systems, that doesn't work.
 # When there are not two arguments, or no argument is /dev/null, return 2.
 # When one argument is /dev/null and the other is not empty,
 # cat the nonempty file to stderr and return 1.

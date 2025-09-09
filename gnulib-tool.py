@@ -79,10 +79,10 @@ func_gnulib_dir ()
       # We use a canonicalized $pathx instead of $PATH, because empty PATH
       # elements are by definition equivalent to '.', however field splitting
       # according to IFS=: loses empty fields in many shells:
-      #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
-      #     beginning, at the end, and in the middle),
-      #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
-      #     at the beginning and at the end,
+      #   - /bin/sh on Solaris loses all empty fields (at the beginning, at
+      #     the end, and in the middle),
+      #   - /bin/sh on IRIX and /bin/ksh on IRIX lose empty fields at the
+      #     beginning and at the end,
       #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
       #     Solaris lose empty fields at the end.
       # The 'case' statement is an optimization, to avoid evaluating the

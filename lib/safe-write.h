@@ -23,7 +23,7 @@
        SA_RESTART.
      - The process receives a signal for which a signal handler was installed
        with signal() and for which no call to siginterrupt(sig,0) was done,
-       on some platforms: AIX, HP-UX, IRIX, OSF/1, Solaris.
+       on some platforms: AIX, HP-UX, IRIX, Solaris.
 
    This module provides a wrapper around write() that handles EINTR.  */
 

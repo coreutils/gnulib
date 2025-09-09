@@ -26,7 +26,7 @@
 #include <string.h>
 #include <errno.h>
 
-#if HAVE_SYSINFO && HAVE_SYS_SYSTEMINFO_H /* IRIX, OSF/1, Solaris */
+#if HAVE_SYSINFO && HAVE_SYS_SYSTEMINFO_H /* IRIX, Solaris */
 # include <sys/systeminfo.h>
 #endif
 
@@ -44,7 +44,7 @@ int
 getdomainname (char *name, size_t len)
 #undef getdomainname
 {
-#if HAVE_GETDOMAINNAME                 /* Mac OS X, FreeBSD, AIX, IRIX, OSF/1 */
+#if HAVE_GETDOMAINNAME                 /* Mac OS X, FreeBSD, AIX, IRIX */
   extern int getdomainname (char *, int);
 
   if (len > INT_MAX)

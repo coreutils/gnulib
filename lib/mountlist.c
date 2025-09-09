@@ -41,7 +41,7 @@
 # include <sys/sysmacros.h>
 #endif
 
-#if defined MOUNTED_GETFSSTAT   /* OSF/1, also (obsolete) Apple Darwin 1.3 */
+#if defined MOUNTED_GETFSSTAT   /* (obsolete) Apple Darwin 1.3 */
 # if HAVE_SYS_UCRED_H
 #  include <grp.h> /* needed on OSF V4.0 for definition of NGROUPS,
                       NGROUPS is used as an array dimension in ucred.h */
@@ -764,7 +764,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_FS_STAT_DEV */
 
-#if defined MOUNTED_GETFSSTAT   /* OSF/1, also (obsolete) Apple Darwin 1.3 */
+#if defined MOUNTED_GETFSSTAT   /* (obsolete) Apple Darwin 1.3 */
   {
     int numsys, counter;
     size_t bufsize;

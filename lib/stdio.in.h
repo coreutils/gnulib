@@ -22,12 +22,7 @@
 
 #if defined __need_FILE || defined __need___FILE || defined _@GUARD_PREFIX@_ALREADY_INCLUDING_STDIO_H || defined _GL_SKIP_GNULIB_STDIO_H
 /* Special invocation convention:
-   - Inside glibc header files.
-   - On OSF/1 5.1 we have a sequence of nested includes
-     <stdio.h> -> <getopt.h> -> <ctype.h> -> <sys/localedef.h> ->
-     <sys/lc_core.h> -> <nl_types.h> -> <mesg.h> -> <stdio.h>.
-     In this situation, the functions are not yet declared, therefore we cannot
-     provide the C++ aliases.  */
+   - Inside glibc header files.  */
 
 #@INCLUDE_NEXT@ @NEXT_STDIO_H@
 

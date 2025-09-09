@@ -1,5 +1,5 @@
 # hypotf.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
   float (* volatile my_hypotf) (float, float) = argc ? hypotf : dummy;
   float f;
   /* Test hypotf(NaN,Infinity).
-     This test fails on OSF/1 5.1 and native Windows.  */
+     This test fails on native Windows.  */
   f = my_hypotf (zero / zero, one / zero);
   if (!numeric_equal (f, f))
     return 1;

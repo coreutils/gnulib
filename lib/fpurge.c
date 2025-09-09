@@ -101,7 +101,7 @@ fpurge (FILE *fp)
   if (fp->_ptr != NULL)
     fp->_count = 0;
   return 0;
-# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+# elif defined _IOERR               /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   fp_->_ptr = fp_->_base;
   if (fp_->_ptr != NULL)
     fp_->_cnt = 0;

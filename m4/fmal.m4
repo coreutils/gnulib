@@ -1,5 +1,5 @@
 # fmal.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -145,7 +145,7 @@ int main()
       failed_tests |= 1;
   }
   /* This test fails on glibc 2.11 x86,x86_64,powerpc, glibc 2.7 hppa,sparc,
-     OSF/1 5.1, mingw.  */
+     mingw.  */
   {
     volatile long double x = 1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG); /* 2^0 + 2^-63 */
     volatile long double y = x;
@@ -160,7 +160,7 @@ int main()
       failed_tests |= 2;
   }
   /* This test fails on glibc 2.11 x86,x86_64,powerpc glibc 2.7 hppa,sparc,
-     OpenBSD 7.4/arm64, OSF/1 5.1, mingw.  */
+     OpenBSD 7.4/arm64, mingw.  */
   {
     volatile long double x = 1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG); /* 2^0 + 2^-63 */
     volatile long double y = - x;
@@ -190,7 +190,7 @@ int main()
   }
   if ((LDBL_MANT_DIG % 2) == 1)
     {
-      /* These tests fail on glibc 2.7 hppa,sparc, OpenBSD 7.4/arm64, OSF/1 5.1.  */
+      /* These tests fail on glibc 2.7 hppa,sparc, OpenBSD 7.4/arm64.  */
       {
         volatile long double x = 1.0L + ldexpl (1.0L, - (LDBL_MANT_DIG + 1) / 2); /* 2^0 + 2^-27 */
         volatile long double y = 1.0L - ldexpl (1.0L, - (LDBL_MANT_DIG + 1) / 2); /* 2^0 - 2^-27 */
@@ -358,7 +358,7 @@ int main()
       failed_tests |= 16;
   }
   /* This test fails on glibc 2.11 x86,x86_64,powerpc glibc 2.7 hppa,sparc,
-     Mac OS X 10.5, FreeBSD 6.4 x86, OSF/1 5.1, mingw.  */
+     Mac OS X 10.5, FreeBSD 6.4 x86, mingw.  */
   {
     volatile long double x = ldexpl (1.0L, LDBL_MAX_EXP - 1);
     volatile long double y = 2.0L;

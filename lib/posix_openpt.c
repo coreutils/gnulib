@@ -34,12 +34,11 @@
      AIX >= 5.2, HP-UX >= 11.31, Solaris >= 10, Cygwin >= 1.7.
    Thus, this replacement function is compiled on
      Mac OS X 10.3, OpenBSD 4.9, Minix 3.1.8,
-     AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
+     AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9,
      Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
    Among these:
      - AIX has /dev/ptc.
-     - HP-UX 10..11, IRIX 6.5, OSF/1 5.1, Solaris 2.6..9, Cygwin 1.5
-       have /dev/ptmx.
+     - HP-UX 10..11, IRIX 6.5, Solaris 2.6..9, Cygwin 1.5 have /dev/ptmx.
      - HP-UX 10..11 also has /dev/ptym/clone, but this should not be needed.
      - OpenBSD 4.9 has /dev/ptm and the PTMGET ioctl.
      - Minix 3.1.8 have a list of pseudo-terminal devices in /dev.
@@ -87,7 +86,7 @@ posix_openpt (int flags)
   else
     master = -1;
 
-#else /* Mac OS X, Minix, HP-UX, IRIX, OSF/1, Solaris 9, Cygwin 1.5 */
+#else /* Mac OS X, Minix, HP-UX, IRIX, Solaris 9, Cygwin 1.5 */
 
   /* Most systems that lack posix_openpt() have /dev/ptmx.  */
   master = open ("/dev/ptmx", flags);
@@ -98,7 +97,6 @@ posix_openpt (int flags)
      - On Minix:    /dev/pty[p-q][0-9a-f]
      - On AIX:      /dev/ptyp[0-9a-f]
      - On HP-UX:    /dev/pty[p-r][0-9a-f]
-     - On OSF/1:    /dev/pty[p-q][0-9a-f]
      - On Solaris:  /dev/pty[p-r][0-9a-f]
    */
 

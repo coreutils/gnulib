@@ -6992,7 +6992,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    on musl libc because we would run into an swprintf() bug.
                    See <https://www.openwall.com/lists/musl/2023/03/19/1>.  */
                 fbp[1] = '\0';
-# else           /* AIX <= 5.1, HP-UX, IRIX, OSF/1, Solaris <= 9, BeOS */
+# else           /* AIX <= 5.1, HP-UX, IRIX, Solaris <= 9, BeOS */
                 fbp[1] = '%';
                 fbp[2] = 'n';
                 fbp[3] = '\0';

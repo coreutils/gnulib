@@ -1,5 +1,5 @@
 # terminfo.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2000-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,8 +31,8 @@ AC_DEFUN([gl_TERMINFO_BODY],
   dnl tputs(), tgoto() in the same library as tgetent(), tgetnum(), tgetstr(),
   dnl tgetflag(), e.g. Linux (in libncurses) or Solaris (in libtermcap =
   dnl libncurses).
-  dnl Some systems have them in a different library, e.g. OSF/1 (in libcurses,
-  dnl not in libtermcap) or AIX, HP-UX (in libxcurses, not in libtermcap).
+  dnl Some systems have them in a different library, e.g. AIX, HP-UX (in
+  dnl libxcurses, not in libtermcap).
   dnl Some systems, like NetBSD or BeOS, don't have these functions at all;
   dnl they have only a libtermcap.
   dnl Some systems, like BeOS, use GNU termcap, which has tparam() instead of

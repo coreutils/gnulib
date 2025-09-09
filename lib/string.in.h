@@ -1208,7 +1208,7 @@ _GL_EXTERN_C bool str_endswith (const char *string, const char *prefix)
 # ifdef __MirBSD__  /* MirBSD defines mbslen as a macro.  Override it.  */
 #  undef mbslen
 # endif
-# if @HAVE_MBSLEN@  /* AIX, OSF/1, MirBSD define mbslen already in libc.  */
+# if @HAVE_MBSLEN@  /* AIX, MirBSD define mbslen already in libc.  */
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mbslen rpl_mbslen
 #  endif

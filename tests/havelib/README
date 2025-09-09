@@ -48,13 +48,6 @@ Known failures:
   static library indirectly through two different dependency paths,
   libtool attempts to link together invalid sets of object files.
 
-* OSF/1 4.0: the tests
-    rpath-2bbd
-    rpath-3bbd rpath-3bbf rpath-3bbg rpath-3bbh
-  fail, because -rpath options are not cumulative:
-  The last -rpath option overrides all previous ones. One would need to
-  pass all directories, separated by colons, in a single -rpath option.
-
 * On Linux/x86_64: the tests
     rpath-2aac rpath-2abc rpath-2bac rpath-2bbc
     rpath-3aac rpath-3aaf rpath-3abc rpath-3abf
