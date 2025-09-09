@@ -110,8 +110,6 @@
 #if HAVE_UTMPX_H
 # if HAVE_STRUCT_UTMPX_UT_EXIT_E_TERMINATION
 #  define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.e_termination)
-# elif HAVE_STRUCT_UTMPX_UT_EXIT_UT_TERMINATION /* OSF/1 */
-#  define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.ut_termination)
 # else
 #  define UT_EXIT_E_TERMINATION(UT) 0
 # endif
@@ -126,8 +124,6 @@
 #if HAVE_UTMPX_H
 # if HAVE_STRUCT_UTMPX_UT_EXIT_E_EXIT
 #  define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.e_exit)
-# elif HAVE_STRUCT_UTMPX_UT_EXIT_UT_EXIT /* OSF/1 */
-#  define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.ut_exit)
 # else
 #  define UT_EXIT_E_EXIT(UT) 0
 # endif
