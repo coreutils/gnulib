@@ -1,5 +1,5 @@
 # mbrlen.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2008, 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,10 +51,10 @@ AC_DEFUN([gl_MBRLEN_INCOMPLETE_STATE],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                     # Guess no on AIX and OSF/1.
-        aix* | osf*) gl_cv_func_mbrlen_incomplete_state="guessing no" ;;
-                     # Guess yes otherwise.
-        *)           gl_cv_func_mbrlen_incomplete_state="guessing yes" ;;
+              # Guess no on AIX.
+        aix*) gl_cv_func_mbrlen_incomplete_state="guessing no" ;;
+              # Guess yes otherwise.
+        *)    gl_cv_func_mbrlen_incomplete_state="guessing yes" ;;
       esac
 changequote([,])dnl
       if test $LOCALE_JA != none; then
