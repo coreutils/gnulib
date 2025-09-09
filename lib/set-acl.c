@@ -26,7 +26,7 @@
 #include "quote.h"
 #include <error.h>
 #include "gettext.h"
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 /* Set the access control lists of a file to match *exactly* MODE (this might
    remove inherited ACLs). Note chmod() tends to honor inherited/default

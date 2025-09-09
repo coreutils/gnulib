@@ -28,7 +28,7 @@
 #include "exitfail.h"
 
 #include "gettext.h"
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 void
 sigpipe_die (void)

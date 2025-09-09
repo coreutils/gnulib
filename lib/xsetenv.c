@@ -24,7 +24,7 @@
 #include <error.h>
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 
 /* Set NAME to VALUE in the environment.

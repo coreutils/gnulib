@@ -39,7 +39,7 @@
 #include "quote.h"
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 enum { IO_SIZE = 32 * 1024 };
 

@@ -25,7 +25,7 @@
 #include "exitfail.h"
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 #define N_(msgid) msgid
 
 /* Report an error for an invalid integer in an option argument.
@@ -84,7 +84,8 @@ xstrtol_error (enum strtol_error err,
   else
     option = long_options[opt_idx].name;
 
-  error (exit_status, 0, dgettext ("gnulib", msgid), hyphens, option, arg);
+  error (exit_status, 0, dgettext (GNULIB_TEXT_DOMAIN, msgid),
+         hyphens, option, arg);
 }
 
 /* Like xstrtol_error, except exit with a failure status.  */

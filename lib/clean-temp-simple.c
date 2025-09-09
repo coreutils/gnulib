@@ -38,7 +38,7 @@
 #include "hashkey-string.h"
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 
 /* Lock that protects the file_cleanup_list from concurrent modification in

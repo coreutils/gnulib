@@ -337,7 +337,7 @@ _obstack_memory_used (struct obstack *h)
 # else
 #  include "gettext.h"
 #  ifndef _
-#   define _(msgid) dgettext ("gnulib", msgid)
+#   define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 #  endif
 # endif
 

@@ -38,7 +38,7 @@
 #include <error.h>
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 
 /* Duplicates a file handle, making the copy uninheritable.

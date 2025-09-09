@@ -105,7 +105,7 @@
 #  define gettext(msgid) \
   __dcgettext (_libc_intl_domainname, msgid, LC_MESSAGES)
 # else
-#  define gettext(msgid) dgettext ("gnulib", msgid)
+#  define gettext(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 # endif
 #else
 # undef gettext

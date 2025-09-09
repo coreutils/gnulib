@@ -27,5 +27,5 @@
 char const *
 file_type (struct stat const *st)
 {
-  return dgettext ("gnulib", c_file_type (st));
+  return dgettext (GNULIB_TEXT_DOMAIN, c_file_type (st));
 }

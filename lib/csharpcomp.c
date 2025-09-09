@@ -40,7 +40,7 @@
 #include "xvasprintf.h"
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 
 /* Survey of C# compilers.

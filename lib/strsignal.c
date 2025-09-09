@@ -30,7 +30,7 @@
 # include <libintl.h>
 #else /* !_LIBC */
 # include "gettext.h"
-# define _(msgid) dgettext ("gnulib", msgid)
+# define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 # define N_(msgid) gettext_noop (msgid)
 #endif /* _LIBC */
 

@@ -1114,6 +1114,11 @@ translatable strings to be included in your POT file.  When you send
 this POT file to the Translation Project, translators will normally fill
 in the translations of the Gnulib strings from their ``translation
 memory'', and send you back updated PO files.
+For this to work, your program should define the macro
+@code{GNULIB_TEXT_DOMAIN} to its own textdomain name early,
+before including @file{gettext.h};
+you can do this by putting @code{AC_DEFINE([GNULIB_TEXT_DOMAIN], [PACKAGE])}
+in your @file{configure.ac}.
 
 However, this process is error-prone: you might forget to list some
 source files, or the translator might not be using a translation memory

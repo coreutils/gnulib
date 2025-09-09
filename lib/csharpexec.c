@@ -76,7 +76,7 @@
 #undef new_classpath
 #undef CLASSPATHVAR
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 
 /* Survey of CIL interpreters.

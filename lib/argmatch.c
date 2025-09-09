@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 #include <error.h>
 #include "quotearg.h"

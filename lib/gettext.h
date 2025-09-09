@@ -347,5 +347,11 @@ dcnpgettext_expr (const char *domain,
   return (n == 1 ? msgid : msgid_plural);
 }
 
+/* The text domainname for Gnulib messages.  Ordinarily this is "gnulib",
+   but packages that do their own translations of Gnulib can use
+   something different by defining GNULIB_TEXT_DOMAIN early.  */
+#ifndef GNULIB_TEXT_DOMAIN
+# define GNULIB_TEXT_DOMAIN "gnulib"
+#endif
 
 #endif /* _LIBGETTEXT_H */

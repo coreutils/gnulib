@@ -26,7 +26,7 @@
 #include "exitfail.h"
 #include "gettext.h"
 
-#define _(msgid) dgettext ("gnulib", msgid)
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 off64_t
 xprintf (char const *restrict format, ...)
