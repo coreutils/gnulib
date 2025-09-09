@@ -36,13 +36,7 @@ orig_creat (const char *filename, mode_t mode)
 }
 
 /* Specification.  */
-#ifdef __osf__
-/* Write "fcntl.h" here, not <fcntl.h>, otherwise OSF/1 5.1 DTK cc eliminates
-   this include because of the preliminary #include <fcntl.h> above.  */
-# include "fcntl.h"
-#else
-# include <fcntl.h>
-#endif
+#include <fcntl.h>
 
 #include <errno.h>
 #include <string.h>
