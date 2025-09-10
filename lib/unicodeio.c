@@ -135,13 +135,8 @@ unicode_to_mb (unsigned int code,
            - replacing FULLWIDTH COLON with ':', or
            - replacing a Unicode TAG character (U+E00xx) with an empty string,
          from replacements that are worse than the FAILURE callback, such as
-           - replacing 'ç' with '?' (NetBSD, Solaris 11) or '*' (musl) or
-             NUL (IRIX).  */
+           - replacing 'ç' with '?' (NetBSD, Solaris 11) or '*' (musl).  */
       if (inbytesleft > 0 || res == (size_t)(-1)
-          /* Irix iconv() inserts a NUL byte if it cannot convert.  */
-# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
-          || (res > 0 && code != 0 && outptr - outbuf == 1 && *outbuf == '\0')
-# endif
           /* FreeBSD iconv(), NetBSD iconv(), and Solaris 11 iconv() insert
              a '?' if they cannot convert.  */
 # if !defined _LIBICONV_VERSION || (_LIBICONV_VERSION == 0x10b && defined __APPLE__)
