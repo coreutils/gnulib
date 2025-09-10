@@ -1,5 +1,5 @@
 # ptsname_r.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,7 +85,7 @@ AC_DEFUN([gl_PREREQ_PTSNAME_R], [
        [gl_cv_func_isatty_sets_errno=yes],
        [gl_cv_func_isatty_sets_errno=no],
        [case "$host_os" in
-          irix* | solaris*)
+          solaris*)
             gl_cv_func_isatty_sets_errno="guessing no" ;;
             # Guess yes on mingw, no on MSVC.
           mingw* | windows*)
