@@ -44,10 +44,6 @@
 # include <sys/pstat.h>
 #endif
 
-#if HAVE_SYS_SYSMP_H
-# include <sys/sysmp.h>
-#endif
-
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>
 #endif
@@ -334,20 +330,6 @@ num_processors_available (enum nproc_query query)
               return psd.psd_max_proc_cnt;
           }
       }
-  }
-#endif
-
-#if HAVE_SYSMP && defined MP_NAPROCS && defined MP_NPROCS
-  { /* This works on IRIX.  */
-    /* MP_NPROCS yields the number of installed processors.
-       MP_NAPROCS yields the number of processors available to unprivileged
-       processes.  */
-    int nprocs =
-      sysmp (query == NPROC_CURRENT && getuid () != 0
-             ? MP_NAPROCS
-             : MP_NPROCS);
-    if (nprocs > 0)
-      return nprocs;
   }
 #endif
 
