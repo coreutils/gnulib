@@ -1,5 +1,5 @@
 # mprotect.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 1993-2025 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License as published by the Free Software Foundation;
@@ -136,10 +136,10 @@ AC_DEFUN([gl_FUNC_MPROTECT_WORKS],
          dnl When cross-compiling, assume the known behaviour.
          case "$host_os" in
            dnl Guess yes on Linux systems, glibc systems,
-           dnl macOS, BSD systems, AIX, HP-UX, IRIX, Solaris, Cygwin.
+           dnl macOS, BSD systems, AIX, HP-UX, Solaris, Cygwin.
            linux-* | linux | *-gnu* | gnu* | \
            darwin* | freebsd* | dragonfly* | midnightbsd* | netbsd* | openbsd* | \
-           aix* | hpux* | irix* | solaris* | cygwin*)
+           aix* | hpux* | solaris* | cygwin*)
              gl_cv_func_mprotect_works="guessing yes" ;;
            mingw* | windows*)
              gl_cv_func_mprotect_works="guessing no" ;;
