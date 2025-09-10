@@ -1,5 +1,5 @@
 # log1pf.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,17 +24,8 @@ AC_DEFUN([gl_FUNC_LOG1PF],
   if test $ac_cv_func_log1pf = yes; then
     LOG1PF_LIBM="$LOG1P_LIBM"
 
-    saved_LIBS="$LIBS"
-    LIBS="$LIBS $LOG1PF_LIBM"
-    gl_FUNC_LOG1PF_WORKS
-    LIBS="$saved_LIBS"
-    case "$gl_cv_func_log1pf_works" in
-      *yes) ;;
-      *) REPLACE_LOG1PF=1 ;;
-    esac
-
     m4_ifdef([gl_FUNC_LOG1PF_IEEE], [
-      if test $gl_log1pf_required = ieee && test $REPLACE_LOG1PF = 0; then
+      if test $gl_log1pf_required = ieee; then
         AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether log1pf works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log1pf_ieee],
@@ -89,38 +80,4 @@ int main (int argc, char *argv[])
     LOG1PF_LIBM="$LOG1P_LIBM"
   fi
   AC_SUBST([LOG1PF_LIBM])
-])
-
-dnl Test whether log1pf() works.
-dnl On IRIX 6.5, log1pf(-1.0f) returns +Infinity instead of -Infinity.
-AC_DEFUN([gl_FUNC_LOG1PF_WORKS],
-[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CACHE_CHECK([whether log1pf works], [gl_cv_func_log1pf_works],
-    [
-      AC_RUN_IFELSE(
-        [AC_LANG_SOURCE([[
-#include <math.h>
-volatile float x;
-float y;
-int main ()
-{
-  x = -1.0f;
-  y = log1pf (x);
-  if (!(y + y == y && y < 0.0f))
-    return 1;
-  return 0;
-}
-]])],
-        [gl_cv_func_log1pf_works=yes],
-        [gl_cv_func_log1pf_works=no],
-        [case "$host_os" in
-           irix*)             gl_cv_func_log1pf_works="guessing no" ;;
-                              # Guess yes on native Windows.
-           mingw* | windows*) gl_cv_func_log1pf_works="guessing yes" ;;
-           *)                 gl_cv_func_log1pf_works="guessing yes" ;;
-         esac
-        ])
-    ])
 ])
