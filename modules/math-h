@@ -169,14 +169,19 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_CBRTF''@|$(HAVE_CBRTF)|g' \
 	      -e 's|@''HAVE_CBRTL''@|$(HAVE_CBRTL)|g' \
 	      -e 's|@''HAVE_COPYSIGN''@|$(HAVE_COPYSIGN)|g' \
+	      -e 's|@''HAVE_COPYSIGNF''@|$(HAVE_COPYSIGNF)|g' \
 	      -e 's|@''HAVE_COPYSIGNL''@|$(HAVE_COPYSIGNL)|g' \
 	      -e 's|@''HAVE_COSF''@|$(HAVE_COSF)|g' \
 	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \
 	      -e 's|@''HAVE_COSHF''@|$(HAVE_COSHF)|g' \
 	      -e 's|@''HAVE_EXPF''@|$(HAVE_EXPF)|g' \
 	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
+	      -e 's|@''HAVE_EXP2''@|$(HAVE_EXP2)|g' \
+	      -e 's|@''HAVE_EXP2F''@|$(HAVE_EXP2F)|g' \
+	      -e 's|@''HAVE_EXP2L''@|$(HAVE_EXP2L)|g' \
 	      -e 's|@''HAVE_EXPM1''@|$(HAVE_EXPM1)|g' \
 	      -e 's|@''HAVE_EXPM1F''@|$(HAVE_EXPM1F)|g' \
+	      -e 's|@''HAVE_EXPM1L''@|$(HAVE_EXPM1L)|g' \
 	      -e 's|@''HAVE_FABSF''@|$(HAVE_FABSF)|g' \
 	      -e 's|@''HAVE_FABSL''@|$(HAVE_FABSL)|g' \
 	      -e 's|@''HAVE_FMA''@|$(HAVE_FMA)|g' \
@@ -204,6 +209,9 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_LOG1P''@|$(HAVE_LOG1P)|g' \
 	      -e 's|@''HAVE_LOG1PF''@|$(HAVE_LOG1PF)|g' \
 	      -e 's|@''HAVE_LOG1PL''@|$(HAVE_LOG1PL)|g' \
+	      -e 's|@''HAVE_LOG2''@|$(HAVE_LOG2)|g' \
+	      -e 's|@''HAVE_LOG2F''@|$(HAVE_LOG2F)|g' \
+	      -e 's|@''HAVE_LOG2L''@|$(HAVE_LOG2L)|g' \
 	      -e 's|@''HAVE_LOGBF''@|$(HAVE_LOGBF)|g' \
 	      -e 's|@''HAVE_LOGBL''@|$(HAVE_LOGBL)|g' \
 	      -e 's|@''HAVE_LOGP1''@|$(HAVE_LOGP1)|g' \
@@ -214,8 +222,13 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
 	      -e 's|@''HAVE_REMAINDER''@|$(HAVE_REMAINDER)|g' \
 	      -e 's|@''HAVE_REMAINDERF''@|$(HAVE_REMAINDERF)|g' \
+	      -e 's|@''HAVE_REMAINDERL''@|$(HAVE_REMAINDERL)|g' \
 	      -e 's|@''HAVE_RINT''@|$(HAVE_RINT)|g' \
+	      -e 's|@''HAVE_RINTF''@|$(HAVE_RINTF)|g' \
 	      -e 's|@''HAVE_RINTL''@|$(HAVE_RINTL)|g' \
+	      -e 's|@''HAVE_ROUND''@|$(HAVE_ROUND)|g' \
+	      -e 's|@''HAVE_ROUNDF''@|$(HAVE_ROUNDF)|g' \
+	      -e 's|@''HAVE_ROUNDL''@|$(HAVE_ROUNDL)|g' \
 	      -e 's|@''HAVE_SETPAYLOAD''@|$(HAVE_SETPAYLOAD)|g' \
 	      -e 's|@''HAVE_SETPAYLOADF''@|$(HAVE_SETPAYLOADF)|g' \
 	      -e 's|@''HAVE_SETPAYLOADL''@|$(HAVE_SETPAYLOADL)|g' \
@@ -241,33 +254,17 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
-	      -e 's|@''HAVE_DECL_CBRTF''@|$(HAVE_DECL_CBRTF)|g' \
-	      -e 's|@''HAVE_DECL_CBRTL''@|$(HAVE_DECL_CBRTL)|g' \
 	      -e 's|@''HAVE_DECL_CEILF''@|$(HAVE_DECL_CEILF)|g' \
 	      -e 's|@''HAVE_DECL_CEILL''@|$(HAVE_DECL_CEILL)|g' \
-	      -e 's|@''HAVE_DECL_COPYSIGNF''@|$(HAVE_DECL_COPYSIGNF)|g' \
 	      -e 's|@''HAVE_DECL_COSL''@|$(HAVE_DECL_COSL)|g' \
 	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
-	      -e 's|@''HAVE_DECL_EXP2''@|$(HAVE_DECL_EXP2)|g' \
-	      -e 's|@''HAVE_DECL_EXP2F''@|$(HAVE_DECL_EXP2F)|g' \
-	      -e 's|@''HAVE_DECL_EXP2L''@|$(HAVE_DECL_EXP2L)|g' \
-	      -e 's|@''HAVE_DECL_EXPM1L''@|$(HAVE_DECL_EXPM1L)|g' \
 	      -e 's|@''HAVE_DECL_FLOORF''@|$(HAVE_DECL_FLOORF)|g' \
 	      -e 's|@''HAVE_DECL_FLOORL''@|$(HAVE_DECL_FLOORL)|g' \
 	      -e 's|@''HAVE_DECL_FREXPL''@|$(HAVE_DECL_FREXPL)|g' \
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
 	      -e 's|@''HAVE_DECL_LOG10L''@|$(HAVE_DECL_LOG10L)|g' \
-	      -e 's|@''HAVE_DECL_LOG2''@|$(HAVE_DECL_LOG2)|g' \
-	      -e 's|@''HAVE_DECL_LOG2F''@|$(HAVE_DECL_LOG2F)|g' \
-	      -e 's|@''HAVE_DECL_LOG2L''@|$(HAVE_DECL_LOG2L)|g' \
 	      -e 's|@''HAVE_DECL_LOGB''@|$(HAVE_DECL_LOGB)|g' \
-	      -e 's|@''HAVE_DECL_REMAINDER''@|$(HAVE_DECL_REMAINDER)|g' \
-	      -e 's|@''HAVE_DECL_REMAINDERL''@|$(HAVE_DECL_REMAINDERL)|g' \
-	      -e 's|@''HAVE_DECL_RINTF''@|$(HAVE_DECL_RINTF)|g' \
-	      -e 's|@''HAVE_DECL_ROUND''@|$(HAVE_DECL_ROUND)|g' \
-	      -e 's|@''HAVE_DECL_ROUNDF''@|$(HAVE_DECL_ROUNDF)|g' \
-	      -e 's|@''HAVE_DECL_ROUNDL''@|$(HAVE_DECL_ROUNDL)|g' \
 	      -e 's|@''HAVE_DECL_SINL''@|$(HAVE_DECL_SINL)|g' \
 	      -e 's|@''HAVE_DECL_SQRTL''@|$(HAVE_DECL_SQRTL)|g' \
 	      -e 's|@''HAVE_DECL_TANL''@|$(HAVE_DECL_TANL)|g' \

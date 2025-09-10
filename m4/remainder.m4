@@ -1,5 +1,5 @@
 # remainder.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,9 +10,6 @@ AC_DEFUN([gl_FUNC_REMAINDER],
 [
   m4_divert_text([DEFAULTS], [gl_remainder_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
-
-  dnl Test whether remainder() is declared. On IRIX 5.3 it is not declared.
-  AC_CHECK_DECL([remainder], , [HAVE_DECL_REMAINDER=0], [[#include <math.h>]])
 
   REMAINDER_LIBM=
   AC_CACHE_CHECK([whether remainder() can be used without linking with libm],

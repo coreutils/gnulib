@@ -1,5 +1,5 @@
 # round.m4
-# serial 28
+# serial 29
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,10 +23,6 @@ AC_DEFUN([gl_FUNC_ROUND],
     ])
   if test "$ROUND_LIBM" != missing; then
     HAVE_ROUND=1
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has round() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECLS([round], , [HAVE_DECL_ROUND=0], [[#include <math.h>]])
-
     dnl Test whether round() produces correct results. On NetBSD 3.0, for
     dnl x = 1/2 - 2^-54, the system's round() returns a wrong result.
     AC_REQUIRE([AC_PROG_CC])
@@ -144,7 +140,6 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_ROUND=0
-    HAVE_DECL_ROUND=0
   fi
   if test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1; then
     dnl Find libraries needed to link lib/round.c.

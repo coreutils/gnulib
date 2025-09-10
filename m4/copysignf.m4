@@ -1,5 +1,5 @@
 # copysignf.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,12 +25,8 @@ AC_DEFUN([gl_FUNC_COPYSIGNF],
   if test $gl_cv_func_copysignf_no_libm = yes \
      || test $gl_cv_func_copysignf_in_libm = yes; then
     HAVE_COPYSIGNF=1
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has copysignf() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([copysignf], , [HAVE_DECL_COPYSIGNF=0], [[#include <math.h>]])
   else
     HAVE_COPYSIGNF=0
-    HAVE_DECL_COPYSIGNF=0
     dnl On HP-UX 11.31/ia64, cc has a built-in for copysignf that redirects
     dnl to the symbol '_copysignf', defined in libm, not libc.
     case "$host_os" in

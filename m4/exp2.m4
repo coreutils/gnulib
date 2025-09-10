@@ -1,5 +1,5 @@
 # exp2.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,9 +67,6 @@ AC_DEFUN([gl_FUNC_EXP2],
   if test $gl_cv_func_exp2_no_libm = yes \
      || test $gl_cv_func_exp2_in_libm = yes; then
     HAVE_EXP2=1
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has exp2() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([exp2], , [HAVE_DECL_EXP2=0], [[#include <math.h>]])
     saved_LIBS="$LIBS"
     LIBS="$LIBS $EXP2_LIBM"
     gl_FUNC_EXP2_WORKS
@@ -80,7 +77,6 @@ AC_DEFUN([gl_FUNC_EXP2],
     esac
   else
     HAVE_EXP2=0
-    HAVE_DECL_EXP2=0
   fi
   if test $HAVE_EXP2 = 0 || test $REPLACE_EXP2 = 1; then
     dnl Find libraries needed to link lib/exp2.c.

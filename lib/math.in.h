@@ -251,8 +251,8 @@ _NaN ()
 
 #if !(defined FP_ILOGB0 && defined FP_ILOGBNAN)
  /* Ensure FP_ILOGB0 and FP_ILOGBNAN are defined.  */
-# if defined __NetBSD__ || defined __sgi
-  /* NetBSD, IRIX 6.5: match what ilogb() does */
+# if defined __NetBSD__
+  /* NetBSD: match what ilogb() does */
 #  define FP_ILOGB0   (- 2147483647 - 1) /* INT_MIN */
 #  define FP_ILOGBNAN (- 2147483647 - 1) /* INT_MIN */
 # elif defined _AIX
@@ -431,7 +431,7 @@ _GL_WARN_ON_USE (atan2f, "atan2f is unportable - "
 _GL_FUNCDECL_RPL (cbrtf, float, (float x), );
 _GL_CXXALIAS_RPL (cbrtf, float, (float x));
 # else
-#  if !@HAVE_DECL_CBRTF@
+#  if !@HAVE_CBRTF@
 _GL_FUNCDECL_SYS (cbrtf, float, (float x), );
 #  endif
 _GL_CXXALIAS_SYS (cbrtf, float, (float x));
@@ -470,7 +470,7 @@ _GL_WARN_ON_USE (cbrt, "cbrt is unportable - "
 _GL_FUNCDECL_RPL (cbrtl, long double, (long double x), );
 _GL_CXXALIAS_RPL (cbrtl, long double, (long double x));
 # else
-#  if !@HAVE_DECL_CBRTL@
+#  if !@HAVE_CBRTL@
 _GL_FUNCDECL_SYS (cbrtl, long double, (long double x), );
 #  endif
 _GL_CXXALIAS_SYS (cbrtl, long double, (long double x));
@@ -555,7 +555,7 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 
 
 #if @GNULIB_COPYSIGNF@
-# if !@HAVE_DECL_COPYSIGNF@
+# if !@HAVE_COPYSIGNF@
 #  undef copysignf
 _GL_FUNCDECL_SYS (copysignf, float, (float x, float y), );
 # endif
@@ -721,7 +721,7 @@ _GL_WARN_ON_USE (expl, "expl is unportable - "
 
 
 #if @GNULIB_EXP2F@
-# if !@HAVE_DECL_EXP2F@
+# if !@HAVE_EXP2F@
 _GL_FUNCDECL_SYS (exp2f, float, (float x), );
 # endif
 _GL_CXXALIAS_SYS (exp2f, float, (float x));
@@ -743,7 +743,7 @@ _GL_WARN_ON_USE (exp2f, "exp2f is unportable - "
 _GL_FUNCDECL_RPL (exp2, double, (double x), );
 _GL_CXXALIAS_RPL (exp2, double, (double x));
 # else
-#  if !@HAVE_DECL_EXP2@
+#  if !@HAVE_EXP2@
 _GL_FUNCDECL_SYS (exp2, double, (double x), );
 #  endif
 _GL_CXXALIAS_SYS (exp2, double, (double x));
@@ -768,7 +768,7 @@ _GL_WARN_ON_USE (exp2, "exp2 is unportable - "
 _GL_FUNCDECL_RPL (exp2l, long double, (long double x), );
 _GL_CXXALIAS_RPL (exp2l, long double, (long double x));
 # else
-#  if !@HAVE_DECL_EXP2L@
+#  if !@HAVE_EXP2L@
 #   undef exp2l
 _GL_FUNCDECL_SYS (exp2l, long double, (long double x), );
 #  endif
@@ -843,7 +843,7 @@ _GL_WARN_ON_USE (expm1, "expm1 is unportable - "
 _GL_FUNCDECL_RPL (expm1l, long double, (long double x), );
 _GL_CXXALIAS_RPL (expm1l, long double, (long double x));
 # else
-#  if !@HAVE_DECL_EXPM1L@
+#  if !@HAVE_EXPM1L@
 #   undef expm1l
 #   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (expm1l, long double, (long double x), );
@@ -1730,7 +1730,7 @@ _GL_WARN_ON_USE (log1pl, "log1pl has portability problems - "
 _GL_FUNCDECL_RPL (log2f, float, (float x), );
 _GL_CXXALIAS_RPL (log2f, float, (float x));
 # else
-#  if !@HAVE_DECL_LOG2F@
+#  if !@HAVE_LOG2F@
 #   undef log2f
 _GL_FUNCDECL_SYS (log2f, float, (float x), );
 #  endif
@@ -1756,7 +1756,7 @@ _GL_WARN_ON_USE (log2f, "log2f is unportable - "
 _GL_FUNCDECL_RPL (log2, double, (double x), );
 _GL_CXXALIAS_RPL (log2, double, (double x));
 # else
-#  if !@HAVE_DECL_LOG2@
+#  if !@HAVE_LOG2@
 #   undef log2
 _GL_FUNCDECL_SYS (log2, double, (double x), );
 #  endif
@@ -1782,7 +1782,7 @@ _GL_WARN_ON_USE (log2, "log2 is unportable - "
 _GL_FUNCDECL_RPL (log2l, long double, (long double x), );
 _GL_CXXALIAS_RPL (log2l, long double, (long double x));
 # else
-#  if !@HAVE_DECL_LOG2L@
+#  if !@HAVE_LOG2L@
 _GL_FUNCDECL_SYS (log2l, long double, (long double x), );
 #  endif
 _GL_CXXALIAS_SYS (log2l, long double, (long double x));
@@ -2046,7 +2046,7 @@ _GL_WARN_ON_USE (remainderf, "remainderf is unportable - "
 _GL_FUNCDECL_RPL (remainder, double, (double x, double y), );
 _GL_CXXALIAS_RPL (remainder, double, (double x, double y));
 # else
-#  if !@HAVE_REMAINDER@ || !@HAVE_DECL_REMAINDER@
+#  if !@HAVE_REMAINDER@
 _GL_FUNCDECL_SYS (remainder, double, (double x, double y), );
 #  endif
 _GL_CXXALIAS_SYS (remainder, double, (double x, double y));
@@ -2071,7 +2071,7 @@ _GL_WARN_ON_USE (remainder, "remainder is unportable - "
 _GL_FUNCDECL_RPL (remainderl, long double, (long double x, long double y), );
 _GL_CXXALIAS_RPL (remainderl, long double, (long double x, long double y));
 # else
-#  if !@HAVE_DECL_REMAINDERL@
+#  if !@HAVE_REMAINDERL@
 #   undef remainderl
 #   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (remainderl, long double, (long double x, long double y), );
@@ -2092,7 +2092,7 @@ _GL_WARN_ON_USE (remainderl, "remainderl is unportable - "
 
 
 #if @GNULIB_RINTF@
-# if !@HAVE_DECL_RINTF@
+# if !@HAVE_RINTF@
 _GL_FUNCDECL_SYS (rintf, float, (float x), );
 # endif
 _GL_CXXALIAS_SYS (rintf, float, (float x));
@@ -2156,7 +2156,7 @@ _GL_WARN_ON_USE (rintl, "rintl is unportable - "
 _GL_FUNCDECL_RPL (roundf, float, (float x), );
 _GL_CXXALIAS_RPL (roundf, float, (float x));
 # else
-#  if !@HAVE_DECL_ROUNDF@
+#  if !@HAVE_ROUNDF@
 _GL_FUNCDECL_SYS (roundf, float, (float x), );
 #  endif
 _GL_CXXALIAS_SYS (roundf, float, (float x));
@@ -2179,7 +2179,7 @@ _GL_WARN_ON_USE (roundf, "roundf is unportable - "
 _GL_FUNCDECL_RPL (round, double, (double x), );
 _GL_CXXALIAS_RPL (round, double, (double x));
 # else
-#  if !@HAVE_DECL_ROUND@
+#  if !@HAVE_ROUND@
 _GL_FUNCDECL_SYS (round, double, (double x), );
 #  endif
 _GL_CXXALIAS_SYS (round, double, (double x));
@@ -2204,7 +2204,7 @@ _GL_WARN_ON_USE (round, "round is unportable - "
 _GL_FUNCDECL_RPL (roundl, long double, (long double x), );
 _GL_CXXALIAS_RPL (roundl, long double, (long double x));
 # else
-#  if !@HAVE_DECL_ROUNDL@
+#  if !@HAVE_ROUNDL@
 #   undef roundl
 #   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (roundl, long double, (long double x), );
@@ -2609,9 +2609,9 @@ _GL_WARN_REAL_FLOATING_DECL (isinf);
 #if @GNULIB_ISNANF@
 /* Test for NaN for 'float' numbers.  */
 # if @HAVE_ISNANF@
-#  if defined __sun || defined __sgi
-/* Solaris and IRIX have isnanf() and declare it in <ieeefp.h>.  We cannot
-   define isnanf as a macro, because that would conflict with <ieeefp.h>.  */
+#  if defined __sun
+/* Solaris has isnanf() and declares it in <ieeefp.h>.  We cannot define isnanf
+   as a macro, because that would conflict with <ieeefp.h>.  */
 _GL_EXTERN_C int isnanf (float x);
 #  else
 /* The original <math.h> included above provides a declaration of isnan macro
@@ -2639,9 +2639,9 @@ _GL_EXTERN_C int isnanf (float x);
    This function is a gnulib extension, unlike isnan() which applied only
    to 'double' numbers earlier but now is a type-generic macro.  */
 # if @HAVE_ISNAND@
-#  if defined __sun || defined __sgi
-/* Solaris and IRIX have isnand() and declare it in <ieeefp.h>.  We cannot
-   define isnand as a macro, because that would conflict with <ieeefp.h>.  */
+#  if defined __sun
+/* Solaris has isnand() and declares it in <ieeefp.h>.  We cannot define isnand
+   as a macro, because that would conflict with <ieeefp.h>.  */
 _GL_EXTERN_C int isnand (double x);
 #  else
 /* The original <math.h> included above provides a declaration of isnan

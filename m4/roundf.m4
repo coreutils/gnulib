@@ -1,5 +1,5 @@
 # roundf.m4
-# serial 29
+# serial 30
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,10 +23,6 @@ AC_DEFUN([gl_FUNC_ROUNDF],
     ])
   if test "$ROUNDF_LIBM" != missing; then
     HAVE_ROUNDF=1
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has roundf() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECLS([roundf], , [HAVE_DECL_ROUNDF=0], [[#include <math.h>]])
-
     dnl Test whether roundf() produces correct results. On mingw, for
     dnl x = 1/2 - 2^-25, the system's roundf() returns a wrong result.
     AC_REQUIRE([AC_PROG_CC])
@@ -149,7 +145,6 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_ROUNDF=0
-    HAVE_DECL_ROUNDF=0
   fi
   if test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
     dnl Find libraries needed to link lib/roundf.c.

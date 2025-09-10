@@ -1,5 +1,5 @@
 # log2f.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,9 +25,6 @@ AC_DEFUN([gl_FUNC_LOG2F],
   LIBS="$saved_LIBS"
   if test $ac_cv_func_log2f = yes; then
     HAVE_LOG2F=1
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has log2f() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([log2f], , [HAVE_DECL_LOG2F=0], [[#include <math.h>]])
 
     saved_LIBS="$LIBS"
     LIBS="$LIBS $LOG2F_LIBM"
@@ -60,8 +57,7 @@ extern
 float log2f (float);
 #endif
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (float x, float y)
 {
@@ -102,7 +98,6 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_LOG2F=0
-    HAVE_DECL_LOG2F=0
     case "$gl_cv_onwards_func_log2f" in
       future*) REPLACE_LOG2F=1 ;;
     esac

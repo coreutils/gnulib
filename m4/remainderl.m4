@@ -1,5 +1,5 @@
 # remainderl.m4
-# serial 18
+# serial 19
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,9 +46,6 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
   if test $gl_cv_func_remainderl = yes; then
     HAVE_REMAINDERL=1
     REMAINDERL_LIBM="$REMAINDER_LIBM"
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has remainderl() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECLS([remainderl], , [HAVE_DECL_REMAINDERL=0], [[#include <math.h>]])
 
     saved_LIBS="$LIBS"
     LIBS="$LIBS $REMAINDERL_LIBM"
@@ -60,7 +57,6 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
     esac
   else
     HAVE_REMAINDERL=0
-    HAVE_DECL_REMAINDERL=0
   fi
   if test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; then
     dnl Find libraries needed to link lib/remainderl.c.
@@ -128,14 +124,6 @@ AC_DEFUN([gl_FUNC_REMAINDERL_WORKS],
 #if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
-#endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# undef LDBL_MANT_DIG
-# define LDBL_MANT_DIG 106
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
 #endif
 extern
 #ifdef __cplusplus

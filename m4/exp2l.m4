@@ -1,5 +1,5 @@
 # exp2l.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,9 +25,6 @@ AC_DEFUN([gl_FUNC_EXP2L],
   if test $ac_cv_func_exp2l = yes; then
     HAVE_EXP2L=1
     EXP2L_LIBM="$EXP2_LIBM"
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has exp2l() in libm but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([exp2l], , [HAVE_DECL_EXP2L=0], [[#include <math.h>]])
     if test $REPLACE_EXP2L = 0; then
       AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
       AC_CACHE_CHECK([whether exp2l works],
@@ -62,14 +59,6 @@ AC_DEFUN([gl_FUNC_EXP2L],
 #if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
-#endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# undef LDBL_MANT_DIG
-# define LDBL_MANT_DIG 106
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
 #endif
 #undef exp2l
 extern
@@ -154,9 +143,6 @@ int main (int argc, char *argv[])
   /* This test fails on OpenBSD 4.9, where exp2l(NaN) = 0.0.  */
   if (exp2l (zero / zero) == 0.0L)
     result |= 1;
-  /* This test fails on IRIX 6.5, where exp2l(-Inf) = 1.0.  */
-  if (!(exp2l (-1.0L / zero) == 0.0L))
-    result |= 2;
   return result;
 }
               ]])],
@@ -183,7 +169,6 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_EXP2L=0
-    HAVE_DECL_EXP2L=0
   fi
   if test $HAVE_EXP2L = 0 || test $REPLACE_EXP2L = 1; then
     dnl Find libraries needed to link lib/exp2l.c.

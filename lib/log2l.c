@@ -52,7 +52,7 @@ log2l (long double x)
       else
         {
           /* Return NaN.  */
-#if (defined _MSC_VER && !defined __clang__) || (defined __sgi && !defined __GNUC__)
+#if defined _MSC_VER && !defined __clang__
           static long double zero;
           return zero / zero;
 #else
