@@ -31,9 +31,6 @@
 #if defined _AIX
 # include <sys/cache.h>
 #endif
-#if defined __sgi
-# include <sys/cachectl.h>
-#endif
 #if defined __sun
 # include <stddef.h>
 #endif
@@ -76,9 +73,6 @@ clear_cache (void *start, void *end)
 #elif defined _AIX
   /* AIX.  */
   _sync_cache_range (start, (char *) end - (char *) start);
-#elif defined __sgi
-  /* IRIX.  */
-  cacheflush (start, (char *) end - (char *) start, ICACHE);
 #elif defined __sun
   /* Solaris.  */
   extern void sync_instruction_memory (char *, size_t);
