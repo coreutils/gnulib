@@ -1,5 +1,5 @@
 # printf.m4
-# serial 97
+# serial 98
 dnl Copyright (C) 2003, 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -994,7 +994,7 @@ int main ()
   int result = 0;
   char buf[100];
   /* Test whether %ls works at all.
-     This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku, but not on
+     This test fails on OpenBSD 4.0, Solaris 2.6, Haiku, but not on
      Cygwin 1.5.  */
   {
     static const wchar_t wstring[] = { 'a', 'b', 'c', 0 };
@@ -1003,8 +1003,8 @@ int main ()
         || strcmp (buf, "abc") != 0)
       result |= 1;
   }
-  /* This test fails on IRIX 6.5, Solaris 2.6, Cygwin 1.5, Haiku (with an
-     assertion failure inside libc), but not on OpenBSD 4.0.  */
+  /* This test fails on Solaris 2.6, Cygwin 1.5, Haiku (with an assertion
+     failure inside libc), but not on OpenBSD 4.0.  */
   {
     static const wchar_t wstring[] = { 'a', 0 };
     buf[0] = '\0';
@@ -1037,7 +1037,6 @@ changequote(,)dnl
                               # Guess yes on OpenBSD >= 6.0.
            openbsd[1-5].*)    gl_cv_func_printf_directive_ls="guessing no";;
            openbsd*)          gl_cv_func_printf_directive_ls="guessing yes";;
-           irix*)             gl_cv_func_printf_directive_ls="guessing no";;
            solaris*)          gl_cv_func_printf_directive_ls="guessing no";;
            cygwin*)           gl_cv_func_printf_directive_ls="guessing no";;
            beos* | haiku*)    gl_cv_func_printf_directive_ls="guessing no";;
@@ -1589,8 +1588,6 @@ changequote(,)dnl
                              *)     gl_cv_func_printf_enomem="guessing no";;
                            esac
                            ;;
-                           # Guess yes on IRIX.
-          irix*)           gl_cv_func_printf_enomem="guessing yes";;
                            # Guess yes on BeOS.
           beos*)           gl_cv_func_printf_enomem="guessing yes";;
                            # Guess yes on Haiku.
@@ -1682,8 +1679,6 @@ changequote(,)dnl
                                  # Guess yes on HP-UX >= 11.
            hpux[7-9]* | hpux10*) gl_cv_func_snprintf_truncation_c99="guessing no";;
            hpux*)                gl_cv_func_snprintf_truncation_c99="guessing yes";;
-                                 # Guess yes on IRIX >= 6.5.
-           irix6.5)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_snprintf_truncation_c99="guessing no";;
@@ -1705,7 +1700,7 @@ changequote([,])dnl
 dnl Test whether the return value of the snprintf function is the number
 dnl of bytes (excluding the terminating NUL) that would have been produced
 dnl if the buffer had been large enough. (ISO C99, POSIX:2001)
-dnl For example, this test program fails on IRIX 6.5:
+dnl For example, this test program fails on HP-UX 11.31 and Solaris 9:
 dnl     ---------------------------------------------------------------------
 dnl     #include <stdio.h>
 dnl     int main()
@@ -1894,8 +1889,6 @@ changequote(,)dnl
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_directive_n="guessing no";;
            aix*)                 gl_cv_func_snprintf_directive_n="guessing yes";;
-                                 # Guess yes on IRIX >= 6.5.
-           irix6.5)              gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_snprintf_directive_n="guessing no";;
@@ -2050,8 +2043,6 @@ changequote(,)dnl
                                     # Guess yes on AIX >= 4.
            aix[1-3]*)               gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
            aix*)                    gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
-                                    # Guess yes on IRIX >= 6.5.
-           irix6.5)                 gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                     # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                     gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
