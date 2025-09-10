@@ -1,5 +1,5 @@
 # fmal.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,16 +24,10 @@ AC_DEFUN([gl_FUNC_FMAL],
     ])
   if test $gl_cv_func_fmal_no_libm = yes \
      || test $gl_cv_func_fmal_in_libm = yes; then
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has fmal() in libm but doesn't declare it in <math.h>,
-    dnl and the function is buggy.
-    AC_CHECK_DECL([fmal], , [REPLACE_FMAL=1], [[#include <math.h>]])
-    if test $REPLACE_FMAL = 0; then
-      gl_FUNC_FMAL_WORKS
-      case "$gl_cv_func_fmal_works" in
-        *no) REPLACE_FMAL=1 ;;
-      esac
-    fi
+    gl_FUNC_FMAL_WORKS
+    case "$gl_cv_func_fmal_works" in
+      *no) REPLACE_FMAL=1 ;;
+    esac
   else
     HAVE_FMAL=0
   fi
@@ -102,14 +96,6 @@ AC_DEFUN([gl_FUNC_FMAL_WORKS],
 #if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
-#endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# undef LDBL_MANT_DIG
-# define LDBL_MANT_DIG 106
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
 #endif
 long double (* volatile my_fmal) (long double, long double, long double) = fmal;
 long double p0 = 0.0L;
