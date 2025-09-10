@@ -66,12 +66,6 @@ extern int proc_pidinfo (int, int, uint64_t, void *, int) WEAK_IMPORT_ATTRIBUTE;
 # include <sys/pstat.h>
 #endif
 
-#if defined __sgi                                           /* IRIX */
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/procfs.h>
-#endif
-
 #if defined __CYGWIN__                                      /* Cygwin */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h> /* needed to get 'struct external_pinfo' defined */
@@ -397,36 +391,6 @@ get_progname_of (pid_t pid)
     }
   if (p != NULL)
     return strdup (p);
-
-#endif
-
-#if defined __sgi                                           /* IRIX */
-
-  char filename[12 + 10 + 1];
-  int fd;
-
-  sprintf (filename, "/proc/pinfo/%u", pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
-  if (0 <= fd)
-    {
-      prpsinfo_t buf;
-      int ioctl_ok = 0 <= ioctl (fd, PIOCPSINFO, &buf);
-      close (fd);
-      if (ioctl_ok)
-        {
-          char *name = buf.pr_fname;
-          size_t namesize = sizeof buf.pr_fname;
-          /* It may not be NUL-terminated.  */
-          char *namenul = memchr (name, '\0', namesize);
-          size_t namelen = namenul ? namenul - name : namesize;
-          char *namecopy = malloc (namelen + 1);
-          if (namecopy)
-            {
-              namecopy[namelen] = '\0';
-              return memcpy (namecopy, name, namelen);
-            }
-        }
-    }
 
 #endif
 

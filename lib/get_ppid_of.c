@@ -58,12 +58,6 @@ extern int proc_pidinfo (int, int, uint64_t, void *, int) WEAK_IMPORT_ATTRIBUTE;
 # include <sys/pstat.h>
 #endif
 
-#if defined __sgi                                           /* IRIX */
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/procfs.h>
-#endif
-
 #if defined __CYGWIN__                                      /* Cygwin */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h> /* needed to get 'struct external_pinfo' defined */
@@ -301,24 +295,6 @@ get_ppid_of (pid_t pid)
       if (__pstat_getproc64 (status64, sizeof status64, 0, pid) > 0)
         return *(unsigned long long *)(status64 + 24);
 # endif
-    }
-
-#endif
-
-#if defined __sgi                                           /* IRIX */
-
-  char filename[12 + 10 + 1];
-  int fd;
-
-  sprintf (filename, "/proc/pinfo/%u", pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
-  if (0 <= fd)
-    {
-      prpsinfo_t buf;
-      int ioctl_ok = 0 <= ioctl (fd, PIOCPSINFO, &buf);
-      close (fd);
-      if (ioctl_ok)
-        return buf.pr_ppid;
     }
 
 #endif
