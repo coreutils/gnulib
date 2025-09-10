@@ -110,11 +110,7 @@ sigabbrev_np (int sig)
     #if defined SIGBREAK
     case SIGBREAK:    return "BREAK";
     #endif
-    /* IRIX */
-    #if defined SIGCKPT
-    case SIGCKPT:     return "CKPT";
-    #endif
-    /* Linux, IRIX, Cygwin */
+    /* Linux, Cygwin */
     #if defined SIGCLD && SIGCLD != SIGCHLD
     case SIGCLD:      return "CLD";
     #endif
@@ -126,7 +122,7 @@ sigabbrev_np (int sig)
     #if defined SIGDANGER
     case SIGDANGER:   return "DANGER";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, mingw */
+    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, mingw */
     #if defined SIGEMT
     case SIGEMT:      return "EMT";
     #endif
@@ -134,11 +130,11 @@ sigabbrev_np (int sig)
     #if defined SIGINFO && SIGINFO != SIGPWR
     case SIGINFO:     return "INFO";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin */
     #if defined SIGIO && SIGIO != SIGPOLL
     case SIGIO:       return "IO";
     #endif
-    /* Linux, IRIX, Cygwin, mingw */
+    /* Linux, Cygwin, mingw */
     #if defined SIGIOT && SIGIOT != SIGABRT
     case SIGIOT:      return "IOT";
     #endif
@@ -186,15 +182,7 @@ sigabbrev_np (int sig)
     #if defined SIGPRE
     case SIGPRE:      return "PRE";
     #endif
-    /* IRIX */
-    #if defined SIGPTINTR
-    case SIGPTINTR:   return "PTINTR";
-    #endif
-    /* IRIX */
-    #if defined SIGPTRESCHED
-    case SIGPTRESCHED:return "PTRESCHED";
-    #endif
-    /* Linux, NetBSD, Minix, AIX, IRIX, Cygwin */
+    /* Linux, NetBSD, Minix, AIX, Cygwin */
     #if defined SIGPWR
     case SIGPWR:      return "PWR";
     #endif
@@ -205,10 +193,6 @@ sigabbrev_np (int sig)
     /* AIX */
     #if defined SIGRECOVERY
     case SIGRECOVERY: return "RECOVERY";
-    #endif
-    /* IRIX */
-    #if defined SIGRESTART
-    case SIGRESTART:  return "RESTART";
     #endif
     /* AIX */
     #if defined SIGRETRACT
@@ -242,10 +226,6 @@ sigabbrev_np (int sig)
     #if defined SIGTHR
     case SIGTHR:      return "THR";
     #endif
-    /* IRIX */
-    #if defined SIGUME
-    case SIGUME:      return "UME";
-    #endif
     /* AIX */
     #if defined SIGVIRT
     case SIGVIRT:     return "VIRT";
@@ -254,7 +234,7 @@ sigabbrev_np (int sig)
     #if defined SIGWAITING
     case SIGWAITING:  return "WAITING";
     #endif
-    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, Haiku */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, Haiku */
     #if defined SIGWINCH
     case SIGWINCH:    return "WINCH";
     #endif
