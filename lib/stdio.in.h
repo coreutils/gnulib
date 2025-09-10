@@ -264,10 +264,6 @@
    - with MSVC ucrt: "[-]nan" or "[-]nan(ind)" or "[-]nan(snan)",
    - with mingw: "[-]1.#IND" or "[-]1.#QNAN".  */
 #  define _PRINTF_NAN_LEN_MAX 10
-# elif defined __sgi
-/* On IRIX, the output typically is "[-]nan0xNNNNNNNN" with 8 hexadecimal
-   digits.  */
-#  define _PRINTF_NAN_LEN_MAX 14
 # else
 /* We don't know, but 32 should be a safe maximum.  */
 #  define _PRINTF_NAN_LEN_MAX 32
