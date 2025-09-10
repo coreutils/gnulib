@@ -1,5 +1,5 @@
 # float_h.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FLOAT_H],
   GL_GENERATE_FLOAT_H=false
   REPLACE_FLOAT_LDBL=0
   case "$host_os" in
-    aix* | beos* | openbsd* | mirbsd* | irix*)
+    aix* | beos* | openbsd* | mirbsd*)
       GL_GENERATE_FLOAT_H=true
       ;;
     freebsd* | dragonfly*)
