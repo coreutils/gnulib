@@ -318,7 +318,7 @@ and C++ programs alike.
 
 Note that putting a @code{#include} in an @code{extern "C" @{ ... @}}
 block yields a syntax error in C++ mode on some platforms (e.g., glibc
-systems with g++ v3.3 to v4.2, AIX, IRIX).  For this reason, it
+systems with g++ v3.3 to v4.2, AIX).  For this reason, it
 is recommended to place the @code{#include} before the @code{extern
 "C"} block.
 

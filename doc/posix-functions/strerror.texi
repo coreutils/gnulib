@@ -20,13 +20,9 @@ although POSIX requires this to leave @code{errno} unchanged and
 report success, on some platforms:
 FreeBSD 8.2, NetBSD 10.0, OpenBSD 4.7, macOS 14.
 @item
-This function fails to return a string for out-of-range integers on
+This function returns an empty string for out-of-range integers on
 some platforms:
 HP-UX 11.
-(Some return NULL which is a POSIX violation, others return the empty
-string which is valid but not as useful); this can still cause bugs
-because most programs call @code{strerror} without setting and testing
-@code{errno}.)
 @end itemize
 
 Portability problems not fixed by Gnulib:
