@@ -33,7 +33,7 @@
 /* The code that uses CMSG_FIRSTHDR is enabled on
    Linux, Mac OS X, FreeBSD, OpenBSD, NetBSD, AIX, Cygwin.
    The code that uses HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS is enabled on
-   HP-UX, IRIX, Solaris.  */
+   HP-UX, Solaris.  */
 
 /* MSG_CMSG_CLOEXEC is defined only on Linux, as of 2011.  */
 #ifndef MSG_CMSG_CLOEXEC
@@ -52,7 +52,7 @@ sendfd (int sock, int fd)
   char byte = 0;
   struct iovec iov;
   struct msghdr msg;
-# if defined CMSG_FIRSTHDR && !defined __sgi
+# if defined CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
 # endif
@@ -66,7 +66,7 @@ sendfd (int sock, int fd)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# if defined CMSG_FIRSTHDR && !defined __sgi
+# if defined CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -112,7 +112,7 @@ recvfd (int sock, int flags)
   struct msghdr msg;
   int fd = -1;
   ssize_t len;
-# if defined CMSG_FIRSTHDR && !defined __sgi
+# if defined CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
   int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
@@ -133,7 +133,7 @@ recvfd (int sock, int flags)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# if defined CMSG_FIRSTHDR && !defined __sgi
+# if defined CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
