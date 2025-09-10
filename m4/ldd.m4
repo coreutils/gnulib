@@ -1,5 +1,5 @@
 # ldd.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2006, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -153,19 +153,6 @@ changequote(,)dnl
           dnl          caliper dynamic instrumentation disabled
           dnl
           LDDPOSTPROC="2>/dev/null | sed -e '1,/shared library list:/d' -e '/shared library binding:/,\$d' | sed -e 's,^.*[ 	]\\([^ 	][^ 	]*\\)\$,\\1,' | sed -e 's,^.*/,,'"
-          ;;
-        irix*)
-          LDDPROG="elfdump -Dl"
-          dnl The output of "elfdump -Dl program" looks like this:
-          dnl
-          dnl program:
-          dnl
-          dnl                    **** MIPS LIBLIST INFORMATION ****
-          dnl .liblist :
-          dnl [INDEX] Timestamp               Checksum        Flags   Name            Version
-          dnl [1]     Oct  2 05:19:12 1999    0x867bf7a8      -----   libc.so.1       sgi1.0
-          dnl
-          LDDPOSTPROC="2>/dev/null | sed -n -e 's,^[[][0-9]*[]].*	0x[^	]*	[^	][^	]*	\\([^	][^	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
           ;;
         linux* | gnu* | kfreebsd*-gnu | knetbsd*-gnu) # glibc-based systems
           LDDPROG="ldd"
