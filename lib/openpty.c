@@ -47,7 +47,7 @@ openpty (_GL_UNUSED int *amaster, _GL_UNUSED int *aslave,
   return -1;
 }
 
-#else /* AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10 */
+#else /* AIX 5.1, HP-UX 11, Solaris 10 */
 
 # include <fcntl.h>
 # include <stdlib.h>
@@ -67,36 +67,24 @@ openpty (int *amaster, int *aslave, char *name,
   char *slave_name;
   int slave;
 
-# if HAVE__GETPTY /* IRIX */
-
-  slave_name = _getpty (&master, O_RDWR, 0622, 0);
-  if (slave_name == NULL)
-    return -1;
-
-# else /* AIX 5.1, HP-UX 11, Solaris 10, mingw */
-
   /* This call uses the 'posix_openpt' module.  */
   master = posix_openpt (O_RDWR | O_NOCTTY);
   if (master < 0)
     return -1;
 
-# endif
-
   /* This call does not require a dependency to the 'grantpt' module,
-     because AIX, HP-UX, IRIX, Solaris all have the grantpt() function.  */
+     because AIX, HP-UX, Solaris all have the grantpt() function.  */
   if (grantpt (master))
     goto fail;
 
   /* This call does not require a dependency to the 'unlockpt' module,
-     because AIX, HP-UX, IRIX, Solaris all have the unlockpt() function.  */
+     because AIX, HP-UX, Solaris all have the unlockpt() function.  */
   if (unlockpt (master))
     goto fail;
 
-# if !HAVE__GETPTY /* !IRIX */
   slave_name = ptsname (master);
   if (slave_name == NULL)
     goto fail;
-# endif
 
   slave = open (slave_name, O_RDWR | O_NOCTTY);
   if (slave == -1)
