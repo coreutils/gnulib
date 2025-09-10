@@ -71,22 +71,14 @@ NaNd ()
 
 /* NaNl () returns a 'long double' not-a-number.  */
 
-/* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
-   runtime type conversion.
-   The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.
+/* The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.
    The IBM XL C compiler on z/OS complains.
    PGI 16.10 complains.
    Avoid possible incorrect constant-folding on mips.  */
-#ifdef __sgi
-static long double NaNl ()
-{
-  double zero = 0.0;
-  return zero / zero;
-}
-#elif (defined _MSC_VER \
-       || (defined __MVS__ && defined __IBMC__) \
-       || defined __PGI \
-       || defined __mips__)
+#if (defined _MSC_VER \
+     || (defined __MVS__ && defined __IBMC__) \
+     || defined __PGI \
+     || defined __mips__)
 static long double
 NaNl ()
 {
