@@ -60,7 +60,7 @@
 # endif
 #endif /* MOUNTED_GETFSSTAT */
 
-#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
+#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, Cygwin, Android,
                                    also (obsolete) 4.3BSD, SunOS */
 # include <mntent.h>
 # include <sys/types.h>
@@ -185,9 +185,7 @@
    /* FreeBSD, Linux 2.4 */                     \
    || strcmp (Fs_type, "devfs") == 0            \
    /* for NetBSD 3.0 */                         \
-   || strcmp (Fs_type, "kernfs") == 0           \
-   /* for Irix 6.5 */                           \
-   || strcmp (Fs_type, "ignore") == 0)
+   || strcmp (Fs_type, "kernfs") == 0)
 
 /* Historically, we have marked as "dummy" any file system of type "none",
    but now that programs like du need to know about bind-mounted directories,
@@ -468,7 +466,7 @@ read_file_system_list (bool need_fs_type)
   struct mount_entry **mtail = &mount_list;
   (void) need_fs_type;
 
-#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
+#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, Cygwin, Android,
                                    also (obsolete) 4.3BSD, SunOS */
   {
     FILE *fp;
