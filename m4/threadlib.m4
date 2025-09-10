@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 46
+# serial 47
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -186,9 +186,7 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
       # Other possible tests:
       #   -lpthreads (FSU threads, PCthreads)
       #   -lgthreads
-      # Test whether both pthread_mutex_lock and pthread_mutexattr_init exist
-      # in libc. IRIX 6.5 has the first one in both libc and libpthread, but
-      # the second one only in libpthread, and lock.c needs it.
+      # Test whether both pthread_mutex_lock exists in libc.
       #
       # If -pthread works, prefer it to -lpthread, since Ubuntu 14.04
       # needs -pthread for some reason.  See:
@@ -200,10 +198,8 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
           [AC_LANG_PROGRAM(
              [[#include <pthread.h>
                pthread_mutex_t m;
-               pthread_mutexattr_t ma;
              ]],
-             [[pthread_mutex_lock (&m);
-               pthread_mutexattr_init (&ma);]])],
+             [[pthread_mutex_lock (&m);]])],
           [gl_pthread_api=yes
            LIBPTHREAD=$gl_pthread
            LIBPMULTITHREAD=$gl_pthread])
@@ -647,8 +643,6 @@ dnl Solaris 7,8,9      posix      -lpthread       Y      Sol 7,8: 0.0; Sol 9: OK
 dnl
 dnl HP-UX 11           posix      -lpthread       N (cc) OK
 dnl                                               Y (gcc)
-dnl
-dnl IRIX 6.5           posix      -lpthread       Y      0.5
 dnl
 dnl AIX 4.3,5.1        posix      -lpthread       N      AIX 4: 0.5; AIX 5: OK
 dnl
