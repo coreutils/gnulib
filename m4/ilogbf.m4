@@ -1,5 +1,5 @@
 # ilogbf.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,8 +70,8 @@ AC_DEFUN([gl_FUNC_ILOGBF_WORKS],
 #  define FP_ILOGBNAN (- 2147483647 - 1) /* INT_MIN */
 # endif
 #else
-# if defined __NetBSD__ || defined __sgi
-  /* NetBSD, IRIX 6.5: match what ilogbf() does */
+# if defined __NetBSD__
+  /* NetBSD: match what ilogbf() does */
 #  define FP_ILOGB0   INT_MIN
 #  define FP_ILOGBNAN INT_MIN
 # elif defined _AIX
