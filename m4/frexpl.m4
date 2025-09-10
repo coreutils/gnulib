@@ -1,5 +1,5 @@
 # frexpl.m4
-# serial 24
+# serial 25
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,7 +117,7 @@ AC_DEFUN([gl_CHECK_FREXPL_NO_LIBM],
 dnl Test whether frexpl() works on finite numbers (this fails on
 dnl Mac OS X 10.4/PowerPC, on AIX 5.1, and on BeOS), on denormalized numbers
 dnl (this fails on Mac OS X 10.5/i386), and also on infinite numbers (this
-dnl fails e.g. on IRIX 6.5 and mingw).
+dnl fails e.g. on mingw).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -140,12 +140,6 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 #if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
-#endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
 #endif
 extern
 #ifdef __cplusplus
@@ -225,7 +219,7 @@ int main()
         [
 changequote(,)dnl
          case "$host_os" in
-           aix | aix[3-6]* | beos* | darwin* | irix* | mingw* | windows* | pw*)
+           aix | aix[3-6]* | beos* | darwin* | mingw* | windows* | pw*)
               gl_cv_func_frexpl_works="guessing no";;
            *) gl_cv_func_frexpl_works="guessing yes";;
          esac
