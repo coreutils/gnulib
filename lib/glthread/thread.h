@@ -133,11 +133,6 @@ extern _Noreturn void gl_thread_exit (void *return_value);
 /* Get intptr_t.  */
 # include <stdint.h>
 
-/* On IRIX, pthread_atfork is declared in <unistd.h>, not in <pthread.h>.  */
-# if defined __sgi
-#  include <unistd.h>
-# endif
-
 # if USE_POSIX_THREADS_WEAK
 /* Compilers other than GCC need to see the declaration of pthread_sigmask
    before the "#pragma weak pthread_sigmask" below.  */
