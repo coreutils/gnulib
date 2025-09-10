@@ -349,7 +349,7 @@ parse_number (const char *nptr,
 static DOUBLE
 minus_zero (void)
 {
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
   return -MIN * MIN;
 #else
   return -0.0;
