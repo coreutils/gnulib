@@ -1,5 +1,5 @@
 # signbit.m4
-# serial 22
+# serial 23
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -199,7 +199,7 @@ double m0d = -p0d;
    But that expression does not work on other platforms, such as when
    cross-compiling to PowerPC on Mac OS X 10.5.  */
 long double p0l = 0.0L;
-#if defined __hpux || defined __sgi
+#if defined __hpux
 long double m0l = -LDBL_MIN * LDBL_MIN;
 #else
 long double m0l = -p0l;
