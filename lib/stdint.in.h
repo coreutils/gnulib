@@ -51,13 +51,6 @@
    in public interfaces due to compiler differences.  */
 
 #if @HAVE_STDINT_H@
-# if defined __sgi && ! defined __c99
-   /* Bypass IRIX's <stdint.h> if in C89 mode, since it merely annoys users
-      with "This header file is to be used only for c99 mode compilations"
-      diagnostics.  */
-#  define __STDINT_H__
-# endif
-
   /* Some pre-C++11 <stdint.h> implementations need this.  */
 # ifdef __cplusplus
 #  ifndef __STDC_CONSTANT_MACROS
@@ -94,8 +87,8 @@
 
 #if ! @HAVE_C99_STDINT_H@
 
-/* <sys/types.h> defines some of the stdint.h types as well, on glibc,
-   IRIX 6.5, and OpenBSD 3.8 (via <machine/types.h>).
+/* <sys/types.h> defines some of the stdint.h types as well, on glibc and
+   OpenBSD 3.8 (via <machine/types.h>).
    AIX 5.2 <sys/types.h> isn't needed and causes troubles.
    Mac OS X 10.4.6 <sys/types.h> includes <stdint.h> (which is us), but
    relies on the system <stdint.h> definitions, so include
