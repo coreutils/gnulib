@@ -51,7 +51,7 @@
     || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ \
     || defined __NetBSD__ \
     || (defined __APPLE__ && defined __MACH__) \
-    || defined _AIX || defined __sgi || defined __sun \
+    || defined _AIX || defined __sun \
     || defined __CYGWIN__ || defined __HAIKU__
 
 /* This file contains the proximity test function for the simple cases, where
@@ -1854,7 +1854,7 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
 /* --------------------------- stackvma-procfs.c --------------------------- */
 
-#elif defined __sgi || defined __sun /* IRIX, Solaris */
+#elif defined __sun /* Solaris */
 
 # include <errno.h> /* errno, EINTR */
 # include <fcntl.h> /* open, O_RDONLY */
@@ -1961,13 +1961,6 @@ vma_iterate (struct callback_locals *locals)
   int fd;
   int nmaps;
   size_t memneed;
-#  if HAVE_MAP_ANONYMOUS
-#   define zero_fd -1
-#   define map_flags MAP_ANONYMOUS
-#  else /* !HAVE_MAP_ANONYMOUS */
-  int zero_fd;
-#   define map_flags 0
-#  endif
   void *auxmap;
   uintptr_t auxmap_start;
   uintptr_t auxmap_end;
@@ -2003,16 +1996,8 @@ vma_iterate (struct callback_locals *locals)
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-#  endif
   auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-#  if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-#  endif
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (uintptr_t) auxmap;
@@ -2071,13 +2056,6 @@ vma_iterate (struct callback_locals *locals)
   int fd;
   int nmaps;
   size_t memneed;
-#  if HAVE_MAP_ANONYMOUS
-#   define zero_fd -1
-#   define map_flags MAP_ANONYMOUS
-#  else /* !HAVE_MAP_ANONYMOUS */
-  int zero_fd;
-#   define map_flags 0
-#  endif
   void *auxmap;
   uintptr_t auxmap_start;
   uintptr_t auxmap_end;
@@ -2118,16 +2096,8 @@ vma_iterate (struct callback_locals *locals)
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-#  endif
   auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-#  if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-#  endif
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (uintptr_t) auxmap;

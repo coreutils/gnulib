@@ -54,7 +54,7 @@ extern int sigsegv_get_vma (uintptr_t address, struct vma_struct *vma);
     || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ \
     || defined __NetBSD__ || defined __OpenBSD__ \
     || (defined __APPLE__ && defined __MACH__) \
-    || defined _AIX || defined __sgi || defined __sun \
+    || defined _AIX || defined __sun \
     || defined __CYGWIN__ || defined __HAIKU__
 # define HAVE_STACKVMA 1
 #endif

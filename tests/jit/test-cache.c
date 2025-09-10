@@ -302,17 +302,8 @@ main ()
       return 1;
     start_rw = start;
 #else
-# ifdef HAVE_MAP_ANONYMOUS
-    int flags = MAP_ANONYMOUS | MAP_PRIVATE;
-    int fd = -1;
-# else
-    int flags = MAP_FILE | MAP_PRIVATE;
-    int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
-    if (fd < 0)
-      return 1;
-# endif
     start = mmap (NULL, mapping_size, PROT_READ | PROT_WRITE | PROT_EXEC,
-                  flags, fd, 0);
+                  MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (start != (char *) (-1))
       {
         /* A platform that allows a mmap'ed memory region to be simultaneously
@@ -332,7 +323,7 @@ main ()
         if (register_temporary_file (filename) < 0)
           return 2;
 # endif
-        fd = open (filename, O_CREAT | O_RDWR | O_TRUNC, 0700);
+        int fd = open (filename, O_CREAT | O_RDWR | O_TRUNC, 0700);
         if (fd < 0)
           return 3;
 # ifndef KEEP_TEMP_FILE_VISIBLE

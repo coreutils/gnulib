@@ -73,26 +73,17 @@ mprotect (void *addr, size_t len, int prot)
 # endif
 # define PROT_READ_WRITE  (PROT_READ|PROT_WRITE)
 
-# if HAVE_MAP_ANONYMOUS
-#  define zero_fd -1
-#  define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-# else
-#  ifndef MAP_FILE
-#   define MAP_FILE 0
-#  endif
-static int zero_fd;
-#  define map_flags MAP_FILE | MAP_PRIVATE
-# endif
-
 static void *
 mmap_zeromap (void *map_addr_hint, size_t map_len)
 {
 # ifdef __hpux
   /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
      freedom about the address range.  */
-  return (void *) mmap ((void *) 0,    map_len, PROT_READ_WRITE, map_flags, zero_fd, 0);
+  return (void *) mmap ((void *) 0,    map_len, PROT_READ_WRITE,
+                        MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 # else
-  return (void *) mmap (map_addr_hint, map_len, PROT_READ_WRITE, map_flags, zero_fd, 0);
+  return (void *) mmap (map_addr_hint, map_len, PROT_READ_WRITE,
+                        MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 # endif
 }
 

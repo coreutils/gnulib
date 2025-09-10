@@ -43,10 +43,6 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/mman.h>
-/* Define MAP_FILE when it isn't otherwise.  */
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
 #endif
 
 /* Return a pointer to a zero-size object in memory (that is, actually, a
@@ -60,23 +56,13 @@ zerosize_ptr (void)
 /* Use mmap and mprotect when they exist.  Don't test HAVE_MMAP, because it is
    not defined on HP-UX 11 (since it does not support MAP_FIXED).  */
 #if HAVE_SYS_MMAN_H && HAVE_MPROTECT && !defined __KLIBC__
-# if HAVE_MAP_ANONYMOUS
-  const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
-  const int fd = -1;
-# else /* !HAVE_MAP_ANONYMOUS */
-  const int flags = MAP_FILE | MAP_PRIVATE;
-  int fd = open ("/dev/zero", O_RDONLY, 0666);
-  if (fd >= 0)
-# endif
-    {
-      size_t pagesize = sysconf (_SC_PAGESIZE);
-      char *two_pages =
-        (char *) mmap (NULL, 2 * pagesize, PROT_READ | PROT_WRITE,
-                       flags, fd, 0);
-      if (two_pages != (char *)(-1)
-          && mprotect (two_pages + pagesize, pagesize, PROT_NONE) == 0)
-        return two_pages + pagesize;
-    }
+  size_t pagesize = sysconf (_SC_PAGESIZE);
+  char *two_pages =
+    (char *) mmap (NULL, 2 * pagesize, PROT_READ | PROT_WRITE,
+                   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (two_pages != (char *)(-1)
+      && mprotect (two_pages + pagesize, pagesize, PROT_NONE) == 0)
+    return two_pages + pagesize;
 #endif
   return NULL;
 }

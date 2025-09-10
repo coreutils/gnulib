@@ -13,7 +13,6 @@ extensions
 getpagesize
 gettext-h
 gnulib-i18n
-open
 stdlib-h
 xalloc
 unistd-h

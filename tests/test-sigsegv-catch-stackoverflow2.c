@@ -151,11 +151,6 @@ main ()
       < 0)
     exit (2);
 
-  /* Preparations.  */
-# if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-# endif
-
 # if defined __linux__ && defined __sparc__
   /* On Linux 2.6.26/SPARC64, PROT_READ has the same effect as
      PROT_READ | PROT_WRITE.  */

@@ -1,5 +1,5 @@
 # mmap-anon.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2005, 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,8 +12,6 @@ dnl This file is offered as-is, without any warranty.
 #   MAP_ANON exist and have the same value.
 # - On HP-UX, only MAP_ANONYMOUS exists.
 # - On Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, only MAP_ANON exists.
-# - On IRIX, neither exists, and a file descriptor opened to /dev/zero must be
-#   used.
 
 AC_DEFUN_ONCE([gl_FUNC_MMAP_ANON],
 [
@@ -48,10 +46,5 @@ AC_DEFUN_ONCE([gl_FUNC_MMAP_ANON],
          gl_have_mmap_anonymous=yes])
     fi
     AC_MSG_RESULT([$gl_have_mmap_anonymous])
-    if test $gl_have_mmap_anonymous = yes; then
-      AC_DEFINE([HAVE_MAP_ANONYMOUS], [1],
-        [Define to 1 if mmap()'s MAP_ANONYMOUS flag is available after including
-         config.h and <sys/mman.h>.])
-    fi
   fi
 ])

@@ -94,11 +94,6 @@
      is slightly larger higher than get_rusage_as_via_setrlimit(), by 4 KB in
      32-bit mode and by 40 KB in 64-bit mode.
 
-   IRIX:
-     a) setrlimit with RLIMIT_AS works.
-     b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP.
-     Both methods agree,
-
    Solaris:
      a) setrlimit with RLIMIT_AS works.
      b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP, and the
@@ -144,10 +139,6 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
-/* Define MAP_FILE when it isn't otherwise.  */
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
 #endif
 
 
@@ -164,16 +155,6 @@ get_rusage_as_via_setrlimit (void)
   uintptr_t result;
 
   struct rlimit orig_limit;
-
-# if HAVE_MAP_ANONYMOUS
-  const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
-  const int fd = -1;
-# else /* !HAVE_MAP_ANONYMOUS */
-  const int flags = MAP_FILE | MAP_PRIVATE;
-  int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
-  if (fd < 0)
-    return 0;
-# endif
 
   /* Record the original limit.  */
   if (getrlimit (RLIMIT_AS, &orig_limit) < 0)
@@ -230,7 +211,8 @@ get_rusage_as_via_setrlimit (void)
             /* Allocate a page of memory, to compare the current address space
                size with try_limit.rlim_cur.  */
             void *new_page =
-              mmap (NULL, pagesize, PROT_READ | PROT_WRITE, flags, fd, 0);
+              mmap (NULL, pagesize, PROT_READ | PROT_WRITE,
+                    MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 
             if (new_page != (void *)(-1))
               {
@@ -276,7 +258,8 @@ get_rusage_as_via_setrlimit (void)
             /* Allocate a page of memory, to compare the current address space
                size with try_limit.rlim_cur.  */
             void *new_page =
-              mmap (NULL, pagesize, PROT_READ | PROT_WRITE, flags, fd, 0);
+              mmap (NULL, pagesize, PROT_READ | PROT_WRITE,
+                    MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 
             if (new_page != (void *)(-1))
               {
@@ -314,9 +297,6 @@ get_rusage_as_via_setrlimit (void)
     abort ();
 
  done2:
-# if !HAVE_MAP_ANONYMOUS
-  close (fd);
-# endif
   return result;
 }
 

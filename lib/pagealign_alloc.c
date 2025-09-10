@@ -39,10 +39,6 @@
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
 #if HAVE_MMAP
-/* Define MAP_FILE when it isn't otherwise.  */
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
 /* Define MAP_FAILED for old systems which neglect to.  */
 # ifndef MAP_FAILED
 #  define MAP_FAILED ((void *)-1)
@@ -123,22 +119,8 @@ pagealign_alloc (size_t size)
      based approaches, since the latter often waste an entire memory page
      per call.  */
 #if HAVE_MMAP
-# ifdef HAVE_MAP_ANONYMOUS
-  const int fd = -1;
-  const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
-# else /* !HAVE_MAP_ANONYMOUS */
-  static int fd = -1;  /* Only open /dev/zero once in order to avoid limiting
-                          the amount of memory we may allocate based on the
-                          number of open file descriptors.  */
-  const int flags = MAP_FILE | MAP_PRIVATE;
-  if (fd == -1)
-    {
-      fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
-      if (fd < 0)
-        error (EXIT_FAILURE, errno, _("Failed to open /dev/zero for read"));
-    }
-# endif /* HAVE_MAP_ANONYMOUS */
-  ret = mmap (NULL, size, PROT_READ | PROT_WRITE, flags, fd, 0);
+  ret = mmap (NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
+              -1, 0);
   if (ret == MAP_FAILED)
     return NULL;
   new_memnode (ret, size);

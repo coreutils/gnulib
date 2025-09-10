@@ -11,7 +11,6 @@ stdint-h
 unistd-h
 extensions
 getpagesize
-open
 vma-iter
 
 configure.ac:

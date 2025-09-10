@@ -82,13 +82,6 @@
 # include <sys/procfs.h> /* prmap_t */
 #endif
 
-#if defined __sgi /* IRIX */
-# include <string.h> /* memcpy */
-# include <sys/types.h>
-# include <sys/mman.h> /* mmap, munmap */
-# include <sys/procfs.h> /* PIOC*, prmap_t */
-#endif
-
 #if defined __sun /* Solaris */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
@@ -1191,118 +1184,6 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   close (fd);
   return 0;
 
-#elif defined __sgi /* IRIX */
-
-  size_t pagesize;
-  char fnamebuf[6+10+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
-# if HAVE_MAP_ANONYMOUS
-#  define zero_fd -1
-#  define map_flags MAP_ANONYMOUS
-# else
-  int zero_fd;
-#  define map_flags 0
-# endif
-  void *auxmap;
-  unsigned long auxmap_start;
-  unsigned long auxmap_end;
-  prmap_t* maps;
-  prmap_t* mp;
-
-  pagesize = getpagesize ();
-
-  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1;
-  *fname = '\0';
-  {
-    unsigned int value = getpid ();
-    do
-      *--fname = (value % 10) + '0';
-    while ((value = value / 10) > 0);
-  }
-  fname -= 6;
-  memcpy (fname, "/proc/", 6);
-
-  fd = open (fname, O_RDONLY | O_CLOEXEC);
-  if (fd < 0)
-    return -1;
-
-  if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
-    goto fail2;
-
-  memneed = (nmaps + 10) * sizeof (prmap_t);
-  /* Allocate memneed bytes of memory.
-     We cannot use alloca here, because not much stack space is guaranteed.
-     We also cannot use malloc here, because a malloc() call may call mmap()
-     and thus pre-allocate available memory.
-     So use mmap(), and ignore the resulting VMA.  */
-  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-# if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-# endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-# if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-# endif
-  if (auxmap == (void *) -1)
-    goto fail2;
-  auxmap_start = (unsigned long) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
-
-  if (ioctl (fd, PIOCMAP, maps) < 0)
-    goto fail1;
-
-  for (mp = maps;;)
-    {
-      unsigned long start, end;
-      unsigned int flags;
-
-      start = (unsigned long) mp->pr_vaddr;
-      end = start + mp->pr_size;
-      if (start == 0 && end == 0)
-        break;
-      flags = 0;
-      if (mp->pr_mflags & MA_READ)
-        flags |= VMA_PROT_READ;
-      if (mp->pr_mflags & MA_WRITE)
-        flags |= VMA_PROT_WRITE;
-      if (mp->pr_mflags & MA_EXEC)
-        flags |= VMA_PROT_EXECUTE;
-      mp++;
-      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-        {
-          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start < auxmap_start)
-            if (callback (data, start, auxmap_start, flags))
-              break;
-          if (auxmap_end - 1 < end - 1)
-            if (callback (data, auxmap_end, end, flags))
-              break;
-        }
-      else
-        {
-          if (callback (data, start, end, flags))
-            break;
-        }
-    }
-  munmap (auxmap, memneed);
-  close (fd);
-  return 0;
-
- fail1:
-  munmap (auxmap, memneed);
- fail2:
-  close (fd);
-  return -1;
-
 #elif defined __sun /* Solaris */
 
   /* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
@@ -1324,13 +1205,6 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   int fd;
   int nmaps;
   size_t memneed;
-#  if HAVE_MAP_ANONYMOUS
-#   define zero_fd -1
-#   define map_flags MAP_ANONYMOUS
-#  else /* Solaris <= 7 */
-  int zero_fd;
-#   define map_flags 0
-#  endif
   void *auxmap;
   unsigned long auxmap_start;
   unsigned long auxmap_end;
@@ -1365,16 +1239,8 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-#  endif
   auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-#  if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-#  endif
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (unsigned long) auxmap;
@@ -1442,13 +1308,6 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   int fd;
   int nmaps;
   size_t memneed;
-#  if HAVE_MAP_ANONYMOUS
-#   define zero_fd -1
-#   define map_flags MAP_ANONYMOUS
-#  else /* Solaris <= 7 */
-  int zero_fd;
-#   define map_flags 0
-#  endif
   void *auxmap;
   unsigned long auxmap_start;
   unsigned long auxmap_end;
@@ -1488,16 +1347,8 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-#  endif
   auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-#  if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-#  endif
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (unsigned long) auxmap;
