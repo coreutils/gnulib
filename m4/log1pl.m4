@@ -1,5 +1,5 @@
 # log1pl.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,7 +54,7 @@ static long double dummy (long double x) { return 0; }
 int main (int argc, char *argv[])
 {
   long double (* volatile my_log1pl) (long double) = argc ? log1pl : dummy;
-  /* This test fails on AIX 7.1, IRIX 6.5.  */
+  /* This test fails on AIX 7.1.  */
   long double y = my_log1pl (minus_zerol);
   if (!(y == 0.0L) || (signbitl (minus_zerol) && !signbitl (y)))
     return 1;
@@ -148,14 +148,6 @@ AC_DEFUN([gl_FUNC_LOG1PL_WORKS],
 #if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
-#endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# undef LDBL_MANT_DIG
-# define LDBL_MANT_DIG 106
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
 #endif
 #undef log1pl
 extern
