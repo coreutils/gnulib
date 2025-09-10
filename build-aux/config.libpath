@@ -162,21 +162,8 @@ case $host_os in
   interix[3-9]*)
     shlibpath_var=LD_LIBRARY_PATH
     ;;
-  irix5* | irix6* | nonstopux*)
-    case $host_os in
-      irix5* | nonstopux*)
-        shlibsuff=
-        ;;
-      *)
-        case $LD in # libtool.m4 will add one of these switches to LD
-          *-32|*"-32 ") shlibsuff= ;;
-          *-n32|*"-n32 ") shlibsuff=N32 ;;
-          *-64|*"-64 ") shlibsuff=64 ;;
-          *) shlibsuff= ;;
-        esac
-        ;;
-    esac
-    shlibpath_var=LD_LIBRARY${shlibsuff}_PATH
+  nonstopux*)
+    shlibpath_var=LD_LIBRARY_PATH
     ;;
   linux*oldld* | linux*aout* | linux*coff*)
     ;;
