@@ -1,5 +1,5 @@
 # expm1f.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,18 +23,8 @@ AC_DEFUN([gl_FUNC_EXPM1F],
   LIBS="$saved_LIBS"
   if test $ac_cv_func_expm1f = yes; then
     EXPM1F_LIBM="$EXPM1_LIBM"
-
-    saved_LIBS="$LIBS"
-    LIBS="$LIBS $EXPM1F_LIBM"
-    gl_FUNC_EXPM1F_WORKS
-    LIBS="$saved_LIBS"
-    case "$gl_cv_func_expm1f_works" in
-      *yes) ;;
-      *) REPLACE_EXPM1F=1 ;;
-    esac
-
     m4_ifdef([gl_FUNC_EXPM1F_IEEE], [
-      if test $gl_expm1f_required = ieee && test $REPLACE_EXPM1F = 0; then
+      if test $gl_expm1f_required = ieee; then
         AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether expm1f works according to ISO C 99 with IEC 60559],
           [gl_cv_func_expm1f_ieee],
@@ -57,8 +47,7 @@ extern
 float expm1f (float);
 #endif
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (float x, float y)
 {
@@ -107,38 +96,4 @@ int main (int argc, char *argv[])
     EXPM1F_LIBM="$EXPM1_LIBM"
   fi
   AC_SUBST([EXPM1F_LIBM])
-])
-
-dnl Test whether expm1f() works.
-dnl On IRIX 6.5, for arguments <= -17.32868, it returns -5.6295e14.
-AC_DEFUN([gl_FUNC_EXPM1F_WORKS],
-[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CACHE_CHECK([whether expm1f works], [gl_cv_func_expm1f_works],
-    [
-      AC_RUN_IFELSE(
-        [AC_LANG_SOURCE([[
-#include <math.h>
-volatile float x;
-float y;
-int main ()
-{
-  x = -100.0f;
-  y = expm1f (x);
-  if (y < -1.0f)
-    return 1;
-  return 0;
-}
-]])],
-        [gl_cv_func_expm1f_works=yes],
-        [gl_cv_func_expm1f_works=no],
-        [case "$host_os" in
-           irix*)             gl_cv_func_expm1f_works="guessing no" ;;
-                              # Guess yes on native Windows.
-           mingw* | windows*) gl_cv_func_expm1f_works="guessing yes" ;;
-           *)                 gl_cv_func_expm1f_works="guessing yes" ;;
-         esac
-        ])
-    ])
 ])
