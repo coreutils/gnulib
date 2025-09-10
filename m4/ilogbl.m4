@@ -1,5 +1,5 @@
 # ilogbl.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,23 +101,6 @@ AC_DEFUN([gl_FUNC_ILOGBL_WORKS],
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
 #endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
-#endif
-/* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
-   runtime type conversion.  */
-#ifdef __sgi
-static long double NaNl ()
-{
-  double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaNl() (0.0L / 0.0L)
-#endif
 volatile long double x;
 static int dummy (long double x) { return 0; }
 int main (int argc, char *argv[])
@@ -132,7 +115,7 @@ int main (int argc, char *argv[])
   }
   /* This test fails on Cygwin 3.4.6.  */
   {
-    x = NaNl ();
+    x = 0.0L / 0.0L;
     if (my_ilogbl (x) != FP_ILOGBNAN)
       result |= 2;
   }
