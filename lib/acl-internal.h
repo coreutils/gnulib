@@ -68,7 +68,7 @@ _GL_INLINE_HEADER_BEGIN
 
 # if HAVE_ACL_GET_FILE
 /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-/* Linux, FreeBSD, Mac OS X, IRIX, Cygwin >= 2.5 */
+/* Linux, FreeBSD, Mac OS X, Cygwin >= 2.5 */
 
 #  ifndef MIN_ACL_ENTRIES
 #   define MIN_ACL_ENTRIES 4
@@ -116,7 +116,7 @@ _GL_INLINE_HEADER_BEGIN
 #  endif
 
 /* Set to 0 if a file's mode is stored independently from the ACL.  */
-#  if (HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP) || defined __sgi /* Mac OS X, IRIX */
+#  if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* Mac OS X */
 #   define MODE_INSIDE_ACL 0
 #  endif
 
@@ -240,7 +240,7 @@ extern int acl_nontrivial (int count, struct acl *entries);
 struct permission_context {
   mode_t mode;
 #if USE_ACL
-# if HAVE_ACL_GET_FILE /* Linux, FreeBSD, Mac OS X, IRIX, Cygwin >= 2.5 */
+# if HAVE_ACL_GET_FILE /* Linux, FreeBSD, Mac OS X, Cygwin >= 2.5 */
   acl_t acl;
 #  if !HAVE_ACL_TYPE_EXTENDED
   acl_t default_acl;

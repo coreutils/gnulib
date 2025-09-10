@@ -384,9 +384,9 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
 
 #if (!USE_LINUX_XATTR && USE_ACL && HAVE_ACL_GET_FILE \
      && !HAVE_ACL_EXTENDED_FILE && !HAVE_ACL_TYPE_EXTENDED)
-/* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
+/* FreeBSD, NetBSD >= 10, Cygwin >= 2.5 */
 
-# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP /* IRIX, Cygwin >= 2.5 */
+# if HAVE_ACL_GET_FD && !HAVE_ACL_GET_LINK_NP /* Cygwin >= 2.5 */
 #  include <fcntl.h>
 #  ifdef O_PATH
 #   define acl_get_fd_np(fd, type) acl_get_fd (fd)
@@ -522,7 +522,7 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
 
   {
     /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-    /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, IRIX, Cygwin >= 2.5 */
+    /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, Cygwin >= 2.5 */
     int ret;
 
 #   if HAVE_ACL_EXTENDED_FILE /* Linux */
@@ -553,7 +553,7 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
       }
     else
       ret = -1;
-#   else /* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
+#   else /* FreeBSD, NetBSD >= 10, Cygwin >= 2.5 */
 
     acl_t acl = acl_get_fdfile (fd, name, ACL_TYPE_ACCESS, flags);
     if (acl)
@@ -562,7 +562,7 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
         int saved_errno = errno;
         acl_free (acl);
         errno = saved_errno;
-        /* On Linux, FreeBSD, NetBSD, IRIX,
+        /* On Linux, FreeBSD, NetBSD,
                acl_get_file (name, ACL_TYPE_ACCESS)
            and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
            either both succeed or both fail; it depends on the
