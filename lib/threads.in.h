@@ -760,13 +760,7 @@ typedef void (*tss_dtor_t) (void *);
 
 /* AIX 7.1 <threads.h> does not define TSS_DTOR_ITERATIONS.  */
 #ifndef TSS_DTOR_ITERATIONS
-# ifdef PTHREAD_DESTRUCTOR_ITERATIONS
-#  define TSS_DTOR_ITERATIONS PTHREAD_DESTRUCTOR_ITERATIONS
-# else
-   /* IRIX 6.5 does not define PTHREAD_DESTRUCTOR_ITERATIONS.
-      This value is a wild guess.  */
-#  define TSS_DTOR_ITERATIONS 1
-# endif
+# define TSS_DTOR_ITERATIONS PTHREAD_DESTRUCTOR_ITERATIONS
 #endif
 
 #if @GNULIB_TSS@
