@@ -22,6 +22,7 @@ vararrays
 attribute               [test $ac_use_included_regex = yes]
 btowc                   [test $ac_use_included_regex = yes]
 builtin-expect          [test $ac_use_included_regex = yes]
+gettext-h               [test $ac_use_included_regex = yes]
 glibc-internal/dynarray [test $ac_use_included_regex = yes]
 gnulib-i18n             [test $ac_use_included_regex = yes]
 intprops                [test $ac_use_included_regex = yes]
