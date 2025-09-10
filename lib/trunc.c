@@ -48,7 +48,7 @@
 #endif
 
 /* -0.0.  See minus-zero.h.  */
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
 # define MINUS_ZERO (-MIN * MIN)
 #else
 # define MINUS_ZERO L_(-0.0)

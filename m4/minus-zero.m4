@@ -1,5 +1,5 @@
 # minus-zero.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FLOAT_MINUS_ZERO_CODE],
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -FLT_MIN * FLT_MIN does not work when cross-compiling
    to PowerPC on Mac OS X 10.5.  */
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
 static float
 compute_minus_zerof (void)
 {
@@ -39,7 +39,7 @@ AC_DEFUN([gl_DOUBLE_MINUS_ZERO_CODE],
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
    to PowerPC on Mac OS X 10.5.  */
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
 static double
 compute_minus_zerod (void)
 {
@@ -61,11 +61,10 @@ AC_DEFUN([gl_LONG_DOUBLE_MINUS_ZERO_CODE],
 #endif
 /* minus_zerol represents the value -0.0L.  */
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
-   IRIX cc can't put -0.0L into .data, but can compute at runtime.
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -LDBL_MIN * LDBL_MIN does not work when cross-compiling
    to PowerPC on Mac OS X 10.5.  */
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
 static long double
 compute_minus_zerol (void)
 {
