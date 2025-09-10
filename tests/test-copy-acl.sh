@@ -65,7 +65,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, none.
   # TODO: Support also native Windows platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -92,7 +92,7 @@ cd "$builddir" ||
   else
     if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
-      # HP-UX, sometimes also IRIX.
+      # HP-UX.
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
         # HP-UX 11.11 or newer.
         acl_flavor=hpuxjfs
@@ -112,11 +112,6 @@ cd "$builddir" ||
           if (fsaclctl -v >/dev/null) 2>/dev/null; then
             # Mac OS X.
             acl_flavor=macosx
-          else
-            if test -f /sbin/chacl; then
-              # IRIX.
-              acl_flavor=irix
-            fi
           fi
         fi
       fi
@@ -177,14 +172,6 @@ cd "$builddir" ||
       {
         /bin/ls -le "$1" | sed -e "s/$1/FILENAME/g" > tmpaclout1
         /bin/ls -le "$2" | sed -e "s/$2/FILENAME/g" > tmpaclout2
-        cmp tmpaclout1 tmpaclout2 > /dev/null
-      }
-      ;;
-    irix)
-      func_test_same_acls ()
-      {
-        /bin/ls -lD "$1" | sed -e "s/$1/FILENAME/g" > tmpaclout1
-        /bin/ls -lD "$2" | sed -e "s/$2/FILENAME/g" > tmpaclout2
         cmp tmpaclout1 tmpaclout2 > /dev/null
       }
       ;;
@@ -567,35 +554,6 @@ cd "$builddir" ||
         rm -f tmpfile9
 
         func_test_copy tmpfile0 tmpfile9
-
-        ;;
-
-      irix)
-
-        # Set an ACL for a user.
-        /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x tmpfile0
-
-        func_test_copy tmpfile0 tmpfile2
-
-        # Set an ACL for a group.
-        /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x,group:$agid:r-- tmpfile0
-
-        func_test_copy tmpfile0 tmpfile3
-
-        # Set an ACL for other.
-        /sbin/chacl user::rw-,group::---,user:$auid:--x,group:$agid:r--,other::r-- tmpfile0
-
-        func_test_copy tmpfile0 tmpfile4
-
-        # Remove the ACL for the user.
-        /sbin/chacl user::rw-,group::---,group:$agid:r--,other::r-- tmpfile0
-
-        func_test_copy tmpfile0 tmpfile5
-
-        # Remove the ACL for the group.
-        /sbin/chacl user::rw-,group::---,other::r-- tmpfile0
-
-        func_test_copy tmpfile0 tmpfile7
 
         ;;
 

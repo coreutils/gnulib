@@ -65,7 +65,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, none.
   # TODO: Support also native Windows platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -92,7 +92,7 @@ cd "$builddir" ||
   else
     if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
-      # HP-UX, sometimes also IRIX.
+      # HP-UX.
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
         # HP-UX 11.11 or newer.
         acl_flavor=hpuxjfs
@@ -112,11 +112,6 @@ cd "$builddir" ||
           if (fsaclctl -v >/dev/null) 2>/dev/null; then
             # Mac OS X.
             acl_flavor=macosx
-          else
-            if test -f /sbin/chacl; then
-              # IRIX.
-              acl_flavor=irix
-            fi
           fi
         fi
       fi
@@ -198,9 +193,6 @@ cd "$builddir" ||
             ;;
           macosx)
             /bin/chmod +a "user:daemon allow execute" tmpfile0
-            ;;
-          irix)
-            /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x tmpfile0
             ;;
         esac
 

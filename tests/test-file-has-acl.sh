@@ -65,7 +65,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, aix, macosx, none.
   # TODO: Support also native Windows platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -92,7 +92,7 @@ cd "$builddir" ||
   else
     if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
-      # HP-UX, sometimes also IRIX.
+      # HP-UX.
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
         # HP-UX 11.11 or newer.
         acl_flavor=hpuxjfs
@@ -112,11 +112,6 @@ cd "$builddir" ||
           if (fsaclctl -v >/dev/null) 2>/dev/null; then
             # Mac OS X.
             acl_flavor=macosx
-          else
-            if test -f /sbin/chacl; then
-              # IRIX.
-              acl_flavor=irix
-            fi
           fi
         fi
       fi
@@ -158,26 +153,6 @@ cd "$builddir" ||
           ??????????" "*)
             test "$2" = no || {
               echo "/bin/ls $acl_ls_option $1 shows no ACL, but expected $2" 1>&2
-              exit 1
-            }
-            ;;
-        esac
-      }
-      ;;
-    irix)
-      func_test_has_acl ()
-      {
-        func_test_file_has_acl "$1" "$2"
-        case `/bin/ls -ldD "$1" | sed 1q` in
-          *" []")
-            test "$2" = no || {
-              echo "/bin/ls -ldD $1 shows no ACL, but expected $2" 1>&2
-              exit 1
-            }
-            ;;
-          *)
-            test "$2" = yes || {
-              echo "/bin/ls -ldD $1 shows an ACL, but expected $2" 1>&2
               exit 1
             }
             ;;
@@ -335,23 +310,6 @@ cd "$builddir" ||
 
         func_test_has_acl tmpfile0 no
 
-        ;;
-
-      irix)
-
-        # Set an ACL for a user.
-        /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x tmpfile0 2> tmp.err
-        cat tmp.err 1>&2
-        if test -s tmp.err; then :; else
-
-          func_test_has_acl tmpfile0 yes
-
-          # Remove the ACL for the user.
-          /sbin/chacl user::rw-,group::---,other::--- tmpfile0
-
-          func_test_has_acl tmpfile0 no
-
-        fi
         ;;
 
     esac
