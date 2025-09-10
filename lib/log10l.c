@@ -35,19 +35,11 @@ long double
 log10l (long double x)
 # undef log10l
 {
-  /* Work around the AIX, IRIX bug.  */
+  /* Work around the AIX bug.  */
   if (x == 0.0L)
     /* Return -Infinity.  */
     return -1.0L / 0.0L;
-  {
-    long double y = log10l (x);
-# ifdef __sgi
-    /* Normalize the +Infinity value.  */
-    if (y > LDBL_MAX)
-      y = 1.0L / 0.0L;
-# endif
-    return y;
-  }
+  return log10l (x);
 }
 
 #else

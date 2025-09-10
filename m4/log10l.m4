@@ -1,5 +1,5 @@
 # log10l.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,9 +56,6 @@ AC_DEFUN([gl_FUNC_LOG10L],
 ])
 
 dnl Test whether log10l() works.
-dnl On IRIX 6.5, log10l(-0.0L) is an unnormalized negative infinity
-dnl 0xFFF00000000000007FF0000000000000, should be
-dnl 0xFFF00000000000000000000000000000.
 dnl On AIX 5.1, log10l(-0.0L) is finite if it's not the first log10l call
 dnl in the program.
 dnl On NetBSD 9.3, the result is accurate to only 16 digits.
@@ -96,14 +93,6 @@ AC_DEFUN([gl_FUNC_LOG10L_WORKS],
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP
 #endif
-#if defined __sgi && (LDBL_MANT_DIG >= 106)
-# undef LDBL_MANT_DIG
-# define LDBL_MANT_DIG 106
-# if defined __GNUC__
-#  undef LDBL_MIN_EXP
-#  define LDBL_MIN_EXP DBL_MIN_EXP
-# endif
-#endif
 #undef log10l /* for AIX */
 extern
 #ifdef __cplusplus
@@ -126,7 +115,7 @@ int main (int argc, char *argv[])
   /* Dummy call, to trigger the AIX 5.1 bug.  */
   gx = 0.6L;
   gy = log10l (gx);
-  /* This test fails on AIX 5.1, IRIX 6.5.  */
+  /* This test fails on AIX 5.1.  */
   {
     gx = -0.0L;
     gy = log10l (gx);
