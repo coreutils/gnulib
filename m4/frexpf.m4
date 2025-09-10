@@ -1,5 +1,5 @@
 # frexpf.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,7 +38,7 @@ AC_DEFUN([gl_FUNC_FREXPF],
 ])
 
 dnl Test whether frexpf() works also on infinite numbers (this fails e.g. on
-dnl IRIX 6.5 and mingw) and on negative zero (this fails e.g. on mingw).
+dnl mingw) and on negative zero (this fails e.g. on mingw).
 AC_DEFUN([gl_FUNC_FREXPF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -54,7 +54,7 @@ AC_DEFUN([gl_FUNC_FREXPF_WORKS],
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -FLT_MIN * FLT_MIN does not work when cross-compiling
    to PowerPC on Mac OS X 10.5.  */
-#if defined __hpux || defined __sgi || defined __ICC
+#if defined __hpux || defined __ICC
 static float
 compute_minus_zero (void)
 {
@@ -91,7 +91,6 @@ int main()
         [gl_cv_func_frexpf_works=yes],
         [gl_cv_func_frexpf_works=no],
         [case "$host_os" in
-           irix*) gl_cv_func_frexpf_works="guessing no" ;;
            # Guess yes with MSVC, no with mingw.
            windows*-msvc*)
              gl_cv_func_frexpf_works="guessing yes"
