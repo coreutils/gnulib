@@ -42,14 +42,6 @@
 # include <string.h>
 #endif
 
-#if defined __sgi
-# include <string.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/procfs.h>
-#endif
-
 #if defined __SCO_VERSION__ || defined __sysv5__
 # include <fcntl.h>
 # include <string.h>
@@ -234,37 +226,6 @@ getprogname (void)
       free (buf.ps_pathptr);
     }
   return p;
-# elif defined __sgi                                        /* IRIX */
-  char filename[50];
-  int fd;
-
-  # if defined __sgi
-    sprintf (filename, "/proc/pinfo/%d", (int) getpid ());
-  # else
-    sprintf (filename, "/proc/%d", (int) getpid ());
-  # endif
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
-  if (0 <= fd)
-    {
-      prpsinfo_t buf;
-      int ioctl_ok = 0 <= ioctl (fd, PIOCPSINFO, &buf);
-      close (fd);
-      if (ioctl_ok)
-        {
-          char *name = buf.pr_fname;
-          size_t namesize = sizeof buf.pr_fname;
-          /* It may not be NUL-terminated.  */
-          char *namenul = memchr (name, '\0', namesize);
-          size_t namelen = namenul ? namenul - name : namesize;
-          char *namecopy = malloc (namelen + 1);
-          if (namecopy)
-            {
-              namecopy[namelen] = '\0';
-              return memcpy (namecopy, name, namelen);
-            }
-        }
-    }
-  return NULL;
 # elif defined __SCO_VERSION__ || defined __sysv5__                /* SCO OpenServer6/UnixWare */
   char buf[80];
   int fd;
