@@ -30,12 +30,8 @@
 # include <sys/pstat.h>
 #endif
 
-#if HAVE_SYS_SYSMP_H /* IRIX */
-# include <sys/sysmp.h>
-#endif
-
 #if HAVE_SYS_SYSINFO_H
-/* Linux, AIX, HP-UX, IRIX, Solaris, Cygwin, Android */
+/* Linux, AIX, HP-UX, Solaris, Cygwin, Android */
 # include <sys/sysinfo.h>
 #endif
 
@@ -46,7 +42,7 @@
 #endif
 
 #if HAVE_SYS_SYSCTL_H && !(defined __GLIBC__ && defined __linux__)
-/* Linux/musl, macOS, *BSD, IRIX, Minix */
+/* Linux/musl, macOS, *BSD, Minix */
 # include <sys/sysctl.h>
 #endif
 
@@ -117,19 +113,6 @@ physmem_total (void)
       {
         double pages = pss.physical_memory;
         double pagesize = pss.page_size;
-        if (0 <= pages && 0 <= pagesize)
-          return pages * pagesize;
-      }
-  }
-#endif
-
-#if HAVE_SYSMP && defined MP_SAGET && defined MPSA_RMINFO && defined _SC_PAGESIZE
-  { /* This works on irix6. */
-    struct rminfo realmem;
-    if (sysmp (MP_SAGET, MPSA_RMINFO, &realmem, sizeof realmem) == 0)
-      {
-        double pagesize = sysconf (_SC_PAGESIZE);
-        double pages = realmem.physmem;
         if (0 <= pages && 0 <= pagesize)
           return pages * pagesize;
       }
@@ -289,19 +272,6 @@ physmem_claimable (double aggressivity)
       {
         double pages = psd.psd_free;
         double pagesize = pss.page_size;
-        if (0 <= pages && 0 <= pagesize)
-          return pages * pagesize;
-      }
-  }
-#endif
-
-#if HAVE_SYSMP && defined MP_SAGET && defined MPSA_RMINFO && defined _SC_PAGESIZE
-  { /* This works on irix6. */
-    struct rminfo realmem;
-    if (sysmp (MP_SAGET, MPSA_RMINFO, &realmem, sizeof realmem) == 0)
-      {
-        double pagesize = sysconf (_SC_PAGESIZE);
-        double pages = realmem.availrmem;
         if (0 <= pages && 0 <= pagesize)
           return pages * pagesize;
       }

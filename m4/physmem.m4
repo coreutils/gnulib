@@ -1,5 +1,5 @@
 # physmem.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2002-2003, 2005-2006, 2008-2025 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -31,7 +31,7 @@ AC_DEFUN([gl_SYS__SYSTEM_CONFIGURATION],
 AC_DEFUN([gl_PHYSMEM],
 [
   # Prerequisites of lib/physmem.c.
-  AC_CHECK_HEADERS([sys/pstat.h sys/sysmp.h sys/sysinfo.h \
+  AC_CHECK_HEADERS([sys/pstat.h sys/sysinfo.h \
     machine/hal_sysinfo.h sys/table.h sys/param.h sys/systemcfg.h],,,
     [AC_INCLUDES_DEFAULT])
   dnl <sys/sysctl.h> requires <sys/param.h> on OpenBSD 4.0.
@@ -42,7 +42,7 @@ AC_DEFUN([gl_PHYSMEM],
      #endif
     ])
 
-  AC_CHECK_FUNCS([pstat_getstatic pstat_getdynamic sysmp getsysinfo sysctl table sysinfo])
+  AC_CHECK_FUNCS([pstat_getstatic pstat_getdynamic getsysinfo sysctl table sysinfo])
   AC_CHECK_MEMBERS([struct sysinfo.mem_unit],,, [[#include <sys/sysinfo.h>]])
   AC_REQUIRE([gl_SYS__SYSTEM_CONFIGURATION])
 ])
