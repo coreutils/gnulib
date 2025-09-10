@@ -1,5 +1,5 @@
 # isnanl.m4
-# serial 26
+# serial 27
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -135,17 +135,7 @@ AC_DEFUN([gl_FUNC_ISNANL_WORKS],
   ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
 typedef union { unsigned int word[NWORDS]; long double value; }
         memory_long_double;
-/* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
-   runtime type conversion.  */
-#ifdef __sgi
-static long double NaNl ()
-{
-  double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaNl() (0.0L / 0.0L)
-#endif
+#define NaNl() (0.0L / 0.0L)
 int main ()
 {
   int result = 0;

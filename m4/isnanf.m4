@@ -1,5 +1,5 @@
 # isnanf.m4
-# serial 21
+# serial 22
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,9 +115,7 @@ AC_DEFUN([gl_HAVE_ISNANF_IN_LIBM],
     ])
 ])
 
-dnl Test whether isnanf() rejects Infinity (this fails on Solaris 2.5.1),
-dnl recognizes a NaN (this fails on IRIX 6.5 with cc), and recognizes a NaN
-dnl with in-memory representation 0x7fbfffff (this fails on IRIX 6.5).
+dnl Test whether isnanf() rejects Infinity (this fails on Solaris 2.5.1).
 AC_DEFUN([gl_ISNANF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -135,20 +133,6 @@ AC_DEFUN([gl_ISNANF_WORKS],
 # undef isnanf
 # define isnanf(x) isnan ((float)(x))
 #endif
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static float
-NaN ()
-{
-  static float zero = 0.0f;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0f / 0.0f)
-#endif
-#define NWORDS \
-  ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-typedef union { unsigned int word[NWORDS]; float value; } memory_float;
 int main()
 {
   int result = 0;
@@ -156,32 +140,12 @@ int main()
   if (isnanf (1.0f / 0.0f))
     result |= 1;
 
-  if (!isnanf (NaN ()))
-    result |= 2;
-
-#if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
-  /* The isnanf function should be immune against changes in the sign bit and
-     in the mantissa bits.  The xor operation twiddles a bit that can only be
-     a sign bit or a mantissa bit.  */
-  if (FLT_EXPBIT0_WORD == 0 && FLT_EXPBIT0_BIT > 0)
-    {
-      memory_float m;
-
-      m.value = NaN ();
-      /* Set the bits below the exponent to 01111...111.  */
-      m.word[0] &= -1U << FLT_EXPBIT0_BIT;
-      m.word[0] |= (1U << (FLT_EXPBIT0_BIT - 1)) - 1;
-      if (!isnanf (m.value))
-        result |= 4;
-    }
-#endif
-
   return result;
 }]])],
         [gl_cv_func_isnanf_works=yes],
         [gl_cv_func_isnanf_works=no],
         [case "$host_os" in
-           irix* | solaris*) gl_cv_func_isnanf_works="guessing no" ;;
+           solaris*) gl_cv_func_isnanf_works="guessing no" ;;
            mingw* | windows*) # Guess yes on mingw, no on MSVC.
              AC_EGREP_CPP([Known], [
 #ifdef __MINGW32__
