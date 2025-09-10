@@ -33,7 +33,6 @@
 
 #define ICONV_FLAVOR_AIX "iconv_open-aix.h"
 #define ICONV_FLAVOR_HPUX "iconv_open-hpux.h"
-#define ICONV_FLAVOR_IRIX "iconv_open-irix.h"
 #define ICONV_FLAVOR_SOLARIS "iconv_open-solaris.h"
 #define ICONV_FLAVOR_ZOS "iconv_open-zos.h"
 
