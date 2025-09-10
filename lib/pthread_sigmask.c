@@ -26,10 +26,6 @@
 # include <string.h>
 #endif
 
-#if PTHREAD_SIGMASK_UNBLOCK_BUG
-# include <unistd.h>
-#endif
-
 int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
 #undef pthread_sigmask
@@ -73,16 +69,6 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
 # if PTHREAD_SIGMASK_FAILS_WITH_ERRNO
   if (ret == -1)
     return errno;
-# endif
-# if PTHREAD_SIGMASK_UNBLOCK_BUG
-  if (ret == 0
-      && new_mask != NULL
-      && (how == SIG_UNBLOCK || how == SIG_SETMASK))
-    {
-      /* Give the OS the opportunity to raise signals that were pending before
-         the pthread_sigmask call and have now been unblocked.  */
-      usleep (1);
-    }
 # endif
   return ret;
 #else
