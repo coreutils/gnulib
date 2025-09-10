@@ -1,5 +1,5 @@
 # remainderf.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,19 +44,10 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
   LIBS="$saved_LIBS"
   if test $gl_cv_func_remainderf = yes; then
     REMAINDERF_LIBM="$REMAINDER_LIBM"
-
-    saved_LIBS="$LIBS"
-    LIBS="$LIBS $REMAINDERF_LIBM"
-    gl_FUNC_REMAINDERF_WORKS
-    LIBS="$saved_LIBS"
-    case "$gl_cv_func_remainderf_works" in
-      *yes) ;;
-      *) REPLACE_REMAINDERF=1 ;;
-    esac
   else
     HAVE_REMAINDERF=0
   fi
-  if test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1; then
+  if test $HAVE_REMAINDERF = 0; then
     dnl Find libraries needed to link lib/remainderf.c.
     if test $gl_cv_func_remainder_no_libm = yes \
        || test $gl_cv_func_remainder_in_libm = yes; then
@@ -86,53 +77,4 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
     fi
   fi
   AC_SUBST([REMAINDERF_LIBM])
-])
-
-dnl Test whether remainderf() works.
-dnl It runs into an endless loop on IRIX 6.5.
-AC_DEFUN([gl_FUNC_REMAINDERF_WORKS],
-[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CHECK_DECLS_ONCE([alarm])
-  AC_CACHE_CHECK([whether remainderf works], [gl_cv_func_remainderf_works],
-    [
-      AC_RUN_IFELSE(
-        [AC_LANG_SOURCE([[
-#include <math.h>
-#if HAVE_DECL_ALARM
-# include <signal.h>
-# include <unistd.h>
-#endif
-extern
-#ifdef __cplusplus
-"C"
-#endif
-float remainderf (float, float);
-volatile float x;
-volatile float y;
-float z;
-int main ()
-{
-#if HAVE_DECL_ALARM
-  signal (SIGALRM, SIG_DFL);
-  alarm (5);
-#endif
-  /* This test fails on IRIX 6.5.  */
-  x = 9.316161e+37f;
-  y = 0.5475547314f;
-  z = remainderf (x, y);
-  return 0;
-}
-]])],
-        [gl_cv_func_remainderf_works=yes],
-        [gl_cv_func_remainderf_works=no],
-        [case "$host_os" in
-           irix*)             gl_cv_func_remainderf_works="guessing no" ;;
-                              # Guess yes on native Windows.
-           mingw* | windows*) gl_cv_func_remainderf_works="guessing yes" ;;
-           *)                 gl_cv_func_remainderf_works="guessing yes" ;;
-         esac
-        ])
-    ])
 ])
