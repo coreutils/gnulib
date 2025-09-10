@@ -48,18 +48,18 @@ extern const char * locale_charset (void);
                                     (darwin = Mac OS X, windows = native Windows)
 
    ASCII, ANSI_X3.4-1968       glibc solaris freebsd netbsd darwin minix cygwin
-   ISO-8859-1              Y   glibc aix hpux irix solaris freebsd netbsd openbsd darwin cygwin zos
-   ISO-8859-2              Y   glibc aix hpux irix solaris freebsd netbsd openbsd darwin cygwin zos
+   ISO-8859-1              Y   glibc aix hpux solaris freebsd netbsd openbsd darwin cygwin zos
+   ISO-8859-2              Y   glibc aix hpux solaris freebsd netbsd openbsd darwin cygwin zos
    ISO-8859-3              Y   glibc solaris cygwin
    ISO-8859-4              Y   hpux solaris freebsd netbsd openbsd darwin
-   ISO-8859-5              Y   glibc aix hpux irix solaris freebsd netbsd openbsd darwin cygwin zos
+   ISO-8859-5              Y   glibc aix hpux solaris freebsd netbsd openbsd darwin cygwin zos
    ISO-8859-6              Y   glibc aix hpux solaris cygwin
-   ISO-8859-7              Y   glibc aix hpux irix solaris freebsd netbsd openbsd darwin cygwin zos
+   ISO-8859-7              Y   glibc aix hpux solaris freebsd netbsd openbsd darwin cygwin zos
    ISO-8859-8              Y   glibc aix hpux solaris cygwin zos
-   ISO-8859-9              Y   glibc aix hpux irix solaris freebsd darwin cygwin zos
+   ISO-8859-9              Y   glibc aix hpux solaris freebsd darwin cygwin zos
    ISO-8859-13                 glibc hpux solaris freebsd netbsd openbsd darwin cygwin
    ISO-8859-14                 glibc cygwin
-   ISO-8859-15                 glibc aix irix solaris freebsd netbsd openbsd darwin cygwin
+   ISO-8859-15                 glibc aix solaris freebsd netbsd openbsd darwin cygwin
    KOI8-R                  Y   glibc hpux solaris freebsd netbsd openbsd darwin
    KOI8-U                  Y   glibc freebsd netbsd openbsd darwin cygwin
    KOI8-T                      glibc
@@ -95,10 +95,10 @@ extern const char * locale_charset (void);
    CP1255                      glibc windows
    CP1256                      windows
    CP1257                      windows
-   GB2312                  Y   glibc aix hpux irix solaris freebsd netbsd darwin cygwin zos
-   EUC-JP                  Y   glibc aix hpux irix solaris freebsd netbsd darwin cygwin
-   EUC-KR                  Y   glibc aix hpux irix solaris freebsd netbsd darwin cygwin zos
-   EUC-TW                      glibc aix hpux irix solaris netbsd
+   GB2312                  Y   glibc aix hpux solaris freebsd netbsd darwin cygwin zos
+   EUC-JP                  Y   glibc aix hpux solaris freebsd netbsd darwin cygwin
+   EUC-KR                  Y   glibc aix hpux solaris freebsd netbsd darwin cygwin zos
+   EUC-TW                      glibc aix hpux solaris netbsd
    BIG5                    Y   glibc aix hpux solaris freebsd netbsd darwin cygwin zos
    BIG5-HKSCS                  glibc hpux solaris netbsd darwin
    GBK                         glibc aix solaris freebsd darwin cygwin windows dos

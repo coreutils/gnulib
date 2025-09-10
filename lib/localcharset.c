@@ -279,19 +279,6 @@ static const struct table_entry alias_table[] =
     { "utf8",      "UTF-8" }
 #   define alias_table_defined
 #  endif
-#  if defined __sgi                                         /* IRIX */
-    { "ISO8859-1",  "ISO-8859-1" },
-    { "ISO8859-15", "ISO-8859-15" },
-    { "ISO8859-2",  "ISO-8859-2" },
-    { "ISO8859-5",  "ISO-8859-5" },
-    { "ISO8859-7",  "ISO-8859-7" },
-    { "ISO8859-9",  "ISO-8859-9" },
-    { "eucCN",      "GB2312" },
-    { "eucJP",      "EUC-JP" },
-    { "eucKR",      "EUC-KR" },
-    { "eucTW",      "EUC-TW" }
-#   define alias_table_defined
-#  endif
 #  if defined __sun                                         /* Solaris */
     { "5601",        "EUC-KR" },
     { "646",         "ASCII" },
