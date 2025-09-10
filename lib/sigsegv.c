@@ -708,18 +708,6 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 #endif
 
-#if defined __sgi /* IRIX */
-
-# define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp
-# define SIGSEGV_FAULT_ADDRESS  (unsigned long) scp->sc_badvaddr
-# define SIGSEGV_FAULT_CONTEXT  scp
-
-# if defined __mips__ || defined __mipsn32__ || defined __mips64__
-#  define SIGSEGV_FAULT_STACKPOINTER  scp->sc_regs[29]
-# endif
-
-#endif
-
 #if defined __sun /* Solaris */
 
 # define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp
@@ -953,7 +941,7 @@ sigsegv_reset_onstack_flag (void)
 
 /* --------------------------- leave-setcontext.c --------------------------- */
 
-# elif defined __sgi || defined __sun /* IRIX, Solaris */
+# elif defined __sun /* Solaris */
 
 #  include <ucontext.h>
 
@@ -1438,13 +1426,8 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
   stk_extra_stack_size = extra_stack_size;
   {
     stack_t ss;
-# if SIGALTSTACK_SS_REVERSED
-    ss.ss_sp = (char *) extra_stack + extra_stack_size - sizeof (void *);
-    ss.ss_size = extra_stack_size - sizeof (void *);
-# else
     ss.ss_sp = extra_stack;
     ss.ss_size = extra_stack_size;
-# endif
     ss.ss_flags = 0; /* no SS_DISABLE */
     if (sigaltstack (&ss, (stack_t*)0) < 0)
       return -1;
