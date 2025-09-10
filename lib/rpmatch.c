@@ -28,7 +28,7 @@
 # include <sys/types.h>
 # include <limits.h>
 # include <string.h>
-# if HAVE_LANGINFO_YESEXPR
+# if HAVE_LANGINFO_H
 #  include <langinfo.h>
 # endif
 # include <regex.h>
@@ -36,7 +36,7 @@
 # define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 # define N_(msgid) gettext_noop (msgid)
 
-# if HAVE_LANGINFO_YESEXPR
+# if HAVE_LANGINFO_H
 /* Return the localized regular expression pattern corresponding to
    ENGLISH_PATTERN.  NL_INDEX can be used with nl_langinfo.
    The resulting string may only be used until the next nl_langinfo call.  */
@@ -133,7 +133,7 @@ rpmatch (const char *response)
   static char *last_yesexpr, *last_noexpr;
   static regex_t cached_yesre, cached_nore;
 
-# if HAVE_LANGINFO_YESEXPR
+# if HAVE_LANGINFO_H
   bool posixly_correct = (getenv ("POSIXLY_CORRECT") != NULL);
 # endif
 

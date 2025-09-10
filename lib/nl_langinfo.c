@@ -295,10 +295,6 @@ rpl_nl_langinfo (nl_item item)
     case CODESET:
       return ctype_codeset ();
 # endif
-# if GNULIB_defined_T_FMT_AMPM
-    case T_FMT_AMPM:
-      return (char *) "%I:%M:%S %p";
-# endif
 # if GNULIB_defined_ALTMON
     case ALTMON_1:
     case ALTMON_2:
@@ -360,12 +356,6 @@ rpl_nl_langinfo (nl_item item)
       /* The format is not standardized.  In glibc it is a sequence of 10
          strings, appended in memory.  */
       return (char *) "\0\0\0\0\0\0\0\0\0\0";
-# endif
-# if GNULIB_defined_YESEXPR || !FUNC_NL_LANGINFO_YESEXPR_WORKS
-    case YESEXPR:
-      return (char *) "^[yY]";
-    case NOEXPR:
-      return (char *) "^[nN]";
 # endif
     default:
       break;
