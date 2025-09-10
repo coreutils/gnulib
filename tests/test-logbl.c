@@ -35,14 +35,10 @@ SIGNATURE_CHECK (logbl, long double, (long double));
 #define MINUS_ZERO minus_zerol
 #define MAX_EXP LDBL_MAX_EXP
 #define MIN_EXP LDBL_MIN_EXP
-/* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
-   exponent for 'long double' is -964.  Similarly, on PowerPC machines,
-   LDBL_MIN_EXP is -1021, but the smallest reliable exponent for 'long double'
-   is -968.  For exponents below that, the precision may be truncated to the
-   precision used for 'double'.  */
-#ifdef __sgi
-# define MIN_NORMAL_EXP (LDBL_MIN_EXP + 57)
-#elif defined __ppc || defined __ppc__ || defined __powerpc || defined __powerpc__
+/* On PowerPC machines, LDBL_MIN_EXP is -1021, but the smallest reliable
+   exponent for 'long double' is -968.  For exponents below that, the precision
+   may be truncated to the precision used for 'double'.  */
+#if defined __ppc || defined __ppc__ || defined __powerpc || defined __powerpc__
 # define MIN_NORMAL_EXP (LDBL_MIN_EXP + 53)
 #else
 # define MIN_NORMAL_EXP LDBL_MIN_EXP

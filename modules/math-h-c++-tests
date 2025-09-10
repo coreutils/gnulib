@@ -16,6 +16,4 @@ if ANSICXX
 TESTS += test-math-h-c++
 check_PROGRAMS += test-math-h-c++
 test_math_h_c___SOURCES = test-math-h-c++.cc test-math-h-c++2.cc
-# These link dependencies are needed on IRIX 6.5 with cc.
-test_math_h_c___LDADD = $(LDADD) $(COPYSIGNL_LIBM) $(RINT_LIBM) $(RINTL_LIBM)
 endif

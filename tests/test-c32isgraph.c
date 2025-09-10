@@ -119,7 +119,7 @@ main (int argc, char *argv[])
           /* U+007F <control> */
           is = for_character ("\177", 1);
           ASSERT (is == 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sgi || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+00A0 NO-BREAK SPACE */
           is = for_character ("\240", 1);
           ASSERT (is != 0);

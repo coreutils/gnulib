@@ -47,7 +47,7 @@ main (int argc, char **argv)
          the current offset.  But BeOS sets it to 0.  */
       ASSERT (lseek (0, (off_t)0, SEEK_CUR) == 2);
 #endif
-#if 0 /* leads to SIGSYS on IRIX 6.5 */
+#if 0 /* unportable test */
       ASSERT (lseek (0, (off_t)0, (SEEK_SET | SEEK_CUR | SEEK_END) + 1) == -1);
       ASSERT (errno == EINVAL);
 #endif
@@ -61,7 +61,7 @@ main (int argc, char **argv)
          the current offset.  But BeOS sets it to 0.  */
       ASSERT (lseek (1, (off_t)0, SEEK_CUR) == 2);
 #endif
-#if 0 /* leads to SIGSYS on IRIX 6.5 */
+#if 0 /* unportable test */
       ASSERT (lseek (1, (off_t)0, (SEEK_SET | SEEK_CUR | SEEK_END) + 1) == -1);
       ASSERT (errno == EINVAL);
 #endif

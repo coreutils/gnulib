@@ -112,10 +112,6 @@ main (void)
   #ifdef SIGBREAK
   ASSERT (strcmp (sigabbrev_np (SIGBREAK), "BREAK") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGCKPT
-  ASSERT (strcmp (sigabbrev_np (SIGCKPT), "CKPT") == 0);
-  #endif
   /* AIX */
   #ifdef SIGCPUFAIL
   ASSERT (strcmp (sigabbrev_np (SIGCPUFAIL), "CPUFAIL") == 0);
@@ -124,7 +120,7 @@ main (void)
   #ifdef SIGDANGER
   ASSERT (strcmp (sigabbrev_np (SIGDANGER), "DANGER") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, mingw */
+  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, mingw */
   #ifdef SIGEMT
   ASSERT (strcmp (sigabbrev_np (SIGEMT), "EMT") == 0);
   #endif
@@ -172,15 +168,7 @@ main (void)
   #ifdef SIGPRE
   ASSERT (strcmp (sigabbrev_np (SIGPRE), "PRE") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGPTINTR
-  ASSERT (strcmp (sigabbrev_np (SIGPTINTR), "PTINTR") == 0);
-  #endif
-  /* IRIX */
-  #ifdef SIGPTRESCHED
-  ASSERT (strcmp (sigabbrev_np (SIGPTRESCHED), "PTRESCHED") == 0);
-  #endif
-  /* Linux, NetBSD, Minix, AIX, IRIX, Cygwin */
+  /* Linux, NetBSD, Minix, AIX, Cygwin */
   #ifdef SIGPWR
   ASSERT (strcmp (sigabbrev_np (SIGPWR), "PWR") == 0);
   #endif
@@ -191,10 +179,6 @@ main (void)
   /* AIX */
   #ifdef SIGRECOVERY
   ASSERT (strcmp (sigabbrev_np (SIGRECOVERY), "RECOVERY") == 0);
-  #endif
-  /* IRIX */
-  #ifdef SIGRESTART
-  ASSERT (strcmp (sigabbrev_np (SIGRESTART), "RESTART") == 0);
   #endif
   /* AIX */
   #ifdef SIGRETRACT
@@ -228,10 +212,6 @@ main (void)
   #ifdef SIGTHR
   ASSERT (strcmp (sigabbrev_np (SIGTHR), "THR") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGUME
-  ASSERT (strcmp (sigabbrev_np (SIGUME), "UME") == 0);
-  #endif
   /* AIX */
   #ifdef SIGVIRT
   ASSERT (strcmp (sigabbrev_np (SIGVIRT), "VIRT") == 0);
@@ -240,7 +220,7 @@ main (void)
   #ifdef SIGWAITING
   ASSERT (strcmp (sigabbrev_np (SIGWAITING), "WAITING") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, Haiku */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, Haiku */
   #ifdef SIGWINCH
   ASSERT (strcmp (sigabbrev_np (SIGWINCH), "WINCH") == 0);
   #endif

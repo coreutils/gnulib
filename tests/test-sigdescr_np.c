@@ -114,10 +114,6 @@ main (void)
   #ifdef SIGBREAK
   ASSERT (strcmp (sigdescr_np (SIGBREAK), "Ctrl-Break") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGCKPT
-  ASSERT (strcmp (sigdescr_np (SIGCKPT), "Checkpoint") == 0);
-  #endif
   /* AIX */
   #ifdef SIGCPUFAIL
   ASSERT (strcmp (sigdescr_np (SIGCPUFAIL), "CPU going down") == 0);
@@ -126,7 +122,7 @@ main (void)
   #ifdef SIGDANGER
   ASSERT (strcmp (sigdescr_np (SIGDANGER), "Swap space nearly exhausted") == 0);
   #endif
-  /* glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, mingw */
+  /* glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, mingw */
   #ifdef SIGEMT
   ASSERT (strcmp (sigdescr_np (SIGEMT), "Instruction emulation needed") == 0
           /* This completely unintelligible message is seen in glibc.  */
@@ -176,15 +172,7 @@ main (void)
   #ifdef SIGPRE
   ASSERT (strcmp (sigdescr_np (SIGPRE), "Programmed exception") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGPTINTR
-  ASSERT (strcmp (sigdescr_np (SIGPTINTR), "Pthread interrupt") == 0);
-  #endif
-  /* IRIX */
-  #ifdef SIGPTRESCHED
-  ASSERT (strcmp (sigdescr_np (SIGPTRESCHED), "Pthread rescheduling") == 0);
-  #endif
-  /* Linux, NetBSD, Minix, AIX, IRIX, Cygwin */
+  /* Linux, NetBSD, Minix, AIX, Cygwin */
   #ifdef SIGPWR
   ASSERT (strcmp (sigdescr_np (SIGPWR), "Power failure") == 0);
   #endif
@@ -195,10 +183,6 @@ main (void)
   /* AIX */
   #ifdef SIGRECOVERY
   ASSERT (strcmp (sigdescr_np (SIGRECOVERY), "Kernel recovery") == 0);
-  #endif
-  /* IRIX */
-  #ifdef SIGRESTART
-  ASSERT (strcmp (sigdescr_np (SIGRESTART), "Checkpoint restart") == 0);
   #endif
   /* AIX */
   #ifdef SIGRETRACT
@@ -232,10 +216,6 @@ main (void)
   #ifdef SIGTHR
   ASSERT (strcmp (sigdescr_np (SIGTHR), "Thread library interrupt") == 0);
   #endif
-  /* IRIX */
-  #ifdef SIGUME
-  ASSERT (strcmp (sigdescr_np (SIGUME), "Uncorrectable memory error") == 0);
-  #endif
   /* AIX */
   #ifdef SIGVIRT
   ASSERT (strcmp (sigdescr_np (SIGVIRT), "Virtual time alarm clock") == 0);
@@ -244,7 +224,7 @@ main (void)
   #ifdef SIGWAITING
   ASSERT (strcmp (sigdescr_np (SIGWAITING), "Thread waiting") == 0);
   #endif
-  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, Haiku */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, Cygwin, Haiku */
   #ifdef SIGWINCH
   ASSERT (strcmp (sigdescr_np (SIGWINCH), "Window changed") == 0 /* glibc */
           || strcmp (sigdescr_np (SIGWINCH), "Window size changed") == 0);

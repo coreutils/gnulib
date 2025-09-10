@@ -51,9 +51,7 @@
 # define ENGLISH "en_US"
 # define GERMAN  "de_DE"
 # define FRENCH  "fr_FR"
-# if defined __sgi
-#  define ENCODING ".ISO8859-15"
-# elif defined __hpux
+# if defined __hpux
 #  define ENCODING ".utf8"
 # else
 #  define ENCODING ".UTF-8"
@@ -160,7 +158,6 @@ NetBSD               OK
 OpenBSD              crash < 1 sec
 AIX                  crash < 2 sec
 HP-UX                OK
-IRIX                 OK
 Solaris 10           OK
 Solaris 11.0         OK
 Solaris 11.4         OK

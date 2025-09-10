@@ -26,19 +26,12 @@
 #define YE_RANGE 0
 
 /* Define to 1 if you want to allow the behaviour of the 'double-double'
-   implementation of 'long double' (seen on IRIX 6.5 and Linux/PowerPC).
+   implementation of 'long double' (seen on Linux/PowerPC).
    This floating-point type does not follow IEEE 754.  */
 #if MANT_BIT == LDBL_MANT_BIT && LDBL_MANT_BIT == 2 * DBL_MANT_BIT
 # define FORGIVE_DOUBLEDOUBLE_BUG 1
 #else
 # define FORGIVE_DOUBLEDOUBLE_BUG 0
-#endif
-
-/* Subnormal numbers appear to not work as expected on IRIX 6.5.  */
-#ifdef __sgi
-# define MIN_SUBNORMAL_EXP (MIN_EXP - 1)
-#else
-# define MIN_SUBNORMAL_EXP (MIN_EXP - MANT_BIT)
 #endif
 
 /* Check rounding behaviour.  */
@@ -159,7 +152,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                      (-1)^(xs+ys) * (2^(xe+ye) + 2^(xe+ye-i+1) + 2^(xe+ye-2*i)) */
 
                   /* Test addition (same signs).  */
-                  for (ze = MIN_SUBNORMAL_EXP; ze <= MAX_EXP - 1;)
+                  for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                     {
                       z = sign * POW2 (ze); /* (-1)^(xs+ys) * 2^ze */
                       result = my_fma (x, y, z);
@@ -256,7 +249,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
 
                   /* Test subtraction (opposite signs).  */
                   if (i > 1)
-                    for (ze = MIN_SUBNORMAL_EXP; ze <= MAX_EXP - 1;)
+                    for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                       {
                         z = - sign * POW2 (ze); /* (-1)^(xs+ys+1) * 2^ze */
                         result = my_fma (x, y, z);
@@ -457,7 +450,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
 
                   /* Test subtraction (opposite signs).  */
                   if (i > 1)
-                    for (ze = MIN_SUBNORMAL_EXP; ze <= MAX_EXP - 1;)
+                    for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                       {
                         z = - sign * POW2 (ze); /* (-1)^(xs+ys+1) * 2^ze */
                         result = my_fma (x, y, z);

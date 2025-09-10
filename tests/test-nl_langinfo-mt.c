@@ -48,9 +48,7 @@
 # define ENGLISH "en_US"
 # define FRENCH  "fr_FR"
 # define GERMAN  "de_DE"
-# if defined __sgi
-#  define ENCODING ".ISO8859-15"
-# elif defined __hpux
+# if defined __hpux
 #  define ENCODING ".utf8"
 # else
 #  define ENCODING ".UTF-8"
