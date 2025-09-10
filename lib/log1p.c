@@ -33,7 +33,7 @@ log1p (double x)
       else
         {
           /* Return NaN.  */
-#if defined _MSC_VER || (defined __sgi && !defined __GNUC__)
+#if defined _MSC_VER
           static double zero;
           return zero / zero;
 #else
