@@ -1,5 +1,5 @@
 # fmaf.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,16 +23,10 @@ AC_DEFUN([gl_FUNC_FMAF],
     ])
   if test $gl_cv_func_fmaf_no_libm = yes \
      || test $gl_cv_func_fmaf_in_libm = yes; then
-    dnl Also check whether it's declared.
-    dnl IRIX 6.5 has fmaf() in libm but doesn't declare it in <math.h>,
-    dnl and the function is likely buggy.
-    AC_CHECK_DECL([fmaf], , [REPLACE_FMAF=1], [[#include <math.h>]])
-    if test $REPLACE_FMAF = 0; then
-      gl_FUNC_FMAF_WORKS
-      case "$gl_cv_func_fmaf_works" in
-        *no) REPLACE_FMAF=1 ;;
-      esac
-    fi
+    gl_FUNC_FMAF_WORKS
+    case "$gl_cv_func_fmaf_works" in
+      *no) REPLACE_FMAF=1 ;;
+    esac
   else
     HAVE_FMAF=0
   fi
