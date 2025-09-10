@@ -79,8 +79,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
           }
 # if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
      && !(defined __GLIBC__ && !defined __UCLIBC__)
-        /* Irix iconv() inserts a NUL byte if it cannot convert.
-           NetBSD iconv() inserts a question mark if it cannot convert.
+        /* NetBSD iconv() inserts a question mark if it cannot convert.
            Only GNU libiconv (excluding the bastard Apple iconv) and GNU libc
            are known to prefer to fail rather than doing a lossy conversion.  */
         else if (res > 0)
@@ -146,8 +145,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
           }
 # if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
      && !(defined __GLIBC__ && !defined __UCLIBC__)
-        /* Irix iconv() inserts a NUL byte if it cannot convert.
-           NetBSD iconv() inserts a question mark if it cannot convert.
+        /* NetBSD iconv() inserts a question mark if it cannot convert.
            Only GNU libiconv (excluding the bastard Apple iconv) and GNU libc
            are known to prefer to fail rather than doing a lossy conversion.  */
         else if (res > 0)
@@ -190,8 +188,7 @@ str_cd_iconv (const char *src, iconv_t cd)
      conversion and add it by hand afterwards.  */
 # if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
      && !(defined __GLIBC__ && !defined __UCLIBC__)
-  /* Irix iconv() inserts a NUL byte if it cannot convert.
-     NetBSD iconv() inserts a question mark if it cannot convert.
+  /* NetBSD iconv() inserts a question mark if it cannot convert.
      Only GNU libiconv (excluding the bastard Apple iconv) and GNU libc are
      known to prefer to fail rather than doing a lossy conversion.  For other
      iconv() implementations, we have to look at the number of irreversible

@@ -1,5 +1,5 @@
 # strtof.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2002-2003, 2006-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,8 +29,7 @@ AC_DEFUN([gl_FUNC_STRTOF],
 #include <math.h>
 #include <errno.h>
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (float x, float y)
 {

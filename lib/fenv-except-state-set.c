@@ -522,7 +522,7 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 }
 
 # elif HAVE_FPSETSTICKY
-/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, IRIX, Solaris, Minix ≥ 3.2.  */
+/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, Solaris, Minix ≥ 3.2.  */
 
 /* Get fpgetsticky, fpsetsticky.  */
 #  include <ieeefp.h>

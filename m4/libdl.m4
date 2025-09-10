@@ -1,5 +1,5 @@
 # libdl.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2024-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,7 @@ AC_DEFUN([gl_LIBDL],
 [
   dnl dlopen, dlsym are
   dnl - in libc on glibc >= 2.34, musl libc, macOS, FreeBSD, NetBSD, OpenBSD,
-  dnl   AIX, IRIX,  Solaris, Cygwin, Haiku,
+  dnl   AIX, Solaris, Cygwin, Haiku,
   dnl - in a separate libdl on glibc < 2.34, Android.
   AC_CACHE_CHECK([for library needed for dlopen and dlsym],
     [gl_cv_lib_dl],

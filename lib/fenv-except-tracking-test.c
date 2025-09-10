@@ -233,7 +233,7 @@ fetestexcept (int exceptions)
    intrinsics.  */
 
 # if HAVE_FPSETSTICKY
-/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, IRIX, Solaris, Minix ≥ 3.2.  */
+/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, Solaris, Minix ≥ 3.2.  */
 
 /* Get fpgetsticky, fpsetsticky.  */
 #  include <ieeefp.h>

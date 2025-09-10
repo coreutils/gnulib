@@ -1,5 +1,5 @@
 # fenv-exceptions-state.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2023-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
   if test $gl_cv_func_fesetexceptflag_no_libm = yes \
      || test $gl_cv_func_fesetexceptflag_in_libm = yes; then
     dnl It needs linking with -lm on
-    dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Android.
+    dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, Solaris, Android.
     if test $gl_cv_func_fesetexceptflag_no_libm = yes; then
       FENV_EXCEPTIONS_STATE_LIBM=
     else

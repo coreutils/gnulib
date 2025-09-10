@@ -49,10 +49,10 @@
    the getcwd-lgpl module, but to be truly robust, use the getcwd module.
 
    Some systems lack fchdir altogether: e.g., OS/2, pre-2001 Cygwin,
-   SCO Xenix.  Also, SunOS 4 and Irix 5.3 provide the function, yet it
-   doesn't work for partitions on which auditing is enabled.  If
-   you're still using an obsolete system with these problems, please
-   send email to the maintainer of this code.  */
+   SCO Xenix.  Also, SunOS 4 provides the function, yet it doesn't work
+   for partitions on which auditing is enabled.  If you're still using
+   an obsolete system with these problems, please send email to the
+   maintainer of this code.  */
 
 int
 save_cwd (struct saved_cwd *cwd)

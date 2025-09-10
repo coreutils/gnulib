@@ -180,7 +180,7 @@
 #   define SNPRINTF swprintf
 #  endif
 # else
-   /* Old platforms such as NetBSD 3.0, OpenBSD 3.8, HP-UX 11.00, IRIX 6.5.  */
+   /* Old platforms such as NetBSD 3.0, OpenBSD 3.8, HP-UX 11.00.  */
 #   define TCHAR_T char
 # endif
 #endif
@@ -5001,8 +5001,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                          || (a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
                              /* Some systems produce wrong output for Inf,
                                 -Inf, and NaN.  Some systems in this category
-                                (IRIX 5.3) also do so for -0.0.  Therefore we
-                                treat this case here as well.  */
+                                also do so for -0.0.  Therefore we treat this
+                                case here as well.  */
                              && is_infinite_or_zerol (a.arg[dp->arg_index].a.a_longdouble))
 # endif
                         ))
@@ -6992,7 +6992,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    on musl libc because we would run into an swprintf() bug.
                    See <https://www.openwall.com/lists/musl/2023/03/19/1>.  */
                 fbp[1] = '\0';
-# else           /* AIX <= 5.1, HP-UX, IRIX, Solaris <= 9, BeOS */
+# else           /* AIX <= 5.1, HP-UX, Solaris <= 9, BeOS */
                 fbp[1] = '%';
                 fbp[2] = 'n';
                 fbp[3] = '\0';

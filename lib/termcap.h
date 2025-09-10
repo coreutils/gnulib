@@ -87,7 +87,7 @@ extern char * tparam (const char *str, void *buf, int bufsize, ...);
 
 /* API provided by
      - GNU ncurses in <term.h>, <curses.h>, <ncurses.h>,
-     - Solaris, AIX, HP-UX, IRIX curses in <term.h>,
+     - Solaris, AIX, HP-UX curses in <term.h>,
      - gnulib's replacement.  */
 
 /* Instantiates a string capability with format strings.

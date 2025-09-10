@@ -129,7 +129,7 @@ aligned_malloc (size_t size)
   return NULL;
 }
 
-# elif HAVE_MEMALIGN                    /* HP-UX, IRIX, Solaris <= 10 */
+# elif HAVE_MEMALIGN                    /* HP-UX, Solaris <= 10 */
 /* Use memalign.  */
 
 static inline

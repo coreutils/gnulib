@@ -1,5 +1,5 @@
 # hypotf.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2012-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,8 +48,7 @@ AC_DEFUN([gl_FUNC_HYPOTF],
 #endif
 #include <math.h>
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (float x, float y)
 {

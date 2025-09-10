@@ -1,5 +1,5 @@
 # modfl.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -83,8 +83,7 @@ int main (int argc, char *argv[])
 ]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
 ]gl_LONG_DOUBLE_SIGNBIT_CODE[
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (long double x, long double y)
 {
@@ -99,7 +98,7 @@ int main (int argc, char *argv[])
   long double i;
   long double f;
   /* Test modfl(-Inf,...).
-     This test fails on IRIX 6.5, mingw.  */
+     This test fails on mingw.  */
   f = my_modfl (minus_one / zero, &i);
   if (!(f == 0.0L) || (signbitl (minus_zerol) && !signbitl (f)))
     return 1;

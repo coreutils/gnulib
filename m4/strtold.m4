@@ -1,5 +1,5 @@
 # strtold.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2002-2003, 2006-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,8 +23,7 @@ AC_DEFUN([gl_FUNC_STRTOLD],
 #include <errno.h>
 #include <string.h>
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (long double x, long double y)
 {
@@ -51,7 +50,7 @@ numeric_equal (long double x, long double y)
       result |= 2;
   }
   {
-    /* IRIX 6.5, mingw do not parse hex floats.  */
+    /* mingw does not parse hex floats.  */
     const char *string = "0XaP+1";
     char *term;
     long double value = strtold (string, &term);
@@ -59,8 +58,7 @@ numeric_equal (long double x, long double y)
       result |= 4;
   }
   {
-    /* IRIX 6.5 does not parse infinities.  HP-UX 11.31/ia64 parses inf,
-       but mistakenly sets errno.  */
+    /* HP-UX 11.31/ia64 parses inf, but mistakenly sets errno.  */
     const char *string = "inf";
     char *term;
     long double value;
@@ -70,7 +68,7 @@ numeric_equal (long double x, long double y)
       result |= 8;
   }
   {
-    /* glibc-2.3.2, IRIX 6.5, mingw, Haiku misparse "nan()".  */
+    /* glibc-2.3.2, mingw, Haiku misparse "nan()".  */
     const char *string = "nan()";
     char *term;
     long double value = strtold (string, &term);
@@ -78,7 +76,7 @@ numeric_equal (long double x, long double y)
       result |= 16;
   }
   {
-    /* Mac OS X 10.5, IRIX 6.5 misparse "nan(".  */
+    /* Mac OS X 10.5 misparses "nan(".  */
     const char *string = "nan(";
     char *term;
     long double value = strtold (string, &term);

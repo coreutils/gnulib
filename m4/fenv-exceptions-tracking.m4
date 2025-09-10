@@ -1,5 +1,5 @@
 # fenv-exceptions-tracking.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2023-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -138,7 +138,7 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRACKING],
       FENV_EXCEPTIONS_TRACKING_LIBM=
     else
       dnl It needs linking with -lm on
-      dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Android.
+      dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, Solaris, Android.
       if test $gl_cv_func_feraiseexcept_no_libm = yes; then
         FENV_EXCEPTIONS_TRACKING_LIBM=
       else

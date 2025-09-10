@@ -1,5 +1,5 @@
 # semaphore.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2019-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_SEMAPHORE],
 [
   AC_REQUIRE([gl_THREADLIB])
   dnl sem_post is
-  dnl   - in libc on macOS, FreeBSD, AIX, IRIX, Solaris 11, Haiku, Cygwin,
+  dnl   - in libc on macOS, FreeBSD, AIX, Solaris 11, Haiku, Cygwin,
   dnl   - in libpthread on glibc systems, OpenBSD,
   dnl   - in libpthread or librt on NetBSD,
   dnl   - in librt on HP-UX 11, Solaris 10.

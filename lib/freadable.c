@@ -45,7 +45,7 @@ freadable (FILE *fp)
   return (fp->_flags & (_IORW | _IOREAD)) != 0;
 #elif defined __minix               /* Minix */
   return (fp->_flags & _IOREAD) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_flag & (_IORW | _IOREAD)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x1 /* _MOPENR */) != 0;

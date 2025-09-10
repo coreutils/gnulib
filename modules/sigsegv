@@ -4,10 +4,10 @@ It implements the most important features of GNU libsigsegv: catching SIGSEGV
 and catching stack overflow. It does *not* implement the 'sigsegv_dispatcher'
 type (which is not multithread-safe).
 It supports all modern Unix-like platforms: Linux, Hurd, FreeBSD, NetBSD,
-OpenBSD, macOS, AIX, Solaris, Cygwin, Haiku, even IRIX. It does *not* support
-HP-UX, Minix, native Windows; on these platforms the module compiles and
-provides a <sigsegv.h> header file, but it does not define HAVE_SIGSEGV_RECOVERY
-and HAVE_STACK_OVERFLOW_RECOVERY.
+OpenBSD, macOS, AIX, Solaris, Cygwin, Haiku. It does *not* support HP-UX, Minix,
+native Windows; on these platforms the module compiles and provides a
+<sigsegv.h> header file, but it does not define HAVE_SIGSEGV_RECOVERY and
+HAVE_STACK_OVERFLOW_RECOVERY.
 Unlike GNU libsigsegv, which consists of many .h and .c files, this module
 compiles to just two object files, rather than a library.
 

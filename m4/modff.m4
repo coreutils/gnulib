@@ -1,5 +1,5 @@
 # modff.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,8 +39,7 @@ AC_DEFUN([gl_FUNC_MODFF],
 ]gl_FLOAT_MINUS_ZERO_CODE[
 ]gl_FLOAT_SIGNBIT_CODE[
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (float x, float y)
 {
@@ -61,7 +60,7 @@ int main (int argc, char *argv[])
   if (numeric_equal (f, f))
     result |= 1;
   /* Test modff(-Inf,...).
-     This test fails on IRIX 6.5, mingw.  */
+     This test fails on mingw.  */
   f = my_modff (minus_one / zero, &i);
   if (!(f == 0.0f) || (signbitf (minus_zerof) && !signbitf (f)))
     result |= 2;

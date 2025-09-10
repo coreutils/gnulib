@@ -332,7 +332,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 # if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H
 
-#  if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
+#  if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, Solaris, Cygwin, Android */
 
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary

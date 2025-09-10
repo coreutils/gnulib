@@ -88,7 +88,7 @@ get_boot_time_uncached (struct timespec *p_boot_time)
 
   /* Try to find the boot time in the /var/run/utmp file.  */
 
-#  if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
+#  if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, Solaris, Cygwin, Android */
 
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary

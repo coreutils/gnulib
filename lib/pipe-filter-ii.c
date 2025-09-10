@@ -479,7 +479,7 @@ pipe_filter_ii_execute (const char *progname,
                    write() call may fail with EAGAIN, simply because sufficient
                    space is not available in the pipe. See POSIX:2008
                    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
-                   This happens actually on AIX and IRIX, when bufsize >= 8192
+                   This happens actually on AIX, when bufsize >= 8192
                    (even though PIPE_BUF and pathconf ("/", _PC_PIPE_BUF) are
                    both 32768).  */
                 size_t attempt_to_write =

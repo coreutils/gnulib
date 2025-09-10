@@ -1,5 +1,5 @@
 # modf.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2011-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,8 +31,7 @@ AC_DEFUN([gl_FUNC_MODF],
 ]gl_DOUBLE_MINUS_ZERO_CODE[
 ]gl_DOUBLE_SIGNBIT_CODE[
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equal (double x, double y)
 {
@@ -53,7 +52,7 @@ int main (int argc, char *argv[])
   if (numeric_equal (f, f))
     result |= 1;
   /* Test modf(-Inf,...).
-     This test fails on FreeBSD 6.4, OpenBSD 6.7, IRIX 6.5.  */
+     This test fails on FreeBSD 6.4, OpenBSD 6.7.  */
   f = my_modf (minus_one / zero, &i);
   if (!(f == 0.0) || (signbitd (minus_zerod) && !signbitd (f)))
     result |= 2;

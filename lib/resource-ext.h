@@ -36,7 +36,7 @@ extern uintptr_t get_rusage_as (void);
    Note: This function always returns zero on HP-UX 11.00.
    Note: The total size of all malloc()ed memory is bounded by the size of
    the data segment only on the following platforms:
-   FreeBSD, AIX, HP-UX 11.23 and newer, IRIX, Solaris, BeOS, Haiku.  */
+   FreeBSD, AIX, HP-UX 11.23 and newer, Solaris, BeOS, Haiku.  */
 extern uintptr_t get_rusage_data (void);
 
 

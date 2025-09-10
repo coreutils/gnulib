@@ -75,8 +75,7 @@ long double hl = HUGE_VALL;
 #include "macros.h"
 
 /* Compare two numbers with ==.
-   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
-   'x == x' test.  */
+   This is a separate function in order to disable compiler optimizations.  */
 static int
 numeric_equalf (float x, float y)
 {

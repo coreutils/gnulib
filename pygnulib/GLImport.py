@@ -358,8 +358,7 @@ class GLImport:
         # Emacs puts some gnulib-tool log lines in its source repository, and
         # git send-email rejects patch lines longer than 998 characters.
         # Also, config.status uses awk, and the HP-UX 11.00 awk fails if a
-        # line has length >= 3071; similarly, the IRIX 6.5 awk fails if a
-        # line has length >= 3072.
+        # line has length >= 3071.
         if len(localpath) > 0:
             actioncmd += ''.join([f' \\\n#  --local-dir={x}' for x in localpath])
         actioncmd += ' \\\n#  --lib=%s' % libname

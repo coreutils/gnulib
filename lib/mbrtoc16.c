@@ -28,7 +28,7 @@
    interfering with the existing use of the mbstate_t in mbrtoc32.  */
 static_assert (sizeof (mbstate_t) >= 4);
 
-#if GNULIB_defined_mbstate_t                              /* AIX, IRIX */
+#if GNULIB_defined_mbstate_t                              /* AIX */
 /* mbstate_t has at least 4 bytes.  They are used as coded in
    gnulib/lib/mbrtowc.c.  */
 # define SET_EXTRA_STATE(ps, c16) \

@@ -28,7 +28,7 @@ func_fatal_error ()
 #            or when it was built with DEFAULT_ECHO_TO_USG (bash < 2.0),
 # - in zsh, when sh-emulation is not set,
 # - in ksh (e.g. AIX /bin/sh and Solaris /usr/xpg4/bin/sh are ksh instances,
-#           and HP-UX /bin/sh and IRIX /bin/sh behave similarly),
+#           and HP-UX /bin/sh behaves similarly),
 # - in Solaris /bin/sh.
 # We try the following workarounds:
 # - for all: respawn using $CONFIG_SHELL if that is set and works.

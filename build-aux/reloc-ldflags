@@ -134,8 +134,7 @@ case "$host_os" in
     ;;
 esac
 if test -n "$origin_token"; then
-  # We are not on AIX, HP-UX, or IRIX. Therefore the -rpath options are
-  # cumulative.
+  # We are not on AIX or HP-UX. Therefore the -rpath options are cumulative.
   rpath_options=
   saved_IFS="$IFS"; IFS=":"
   for dir in $library_path_value; do

@@ -72,7 +72,7 @@ test_function (float (*my_strtof) (const char *, char **))
     result = my_strtof (input, &ptr);
     ASSERT (result == 0.0f);
     ASSERT (!signbit (result));
-    ASSERT (ptr == input);              /* IRIX 6.5 */
+    ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
@@ -83,7 +83,7 @@ test_function (float (*my_strtof) (const char *, char **))
     result = my_strtof (input, &ptr);
     ASSERT (result == 0.0f);
     ASSERT (!signbit (result));
-    ASSERT (ptr == input);              /* IRIX 6.5 */
+    ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
@@ -284,7 +284,7 @@ test_function (float (*my_strtof) (const char *, char **))
     errno = 0;
     result = my_strtof (input, &ptr);
     ASSERT (result == 0.0f);
-    ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (minus_zerof));
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -346,8 +346,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* HP-UX 11.11, IRIX 6.5 */
-    ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
+    ASSERT (result == 1.0f);            /* HP-UX 11.11 */
+    ASSERT (ptr == input + 1);          /* HP-UX 11.11 */
     ASSERT (errno == 0);
   }
   {
@@ -379,7 +379,7 @@ test_function (float (*my_strtof) (const char *, char **))
     errno = 0;
     result = my_strtof (input, &ptr);
     ASSERT (result == 0.0f);
-    ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* Mac OS X 10.3, FreeBSD 6.2, IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* Mac OS X 10.3, FreeBSD 6.2 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, AIX 7.1 */
     ASSERT (errno == 0);
   }
@@ -580,8 +580,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* HP-UX 11.11, IRIX 6.5 */
-    ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
+    ASSERT (result == 1.0f);            /* HP-UX 11.11 */
+    ASSERT (ptr == input + 1);          /* HP-UX 11.11 */
     ASSERT (errno == 0);
   }
   {
@@ -590,8 +590,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
 
@@ -602,8 +602,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, mingw */
+    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.00, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
@@ -612,8 +612,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == -HUGE_VAL);       /* OpenBSD 4.0, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 4);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (result == -HUGE_VAL);       /* OpenBSD 4.0, mingw */
+    ASSERT (ptr == input + 4);          /* OpenBSD 4.0, HP-UX 11.00, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
@@ -622,8 +622,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.11, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -632,8 +632,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, Solaris 9, mingw */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, mingw */
+    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.00, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */
   }
   {
@@ -642,8 +642,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.11, mingw */
     ASSERT (errno == 0);
   }
 
@@ -659,15 +659,15 @@ test_function (float (*my_strtof) (const char *, char **))
     result1 = my_strtof (input, &ptr1);
     result2 = my_strtof (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnanf (result1));          /* OpenBSD 4.0, IRIX 6.5, mingw */
-    ASSERT (isnanf (result2));          /* OpenBSD 4.0, IRIX 6.5, mingw */
+    ASSERT (isnanf (result1));          /* OpenBSD 4.0, mingw */
+    ASSERT (isnanf (result2));          /* OpenBSD 4.0, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, mingw */
 # endif
-    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, Solaris 2.5.1, mingw */
-    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, Solaris 2.5.1, mingw */
+    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, Solaris 2.5.1, mingw */
+    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */
 #else
     ASSERT (result1 == 0.0f);
@@ -689,11 +689,11 @@ test_function (float (*my_strtof) (const char *, char **))
     result1 = my_strtof (input, &ptr1);
     result2 = my_strtof (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
     ASSERT (!!signbit (result1) == !!signbit (result2));
-    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, Solaris 2.5.1, mingw */
-    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, Solaris 2.5.1, mingw */
+    ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, Solaris 2.5.1, mingw */
+    ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0f);
@@ -715,15 +715,15 @@ test_function (float (*my_strtof) (const char *, char **))
     result1 = my_strtof (input, &ptr1);
     result2 = my_strtof (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, mingw */
 # endif
-    ASSERT (ptr1 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (ptr2 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr1 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, mingw */
+    ASSERT (ptr2 == input + 6);         /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0f);
@@ -742,8 +742,8 @@ test_function (float (*my_strtof) (const char *, char **))
     errno = 0;
     result = my_strtof (input, &ptr);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnanf (result));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (ptr == input + 6);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnanf (result));           /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (ptr == input + 6);          /* glibc-2.3.6, Mac OS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result == 0.0f);
@@ -765,15 +765,15 @@ test_function (float (*my_strtof) (const char *, char **))
     result1 = my_strtof (input, &ptr1);
     result2 = my_strtof (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (isnanf (result1));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
+    ASSERT (isnanf (result2));          /* OpenBSD 4.0, HP-UX 11.11, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, mingw */
 # endif
-    ASSERT (ptr1 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
-    ASSERT (ptr2 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, mingw */
+    ASSERT (ptr1 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, mingw */
+    ASSERT (ptr2 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, mingw */
     ASSERT (errno == 0);
 #else
     ASSERT (result1 == 0.0f);
@@ -793,8 +793,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 10.0f);           /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 10.0f);           /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -803,8 +803,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 10.0f);           /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 10.0f);           /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -813,8 +813,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -823,8 +823,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -833,8 +833,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -843,8 +843,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -853,8 +853,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -863,8 +863,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 2.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
@@ -873,8 +873,8 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
-    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
-    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, Solaris 10, mingw */
+    ASSERT (result == 1.0f);            /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
 
@@ -939,9 +939,9 @@ test_function (float (*my_strtof) (const char *, char **))
         input[m] = '\0';
         errno = 0;
         result = my_strtof (input, &ptr);
-        ASSERT (result == 1.0f);        /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
+        ASSERT (result == 1.0f);        /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, mingw */
         ASSERT (ptr == input + m);
-        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
+        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, mingw */
       }
     free (input);
   }
@@ -965,9 +965,9 @@ test_function (float (*my_strtof) (const char *, char **))
         input[m] = '\0';
         errno = 0;
         result = my_strtof (input, &ptr);
-        ASSERT (result == 1.0f);        /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
+        ASSERT (result == 1.0f);        /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, mingw */
         ASSERT (ptr == input + m);
-        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, mingw */
+        ASSERT (errno == 0);            /* Mac OS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, mingw */
       }
     free (input);
   }
@@ -988,7 +988,7 @@ test_function (float (*my_strtof) (const char *, char **))
         errno = 0;
         result = my_strtof (input, &ptr);
         ASSERT (result == 0.0f);
-        ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* IRIX 6.5 */
+        ASSERT (!!signbit (result) == !!signbit (minus_zerof));
         ASSERT (ptr == input + m);
         ASSERT (errno == 0);
       }

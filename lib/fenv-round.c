@@ -490,7 +490,7 @@ fesetround (int rounding_direction)
    intrinsics.  */
 
 # if HAVE_FPSETROUND
-/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, IRIX, Solaris, Minix ≥ 3.2.  */
+/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, Solaris, Minix ≥ 3.2.  */
 
 /* Get fpgetround, fpsetround.  */
 #  include <ieeefp.h>

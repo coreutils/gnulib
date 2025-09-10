@@ -45,7 +45,7 @@ main (void)
     errno = 0;
     ASSERT (isatty (-1) == 0);
     ASSERT (errno == EBADF
-            || errno == 0 /* seen on IRIX 6.5, Solaris 10 */
+            || errno == 0 /* seen on Solaris 10 */
            );
   }
   {
@@ -53,7 +53,7 @@ main (void)
     errno = 0;
     ASSERT (isatty (99) == 0);
     ASSERT (errno == EBADF
-            || errno == 0 /* seen on IRIX 6.5, Solaris 10 */
+            || errno == 0 /* seen on Solaris 10 */
            );
   }
 #ifdef AT_FDCWD
@@ -61,7 +61,7 @@ main (void)
     errno = 0;
     ASSERT (isatty (AT_FDCWD) == 0);
     ASSERT (errno == EBADF
-            || errno == 0 /* seen on IRIX 6.5, Solaris 10 */
+            || errno == 0 /* seen on Solaris 10 */
            );
   }
 #endif

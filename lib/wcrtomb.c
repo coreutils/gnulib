@@ -36,7 +36,7 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
       return (size_t)(-1);
     }
 
-#if !HAVE_WCRTOMB                       /* IRIX 6.5 */ \
+#if !HAVE_WCRTOMB                       /* HP-UX 11.00, mingw */ \
     || WCRTOMB_RETVAL_BUG               /* Solaris 11.3, MSVC */ \
     || WCRTOMB_C_LOCALE_BUG             /* Android */
   if (s == NULL)
@@ -62,7 +62,7 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
 # else
       return wcrtomb (s, wc, ps);
 # endif
-#else                                   /* IRIX 6.5 */
+#else                                   /* HP-UX 11.00, mingw */
       /* Fallback for platforms that don't have wcrtomb().
          Implement on top of wctomb().
          This code is not multithread-safe.  */

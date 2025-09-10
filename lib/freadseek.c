@@ -49,7 +49,7 @@ freadptrinc (FILE *fp, size_t increment)
 #elif defined __minix               /* Minix */
   fp_->_ptr += increment;
   fp_->_count -= increment;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   fp_->_ptr += increment;
   fp_->_cnt -= increment;
 #elif defined __UCLIBC__            /* uClibc */

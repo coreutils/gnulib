@@ -1,5 +1,5 @@
 # locale-ja.m4
-# serial 20
+# serial 21
 dnl Copyright (C) 2003, 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -116,7 +116,7 @@ int main ()
               if (LC_ALL=ja_JP.eucJP LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
                 gt_cv_locale_ja=ja_JP.eucJP
               else
-                # Test for the IRIX, FreeBSD locale name.
+                # Test for the FreeBSD locale name.
                 if (LC_ALL=ja_JP.EUC LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
                   gt_cv_locale_ja=ja_JP.EUC
                 else

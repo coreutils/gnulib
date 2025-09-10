@@ -49,7 +49,7 @@ c32width (char32_t wc)
   /* The char32_t encoding of a multibyte character is defined by the way
      mbrtoc32() is defined.  */
 
-#if GNULIB_defined_mbstate_t            /* AIX, IRIX */
+#if GNULIB_defined_mbstate_t            /* AIX */
   /* mbrtoc32() is defined on top of mbtowc() for the non-UTF-8 locales
      and directly for the UTF-8 locales.  */
   const char *encoding = locale_charset ();

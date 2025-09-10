@@ -1,5 +1,5 @@
 # pthread-rwlock.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2019-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -93,8 +93,8 @@ AC_DEFUN([gl_PTHREAD_RWLOCK],
           [Define if all pthread_rwlock* functions don't exist.])
       else
         dnl On Mac OS X 10.5, FreeBSD 5.2.1, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-        dnl IRIX 6.5, Solaris 9, Cygwin, the pthread_rwlock_timed*lock functions
-        dnl don't exist, although the other pthread_rwlock* functions exist.
+        dnl Solaris 9, Cygwin, the pthread_rwlock_timed*lock functions don't
+        dnl exist, although the other pthread_rwlock* functions exist.
         AC_CHECK_DECL([pthread_rwlock_timedrdlock], ,
           [HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK=0
            HAVE_PTHREAD_RWLOCK_TIMEDWRLOCK=0

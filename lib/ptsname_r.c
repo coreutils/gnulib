@@ -206,7 +206,7 @@ ptsname_r (int fd, char *buf, size_t buflen)
 # else
   if (!isatty (fd))
     {
-#  if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
+#  if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* Solaris */
       /* Set errno.  */
       if (fcntl (fd, F_GETFL) != -1)
         errno = ENOTTY;

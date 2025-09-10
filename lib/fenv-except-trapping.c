@@ -757,7 +757,7 @@ fegetexcept (void)
    intrinsics.  */
 
 # if HAVE_FPSETMASK
-/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, IRIX, Solaris, Minix ≥ 3.2.  */
+/* FreeBSD ≥ 3.1, NetBSD ≥ 1.1, OpenBSD, Solaris, Minix ≥ 3.2.  */
 
 /* Get fpgetmask, fpsetmask.  */
 #  include <ieeefp.h>

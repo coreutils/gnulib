@@ -28,7 +28,6 @@
      AIX 5.1                         >= 125713
      AIX 7.1                         >= 200000 (depends on circumstances)
      HP-UX                           >= 114689
-     IRIX                            >= 61089
      Solaris 7                       >= 63000 (depends on circumstances)
      Solaris 8                       >= 49153
      Solaris 9                       >= 73729

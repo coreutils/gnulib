@@ -152,7 +152,7 @@
    EPROTO, EMULTIHOP, EBADMSG, EOVERFLOW, ENOTSUP, ECANCELED are not defined.
    Likewise, on NonStop Kernel, EDQUOT is not defined.
    Define them here.  Values >= 2000 seem safe to use: Solaris ESTALE = 151,
-   HP-UX EWOULDBLOCK = 246, IRIX EDQUOT = 1133.
+   HP-UX EWOULDBLOCK = 246.
 
    Note: When one of these systems defines some of these macros some day,
    binaries will have to be recompiled so that they recognizes the new

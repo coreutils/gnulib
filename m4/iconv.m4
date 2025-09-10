@@ -1,5 +1,5 @@
 # iconv.m4
-# serial 31
+# serial 32
 dnl Copyright (C) 2000-2002, 2007-2014, 2016-2025 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -209,7 +209,7 @@ AC_DEFUN([AM_ICONV_LINK],
   {
     /* Try standardized names.  */
     iconv_t cd1 = iconv_open ("UTF-8", "EUC-JP");
-    /* Try IRIX names.  */
+    /* Try possible *BSD names.  */
     iconv_t cd2 = iconv_open ("UTF-8", "eucJP");
     /* Try AIX names.  */
     iconv_t cd3 = iconv_open ("UTF-8", "IBM-eucJP");

@@ -304,7 +304,7 @@ func_create_wrapper ()
                -o "$destprog.wrapper$exeext"
   rc=$?
   # Clean up object files left over in the current directory by the native C
-  # compilers on Solaris, HP-UX, IRIX.
+  # compilers on Solaris, HP-UX.
   rm -f relocwrapper.o \
         progname.o \
         progreloc.o \

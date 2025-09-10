@@ -474,8 +474,6 @@ func_gnulib_dir ()
       # according to IFS=: loses empty fields in many shells:
       #   - /bin/sh on Solaris loses all empty fields (at the beginning, at
       #     the end, and in the middle),
-      #   - /bin/sh on IRIX and /bin/ksh on IRIX lose empty fields at the
-      #     beginning and at the end,
       #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
       #     Solaris lose empty fields at the end.
       # The 'case' statement is an optimization, to avoid evaluating the
@@ -910,7 +908,7 @@ func_hardlink ()
 #            or when it was built with DEFAULT_ECHO_TO_USG (bash < 2.0),
 # - in zsh, when sh-emulation is not set,
 # - in ksh (e.g. AIX /bin/sh and Solaris /usr/xpg4/bin/sh are ksh instances,
-#           and HP-UX /bin/sh and IRIX /bin/sh behave similarly),
+#           and HP-UX /bin/sh behaves similarly),
 # - in Solaris /bin/sh.
 # We try the following workarounds:
 # - for all: respawn using $CONFIG_SHELL if that is set and works.
@@ -5719,8 +5717,7 @@ s,^\(.................................................[^ ]*\) *,                
   # Emacs puts some gnulib-tool log lines in its source repository, and
   # git send-email rejects patch lines longer than 998 characters.
   # Also, config.status uses awk, and the HP-UX 11.00 awk fails if a
-  # line has length >= 3071; similarly, the IRIX 6.5 awk fails if a
-  # line has length >= 3072.
+  # line has length >= 3071.
   func_append_actionarg ()
   {
     func_append actioncmd " \\$nl#  $1"

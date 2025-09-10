@@ -27,7 +27,6 @@
      FreeBSD, OpenBSD, Mac OS X      >= 65537
      AIX                             >= 32769
      HP-UX                           >= 8193
-     IRIX                            >= 10241
      Solaris <= 7                    >= 10241
      Solaris >= 8                    >= 20481
      z/OS                            >= 131073

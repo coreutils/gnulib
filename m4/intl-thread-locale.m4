@@ -1,5 +1,5 @@
 # intl-thread-locale.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2015-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -171,7 +171,7 @@ int main ()
   dnl fake.  So, set
   dnl   gt_good_uselocale = gt_working_uselocale && !gt_fake_locales.
   dnl Expected result: HAVE_GOOD_USELOCALE is defined on all platforms except
-  dnl FreeBSD < 9.1, NetBSD, OpenBSD, Minix, AIX < 7, AIX 7.2, HP-UX, IRIX,
+  dnl FreeBSD < 9.1, NetBSD, OpenBSD, Minix, AIX < 7, AIX 7.2, HP-UX,
   dnl Solaris < 11.4, Cygwin < 2.6, mingw, MSVC 14, Android.
   if test $gt_working_uselocale = yes && test $gt_fake_locales = no; then
     gt_good_uselocale=yes
@@ -199,7 +199,7 @@ int main ()
 dnl Tests whether uselocale() exists and is usable.
 dnl Sets gt_working_uselocale and defines HAVE_WORKING_USELOCALE.
 dnl Expected result: HAVE_WORKING_USELOCALE is defined on all platforms except
-dnl FreeBSD < 9.1, NetBSD, OpenBSD < 6.2, Minix, AIX < 7, AIX 7.2, HP-UX, IRIX,
+dnl FreeBSD < 9.1, NetBSD, OpenBSD < 6.2, Minix, AIX < 7, AIX 7.2, HP-UX,
 dnl Solaris < 11.4, Cygwin < 2.6, mingw, MSVC 14, Android API level < 21.
 AC_DEFUN([gt_FUNC_USELOCALE],
 [

@@ -1,5 +1,5 @@
 # fenv-rounding.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2023-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,7 @@ AC_DEFUN([gl_FENV_ROUNDING],
       FENV_ROUNDING_LIBM=
     else
       dnl It needs linking with -lm on
-      dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris, Android.
+      dnl glibc, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, Solaris, Android.
       if test $gl_cv_func_fesetround_no_libm = yes; then
         FENV_ROUNDING_LIBM=
       else
