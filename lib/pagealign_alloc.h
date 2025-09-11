@@ -55,6 +55,21 @@ extern void *pagealign_xalloc (size_t size)
   _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 
+/* Selects the implementation of pagealign_alloc.
+   If you set pagealign_impl, it must be before the first invocation of
+   pagealign_alloc or pagealign_xalloc.  */
+typedef enum
+{
+  PA_IMPL_DEFAULT        = 0, /* platform-dependent default */
+  PA_IMPL_MALLOC         = 1, /* malloc */
+  PA_IMPL_MMAP           = 2, /* mmap (if available) */
+  PA_IMPL_POSIX_MEMALIGN = 3, /* posix_memalign (if available) */
+  PA_IMPL_ALIGNED_MALLOC = 4, /* _aligned_malloc (if available) */
+  PA_IMPL_VIRTUAL_ALLOC  = 5  /* VirtualAlloc (if available) */
+} pagealign_impl_t;
+extern pagealign_impl_t pagealign_impl;
+
+
 #ifdef __cplusplus
 }
 #endif

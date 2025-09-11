@@ -1,0 +1,13 @@
+Files:
+tests/bench-pagealign_alloc.c
+
+Depends-on:
+getpagesize
+get-rusage-as
+get-rusage-data
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-pagealign_alloc
+bench_pagealign_alloc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG

@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "pagealign_alloc.h"
 
 #include <errno.h>
@@ -30,6 +31,11 @@
 
 #if HAVE_SYS_MMAN_H
 # include <sys/mman.h>
+#endif
+#if defined _WIN32 && !defined __CYGWIN__
+# include <malloc.h>
+# define WIN32_LEAN_AND_MEAN /* avoid including junk */
+# include <windows.h>
 #endif
 
 #include <error.h>
@@ -46,16 +52,22 @@
 #endif
 
 
-#if ! HAVE_POSIX_MEMALIGN
+/* Implementation of pagealign_alloc.  */
+pagealign_impl_t pagealign_impl;
 
-# if HAVE_SYS_MMAN_H
-/* For each memory region, we store its size.  */
-typedef size_t info_t;
-# else
-/* For each memory region, we store the original pointer returned by
-   malloc().  */
-typedef void * info_t;
-# endif
+typedef union
+{
+  /* For PA_IMPL_MALLOC:
+     For each memory region, we store the original pointer returned by
+     malloc().  */
+  void *pointer;
+  /* For PA_IMPL_MMAP, PA_IMPL_VIRTUAL_ALLOC:
+     For each memory region, we store its size.  */
+  size_t size;
+} info_t;
+
+
+/* For PA_IMPL_MALLOC, PA_IMPL_MMAP.  */
 
 /* A simple linked list of allocated memory regions.  It is probably not the
    most efficient way to store these, but anyway...  */
@@ -70,7 +82,6 @@ struct memnode_s
 /* The list of currently allocated memory regions.  */
 static memnode_t *memnode_table = NULL;
 
-
 static void
 new_memnode (void *aligned_ptr, info_t info)
 {
@@ -80,7 +91,6 @@ new_memnode (void *aligned_ptr, info_t info)
   new_node->next = memnode_table;
   memnode_table = new_node;
 }
-
 
 /* Dispose of the memnode containing a map for the ALIGNED_PTR in question
    and return the content of the node's INFO field.  */
@@ -108,47 +118,117 @@ get_memnode (void *aligned_ptr)
   return ret;
 }
 
-#endif /* !HAVE_POSIX_MEMALIGN */
+
+/* Returns the default implementation.  */
+static pagealign_impl_t
+get_default_impl (void)
+{
+#if HAVE_POSIX_MEMALIGN
+  return PA_IMPL_POSIX_MEMALIGN;
+#elif HAVE_SYS_MMAN_H
+  return PA_IMPL_MMAP;
+#else
+  return PA_IMPL_MALLOC;
+#endif
+}
 
 
 void *
 pagealign_alloc (size_t size)
 {
   void *ret;
-#if HAVE_POSIX_MEMALIGN
-  /* Prefer posix_memalign to malloc and mmap,
-     as it typically scales better when there are many allocations.  */
-  int status = posix_memalign (&ret, getpagesize (), size);
-  if (status)
+  pagealign_impl_t impl;
+
+  impl = pagealign_impl;
+  if (impl == PA_IMPL_DEFAULT)
+    impl = get_default_impl ();
+
+  switch (impl)
     {
-      errno = status;
+    case PA_IMPL_MALLOC:
+      {
+        size_t pagesize = getpagesize ();
+        void *unaligned_ptr = malloc (size + pagesize - 1);
+        if (unaligned_ptr == NULL)
+          {
+            /* Set errno.  We don't know whether malloc already set errno: some
+               implementations of malloc do, some don't.  */
+            errno = ENOMEM;
+            return NULL;
+          }
+        ret = (char *) unaligned_ptr
+              + ((- (uintptr_t) unaligned_ptr) & (pagesize - 1));
+        info_t info;
+        info.pointer = unaligned_ptr;
+        new_memnode (ret, info);
+      }
+      break;
+
+    case PA_IMPL_MMAP:
+      #if HAVE_SYS_MMAN_H
+      ret = mmap (NULL, size, PROT_READ | PROT_WRITE,
+                  MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      if (ret == MAP_FAILED)
+        return NULL;
+      info_t info;
+      info.size = size;
+      new_memnode (ret, info);
+      break;
+      #else
+      errno = ENOSYS;
       return NULL;
-    }
-#elif HAVE_SYS_MMAN_H
-  /* Prefer mmap to malloc, since the latter often wastes an entire
-     memory page per call.  */
-  ret = mmap (NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
-              -1, 0);
-  if (ret == MAP_FAILED)
-    return NULL;
-  new_memnode (ret, size);
-#else /* !HAVE_SYS_MMAN_H && !HAVE_POSIX_MEMALIGN */
-  size_t pagesize = getpagesize ();
-  void *unaligned_ptr = malloc (size + pagesize - 1);
-  if (unaligned_ptr == NULL)
-    {
-      /* Set errno.  We don't know whether malloc already set errno: some
-         implementations of malloc do, some don't.  */
-      errno = ENOMEM;
+      #endif
+
+    case PA_IMPL_POSIX_MEMALIGN:
+      #if HAVE_POSIX_MEMALIGN
+      {
+        int status = posix_memalign (&ret, getpagesize (), size);
+        if (status)
+          {
+            errno = status;
+            return NULL;
+          }
+      }
+      break;
+      #else
+      errno = ENOSYS;
       return NULL;
+      #endif
+
+    case PA_IMPL_ALIGNED_MALLOC:
+      #if defined _WIN32 && !defined __CYGWIN__
+      /* Documentation:
+         <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/aligned-malloc>  */
+      return _aligned_malloc (size, getpagesize ());
+      #else
+      errno = ENOSYS;
+      return NULL;
+      #endif
+
+    case PA_IMPL_VIRTUAL_ALLOC:
+      #if defined _WIN32 && !defined __CYGWIN__
+      /* Documentation:
+         <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc>  */
+      ret = VirtualAlloc (NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+      if (ret == NULL)
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
+      info_t info;
+      info.size = size;
+      new_memnode (ret, info);
+      #else
+      errno = ENOSYS;
+      return NULL;
+      #endif
+
+    default:
+      abort ();
     }
-  ret = (char *) unaligned_ptr
-        + ((- (uintptr_t) unaligned_ptr) & (pagesize - 1));
-  new_memnode (ret, unaligned_ptr);
-#endif /* HAVE_SYS_MMAN_H && HAVE_POSIX_MEMALIGN */
+
   return ret;
 }
-
 
 void *
 pagealign_xalloc (size_t size)
@@ -165,12 +245,53 @@ pagealign_xalloc (size_t size)
 void
 pagealign_free (void *aligned_ptr)
 {
-#if HAVE_POSIX_MEMALIGN
-  free (aligned_ptr);
-#elif HAVE_SYS_MMAN_H
-  if (munmap (aligned_ptr, get_memnode (aligned_ptr)) < 0)
-    error (EXIT_FAILURE, errno, "Failed to unmap memory");
-#else
-  free (get_memnode (aligned_ptr));
-#endif
+  pagealign_impl_t impl;
+
+  impl = pagealign_impl;
+  if (impl == PA_IMPL_DEFAULT)
+    impl = get_default_impl ();
+
+  switch (impl)
+    {
+    case PA_IMPL_MALLOC:
+      free (get_memnode (aligned_ptr).pointer);
+      break;
+
+    case PA_IMPL_MMAP:
+      #if HAVE_SYS_MMAN_H
+      if (munmap (aligned_ptr, get_memnode (aligned_ptr).size) < 0)
+        error (EXIT_FAILURE, errno, "Failed to unmap memory");
+      #else
+      abort ();
+      #endif
+
+    case PA_IMPL_POSIX_MEMALIGN:
+      #if HAVE_POSIX_MEMALIGN
+      free (aligned_ptr);
+      #else
+      abort ();
+      #endif
+
+    case PA_IMPL_ALIGNED_MALLOC:
+      #if defined _WIN32 && !defined __CYGWIN__
+      /* Documentation:
+         <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/aligned-free>  */
+      _aligned_free (aligned_ptr);
+      #else
+      abort ();
+      #endif
+
+    case PA_IMPL_VIRTUAL_ALLOC:
+      #if defined _WIN32 && !defined __CYGWIN__
+      /* Documentation:
+         <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfree>  */
+      if (!VirtualFree (aligned_ptr, get_memnode (aligned_ptr).size, MEM_RELEASE))
+        error (EXIT_FAILURE, 0, "Failed to free memory");
+      #else
+      abort ();
+      #endif
+
+    default:
+      abort ();
+    }
 }
