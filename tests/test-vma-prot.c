@@ -22,7 +22,7 @@
 
 #include <stdlib.h>
 
-#if HAVE_MMAP
+#if HAVE_SYS_MMAN_H
 # include <sys/mman.h>
 # include <unistd.h>
 #endif
@@ -56,7 +56,7 @@ main (void)
     ASSERT (((VMA_PROT_READ | VMA_PROT_WRITE) & ~prot) == 0);
   }
 
-#if HAVE_MMAP
+#if HAVE_SYS_MMAN_H
   /* Test on memory allocated through mmap().  */
   {
     char *mem = mmap (NULL, 1024*1024, PROT_READ | PROT_WRITE,

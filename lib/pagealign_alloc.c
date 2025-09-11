@@ -28,7 +28,7 @@
 #include <unistd.h>
 #include <stdint.h>
 
-#if HAVE_MMAP
+#if HAVE_SYS_MMAN_H
 # include <sys/mman.h>
 #endif
 
@@ -38,7 +38,7 @@
 
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
-#if HAVE_MMAP
+#if HAVE_SYS_MMAN_H
 /* Define MAP_FAILED for old systems which neglect to.  */
 # ifndef MAP_FAILED
 #  define MAP_FAILED ((void *)-1)
@@ -48,7 +48,7 @@
 
 #if ! HAVE_POSIX_MEMALIGN
 
-# if HAVE_MMAP
+# if HAVE_SYS_MMAN_H
 /* For each memory region, we store its size.  */
 typedef size_t info_t;
 # else
@@ -124,7 +124,7 @@ pagealign_alloc (size_t size)
       errno = status;
       return NULL;
     }
-#elif HAVE_MMAP
+#elif HAVE_SYS_MMAN_H
   /* Prefer mmap to malloc, since the latter often wastes an entire
      memory page per call.  */
   ret = mmap (NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
@@ -132,7 +132,7 @@ pagealign_alloc (size_t size)
   if (ret == MAP_FAILED)
     return NULL;
   new_memnode (ret, size);
-#else /* !HAVE_MMAP && !HAVE_POSIX_MEMALIGN */
+#else /* !HAVE_SYS_MMAN_H && !HAVE_POSIX_MEMALIGN */
   size_t pagesize = getpagesize ();
   void *unaligned_ptr = malloc (size + pagesize - 1);
   if (unaligned_ptr == NULL)
@@ -145,7 +145,7 @@ pagealign_alloc (size_t size)
   ret = (char *) unaligned_ptr
         + ((- (uintptr_t) unaligned_ptr) & (pagesize - 1));
   new_memnode (ret, unaligned_ptr);
-#endif /* HAVE_MMAP && HAVE_POSIX_MEMALIGN */
+#endif /* HAVE_SYS_MMAN_H && HAVE_POSIX_MEMALIGN */
   return ret;
 }
 
@@ -167,7 +167,7 @@ pagealign_free (void *aligned_ptr)
 {
 #if HAVE_POSIX_MEMALIGN
   free (aligned_ptr);
-#elif HAVE_MMAP
+#elif HAVE_SYS_MMAN_H
   if (munmap (aligned_ptr, get_memnode (aligned_ptr)) < 0)
     error (EXIT_FAILURE, errno, "Failed to unmap memory");
 #else
