@@ -46,7 +46,7 @@
 #endif
 
 
-#if HAVE_MMAP || ! HAVE_POSIX_MEMALIGN
+#if ! HAVE_POSIX_MEMALIGN
 
 # if HAVE_MMAP
 /* For each memory region, we store its size.  */
@@ -108,29 +108,30 @@ get_memnode (void *aligned_ptr)
   return ret;
 }
 
-#endif /* HAVE_MMAP || !HAVE_POSIX_MEMALIGN */
+#endif /* !HAVE_POSIX_MEMALIGN */
 
 
 void *
 pagealign_alloc (size_t size)
 {
   void *ret;
-  /* We prefer the mmap() approach over the posix_memalign() or malloc()
-     based approaches, since the latter often waste an entire memory page
-     per call.  */
-#if HAVE_MMAP
-  ret = mmap (NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
-              -1, 0);
-  if (ret == MAP_FAILED)
-    return NULL;
-  new_memnode (ret, size);
-#elif HAVE_POSIX_MEMALIGN
+#if HAVE_POSIX_MEMALIGN
+  /* Prefer posix_memalign to malloc and mmap,
+     as it typically scales better when there are many allocations.  */
   int status = posix_memalign (&ret, getpagesize (), size);
   if (status)
     {
       errno = status;
       return NULL;
     }
+#elif HAVE_MMAP
+  /* Prefer mmap to malloc, since the latter often wastes an entire
+     memory page per call.  */
+  ret = mmap (NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
+              -1, 0);
+  if (ret == MAP_FAILED)
+    return NULL;
+  new_memnode (ret, size);
 #else /* !HAVE_MMAP && !HAVE_POSIX_MEMALIGN */
   size_t pagesize = getpagesize ();
   void *unaligned_ptr = malloc (size + pagesize - 1);
@@ -164,11 +165,11 @@ pagealign_xalloc (size_t size)
 void
 pagealign_free (void *aligned_ptr)
 {
-#if HAVE_MMAP
+#if HAVE_POSIX_MEMALIGN
+  free (aligned_ptr);
+#elif HAVE_MMAP
   if (munmap (aligned_ptr, get_memnode (aligned_ptr)) < 0)
     error (EXIT_FAILURE, errno, "Failed to unmap memory");
-#elif HAVE_POSIX_MEMALIGN
-  free (aligned_ptr);
 #else
   free (get_memnode (aligned_ptr));
 #endif
