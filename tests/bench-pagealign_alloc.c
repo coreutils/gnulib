@@ -67,11 +67,15 @@ show_stats (intptr_t initial_as, intptr_t initial_data, int count)
       intptr_t requested = count * size_of_some_pages ();
       intptr_t as_increase = get_rusage_as () - initial_as;
       intptr_t data_increase = get_rusage_data () - initial_data;
-      printf ("count = %5d: requested: %6ld pages, allocated AS: %6ld pages (%.2f%%), allocated DATA: %6ld pages (%.2f%%)\n",
+      printf ("count = %5d: requested: %6ld pages, "
+              "allocated AS: %6ld pages (%.2f%%), "
+              "allocated DATA: %6ld pages (%.2f%%)\n",
               count,
               (long int) (requested / pagesize),
-              (long int) (as_increase / pagesize), 100 * (double) as_increase / (double) requested,
-              (long int) (data_increase / pagesize), 100 * (double) data_increase / (double) requested);
+              (long int) (as_increase / pagesize),
+              100 * (double) as_increase / (double) requested,
+              (long int) (data_increase / pagesize),
+              100 * (double) data_increase / (double) requested);
     }
 }
 
@@ -99,7 +103,7 @@ main (int argc, char *argv[])
   if (argc != 2)
     {
       fprintf (stderr, "Usage: %s TESTS\n", argv[0]);
-      fprintf (stderr, "Example: %s abcdef\n", argv[0]);
+      fprintf (stderr, "Example: %s {a|b|c|d|e|f}\n", argv[0]);
       exit (1);
     }
 
