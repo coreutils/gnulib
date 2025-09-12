@@ -229,57 +229,6 @@ else
   submodule_names=
 fi
 
-# func_expand URL
-# Expands a repository URL, taking into account the git configuration.
-# Output:
-# - url                      expanded repository URL
-# Test cases:
-# After
-#   git config --global url.git://git.savannah.gnu.org/.insteadof git://git.git.savannah.gnu.org/
-#   git config --global url.https://git.savannah.gnu.org/git/.insteadof https://https.git.savannah.gnu.org/git/
-#   git config --global url.git://git.savannah.gnu.org/gnulib.git.insteadof https://github.com/coreutils/gnulib.git
-#   git config --global url.https://git.savannah.gnu.org/git/gnulib.git.insteadof https://github.com/coreutils/gnulib.git
-# func_expand git://git.savannah.gnu.org/grep.git => url = git://git.git.savannah.gnu.org/grep.git
-# func_expand git://git.savannah.gnu.org/gnulib.git => url = https://github.com/coreutils/gnulib.git
-func_expand ()
-{
-  url="$1"
-  # Iterate through all the elements of the configuration of the form
-  #   url.<base>.insteadof = <rewritten-base>
-  # Note: $ git config get --url="$url" url.insteadof
-  # and   $ git config --get-urlmatch url.insteadof "$url"
-  # are not useful here, because they return <rewritten-base> without
-  # returning <base>.
-  longest_base=
-  longest_len=0
-  for lhs in `git config --get-regexp --name-only '^url\..*\.insteadof$'`; do
-    base=`echo "$lhs" | sed -e 's/^url\.//' -e 's/\.insteadof$//'`
-    len=`printf '%s' "$base" | wc -c`
-    if test $len -gt $longest_len; then
-      case "$url" in
-        "$base"* ) longest_base="$base"; longest_len="$len" ;;
-      esac
-    fi
-  done
-  # Iterate through all the elements of the configuration of the form
-  #   url.<base>.insteadof = <rewritten-base>
-  # this time with the right-hand sides.
-  if test $longest_len != 0; then
-    startpos=`expr $longest_len + 1`
-    urltail=`echo "$url" | cut -b "$startpos"-`
-    rewritten=`
-      git config --get-regexp '^url\..*\.insteadof$' \
-        | while read lhs rhs; do
-            if test "$lhs" = url."$longest_base".insteadof; then
-              echo "$rhs$urltail"
-            fi
-          done`
-    if test -n "$rewritten"; then
-      url="$rewritten"
-    fi
-  fi
-}
-
 # func_validate SUBDIR
 # Verifies that the state on the file system is in sync with the declarations
 # in the configuration file.
@@ -405,13 +354,6 @@ func_pull ()
         fi
       else
         # The subdir does not yet exist. Create a plain checkout.
-        orig_url="$url"
-        func_expand "$url"
-        if test "$url" = "$orig_url"; then
-          func_note "Accessing $url"
-        else
-          func_note "Redirecting $orig_url => $url"
-        fi
         trap func_cleanup_current_git_clone HUP INT PIPE TERM
         git clone $2 "$url" "$path" || func_cleanup_current_git_clone
         trap - HUP INT PIPE TERM
