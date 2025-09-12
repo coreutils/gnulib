@@ -32,6 +32,9 @@ extern "C" {
 #endif
 
 
+/* Note: The functions declared in this file are NOT multithread-safe.  */
+
+
 /* Free a memory block.
    PTR must be a non-NULL pointer returned by pagealign_alloc or
    pagealign_xalloc.  */
