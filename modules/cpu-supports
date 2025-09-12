@@ -1,0 +1,27 @@
+Description:
+A wrapper for __builtin_cpu_supports to also check GLIBC_TUNABLES
+
+Files:
+lib/cpu-supports.h
+lib/cpu-supports.c
+
+Depends-on:
+assert
+attribute
+bool
+c99
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+
+Makefile.am:
+lib_SOURCES += cpu-supports.c
+
+Include:
+"cpu-supports.h"
+
+License:
+GPL
+
+Maintainer:
+all

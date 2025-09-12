@@ -1,0 +1,14 @@
+Files:
+tests/test-cpu-supports.c
+tests/macros.h
+
+Depends-on:
+bool
+setenv
+unsetenv
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-cpu-supports
+check_PROGRAMS += test-cpu-supports
