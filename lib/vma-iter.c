@@ -785,8 +785,6 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   unsigned long auxmap_start;
   unsigned long auxmap_end;
   char *mem;
-  char *p;
-  char *p_end;
 
   len = 0;
   if (sysctl (info_path, 3, NULL, &len, NULL, 0) < 0)
@@ -800,6 +798,13 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   /* And the system call rejects lengths that are not a multiple of
      sizeof (struct kinfo_vmentry).  */
   len = (len / sizeof (struct kinfo_vmentry)) * sizeof (struct kinfo_vmentry);
+  /* Here len >= 2 * sizeof (struct kinfo_vmentry).  This is important, because
+       * The system call rejects len == 0.
+       * len == 1 * sizeof (struct kinfo_vmentry)
+         would produce just one entry, with
+           kve_start = kve_end = 0x1000,
+           kve_protection = 0,
+         and thus lead to an endless loop.  */
   /* Allocate memneed bytes of memory.
      We cannot use alloca here, because not much stack space is guaranteed.
      We also cannot use malloc here, because a malloc() call may call mmap()
@@ -815,45 +820,64 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   auxmap_start = (unsigned long) auxmap;
   auxmap_end = auxmap_start + memneed;
   mem = (char *) auxmap;
-  if (sysctl (info_path, 3, mem, &len, NULL, 0) < 0
-      || len > 0x10000 - sizeof (struct kinfo_vmentry))
+
+  for (;;)
     {
-      /* sysctl failed, or the list of VMAs is possibly truncated.  */
-      munmap (auxmap, memneed);
-      return -1;
-    }
-  p = mem;
-  p_end = mem + len;
-  while (p < p_end)
-    {
-      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
-      unsigned long start = kve->kve_start;
-      unsigned long end = kve->kve_end;
-      unsigned int flags = 0;
-      if (kve->kve_protection & KVE_PROT_READ)
-        flags |= VMA_PROT_READ;
-      if (kve->kve_protection & KVE_PROT_WRITE)
-        flags |= VMA_PROT_WRITE;
-      if (kve->kve_protection & KVE_PROT_EXEC)
-        flags |= VMA_PROT_EXECUTE;
-      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+      size_t rlen = len;
+      char *p;
+      char *p_end;
+
+      if (sysctl (info_path, 3, mem, &rlen, NULL, 0) < 0)
         {
-          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start < auxmap_start)
-            if (callback (data, start, auxmap_start, flags))
-              break;
-          if (auxmap_end - 1 < end - 1)
-            if (callback (data, auxmap_end, end, flags))
-              break;
+          /* sysctl failed.  */
+          munmap (auxmap, memneed);
+          return -1;
         }
-      else
+      if (rlen == 0)
+        break;
+      p = mem;
+      p_end = mem + rlen;
+      while (p < p_end)
         {
-          if (start != end)
-            if (callback (data, start, end, flags))
-              break;
+          struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+          unsigned long start = kve->kve_start;
+          unsigned long end = kve->kve_end;
+          unsigned int flags = 0;
+          if (kve->kve_protection & KVE_PROT_READ)
+            flags |= VMA_PROT_READ;
+          if (kve->kve_protection & KVE_PROT_WRITE)
+            flags |= VMA_PROT_WRITE;
+          if (kve->kve_protection & KVE_PROT_EXEC)
+            flags |= VMA_PROT_EXECUTE;
+          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+            {
+              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+              if (start < auxmap_start)
+                if (callback (data, start, auxmap_start, flags))
+                  break;
+              if (auxmap_end - 1 < end - 1)
+                if (callback (data, auxmap_end, end, flags))
+                  break;
+            }
+          else
+            {
+              if (start != end)
+                if (callback (data, start, end, flags))
+                  break;
+            }
+          p += sizeof (struct kinfo_vmentry);
         }
-      p += sizeof (struct kinfo_vmentry);
+      if (rlen < len)
+        break;
+      /* sysctl returned exactly len entries, which means that another sysctl
+         invocation is needed.  */
+      unsigned long end_so_far = ((struct kinfo_vmentry *) p_end)[-1].kve_end;
+      if (end_so_far == 0)
+        /* Wrapped around.  Avoid an endless loop.  */
+        break;
+      /* Prepare for the next sysctl invocation.  */
+      ((struct kinfo_vmentry *) mem)[0].kve_start = end_so_far;
     }
   munmap (auxmap, memneed);
   return 0;
@@ -1638,8 +1662,11 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 #elif HAVE_MQUERY /* OpenBSD */
 
 # if defined __OpenBSD__
-  /* Try sysctl() first.  It is more efficient than the mquery() loop below
-     and also provides the flags.  */
+  /* Try sysctl() first.  It
+       - is more efficient than the mquery() loop below,
+       - also provides the flags, and
+       - does not return areas that are merely reserved, such as ca. 8 GB
+         near the first VMA on OpenBSD 7.6/x86_64.  */
   {
     int retval = vma_iterate_bsd (callback, data);
     if (retval == 0)
@@ -1675,12 +1702,15 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
               end = 0; /* wrap around */
             address = end;
 
+            /* When wrapping around, OpenBSD 7.6/x86_64 produces an interval
+               start = 0x7f7fffffc000, end = 0x0, that is not real (not
+               returned by sysctl()).  Ignore this interval.  */
+            if (address < pagesize) /* wrap around? */
+              break;
+
             /* It's too complicated to find out about the flags.
                Just pass 0.  */
             if (callback (data, start, end, 0))
-              break;
-
-            if (address < pagesize) /* wrap around? */
               break;
           }
         /* Here we know that the page at address is unmapped.  */
