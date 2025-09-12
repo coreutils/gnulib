@@ -22,6 +22,7 @@
 #include "endian.h"
 
 #ifdef GL_CRC_X86_64_PCLMUL
+#include "cpu-supports.h"
 #include "crc-x86_64.h"
 static bool pclmul_enabled = false;
 static bool pclmul_checked = false;
@@ -118,8 +119,8 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
 #ifdef GL_CRC_X86_64_PCLMUL
   if (!pclmul_checked)
     {
-      pclmul_enabled = (0 < __builtin_cpu_supports ("pclmul")
-                        && 0 < __builtin_cpu_supports ("avx"));
+      pclmul_enabled = (cpu_supports ("pclmul")
+                        && cpu_supports ("avx"));
       pclmul_checked = true;
     }
 
@@ -200,8 +201,8 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
 #ifdef GL_CRC_X86_64_PCLMUL
   if (!pclmul_checked)
     {
-      pclmul_enabled = (0 < __builtin_cpu_supports ("pclmul")
-                        && 0 < __builtin_cpu_supports ("avx"));
+      pclmul_enabled = (cpu_supports ("pclmul")
+                        && cpu_supports ("avx"));
       pclmul_checked = true;
     }
 
