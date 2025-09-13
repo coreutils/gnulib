@@ -14,9 +14,10 @@ getpagesize
 gettext-h
 gnulib-i18n
 stdlib-h
-xalloc
 unistd-h
 stdint-h
+xmap
+hash-map
 
 configure.ac:
 gl_PAGEALIGN_ALLOC

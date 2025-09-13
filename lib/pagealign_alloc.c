@@ -39,7 +39,8 @@
 #endif
 
 #include <error.h>
-#include "xalloc.h"
+#include "gl_xmap.h"
+#include "gl_hash_map.h"
 #include "gettext.h"
 
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
@@ -55,68 +56,14 @@
 /* Implementation of pagealign_alloc.  */
 pagealign_impl_t pagealign_impl;
 
-typedef union
-{
-  /* For PA_IMPL_MALLOC:
-     For each memory region, we store the original pointer returned by
-     malloc().  */
-  void *pointer;
-  /* For PA_IMPL_MMAP:
+/* Map:
+   For PA_IMPL_MALLOC:
+     aligned_ptr -> void *.
+     For each memory region, we store the original pointer returned by malloc().
+   For PA_IMPL_MMAP:
+     aligned_ptr -> size_t.
      For each memory region, we store its size.  */
-  size_t size;
-} info_t;
-
-
-/* For PA_IMPL_MALLOC, PA_IMPL_MMAP.  */
-
-/* A simple linked list of allocated memory regions.  It is probably not the
-   most efficient way to store these, but anyway...  */
-typedef struct memnode_s memnode_t;
-struct memnode_s
-{
-  void *aligned_ptr;
-  info_t info;
-  memnode_t *next;
-};
-
-/* The list of currently allocated memory regions.  */
-static memnode_t *memnode_table = NULL;
-
-static void
-new_memnode (void *aligned_ptr, info_t info)
-{
-  memnode_t *new_node = XMALLOC (memnode_t);
-  new_node->aligned_ptr = aligned_ptr;
-  new_node->info = info;
-  new_node->next = memnode_table;
-  memnode_table = new_node;
-}
-
-/* Dispose of the memnode containing a map for the ALIGNED_PTR in question
-   and return the content of the node's INFO field.  */
-static info_t
-get_memnode (void *aligned_ptr)
-{
-  info_t ret;
-  memnode_t *c;
-  memnode_t **p_next = &memnode_table;
-
-  for (c = *p_next; c != NULL; p_next = &c->next, c = c->next)
-    if (c->aligned_ptr == aligned_ptr)
-      break;
-
-  if (c == NULL)
-    /* An attempt to free untracked memory.  A wrong pointer was passed
-       to pagealign_free().  */
-    abort ();
-
-  /* Remove this entry from the list, save the return value, and free it.  */
-  *p_next = c->next;
-  ret = c->info;
-  free (c);
-
-  return ret;
-}
+static gl_map_t page_info_map;
 
 
 /* Returns the default implementation.  */
@@ -158,9 +105,10 @@ pagealign_alloc (size_t size)
           }
         ret = (char *) unaligned_ptr
               + ((- (uintptr_t) unaligned_ptr) & (pagesize - 1));
-        info_t info;
-        info.pointer = unaligned_ptr;
-        new_memnode (ret, info);
+        if (page_info_map == NULL)
+          page_info_map =
+            gl_map_create_empty (GL_HASH_MAP, NULL, NULL, NULL, NULL);
+        gl_map_put (page_info_map, ret, unaligned_ptr);
       }
       break;
 
@@ -170,9 +118,10 @@ pagealign_alloc (size_t size)
                   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
       if (ret == MAP_FAILED)
         return NULL;
-      info_t info;
-      info.size = size;
-      new_memnode (ret, info);
+      if (page_info_map == NULL)
+        page_info_map =
+          gl_map_create_empty (GL_HASH_MAP, NULL, NULL, NULL, NULL);
+      gl_map_put (page_info_map, ret, (void *) (uintptr_t) size);
       break;
       #else
       errno = ENOSYS;
@@ -252,13 +201,26 @@ pagealign_free (void *aligned_ptr)
   switch (impl)
     {
     case PA_IMPL_MALLOC:
-      free (get_memnode (aligned_ptr).pointer);
+      {
+        const void *value;
+        if (page_info_map == NULL
+            || !gl_map_getremove (page_info_map, aligned_ptr, &value))
+          abort ();
+        void *unaligned_ptr = (void *) value;
+        free (unaligned_ptr);
+      }
       break;
 
     case PA_IMPL_MMAP:
       #if HAVE_SYS_MMAN_H
-      if (munmap (aligned_ptr, get_memnode (aligned_ptr).size) < 0)
-        error (EXIT_FAILURE, errno, "Failed to unmap memory");
+      {
+        const void *value;
+        if (page_info_map == NULL
+            || !gl_map_getremove (page_info_map, aligned_ptr, &value))
+          abort ();
+        if (munmap (aligned_ptr, (size_t) (uintptr_t) value) < 0)
+          error (EXIT_FAILURE, errno, "Failed to unmap memory");
+      }
       break;
       #else
       abort ();
