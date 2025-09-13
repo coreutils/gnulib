@@ -1,13 +1,19 @@
 Files:
+tests/test-pagealign_alloc.c
 tests/bench-pagealign_alloc.c
 
 Depends-on:
 getpagesize
 get-rusage-as
 get-rusage-data
+xalloc
 
 configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
 
 Makefile.am:
+TESTS += test-pagealign_alloc
+check_PROGRAMS += test-pagealign_alloc
+
 noinst_PROGRAMS += bench-pagealign_alloc
 bench_pagealign_alloc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
