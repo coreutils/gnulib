@@ -70,11 +70,47 @@ static gl_map_t page_info_map;
 static pagealign_impl_t
 get_default_impl (void)
 {
-#if HAVE_POSIX_MEMALIGN
+  /* The default is chosen so as to
+     1. (most important) not waste memory, when possible.
+     2. when there is no waste of memory, avoid using the page_info_map,
+        when possible.
+     Regarding the amount of used memory, it was determined through the
+     'bench-pagealign_alloc' program.  The results were:
+
+                          b         c         d         e         f
+
+       glibc            176%      101%      175%       ---       ---
+       musl libc        198%      101%      197%       ---       ---
+       macOS            190%      100%      195%       ---       ---
+       FreeBSD          190%      100%      380%       ---       ---
+       NetBSD           185%      101%      379%       ---       ---
+       OpenBSD          177%      101%      101%       ---       ---
+       AIX              177%      101%      176%       ---       ---
+       Solaris 11.4     176%      101%      175%       ---       ---
+       Cygwin           181%      100%      181%       ---       ---
+       native Windows   184%       ---       ---      180%      100%
+       Android          182%      101%      181%       ---       ---
+
+     where
+       b = PA_IMPL_MALLOC
+       c = PA_IMPL_MMAP
+       d = PA_IMPL_POSIX_MEMALIGN
+       e = PA_IMPL_ALIGNED_MALLOC
+       f = PA_IMPL_VIRTUAL_ALLOC
+   */
+#if defined _WIN32 && !defined __CYGWIN__
+  /* Native Windows.  */
+  return PA_IMPL_VIRTUAL_ALLOC;
+#elif defined __OpenBSD__ && HAVE_POSIX_MEMALIGN
+  /* On OpenBSD, we may choose among PA_IMPL_MMAP and PA_IMPL_POSIX_MEMALIGN.
+     The latter does not need the page_info_map.  */
   return PA_IMPL_POSIX_MEMALIGN;
 #elif HAVE_SYS_MMAN_H
+  /* On all other platforms, PA_IMPL_MMAP is the only implementation that does
+     not waste memory.  */
   return PA_IMPL_MMAP;
 #else
+  /* Old platforms without mmap: use PA_IMPL_MALLOC.  */
   return PA_IMPL_MALLOC;
 #endif
 }
