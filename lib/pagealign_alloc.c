@@ -61,7 +61,7 @@ typedef union
      For each memory region, we store the original pointer returned by
      malloc().  */
   void *pointer;
-  /* For PA_IMPL_MMAP, PA_IMPL_VIRTUAL_ALLOC:
+  /* For PA_IMPL_MMAP:
      For each memory region, we store its size.  */
   size_t size;
 } info_t;
@@ -215,9 +215,7 @@ pagealign_alloc (size_t size)
           errno = ENOMEM;
           return NULL;
         }
-      info_t info;
-      info.size = size;
-      new_memnode (ret, info);
+      break;
       #else
       errno = ENOSYS;
       return NULL;
@@ -261,6 +259,7 @@ pagealign_free (void *aligned_ptr)
       #if HAVE_SYS_MMAN_H
       if (munmap (aligned_ptr, get_memnode (aligned_ptr).size) < 0)
         error (EXIT_FAILURE, errno, "Failed to unmap memory");
+      break;
       #else
       abort ();
       #endif
@@ -268,6 +267,7 @@ pagealign_free (void *aligned_ptr)
     case PA_IMPL_POSIX_MEMALIGN:
       #if HAVE_POSIX_MEMALIGN
       free (aligned_ptr);
+      break;
       #else
       abort ();
       #endif
@@ -277,6 +277,7 @@ pagealign_free (void *aligned_ptr)
       /* Documentation:
          <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/aligned-free>  */
       _aligned_free (aligned_ptr);
+      break;
       #else
       abort ();
       #endif
@@ -285,8 +286,9 @@ pagealign_free (void *aligned_ptr)
       #if defined _WIN32 && !defined __CYGWIN__
       /* Documentation:
          <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfree>  */
-      if (!VirtualFree (aligned_ptr, get_memnode (aligned_ptr).size, MEM_RELEASE))
+      if (!VirtualFree (aligned_ptr, 0, MEM_RELEASE))
         error (EXIT_FAILURE, 0, "Failed to free memory");
+      break;
       #else
       abort ();
       #endif
