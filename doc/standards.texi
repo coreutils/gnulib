@@ -87,7 +87,7 @@ state reasons for writing in a certain way.
 If you did not obtain this file directly from the GNU project and
 recently, please check for a newer version.  You can get the GNU
 Coding Standards from the GNU web server in many
-different formats, including the Texinfo source, PDF, HTML, DVI, plain
+different formats, including the Texinfo source, PDF, HTML, plain
 text, and more, at: @uref{https://www.gnu.org/prep/standards/}.
 
 If you are maintaining an official GNU package, in addition to this
@@ -4223,7 +4223,7 @@ corresponding to most of the standard directory variables
 --sharedstatedir --localstatedir --runstatedir
 --libdir --includedir --oldincludedir
 --datarootdir --datadir --infodir --localedir --mandir --docdir
---htmldir --dvidir --pdfdir --psdir
+--htmldir --pdfdir --psdir
 @end example
 
 The @code{configure} script should also take an argument which specifies the
