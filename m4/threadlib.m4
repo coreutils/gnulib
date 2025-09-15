@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 47
+# serial 48
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -434,9 +434,14 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
   dnl gl_use_winpthreads_default defaults to "no", because in mingw 10, like
   dnl in mingw 5, the use of libwinpthread still makes test-pthread-tss crash.
   m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=no])
+  dnl Don't display the --disable-threads option
+  dnl   - if the package builds one or more libraries, because libraries must
+  dnl     always be multithread-safe (as far as possible),
+  dnl   - if the package defines gl_THREADLIB_DEFAULT_NO, because the option
+  dnl     would then be a no-op.
   AC_ARG_ENABLE([threads],
-AS_HELP_STRING([[--enable-threads={isoc|posix|isoc+posix|windows}]], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
-AS_HELP_STRING([[--disable-threads]], [build without multithread safety])]),
+AS_HELP_STRING([[--enable-threads={isoc|posix|isoc+posix|windows}]], [specify multithreading API])m4_ifdef([LT_INIT], [], [m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AS_HELP_STRING([[--disable-threads]], [build without multithread safety])])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
        gl_use_threads="$gl_use_threads_default"
