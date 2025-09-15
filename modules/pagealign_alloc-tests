@@ -14,6 +14,7 @@ AC_CHECK_DECLS_ONCE([alarm])
 Makefile.am:
 TESTS += test-pagealign_alloc
 check_PROGRAMS += test-pagealign_alloc
+test_pagealign_alloc_LDADD = $(LDADD) @LIBINTL@
 
 noinst_PROGRAMS += bench-pagealign_alloc
 bench_pagealign_alloc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
