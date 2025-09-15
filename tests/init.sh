@@ -394,7 +394,7 @@ mktempd_ ()
     err_=`mkdir -m 0700 "$candidate_dir_" 2>&1` \
       && { echo "$candidate_dir_"; return; }
     test $MAX_TRIES_ -le $i_ && break;
-    i_=`expr $i_ + 1`
+    i_=`expr $i_ + 1` || break
   done
   fail_ "$err_"
 }
