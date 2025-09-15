@@ -185,14 +185,14 @@ mean:
 
 @example
 ar bison cc flex install ld ldconfig lex
-make makeinfo ranlib texi2dvi yacc
+make makeinfo ranlib texi2pdf yacc
 @end example
 
 Use the following @code{make} variables to run those programs:
 
 @example
 $(AR) $(BISON) $(CC) $(FLEX) $(INSTALL) $(LD) $(LDCONFIG) $(LEX)
-$(MAKE) $(MAKEINFO) $(RANLIB) $(TEXI2DVI) $(YACC)
+$(MAKE) $(MAKEINFO) $(RANLIB) $(TEXI2PDF) $(YACC)
 @end example
 
 When you use @code{ranlib} or @code{ldconfig}, you should make sure
@@ -592,13 +592,12 @@ write it as @samp{@@infodir@@}.)  @code{infodir} is separate from
 @code{docdir} for compatibility with existing practice.
 
 @item htmldir
-@itemx dvidir
 @itemx pdfdir
 @itemx psdir
 Directories for installing documentation files in the particular
 format.  They should all be set to @code{$(docdir)} by default.  (If
 you are using Autoconf, write them as @samp{@@htmldir@@},
-@samp{@@dvidir@@}, etc.)  Packages which supply several translations
+etc.)  Packages which supply several translations
 of their documentation should install them in
 @samp{$(htmldir)/}@var{ll}, @samp{$(pdfdir)/}@var{ll}, etc. where
 @var{ll} is a locale abbreviation such as @samp{en} or @samp{pt_BR}.
@@ -725,7 +724,7 @@ All GNU programs should have the following targets in their Makefiles:
 @item all
 Compile the entire program.  This should be the default target.  This
 target need not rebuild any documentation files; Info files should
-normally be included in the distribution, and DVI (and other
+normally be included in the distribution, and PDF (and other
 documentation format) files should be made only when explicitly asked
 for.
 
@@ -801,7 +800,6 @@ commands and @dfn{post-installation} commands.  @xref{Install Command
 Categories}.
 
 @item install-html
-@itemx install-dvi
 @itemx install-pdf
 @itemx install-ps
 These targets install documentation in formats other than Info;
@@ -865,7 +863,7 @@ building, but normally aren't because the distribution comes with
 them.  There is no need to delete parent directories that were created
 with @samp{mkdir -p}, since they could have existed anyway.
 
-Delete @file{.dvi} files here if they are not part of the distribution.
+Delete @file{.pdf} files here if they are not part of the distribution.
 
 @item distclean
 Delete all files in the current directory (or created by this
@@ -940,7 +938,6 @@ rule for an info file should update it in the source directory.  When
 users build the package, ordinarily Make will not update the Info files
 because they will already be up to date.
 
-@item dvi
 @itemx html
 @itemx pdf
 @itemx ps
@@ -949,19 +946,19 @@ should always exist, but any or all can be a no-op if the given output
 format cannot be generated.  These targets should not be dependencies
 of the @code{all} target; the user must manually invoke them.
 
-Here's an example rule for generating DVI files from Texinfo:
+Here's an example rule for generating PDF files from Texinfo:
 
 @smallexample
-dvi: foo.dvi
+pdf: foo.pdf
 
-foo.dvi: foo.texi chap1.texi chap2.texi
-        $(TEXI2DVI) $(srcdir)/foo.texi
+foo.pdf: foo.texi chap1.texi chap2.texi
+        $(TEXI2PDF) $(srcdir)/foo.texi
 @end smallexample
 
 @noindent
-You must define the variable @code{TEXI2DVI} in the Makefile.  It
-should run the program @code{texi2dvi}, which is part of the Texinfo
-distribution.  (@code{texi2dvi} uses @TeX{} to do the real work of
+You must define the variable @code{TEXI2PDF} in the Makefile.  It
+should run the program @code{texi2pdf}, which is part of the Texinfo
+distribution.  (@code{texi2pdf} uses @TeX{} to do the real work of
 formatting. @TeX{} is not distributed with Texinfo.)  Alternatively,
 write only the dependencies, and allow GNU @code{make} to provide the
 command.
