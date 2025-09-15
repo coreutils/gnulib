@@ -21,7 +21,7 @@ Include:
 "cpu-supports.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 all
