@@ -22,6 +22,7 @@
    However, they do not support obsolescent encodings like CP864,
    EBCDIC, Johab, and Shift JIS that glibc also does not support,
    and it is up to the caller to coalesce encoding-error bytes if desired.
+   The value of errno is unspecified after calls to these macros.
 
    The mcel_scan function lets code iterate through an array of bytes,
    supporting character encodings in practical use
