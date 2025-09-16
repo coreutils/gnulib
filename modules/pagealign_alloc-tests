@@ -18,3 +18,4 @@ test_pagealign_alloc_LDADD = $(LDADD) @LIBINTL@
 
 noinst_PROGRAMS += bench-pagealign_alloc
 bench_pagealign_alloc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
+bench_pagealign_alloc_LDADD = $(LDADD) $(LIBINTL)
