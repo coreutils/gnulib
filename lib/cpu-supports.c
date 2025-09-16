@@ -16,7 +16,6 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include <config.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -31,7 +30,8 @@ hwcap_allowed (char const *glibc_hwcap)
   if (! glibc_hwcap)
     return true;
 
-  assert (*glibc_hwcap == '-');  /* Pass HWCAP with a leading -  */
+  if (*glibc_hwcap != '-')  /* Need to pass HWCAP with a leading -  */
+    return true;
 
   /* Match how GLIBC parses tunables as indicated with:
        GLIBC_TUNABLES=glibc.cpu.hwcaps=... ld.so --list-tunables | grep hwcaps
@@ -58,7 +58,8 @@ hwcap_allowed (char const *glibc_hwcap)
         hwcaps = "";
     }
 
-  assert (hwcaps);
+  if (! hwcaps)  /* Shouldn't happen.  */
+    return true;
 
   if (! *hwcaps)
     return true;

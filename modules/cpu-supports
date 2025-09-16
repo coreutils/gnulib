@@ -6,7 +6,6 @@ lib/cpu-supports.h
 lib/cpu-supports.c
 
 Depends-on:
-assert
 attribute
 bool
 c99
