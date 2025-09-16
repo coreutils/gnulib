@@ -456,6 +456,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
 #else
         snprintf (buf, buflen, "Unknown error %d", errnum);
 #endif
+        buf[buflen - 1] = '\0';
       }
 
     errno = saved_errno;
