@@ -28,7 +28,7 @@ macOS 10.6.6.
 
 @item
 This function fails to set @code{errno} upon overflow on some platforms:
-mingw 5.0.
+mingw 9.0.
 
 @item
 @c The term "underflow", as defined by ISO C23 § 7.12.1.(6), includes both

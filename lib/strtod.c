@@ -492,6 +492,10 @@ STRTOD (const char *nptr, char **endptr)
                 }
               end = e;
             }
+          /* If "1e50" was converted to Inf (overflow), errno needs to be
+             set.  */
+          else if (isinf (num))
+            errno = ERANGE;
         }
 
       s = end;
