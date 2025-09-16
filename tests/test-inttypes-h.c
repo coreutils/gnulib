@@ -66,11 +66,13 @@ const char *k = /* implicit string concatenation */
 #endif
   ;
 const char *l = /* implicit string concatenation */
-#ifdef INT8_MAX
+#if !(defined __MINGW32__ && __USE_MINGW_ANSI_STDIO == 0)
+# ifdef INT8_MAX
   SCNd8 SCNi8
-#endif
-#ifdef UINT8_MAX
+# endif
+# ifdef UINT8_MAX
   SCNo8 SCNu8 SCNx8
+# endif
 #endif
 #ifdef INT16_MAX
   SCNd16 SCNi16
@@ -90,12 +92,16 @@ const char *l = /* implicit string concatenation */
 #ifdef UINT64_MAX
   SCNo64 SCNu64 SCNx64
 #endif
+#if !(defined __MINGW32__ && __USE_MINGW_ANSI_STDIO == 0)
   SCNdLEAST8 SCNiLEAST8 SCNoLEAST8 SCNuLEAST8 SCNxLEAST8
+#endif
   SCNdLEAST16 SCNiLEAST16 SCNoLEAST16 SCNuLEAST16 SCNxLEAST16
   SCNdLEAST32 SCNiLEAST32 SCNoLEAST32 SCNuLEAST32 SCNxLEAST32
   SCNdLEAST64 SCNiLEAST64
   SCNoLEAST64 SCNuLEAST64 SCNxLEAST64
+#if !(defined __MINGW32__ && __USE_MINGW_ANSI_STDIO == 0)
   SCNdFAST8 SCNiFAST8 SCNoFAST8 SCNuFAST8 SCNxFAST8
+#endif
   SCNdFAST16 SCNiFAST16 SCNoFAST16 SCNuFAST16 SCNxFAST16
   SCNdFAST32 SCNiFAST32 SCNoFAST32 SCNuFAST32 SCNxFAST32
   SCNdFAST64 SCNiFAST64

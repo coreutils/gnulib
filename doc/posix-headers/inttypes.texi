@@ -30,7 +30,11 @@ macros such as @code{PRIdMAX}.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-The @code{PRIb*}, @code{PRIB*}, @code{SCNb*} macros,
+The macros @code{SCN*8}, @code{SCN*LEAST8}, @code{SCN*FAST8}
+are missing on some platforms:
+mingw without @code{__USE_MINGW_ANSI_STDIO}.
+@item
+The macros @code{PRIb*}, @code{PRIB*}, @code{SCNb*},
 that were added in ISO C 23,
 are missing on many platforms:
 glibc 2.37 and many others.
