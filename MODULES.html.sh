@@ -1875,6 +1875,7 @@ func_all_modules ()
   func_module strerrorname_np
   func_module strerror_r-posix
   func_module string-buffer
+  func_module stringeq
   func_module strnlen
   func_module strnlen1
   func_module strndup
