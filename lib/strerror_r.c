@@ -450,10 +450,11 @@ strerror_r (int errnum, char *buf, size_t buflen)
 #endif
 #if defined __HAIKU__
         /* For consistency with perror().  */
-        snprintf (buf, buflen, "Unknown Application Error (%d)", errnum);
+        snprintf (buf, buflen - 1, "Unknown Application Error (%d)", errnum);
 #else
-        snprintf (buf, buflen, "Unknown error %d", errnum);
+        snprintf (buf, buflen - 1, "Unknown error %d", errnum);
 #endif
+        buf[buflen - 1] = '\0';
       }
 
     errno = saved_errno;
