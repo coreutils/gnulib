@@ -12,6 +12,7 @@ stdlib-h
 c-ctype         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 math-h          [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 bool            [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
+isinf           [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
 
 configure.ac:
 gl_FUNC_STRTOF
