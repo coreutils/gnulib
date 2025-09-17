@@ -9,6 +9,16 @@ Gnulib module: stdio-h, nonblocking, sigpipe
 @mindex nonblocking
 @mindex sigpipe
 
+Portability problems fixed by Gnulib module @code{stdio-h}:
+@itemize
+@item
+This function fails and produces no output
+when the argument string starts with a non-ASCII character in double-byte encoding,
+corresponding to the locale, on some platforms:
+mingw in combination with msvcrt,
+when the output goes to a Windows console.
+@end itemize
+
 Portability problems fixed by Gnulib module @code{stdio-h}, together with module @code{nonblocking}:
 @itemize
 @item
