@@ -2083,6 +2083,7 @@ func_all_modules ()
   func_module base32
   func_module base64
   func_module check-version
+  func_module cpu-supports
   func_module crc
   func_module diffseq
   func_module execinfo
