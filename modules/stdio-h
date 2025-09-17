@@ -3,6 +3,7 @@ A GNU-like <stdio.h>.
 
 Files:
 lib/stdio.in.h
+lib/stdio-consolesafe.c
 lib/stdio-read.c
 lib/stdio-write.c
 m4/stdio_h.m4
@@ -18,6 +19,7 @@ snippet/warn-on-use
 ssize_t
 stddef-h
 sys_types-h
+stdckdint-h
 
 configure.ac-early:
 gl_STDIO_H_EARLY
@@ -26,6 +28,18 @@ configure.ac:
 gl_STDIO_H
 gl_STDIO_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
+USES_MSVCRT=0
+case "$host_os" in
+  mingw* | windows*)
+    AC_EGREP_CPP([Special], [
+#ifndef _UCRT
+ Special
+#endif
+      ],
+      [USES_MSVCRT=1])
+    ;;
+esac
+gl_CONDITIONAL([GL_COND_OBJ_STDIO_CONSOLESAFE], [test $USES_MSVCRT = 1])
 gl_CONDITIONAL([GL_COND_OBJ_STDIO_READ], [test $REPLACE_STDIO_READ_FUNCS = 1])
 gl_CONDITIONAL([GL_COND_OBJ_STDIO_WRITE], [test $REPLACE_STDIO_WRITE_FUNCS = 1])
 
@@ -204,6 +218,9 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	$(AM_V_at)mv $@-t3 $@
 MOSTLYCLEANFILES += stdio.h stdio.h-t1 stdio.h-t2 stdio.h-t3
 
+if GL_COND_OBJ_STDIO_CONSOLESAFE
+lib_SOURCES += stdio-consolesafe.c
+endif
 if GL_COND_OBJ_STDIO_READ
 lib_SOURCES += stdio-read.c
 endif

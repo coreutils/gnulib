@@ -280,6 +280,14 @@
 #endif
 
 
+#if (defined _WIN32 && !defined __CYGWIN__) && !defined _UCRT
+/* Workarounds against msvcrt bugs.  */
+_GL_FUNCDECL_SYS (gl_consolesafe_fwrite, size_t,
+                  (const void *ptr, size_t size, size_t nmemb, FILE *fp),
+                  _GL_ARG_NONNULL ((1, 4)));
+#endif
+
+
 #if @GNULIB_DZPRINTF@
 /* Prints formatted output to file descriptor FD.
    Returns the number of bytes written to the file descriptor.  Upon
@@ -969,6 +977,11 @@ _GL_EXTERN_C size_t __REDIRECT (rpl_fwrite_unlocked,
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fwrite);
+# endif
+#elif (defined _WIN32 && !defined __CYGWIN__) && !defined _UCRT
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  undef fwrite
+#  define fwrite gl_consolesafe_fwrite
 # endif
 #endif
 
