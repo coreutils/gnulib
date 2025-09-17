@@ -61,18 +61,16 @@ gcc_feature_to_glibc_hwcap (char const *feature)
 {
   char const *hwcap = NULL;
 
-  if (0)
-    ;
-# if defined __x86_64__
+  if (0) {}
+  /* x64_64 */
   else if (streq (feature, "avx"))          hwcap = "-AVX";
   else if (streq (feature, "avx2"))         hwcap = "-AVX2";
   else if (streq (feature, "avx512bw"))     hwcap = "-AVX512BW";
   else if (streq (feature, "avx512f"))      hwcap = "-AVX512F";
   else if (streq (feature, "pclmul"))       hwcap = "-PCLMULQDQ";
   else if (streq (feature, "vpclmulqdq"))   hwcap = "-VPCLMULQDQ";
-# elif defined __aarch64__
+  /* aarch64 */
   else if (streq (feature, "pmull"))        hwcap = "-PMULL";
-# endif
 
   return hwcap;
 }
