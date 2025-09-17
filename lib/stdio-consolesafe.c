@@ -70,3 +70,80 @@ gl_consolesafe_fwrite (const void *ptr, size_t size, size_t nmemb, FILE *fp)
   size_t written = workaround_fwrite0 (tmp, nbytes, fp);
   return written / size;
 }
+
+#if defined __MINGW32__ && __USE_MINGW_ANSI_STDIO
+
+# include "fseterr.h"
+
+/* Bypass the functions __mingw_[v][f]printf, that trigger a bug in msvcrt,
+   but without losing the support for modern format specifiers added by
+   __mingw_*printf.  */
+
+int
+gl_consolesafe_fprintf (FILE *restrict fp, const char *restrict format, ...)
+{
+  va_list args;
+  char *tmpstring;
+  va_start (args, format);
+  int result = vasprintf (&tmpstring, format, args);
+  va_end (args);
+  if (result >= 0)
+    {
+      if (workaround_fwrite0 (tmpstring, result, fp) < result)
+        result = -1;
+    }
+  else
+    fseterr (fp);
+  return result;
+}
+
+int
+gl_consolesafe_printf (const char *restrict format, ...)
+{
+  va_list args;
+  char *tmpstring;
+  va_start (args, format);
+  int result = vasprintf (&tmpstring, format, args);
+  va_end (args);
+  if (result >= 0)
+    {
+      if (workaround_fwrite0 (tmpstring, result, stdout) < result)
+        result = -1;
+    }
+  else
+    fseterr (stdout);
+  return result;
+}
+
+int
+gl_consolesafe_vfprintf (FILE *restrict fp,
+                         const char *restrict format, va_list args)
+{
+  char *tmpstring;
+  int result = vasprintf (&tmpstring, format, args);
+  if (result >= 0)
+    {
+      if (workaround_fwrite0 (tmpstring, result, fp) < result)
+        result = -1;
+    }
+  else
+    fseterr (fp);
+  return result;
+}
+
+int
+gl_consolesafe_vprintf (const char *restrict format, va_list args)
+{
+  char *tmpstring;
+  int result = vasprintf (&tmpstring, format, args);
+  if (result >= 0)
+    {
+      if (workaround_fwrite0 (tmpstring, result, stdout) < result)
+        result = -1;
+    }
+  else
+    fseterr (stdout);
+  return result;
+}
+
+#endif

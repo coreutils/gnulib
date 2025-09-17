@@ -162,6 +162,9 @@ vprintf (const char *format, va_list args)
 int
 vfprintf (FILE *stream, const char *format, va_list args)
 #undef vfprintf
+#if defined __MINGW32__ && !defined _UCRT && __USE_MINGW_ANSI_STDIO
+# define vfprintf gl_consolesafe_vfprintf
+#endif
 {
   CALL_WITH_SIGPIPE_EMULATION (int, vfprintf (stream, format, args), ret == EOF)
 }
