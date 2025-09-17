@@ -3,15 +3,15 @@ streq and memeq convenience functions for string equality
 
 Files:
 lib/string.c
+m4/stringeq.m4
 
 Depends-on:
 bool
 string-h
 
 configure.ac:
-AC_CHECK_DECLS_ONCE([memeq, streq])
-test $ac_cv_have_decl_memeq = no || HAVE_DECL_MEMEQ=1
-test $ac_cv_have_decl_streq = no || HAVE_DECL_STREQ=1
+gl_FUNC_STREQ
+gl_FUNC_MEMEQ
 gl_STRING_MODULE_INDICATOR([stringeq])
 
 Makefile.am:
