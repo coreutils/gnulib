@@ -201,6 +201,10 @@ __attribute__ ((__noipa__))
 # endif
 do_secret_stuff (int pass, char *volatile *last_stackbuf)
 {
+# if _GL_GNUC_PREREQ (12, 0) ||  __clang_major__ >= 14
+  /* Support -ftrivial-auto-var-init  */
+  __attribute__ ((uninitialized))
+# endif
   char stackbuf[SECRET_SIZE];
   if (pass == 1)
     {
