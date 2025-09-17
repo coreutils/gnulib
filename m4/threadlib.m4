@@ -1,5 +1,5 @@
 # threadlib.m4
-# serial 48
+# serial 49
 dnl Copyright (C) 2005-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_ANYTHREADLIB_EARLY],
     # definition of errno in <errno.h>.
     AS_CASE([$host_os],
       [aix* | freebsd*], [CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE"],
-      [solaris*], [CPPFLAGS="$CPPFLAGS -D_REENTRANT"])
+      [hpux* | solaris*], [CPPFLAGS="$CPPFLAGS -D_REENTRANT"])
     gl_anythreadlib_early_done=done
   fi
 ])
