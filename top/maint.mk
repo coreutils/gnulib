@@ -386,12 +386,12 @@ sc_prohibit_atoi_atof:
 	halt='do not use *scan''f, ato''f, ato''i, ato''l, ato''ll or ato''q'	\
 	  $(_sc_search_regexp)
 
-# Use STREQ rather than comparing strcmp == 0, or != 0.
+# Use streq rather than comparing strcmp == 0, or != 0.
 sp_ = strcmp *\(.+\)
 sc_prohibit_strcmp:
 	@prohibit='! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
 	exclude='# *define STRN?EQ\('					\
-	halt='replace strcmp calls above with STREQ/STRNEQ'		\
+	halt='replace strcmp calls above with streq'			\
 	  $(_sc_search_regexp)
 
 # Really.  You don't want to use this function.
