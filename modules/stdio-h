@@ -20,6 +20,7 @@ ssize_t
 stddef-h
 sys_types-h
 stdckdint-h
+fseterr
 
 configure.ac-early:
 gl_STDIO_H_EARLY

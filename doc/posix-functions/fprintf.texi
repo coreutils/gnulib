@@ -11,6 +11,16 @@ Gnulib module: fprintf-posix or fprintf-gnu or stdio-h, nonblocking, sigpipe
 @mindex nonblocking
 @mindex sigpipe
 
+Portability problems fixed by either Gnulib module @code{stdio-h} or @code{fprintf-posix} or @code{fprintf-gnu}:
+@itemize
+@item
+This function does not support non-ASCII characters in double-byte encoding,
+corresponding to the locale, on some platforms:
+@c https://github.com/mlocati/gettext-iconv-windows/issues/52
+mingw with @code{__USE_MINGW_ANSI_STDIO} in combination with msvcrt,
+when the output goes to a Windows console.
+@end itemize
+
 Portability problems fixed by either Gnulib module @code{fprintf-posix} or @code{fprintf-gnu}:
 @itemize
 @item
