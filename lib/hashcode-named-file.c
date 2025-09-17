@@ -27,8 +27,6 @@
 #include "hashcode-string2.h"
 #include "same-inode.h"
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
-
 /* Hash an F_triple, and *do* consider the file name.  */
 size_t
 triple_hash (void const *x, size_t table_size)
@@ -46,7 +44,7 @@ triple_compare_ino_str (void const *x, void const *y)
 {
   struct F_triple const *a = x;
   struct F_triple const *b = y;
-  return PSAME_INODE (a, b) && STREQ (a->name, b->name);
+  return PSAME_INODE (a, b) && streq (a->name, b->name);
 }
 
 /* Free an F_triple.  */

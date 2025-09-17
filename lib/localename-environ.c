@@ -44,12 +44,12 @@ gl_locale_name_environ (_GL_UNUSED int category, const char *categoryname)
 #if HAVE_CFPREFERENCESCOPYAPPVALUE
       /* Mac OS X 10.2 or newer.
          Ignore invalid LANG value set by the Terminal application.  */
-      if (strcmp (retval, "UTF-8") != 0)
+      if (!streq (retval, "UTF-8"))
 #endif
 #if defined __CYGWIN__
       /* Cygwin.
          Ignore dummy LANG value set by ~/.profile.  */
-      if (strcmp (retval, "C.UTF-8") != 0)
+       if (!streq (retval, "C.UTF-8"))
 #endif
         return retval;
     }

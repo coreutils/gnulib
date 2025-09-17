@@ -17,6 +17,7 @@ localename-environ
 extensions
 locale-h
 strdup
+stringeq
 windows-mutex
 getlocalename_l-unsafe
 setlocale-null-unlocked

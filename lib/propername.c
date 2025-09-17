@@ -275,7 +275,7 @@ proper_name_utf8 (const char *name_ascii, const char *name_utf8)
   /* See whether we have a translation.  Some translators have not understood
      that they should use the UTF-8 form of the name, if possible.  So if the
      translator provided a no-op translation, we ignore it.  */
-  if (strcmp (translation, name_ascii) != 0)
+  if (!streq (translation, name_ascii))
     {
       /* See whether the translation contains the original name.  */
       if (mbsstr_trimmed_wordbounded (translation, name_ascii)

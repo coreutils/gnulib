@@ -1377,7 +1377,7 @@ gl_locale_name_canonicalize (char *name)
           else
             i1 = i;
         }
-      if (strcmp (name, legacy_table[i1].legacy) == 0)
+      if (streq (name, legacy_table[i1].legacy))
         {
           strcpy (name, legacy_table[i1].unixy);
           return;
@@ -1401,7 +1401,7 @@ gl_locale_name_canonicalize (char *name)
           else
             i1 = i;
         }
-      if (strcmp (name, langtag_table[i1].langtag) == 0)
+      if (streq (name, langtag_table[i1].langtag))
         {
           strcpy (name, langtag_table[i1].unixy);
           return;
@@ -1420,7 +1420,7 @@ gl_locale_name_canonicalize (char *name)
           else
             i1 = i;
         }
-      if (strcmp (name + 3, script_table[i1].script) == 0)
+      if (streq (name + 3, script_table[i1].script))
         {
           name[2] = '@';
           strcpy (name + 3, script_table[i1].unixy);
@@ -2593,7 +2593,7 @@ get_lcid (const char *locale_name)
   /* Lock while looking for an LCID, to protect access to static
      variables: last_lcid, last_locale, found_lcid, and lname.  */
   glwthread_mutex_lock (&get_lcid_lock);
-  if (last_lcid > 0 && strcmp (locale_name, last_locale) == 0)
+  if (last_lcid > 0 && streq (locale_name, last_locale))
     {
       glwthread_mutex_unlock (&get_lcid_lock);
       return last_lcid;

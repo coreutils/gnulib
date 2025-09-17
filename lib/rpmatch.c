@@ -90,7 +90,7 @@ localized_pattern (const char *english_pattern, nl_item nl_index,
 static int
 try (const char *response, const char *pattern, char **lastp, regex_t *re)
 {
-  if (*lastp == NULL || strcmp (pattern, *lastp) != 0)
+  if (*lastp == NULL || !streq (pattern, *lastp))
     {
       char *safe_pattern;
 

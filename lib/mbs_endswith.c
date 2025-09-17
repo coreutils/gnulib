@@ -67,7 +67,7 @@ mbs_endswith (const char *string, const char *suffix)
           if (!mbi_avail (iter))
             /* We can get here due to incomplete multibyte characters.  */
             return false;
-          return strcmp (mbi_cur_ptr (iter), suffix) == 0;
+          return streq (mbi_cur_ptr (iter), suffix);
         }
     }
   return false;

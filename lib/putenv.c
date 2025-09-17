@@ -106,7 +106,7 @@ putenv (char *string)
       name_x[name_end - string + 2] = 0;
       putenv_result = _putenv (name_x);
       for (ep = environ; *ep; ep++)
-        if (strcmp (*ep, name_x) == 0)
+        if (streq (*ep, name_x))
           {
             *ep = string;
             break;

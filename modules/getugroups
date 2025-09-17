@@ -8,6 +8,7 @@ m4/getugroups.m4
 
 Depends-on:
 errno-h
+stringeq
 
 configure.ac:
 gl_GETUGROUPS

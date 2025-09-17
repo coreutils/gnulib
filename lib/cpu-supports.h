@@ -50,10 +50,6 @@
 
 
 
-# ifndef STREQ
-#  define STREQ(a, b) (strcmp (a, b) == 0)
-# endif
-
 /* Return the glibc.cpu.hwcaps setting (prepended with "-"),
    corresponding to the passed gcc _builtin_cpu_supports(FEATURE).
    Supported hwcaps can be identified from the bit_cpu_* defines
@@ -68,14 +64,14 @@ gcc_feature_to_glibc_hwcap (char const *feature)
   if (0)
     ;
 # if defined __x86_64__
-  else if (STREQ (feature, "avx"))          hwcap = "-AVX";
-  else if (STREQ (feature, "avx2"))         hwcap = "-AVX2";
-  else if (STREQ (feature, "avx512bw"))     hwcap = "-AVX512BW";
-  else if (STREQ (feature, "avx512f"))      hwcap = "-AVX512F";
-  else if (STREQ (feature, "pclmul"))       hwcap = "-PCLMULQDQ";
-  else if (STREQ (feature, "vpclmulqdq"))   hwcap = "-VPCLMULQDQ";
+  else if (streq (feature, "avx"))          hwcap = "-AVX";
+  else if (streq (feature, "avx2"))         hwcap = "-AVX2";
+  else if (streq (feature, "avx512bw"))     hwcap = "-AVX512BW";
+  else if (streq (feature, "avx512f"))      hwcap = "-AVX512F";
+  else if (streq (feature, "pclmul"))       hwcap = "-PCLMULQDQ";
+  else if (streq (feature, "vpclmulqdq"))   hwcap = "-VPCLMULQDQ";
 # elif defined __aarch64__
-  else if (STREQ (feature, "pmull"))        hwcap = "-PMULL";
+  else if (streq (feature, "pmull"))        hwcap = "-PMULL";
 # endif
 
   return hwcap;

@@ -128,7 +128,7 @@ ctype_codeset (void)
     sprintf (buf + 2, "%u", GetACP ());
   /* For a locale name such as "French_France.65001", in Windows 10,
      setlocale now returns "French_France.utf8" instead.  */
-  if (strcmp (buf + 2, "65001") == 0 || strcmp (buf + 2, "utf8") == 0)
+  if (streq (buf + 2, "65001") || streq (buf + 2, "utf8"))
     return (char *) "UTF-8";
   else
     {

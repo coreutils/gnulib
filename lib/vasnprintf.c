@@ -439,7 +439,7 @@ thousands_separator_char (char stackbuf[10])
   stackbuf[strlen (stackbuf) - 3] = '\0';
 #   if defined __sun
   /* Solaris specific hack: Replace wrong result (0xC2 means U+00A0).  */
-  if (strcmp (&stackbuf[1], "\302") == 0)
+  if (streq (&stackbuf[1], "\302"))
     strcpy (&stackbuf[1], MB_CUR_MAX > 1 ? "\302\240" : "\240");
 #   endif
   return &stackbuf[1];
@@ -524,7 +524,7 @@ thousands_separator_wchar (wchar_t stackbuf[10])
   /* Now tmp = L"1<thousep>000".  */
   tmp[strlen (tmp) - 3] = '\0';
   /* Solaris specific hack: Replace wrong result (0xC2 means U+00A0).  */
-  if (strcmp (&tmp[1], "\302") == 0)
+  if (streq (&tmp[1], "\302"))
     strcpy (&tmp[1], MB_CUR_MAX > 1 ? "\302\240" : "\240");
   if (tmp[1] != '\0')
     {

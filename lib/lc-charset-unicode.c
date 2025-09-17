@@ -109,7 +109,7 @@ get_converters (const char *encoding)
       strcpy (conv->encoding, encoding);
       gl_tls_set (converters_key, conv);
     }
-  else if (strcmp (conv->encoding, encoding) != 0)
+  else if (!streq (conv->encoding, encoding))
     {
       /* The locale encoding of this thread changed.  */
       iconv_t new_cd_locale_to_utf8 = iconv_open ("UTF-8", encoding);

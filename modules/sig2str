@@ -8,6 +8,7 @@ m4/sig2str.m4
 
 Depends-on:
 signal-h
+stringeq
 
 configure.ac:
 gl_FUNC_SIG2STR

@@ -195,7 +195,7 @@ spawnpvech (int mode,
 #endif
 
   if (!(libcx_spawn2_loaded
-        || (currdir == NULL || strcmp (currdir, ".") == 0)))
+        || (currdir == NULL || streq (currdir, "."))))
     {
       errno = EINVAL;
       return -1;
@@ -219,7 +219,7 @@ spawnpvech (int mode,
           || dup2 (new_stderr, STDERR_FILENO) >= 0))
     {
       if (!libcx_spawn2_loaded
-          || (currdir == NULL || strcmp (currdir, ".") == 0))
+          || (currdir == NULL || streq (currdir, ".")))
         ret = spawnvpe (mode, progname, (char * const *) argv,
                         (char * const *) envp);
 #if HAVE_LIBCX_SPAWN2_H

@@ -233,7 +233,6 @@ static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
 #endif
 
 #define ISDOT(a)        (a[0] == '.' && (!a[1] || (a[1] == '.' && !a[2])))
-#define STREQ(a, b)     (strcmp (a, b) == 0)
 
 #define CLR(opt)        (sp->fts_options &= ~(opt))
 #define ISSET(opt)      ((sp->fts_options & (opt)) != 0)
@@ -2048,7 +2047,7 @@ internal_function
 fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 {
         int ret;
-        bool is_dotdot = dir && STREQ (dir, "..");
+        bool is_dotdot = dir && streq (dir, "..");
         int newfd;
 
         /* This clause handles the unusual case in which FTS_NOCHDIR
@@ -2094,7 +2093,7 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
            not "..", diropen's use of O_NOFOLLOW ensures we don't mistakenly
            follow a symlink, so we can avoid the expense of this fstat.  */
         if (ISSET(FTS_LOGICAL) || ! HAVE_WORKING_O_NOFOLLOW
-            || (dir && STREQ (dir, "..")))
+            || (dir && streq (dir, "..")))
           {
             struct stat sb;
             if (fstat(newfd, &sb))

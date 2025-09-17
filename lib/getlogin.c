@@ -94,7 +94,7 @@ getlogin (void)
               {
                 idx_t i;
                 for (i = 0; i < n; i++)
-                  if (strcmp (entries[i].ut_line, tty + 5) == 0)
+                  if (streq (entries[i].ut_line, tty + 5))
                     {
                       if (strlen (entries[i].ut_user) < 64)
                         {

@@ -8,6 +8,7 @@ m4/popen.m4
 Depends-on:
 stdio-h
 open            [test $HAVE_POPEN = 0 || test $REPLACE_POPEN = 1]
+stringeq        [test $HAVE_POPEN = 0 || test $REPLACE_POPEN = 1]
 
 configure.ac:
 gl_FUNC_POPEN

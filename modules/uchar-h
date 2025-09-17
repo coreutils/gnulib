@@ -15,6 +15,7 @@ snippet/warn-on-use
 extern-inline
 assert-h
 stdint-h
+stringeq
 wchar-h
 wctype-h
 

@@ -156,7 +156,7 @@ find_in_given_path (const char *progname, const char *path,
                             if (! S_ISDIR (statbuf.st_mode))
                               {
                                 /* Found!  */
-                                if (strcmp (progpathname, progname) == 0)
+                                if (streq (progpathname, progname))
                                   {
                                     free (progpathname);
                                     return progname;
@@ -308,7 +308,7 @@ find_in_given_path (const char *progname, const char *path,
                         if (! S_ISDIR (statbuf.st_mode))
                           {
                             /* Found!  */
-                            if (strcmp (progpathname, progname) == 0)
+                            if (streq (progpathname, progname))
                               {
                                 free (progpathname);
 

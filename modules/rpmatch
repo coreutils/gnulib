@@ -13,6 +13,7 @@ gettext-h       [test $HAVE_RPMATCH = 0]
 gnulib-i18n     [test $HAVE_RPMATCH = 0]
 regex           [test $HAVE_RPMATCH = 0]
 strdup          [test $HAVE_RPMATCH = 0]
+stringeq        [test $HAVE_RPMATCH = 0]
 
 configure.ac:
 gl_FUNC_RPMATCH
@@ -39,4 +40,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

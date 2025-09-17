@@ -654,7 +654,7 @@ hol_find_entry (struct hol *hol, const char *name)
           unsigned num_opts = entry->num;
 
           while (num_opts-- > 0)
-            if (opt->name && ovisible (opt) && strcmp (opt->name, name) == 0)
+            if (opt->name && ovisible (opt) && streq (opt->name, name))
               return entry;
             else
               opt++;

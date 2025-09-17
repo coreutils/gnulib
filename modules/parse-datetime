@@ -22,6 +22,7 @@ intprops
 inttypes-h
 mktime
 stdckdint-h
+stringeq
 time-h
 time_r
 time_rz

@@ -192,14 +192,14 @@ void
 xpg_to_bcp47 (char *bcp47, const char *xpg)
 {
   /* Special cases.  */
-  if (strcmp (xpg, "") == 0)
+  if (streq (xpg, ""))
    fail:
     {
       strcpy (bcp47, "und");
       return;
     }
   if ((xpg[0] == 'C' && (xpg[1] == '\0' || xpg[1] == '.'))
-      || strcmp (xpg, "POSIX") == 0)
+      || streq (xpg, "POSIX"))
     {
       /* The "C" (or "C.UTF-8") and "POSIX" locales most closely resemble the
          "en_US" locale.  */
@@ -367,7 +367,7 @@ void
 bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
 {
   /* Special cases.  */
-  if (strcmp (bcp47, "") == 0)
+  if (streq (bcp47, ""))
    fail:
     {
       strcpy (xpg, "");
@@ -514,7 +514,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
             default_script_in_territory (xpg, territory);
           if (sp != NULL)
             {
-              if (strcmp (script, sp->name) == 0)
+              if (streq (script, sp->name))
                 script = NULL;
             }
           else if (memeq (xpg, "zh", 2))
@@ -530,7 +530,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
             default_script_for_language2 (xpg);
           if (sp != NULL)
             {
-              if (strcmp (script, sp->name) == 0)
+              if (streq (script, sp->name))
                 script = NULL;
             }
           else if (memeq (xpg, "iu", 2))
@@ -545,7 +545,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
             default_script_for_language3 (xpg);
           if (sp != NULL)
             {
-              if (strcmp (script, sp->name) == 0)
+              if (streq (script, sp->name))
                 script = NULL;
             }
           else if (memeq (xpg, "nan", 3))

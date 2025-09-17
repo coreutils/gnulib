@@ -27,7 +27,7 @@ hashkey_string_equals (const void *x1, const void *x2)
 {
   const char *s1 = (const char *) x1;
   const char *s2 = (const char *) x2;
-  return strcmp (s1, s2) == 0;
+  return streq (s1, s2);
 }
 
 #define SIZE_BITS (sizeof (size_t) * CHAR_BIT)

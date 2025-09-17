@@ -10,6 +10,7 @@ uchar-h
 wctrans
 c32tolower
 c32toupper
+stringeq
 
 configure.ac:
 gl_UCHAR_MODULE_INDICATOR([c32_get_mapping])

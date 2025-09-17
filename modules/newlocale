@@ -8,6 +8,7 @@ m4/newlocale.m4
 Depends-on:
 locale-h
 localename-environ
+stringeq
 
 configure.ac:
 gl_FUNC_NEWLOCALE

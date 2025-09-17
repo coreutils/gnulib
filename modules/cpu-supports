@@ -9,6 +9,7 @@ Depends-on:
 attribute
 bool
 c99
+stringeq
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

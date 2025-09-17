@@ -54,7 +54,7 @@ rpl_fopen (const char *filename, const char *mode)
 #endif
 
 #if defined _WIN32 && ! defined __CYGWIN__
-  if (strcmp (filename, "/dev/null") == 0)
+  if (streq (filename, "/dev/null"))
     filename = "NUL";
 #endif
 

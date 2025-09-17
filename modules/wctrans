@@ -7,6 +7,7 @@ lib/wctrans-impl.h
 m4/wctrans.m4
 
 Depends-on:
+stringeq
 wctype-h
 # When we override wctrans_t, we also need to override towctrans().
 towctrans       [test $REPLACE_WCTRANS = 1]

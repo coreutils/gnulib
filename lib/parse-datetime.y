@@ -88,8 +88,6 @@
 
 #define HOUR(x) (60 * 60 * (x))
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
-
 /* Verify that time_t is an integer as POSIX requires, and that every
    time_t value fits in intmax_t.  Please file a bug report if these
    assumptions are false on your platform.  */
@@ -1312,17 +1310,17 @@ lookup_zone (parser_control const *pc, char const *name)
   table const *tp;
 
   for (tp = universal_time_zone_table; tp->name; tp++)
-    if (strcmp (name, tp->name) == 0)
+    if (streq (name, tp->name))
       return tp;
 
   /* Try local zone abbreviations before those in time_zone_table, as
      the local ones are more likely to be right.  */
   for (tp = pc->local_time_zone_table; tp->name; tp++)
-    if (strcmp (name, tp->name) == 0)
+    if (streq (name, tp->name))
       return tp;
 
   for (tp = time_zone_table; tp->name; tp++)
-    if (strcmp (name, tp->name) == 0)
+    if (streq (name, tp->name))
       return tp;
 
   return NULL;
@@ -1370,7 +1368,7 @@ lookup_word (parser_control const *pc, char *word)
     *p = c_toupper (to_uchar (*p));
 
   for (tp = meridian_table; tp->name; tp++)
-    if (strcmp (word, tp->name) == 0)
+    if (streq (word, tp->name))
       return tp;
 
   /* See if we have an abbreviation for a month.  */
@@ -1384,11 +1382,11 @@ lookup_word (parser_control const *pc, char *word)
   if ((tp = lookup_zone (pc, word)))
     return tp;
 
-  if (strcmp (word, dst_table[0].name) == 0)
+  if (streq (word, dst_table[0].name))
     return dst_table;
 
   for (tp = time_units_table; tp->name; tp++)
-    if (strcmp (word, tp->name) == 0)
+    if (streq (word, tp->name))
       return tp;
 
   /* Strip off any plural and try the units table again.  */
@@ -1396,13 +1394,13 @@ lookup_word (parser_control const *pc, char *word)
     {
       word[wordlen - 1] = '\0';
       for (tp = time_units_table; tp->name; tp++)
-        if (strcmp (word, tp->name) == 0)
+        if (streq (word, tp->name))
           return tp;
       word[wordlen - 1] = 'S';  /* For "this" in relative_time_table.  */
     }
 
   for (tp = relative_time_table; tp->name; tp++)
-    if (strcmp (word, tp->name) == 0)
+    if (streq (word, tp->name))
       return tp;
 
   /* Military time zones.  */
@@ -1879,8 +1877,8 @@ parse_datetime_body (struct timespec *result, char const *p,
           populate_local_time_zone_table (&pc, &probe_tm);
           if (pc.local_time_zone_table[1].name)
             {
-              if (! strcmp (pc.local_time_zone_table[0].name,
-                            pc.local_time_zone_table[1].name))
+              if (streq (pc.local_time_zone_table[0].name,
+                         pc.local_time_zone_table[1].name))
                 {
                   /* This locale uses the same abbreviation for standard and
                      daylight times.  So if we see that abbreviation, we don't
@@ -1919,7 +1917,7 @@ parse_datetime_body (struct timespec *result, char const *p,
         {
           if (tz != tzdefault)
             fprintf (stderr, _("TZ=\"%s\" in date string"), tzstring);
-          else if (STREQ (tzstring, "UTC0"))
+          else if (streq (tzstring, "UTC0"))
             {
               /* Special case: 'date -u' sets TZ="UTC0".  */
               fputs (_("TZ=\"UTC0\" environment value or -u"), stderr);
@@ -2324,7 +2322,7 @@ parse_datetime_body (struct timespec *result, char const *p,
       /* Special case: using 'date -u' simply set TZ=UTC0 */
       if (! tzstring)
         dbg_fputs (_("timezone: system default\n"));
-      else if (STREQ (tzstring, "UTC0"))
+      else if (streq (tzstring, "UTC0"))
         dbg_fputs (_("timezone: Universal Time\n"));
       else
         dbg_printf (_("timezone: TZ=\"%s\" environment value\n"), tzstring);

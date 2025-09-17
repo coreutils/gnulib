@@ -343,7 +343,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
   SET_UTMP_ENT ();
 
 #   if (defined __linux__ && !defined __ANDROID__) || defined __minix
-  bool file_is_utmp = (strcmp (file, UTMP_FILE) == 0);
+  bool file_is_utmp = streq (file, UTMP_FILE);
   /* Timestamp of the "runlevel" entry, if any.  */
   struct timespec runlevel_ts = {0};
 #   endif
@@ -457,7 +457,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
      it produces wrong values after the date has been bumped in the running
      system.  */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -556,7 +556,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     }
   else
     {
-      if (strcmp (file, UTMP_FILE) != 0)
+      if (!streq (file, UTMP_FILE))
         {
           int saved_errno = errno;
           free (a.utmp);
@@ -567,7 +567,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #   if defined __OpenBSD__
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -585,7 +585,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #  if defined __linux__ && !defined __ANDROID__
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -604,7 +604,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       && defined CTL_KERN && defined KERN_BOOTTIME \
       && !defined __minix
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -620,7 +620,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #  if defined __HAIKU__
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -636,7 +636,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #  if HAVE_OS_H /* BeOS, Haiku */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -654,7 +654,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 # if defined __CYGWIN__ || defined _WIN32
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -670,7 +670,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 # if defined _WIN32 && ! defined __CYGWIN__
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0
+      && streq (file, UTMP_FILE)
       && !have_boot_time (a))
     {
       struct timespec boot_time;
@@ -841,7 +841,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                   /* Try harder to get a sensible value for the tty.  */
                   if (sd_session_get_type (session, &type) < 0)
                     type = missing;
-                  if (strcmp (type, "tty") == 0)
+                  if (streq (type, "tty"))
                     {
                       char *service;
                       if (sd_session_get_service (session, &service) < 0)
@@ -863,7 +863,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                       else if (pty != NULL)
                         tty = pty;
                     }
-                  else if (strcmp (type, "web") == 0)
+                  else if (streq (type, "web"))
                     {
                       char *service;
                       if (sd_session_get_service (session, &service) < 0)
@@ -901,7 +901,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                          host field.  */
                       if (!type && sd_session_get_type (session, &type) < 0)
                         type = missing;
-                      if (strcmp (type, "x11") == 0)
+                      if (streq (type, "x11"))
                         {
                           char *display;
                           if (sd_session_get_display (session, &display) < 0)
@@ -978,7 +978,7 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
 # if READUTMP_USE_SYSTEMD
-  if (strcmp (file, UTMP_FILE) == 0)
+  if (streq (file, UTMP_FILE))
     /* Imitate reading UTMP_FILE, using systemd and Linux APIs.  */
     return read_utmp_from_systemd (n_entries, utmp_buf, options);
 # endif

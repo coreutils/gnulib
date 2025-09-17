@@ -20,6 +20,7 @@ c32ispunct
 c32isspace
 c32isupper
 c32isxdigit
+stringeq
 
 configure.ac:
 gl_UCHAR_MODULE_INDICATOR([c32_get_type_test])

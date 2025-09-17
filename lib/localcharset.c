@@ -811,7 +811,7 @@ locale_charset (void)
   /* Cygwin < 1.7 does not have locales.  nl_langinfo (CODESET) always
      returns "US-ASCII".  Return the suffix of the locale name from the
      environment variables (if present) or the codepage as a number.  */
-  if (codeset != NULL && strcmp (codeset, "US-ASCII") == 0)
+  if (codeset != NULL && streq (codeset, "US-ASCII"))
     {
       const char *locale;
       static char resultbuf[2 + 10 + 1];
@@ -902,8 +902,7 @@ locale_charset (void)
   /* For a locale name such as "French_France.65001", in Windows 10,
      setlocale now returns "French_France.utf8" instead, or in the UTF-8
      environment (with modern system settings) "fr_FR.UTF-8".  */
-  if (strcmp (buf + 2, "65001") == 0 || strcmp (buf + 2, "utf8") == 0
-      || strcmp (buf + 2, "UTF-8") == 0)
+  if (streq (buf + 2, "65001") || streq (buf + 2, "utf8") || streq (buf + 2, "UTF-8"))
     codeset = "UTF-8";
   else
     {
@@ -953,7 +952,7 @@ locale_charset (void)
         }
 
       /* For the POSIX locale, don't use the system's codepage.  */
-      if (strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0)
+      if (streq (locale, "C") || streq (locale, "POSIX"))
         codeset = "";
     }
 
@@ -985,7 +984,7 @@ locale_charset (void)
        Speed up the common case and slow down the less common cases by
        testing for this case first.  */
 #  if defined __OpenBSD__ || (defined __APPLE__ && defined __MACH__) || defined __sun || defined __CYGWIN__
-    if (strcmp (codeset, "UTF-8") == 0)
+    if (streq (codeset, "UTF-8"))
       goto done_table_lookup;
     else
 #  endif
@@ -1114,7 +1113,7 @@ locale_charset (void)
 #ifdef DARWIN7
   /* Mac OS X sets MB_CUR_MAX to 1 when LC_ALL=C, and "UTF-8"
      (the default codeset) does not work when MB_CUR_MAX is 1.  */
-  if (strcmp (codeset, "UTF-8") == 0 && MB_CUR_MAX_L (uselocale (NULL)) <= 1)
+  if (ostreq (codeset, "UTF-8") && MB_CUR_MAX_L (uselocale (NULL)) <= 1)
     codeset = "ASCII";
 #endif
 

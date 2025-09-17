@@ -686,7 +686,7 @@ setlocale_unixlike (int category, const char *locale)
 
   /* The native Windows implementation of setlocale understands the special
      locale name "C", but not "POSIX".  Therefore map "POSIX" to "C".  */
-  if (locale != NULL && strcmp (locale, "POSIX") == 0)
+  if (locale != NULL && streq (locale, "POSIX"))
     locale = "C";
 
   /* The native Windows implementation of setlocale, in the UTF-8 environment,
@@ -694,8 +694,8 @@ setlocale_unixlike (int category, const char *locale)
      but it understands "English_United States.65001", which is functionally
      equivalent.  */
   if (locale != NULL
-      && ((is_utf8 && strcmp (locale, "C") == 0)
-          || strcmp (locale, "C.UTF-8") == 0))
+      && ((is_utf8 && streq (locale, "C"))
+          || streq (locale, "C.UTF-8")))
     locale = "English_United States.65001";
 
   /* First, try setlocale with the original argument unchanged.  */
@@ -728,7 +728,7 @@ setlocale_unixlike (int category, const char *locale)
       /* llCC_buf now contains
            language[_territory][@modifier]
        */
-      if (strcmp (llCC_buf, locale) != 0)
+      if (!streq (llCC_buf, locale))
         {
           if (is_utf8)
             {
@@ -890,7 +890,7 @@ setlocale_unixlike (int category, const char *locale)
       case LC_TELEPHONE:
       case LC_MEASUREMENT:
         if (locale == NULL
-            || strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0)
+            || streq (locale, "C") || streq (locale, "POSIX"))
           result = (char *) "C";
         break;
       default:
@@ -1501,7 +1501,7 @@ setlocale_improved (int category, const char *locale)
              LC_CTYPE category to an invalid value ("C") when it does not
              support the specified encoding.  Report a failure instead.  */
           if (strchr (base_name, '.') != NULL
-              && strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+              && streq (setlocale (LC_CTYPE, NULL), "C"))
             goto fail;
 #  endif
 
@@ -1516,7 +1516,7 @@ setlocale_improved (int category, const char *locale)
 
               /* If name is the same as base_name, it has already been set
                  through the setlocale call before the loop.  */
-              if (strcmp (name, base_name) != 0
+              if (!streq (name, base_name)
 #  if LC_MESSAGES == 1729
                   || cat == LC_MESSAGES
 #  endif
@@ -1726,7 +1726,7 @@ setlocale_improved (int category, const char *locale)
                      set the LC_CTYPE category to an invalid value ("C") when
                      it does not support the specified encoding.  Report a
                      failure instead.  */
-                  if (strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+                  if (streq (setlocale (LC_CTYPE, NULL), "C"))
                     {
                       /* Don't risk an endless recursion.  */
                       if (saved_locale[0] != '\0')
@@ -1778,7 +1778,7 @@ setlocale_improved (int category, const char *locale)
   {
     char *name1 = setlocale (LC_ALL, NULL);
     char *name2 = setlocale_single (LC_MESSAGES, NULL);
-    if (strcmp (name1, name2) == 0)
+    if (streq (name1, name2))
       /* Not a mixed locale.  */
       return name1;
     else

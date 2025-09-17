@@ -39,11 +39,11 @@ c32_get_mapping (const char *name)
     switch (name[2])
       {
       case 'l':
-        if (strcmp (name + 3, "ower") == 0)
+        if (streq (name + 3, "ower"))
           return c32tolower;
         break;
       case 'u':
-        if (strcmp (name + 3, "pper") == 0)
+        if (streq (name + 3, "pper"))
           return c32toupper;
         break;
       default:

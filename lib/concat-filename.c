@@ -39,7 +39,7 @@ concatenated_filename (const char *directory, const char *filename,
   char *result;
   char *p;
 
-  if (strcmp (directory, ".") == 0)
+  if (streq (directory, "."))
     {
       /* No need to prepend the directory.  */
       result = (char *) malloc (strlen (filename)

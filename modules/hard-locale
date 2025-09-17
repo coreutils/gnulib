@@ -8,6 +8,7 @@ lib/hard-locale.c
 Depends-on:
 bool
 setlocale-null
+stringeq
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])

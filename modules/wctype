@@ -12,6 +12,7 @@ iswblank        [test $HAVE_WCTYPE = 0 || test $REPLACE_WCTYPE = 1]
 iswdigit        [test $HAVE_WCTYPE = 0 || test $REPLACE_WCTYPE = 1]
 iswpunct        [test $HAVE_WCTYPE = 0 || test $REPLACE_WCTYPE = 1]
 iswxdigit       [test $HAVE_WCTYPE = 0 || test $REPLACE_WCTYPE = 1]
+stringeq        [test $HAVE_WCTYPE = 0 || test $REPLACE_WCTYPE = 1]
 # When we override wctype_t, we also need to override iswctype().
 iswctype        [test $REPLACE_WCTYPE = 1]
 

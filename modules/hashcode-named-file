@@ -9,6 +9,7 @@ lib/hash-triple.h
 Depends-on:
 hashcode-string2
 same-inode
+stringeq
 bool
 
 configure.ac:

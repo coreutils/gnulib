@@ -84,7 +84,7 @@ struniq (const char *string)
   struct struniq_hash_node *new_node;
   struct struniq_hash_node *p;
   for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
-    if (strcmp (p->contents, string) == 0)
+    if (streq (p->contents, string))
       return p->contents;
   size = strlen (string) + 1;
   new_node =
@@ -101,7 +101,7 @@ struniq (const char *string)
     /* Check whether another thread already added the string while we were
        waiting on the lock.  */
     for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
-      if (strcmp (p->contents, string) == 0)
+      if (streq (p->contents, string))
         {
           free (new_node);
           new_node = p;

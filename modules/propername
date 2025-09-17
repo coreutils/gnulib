@@ -14,6 +14,7 @@ mbchar
 mbuiter
 iconv
 localcharset
+stringeq
 c-strcasecmp
 xstriconv
 xalloc

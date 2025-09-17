@@ -11,6 +11,7 @@ locale-h
 localename-unsafe
 flexmember
 lock
+stringeq
 bool
 thread-optim
 

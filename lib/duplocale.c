@@ -95,7 +95,7 @@ duplocale (locale_t locale)
               errno = err;
               return NULL;
             }
-          if (strcmp (name, base_name) != 0)
+          if (!streq (name, base_name))
             {
               locale_t copy = newlocale (category_mask, name, base_copy);
               if (copy == NULL)

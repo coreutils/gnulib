@@ -23,11 +23,11 @@ wctrans (const char *name)
     switch (name[2])
       {
       case 'l':
-        if (strcmp (name + 3, "ower") == 0)
+        if (streq (name + 3, "ower"))
           return (wctrans_t) towlower;
         break;
       case 'u':
-        if (strcmp (name + 3, "pper") == 0)
+        if (streq (name + 3, "pper"))
           return (wctrans_t) towupper;
         break;
       default:

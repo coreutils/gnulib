@@ -9,6 +9,7 @@ m4/localcharset.m4
 
 Depends-on:
 extensions
+stringeq
 
 configure.ac:
 gl_LOCALCHARSET

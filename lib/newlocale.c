@@ -48,7 +48,7 @@ newlocale (int category_mask, const char *name, locale_t base)
   if (category_mask != 0)
     {
       /* Test whether NAME is valid.  */
-      if (!(strcmp (name, "C") == 0 || strcmp (name, "POSIX") == 0))
+      if (!(streq (name, "C") || streq (name, "POSIX")))
         {
           char *filename = (char *) malloc (18 + strlen (name) + 9 + 1);
           if (filename == NULL)
@@ -110,13 +110,13 @@ newlocale (int category_mask, const char *name, locale_t base)
     }
 
   /* Canonicalize the name.  */
-  if (strcmp (name, "POSIX") == 0)
+  if (streq (name, "POSIX"))
     name = "C";
 
 # if !HAVE_WINDOWS_LOCALE_T
   /* In this case, the only NAMEs that we support are "C" and (equivalently)
      "POSIX".  */
-  if (category_mask != 0 && strcmp (name, "C") != 0)
+  if (category_mask != 0 && !streq (name, "C"))
     {
       errno = ENOENT;
       return NULL;
@@ -164,7 +164,7 @@ newlocale (int category_mask, const char *name, locale_t base)
               err = ENOMEM;
               goto fail_with_err;
             }
-          if (strcmp (lcname, "C") == 0)
+          if (streq (lcname, "C"))
             {
               result->category[i].is_c_locale = true;
 # if HAVE_WINDOWS_LOCALE_T

@@ -177,7 +177,7 @@ find_long_option (struct option *long_options, const char *name)
 {
   struct option *l = long_options;
   while (l->name != NULL)
-    if (name != NULL && strcmp (l->name, name) == 0)
+    if (name != NULL && streq (l->name, name))
       return l - long_options;
     else
       l++;
@@ -814,8 +814,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
         {
           parser->try_getopt = 0;
           if (parser->state.next > 1
-              && strcmp (parser->state.argv[parser->state.next - 1], QUOTE)
-                   == 0)
+              && streq (parser->state.argv[parser->state.next - 1], QUOTE))
             /* Not only is this the end of the options, but it's a
                "quoted" region, which may have args that *look* like
                options, so we definitely shouldn't try to use getopt past

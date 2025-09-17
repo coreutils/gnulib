@@ -116,7 +116,7 @@ save_abbr (timezone_t tz, struct tm *tm)
     {
       zone_copy = tz->abbrs;
 
-      while (strcmp (zone_copy, zone) != 0)
+      while (!streq (zone_copy, zone))
         {
           if (! (*zone_copy || (zone_copy == tz->abbrs && tz->tz_is_set)))
             {
@@ -202,7 +202,7 @@ set_tz (timezone_t tz)
 {
   char *env_tz = getenv_TZ ();
   if (env_tz
-      ? tz->tz_is_set && strcmp (tz->abbrs, env_tz) == 0
+      ? tz->tz_is_set && streq (tz->abbrs, env_tz)
       : !tz->tz_is_set)
     return local_tz;
   else

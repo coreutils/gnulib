@@ -6,6 +6,7 @@ lib/str_endswith.c
 
 Depends-on:
 string-h
+stringeq
 bool
 
 configure.ac:

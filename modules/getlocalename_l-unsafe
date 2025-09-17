@@ -15,6 +15,7 @@ locale-h
 getlocalename_l-unsafe-limited
 flexmember
 lock
+stringeq
 bool
 thread-optim
 setlocale-fixes

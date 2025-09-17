@@ -5,6 +5,7 @@ Files:
 lib/streq.h
 
 Depends-on:
+stringeq
 
 configure.ac:
 

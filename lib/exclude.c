@@ -240,7 +240,7 @@ string_hasher_ci (void const *data, size_t n_buckets)
 static bool
 string_compare (void const *data1, void const *data2)
 {
-  return strcmp (data1, data2) == 0;
+  return streq (data1, data2);
 }
 
 /* compare two strings for equality, case-insensitive */
@@ -659,7 +659,7 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
                   struct exclude *ex, char const *file_name, int options,
                   char line_end)
 {
-  if (strcmp (file_name, "-") == 0)
+  if (streq (file_name, "-"))
     return add_exclude_fp (call_addfn, ex, stdin, options, line_end, &add_func);
 
   FILE *in = fopen (file_name, "re");

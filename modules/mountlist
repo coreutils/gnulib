@@ -16,6 +16,7 @@ open
 unlocked-io-internal
 bool
 stdint-h
+stringeq
 strstr-simple
 xalloc
 

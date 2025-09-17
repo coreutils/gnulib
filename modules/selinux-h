@@ -18,6 +18,7 @@ errno-h
 sys_types-h
 extern-inline
 gen-header
+stringeq
 
 configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H

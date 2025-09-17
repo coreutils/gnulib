@@ -64,13 +64,19 @@ str_endswith (const char *string, const char *suffix)
 {
   size_t len = strlen (string);
   size_t n = strlen (suffix);
-  return len >= n && strcmp (string + len - n, suffix) == 0;
+  return len >= n && streq (string + len - n, suffix);
 }
 
 static bool
 memeq (void const *s1, void const *s2, size_t n)
 {
   return !memcmp (s1, s2, n);
+}
+
+static bool
+streq (char const *s1, char const *s2)
+{
+  return !strcmp (s1, s2);
 }
 
 /* ========================================================================= */
@@ -122,7 +128,7 @@ fill_attribute (unsigned int i,
       fprintf (stderr, "index too large\n");
       exit (1);
     }
-  if (strcmp (field2, "Cs") == 0)
+  if (streq (field2, "Cs"))
     /* Surrogates are UTF-16 artifacts, not real characters. Ignore them.  */
     return;
   uni = &unicode_attributes[i];
@@ -799,9 +805,9 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream,
-                          strcmp (filename, "unictype/categ_M.h") == 0
+                          streq (filename, "unictype/categ_M.h")
                           || str_startswith (filename, "unictype/ctype_")
-                          || strcmp (filename, "uniwidth/width2.h") == 0);
+                          || streq (filename, "uniwidth/width2.h"));
   fprintf (stream, "\n");
 
   t.p = 4; /* or: 5 */
@@ -2946,7 +2952,7 @@ fill_properties (const char *proplist_filename)
           i2 = i1;
         }
 #define PROP(name,code) \
-      if (strcmp (propname, name) == 0) propcode = code; else
+      if (streq (propname, name)) propcode = code; else
       /* PropList.txt */
       PROP ("White_Space", PROP_WHITE_SPACE)
       PROP ("Bidi_Control", PROP_BIDI_CONTROL)
@@ -3015,7 +3021,7 @@ fill_properties (const char *proplist_filename)
       PROP ("Extended_Pictographic", PROP_EXTENDED_PICTOGRAPHIC)
 #undef PROP
       /* An enum-valued property from DerivedCoreProperties.txt */
-      if (strcmp (propname, "InCB;") == 0)
+      if (streq (propname, "InCB;"))
         {
           char valuename[200+1];
           unsigned int valuecode;
@@ -3026,13 +3032,13 @@ fill_properties (const char *proplist_filename)
               exit (1);
             }
 
-          if (strcmp (valuename, "None") == 0)
+          if (streq (valuename, "None"))
             valuecode = UC_INDIC_CONJUNCT_BREAK_NONE;
-          else if (strcmp (valuename, "Consonant") == 0)
+          else if (streq (valuename, "Consonant"))
             valuecode = UC_INDIC_CONJUNCT_BREAK_CONSONANT;
-          else if (strcmp (valuename, "Linker") == 0)
+          else if (streq (valuename, "Linker"))
             valuecode = UC_INDIC_CONJUNCT_BREAK_LINKER;
-          else if (strcmp (valuename, "Extend") == 0)
+          else if (streq (valuename, "Extend"))
             valuecode = UC_INDIC_CONJUNCT_BREAK_EXTEND;
           else
             {
@@ -3741,7 +3747,7 @@ is_property_iso_control (unsigned int ch)
 {
   bool result1 =
     (unicode_attributes[ch].name != NULL
-     && strcmp (unicode_attributes[ch].name, "<control>") == 0);
+     && streq (unicode_attributes[ch].name, "<control>"));
   bool result2 =
     is_category_Cc (ch);
 
@@ -3871,7 +3877,7 @@ static bool
 is_property_combining (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-          && (strcmp (unicode_attributes[ch].combining, "0") != 0
+          && (!streq (unicode_attributes[ch].combining, "0")
               || is_category_Mc (ch)
               || is_category_Me (ch)
               || is_category_Mn (ch)));
@@ -4497,7 +4503,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
         }
       assert (i < 0x110000);
 
-#define TRY(name) else if (strcmp (joining_type_name, #name + 16) == 0) joining_type = name;
+#define TRY(name) else if (streq (joining_type_name, #name + 16)) joining_type = name;
       if (false) {}
       TRY(UC_JOINING_TYPE_U)
       TRY(UC_JOINING_TYPE_T)
@@ -4518,7 +4524,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
              && joining_group_name[strlen (joining_group_name) - 1] == ' ')
         joining_group_name[strlen (joining_group_name) - 1] = '\0';
 
-#define TRY(value,name) else if (strcmp (joining_group_name, name) == 0) joining_group = value;
+#define TRY(value,name) else if (streq (joining_group_name, name)) joining_group = value;
       if (false) {}
       TRY(UC_JOINING_GROUP_NONE,                     "No_Joining_Group")
       TRY(UC_JOINING_GROUP_AIN,                      "AIN")
@@ -5223,7 +5229,7 @@ fill_scripts (const char *scripts_filename)
       assert (i2 < 0x110000);
 
       for (script = numscripts - 1; script >= 0; script--)
-        if (strcmp (scripts[script], scriptname) == 0)
+        if (streq (scripts[script], scriptname))
           break;
       if (script < 0)
         {
@@ -6321,7 +6327,7 @@ static bool
 is_cntrl (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-          && (strcmp (unicode_attributes[ch].name, "<control>") == 0
+          && (streq (unicode_attributes[ch].name, "<control>")
               /* Categories Zl and Zp */
               || (unicode_attributes[ch].category[0] == 'Z'
                   && (unicode_attributes[ch].category[1] == 'l'
@@ -6354,7 +6360,7 @@ static bool
 is_graph (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-          && strcmp (unicode_attributes[ch].name, "<control>")
+          && !streq (unicode_attributes[ch].name, "<control>")
           && !is_space (ch));
 }
 
@@ -6362,7 +6368,7 @@ static bool
 is_print (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-          && strcmp (unicode_attributes[ch].name, "<control>")
+          && !streq (unicode_attributes[ch].name, "<control>")
           /* Categories Zl and Zp */
           && !(unicode_attributes[ch].name != NULL
                && unicode_attributes[ch].category[0] == 'Z'
@@ -7119,12 +7125,12 @@ symbolic_width (unsigned int ch)
         return '0';
       /* Test for double-width character.  */
       if (unicode_width[ch] != NULL
-          && (strcmp (unicode_width[ch], "W") == 0
-              || strcmp (unicode_width[ch], "F") == 0))
+          && (streq (unicode_width[ch], "W")
+              || streq (unicode_width[ch], "F")))
         return '2';
       /* Test for half-width character.  */
       if (unicode_width[ch] != NULL
-          && strcmp (unicode_width[ch], "H") == 0)
+          && streq (unicode_width[ch], "H"))
         return '1';
     }
   /* In ancient CJK encodings, Cyrillic and most other characters are
@@ -7266,9 +7272,9 @@ static int
 get_lbea (unsigned int ch)
 {
   return (unicode_width[ch] != NULL
-          && (strcmp (unicode_width[ch], "W") == 0
-              || strcmp (unicode_width[ch], "F") == 0
-              || strcmp (unicode_width[ch], "H") == 0));
+          && (streq (unicode_width[ch], "W")
+              || streq (unicode_width[ch], "F")
+              || streq (unicode_width[ch], "H")));
 }
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
@@ -8809,7 +8815,7 @@ fill_org_lbp (const char *linebreak_filename)
       /* Remove trailing spaces from field1.  */
       while (strlen (field1) > 0 && field1[strlen (field1) - 1] == ' ')
         field1[strlen (field1) - 1] = '\0';
-#define TRY(bit) else if (strcmp (field1, #bit + 4) == 0) value = bit;
+#define TRY(bit) else if (streq (field1, #bit + 4)) value = bit;
       if (false) {}
       TRY(LBP_BK)
       TRY(LBP_CR)
@@ -8857,9 +8863,9 @@ fill_org_lbp (const char *linebreak_filename)
       TRY(LBP_EM)
       TRY(LBP_XX)
 #undef TRY
-      else if (strcmp (field1, "NL") == 0) value = LBP_BK;
-      else if (strcmp (field1, "SG") == 0) value = LBP_XX;
-      else if (strcmp (field1, "CJ") == 0) value = LBP_NS;
+      else if (streq (field1, "NL")) value = LBP_BK;
+      else if (streq (field1, "SG")) value = LBP_XX;
+      else if (streq (field1, "CJ")) value = LBP_NS;
       else
         {
           fprintf (stderr, "unknown property value \"%s\" in '%s':%d\n",
@@ -9651,12 +9657,12 @@ get_wbp (unsigned int ch)
       if (((unicode_properties[ch] >> PROP_GRAPHEME_EXTEND) & 1) != 0
           || ((unicode_properties[ch] >> PROP_OTHER_GRAPHEME_EXTEND) & 1) != 0
           || (unicode_attributes[ch].category != NULL
-              && strcmp (unicode_attributes[ch].category, "Mc") == 0)
+              && streq (unicode_attributes[ch].category, "Mc"))
           || ((unicode_properties[ch] >> PROP_EMOJI_MODIFIER) & 1) != 0 /* Emoji modifier */)
         attr |= 1 << WBP_EXTEND;
 
       if (unicode_attributes[ch].category != NULL
-          && strcmp (unicode_attributes[ch].category, "Cf") == 0
+          && streq (unicode_attributes[ch].category, "Cf")
           && !(ch >= 0x0600 && ch <= 0x0605)
           && ch != 0x06DD
           && ch != 0x070F
@@ -9667,15 +9673,15 @@ get_wbp (unsigned int ch)
         attr |= 1 << WBP_FORMAT;
 
       if ((unicode_scripts[ch] < numscripts
-           && strcmp (scripts[unicode_scripts[ch]], "Katakana") == 0)
+           && streq (scripts[unicode_scripts[ch]], "Katakana"))
           || (ch >= 0x3031 && ch <= 0x3035)
           || ch == 0x309B || ch == 0x309C || ch == 0x30A0 || ch == 0x30FC
           || ch == 0xFF70)
         attr |= 1 << WBP_KATAKANA;
 
       if ((unicode_scripts[ch] < numscripts
-           && strcmp (scripts[unicode_scripts[ch]], "Hebrew") == 0)
-          && strcmp (unicode_attributes[ch].category, "Lo") == 0)
+           && streq (scripts[unicode_scripts[ch]], "Hebrew"))
+          && streq (unicode_attributes[ch].category, "Lo"))
         attr |= 1 << WBP_HL;
 
       if ((((unicode_properties[ch] >> PROP_ALPHABETIC) & 1) != 0
@@ -9698,7 +9704,7 @@ get_wbp (unsigned int ch)
           && (attr & (1 << WBP_KATAKANA)) == 0
           && ((get_lbp (ch) >> LBP_SA) & 1) == 0
           && !(unicode_scripts[ch] < numscripts
-               && strcmp (scripts[unicode_scripts[ch]], "Hiragana") == 0)
+               && streq (scripts[unicode_scripts[ch]], "Hiragana"))
           && (attr & (1 << WBP_EXTEND)) == 0
           && (attr & (1 << WBP_HL)) == 0)
         attr |= 1 << WBP_ALETTER;
@@ -9728,7 +9734,7 @@ get_wbp (unsigned int ch)
         attr |= 1 << WBP_NUMERIC;
 
       if ((unicode_attributes[ch].category != NULL
-           && strcmp (unicode_attributes[ch].category, "Pc") == 0)
+           && streq (unicode_attributes[ch].category, "Pc"))
           || ch == 0x202F /* NARROW NO-BREAK SPACE */)
         attr |= 1 << WBP_EXTENDNUMLET;
 
@@ -9875,7 +9881,7 @@ fill_org_wbp (const char *wordbreakproperty_filename)
           i2 = i1;
         }
 #define PROP(name,value) \
-      if (strcmp (propname, name) == 0) propvalue = value; else
+      if (streq (propname, name)) propvalue = value; else
       PROP ("CR", WBP_CR)
       PROP ("LF", WBP_LF)
       PROP ("Newline", WBP_NEWLINE)
@@ -10455,7 +10461,7 @@ fill_org_gbp (const char *graphemebreakproperty_filename)
           i2 = i1;
         }
 #define PROP(name,value) \
-      if (strcmp (propname, name) == 0) propvalue = value; else
+      if (streq (propname, name)) propvalue = value; else
       PROP ("CR", GBP_CR)
       PROP ("LF", GBP_LF)
       PROP ("Control", GBP_CONTROL)
@@ -10863,13 +10869,13 @@ debug_output_composition_tables (const char *filename)
 
           /* Exclude decompositions where the first part is not a starter,
              i.e. is not of canonical combining class 0.  */
-          if (strcmp (unicode_attributes[code1].combining, "0") == 0
+          if (streq (unicode_attributes[code1].combining, "0")
               /* Exclude characters listed in CompositionExclusions.txt.  */
               && !unicode_composition_exclusions[combined])
             {
               /* The combined character must now also be a starter.
                  Verify this.  */
-              assert (strcmp (unicode_attributes[combined].combining, "0") == 0);
+              assert (streq (unicode_attributes[combined].combining, "0"));
 
               fprintf (stream, "0x%04X\t0x%04X\t0x%04X\t%s\n",
                        code1,
@@ -10965,13 +10971,13 @@ output_composition_tables (const char *filename, const char *filename2,
 
           /* Exclude decompositions where the first part is not a starter,
              i.e. is not of canonical combining class 0.  */
-          if (strcmp (unicode_attributes[code1].combining, "0") == 0
+          if (streq (unicode_attributes[code1].combining, "0")
               /* Exclude characters listed in CompositionExclusions.txt.  */
               && !unicode_composition_exclusions[combined])
             {
               /* The combined character must now also be a starter.
                  Verify this.  */
-              assert (strcmp (unicode_attributes[combined].combining, "0") == 0);
+              assert (streq (unicode_attributes[combined].combining, "0"));
 
               if (max_code1 < code1)
                 max_code1 = code1;
@@ -11120,8 +11126,8 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "/* Copyright (C) 2000-2025 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream,
-                          strcmp (filename, "unicase/tolower.h") == 0
-                          || strcmp (filename, "unicase/toupper.h") == 0);
+                          streq (filename, "unicase/tolower.h")
+                          || streq (filename, "unicase/toupper.h"));
   fprintf (stream, "\n");
 
   t.p = 7;
@@ -11710,7 +11716,7 @@ redistribute_casefolding_rules (void)
               if (rule->code == cfrule->code
                   && (cfrule->language == NULL
                       || (rule->language != NULL
-                          && strcmp (rule->language, cfrule->language) == 0)))
+                          && streq (rule->language, cfrule->language))))
                 {
                   memcpy (rule->casefold_mapping, cfrule->mapping,
                           sizeof (rule->casefold_mapping));
@@ -11718,7 +11724,7 @@ redistribute_casefolding_rules (void)
                   if ((cfrule->language == NULL
                        ? rule->language == NULL
                        : rule->language != NULL
-                         && strcmp (rule->language, cfrule->language) == 0)
+                         && streq (rule->language, cfrule->language))
                       && rule->context == SCC_ALWAYS)
                     {
                       /* Found it.  */

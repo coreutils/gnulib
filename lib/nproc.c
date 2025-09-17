@@ -392,7 +392,7 @@ cgroup2_mount (void)
     return NULL;
   while ((mnt = getmntent (fp)) != NULL)
     {
-      if (strcmp (mnt->mnt_type, "cgroup2") == 0)
+      if (streq (mnt->mnt_type, "cgroup2"))
         {
           ret = strdup (mnt->mnt_dir);
           break;

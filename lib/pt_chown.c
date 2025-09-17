@@ -85,7 +85,7 @@ main (int argc, char *argv[])
     }
 
   /* It would be possible to drop setuid/setgid privileges here.  But it is not
-     really needed, since the code below only calls strcmp and [f]printf.  */
+     really needed, since the code below only calls streq and [f]printf.  */
 
   {
     int do_help = 0;
@@ -98,14 +98,14 @@ main (int argc, char *argv[])
 
         if (arg[0] == '-')
           {
-            if (strcmp (arg, "--") == 0)
+            if (streq (arg, "--"))
               {
                 remaining++;
                 break;
               }
-            else if (strcmp (arg, "--help") == 0)
+            else if (streq (arg, "--help"))
               do_help = 1;
-            else if (strcmp (arg, "--version") == 0)
+            else if (streq (arg, "--version"))
               do_version = 1;
             else
               {

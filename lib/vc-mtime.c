@@ -381,9 +381,9 @@ abs_git_checkout (void)
 static long
 ancestor_level (const char *dir1, const char *dir2)
 {
-  if (strcmp (dir1, "/") == 0)
+  if (streq (dir1, "/"))
     dir1 = "";
-  if (strcmp (dir2, "/") == 0)
+  if (streq (dir2, "/"))
     dir2 = "";
   size_t dir1_len = strlen (dir1);
   if (strncmp (dir1, dir2, dir1_len) == 0)
@@ -415,14 +415,14 @@ static char *
 relativize (const char *filename,
             unsigned long n, const char *dir1, const char *dir2)
 {
-  if (strcmp (dir1, "/") == 0)
+  if (streq (dir1, "/"))
     dir1 = "";
   size_t dir1_len = strlen (dir1);
   if (!(strncmp (filename, dir1, dir1_len) == 0
         && (filename[dir1_len] == '\0' || ISSLASH (filename[dir1_len]))))
     /* Invalid argument.  */
     abort ();
-  if (strcmp (dir2, "/") == 0)
+  if (streq (dir2, "/"))
     dir2 = "";
 
   dir2 += dir1_len;
@@ -560,7 +560,7 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                   /* Test which of these absolute file names are outside of the
                      git_checkout.  */
                   char *git_checkout_slash =
-                    (strcmp (git_checkout, "/") == 0
+                    (streq (git_checkout, "/")
                      ? xstrdup (git_checkout)
                      : xasprintf ("%s%c", git_checkout, SLASH));
 
@@ -1002,75 +1002,75 @@ test_ancestor_level (void)
 static void
 test_relativize (void)
 {
-  assert (strcmp (relativize ("/home/user/projects/gnulib",
-                              0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
-                  ".") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/NEWS",
-                              0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
-                  "NEWS") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/doc/Makefile",
-                              0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
-                  "doc/Makefile") == 0);
+  assert (streq (relativize ("/home/user/projects/gnulib",
+                             0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
+                 "."));
+  assert (streq (relativize ("/home/user/projects/gnulib/NEWS",
+                             0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
+                 "NEWS"));
+  assert (streq (relativize ("/home/user/projects/gnulib/doc/Makefile",
+                             0, "/home/user/projects/gnulib", "/home/user/projects/gnulib"),
+                 "doc/Makefile"));
 
-  assert (strcmp (relativize ("/",
-                              0, "/", "/"),
-                  ".") == 0);
-  assert (strcmp (relativize ("/swapfile",
-                              0, "/", "/"),
-                  "swapfile") == 0);
-  assert (strcmp (relativize ("/etc/passwd",
-                              0, "/", "/"),
-                  "etc/passwd") == 0);
+  assert (streq (relativize ("/",
+                             0, "/", "/"),
+                 "."));
+  assert (streq (relativize ("/swapfile",
+                             0, "/", "/"),
+                 "swapfile"));
+  assert (streq (relativize ("/etc/passwd",
+                             0, "/", "/"),
+                 "etc/passwd"));
 
-  assert (strcmp (relativize ("/home/user/projects/gnulib",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../../") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/lib",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/lib/crypto",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  ".") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/lib/malloc",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../malloc") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/lib/cr",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../cr") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/lib/cryptography",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../cryptography") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/doc",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../../doc") == 0);
-  assert (strcmp (relativize ("/home/user/projects/gnulib/doc/Makefile",
-                              2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
-                  "../../doc/Makefile") == 0);
+  assert (streq (relativize ("/home/user/projects/gnulib",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../../"));
+  assert (streq (relativize ("/home/user/projects/gnulib/lib",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../"));
+  assert (streq (relativize ("/home/user/projects/gnulib/lib/crypto",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "."));
+  assert (streq (relativize ("/home/user/projects/gnulib/lib/malloc",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../malloc"));
+  assert (streq (relativize ("/home/user/projects/gnulib/lib/cr",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../cr"));
+  assert (streq (relativize ("/home/user/projects/gnulib/lib/cryptography",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../cryptography"));
+  assert (streq (relativize ("/home/user/projects/gnulib/doc",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../../doc"));
+  assert (streq (relativize ("/home/user/projects/gnulib/doc/Makefile",
+                             2, "/home/user/projects/gnulib", "/home/user/projects/gnulib/lib/crypto"),
+                 "../../doc/Makefile"));
 
-  assert (strcmp (relativize ("/",
-                              2, "/", "/home/user"),
-                  "../../") == 0);
-  assert (strcmp (relativize ("/home",
-                              2, "/", "/home/user"),
-                  "../") == 0);
-  assert (strcmp (relativize ("/home/user",
-                              2, "/", "/home/user"),
-                  ".") == 0);
-  assert (strcmp (relativize ("/home/root",
-                              2, "/", "/home/user"),
-                  "../root") == 0);
-  assert (strcmp (relativize ("/home/us",
-                              2, "/", "/home/user"),
-                  "../us") == 0);
-  assert (strcmp (relativize ("/home/users",
-                              2, "/", "/home/user"),
-                  "../users") == 0);
-  assert (strcmp (relativize ("/etc",
-                              2, "/", "/home/user"),
-                  "../../etc") == 0);
-  assert (strcmp (relativize ("/etc/passwd",
-                              2, "/", "/home/user"),
-                  "../../etc/passwd") == 0);
+  assert (streq (relativize ("/",
+                             2, "/", "/home/user"),
+                 "../../"));
+  assert (streq (relativize ("/home",
+                             2, "/", "/home/user"),
+                 "../"));
+  assert (streq (relativize ("/home/user",
+                             2, "/", "/home/user"),
+                 "."));
+  assert (streq (relativize ("/home/root",
+                             2, "/", "/home/user"),
+                 "../root"));
+  assert (streq (relativize ("/home/us",
+                             2, "/", "/home/user"),
+                 "../us"));
+  assert (streq (relativize ("/home/users",
+                             2, "/", "/home/user"),
+                 "../users"));
+  assert (streq (relativize ("/etc",
+                             2, "/", "/home/user"),
+                 "../../etc"));
+  assert (streq (relativize ("/etc/passwd",
+                             2, "/", "/home/user"),
+                 "../../etc/passwd"));
 }
 
 /* Usage: ./a.out FILE[...]

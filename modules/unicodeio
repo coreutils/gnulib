@@ -16,6 +16,7 @@ gnulib-i18n
 localcharset
 error
 stdio-h
+stringeq
 
 configure.ac:
 gl_UNICODEIO

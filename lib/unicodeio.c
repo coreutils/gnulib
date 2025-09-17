@@ -81,7 +81,7 @@ unicode_to_mb (unsigned int code,
     {
       const char *charset = locale_charset ();
 
-      is_utf8 = !strcmp (charset, UTF8_NAME);
+      is_utf8 = streq (charset, UTF8_NAME);
 #if HAVE_ICONV
       if (!is_utf8)
         {

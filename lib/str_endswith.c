@@ -27,5 +27,5 @@ str_endswith (const char *string, const char *suffix)
 {
   size_t len = strlen (string);
   size_t n = strlen (suffix);
-  return len >= n && strcmp (string + len - n, suffix) == 0;
+  return len >= n && streq (string + len - n, suffix);
 }

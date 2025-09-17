@@ -98,7 +98,7 @@ fill_lc_all_name (void)
 {
   bool all_same = true;
   for (size_t i = 1; i < 12; i++)
-    if (strcmp (lc_cat_name[i], lc_cat_name[0]) != 0)
+    if (!streq (lc_cat_name[i], lc_cat_name[0]))
       {
         all_same = false;
         break;

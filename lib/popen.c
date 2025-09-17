@@ -30,9 +30,9 @@ FILE *
 popen (const char *filename, const char *mode)
 {
   /* Use binary mode by default.  */
-  if (strcmp (mode, "r") == 0)
+  if (streq (mode, "r"))
     mode = "rb";
-  else if (strcmp (mode, "w") == 0)
+  else if (streq (mode, "w"))
     mode = "wb";
 
   return _popen (filename, mode);

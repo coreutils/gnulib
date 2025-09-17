@@ -18,6 +18,7 @@ iconv
 c-ctype           [test $REPLACE_ICONV_OPEN = 1]
 c-strcasecmp      [test $REPLACE_ICONV_OPEN = 1]
 stdint-h          [test $REPLACE_ICONV_UTF = 1]
+stringeq          [test $REPLACE_ICONV_UTF = 1]
 unistr/u8-mbtoucr [test $REPLACE_ICONV_UTF = 1]
 unistr/u8-uctomb  [test $REPLACE_ICONV_UTF = 1]
 

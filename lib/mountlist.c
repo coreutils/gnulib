@@ -171,21 +171,21 @@
 #endif
 
 #define ME_DUMMY_0(Fs_name, Fs_type)            \
-  (strcmp (Fs_type, "autofs") == 0              \
-   || strcmp (Fs_type, "proc") == 0             \
-   || strcmp (Fs_type, "subfs") == 0            \
+  (streq (Fs_type, "autofs")              \
+   || streq (Fs_type, "proc")             \
+   || streq (Fs_type, "subfs")            \
    /* for Linux 2.6/3.x */                      \
-   || strcmp (Fs_type, "debugfs") == 0          \
-   || strcmp (Fs_type, "devpts") == 0           \
-   || strcmp (Fs_type, "fusectl") == 0          \
-   || strcmp (Fs_type, "fuse.portal") == 0      \
-   || strcmp (Fs_type, "mqueue") == 0           \
-   || strcmp (Fs_type, "rpc_pipefs") == 0       \
-   || strcmp (Fs_type, "sysfs") == 0            \
+   || streq (Fs_type, "debugfs")          \
+   || streq (Fs_type, "devpts")           \
+   || streq (Fs_type, "fusectl")          \
+   || streq (Fs_type, "fuse.portal")      \
+   || streq (Fs_type, "mqueue")           \
+   || streq (Fs_type, "rpc_pipefs")       \
+   || streq (Fs_type, "sysfs")            \
    /* FreeBSD, Linux 2.4 */                     \
-   || strcmp (Fs_type, "devfs") == 0            \
+   || streq (Fs_type, "devfs")            \
    /* for NetBSD 3.0 */                         \
-   || strcmp (Fs_type, "kernfs") == 0)
+   || streq (Fs_type, "kernfs"))
 
 /* Historically, we have marked as "dummy" any file system of type "none",
    but now that programs like du need to know about bind-mounted directories,
@@ -194,10 +194,10 @@
 #ifdef MOUNTED_GETMNTENT1
 # define ME_DUMMY(Fs_name, Fs_type, Bind) \
   (ME_DUMMY_0 (Fs_name, Fs_type) \
-   || (strcmp (Fs_type, "none") == 0 && !Bind))
+   || (streq (Fs_type, "none") && !Bind))
 #else
 # define ME_DUMMY(Fs_name, Fs_type) \
-  (ME_DUMMY_0 (Fs_name, Fs_type) || strcmp (Fs_type, "none") == 0)
+  (ME_DUMMY_0 (Fs_name, Fs_type) || streq (Fs_type, "none"))
 #endif
 
 #ifdef __CYGWIN__
@@ -238,19 +238,19 @@ me_remote (char const *fs_name, _GL_UNUSED char const *fs_type)
     (strchr (Fs_name, ':') != NULL              \
      || ((Fs_name)[0] == '/'                    \
          && (Fs_name)[1] == '/'                 \
-         && (strcmp (Fs_type, "smbfs") == 0     \
-             || strcmp (Fs_type, "smb3") == 0   \
-             || strcmp (Fs_type, "cifs") == 0)) \
-     || strcmp (Fs_type, "acfs") == 0           \
-     || strcmp (Fs_type, "afs") == 0            \
-     || strcmp (Fs_type, "coda") == 0           \
-     || strcmp (Fs_type, "auristorfs") == 0     \
-     || strcmp (Fs_type, "fhgfs") == 0          \
-     || strcmp (Fs_type, "gpfs") == 0           \
-     || strcmp (Fs_type, "ibrix") == 0          \
-     || strcmp (Fs_type, "ocfs2") == 0          \
-     || strcmp (Fs_type, "vxfs") == 0           \
-     || strcmp ("-hosts", Fs_name) == 0)
+         && (streq (Fs_type, "smbfs")     \
+             || streq (Fs_type, "smb3")   \
+             || streq (Fs_type, "cifs"))) \
+     || streq (Fs_type, "acfs")           \
+     || streq (Fs_type, "afs")            \
+     || streq (Fs_type, "coda")           \
+     || streq (Fs_type, "auristorfs")     \
+     || streq (Fs_type, "fhgfs")          \
+     || streq (Fs_type, "gpfs")           \
+     || streq (Fs_type, "ibrix")          \
+     || streq (Fs_type, "ocfs2")          \
+     || streq (Fs_type, "vxfs")           \
+     || streq ("-hosts", Fs_name))
 #endif
 
 #if MOUNTED_GETMNTINFO          /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
@@ -695,10 +695,10 @@ read_file_system_list (bool need_fs_type)
             char *name;
             struct stat statbuf;
 
-            if (strcmp (d->d_name, "..") == 0)
+            if (streq (d->d_name, ".."))
               continue;
 
-            if (strcmp (d->d_name, ".") == 0)
+            if (streq (d->d_name, "."))
               name = xstrdup ("/");
             else
               {

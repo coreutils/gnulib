@@ -67,7 +67,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
           && c_toupper (tocode[2]) == 'F'
           && tocode[3] == '-')
         {
-          if (strcmp (fromcode + 4, "8") == 0)
+          if (streq (fromcode + 4, "8"))
             {
               if (c_strcasecmp (tocode + 4, "16BE") == 0)
                 return _ICONV_UTF8_UTF16BE;
@@ -78,7 +78,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
               if (c_strcasecmp (tocode + 4, "32LE") == 0)
                 return _ICONV_UTF8_UTF32LE;
             }
-          else if (strcmp (tocode + 4, "8") == 0)
+          else if (streq (tocode + 4, "8"))
             {
               if (c_strcasecmp (fromcode + 4, "16BE") == 0)
                 return _ICONV_UTF16BE_UTF8;

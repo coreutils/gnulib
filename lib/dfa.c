@@ -51,6 +51,7 @@
 # define c32isprint iswprint
 # define c32isspace iswspace
 # define mbszero(p) memset (p, 0, sizeof (mbstate_t))
+# define streq(a, b) (strcmp (a, b) == 0)
 #else
 /* Use ISO C 11 + gnulib API.  */
 # include <uchar.h>
@@ -62,12 +63,6 @@
    runtime overhead of 'assert' instead of 'assume_nonnull' when the
    MMU will check anyway.  */
 #define assume_nonnull(x) assume ((x) != NULL)
-
-static bool
-str_eq (char const *a, char const *b)
-{
-  return strcmp (a, b) == 0;
-}
 
 static bool
 c_isdigit (char c)
@@ -944,7 +939,7 @@ static const struct dfa_ctype *_GL_ATTRIBUTE_PURE
 find_pred (const char *str)
 {
   for (int i = 0; prednames[i].name; i++)
-    if (str_eq (str, prednames[i].name))
+    if (streq (str, prednames[i].name))
       return &prednames[i];
   return NULL;
 }
@@ -1023,8 +1018,8 @@ parse_bracket_exp (struct dfa *dfa)
                    worry about that possibility.  */
                 {
                   char const *class
-                    = (dfa->syntax.case_fold && (str_eq (str, "upper")
-                                                 || str_eq (str, "lower"))
+                    = (dfa->syntax.case_fold && (streq (str, "upper")
+                                                 || streq (str, "lower"))
                        ? "alpha" : str);
                   const struct dfa_ctype *pred = find_pred (class);
                   if (!pred)
@@ -4207,7 +4202,7 @@ dfamust (struct dfa const *d)
             idx_t j, ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
-            if (str_eq (lmp->is, rmp->is))
+            if (streq (lmp->is, rmp->is))
               {
                 lmp->begline &= rmp->begline;
                 lmp->endline &= rmp->endline;
@@ -4254,7 +4249,7 @@ dfamust (struct dfa const *d)
           for (idx_t i = 0; mp->in[i] != NULL; i++)
             if (strlen (mp->in[i]) > strlen (result))
               result = mp->in[i];
-          if (str_eq (result, mp->is))
+          if (streq (result, mp->is))
             {
               if ((!need_begline || mp->begline) && (!need_endline
                                                      || mp->endline))

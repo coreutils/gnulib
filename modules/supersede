@@ -10,6 +10,7 @@ Depends-on:
 c99
 fcntl-h
 bool
+stringeq
 sys_stat-h
 clean-temp
 tempname

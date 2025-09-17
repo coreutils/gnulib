@@ -126,7 +126,7 @@ argmatch_exact (const char *arg, const char *const *arglist)
   /* Test elements for exact match.  */
   for (i = 0; arglist[i]; i++)
     {
-      if (!strcmp (arglist[i], arg))
+      if (streq (arglist[i], arg))
         return i;
     }
 

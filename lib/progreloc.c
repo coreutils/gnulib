@@ -285,7 +285,7 @@ find_executable (const char *argv0)
     link = xreadlink ("/proc/curproc/file");
     if (link != NULL)
       {
-        if (strcmp (link, "unknown") != 0)
+        if (!streq (link, "unknown"))
           return link;
         free (link);
       }

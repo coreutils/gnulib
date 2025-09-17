@@ -8,6 +8,7 @@ m4/idcache.m4
 
 Depends-on:
 flexmember
+stringeq
 xalloc
 
 configure.ac:

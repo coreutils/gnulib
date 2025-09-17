@@ -118,9 +118,9 @@ acl_access_nontrivial (acl_t acl)
                        - S-1-5-32-545 (group "Users")
                        Cf. <https://learn.microsoft.com/en-us/windows/win32/secauthz/well-known-sids>
                        and look at the output of the 'mkgroup' command.  */
-                    ignorable = (strcmp (group_sid, "S-1-5-18") == 0
-                                 || strcmp (group_sid, "S-1-5-32-544") == 0
-                                 || strcmp (group_sid, "S-1-5-32-545") == 0);
+                    ignorable = (streq (group_sid, "S-1-5-18")
+                                 || streq (group_sid, "S-1-5-32-544")
+                                 || streq (group_sid, "S-1-5-32-545"));
                   }
               }
             if (!ignorable)

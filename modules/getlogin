@@ -8,6 +8,7 @@ m4/getlogin.m4
 Depends-on:
 unistd-h
 readutmp        [test $HAVE_GETLOGIN = 0 || test $REPLACE_GETLOGIN = 1]
+stringeq        [test $HAVE_GETLOGIN = 0 || test $REPLACE_GETLOGIN = 1]
 
 configure.ac:
 gl_FUNC_GETLOGIN

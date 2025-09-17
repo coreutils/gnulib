@@ -10,6 +10,7 @@ Depends-on:
 acl-permissions
 dirent-h        [test "$use_xattr" = yes]
 file-has-acl    [test "$use_xattr" = yes]
+stringeq        [test "$use_xattr" = yes]
 
 configure.ac:
 gl_QCOPY_ACL

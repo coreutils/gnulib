@@ -10,6 +10,7 @@ stdlib-h
 environ         [test $REPLACE_PUTENV = 1]
 free-posix      [test $REPLACE_PUTENV = 1]
 malloc-posix    [test $REPLACE_PUTENV = 1]
+stringeq        [test $REPLACE_PUTENV = 1]
 unsetenv        [test $REPLACE_PUTENV = 1]
 
 configure.ac:

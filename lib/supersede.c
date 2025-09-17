@@ -97,7 +97,7 @@ open_supersede (const char *filename, int flags, mode_t mode,
     #endif
 
 #if defined _WIN32 && ! defined __CYGWIN__
-  if (strcmp (filename, "/dev/null") == 0)
+  if (streq (filename, "/dev/null"))
     filename = "NUL";
 #endif
 

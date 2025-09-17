@@ -109,12 +109,12 @@ getuidbyname (const char *user)
 
   for (tail = user_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
-    if (*tail->name == *user && !strcmp (tail->name, user))
+    if (*tail->name == *user && streq (tail->name, user))
       return &tail->id.u;
 
   for (tail = nouser_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
-    if (*tail->name == *user && !strcmp (tail->name, user))
+    if (*tail->name == *user && streq (tail->name, user))
       return NULL;
 
   pwent = getpwnam (user);
@@ -191,12 +191,12 @@ getgidbyname (const char *group)
 
   for (tail = group_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
-    if (*tail->name == *group && !strcmp (tail->name, group))
+    if (*tail->name == *group && streq (tail->name, group))
       return &tail->id.g;
 
   for (tail = nogroup_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
-    if (*tail->name == *group && !strcmp (tail->name, group))
+    if (*tail->name == *group && streq (tail->name, group))
       return NULL;
 
   grent = getgrnam (group);

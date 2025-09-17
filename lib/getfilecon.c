@@ -60,7 +60,7 @@ map_to_failure (int ret, char **con)
       return -1;
     }
 
-  if (ret == 10 && strcmp (*con, "unlabeled") == 0)
+  if (ret == 10 && streq (*con, "unlabeled"))
     {
       freecon (*con);
       *con = NULL;
