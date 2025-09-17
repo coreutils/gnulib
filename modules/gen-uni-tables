@@ -12,8 +12,6 @@ memcmp
 bool
 strdup
 strstr-simple
-str_startswith
-str_endswith
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
