@@ -452,7 +452,7 @@ relativize (const char *filename,
           break;
       /* Did the components match?  */
       if (!(filename_s - filename == dir2_s - dir2
-            && memcmp (filename, dir2, dir2_s - dir2) == 0))
+            && memeq (filename, dir2, dir2_s - dir2)))
         break;
       dir2 = dir2_s;
       filename = filename_s;

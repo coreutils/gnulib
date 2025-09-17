@@ -11,6 +11,7 @@ stdlib-h
 basename-lgpl   [test $HAVE_GETPROGNAME = 0]
 extensions      [test $HAVE_GETPROGNAME = 0]
 open            [test $HAVE_GETPROGNAME = 0 && case "$host_os" in sco* | unixware*) true;; *) false;; esac]
+stringeq        [test $HAVE_GETPROGNAME = 0]
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])

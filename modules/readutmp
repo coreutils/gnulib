@@ -15,6 +15,7 @@ stat-time
 gettimeofday
 bool
 stdint-h
+stringeq
 strnlen
 time-h
 unlocked-io-internal

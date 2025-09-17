@@ -18,6 +18,7 @@ minmax
 free-posix
 limits-h
 stdint-h
+stringeq
 malloc-posix
 ssize_t
 stat

@@ -11,6 +11,7 @@ unistd-h
 extensions
 malloca         [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
 memchr          [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
+stringeq        [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
 
 configure.ac:
 gl_FUNC_GETLOGIN_R

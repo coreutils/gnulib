@@ -26,6 +26,7 @@ c32isxdigit
 c32tolower
 c32width
 memcmp
+stringeq
 
 configure.ac:
 gl_MBCHAR

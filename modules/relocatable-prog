@@ -19,6 +19,7 @@ Depends-on:
 relocatable-prog-wrapper
 progname
 canonicalize-lgpl
+stringeq
 xalloc
 xreadlink
 open

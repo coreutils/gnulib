@@ -9,6 +9,7 @@ Depends-on:
 time-h
 bool
 spawn-pipe
+stringeq
 wait-process
 execute
 safe-read

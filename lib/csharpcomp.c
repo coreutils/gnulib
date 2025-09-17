@@ -68,7 +68,7 @@ name_is_dll (const struct dirent *d)
   if (d->d_name[0] != '.')
     {
       size_t d_name_len = strlen (d->d_name);
-      if (d_name_len > 4 && memcmp (d->d_name + d_name_len - 4, ".dll", 4) == 0)
+      if (d_name_len > 4 && memeq (d->d_name + d_name_len - 4, ".dll", 4))
         /* Filter out files that start with a lowercase letter and files that
            contain the substring ".Native.", since on Windows these files
            produce an error "PE image doesn't contain managed metadata".  */
@@ -122,7 +122,7 @@ compile_csharp_using_mono (const char * const *sources,
               count++;
               if (count == 4)
                 {
-                  if (memcmp (c, "Mono", 4) == 0)
+                  if (memeq (c, "Mono", 4))
                     mcs_present = true;
                   c[0] = c[1]; c[1] = c[2]; c[2] = c[3];
                   count--;
@@ -192,8 +192,8 @@ compile_csharp_using_mono (const char * const *sources,
         {
           const char *source_file = sources[i];
           if (strlen (source_file) >= 10
-              && memcmp (source_file + strlen (source_file) - 10, ".resources",
-                         10) == 0)
+              && memeq (source_file + strlen (source_file) - 10,
+                        ".resources", 10))
             {
               char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
 
@@ -239,7 +239,7 @@ compile_csharp_using_mono (const char * const *sources,
       l = (l + 1) % 2;
       if (line[l] != NULL
           && !(linelen[l] >= 21
-               && memcmp (line[l], "Compilation succeeded", 21) == 0))
+               && memeq (line[l], "Compilation succeeded", 21)))
         fwrite (line[l], 1, linelen[l], stderr);
       if (line[0] != NULL)
         free (line[0]);
@@ -399,7 +399,7 @@ compile_csharp_using_dotnet (const char * const *sources,
                 /* The line has the structure
                      Microsoft.SUBSYSTEM VERSION [DIRECTORY]  */
                 if (linelen > 22
-                    && memcmp (line, "Microsoft.NETCore.App ", 22) == 0)
+                    && memeq (line, "Microsoft.NETCore.App ", 22))
                   {
                     char *version = line + 22;
                     char *version_end = strchr (version, ' ');
@@ -613,10 +613,9 @@ compile_csharp_using_dotnet (const char * const *sources,
           char *source_file_converted = cygpath_w (source_file);
           *mallocedp++ = source_file_converted;
           if (strlen (source_file_converted) >= 10
-              && memcmp (source_file_converted
-                         + strlen (source_file_converted) - 10,
-                         ".resources",
-                         10) == 0)
+              && memeq ((source_file_converted
+                         + strlen (source_file_converted) - 10),
+                        ".resources", 10))
             {
               char *option =
                 (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -717,12 +716,12 @@ compile_csharp_using_dotnet (const char * const *sources,
                   count++;
                   if (count >= 7)
                     {
-                      if (memcmp (c, "chicken", 7) == 0)
+                      if (memeq (c, "chicken", 7))
                         seen_chicken = true;
                     }
                   if (count == 8)
                     {
-                      if (memcmp (c, "analyzer", 8) == 0)
+                      if (memeq (c, "analyzer", 8))
                         seen_analyzer = true;
                       c[0] = c[1]; c[1] = c[2]; c[2] = c[3]; c[3] = c[4];
                       c[4] = c[5]; c[5] = c[6]; c[6] = c[7];
@@ -805,10 +804,9 @@ compile_csharp_using_dotnet (const char * const *sources,
               char *source_file_converted = cygpath_w (source_file);
               *mallocedp++ = source_file_converted;
               if (strlen (source_file_converted) >= 10
-                  && memcmp (source_file_converted
-                             + strlen (source_file_converted) - 10,
-                             ".resources",
-                             10) == 0)
+                  && memeq ((source_file_converted
+                             + strlen (source_file_converted) - 10),
+                            ".resources", 10))
                 {
                   char *option =
                     (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -895,7 +893,7 @@ compile_csharp_using_sscli (const char * const *sources,
               count++;
               if (count == 7)
                 {
-                  if (memcmp (c, "chicken", 7) == 0)
+                  if (memeq (c, "chicken", 7))
                     csc_present = false;
                   c[0] = c[1]; c[1] = c[2]; c[2] = c[3];
                   c[3] = c[4]; c[4] = c[5]; c[5] = c[6];
@@ -977,10 +975,9 @@ compile_csharp_using_sscli (const char * const *sources,
           char *source_file_converted = cygpath_w (source_file);
           *mallocedp++ = source_file_converted;
           if (strlen (source_file_converted) >= 10
-              && memcmp (source_file_converted
-                         + strlen (source_file_converted) - 10,
-                         ".resources",
-                         10) == 0)
+              && memeq ((source_file_converted
+                         + strlen (source_file_converted) - 10),
+                        ".resources", 10))
             {
               char *option =
                 (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -1034,7 +1031,7 @@ compile_csharp_class (const char * const *sources,
 {
   bool output_is_library =
     (strlen (output_file) >= 4
-     && memcmp (output_file + strlen (output_file) - 4, ".dll", 4) == 0);
+     && memeq (output_file + strlen (output_file) - 4, ".dll", 4));
   int result;
 
   /* First try the C# implementation specified through --enable-csharp.  */

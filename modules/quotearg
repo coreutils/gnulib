@@ -22,6 +22,7 @@ minmax
 quotearg-simple
 bool
 stdint-h
+stringeq
 uchar-h
 xalloc
 

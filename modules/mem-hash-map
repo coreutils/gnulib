@@ -8,6 +8,7 @@ lib/mem-hash-map.c
 Depends-on:
 next-prime
 obstack
+stringeq
 xalloc
 
 configure.ac:

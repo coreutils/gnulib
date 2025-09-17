@@ -80,7 +80,7 @@ getumask (void)
             for (;;)
               {
                 /* Here we're at the beginning of a line.  */
-                if (p_end - p > 8 && memcmp (p, "Umask:\t0", 8) == 0)
+                if (p_end - p > 8 && memeq (p, "Umask:\t0", 8))
                   {
                     unsigned int value = 0;
                     p += 8;

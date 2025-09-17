@@ -485,19 +485,19 @@ unicode_name_character (const char *name)
                               unsigned int index1;
 
                               for (index1 = 0; index1 < 19; index1++)
-                                if (memcmp (jamo_initial_short_name[index1], p1, n1) == 0
+                                if (memeq (jamo_initial_short_name[index1], p1, n1)
                                     && jamo_initial_short_name[index1][n1] == '\0')
                                   {
                                     unsigned int index2;
 
                                     for (index2 = 0; index2 < 21; index2++)
-                                      if (memcmp (jamo_medial_short_name[index2], p2, n2) == 0
+                                      if (memeq (jamo_medial_short_name[index2], p2, n2)
                                           && jamo_medial_short_name[index2][n2] == '\0')
                                         {
                                           unsigned int index3;
 
                                           for (index3 = 0; index3 < 28; index3++)
-                                            if (memcmp (jamo_final_short_name[index3], p3, n3) == 0
+                                            if (memeq (jamo_final_short_name[index3], p3, n3)
                                                 && jamo_final_short_name[index3][n3] == '\0')
                                               {
                                                 return 0xAC00 + (index1 * 21 + index2) * 28 + index3;
@@ -516,7 +516,7 @@ unicode_name_character (const char *name)
                       && words[1] == UNICODE_CHARNAME_WORD_COMPATIBILITY
                       && p1 + 14 <= ptr
                       && p1 + 15 >= ptr
-                      && memcmp (p1, "IDEOGRAPH-", 10) == 0)
+                      && memeq (p1, "IDEOGRAPH-", 10))
                     {
                       const char *p2 = p1 + 10;
 
@@ -553,7 +553,7 @@ unicode_name_character (const char *name)
                       && words[0] == UNICODE_CHARNAME_WORD_VARIATION
                       && p1 + 10 <= ptr
                       && p1 + 12 >= ptr
-                      && memcmp (p1, "SELECTOR-", 9) == 0)
+                      && memeq (p1, "SELECTOR-", 9))
                     {
                       const char *p2 = p1 + 9;
 

@@ -18,6 +18,7 @@ scandir
 alphasort
 sh-quote
 safe-read
+stringeq
 xmalloca
 xvasprintf
 gettext-h

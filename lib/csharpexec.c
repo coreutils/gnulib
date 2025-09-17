@@ -105,7 +105,7 @@ name_is_dll (const struct dirent *d)
   if (d->d_name[0] != '.')
     {
       size_t d_name_len = strlen (d->d_name);
-      if (d_name_len > 4 && memcmp (d->d_name + d_name_len - 4, ".dll", 4) == 0)
+      if (d_name_len > 4 && memeq (d->d_name + d_name_len - 4, ".dll", 4))
         return 1;
     }
   return 0;
@@ -327,7 +327,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
       {
         size_t assembly_path_len = strlen (assembly_path);
         if (assembly_path_len > 4
-            && memcmp (assembly_path + (assembly_path_len - 4), ".exe", 4) == 0)
+            && memeq (assembly_path + (assembly_path_len - 4), ".exe", 4))
           assembly_path_len -= 4;
         char *p = runtimeconfig_filename;
         memcpy (p, assembly_path, assembly_path_len);
@@ -421,7 +421,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
                     /* The line has the structure
                          Microsoft.SUBSYSTEM VERSION [DIRECTORY]  */
                     if (linelen > 22
-                        && memcmp (line, "Microsoft.NETCore.App ", 22) == 0)
+                        && memeq (line, "Microsoft.NETCore.App ", 22))
                       {
                         char *version = line + 22;
                         char *version_end = strchr (version, ' ');

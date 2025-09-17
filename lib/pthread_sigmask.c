@@ -54,7 +54,7 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
          Don't cache the information: libpthread.so could be dynamically
          loaded after the program started and after pthread_sigmask was
          called for the first time.  */
-      if (memcmp (&omask_copy, &omask, sizeof omask) == 0
+      if (memeq (&omask_copy, &omask, sizeof omask)
           && pthread_sigmask (1729, &omask_copy, NULL) == 0)
         {
           /* pthread_sigmask is currently ineffective.  The program is not

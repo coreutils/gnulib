@@ -239,7 +239,7 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
       if (_D_EXACT_NAMLEN (dp) < baselen + 4)
         continue;
 
-      if (memcmp (buf + base_offset, dp->d_name, baselen + 2) != 0)
+      if (!memeq (buf + base_offset, dp->d_name, baselen + 2))
         continue;
 
       char const *p = dp->d_name + baselen + 2;

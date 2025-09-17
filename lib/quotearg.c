@@ -410,7 +410,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                      and when the quote string is more than 1 byte long.
                      If we do call strlen, save the result.  */
                   ? (argsize = strlen (arg)) : argsize))
-          && memcmp (arg + i, quote_string, quote_string_len) == 0)
+          && memeq (arg + i, quote_string, quote_string_len))
         {
           if (elide_outer_quotes)
             goto force_outer_quoting_style;

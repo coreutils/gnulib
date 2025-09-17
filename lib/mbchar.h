@@ -217,12 +217,12 @@ typedef struct mbchar mbchar_t;
   ((mbc1).wc_valid && (mbc2).wc_valid                                   \
    ? (mbc1).wc == (mbc2).wc                                             \
    : (mbc1).bytes == (mbc2).bytes                                       \
-     && memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) == 0)
+     && memeq ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes))
 #define mb_caseequal(mbc1, mbc2) \
   ((mbc1).wc_valid && (mbc2).wc_valid                                   \
    ? c32tolower ((mbc1).wc) == c32tolower ((mbc2).wc)                   \
    : (mbc1).bytes == (mbc2).bytes                                       \
-     && memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) == 0)
+     && memeq ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes))
 
 /* <ctype.h>, <wctype.h> classification.  */
 #define mb_isascii(mbc) \

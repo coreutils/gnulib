@@ -67,6 +67,12 @@ str_endswith (const char *string, const char *suffix)
   return len >= n && strcmp (string + len - n, suffix) == 0;
 }
 
+static bool
+memeq (void const *s1, void const *s2, size_t n)
+{
+  return !memcmp (s1, s2, n);
+}
+
 /* ========================================================================= */
 
 /* Reading UnicodeData.txt.  */
@@ -10539,7 +10545,7 @@ get_decomposition (unsigned int ch,
           assert (rangle != NULL);
           typelen = rangle + 1 - decomposition;
 #define TYPE(t1,t2) \
-          if (typelen == (sizeof (t1) - 1) && memcmp (decomposition, t1, typelen) == 0) \
+          if (typelen == (sizeof (t1) - 1) && memeq (decomposition, t1, typelen)) \
             type = t2; \
           else
           TYPE ("<font>", UC_DECOMP_FONT)
@@ -11426,20 +11432,20 @@ fill_casing_rules (const char *specialcasing_filename)
             {
               bool negate = false;
 
-              if (word_end - word_begin >= 4 && memcmp (word_begin, "Not_", 4) == 0)
+              if (word_end - word_begin >= 4 && memeq (word_begin, "Not_", 4))
                 {
                   word_begin += 4;
                   negate = true;
                 }
-              if (word_end - word_begin == 11 && memcmp (word_begin, "Final_Sigma", 11) == 0)
+              if (word_end - word_begin == 11 && memeq (word_begin, "Final_Sigma", 11))
                 context = SCC_FINAL_SIGMA;
-              else if (word_end - word_begin == 17 && memcmp (word_begin, "After_Soft_Dotted", 17) == 0)
+              else if (word_end - word_begin == 17 && memeq (word_begin, "After_Soft_Dotted", 17))
                 context = SCC_AFTER_SOFT_DOTTED;
-              else if (word_end - word_begin == 10 && memcmp (word_begin, "More_Above", 10) == 0)
+              else if (word_end - word_begin == 10 && memeq (word_begin, "More_Above", 10))
                 context = SCC_MORE_ABOVE;
-              else if (word_end - word_begin == 10 && memcmp (word_begin, "Before_Dot", 10) == 0)
+              else if (word_end - word_begin == 10 && memeq (word_begin, "Before_Dot", 10))
                 context = SCC_BEFORE_DOT;
-              else if (word_end - word_begin == 7 && memcmp (word_begin, "After_I", 7) == 0)
+              else if (word_end - word_begin == 7 && memeq (word_begin, "After_I", 7))
                 context = SCC_AFTER_I;
               else
                 {

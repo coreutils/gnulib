@@ -102,7 +102,7 @@ argmatch (const char *arg, const char *const *arglist,
             {
               /* Second nonexact match found.  */
               if (vallist == NULL
-                  || memcmp ((char const *) vallist + valsize * matchind,
+                  || !memeq ((char const *) vallist + valsize * matchind,
                              (char const *) vallist + valsize * i, valsize))
                 {
                   /* There is a real ambiguity, or we could not
@@ -165,7 +165,7 @@ argmatch_valid (const char *const *arglist,
   fputs (_("Valid arguments are:"), stderr);
   for (i = 0; arglist[i]; i++)
     if ((i == 0)
-        || memcmp (last_val, (char const *) vallist + valsize * i, valsize))
+        || !memeq (last_val, (char const *) vallist + valsize * i, valsize))
       {
         fprintf (stderr, "\n  - %s", quote (arglist[i]));
         last_val = (char const *) vallist + valsize * i;
@@ -219,7 +219,7 @@ argmatch_to_argument (const void *value,
   size_t i;
 
   for (i = 0; arglist[i]; i++)
-    if (!memcmp (value, (char const *) vallist + valsize * i, valsize))
+    if (memeq (value, (char const *) vallist + valsize * i, valsize))
       return arglist[i];
   return NULL;
 }

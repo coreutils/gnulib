@@ -22,6 +22,7 @@ xsetenv
 scandir
 alphasort
 sh-quote
+stringeq
 xalloc
 xmalloca
 copy-file

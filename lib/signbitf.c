@@ -56,7 +56,7 @@ gl_signbitf (float arg)
       /* Distinguish 0.0f and -0.0f.  */
       static float plus_zero = 0.0f;
       float arg_mem = arg;
-      return (memcmp (&plus_zero, &arg_mem, SIZEOF_FLT) != 0);
+      return !memeq (&plus_zero, &arg_mem, SIZEOF_FLT);
     }
   else
     return 0;

@@ -454,7 +454,7 @@ set_program_name_and_installdir (const char *argv0,
     size_t argv0_len = strlen (argv0);
     const size_t exeext_len = sizeof (EXEEXT) - sizeof ("");
     if (argv0_len > 4 + exeext_len)
-      if (memcmp (argv0 + argv0_len - exeext_len - 4, ".bin", 4) == 0)
+      if (memeq (argv0 + argv0_len - exeext_len - 4, ".bin", 4))
         {
           if (sizeof (EXEEXT) > sizeof (""))
             {

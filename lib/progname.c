@@ -43,7 +43,7 @@ set_program_name (const char *argv0)
      Remove this "<dirname>/.libs/" or "<dirname>/.libs/lt-" prefix here.  */
   char const *slash = strrchr (argv0, '/');
   char const *base = slash ? slash + 1 : argv0;
-  if (7 <= base - argv0 && memcmp (base - 7, "/.libs/", 7) == 0)
+  if (7 <= base - argv0 && memeq (base - 7, "/.libs/", 7))
     {
       argv0 = base;
       if (strncmp (base, "lt-", 3) == 0)

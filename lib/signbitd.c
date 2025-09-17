@@ -56,7 +56,7 @@ gl_signbitd (double arg)
       /* Distinguish 0.0 and -0.0.  */
       static double plus_zero = 0.0;
       double arg_mem = arg;
-      return (memcmp (&plus_zero, &arg_mem, SIZEOF_DBL) != 0);
+      return !memeq (&plus_zero, &arg_mem, SIZEOF_DBL);
     }
   else
     return 0;

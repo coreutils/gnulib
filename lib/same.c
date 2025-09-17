@@ -76,7 +76,7 @@ same_nameat (int source_dfd, char const *source,
   size_t dest_baselen = base_len (dest_basename);
   bool identical_basenames =
     (source_baselen == dest_baselen
-     && memcmp (source_basename, dest_basename, dest_baselen) == 0);
+     && memeq (source_basename, dest_basename, dest_baselen));
   bool compare_dirs = identical_basenames;
   bool same = false;
 
@@ -84,7 +84,7 @@ same_nameat (int source_dfd, char const *source,
   size_t slen_max = HAVE_LONG_FILE_NAMES ? 255 : _POSIX_NAME_MAX;
   size_t min_baselen = MIN (source_baselen, dest_baselen);
   if (slen_max <= min_baselen
-      && memcmp (source_basename, dest_basename, slen_max) == 0)
+      && memeq (source_basename, dest_basename, slen_max))
     compare_dirs = true;
 #endif
 
@@ -122,8 +122,7 @@ same_nameat (int source_dfd, char const *source,
                 destdir_errno = errno;
               else
                 same = (name_max <= min_baselen
-                        && (memcmp (source_basename, dest_basename, name_max)
-                            == 0));
+                        && memeq (source_basename, dest_basename, name_max));
             }
         }
       close (destdir_fd);

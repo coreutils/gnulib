@@ -41,7 +41,7 @@ _sd_equals (idx_t a_nbytes, const char *a_data,
             idx_t b_nbytes, const char *b_data)
 {
   return (a_nbytes == b_nbytes
-          && (a_nbytes == 0 || memcmp (a_data, b_data, a_nbytes) == 0));
+          && (a_nbytes == 0 || memeq (a_data, b_data, a_nbytes)));
 }
 
 bool
@@ -50,7 +50,7 @@ _sd_startswith (idx_t s_nbytes, const char *s_data,
 {
   return (s_nbytes >= prefix_nbytes
           && (prefix_nbytes == 0
-              || memcmp (s_data, prefix_data, prefix_nbytes) == 0));
+              || memeq (s_data, prefix_data, prefix_nbytes)));
 }
 
 bool
@@ -59,8 +59,8 @@ _sd_endswith (idx_t s_nbytes, const char *s_data,
 {
   return (s_nbytes >= suffix_nbytes
           && (suffix_nbytes == 0
-              || memcmp (s_data + (s_nbytes - suffix_nbytes), suffix_data,
-                         suffix_nbytes) == 0));
+              || memeq (s_data + (s_nbytes - suffix_nbytes), suffix_data,
+                        suffix_nbytes)));
 }
 
 int

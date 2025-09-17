@@ -9,6 +9,7 @@ isnanf
 isnand
 isnanl
 math-h
+stringeq
 extensions
 
 configure.ac:

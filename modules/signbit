@@ -16,6 +16,7 @@ isnand-nolibm   [test $REPLACE_SIGNBIT = 1]
 isnanl-nolibm   [test $REPLACE_SIGNBIT = 1]
 fpieee          [test $REPLACE_SIGNBIT = 1]
 memcmp          [test $REPLACE_SIGNBIT = 1]
+stringeq        [test $REPLACE_SIGNBIT = 1]
 
 configure.ac:
 gl_SIGNBIT

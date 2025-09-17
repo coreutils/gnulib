@@ -8,6 +8,7 @@ m4/memcoll.m4
 
 Depends-on:
 memcmp
+stringeq
 
 configure.ac:
 gl_MEMCOLL

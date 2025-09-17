@@ -129,7 +129,7 @@ getprogname (void)
               else
                 p = cmd;
               if (strlen (p) > PST_UCOMMLEN - 1
-                  && memcmp (p, ucomm, PST_UCOMMLEN - 1) == 0)
+                  && memeq (p, ucomm, PST_UCOMMLEN - 1))
                 /* p is less truncated than ucomm.  */
                 ;
               else
@@ -165,7 +165,7 @@ getprogname (void)
                   else
                     p = cmd;
                   if (strlen (p) > PST_UCOMMLEN - 1
-                      && memcmp (p, ucomm, PST_UCOMMLEN - 1) == 0)
+                      && memeq (p, ucomm, PST_UCOMMLEN - 1))
                     /* p is less truncated than ucomm.  */
                     ;
                   else

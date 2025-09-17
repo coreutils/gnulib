@@ -261,7 +261,7 @@ get_aclinfo (int fd, char const *name, struct aclinfo *ai, int flags)
                  first case, and ENODATA in the latter.  */
               if (r == 0)
                 scontext_err = ENOTSUP;
-              if (r == 10 && memcmp (ai->scontext, "unlabeled", 10) == 0)
+              if (r == 10 && memeq (ai->scontext, "unlabeled", 10))
                 {
                   freecon (ai->scontext);
                   scontext_err = ENODATA;
@@ -364,9 +364,9 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
       /* For a trivial ACL, max 6 (typically 3) ACEs, 3 allow, 3 deny.
          Check that there is at most one ACE of each TYPE and WHO.  */
       int who2
-        = (wholen == 6 && memcmp (xattr, "OWNER@", 6) == 0 ? 0
-           : wholen == 6 && memcmp (xattr, "GROUP@", 6) == 0 ? 2
-           : wholen == 9 && memcmp (xattr, "EVERYONE@", 9) == 0 ? 4
+        = (wholen == 6 && memeq (xattr, "OWNER@", 6) ? 0
+           : wholen == 6 && memeq (xattr, "GROUP@", 6) ? 2
+           : wholen == 9 && memeq (xattr, "EVERYONE@", 9) ? 4
            : -1);
       if (who2 < 0)
         return 1;

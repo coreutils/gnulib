@@ -218,8 +218,8 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   for (j = 0; j < t->level3_size; j++)
     {
       for (i = 0; i < k; i++)
-        if (memcmp (&t->level3[i << t->p], &t->level3[j << t->p],
-                    (1 << t->p) * sizeof (uint32_t)) == 0)
+        if (memeq (&t->level3[i << t->p], &t->level3[j << t->p],
+                   (1 << t->p) * sizeof (uint32_t)))
           break;
       /* Relocate block j to block i.  */
       reorder3[j] = i;
@@ -242,8 +242,8 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   for (j = 0; j < t->level2_size; j++)
     {
       for (i = 0; i < k; i++)
-        if (memcmp (&t->level2[i << t->q], &t->level2[j << t->q],
-                    (1 << t->q) * sizeof (uint32_t)) == 0)
+        if (memeq (&t->level2[i << t->q], &t->level2[j << t->q],
+                   (1 << t->q) * sizeof (uint32_t)))
           break;
       /* Relocate block j to block i.  */
       reorder2[j] = i;

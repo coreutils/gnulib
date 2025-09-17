@@ -156,8 +156,8 @@ FUNC (DOUBLE x)
     if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
          & (EXP_MASK << EXPBIT0_BIT))
         == 0)
-      return (memcmp (&m.value, &plus_inf, SIZE) != 0
-              && memcmp (&m.value, &minus_inf, SIZE) != 0);
+      return (!memeq (&m.value, &plus_inf, SIZE)
+              && !memeq (&m.value, &minus_inf, SIZE));
     else
       return 0;
   }
@@ -177,7 +177,7 @@ FUNC (DOUBLE x)
       memset (&m2.value, 0, SIZE);
       m1.value = x;
       m2.value = x + (x ? 0.0L : -0.0L);
-      if (memcmp (&m1.value, &m2.value, SIZE) != 0)
+      if (!memeq (&m1.value, &m2.value, SIZE))
         return 1;
 # endif
       return 0;

@@ -124,27 +124,27 @@ static const struct script scripts[] =
 static const struct script *
 default_script_in_territory (const char language[2], const char territory[2])
 {
-  if (memcmp (language, "az", 2) == 0)
+  if (memeq (language, "az", 2))
     {
-      if (memcmp (territory, "AZ", 2) == 0)
+      if (memeq (territory, "AZ", 2))
         return &scripts[SCRIPT_LATIN];
-      else if (memcmp (territory, "IR", 2) == 0)
+      else if (memeq (territory, "IR", 2))
         return &scripts[SCRIPT_ARABIC];
     }
-  else if (memcmp (language, "ku", 2) == 0)
+  else if (memeq (language, "ku", 2))
     {
-      if (memcmp (territory, "IQ", 2) == 0
-          || memcmp (territory, "IR", 2) == 0)
+      if (memeq (territory, "IQ", 2)
+          || memeq (territory, "IR", 2))
         return &scripts[SCRIPT_ARABIC];
-      else if (memcmp (territory, "SY", 2) == 0
-               || memcmp (territory, "TR", 2) == 0)
+      else if (memeq (territory, "SY", 2)
+               || memeq (territory, "TR", 2))
         return &scripts[SCRIPT_LATIN];
     }
-  else if (memcmp (language, "pa", 2) == 0)
+  else if (memeq (language, "pa", 2))
     {
-      if (memcmp (territory, "PK", 2) == 0)
+      if (memeq (territory, "PK", 2))
         return &scripts[SCRIPT_ARABIC];
-      else if (memcmp (territory, "IN", 2) == 0)
+      else if (memeq (territory, "IN", 2))
         return &scripts[SCRIPT_GURMUKHI];
     }
   return NULL;
@@ -156,32 +156,32 @@ default_script_in_territory (const char language[2], const char territory[2])
 static const struct script *
 default_script_for_language2 (const char language[2])
 {
-  if (memcmp (language, "be", 2) == 0)
+  if (memeq (language, "be", 2))
      return &scripts[SCRIPT_CYRILLIC];
-   else if (memcmp (language, "bs", 2) == 0)
+   else if (memeq (language, "bs", 2))
      return &scripts[SCRIPT_LATIN];
-   else if (memcmp (language, "ha", 2) == 0)
+   else if (memeq (language, "ha", 2))
      return &scripts[SCRIPT_LATIN];
-   else if (memcmp (language, "kk", 2) == 0)
+   else if (memeq (language, "kk", 2))
      return &scripts[SCRIPT_CYRILLIC];
-   else if (memcmp (language, "ks", 2) == 0)
+   else if (memeq (language, "ks", 2))
      return &scripts[SCRIPT_ARABIC];
-   else if (memcmp (language, "mn", 2) == 0)
+   else if (memeq (language, "mn", 2))
      return &scripts[SCRIPT_CYRILLIC];
-   else if (memcmp (language, "sd", 2) == 0)
+   else if (memeq (language, "sd", 2))
      return &scripts[SCRIPT_ARABIC];
-   else if (memcmp (language, "sr", 2) == 0)
+   else if (memeq (language, "sr", 2))
      return &scripts[SCRIPT_CYRILLIC];
-   else if (memcmp (language, "uz", 2) == 0)
+   else if (memeq (language, "uz", 2))
      return &scripts[SCRIPT_LATIN];
-   else if (memcmp (language, "yi", 2) == 0)
+   else if (memeq (language, "yi", 2))
      return &scripts[SCRIPT_HEBREW];
    return NULL;
 }
 static const struct script *
 default_script_for_language3 (const char language[3])
 {
-   if (memcmp (language, "ber", 3) == 0)
+   if (memeq (language, "ber", 3))
      return &scripts[SCRIPT_LATIN];
    return NULL;
 }
@@ -254,14 +254,14 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
   /* Canonicalize the language.  */
   /* For Quechua, Microsoft uses the ISO 639-3 code "quz" instead of the
      ISO 639-1 code "qu".  */
-  if (language_len == 3 && memcmp (language_start, "quz", 3) == 0)
+  if (language_len == 3 && memeq (language_start, "quz", 3))
     {
       language_start = "qu";
       language_len = 2;
     }
   /* For Tamazight, Microsoft uses the ISO 639-3 code "tzm" instead of the
      ISO 639-2 code "ber".  */
-  else if (language_len == 3 && memcmp (language_start, "tzm", 3) == 0)
+  else if (language_len == 3 && memeq (language_start, "tzm", 3))
     {
       language_start = "ber";
       language_len = 3;
@@ -277,7 +277,7 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
       size_t i;
       for (i = 0; i < NUM_SCRIPTS; i++)
         if (strlen (scripts[i].name) == modifier_len
-            && memcmp (scripts[i].name, modifier_start, modifier_len) == 0)
+            && memeq (scripts[i].name, modifier_start, modifier_len))
           script_subtag = scripts[i].code;
       if (script_subtag == NULL)
         {
@@ -298,10 +298,10 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
             default_script_in_territory (language_start, territory_start);
           if (sp != NULL)
             script_subtag = sp->code;
-          else if (memcmp (language_start, "zh", 2) == 0)
+          else if (memeq (language_start, "zh", 2))
             {
-              if (memcmp (territory_start, "CN", 2) == 0
-                  || memcmp (territory_start, "SG", 2) == 0)
+              if (memeq (territory_start, "CN", 2)
+                  || memeq (territory_start, "SG", 2))
                 script_subtag = "Hans";
               else
                 script_subtag = "Hant";
@@ -314,7 +314,7 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
             default_script_for_language2 (language_start);
           if (sp != NULL)
             script_subtag = sp->code;
-          else if (memcmp (language_start, "iu", 2) == 0)
+          else if (memeq (language_start, "iu", 2))
             script_subtag = "Cans";
         }
       else if (language_len == 3)
@@ -323,7 +323,7 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
             default_script_for_language3 (language_start);
           if (sp != NULL)
             script_subtag = sp->code;
-          else if (memcmp (language_start, "nan", 3) == 0)
+          else if (memeq (language_start, "nan", 3))
             script_subtag = "Hant";
         }
     }
@@ -466,14 +466,14 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
   /* Canonicalize the language.  */
   /* For Quechua, Microsoft uses the ISO 639-3 code "quz" instead of the
      ISO 639-1 code "qu".  */
-  if (language_len == 3 && memcmp (xpg, "quz", 3) == 0)
+  if (language_len == 3 && memeq (xpg, "quz", 3))
     {
       language_len = 2;
       memcpy (xpg, "qu", language_len);
     }
   /* For Tamazight, Microsoft uses the ISO 639-3 code "tzm" instead of the
      ISO 639-2 code "ber".  */
-  else if (language_len == 3 && memcmp (xpg, "tzm", 3) == 0)
+  else if (language_len == 3 && memeq (xpg, "tzm", 3))
     {
       language_len = 3;
       memcpy (xpg, "ber", language_len);
@@ -517,7 +517,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
               if (strcmp (script, sp->name) == 0)
                 script = NULL;
             }
-          else if (memcmp (xpg, "zh", 2) == 0)
+          else if (memeq (xpg, "zh", 2))
             {
               /* "Hans" and "Hant" are not present in the scripts[] table,
                  therefore nothing to do here.  */
@@ -533,7 +533,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
               if (strcmp (script, sp->name) == 0)
                 script = NULL;
             }
-          else if (memcmp (xpg, "iu", 2) == 0)
+          else if (memeq (xpg, "iu", 2))
             {
               /* "Cans" is not present in the scripts[] table,
                  therefore nothing to do here.  */
@@ -548,7 +548,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
               if (strcmp (script, sp->name) == 0)
                 script = NULL;
             }
-          else if (memcmp (xpg, "nan", 3) == 0)
+          else if (memeq (xpg, "nan", 3))
             {
               /* "Hant" is not present in the scripts[] table,
                  therefore nothing to do here.  */

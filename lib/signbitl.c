@@ -56,7 +56,7 @@ gl_signbitl (long double arg)
       /* Distinguish 0.0L and -0.0L.  */
       static long double plus_zero = 0.0L;
       long double arg_mem = arg;
-      return (memcmp (&plus_zero, &arg_mem, SIZEOF_LDBL) != 0);
+      return !memeq (&plus_zero, &arg_mem, SIZEOF_LDBL);
     }
   else
     return 0;

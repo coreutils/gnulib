@@ -15,6 +15,7 @@ fstat
 fstatat
 openat
 same-inode
+stringeq
 bool
 memcmp
 

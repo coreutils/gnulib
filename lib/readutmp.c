@@ -394,14 +394,14 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                    );
 #   if defined __linux__ && !defined __ANDROID__
       if (file_is_utmp
-          && memcmp (UT_USER (ut), "runlevel", strlen ("runlevel") + 1) == 0
-          && memcmp (ut->ut_line, "~", strlen ("~") + 1) == 0)
+          && memeq (UT_USER (ut), "runlevel", strlen ("runlevel") + 1)
+          && memeq (ut->ut_line, "~", strlen ("~") + 1))
         runlevel_ts = ts;
 #   endif
 #   if defined __minix
       if (file_is_utmp
           && UT_USER (ut)[0] == '\0'
-          && memcmp (ut->ut_line, "run-level ", strlen ("run-level ")) == 0)
+          && memeq (ut->ut_line, "run-level ", strlen ("run-level ")))
         runlevel_ts = ts;
 #   endif
     }

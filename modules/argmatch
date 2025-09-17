@@ -18,6 +18,7 @@ quote
 quotearg
 bool
 stdlib-h
+stringeq
 
 configure.ac:
 

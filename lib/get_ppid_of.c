@@ -97,7 +97,7 @@ get_ppid_of (pid_t pid)
           /* Search for a line that starts with "PPid:".  */
           for (p = buf;;)
             {
-              if (bufend - p >= 5 && memcmp (p, "PPid:", 5) == 0)
+              if (bufend - p >= 5 && memeq (p, "PPid:", 5))
                 {
                   unsigned int ppid = 0;
                   if (sscanf (p + 5, "%u", &ppid) > 0)

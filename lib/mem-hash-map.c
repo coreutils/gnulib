@@ -129,7 +129,7 @@ lookup (const hash_table *htab,
   if (table[idx].used)
     {
       if (table[idx].used == hval && table[idx].keylen == keylen
-          && memcmp (table[idx].key, key, keylen) == 0)
+          && memeq (table[idx].key, key, keylen))
         return idx;
 
       /* Second hash function as suggested in [Knuth].  */
@@ -144,7 +144,7 @@ lookup (const hash_table *htab,
 
           /* If entry is found use it.  */
           if (table[idx].used == hval && table[idx].keylen == keylen
-              && memcmp (table[idx].key, key, keylen) == 0)
+              && memeq (table[idx].key, key, keylen))
             return idx;
         }
       while (table[idx].used);

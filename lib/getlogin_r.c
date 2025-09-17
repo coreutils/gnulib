@@ -157,7 +157,7 @@ getlogin_r (char *name, size_t size)
             return ENOMEM;
           ret = getlogin_r (room, size + 1);
           /* The untruncated result should be the same as in the first call.  */
-          if (ret == 0 && memcmp (name, room, size) != 0)
+          if (ret == 0 && !memeq (name, room, size))
             /* The untruncated result would have been different.  */
             ret = ERANGE;
           freea (room);

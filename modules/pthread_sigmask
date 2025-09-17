@@ -9,6 +9,7 @@ Depends-on:
 signal-h
 threadlib
 sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1]
+stringeq        [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1]
 
 configure.ac:
 gl_FUNC_PTHREAD_SIGMASK
