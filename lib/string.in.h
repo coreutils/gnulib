@@ -416,7 +416,7 @@ _GL_WARN_ON_USE (memchr, "memchr has platform-specific bugs - "
 #endif
 
 /* Are S1 and S2, of size N, bytewise equal?  */
-#if @GNULIB_STRINGEQ@
+#if @GNULIB_STRINGEQ@ && !@HAVE_DECL_MEMEQ@
 _GL_STRING_INLINE bool
 memeq (void const *__s1, void const *__s2, size_t __n)
 {
@@ -805,7 +805,7 @@ _GL_CXXALIASWARN (strdup);
 #endif
 
 /* Are strings S1 and S2 equal?  */
-#if @GNULIB_STRINGEQ@
+#if @GNULIB_STRINGEQ@ && !@HAVE_DECL_STREQ@
 _GL_STRING_INLINE bool
 streq (char const *__s1, char const *__s2)
 {
