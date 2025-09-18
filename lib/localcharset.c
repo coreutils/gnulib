@@ -1113,7 +1113,7 @@ locale_charset (void)
 #ifdef DARWIN7
   /* Mac OS X sets MB_CUR_MAX to 1 when LC_ALL=C, and "UTF-8"
      (the default codeset) does not work when MB_CUR_MAX is 1.  */
-  if (ostreq (codeset, "UTF-8") && MB_CUR_MAX_L (uselocale (NULL)) <= 1)
+  if (streq (codeset, "UTF-8") && MB_CUR_MAX_L (uselocale (NULL)) <= 1)
     codeset = "ASCII";
 #endif
 
