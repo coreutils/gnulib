@@ -1,5 +1,5 @@
 # stack-trace.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2024-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,10 +71,13 @@ AC_DEFUN([gl_STACK_TRACE_EARLY],
           if test $CAN_PRINT_STACK_TRACE = 1; then
             dnl Link all programs in such a way that the stack trace includes
             dnl the function names.
-            dnl '-rdynamic' is equivalent to '-Wl,-export-dynamic'.
+            dnl gcc supports '-rdynamic' as an option equivalent to
+            dnl '-Wl,-export-dynamic'. But cc from Oracle DeveloperStudio 12.6
+            dnl converts '-rdynamic' into a linker option '-dynamic', which the
+            dnl linker does not understand. So better avoid '-rdynamic'.
             case "$host_os" in
               *-gnu* | gnu* | openbsd*)
-                LDFLAGS="$LDFLAGS -rdynamic"
+                LDFLAGS="$LDFLAGS -Wl,-export-dynamic"
                 ;;
             esac
           fi
