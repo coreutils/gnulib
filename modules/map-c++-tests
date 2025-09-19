@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 ansi-c++-opt
 array-map
+stringeq
 
 configure.ac:
 

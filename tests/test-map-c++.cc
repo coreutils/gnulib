@@ -26,12 +26,6 @@
 
 static const int integers[6] = { 0, 1, 2, 3, 4, 5 };
 
-static bool
-streq (const char *str1, const char *str2)
-{
-  return strcmp (str1, str2) == 0;
-}
-
 int
 main (int argc, char *argv[])
 {
