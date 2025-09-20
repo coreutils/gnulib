@@ -25,7 +25,7 @@ The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
 OpenBSD 7.5.
 @item
 This function is not multithread-safe on some platforms:
-Solaris 11.3.
+macOS 26, Solaris 11.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
