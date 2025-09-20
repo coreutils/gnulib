@@ -1,4 +1,6 @@
-/* This function serves as replacement for a missing fchownat function,
+/* A more POSIX-compliant fchownat
+
+   This serves as replacement for a missing fchownat function,
    as well as a workaround for the fchownat bug in glibc-2.4:
     <https://lists.ubuntu.com/archives/ubuntu-users/2006-September/093218.html>
    when the buggy fchownat-with-AT_SYMLINK_NOFOLLOW operates on a symlink, it
@@ -98,17 +100,14 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
     }
 # endif
 # if CHOWN_TRAILING_SLASH_BUG
-  {
-    size_t len = strlen (file);
-    struct stat st;
-    if (len && file[len - 1] == '/')
-      {
-        if (fstatat (fd, file, &st, 0))
-          return -1;
-        if (flag == AT_SYMLINK_NOFOLLOW)
-          return fchownat (fd, file, owner, group, 0);
-      }
-  }
+  if (file[0] && file[strlen (file) - 1] == '/')
+    {
+      struct stat st;
+      int r = fstatat (fd, file, &st, 0);
+      if (r < 0 && errno != EOVERFLOW)
+        return r;
+      flag &= ~AT_SYMLINK_NOFOLLOW;
+    }
 # endif
   return fchownat (fd, file, owner, group, flag);
 }
