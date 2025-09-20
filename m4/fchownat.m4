@@ -1,5 +1,5 @@
 # fchownat.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_FUNC_CHOWN])
-  AC_CHECK_FUNC([fchownat],
+  AC_CHECK_FUNCS([fchownat],
     [gl_FUNC_FCHOWNAT_DEREF_BUG(
        [REPLACE_FCHOWNAT=1
         AC_DEFINE([FCHOWNAT_NOFOLLOW_BUG], [1],
