@@ -19,6 +19,7 @@ lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-die      [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-h        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 save-cwd        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+fstatat         [test $REPLACE_FCHOWNAT = 1]
 
 configure.ac:
 gl_FUNC_FCHOWNAT
