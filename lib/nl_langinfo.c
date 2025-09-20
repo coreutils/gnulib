@@ -154,11 +154,15 @@ ctype_codeset (void)
    "thread5 disturbed by threadN!", even when threadN invokes only
       nl_langinfo (CODESET);
       nl_langinfo (CRNCYSTR);
-   Similarly on Solaris 10.  */
+   Similarly on Solaris 10 and macOS 26.  */
 
-# if !NL_LANGINFO_MTSAFE /* Solaris */
+# if !NL_LANGINFO_MTSAFE /* macOS, Solaris */
 
-#  define ITEMS (MAXSTRMSG + 1)
+#  ifdef __sun /* Solaris */
+#   define ITEMS (MAXSTRMSG + 1)
+#  else /* macOS */
+#   define ITEMS (CRNCYSTR + 20)
+#  endif
 #  define MAX_RESULT_LEN 80
 
 static char *
