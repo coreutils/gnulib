@@ -1,5 +1,5 @@
 # chown.m4
-# serial 37
+# serial 38
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2025 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -131,35 +131,15 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
     esac
 
     dnl OpenBSD fails to update ctime if ownership does not change.
-    AC_CACHE_CHECK([whether chown always updates ctime],
+    AC_CACHE_CHECK([whether chown updates ctime per POSIX],
       [gl_cv_func_chown_ctime_works],
-      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#include <unistd.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-]GL_MDA_DEFINES],
-        [[struct stat st1, st2;
-          if (close (creat ("conftest.file", 0600))) return 1;
-          if (stat ("conftest.file", &st1)) return 2;
-          sleep (1);
-          if (chown ("conftest.file", st1.st_uid, st1.st_gid)) return 3;
-          if (stat ("conftest.file", &st2)) return 4;
-          if (st2.st_ctime <= st1.st_ctime) return 5;
-        ]])],
-        [gl_cv_func_chown_ctime_works=yes],
-        [gl_cv_func_chown_ctime_works=no],
-        [case "$host_os" in
-                    # Guess yes on glibc systems.
-           *-gnu*)  gl_cv_func_chown_ctime_works="guessing yes" ;;
-                    # Guess yes on musl systems.
-           *-musl*) gl_cv_func_chown_ctime_works="guessing yes" ;;
-                    # If we don't know, obey --enable-cross-guesses.
-           *)       gl_cv_func_chown_ctime_works="$gl_cross_guess_normal" ;;
-         esac
-        ])
-      rm -f conftest.file])
+      [dnl Although this formerly used AC_RUN_IFELSE, that was tricky
+       dnl as it depended on timing and file timestamp resolution,
+       dnl and there were false positives when configuring with Linux fakeroot.
+       dnl Since the problem occurs only on OpenBSD, just test for that.
+       AS_CASE([$host_os],
+         [openbsd*], [gl_cv_func_chown_ctime_works=no],
+         [gl_cv_func_chown_ctime_works=yes])])
     case "$gl_cv_func_chown_ctime_works" in
       *yes) ;;
       *)
