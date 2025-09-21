@@ -13,7 +13,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-glibc 2.7, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
+glibc 2.7, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android API level 35.
 @item
 This function has an incompatible API on some platforms:
 FreeBSD 13.4.
