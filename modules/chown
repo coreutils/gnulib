@@ -8,11 +8,12 @@ m4/chown.m4
 
 Depends-on:
 unistd-h
+bool            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 fstat           [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 issymlink       [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 open            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 stat            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
-bool            [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
+stat-time       [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 sys_stat-h      [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 
 configure.ac:

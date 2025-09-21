@@ -1,5 +1,5 @@
 # chown.m4
-# serial 36
+# serial 37
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2025 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -163,6 +163,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
     case "$gl_cv_func_chown_ctime_works" in
       *yes) ;;
       *)
+        gl_CHECK_FUNCS_ANDROID([utimensat], [[#include <sys/stat.h>]])
         AC_DEFINE([CHOWN_CHANGE_TIME_BUG], [1], [Define to 1 if chown fails
           to change ctime when at least one argument was not -1.])
         REPLACE_CHOWN=1

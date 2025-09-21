@@ -1,4 +1,4 @@
-/* Provide a stub lchown function for systems that lack it.
+/* A more POSIX-compliant lchown
 
    Copyright (C) 1998-1999, 2002, 2004, 2006-2007, 2009-2025 Free Software
    Foundation, Inc.
@@ -24,10 +24,30 @@
 #include <unistd.h>
 
 #include <errno.h>
+#include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
 
 #include "issymlink.h"
+
+#ifndef CHOWN_CHANGE_TIME_BUG
+# define CHOWN_CHANGE_TIME_BUG 0
+#endif
+#ifndef CHOWN_MODIFIES_SYMLINK
+# define CHOWN_MODIFIES_SYMLINK 0
+#endif
+#ifndef CHOWN_TRAILING_SLASH_BUG
+# define CHOWN_TRAILING_SLASH_BUG 0
+#endif
+
+/* Gnulib target platforms lacking utimensat do not need it,
+   because in practice the bug it works around does not occur.  */
+#if !HAVE_UTIMENSAT
+# undef utimensat
+# define utimensat(fd, file, times, flag) \
+    ((void) (fd), (void) (file), (void) (times), (void) (flag), \
+     0)
+#endif
 
 #if !HAVE_LCHOWN
 
@@ -43,18 +63,17 @@
    symlinks, then just call chown.  */
 
 int
-lchown (const char *file, uid_t uid, gid_t gid)
+lchown (_GL_UNUSED char const *file, _GL_UNUSED uid_t owner,
+        _GL_UNUSED gid_t group)
 {
 # if HAVE_CHOWN
-#  if ! CHOWN_MODIFIES_SYMLINK
-  if (issymlink (file) > 0)
+  if (!CHOWN_MODIFIES_SYMLINK && 0 < issymlink (file))
     {
       errno = EOPNOTSUPP;
       return -1;
     }
-#  endif
 
-  return chown (file, uid, gid);
+  return chown (file, owner, group);
 
 # else /* !HAVE_CHOWN */
   errno = ENOSYS;
@@ -64,65 +83,63 @@ lchown (const char *file, uid_t uid, gid_t gid)
 
 #else /* HAVE_LCHOWN */
 
+/* Below we refer to the system's function.  */
 # undef lchown
 
-/* Work around trailing slash bugs in lchown.  */
+/* Provide a more-closely POSIX-conforming version.  */
+
 int
-rpl_lchown (const char *file, uid_t uid, gid_t gid)
+rpl_lchown (const char *file, uid_t owner, gid_t group)
 {
-  bool stat_valid = false;
-  int result;
-
-# if CHOWN_CHANGE_TIME_BUG
   struct stat st;
+  gid_t no_gid = -1;
+  uid_t no_uid = -1;
+  bool gid_noop = group == no_gid;
+  bool uid_noop = owner == no_uid;
+  bool change_time_check = CHOWN_CHANGE_TIME_BUG && !(gid_noop & uid_noop);
 
-  if (gid != (gid_t) -1 || uid != (uid_t) -1)
+  if (change_time_check
+      || (CHOWN_TRAILING_SLASH_BUG
+          && file[0] && file[strlen (file) - 1] == '/'))
     {
-      /* Prefer readlink to lstat+S_ISLNK, to avoid EOVERFLOW issues
-         in the common case where FILE is a non-symlink.  */
-      int ret = issymlink (file);
-      if (ret < 0)
-        return -1;
-      if (ret == 0)
-        /* FILE is not a symlink.  */
-        return chown (file, uid, gid);
+      bool file_is_symlink = false;
+      int r = lstat (file, &st);
+      if (0 <= r)
+        file_is_symlink = !!S_ISLNK (st.st_mode);
+      else if (errno != EOVERFLOW)
+        return r;
+      else
+        {
+          int s = issymlink (file);
+          if (s < 0)
+            return s;
+          if (0 < s)
+            {
+              errno = EOVERFLOW;
+              return -1;
+            }
+          /* FILE exists and is not a symbolic link; ST is unset.
+             Rely on Gnulib chown to work around platform chown bugs.  */
+        }
 
-      /* Later code can use the status, so get it if possible.  */
-      ret = lstat (file, &st);
-      if (ret < 0)
-        return -1;
-      /* An easy check: did FILE change from a symlink to a non-symlink?  */
-      if (!S_ISLNK (st.st_mode))
-        return chown (file, uid, gid);
-
-      stat_valid = true;
+      if (!file_is_symlink)
+        return chown (file, owner, group);
     }
-# endif
 
-# if CHOWN_TRAILING_SLASH_BUG
-  if (!stat_valid)
-    {
-      size_t len = strlen (file);
-      if (len && file[len - 1] == '/')
-        return chown (file, uid, gid);
-    }
-# endif
+  int result = lchown (file, owner, group);
 
-  result = lchown (file, uid, gid);
-
-# if CHOWN_CHANGE_TIME_BUG && HAVE_LCHMOD
-  if (result == 0 && stat_valid
-      && (uid == st.st_uid || uid == (uid_t) -1)
-      && (gid == st.st_gid || gid == (gid_t) -1))
-    {
-      /* No change in ownership, but at least one argument was not -1,
-         so we are required to update ctime.  Since lchown succeeded,
-         we assume that lchmod will do likewise.  But if the system
-         lacks lchmod and lutimes, we are out of luck.  Oh well.  */
-      result = lchmod (file, st.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO
-                                           | S_ISUID | S_ISGID | S_ISVTX));
-    }
-# endif
+  /* If no change in ownership, but at least one argument was not -1,
+     update ctime indirectly via a no-change update to atime and mtime.
+     Do not use UTIME_NOW or UTIME_OMIT as they might run into bugs
+     on some platforms.  Do not communicate any failure to the caller
+     as that would be worse than communicating the ownership change.  */
+  if (result == 0 && change_time_check
+      && (((owner == st.st_uid) | uid_noop)
+          & ((group == st.st_gid) | gid_noop)))
+    utimensat (AT_FDCWD, file,
+               ((struct timespec[]) { get_stat_atime (&st),
+                                      get_stat_mtime (&st) }),
+               AT_SYMLINK_NOFOLLOW);
 
   return result;
 }

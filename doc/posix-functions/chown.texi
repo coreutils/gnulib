@@ -16,7 +16,7 @@ macOS 14, FreeBSD 7.2, AIX 7.3.1, Solaris 9.
 @item
 Some platforms fail to update the change time when at least one
 argument was not @minus{}1, but no ownership changes resulted:
-OpenBSD 7.2.
+OpenBSD 7.7.
 @item
 When passed an argument of @minus{}1, some implementations really set the owner
 user/group id of the file to this value, rather than leaving that id of the

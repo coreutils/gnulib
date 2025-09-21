@@ -10,6 +10,7 @@ Depends-on:
 unistd-h
 extensions
 at-internal     [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+bool            [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 errno-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 extern-inline   [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fchdir          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
@@ -19,6 +20,7 @@ lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-die      [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-h        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 save-cwd        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+stat-time       [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fstatat         [test $REPLACE_FCHOWNAT = 1]
 
 configure.ac:

@@ -31,8 +31,29 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "openat.h"
+#include "stat-time.h"
+
+#ifndef CHOWN_CHANGE_TIME_BUG
+# define CHOWN_CHANGE_TIME_BUG 0
+#endif
+#ifndef CHOWN_TRAILING_SLASH_BUG
+# define CHOWN_TRAILING_SLASH_BUG 0
+#endif
+#ifndef FCHOWNAT_EMPTY_FILENAME_BUG
+# define FCHOWNAT_EMPTY_FILENAME_BUG 0
+#endif
+
+/* Gnulib target platforms lacking utimensat do not need it,
+   because in practice the bug it works around does not occur.  */
+#if !HAVE_UTIMENSAT
+# undef utimensat
+# define utimensat(fd, file, times, flag) \
+    ((void) (fd), (void) (file), (void) (times), (void) (flag), \
+     0)
+#endif
 
 #if !HAVE_FCHOWNAT
 
@@ -88,28 +109,58 @@ local_lchownat (int fd, char const *file, uid_t owner, gid_t group);
 int
 rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
 {
+  /* No need to worry about CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE
+     or CHOWN_MODIFIES_SYMLINK, as no known fchownat implementations
+     have these bugs.  */
+
 # if FCHOWNAT_NOFOLLOW_BUG
   if (flag == AT_SYMLINK_NOFOLLOW)
     return local_lchownat (fd, file, owner, group);
 # endif
-# if FCHOWNAT_EMPTY_FILENAME_BUG
-  if (file[0] == '\0')
+
+  if (FCHOWNAT_EMPTY_FILENAME_BUG && file[0] == '\0')
     {
       errno = ENOENT;
       return -1;
     }
-# endif
-# if CHOWN_TRAILING_SLASH_BUG
-  if (file[0] && file[strlen (file) - 1] == '/')
+
+  struct stat st;
+  gid_t no_gid = -1;
+  uid_t no_uid = -1;
+  bool gid_noop = group == no_gid;
+  bool uid_noop = owner == no_uid;
+  bool change_time_check = CHOWN_CHANGE_TIME_BUG && !(gid_noop & uid_noop);
+
+  if (change_time_check
+      || (CHOWN_TRAILING_SLASH_BUG
+          && file[0] && file[strlen (file) - 1] == '/'))
     {
-      struct stat st;
       int r = fstatat (fd, file, &st, 0);
-      if (r < 0 && errno != EOVERFLOW)
+
+      /* EOVERFLOW means the file exists, which is all that the
+         trailing slash check needs.  */
+      if (r < 0 && (change_time_check || errno != EOVERFLOW))
         return r;
+
       flag &= ~AT_SYMLINK_NOFOLLOW;
     }
-# endif
-  return fchownat (fd, file, owner, group, flag);
+
+  int result = fchownat (fd, file, owner, group, flag);
+
+  /* If no change in ownership, but at least one argument was not -1,
+     update ctime indirectly via a no-change update to atime and mtime.
+     Do not use UTIME_NOW or UTIME_OMIT as they might run into bugs
+     on some platforms.  Do not communicate any failure to the caller
+     as that would be worse than communicating the ownership change.  */
+  if (result == 0 && change_time_check
+      && (((owner == st.st_uid) | uid_noop)
+          & ((group == st.st_gid) | gid_noop)))
+    utimensat (fd, file,
+               ((struct timespec[]) { get_stat_atime (&st),
+                                      get_stat_mtime (&st) }),
+               flag);
+
+  return result;
 }
 
 #endif /* HAVE_FCHOWNAT */

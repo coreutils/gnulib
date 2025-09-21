@@ -26,6 +26,10 @@ Some platforms fail to detect trailing slash on non-directories, as in
 @code{fchown(dir,"link-to-file/",uid,gid,flag)}:
 Solaris 9.
 @item
+Some platforms fail to update the change time when at least one
+argument was not @minus{}1, but no ownership changes resulted:
+OpenBSD 7.7.
+@item
 Some platforms mistakenly dereference symlinks when using
 @code{AT_SYMLINK_NOFOLLOW}:
 Linux kernel 2.6.17.

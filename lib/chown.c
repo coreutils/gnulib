@@ -1,5 +1,4 @@
-/* provide consistent interface to chown for systems that don't interpret
-   an ID of -1 as meaning "don't change the corresponding ID".
+/* A more POSIX-compliant chown
 
    Copyright (C) 1997, 2004-2007, 2009-2025 Free Software Foundation, Inc.
 
@@ -29,13 +28,36 @@
 #include <sys/stat.h>
 
 #include "issymlink.h"
+#include "stat-time.h"
+
+#ifndef CHOWN_CHANGE_TIME_BUG
+# define CHOWN_CHANGE_TIME_BUG 0
+#endif
+#ifndef CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE
+# define CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE 0
+#endif
+#ifndef CHOWN_MODIFIES_SYMLINK
+# define CHOWN_MODIFIES_SYMLINK 0
+#endif
+#ifndef CHOWN_TRAILING_SLASH_BUG
+# define CHOWN_TRAILING_SLASH_BUG 0
+#endif
+
+/* Gnulib target platforms lacking utimensat do not need it,
+   because in practice the bug it works around does not occur.  */
+#if !HAVE_UTIMENSAT
+# undef utimensat
+# define utimensat(fd, file, times, flag) \
+    ((void) (fd), (void) (file), (void) (times), (void) (flag), \
+     0)
+#endif
 
 #if !HAVE_CHOWN
 
 /* Simple stub that always fails with ENOSYS, for mingw.  */
 int
-chown (_GL_UNUSED const char *file, _GL_UNUSED uid_t uid,
-       _GL_UNUSED gid_t gid)
+chown (_GL_UNUSED const char *file, _GL_UNUSED uid_t owner,
+       _GL_UNUSED gid_t group)
 {
   errno = ENOSYS;
   return -1;
@@ -43,54 +65,20 @@ chown (_GL_UNUSED const char *file, _GL_UNUSED uid_t uid,
 
 #else /* HAVE_CHOWN */
 
-/* Below we refer to the system's chown().  */
+/* Below we refer to the system's function.  */
 # undef chown
 
-/* Provide a more-closely POSIX-conforming version of chown on
-   systems with one or both of the following problems:
-   - chown doesn't treat an ID of -1 as meaning
-   "don't change the corresponding ID".
-   - chown doesn't dereference symlinks.  */
+/* Provide a more-closely POSIX-conforming version.  */
 
 int
-rpl_chown (const char *file, uid_t uid, gid_t gid)
+rpl_chown (const char *file, uid_t owner, gid_t group)
 {
-# if (CHOWN_CHANGE_TIME_BUG || CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE \
-      || CHOWN_TRAILING_SLASH_BUG)
-  struct stat st;
-  bool stat_valid = false;
-# endif
-  int result;
-
-# if CHOWN_CHANGE_TIME_BUG /* OpenBSD 7.2 */
-  if (gid != (gid_t) -1 || uid != (uid_t) -1)
-    {
-      if (stat (file, &st))
-        return -1;
-      stat_valid = true;
-    }
-# endif
-
-# if CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE /* some very old platforms */
-  if (gid == (gid_t) -1 || uid == (uid_t) -1)
-    {
-      /* Stat file to get id(s) that should remain unchanged.  */
-      if (!stat_valid && stat (file, &st))
-        return -1;
-      stat_valid = true;
-      if (gid == (gid_t) -1)
-        gid = st.st_gid;
-      if (uid == (uid_t) -1)
-        uid = st.st_uid;
-    }
-# endif
-
-# if CHOWN_MODIFIES_SYMLINK /* some very old platforms */
-  /* The system-supplied chown function does not follow symlinks.
+  /* In some very old platforms, the system-supplied function
+     does not follow symlinks.
      If the file is a symlink, open the file (following symlinks), and
      fchown the resulting descriptor.  Although the open might fail
      due to lack of permissions, it's the best we can easily do.  */
-  if (issymlink (file) > 0)
+  if (CHOWN_MODIFIES_SYMLINK && 0 < issymlink (file))
     {
       int open_flags = O_NONBLOCK | O_NOCTTY | O_CLOEXEC;
       int fd = open (file, O_RDONLY | open_flags);
@@ -103,39 +91,52 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
               || ((fd = open (file, O_SEARCH | open_flags)) < 0)))
         return fd;
 
-      int r = fchown (fd, uid, gid);
+      int r = fchown (fd, owner, group);
       int err = errno;
       close (fd);
       errno = err;
       return r;
     }
-# endif
 
-# if CHOWN_TRAILING_SLASH_BUG /* macOS 12.5, FreeBSD 7.2, AIX 7.3.1, Solaris 9 */
-  if (!stat_valid)
+  struct stat st;
+  gid_t no_gid = -1;
+  uid_t no_uid = -1;
+  bool gid_noop = group == no_gid;
+  bool uid_noop = owner == no_uid;
+  bool change_time_check = CHOWN_CHANGE_TIME_BUG && !(gid_noop & uid_noop);
+  bool negative_one_check = (CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE
+                             && (gid_noop | uid_noop));
+  if (change_time_check | negative_one_check
+      || (CHOWN_TRAILING_SLASH_BUG
+          && file[0] && file[strlen (file) - 1] == '/'))
     {
-      size_t len = strlen (file);
-      if (len && file[len - 1] == '/' && stat (file, &st))
-        return -1;
-    }
-# endif
+      int r = stat (file, &st);
 
-  result = chown (file, uid, gid);
-
-# if CHOWN_CHANGE_TIME_BUG /* OpenBSD 7.2 */
-  if (result == 0 && stat_valid
-      && (uid == st.st_uid || uid == (uid_t) -1)
-      && (gid == st.st_gid || gid == (gid_t) -1))
-    {
-      /* No change in ownership, but at least one argument was not -1,
-         so we are required to update ctime.  Since chown succeeded,
-         we assume that chmod will do likewise.  Fortunately, on all
-         known systems where a 'no-op' chown skips the ctime update, a
-         'no-op' chmod still does the trick.  */
-      result = chmod (file, st.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO
-                                          | S_ISUID | S_ISGID | S_ISVTX));
+      /* EOVERFLOW means the file exists, which is all that the
+         trailing slash check needs.  */
+      if (r < 0 && (change_time_check | negative_one_check
+                    || errno != EOVERFLOW))
+        return r;
     }
-# endif
+
+  gid_t uid = (CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE && uid_noop
+               ? st.st_uid : owner);
+  gid_t gid = (CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE && gid_noop
+               ? st.st_gid : group);
+  int result = chown (file, uid, gid);
+
+  /* If no change in ownership, but at least one argument was not -1,
+     update ctime indirectly via a no-change update to atime and mtime.
+     Do not use UTIME_NOW or UTIME_OMIT as they might run into bugs
+     on some platforms.  Do not communicate any failure to the caller
+     as that would be worse than communicating the ownership change.  */
+  if (result == 0 && change_time_check
+      && (((uid == st.st_uid) | uid_noop)
+          & ((gid == st.st_gid) | gid_noop)))
+    utimensat (AT_FDCWD, file,
+               ((struct timespec[]) { get_stat_atime (&st),
+                                      get_stat_mtime (&st) }),
+               0);
 
   return result;
 }

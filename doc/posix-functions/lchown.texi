@@ -23,9 +23,8 @@ Some platforms fail to detect trailing slash on non-directories, as in
 FreeBSD 7.2, Solaris 9.
 @item
 Some platforms fail to update the change time when at least one
-argument was not -1, but no ownership changes resulted.  However,
-without @code{lchmod}, the replacement only fixes this for non-symlinks:
-OpenBSD 4.0.
+argument was not @minus{}1, but no ownership changes resulted:
+OpenBSD 7.7.
 @end itemize
 
 Portability problems not fixed by Gnulib:
