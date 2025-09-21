@@ -29,6 +29,7 @@
 #include <sys/stat.h>
 
 #include "issymlink.h"
+#include "stat-time.h"
 
 #ifndef CHOWN_CHANGE_TIME_BUG
 # define CHOWN_CHANGE_TIME_BUG 0
