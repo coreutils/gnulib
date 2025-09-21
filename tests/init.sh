@@ -484,8 +484,11 @@ remove_tmp_ ()
     # cd out of the directory we're about to remove
     cd "$initial_cwd_" || cd / || cd /tmp
     chmod -R u+rwx "$test_dir_"
-    # If removal fails and exit status was to be 0, then change it to 1.
-    rm -rf "$test_dir_" || { test $__st = 0 && __st=1; }
+    # If the first removal fails, wait for subprocesses to exit and try again.
+    # If that fails and exit status was to be 0, change it to 1.
+    rm -rf "$test_dir_" 2>/dev/null \
+      || { sleep 1 && rm -rf "$test_dir_"; } \
+      || { test $__st = 0 && __st=1; }
   fi
   exit $__st
 }
