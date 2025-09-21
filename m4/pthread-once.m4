@@ -1,5 +1,5 @@
 # pthread-once.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2019-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,15 +10,18 @@ AC_DEFUN([gl_PTHREAD_ONCE],
 [
   AC_REQUIRE([gl_PTHREAD_H])
   AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_REQUIRE([gl_PTHREADLIB])
 
   if { case "$host_os" in mingw* | windows*) true;; *) false;; esac; } \
      && test $gl_threads_api = windows; then
     dnl Choose function names that don't conflict with the mingw-w64 winpthreads
     dnl library.
     REPLACE_PTHREAD_ONCE=1
+    PTHREAD_ONCE_LIB=
   else
     if test $HAVE_PTHREAD_H = 0; then
       HAVE_PTHREAD_ONCE=0
+      PTHREAD_ONCE_LIB=
     else
       dnl Work around Cygwin 3.5.3 bug.
       AC_CACHE_CHECK([whether pthread_once works],
@@ -32,6 +35,17 @@ AC_DEFUN([gl_PTHREAD_ONCE],
         *yes) ;;
         *) REPLACE_PTHREAD_ONCE=1 ;;
       esac
+      dnl Among the platforms where $(LIBPTHREAD) is empty and
+      dnl $(LIBPMULTITHREAD) is non-empty, namely
+      dnl   musl libc, macOS, FreeBSD, NetBSD, Solaris, Cygwin, Haiku, Android,
+      dnl $(LIBPMULTITHREAD) is necessary only on FreeBSD.
+      case "$host_os" in
+        freebsd* | dragonfly* | midnightbsd*)
+          PTHREAD_ONCE_LIB="$LIBPMULTITHREAD" ;;
+        *)
+          PTHREAD_ONCE_LIB="$LIBPTHREAD" ;;
+      esac
     fi
   fi
+  AC_SUBST([PTHREAD_ONCE_LIB])
 ])

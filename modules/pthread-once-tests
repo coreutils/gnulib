@@ -15,5 +15,5 @@ AC_CHECK_DECLS_ONCE([alarm])
 Makefile.am:
 TESTS += test-pthread-once1 test-pthread-once2
 check_PROGRAMS += test-pthread-once1 test-pthread-once2
-test_pthread_once1_LDADD = $(LDADD) @LIBPMULTITHREAD@
+test_pthread_once1_LDADD = $(LDADD) @PTHREAD_ONCE_LIB@
 test_pthread_once2_LDADD = $(LDADD) @LIBPMULTITHREAD@ @SCHED_YIELD_LIB@
