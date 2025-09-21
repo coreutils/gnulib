@@ -1,5 +1,5 @@
 # pthread-once.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2019-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,10 +37,11 @@ AC_DEFUN([gl_PTHREAD_ONCE],
       esac
       dnl Among the platforms where $(LIBPTHREAD) is empty and
       dnl $(LIBPMULTITHREAD) is non-empty, namely
-      dnl   musl libc, macOS, FreeBSD, NetBSD, Solaris, Cygwin, Haiku, Android,
-      dnl $(LIBPMULTITHREAD) is necessary only on FreeBSD.
+      dnl   glibc < 2.34, musl libc, macOS, FreeBSD, NetBSD, Solaris, Cygwin,
+      dnl   Haiku, Android,
+      dnl $(LIBPMULTITHREAD) is necessary only on glibc and FreeBSD.
       case "$host_os" in
-        freebsd* | dragonfly* | midnightbsd*)
+        *-gnu* | gnu* | freebsd* | dragonfly* | midnightbsd*)
           PTHREAD_ONCE_LIB="$LIBPMULTITHREAD" ;;
         *)
           PTHREAD_ONCE_LIB="$LIBPTHREAD" ;;
