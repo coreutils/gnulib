@@ -135,7 +135,7 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
       || (CHOWN_TRAILING_SLASH_BUG
           && file[0] && file[strlen (file) - 1] == '/'))
     {
-      int r = fstatat (fd, file, &st, 0);
+      int r = fstatat (fd, file, &st, flag);
 
       /* EOVERFLOW means the file exists, which is all that the
          trailing slash check needs.  */
