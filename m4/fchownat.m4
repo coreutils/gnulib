@@ -1,5 +1,5 @@
 # fchownat.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2004-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,16 +46,18 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
 
   AC_CACHE_CHECK([whether fchownat works with AT_SYMLINK_NOFOLLOW],
     [gl_cv_func_fchownat_nofollow_works],
-    [
-     gl_dangle=conftest.dangle
-     # Remove any remnants of a previous test.
-     rm -f $gl_dangle
-     # Arrange for deletion of the temporary file this test creates.
-     ac_clean_files="$ac_clean_files $gl_dangle"
-     ln -s conftest.no-such $gl_dangle
-     AC_RUN_IFELSE(
-       [AC_LANG_SOURCE(
-          [[
+    [gl_FUNC_CHOWN_CTIME
+     case "$gl_cv_func_chown_ctime_works" in
+       *yes)
+         gl_dangle=conftest.dangle
+         # Remove any remnants of a previous test.
+         rm -f $gl_dangle
+         # Arrange for deletion of the temporary file this test creates.
+         ac_clean_files="$ac_clean_files $gl_dangle"
+         ln -s conftest.no-such $gl_dangle
+         AC_RUN_IFELSE(
+           [AC_LANG_SOURCE(
+              [[
 #include <fcntl.h>
 #include <unistd.h>
 /* Android 4.3 declares fchownat() in <sys/stat.h> instead.  */
@@ -70,12 +72,27 @@ main ()
                     AT_SYMLINK_NOFOLLOW) != 0
           && errno == ENOENT);
 }
-          ]])],
-       [gl_cv_func_fchownat_nofollow_works=yes],
-       [gl_cv_func_fchownat_nofollow_works=no],
-       [gl_cv_func_fchownat_nofollow_works="$gl_cross_guess_normal"])
-  ])
-  AS_IF([test "$gl_cv_func_fchownat_nofollow_works" != yes], [$1], [$2])
+              ]])],
+           [gl_cv_func_fchownat_nofollow_works=yes],
+           [gl_cv_func_fchownat_nofollow_works=no],
+           [gl_cv_func_fchownat_nofollow_works="$gl_cross_guess_normal"])
+         ;;
+       *)
+         dnl On OpenBSD and Cygwin 2.9.0, the test above would produce
+         dnl gl_cv_func_fchownat_nofollow_works=yes, and this would then
+         dnl lead to an fchownat test failure:
+         dnl   test-lchown.h:185: assertion 'st1.st_gid == st2.st_gid' failed
+         dnl Since testing for this bug directly is only possible on machines
+         dnl where the current user is in at least two groups, we use
+         dnl gl_FUNC_CHOWN_CTIME as a substitute test.
+         gl_cv_func_fchownat_nofollow_works="guessing no"
+         ;;
+     esac
+    ])
+  case "$gl_cv_func_fchownat_nofollow_works" in
+    *yes) $2 ;;
+    *)    $1 ;;
+  esac
 ])
 
 # gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])

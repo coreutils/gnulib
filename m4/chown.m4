@@ -1,5 +1,5 @@
 # chown.m4
-# serial 39
+# serial 40
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2025 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -130,39 +130,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
         ;;
     esac
 
-    dnl OpenBSD fails to update ctime if ownership does not change.
-    AC_CACHE_CHECK([whether chown updates ctime per POSIX],
-      [gl_cv_func_chown_ctime_works],
-      [dnl This test is tricky as it depends on timing and file timestamp
-       dnl resolution, and there were false positives when configuring with
-       dnl Linux fakeroot. Since the problem occurs only on OpenBSD and Cygwin,
-       dnl test only on these platforms.
-       AS_CASE([$host_os],
-         [openbsd* | cygwin*],
-          [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#include <unistd.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-]GL_MDA_DEFINES],
-             [[struct stat st1, st2;
-               if (close (creat ("conftest.file", 0600))) return 1;
-               if (stat ("conftest.file", &st1)) return 2;
-               sleep (1);
-               if (chown ("conftest.file", st1.st_uid, st1.st_gid)) return 3;
-               if (stat ("conftest.file", &st2)) return 4;
-               if (st2.st_ctime <= st1.st_ctime) return 5;
-             ]])],
-             [gl_cv_func_chown_ctime_works=yes],
-             [gl_cv_func_chown_ctime_works=no],
-             [# Obey --enable-cross-guesses.
-              gl_cv_func_chown_ctime_works="$gl_cross_guess_normal"
-             ])
-           rm -f conftest.file
-          ],
-         [gl_cv_func_chown_ctime_works=yes])
-      ])
+    gl_FUNC_CHOWN_CTIME
     case "$gl_cv_func_chown_ctime_works" in
       *yes) ;;
       *)
@@ -220,4 +188,48 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
         [Define if chown modifies symlinks.])
       ;;
   esac
+])
+
+AC_DEFUN_ONCE([gl_FUNC_CHOWN_CTIME],
+[
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CHECK_FUNCS_ONCE([chown])
+
+  dnl mingw lacks chown altogether.
+  if test $ac_cv_func_chown != no; then
+    dnl OpenBSD and Cygwin 2.9.0 fail to update ctime if ownership does not
+    dnl change.
+    AC_CACHE_CHECK([whether chown updates ctime per POSIX],
+      [gl_cv_func_chown_ctime_works],
+      [dnl This test is tricky as it depends on timing and file timestamp
+       dnl resolution, and there were false positives when configuring with
+       dnl Linux fakeroot. Since the problem occurs only on OpenBSD and Cygwin,
+       dnl test only on these platforms.
+       AS_CASE([$host_os],
+         [openbsd* | cygwin*],
+          [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+]GL_MDA_DEFINES],
+             [[struct stat st1, st2;
+               if (close (creat ("conftest.file", 0600))) return 1;
+               if (stat ("conftest.file", &st1)) return 2;
+               sleep (1);
+               if (chown ("conftest.file", st1.st_uid, st1.st_gid)) return 3;
+               if (stat ("conftest.file", &st2)) return 4;
+               if (st2.st_ctime <= st1.st_ctime) return 5;
+             ]])],
+             [gl_cv_func_chown_ctime_works=yes],
+             [gl_cv_func_chown_ctime_works=no],
+             [# Obey --enable-cross-guesses.
+              gl_cv_func_chown_ctime_works="$gl_cross_guess_normal"
+             ])
+           rm -f conftest.file
+          ],
+         [gl_cv_func_chown_ctime_works=yes])
+      ])
+  fi
 ])
