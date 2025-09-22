@@ -5,7 +5,6 @@ Files:
 lib/fchownat.c
 lib/at-func.c
 m4/fchownat.m4
-m4/chown.m4
 
 Depends-on:
 unistd-h

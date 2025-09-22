@@ -113,16 +113,21 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
      or CHOWN_MODIFIES_SYMLINK, as no known fchownat implementations
      have these bugs.  */
 
-# if FCHOWNAT_NOFOLLOW_BUG
-  if (flag == AT_SYMLINK_NOFOLLOW)
-    return local_lchownat (fd, file, owner, group);
-# endif
-
   if (FCHOWNAT_EMPTY_FILENAME_BUG && file[0] == '\0')
     {
       errno = ENOENT;
       return -1;
     }
+
+  bool trailing_slash_check = (CHOWN_TRAILING_SLASH_BUG
+                               && file[0] && file[strlen (file) - 1] == '/');
+  if (trailing_slash_check)
+    flag &= ~AT_SYMLINK_NOFOLLOW;
+
+# if FCHOWNAT_NOFOLLOW_BUG
+  if (flag == AT_SYMLINK_NOFOLLOW)
+    return local_lchownat (fd, file, owner, group);
+# endif
 
   struct stat st;
   gid_t no_gid = -1;
@@ -131,9 +136,7 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
   bool uid_noop = owner == no_uid;
   bool change_time_check = CHOWN_CHANGE_TIME_BUG && !(gid_noop & uid_noop);
 
-  if (change_time_check
-      || (CHOWN_TRAILING_SLASH_BUG
-          && file[0] && file[strlen (file) - 1] == '/'))
+  if (change_time_check | trailing_slash_check)
     {
       int r = fstatat (fd, file, &st, flag);
 
@@ -141,8 +144,6 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
          trailing slash check needs.  */
       if (r < 0 && (change_time_check || errno != EOVERFLOW))
         return r;
-
-      flag &= ~AT_SYMLINK_NOFOLLOW;
     }
 
   int result = fchownat (fd, file, owner, group, flag);
