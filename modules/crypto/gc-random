@@ -16,6 +16,7 @@ Include:
 "gc.h"
 
 Link:
+$(LIB_CRYPTO)
 $(GETRANDOM_LIB)
 
 License:

@@ -17,6 +17,9 @@ Makefile.am:
 Include:
 "gc.h"
 
+Link:
+$(LIB_CRYPTO)
+
 License:
 LGPLv2+
 
