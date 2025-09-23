@@ -18,6 +18,9 @@ lib_SOURCES += md5.h
 Include:
 "gc.h"
 
+Link:
+$(LIB_CRYPTO)
+
 License:
 LGPLv2+
 
