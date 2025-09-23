@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-arctwo
 check_PROGRAMS += test-gc-arctwo
-test_gc_arctwo_LDADD = $(LDADD) $(GETRANDOM_LIB)
+test_gc_arctwo_LDADD = $(LDADD) @LIB_CRYPTO@ $(GETRANDOM_LIB)
