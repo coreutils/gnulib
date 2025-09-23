@@ -54,6 +54,18 @@
 /* Utility functions.  */
 
 static bool
+streq (char const *s1, char const *s2)
+{
+  return strcmp (s1, s2) == 0;
+}
+
+static bool
+memeq (void const *s1, void const *s2, size_t n)
+{
+  return memcmp (s1, s2, n) == 0;
+}
+
+static bool
 str_startswith (const char *string, const char *prefix)
 {
   return strncmp (string, prefix, strlen (prefix)) == 0;
@@ -65,18 +77,6 @@ str_endswith (const char *string, const char *suffix)
   size_t len = strlen (string);
   size_t n = strlen (suffix);
   return len >= n && streq (string + len - n, suffix);
-}
-
-static bool
-memeq (void const *s1, void const *s2, size_t n)
-{
-  return !memcmp (s1, s2, n);
-}
-
-static bool
-streq (char const *s1, char const *s2)
-{
-  return !strcmp (s1, s2);
 }
 
 /* ========================================================================= */
