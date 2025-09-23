@@ -32,7 +32,7 @@ OpenBSD 7.7.
 @item
 Some platforms mistakenly dereference symlinks when using
 @code{AT_SYMLINK_NOFOLLOW}:
-Linux kernel 2.6.17, OpenBSD 7.6, Cygwin 2.9.0.
+Linux kernel 2.6.17.
 @item
 This function does not fail for an empty filename on some platforms:
 Linux with glibc < 2.11.
