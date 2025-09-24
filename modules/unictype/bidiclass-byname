@@ -10,7 +10,7 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.11], [unictype/bidiclass-byname])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/bidiclass-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_BIDICLASS_BYNAME

@@ -8,7 +8,7 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unictype/category-name])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/category-name])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_NAME

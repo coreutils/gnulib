@@ -15,7 +15,7 @@ localcharset
 minmax
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.3], [unicase/ulc-casecmp])
+gl_LIBUNISTRING_MODULE([1.4], [unicase/ulc-casecmp])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_ULC_CASECMP

@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -714,6 +714,16 @@
     { 0x11DA7, 7 },
     { 0x11DA8, 8 },
     { 0x11DA9, 9 },
+    { 0x11DE0, 0 },
+    { 0x11DE1, 1 },
+    { 0x11DE2, 2 },
+    { 0x11DE3, 3 },
+    { 0x11DE4, 4 },
+    { 0x11DE5, 5 },
+    { 0x11DE6, 6 },
+    { 0x11DE7, 7 },
+    { 0x11DE8, 8 },
+    { 0x11DE9, 9 },
     { 0x11F50, 0 },
     { 0x11F51, 1 },
     { 0x11F52, 2 },

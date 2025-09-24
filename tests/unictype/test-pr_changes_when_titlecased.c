@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -625,7 +625,10 @@
     { 0xA7C8, 0xA7C8 },
     { 0xA7CA, 0xA7CA },
     { 0xA7CD, 0xA7CD },
+    { 0xA7CF, 0xA7CF },
     { 0xA7D1, 0xA7D1 },
+    { 0xA7D3, 0xA7D3 },
+    { 0xA7D5, 0xA7D5 },
     { 0xA7D7, 0xA7D7 },
     { 0xA7D9, 0xA7D9 },
     { 0xA7DB, 0xA7DB },
@@ -645,6 +648,7 @@
     { 0x10D70, 0x10D85 },
     { 0x118C0, 0x118DF },
     { 0x16E60, 0x16E7F },
+    { 0x16EBB, 0x16ED3 },
     { 0x1E922, 0x1E943 }
 
 #define PREDICATE(c) uc_is_property_changes_when_titlecased (c)

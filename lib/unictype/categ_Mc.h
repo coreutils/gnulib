@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -373,7 +373,7 @@ u_categ_Mc =
     0x00000000U, 0x00000000U, 0xF00E0000U, 0x00000010U,
     0x00000000U, 0x02000000U, 0x01800000U, 0x00000000U,
     0x00800000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x000000A2U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x40008000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00120200U, 0x00000000U, 0x00000000U,

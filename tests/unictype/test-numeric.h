@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Numeric values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -1380,6 +1380,16 @@
     { 0x11DA7, 7, 1 },
     { 0x11DA8, 8, 1 },
     { 0x11DA9, 9, 1 },
+    { 0x11DE0, 0, 1 },
+    { 0x11DE1, 1, 1 },
+    { 0x11DE2, 2, 1 },
+    { 0x11DE3, 3, 1 },
+    { 0x11DE4, 4, 1 },
+    { 0x11DE5, 5, 1 },
+    { 0x11DE6, 6, 1 },
+    { 0x11DE7, 7, 1 },
+    { 0x11DE8, 8, 1 },
+    { 0x11DE9, 9, 1 },
     { 0x11F50, 0, 1 },
     { 0x11F51, 1, 1 },
     { 0x11F52, 2, 1 },
@@ -1411,6 +1421,14 @@
     { 0x11FD2, 1, 2 },
     { 0x11FD3, 3, 4 },
     { 0x11FD4, 1, 320 },
+    { 0x12038, 1, 1 },
+    { 0x12039, 1, 1 },
+    { 0x12079, 1, 1 },
+    { 0x12226, 1, 2 },
+    { 0x1222B, 2, 1 },
+    { 0x1230B, 1, 1 },
+    { 0x1230D, 3, 1 },
+    { 0x12399, 2, 1 },
     { 0x12400, 2, 1 },
     { 0x12401, 3, 1 },
     { 0x12402, 4, 1 },
@@ -1602,6 +1620,9 @@
     { 0x16E94, 1, 1 },
     { 0x16E95, 2, 1 },
     { 0x16E96, 3, 1 },
+    { 0x16FF4, 1, 1 },
+    { 0x16FF5, 3, 2 },
+    { 0x16FF6, 2, 1 },
     { 0x1CCF0, 0, 1 },
     { 0x1CCF1, 1, 1 },
     { 0x1CCF2, 2, 1 },

@@ -12,7 +12,7 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([0.9.8], [unictype/ctype-blank])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/ctype-blank])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_BLANK

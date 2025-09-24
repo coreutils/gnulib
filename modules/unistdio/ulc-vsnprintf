@@ -11,7 +11,7 @@ unistdio/ulc-vasnprintf
 errno-h
 
 configure.ac:
-gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.3]), [unistdio/ulc-vsnprintf])
+gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.4]), [unistdio/ulc-vsnprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_ULC_VSNPRINTF

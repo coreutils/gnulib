@@ -9,7 +9,7 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unictype/incb-name])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/incb-name])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_INCB_NAME

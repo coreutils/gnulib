@@ -10,7 +10,7 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unictype/incb-byname])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/incb-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_INCB_BYNAME

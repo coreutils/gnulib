@@ -96,7 +96,7 @@ main (void)
   test_u8_grapheme_breaks ("a\nb\rc\r\nd", "######_#");
 
   /* Emoji modifier / ZWJ sequence. */
-  test_u8_grapheme_breaks ("\342\230\205\314\205\315\207\342\200\215\342\230\200",
+  test_u8_grapheme_breaks ("\342\255\220\314\205\315\207\342\200\215\342\230\200",
                            "#____________");
 
   /* Regional indicators. */

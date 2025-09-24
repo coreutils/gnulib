@@ -85,7 +85,7 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                                  (= last character, ignoring intervening characters of class CM or ZWJ) */
       int prev2_ea = 0;       /* EastAsian property of character before the previous character */
       bool prev_initial_hyphen = false; /* the previous character was a
-                                           word-initial hyphen or U+2010 */
+                                           word-initial hyphen or unambiguous hyphen */
       bool prev_nus = false; /* before the previous character, there was a character
                                 with line break property LBP_NU and since then
                                 only characters with line break property LBP_SY
@@ -152,9 +152,9 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                   /* This is arbitrary.  */
                   prop = LBP_ID;
                   break;
-                case LBP_SA:
+                case LBP_SA1:
                   /* We don't handle complex scripts yet.
-                     Treat LBP_SA like LBP_XX.  */
+                     Treat LBP_SA1 like LBP_XX.  */
                 case LBP_XX:
                   /* This is arbitrary.  */
                   prop = LBP_AL1;
@@ -175,7 +175,7 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                   last_prop = LBP_ZW;
                   seen_space = NULL;
                 }
-              else if (prop == LBP_CM || prop == LBP_ZWJ)
+              else if (prop == LBP_CM || prop == LBP_SA2 || prop == LBP_ZWJ)
                 {
                   /* (LB9) Don't break just before a combining character or
                      zero-width joiner, except immediately after a mandatory
@@ -250,14 +250,14 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                       *p = UC_BREAK_PROHIBITED;
                     }
                   else if (prev_initial_hyphen
-                           && (prop == LBP_AL1 || prop == LBP_AL2))
+                           && (prop == LBP_AL1 || prop == LBP_AL2 || prop == LBP_HL))
                     {
                       /* (LB20a) Don't break after a word-initial hyphen.  */
                       *p = UC_BREAK_PROHIBITED;
                     }
-                  else if (prev_prop == LBP_HL_BA && prop != LBP_HL)
+                  else if (prev_prop == LBP_HL_HY && prop != LBP_HL)
                     {
-                      /* (LB21a) Don't break after Hebrew + Hyphen/Break-After,
+                      /* (LB21a) Don't break after Hebrew + Hyphen/Unambiguous hyphen,
                          before non-Hebrew.  */
                       *p = UC_BREAK_PROHIBITED;
                     }
@@ -392,7 +392,7 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                      || prev_prop == LBP_SP || prev_prop == LBP_ZW)))
             {
               prev_initial_hyphen =
-                (prop == LBP_HY || uc == 0x2010)
+                (prop == LBP_HY || prop == LBP_HH)
                 && (prev_prop == LBP_BK || prev_prop == LBP_CR || prev_prop == LBP_LF
                     || prev_prop == LBP_SP || prev_prop == LBP_ZW
                     || prev_prop == LBP_CB || prev_prop == LBP_GL);
@@ -400,9 +400,8 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                                               || prev_prop == LBP_AL2
                                               || prev_prop == LBP_AS)
                            ? LBP_AKLS_VI :
-                           prev_prop == LBP_HL && (prop == LBP_HY
-                                                   || (prop == LBP_BA && !ea))
-                           ? LBP_HL_BA :
+                           prev_prop == LBP_HL && (prop == LBP_HY || prop == LBP_HH)
+                           ? LBP_HL_HY :
                            prop);
               prev2_ea = prev_ea;
               prev_ea = ea;

@@ -12,7 +12,7 @@ unictype/base
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 gl_UNICTYPE_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.3], [unictype/property-changes-when-titlecased])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.4], [unictype/property-changes-when-titlecased])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_CHANGES_WHEN_TITLECASED

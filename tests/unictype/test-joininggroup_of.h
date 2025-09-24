@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -284,6 +284,7 @@
     { 0x088C, UC_JOINING_GROUP_TAH },
     { 0x088D, UC_JOINING_GROUP_GAF },
     { 0x088E, UC_JOINING_GROUP_VERTICAL_TAIL },
+    { 0x088F, UC_JOINING_GROUP_NOON },
     { 0x08A0, UC_JOINING_GROUP_BEH },
     { 0x08A1, UC_JOINING_GROUP_BEH },
     { 0x08A2, UC_JOINING_GROUP_HAH },
@@ -369,4 +370,6 @@
     { 0x10D23, UC_JOINING_GROUP_HANIFI_ROHINGYA_KINNA_YA },
     { 0x10EC2, UC_JOINING_GROUP_DAL },
     { 0x10EC3, UC_JOINING_GROUP_TAH },
-    { 0x10EC4, UC_JOINING_GROUP_KAF }
+    { 0x10EC4, UC_JOINING_GROUP_KAF },
+    { 0x10EC6, UC_JOINING_GROUP_THIN_NOON },
+    { 0x10EC7, UC_JOINING_GROUP_YEH }

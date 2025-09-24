@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[15];
     short level2[3 << 7];
-    unsigned int level3[48 << 4];
+    unsigned int level3[49 << 4];
   }
 u_property_grapheme_extend =
 {
@@ -301,20 +301,20 @@ u_property_grapheme_extend =
        16 +   384 * sizeof (short) / sizeof (int) +   688,
        16 +   384 * sizeof (short) / sizeof (int) +   704,
        16 +   384 * sizeof (short) / sizeof (int) +   720,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +   736,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +   752,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       16 +   384 * sizeof (short) / sizeof (int) +   768,
        -1,
        -1,
        -1,
@@ -489,7 +489,7 @@ u_property_grapheme_extend =
     0x00000000U, 0x0E040187U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x09800000U, 0x00000000U, 0x7F400000U, 0x9FF81FE5U,
-    0x00000000U, 0xFFFF0000U, 0x00007FFFU, 0x00000000U,
+    0x00000000U, 0xFFFF0000U, 0x3FFFFFFFU, 0x00000FFFU,
     0x0000000FU, 0x3FF00000U, 0x0000001CU, 0x000FF800U,
     0x00000003U, 0x00003F3CU, 0x00000000U, 0x000FA340U,
     0x00000000U, 0x00CFF000U, 0x00000000U, 0x00000000U,
@@ -545,7 +545,7 @@ u_property_grapheme_extend =
     0x00000000U, 0x000000F0U, 0x00000000U, 0x00003E00U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00001800U, 0x00000000U, 0xF0000000U,
+    0x00000000U, 0x00001800U, 0x00000000U, 0xFC000000U,
     0x00000000U, 0x00000000U, 0x0001FFC0U, 0x00000000U,
     0x0000003CU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000002U, 0xFF000000U, 0x0000007FU, 0x80190000U,
@@ -570,7 +570,7 @@ u_property_grapheme_extend =
     0x00000000U, 0x00000000U, 0x0CF00000U, 0x00000001U,
     0x000007FEU, 0x79F80000U, 0x0E7E0080U, 0x00000000U,
     0x037FFC00U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x0000005DU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0xBF7F0000U, 0x00000000U, 0x00000000U,
     0xFFFC0000U, 0x006DFCFFU, 0x00000000U, 0x00000000U,
@@ -628,6 +628,10 @@ u_property_grapheme_extend =
     0x00000000U, 0x00000000U, 0x00000000U, 0x0000F000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x0000C000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x0020C048U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x007F0000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x000007F0U, 0x00000000U,

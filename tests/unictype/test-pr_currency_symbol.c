@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -28,7 +28,7 @@
     { 0x0BF9, 0x0BF9 },
     { 0x0E3F, 0x0E3F },
     { 0x17DB, 0x17DB },
-    { 0x20A0, 0x20C0 },
+    { 0x20A0, 0x20C1 },
     { 0xA838, 0xA838 },
     { 0xFDFC, 0xFDFC },
     { 0xFE69, 0xFE69 },

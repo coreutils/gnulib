@@ -10,7 +10,7 @@ uniwidth/u32-width
 unistr/u32-strlen
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.3], [uniwidth/u32-strwidth])
+gl_LIBUNISTRING_MODULE([1.4], [uniwidth/u32-strwidth])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWIDTH_U32_STRWIDTH

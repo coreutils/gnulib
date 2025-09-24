@@ -9,7 +9,7 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.3], [unictype/combining-class])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/combining-class])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_COMBINING_CLASS

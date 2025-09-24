@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Casing Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[15];
     short level2[3 << 7];
-    unsigned int level3[57 << 4];
+    unsigned int level3[58 << 4];
   }
 u_casing_property_case_ignorable =
 {
@@ -301,20 +301,20 @@ u_casing_property_case_ignorable =
        16 +   384 * sizeof (short) / sizeof (int) +   816,
        16 +   384 * sizeof (short) / sizeof (int) +   832,
        16 +   384 * sizeof (short) / sizeof (int) +   848,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +   864,
-       -1,
-       -1,
-       -1,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +   880,
        -1,
        -1,
        -1,
        -1,
-       -1,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +   896,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       16 +   384 * sizeof (short) / sizeof (int) +   912,
        -1,
        -1,
        -1,
@@ -493,7 +493,7 @@ u_casing_property_case_ignorable =
     0x00000000U, 0x0E040187U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x09800000U, 0x00000000U, 0x7F400000U, 0x9FF81FE5U,
-    0x00000000U, 0xFFFF0080U, 0x00007FFFU, 0x00000000U,
+    0x00000000U, 0xFFFF0080U, 0x3FFFFFFFU, 0x00000FFFU,
     0x0000000FU, 0x17D00000U, 0x00000004U, 0x000FF800U,
     0x00000003U, 0x00003B3CU, 0x00000000U, 0x0003A340U,
     0x00000000U, 0x00CFF000U, 0x00000000U, 0x3F000000U,
@@ -569,7 +569,7 @@ u_casing_property_case_ignorable =
     0x00000000U, 0x000000F0U, 0x00004000U, 0x0000BE00U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00001800U, 0x00000000U, 0xF0000000U,
+    0x00000000U, 0x00001800U, 0x00000020U, 0xFC000000U,
     0x00000000U, 0x00000000U, 0x0001FFC0U, 0x00000000U,
     0x0000003CU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000002U, 0xFF000000U, 0x0000007FU, 0x80190000U,
@@ -594,12 +594,12 @@ u_casing_property_case_ignorable =
     0x00000000U, 0x00000000U, 0x0CF00000U, 0x00000001U,
     0x000007FEU, 0x79F80000U, 0x0E7E0080U, 0x00000000U,
     0x037FFC00U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x0000005DU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0xBF7F0000U, 0x00000000U, 0x00000000U,
     0xFFFC0000U, 0x006DFCFFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0xB47E0000U, 0x000000BFU, 0x00000000U,
-    0x00A30000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00A30000U, 0x00000000U, 0x02000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00180000U,
     0x00000003U, 0x07C00000U, 0x04000005U, 0x00000000U,
@@ -623,7 +623,7 @@ u_casing_property_case_ignorable =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00008000U, 0x00000000U,
-    0xFFFF8000U, 0x00000000U, 0x00000000U, 0x0000001BU,
+    0xFFFF8000U, 0x00000000U, 0x00000000U, 0x000C001BU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -660,6 +660,10 @@ u_casing_property_case_ignorable =
     0x00000000U, 0x00000000U, 0x00000000U, 0x0000F800U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x0000C000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x8020C048U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x007F0000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000FF0U, 0x00000000U,

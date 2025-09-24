@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -189,6 +189,9 @@
     { 0x11A39, 0x11A39 },
     { 0x11A57, 0x11A58 },
     { 0x11A97, 0x11A97 },
+    { 0x11B61, 0x11B61 },
+    { 0x11B65, 0x11B65 },
+    { 0x11B67, 0x11B67 },
     { 0x11C2F, 0x11C2F },
     { 0x11C3E, 0x11C3E },
     { 0x11CA9, 0x11CA9 },

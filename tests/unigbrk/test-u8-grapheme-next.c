@@ -80,7 +80,7 @@ main (void)
   test_u8_grapheme_next ("\r\nd", 3, 2);
 
   /* Emoji modifier / ZWJ sequence. */
-  test_u8_grapheme_next ("\342\230\205\314\205\315\207\342\200\215\342\230\200",
+  test_u8_grapheme_next ("\342\255\220\314\205\315\207\342\200\215\342\230\200",
                          13, 13);
 
   /* Regional indicators. */

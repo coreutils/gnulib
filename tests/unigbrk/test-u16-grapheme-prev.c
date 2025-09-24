@@ -101,7 +101,7 @@ main (void)
   test_u16_grapheme_prev (2, 'c', '\r', '\n', -1);
 
   /* Emoji modifier / ZWJ sequence. */
-  test_u16_grapheme_prev (5, 0x2605, 0x0305, 0x0347, 0x200D, 0x2600, -1);
+  test_u16_grapheme_prev (5, 0x2B50, 0x0305, 0x0347, 0x200D, 0x2600, -1);
 
   /* Regional indicators. */
   test_u16_grapheme_prev (4, 0xD83C, 0xDDE9, 0xD83C, 0xDDEA, 0xD83C, 0xDDEB, 0xD83C, 0xDDF7, -1);

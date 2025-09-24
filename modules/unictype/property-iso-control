@@ -14,7 +14,7 @@ unictype/category-Cc
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 gl_UNICTYPE_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([0.9.8], [unictype/property-iso-control])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.4], [unictype/property-iso-control])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_ISO_CONTROL

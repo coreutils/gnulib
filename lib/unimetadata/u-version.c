@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Supported Unicode version.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2024 Free Software Foundation, Inc.
+/* Copyright (C) 2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -30,4 +30,4 @@
 /* Specification.  */
 #include "unimetadata.h"
 
-const int _libunistring_unicode_version = (16 << 8) | 0;
+const int _libunistring_unicode_version = (17 << 8) | 0;

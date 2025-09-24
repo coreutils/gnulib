@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[36 << 4];
+    unsigned int level3[37 << 4];
   }
 u_property_other_alphabetic =
 {
@@ -288,12 +288,12 @@ u_property_other_alphabetic =
         3 +   256 * sizeof (short) / sizeof (int) +   528,
        -1,
        -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   544,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   560,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   576,
        -1,
        -1,
        -1,
@@ -388,7 +388,7 @@ u_property_other_alphabetic =
     0x00000000U, 0x000000F0U, 0x00000000U, 0x00000200U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00001800U, 0x00000000U, 0x10000000U,
+    0x00000000U, 0x00001800U, 0x00000000U, 0x1C000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000007U, 0xFF000000U, 0x0000003FU, 0x00180000U,
@@ -413,7 +413,7 @@ u_property_other_alphabetic =
     0x00000000U, 0x00000000U, 0xFCFE0000U, 0x00000010U,
     0x000007FEU, 0x7BE00000U, 0x0FFE0000U, 0x00000000U,
     0x00FFFC00U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x000000FFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x7F7F8000U, 0x00000000U, 0x00000000U,
     0xFFFC0000U, 0x007FFEFFU, 0x00000000U, 0x00000000U,
@@ -437,6 +437,10 @@ u_property_other_alphabetic =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0xF9FFFF7FU, 0x000007DBU, 0x00000000U, 0x00000000U,
     0x00008000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x0020C048U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

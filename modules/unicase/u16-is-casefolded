@@ -10,7 +10,7 @@ unicase/u16-is-invariant
 unicase/u16-casefold
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unicase/u16-is-casefolded])
+gl_LIBUNISTRING_MODULE([1.4], [unicase/u16-is-casefolded])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U16_IS_CASEFOLDED

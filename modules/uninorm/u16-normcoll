@@ -11,7 +11,7 @@ uninorm/u16-normxfrm
 memcmp2
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.3], [uninorm/u16-normcoll])
+gl_LIBUNISTRING_MODULE([1.4], [uninorm/u16-normcoll])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_U16_NORMCOLL

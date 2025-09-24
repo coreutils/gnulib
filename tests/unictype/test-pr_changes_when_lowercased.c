@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -613,7 +613,10 @@
     { 0xA7C4, 0xA7C7 },
     { 0xA7C9, 0xA7C9 },
     { 0xA7CB, 0xA7CC },
+    { 0xA7CE, 0xA7CE },
     { 0xA7D0, 0xA7D0 },
+    { 0xA7D2, 0xA7D2 },
+    { 0xA7D4, 0xA7D4 },
     { 0xA7D6, 0xA7D6 },
     { 0xA7D8, 0xA7D8 },
     { 0xA7DA, 0xA7DA },
@@ -630,6 +633,7 @@
     { 0x10D50, 0x10D65 },
     { 0x118A0, 0x118BF },
     { 0x16E40, 0x16E5F },
+    { 0x16EA0, 0x16EB8 },
     { 0x1E900, 0x1E921 }
 
 #define PREDICATE(c) uc_is_property_changes_when_lowercased (c)

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode grapheme break property functions.
-   Copyright (C) 2010-2024 Free Software Foundation, Inc.
+   Copyright (C) 2010-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -385,7 +385,9 @@
 { 0x1A7F, GBP_OTHER },
 { 0x1A80, GBP_EXTEND },
 { 0x1AB0, GBP_OTHER },
-{ 0x1ACF, GBP_EXTEND },
+{ 0x1ADE, GBP_EXTEND },
+{ 0x1AE0, GBP_OTHER },
+{ 0x1AEC, GBP_EXTEND },
 { 0x1B00, GBP_OTHER },
 { 0x1B04, GBP_EXTEND },
 { 0x1B05, GBP_SPACINGMARK },
@@ -1380,7 +1382,7 @@
 { 0x10D6E, GBP_EXTEND },
 { 0x10EAB, GBP_OTHER },
 { 0x10EAD, GBP_EXTEND },
-{ 0x10EFC, GBP_OTHER },
+{ 0x10EFA, GBP_OTHER },
 { 0x10F00, GBP_EXTEND },
 { 0x10F46, GBP_OTHER },
 { 0x10F51, GBP_EXTEND },
@@ -1573,7 +1575,7 @@
 { 0x11A33, GBP_OTHER },
 { 0x11A39, GBP_EXTEND },
 { 0x11A3A, GBP_SPACINGMARK },
-{ 0x11A3B, GBP_PREPEND },
+{ 0x11A3B, GBP_OTHER },
 { 0x11A3F, GBP_EXTEND },
 { 0x11A47, GBP_OTHER },
 { 0x11A48, GBP_EXTEND },
@@ -1586,6 +1588,13 @@
 { 0x11A97, GBP_EXTEND },
 { 0x11A98, GBP_SPACINGMARK },
 { 0x11A9A, GBP_EXTEND },
+{ 0x11B60, GBP_OTHER },
+{ 0x11B61, GBP_EXTEND },
+{ 0x11B62, GBP_SPACINGMARK },
+{ 0x11B65, GBP_EXTEND },
+{ 0x11B66, GBP_SPACINGMARK },
+{ 0x11B67, GBP_EXTEND },
+{ 0x11B68, GBP_SPACINGMARK },
 { 0x11C2F, GBP_OTHER },
 { 0x11C30, GBP_SPACINGMARK },
 { 0x11C37, GBP_EXTEND },
@@ -1717,6 +1726,14 @@
 { 0x1E4F0, GBP_EXTEND },
 { 0x1E5EE, GBP_OTHER },
 { 0x1E5F0, GBP_EXTEND },
+{ 0x1E6E3, GBP_OTHER },
+{ 0x1E6E4, GBP_EXTEND },
+{ 0x1E6E6, GBP_OTHER },
+{ 0x1E6E7, GBP_EXTEND },
+{ 0x1E6EE, GBP_OTHER },
+{ 0x1E6F0, GBP_EXTEND },
+{ 0x1E6F5, GBP_OTHER },
+{ 0x1E6F6, GBP_EXTEND },
 { 0x1E8D0, GBP_OTHER },
 { 0x1E8D7, GBP_EXTEND },
 { 0x1E944, GBP_OTHER },

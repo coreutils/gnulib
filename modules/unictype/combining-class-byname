@@ -10,7 +10,7 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unictype/combining-class-byname])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/combining-class-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_COMBINING_CLASS_BYNAME

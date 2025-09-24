@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -198,3 +198,7 @@ Ol_Onal, 166
 Sunuwar, 167
 Todhri, 168
 Tulu_Tigalari, 169
+Sidetic, 170
+Tai_Yo, 171
+Tolong_Siki, 172
+Beria_Erfe, 173

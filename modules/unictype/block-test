@@ -8,7 +8,7 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.11], [unictype/block-test])
+gl_LIBUNISTRING_MODULE([1.4], [unictype/block-test])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_BLOCK_TEST

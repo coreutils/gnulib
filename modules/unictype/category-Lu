@@ -10,7 +10,7 @@ unictype/base
 
 configure.ac:
 gl_UNICTYPE_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.3], [unictype/category-Lu])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.4], [unictype/category-Lu])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_LU

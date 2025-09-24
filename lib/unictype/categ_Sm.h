@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
 
-/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[14 << 4];
+    unsigned int level3[16 << 4];
   }
 u_categ_Sm =
 {
@@ -276,19 +276,7 @@ u_categ_Sm =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   192,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
        -1,
        -1,
        -1,
@@ -298,6 +286,18 @@ u_categ_Sm =
        -1,
        -1,
        -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   224,
+       -1,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   240,
        -1,
        -1,
        -1
@@ -352,11 +352,19 @@ u_categ_Sm =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x0000C000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00010000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x08000002U, 0x08000000U,
     0x00200000U, 0x00200000U, 0x00008000U, 0x00008000U,
     0x00000200U, 0x00000200U, 0x00000008U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00030000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x01FF0000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
   }

@@ -107,7 +107,7 @@ main (void)
 
   /* Emoji modifier / ZWJ sequence. */
   test_u16_grapheme_breaks ("#____",
-                            0x2605, 0x0305, 0x0347, 0x200D, 0x2600,
+                            0x2B50, 0x0305, 0x0347, 0x200D, 0x2600,
                             -1);
 
   /* Regional indicators. */

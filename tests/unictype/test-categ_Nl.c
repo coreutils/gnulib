@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -28,7 +28,8 @@
     { 0x10341, 0x10341 },
     { 0x1034A, 0x1034A },
     { 0x103D1, 0x103D5 },
-    { 0x12400, 0x1246E }
+    { 0x12400, 0x1246E },
+    { 0x16FF4, 0x16FF6 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Nl)
 #include "test-predicate-part2.h"

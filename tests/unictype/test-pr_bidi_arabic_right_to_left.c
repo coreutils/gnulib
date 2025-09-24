@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -30,18 +30,20 @@
     { 0x074B, 0x07A5 },
     { 0x07B1, 0x07BF },
     { 0x0860, 0x086A },
-    { 0x0870, 0x088E },
+    { 0x0870, 0x088F },
     { 0x08A0, 0x08C9 },
     { 0x2065, 0x2065 },
-    { 0xFB50, 0xFD3D },
-    { 0xFD50, 0xFDCE },
+    { 0xFB50, 0xFBC2 },
+    { 0xFBD3, 0xFD3D },
+    { 0xFD50, 0xFD8F },
+    { 0xFD92, 0xFDC7 },
     { 0xFDF0, 0xFDFC },
     { 0xFE1A, 0xFE1F },
     { 0xFE53, 0xFE53 },
     { 0xFE67, 0xFE67 },
     { 0xFE6C, 0xFEFE },
     { 0x10D00, 0x10D23 },
-    { 0x10EC2, 0x10EC4 },
+    { 0x10EC2, 0x10EC7 },
     { 0x10F30, 0x10F45 },
     { 0x10F51, 0x10F59 },
     { 0x1EC71, 0x1ECB4 },

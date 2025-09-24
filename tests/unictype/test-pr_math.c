@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2024 Free Software Foundation, Inc.
+   Copyright (C) 2007-2025 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -101,6 +101,7 @@
     { 0xFFE2, 0xFFE2 },
     { 0xFFE9, 0xFFEC },
     { 0x10D8E, 0x10D8F },
+    { 0x1CEF0, 0x1CEF0 },
     { 0x1D400, 0x1D454 },
     { 0x1D456, 0x1D49C },
     { 0x1D49E, 0x1D49F },
@@ -155,7 +156,8 @@
     { 0x1EEA1, 0x1EEA3 },
     { 0x1EEA5, 0x1EEA9 },
     { 0x1EEAB, 0x1EEBB },
-    { 0x1EEF0, 0x1EEF1 }
+    { 0x1EEF0, 0x1EEF1 },
+    { 0x1F8D0, 0x1F8D8 }
 
 #define PREDICATE(c) uc_is_property_math (c)
 #include "test-predicate-part2.h"
