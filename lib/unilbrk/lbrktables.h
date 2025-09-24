@@ -73,8 +73,8 @@ enum
   LBP_H2  = 24, /* Hangul LV syllable */
   LBP_H3  = 25, /* Hangul LVT syllable */
   LBP_HL  = 31, /* Hebrew letter */
-  LBP_ID1 = 26, /* ideographic */
-  LBP_ID2 = 27, /* ideographic and potential future emoji */
+  LBP_ID  = 26, /* ideographic */
+  LBP_EBF = 27, /* future emoji base */
   LBP_JL  = 28, /* Hangul L Jamo */
   LBP_JV  = 29, /* Hangul V Jamo */
   LBP_JT  = 30, /* Hangul T Jamo */

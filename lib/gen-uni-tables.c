@@ -7243,8 +7243,8 @@ enum
   LBP_H2  = 24, /* Hangul LV syllable */
   LBP_H3  = 25, /* Hangul LVT syllable */
   LBP_HL  = 31, /* Hebrew letter */
-  LBP_ID1 = 26, /* ideographic */
-  LBP_ID2 = 27, /* ideographic and potential future emoji */
+  LBP_ID  = 26, /* ideographic */
+  LBP_EBF = 27, /* future emoji base */
   LBP_JL  = 28, /* Hangul L Jamo */
   LBP_JV  = 29, /* Hangul V Jamo */
   LBP_JT  = 30, /* Hangul T Jamo */
@@ -7263,8 +7263,7 @@ enum
   LBP_CP  = 100, /* LBP_CP1 or LBP_CP2 */
   LBP_OP  = 101, /* LBP_OP1 or LBP_OP2 */
   LBP_QU  = 102, /* LBP_QU1 or LBP_QU2 or LBP_QU3 */
-  LBP_AL  = 103, /* LBP_AL1 or LBP_AL2 */
-  LBP_ID  = 104  /* LBP_ID1 or LBP_ID2 */
+  LBP_AL  = 103  /* LBP_AL1 or LBP_AL2 */
 };
 
 /* Returns the line breaking EastAsian property for ch, as a bit.  */
@@ -8357,7 +8356,7 @@ get_lbp (unsigned int ch)
                 || (ch >= 0x3248 && ch <= 0x324F) /* CIRCLED NUMBER TEN ON BLACK SQUARE..CIRCLED NUMBER EIGHTY ON BLACK SQUARE */)
               attr |= (int64_t) 1 << LBP_AI;
             else
-              attr |= (int64_t) 1 << LBP_ID1;
+              attr |= (int64_t) 1 << LBP_ID;
           }
 
       /* ordinary alphabetic and symbol characters */
@@ -8385,7 +8384,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2064 /* INVISIBLE PLUS */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x08E2 /* ARABIC DISPUTED END OF AYAH */)
-        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP1) | ((int64_t) 1 << LBP_CP2) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP1) | ((int64_t) 1 << LBP_OP2) | ((int64_t) 1 << LBP_QU1) | ((int64_t) 1 << LBP_QU2) | ((int64_t) 1 << LBP_QU3) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_AP) | ((int64_t) 1 << LBP_AK) | ((int64_t) 1 << LBP_AS) | ((int64_t) 1 << LBP_VI) | ((int64_t) 1 << LBP_VF) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID1) | ((int64_t) 1 << LBP_ID2) | ((int64_t) 1 << LBP_EB) | ((int64_t) 1 << LBP_EM)))
+        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP1) | ((int64_t) 1 << LBP_CP2) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP1) | ((int64_t) 1 << LBP_OP2) | ((int64_t) 1 << LBP_QU1) | ((int64_t) 1 << LBP_QU2) | ((int64_t) 1 << LBP_QU3) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_AP) | ((int64_t) 1 << LBP_AK) | ((int64_t) 1 << LBP_AS) | ((int64_t) 1 << LBP_VI) | ((int64_t) 1 << LBP_VF) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID) | ((int64_t) 1 << LBP_EB) | ((int64_t) 1 << LBP_EM)))
             && ch != 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */
             && !(ch >= 0x3248 && ch <= 0x324F) /* CIRCLED NUMBER TEN ON BLACK SQUARE..CIRCLED NUMBER EIGHTY ON BLACK SQUARE */)
           {
@@ -8594,53 +8593,53 @@ get_lbp (unsigned int ch)
   else
     {
       /* Unassigned character.  */
-      if ((ch >= 0x3400 && ch <= 0x4DBF) /* CJK Unified Ideographs Extension A */
-          || (ch >= 0x4E00 && ch <= 0x9FFF) /* CJK Unified Ideographs */
-          || (ch >= 0xF900 && ch <= 0xFAFF) /* CJK Compatibility Ideographs */
-          || (ch >= 0x1F02C && ch <= 0x1F02F) /* reserved */
-          || (ch >= 0x1F094 && ch <= 0x1F09F) /* reserved */
-          || (ch >= 0x1F0AF && ch <= 0x1F0B0) /* reserved */
-          || ch == 0x1F0C0 /* reserved */
-          || ch == 0x1F0D0 /* reserved */
-          || (ch >= 0x1F0F6 && ch <= 0x1F0FF) /* reserved */
-          || (ch >= 0x1F10D && ch <= 0x1F10F) /* reserved */
-          || ch == 0x1F12F /* reserved */
-          || (ch >= 0x1F16C && ch <= 0x1F16F) /* reserved */
-          || (ch >= 0x1F1AD && ch <= 0x1F1E5) /* reserved */
-          || (ch >= 0x1F203 && ch <= 0x1F20F) /* reserved */
-          || (ch >= 0x1F23C && ch <= 0x1F23F) /* reserved */
-          || (ch >= 0x1F249 && ch <= 0x1F24F) /* reserved */
-          || (ch >= 0x1F252 && ch <= 0x1F2FF) /* reserved */
-          || (ch >= 0x1F6D3 && ch <= 0x1F6DF) /* reserved */
-          || (ch >= 0x1F6ED && ch <= 0x1F6EF) /* reserved */
-          || (ch >= 0x1F6F7 && ch <= 0x1F6FF) /* reserved */
-          || (ch >= 0x1F774 && ch <= 0x1F77F) /* reserved */
-          || (ch >= 0x1F7D5 && ch <= 0x1F7FF) /* reserved */
-          || (ch >= 0x1F8B0 && ch <= 0x1F8BB) /* reserved */
-          || (ch >= 0x1F8C0 && ch <= 0x1F8C1) /* reserved */
-          || (ch >= 0x1F900 && ch <= 0x1F90F) /* reserved */
-          || ch == 0x1F91F /* reserved */
-          || ch == 0x1F93F /* reserved */
-          || (ch >= 0x1F928 && ch <= 0x1F92F) /* reserved */
-          || (ch >= 0x1F931 && ch <= 0x1F932) /* reserved */
-          || (ch >= 0x1F94C && ch <= 0x1F94F) /* reserved */
-          || (ch >= 0x1F95F && ch <= 0x1F97F) /* reserved */
-          || (ch >= 0x1F992 && ch <= 0x1F9BF) /* reserved */
-          || (ch >= 0x1F9C1 && ch <= 0x1FB92) /* reserved */
-          || (ch >= 0x1FB94 && ch <= 0x1FBCA) /* reserved */
-          || (ch >= 0x1FBF0 && ch <= 0x1FBF9) /* reserved */
-          || (ch >= 0x1FC00 && ch <= 0x1FFFD) /* reserved */
-          || (ch >= 0x20000 && ch <= 0x2A6FF) /* CJK Unified Ideographs Extension B */
-          || (ch >= 0x2A700 && ch <= 0x2F7FF) /* CJK Unified Ideographs Extension C,
-                                                 Supplementary Ideographic Plane (Plane 2) outside of blocks */
-          || (ch >= 0x2F800 && ch <= 0x2FFFD) /* CJK Compatibility Ideographs Supplement,
-                                                 Supplementary Ideographic Plane (Plane 2) outside of blocks */
-          || (ch >= 0x30000 && ch <= 0x3FFFD) /* Tertiary Ideographic Plane (Plane 3) outside of blocks */)
+      if (is_property_extended_pictographic (ch))
+        attr |= (int64_t) 1 << LBP_EBF;
+      else
         {
-          if (is_property_extended_pictographic (ch))
-            attr |= (int64_t) 1 << LBP_ID2;
-          else
-            attr |= (int64_t) 1 << LBP_ID1;
+          if ((ch >= 0x3400 && ch <= 0x4DBF) /* CJK Unified Ideographs Extension A */
+              || (ch >= 0x4E00 && ch <= 0x9FFF) /* CJK Unified Ideographs */
+              || (ch >= 0xF900 && ch <= 0xFAFF) /* CJK Compatibility Ideographs */
+              || (ch >= 0x1F02C && ch <= 0x1F02F) /* reserved */
+              || (ch >= 0x1F094 && ch <= 0x1F09F) /* reserved */
+              || (ch >= 0x1F0AF && ch <= 0x1F0B0) /* reserved */
+              || ch == 0x1F0C0 /* reserved */
+              || ch == 0x1F0D0 /* reserved */
+              || (ch >= 0x1F0F6 && ch <= 0x1F0FF) /* reserved */
+              || (ch >= 0x1F10D && ch <= 0x1F10F) /* reserved */
+              || ch == 0x1F12F /* reserved */
+              || (ch >= 0x1F16C && ch <= 0x1F16F) /* reserved */
+              || (ch >= 0x1F1AD && ch <= 0x1F1E5) /* reserved */
+              || (ch >= 0x1F203 && ch <= 0x1F20F) /* reserved */
+              || (ch >= 0x1F23C && ch <= 0x1F23F) /* reserved */
+              || (ch >= 0x1F249 && ch <= 0x1F24F) /* reserved */
+              || (ch >= 0x1F252 && ch <= 0x1F2FF) /* reserved */
+              || (ch >= 0x1F6D3 && ch <= 0x1F6DF) /* reserved */
+              || (ch >= 0x1F6ED && ch <= 0x1F6EF) /* reserved */
+              || (ch >= 0x1F6F7 && ch <= 0x1F6FF) /* reserved */
+              || (ch >= 0x1F774 && ch <= 0x1F77F) /* reserved */
+              || (ch >= 0x1F7D5 && ch <= 0x1F7FF) /* reserved */
+              || (ch >= 0x1F8B0 && ch <= 0x1F8BB) /* reserved */
+              || (ch >= 0x1F8C0 && ch <= 0x1F8C1) /* reserved */
+              || (ch >= 0x1F900 && ch <= 0x1F90F) /* reserved */
+              || ch == 0x1F91F /* reserved */
+              || ch == 0x1F93F /* reserved */
+              || (ch >= 0x1F928 && ch <= 0x1F92F) /* reserved */
+              || (ch >= 0x1F931 && ch <= 0x1F932) /* reserved */
+              || (ch >= 0x1F94C && ch <= 0x1F94F) /* reserved */
+              || (ch >= 0x1F95F && ch <= 0x1F97F) /* reserved */
+              || (ch >= 0x1F992 && ch <= 0x1F9BF) /* reserved */
+              || (ch >= 0x1F9C1 && ch <= 0x1FB92) /* reserved */
+              || (ch >= 0x1FB94 && ch <= 0x1FBCA) /* reserved */
+              || (ch >= 0x1FBF0 && ch <= 0x1FBF9) /* reserved */
+              || (ch >= 0x1FC00 && ch <= 0x1FFFD) /* reserved */
+              || (ch >= 0x20000 && ch <= 0x2A6FF) /* CJK Unified Ideographs Extension B */
+              || (ch >= 0x2A700 && ch <= 0x2F7FF) /* CJK Unified Ideographs Extension C,
+                                                     Supplementary Ideographic Plane (Plane 2) outside of blocks */
+              || (ch >= 0x2F800 && ch <= 0x2FFFD) /* CJK Compatibility Ideographs Supplement,
+                                                     Supplementary Ideographic Plane (Plane 2) outside of blocks */
+              || (ch >= 0x30000 && ch <= 0x3FFFD) /* Tertiary Ideographic Plane (Plane 3) outside of blocks */)
+            attr |= (int64_t) 1 << LBP_ID;
         }
     }
 
@@ -8709,8 +8708,8 @@ debug_output_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_H2);
           PRINT_BIT(attr,LBP_H3);
           PRINT_BIT(attr,LBP_HL);
-          PRINT_BIT_ALT(attr,LBP_ID1,LBP_ID);
-          PRINT_BIT_ALT(attr,LBP_ID2,LBP_ID);
+          PRINT_BIT(attr,LBP_ID);
+          PRINT_BIT(attr,LBP_EBF);
           PRINT_BIT(attr,LBP_JL);
           PRINT_BIT(attr,LBP_JV);
           PRINT_BIT(attr,LBP_JT);
@@ -8768,8 +8767,20 @@ fill_org_lbp (const char *linebreak_filename)
   char field2[FIELDLEN];
   int lineno = 0;
 
+  /* For unassigned characters (General Category "Cn") that have property
+     Extended_Pictographic, the LineBreak.txt files is inconsistent:
+     For some of them, such as U+1F02C, it specifies LBP_ID, which then triggers
+     e.g. rule (LB23a).  For others, such as U+1F8FF, it specifies nothing,
+     which implies LBP_XX, which by rule (LB1) maps to LBP_AL, which then
+     triggers e.g. rule (LB28) "Do not break between alphabetics".  This is
+     nonsense; it should better behave like LBP_EB.
+     To fix this, in view of rule (LB30b), we map all unassigned
+     Extended_Pictographic characters to LBP_EBF, and ensure that they
+     behave like LBP_EB.  */
+
   for (i = 0; i < 0x110000; i++)
-    unicode_org_lbp[i] = LBP_XX;
+    unicode_org_lbp[i] =
+      (is_property_extended_pictographic (i) ? LBP_EBF : LBP_XX);
 
   stream = fopen (linebreak_filename, "r");
   if (stream == NULL)
@@ -8872,18 +8883,28 @@ fill_org_lbp (const char *linebreak_filename)
                    field1, linebreak_filename, lineno);
           exit (1);
         }
+      bool unassigned1 = (strncmp (field2, " Cn", 3) == 0);
+      bool unassigned2 = (strstr (field2, "<reserved-") != NULL);
+      if (unassigned1 != unassigned2)
+        {
+          fprintf (stderr, "contradictory comment \"%s\" in '%s':%d\n",
+                   field2, linebreak_filename, lineno);
+          exit (1);
+        }
       i = strtoul (field0, NULL, 16);
       if (strstr (field0, "..") != NULL)
         {
           /* Deal with a range.  */
           j = strtoul (strstr (field0, "..") + 2, NULL, 16);
           for (; i <= j; i++)
-            unicode_org_lbp[i] = value;
+            unicode_org_lbp[i] =
+              (unassigned1 && is_property_extended_pictographic (i) ? LBP_EBF : value);
         }
       else
         {
           /* Single character line.  */
-          unicode_org_lbp[i] = value;
+          unicode_org_lbp[i] =
+            (unassigned1 && is_property_extended_pictographic (i) ? LBP_EBF : value);
         }
     }
 
@@ -8939,6 +8960,7 @@ debug_output_org_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_H3);
           PRINT_BIT(attr,LBP_HL);
           PRINT_BIT(attr,LBP_ID);
+          PRINT_BIT(attr,LBP_EBF);
           PRINT_BIT(attr,LBP_JL);
           PRINT_BIT(attr,LBP_JV);
           PRINT_BIT(attr,LBP_JT);
@@ -9023,8 +9045,8 @@ lbp_value_to_string (unsigned int value)
       CASE(LBP_H2);
       CASE(LBP_H3);
       CASE(LBP_HL);
-      CASE(LBP_ID1);
-      CASE(LBP_ID2);
+      CASE(LBP_ID);
+      CASE(LBP_EBF);
       CASE(LBP_JL);
       CASE(LBP_JV);
       CASE(LBP_JT);
@@ -9267,14 +9289,12 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
      before == LBP_OP ? (set_table_cell_1 (LBP_OP1, field, value), set_table_cell_1 (LBP_OP2, field, value)) : \
      before == LBP_QU ? (set_table_cell_1 (LBP_QU1, field, value), set_table_cell_1 (LBP_QU2, field, value), set_table_cell_1 (LBP_QU3, field, value)) : \
      before == LBP_AL ? (set_table_cell_1 (LBP_AL1, field, value), set_table_cell_1 (LBP_AL2, field, value)) : \
-     before == LBP_ID ? (set_table_cell_1 (LBP_ID1, field, value), set_table_cell_1 (LBP_ID2, field, value)) : \
      set_table_cell_1 (before, field, value))
   #define set_table_cell_1(row,field,value) \
     (after == LBP_CP ? (set_table_cell_2 (row, LBP_CP1, field, value), set_table_cell_2 (row, LBP_CP2, field, value)) : \
      after == LBP_OP ? (set_table_cell_2 (row, LBP_OP1, field, value), set_table_cell_2 (row, LBP_OP2, field, value)) : \
      after == LBP_QU ? (set_table_cell_2 (row, LBP_QU1, field, value), set_table_cell_2 (row, LBP_QU2, field, value), set_table_cell_2 (row, LBP_QU3, field, value)) : \
      after == LBP_AL ? (set_table_cell_2 (row, LBP_AL1, field, value), set_table_cell_2 (row, LBP_AL2, field, value)) : \
-     after == LBP_ID ? (set_table_cell_2 (row, LBP_ID1, field, value), set_table_cell_2 (row, LBP_ID2, field, value)) : \
      set_table_cell_2 (row, after, field, value))
   #define set_table_cell_2(row,column,field,value) \
     (table[row][column].field = (value))
@@ -9294,7 +9314,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   /* (LB30b) Do not break between an emoji base (or potential emoji) and an
      emoji modifier.  */
   before = LBP_EB; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
-  before = LBP_ID2; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
+  before = LBP_EBF; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
 
   /* (LB30) Do not break between letters, numbers, or ordinary symbols and
      opening or closing parentheses (except for East Asian parentheses).  */
@@ -9376,9 +9396,11 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
      ideographs and numeric postfixes.  */
   before = LBP_PR; after = LBP_ID; set_table_cell (prohibited_no_sp, true);
   before = LBP_PR; after = LBP_EB; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_EBF; set_table_cell (prohibited_no_sp, true);
   before = LBP_PR; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
   before = LBP_ID; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
   before = LBP_EB; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_EBF; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
   before = LBP_EM; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
 
   /* (LB23) Do not break between digits and letters.  */
@@ -9519,6 +9541,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
      base or emoji modifier.  */
   before = LBP_ZWJ; after = LBP_ID; set_table_cell (prohibited_no_sp, true);
   before = LBP_ZWJ; after = LBP_EB; set_table_cell (prohibited_no_sp, true);
+  before = LBP_ZWJ; after = LBP_EBF; set_table_cell (prohibited_no_sp, true);
   before = LBP_ZWJ; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
 
   /* Not reflected in the table:

@@ -2,7 +2,7 @@
 /* Table that encodes several line breaking rules.  */
 /* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
 
-/* Copyright (C) 2001-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2001-2025 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -36,7 +36,7 @@
 const unsigned char unilbrk_table[41][41] =
 {
                                 /* after */
-        /*  WJ  GL  B2  BA  BB  HY  CL  CP1 CP2 EX  IN  NS  OP1 OP2 QU1 QU2 QU3 IS  NU  PO  PR  SY  AL1 AL2 H2  H3  ID1 ID2 JL  JV  JT  HL  AP  AK  AS  VI  VF  RI  ZWJ EB  EM  */
+        /*  WJ  GL  B2  BA  BB  HY  CL  CP1 CP2 EX  IN  NS  OP1 OP2 QU1 QU2 QU3 IS  NU  PO  PR  SY  AL1 AL2 H2  H3  ID  EBF JL  JV  JT  HL  AP  AK  AS  VI  VF  RI  ZWJ EB  EM  */
 /*  WJ */ {  P,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /*  GL */ {  P,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /*  B2 */ {  P,  I,  P,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
@@ -63,8 +63,8 @@ const unsigned char unilbrk_table[41][41] =
 /* AL2 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  I,  D,  I,  D,  P,  P,  I,  I,  I,  P,  I,  I,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  I,  I,  D,  I,  D,  D, },
 /*  H2 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  I,  I,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  H3 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
-/* ID1 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
-/* ID2 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  I, },
+/*  ID */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
+/* EBF */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  I, },
 /*  JL */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  I,  I,  D,  D,  I,  I,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  JV */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  I,  I,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  JT */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  I,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },

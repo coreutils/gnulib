@@ -137,28 +137,38 @@ main (int argc, char *argv[])
                  because regional indicators are supposed to come in pairs.  */
               if (!(j >= 2 && (input[0] >= 0x1F1E6 && input[0] <= 0x1F1FF)
                     && input[1] == 0x0308))
-                /* There is a disagreement regarding whether to allow a line break
-                   after a U+0020 SPACE character at the start of the text.
-                   We consider that the start of the text is equivalent to the
-                   state after a newline was seen; hence the loop starts with
-                   property LBP_BK.  By the rules (LB4,LB5,LB6) an extra line
-                   break after a mandatory line break is undesired, even with
-                   intervening spaces (because these rules come before (LB18)).
-                   Whereas the LineBreakTest.txt file allows a line break after
-                   the space.
-                   Similarly when the first two characters at the start of the
-                   text have property LBP_CM and LBP_ZWJ, respectively. (LB9).  */
-                if (!(((j == 1 || (j > 1 && ((input[j - 2] >= 0x000A && input[j - 2] <= 0x000D) || input[j - 2] == 0x0085)))
-                       && input[j - 1] == 0x0020)
-                      || ((j == 2 || (j > 2 && ((input[j - 3] >= 0x000A && input[j - 3] <= 0x000D) || input[j - 3] == 0x0085)))
-                          && ((input[j - 2] == 0x0020 && input[j - 1] == 0x0020)
-                              || (input[j - 2] == 0x0308 && input[j - 1] == 0x200D)
-                              || (input[j - 2] == 0x200D && input[j - 1] == 0x0308)))))
-                  matches &= (!(breaks[j] == UC_BREAK_PROHIBITED
-                                || breaks[j] == UC_BREAK_MANDATORY
-                                || breaks[j] == UC_BREAK_CR_BEFORE_LF)
-                              || (j > 0 && breaks[j - 1] == UC_BREAK_MANDATORY))
-                             == breaks_expected[j];
+                /* It is nonsense to treat U+1F8FF differently than U+1F02C.
+                   Both are unassigned Extended_Pictographic characters and
+                   should therefore be treated like LBP_EB (or LBP_ID, if you
+                   want), not like LBP_AL.  See rule (LB30b).  */
+                if (!(input[j] == 0x1F8FF
+                      || (j > 0 && input[j - 1] == 0x1F8FF)
+                      /* Also consider intervening characters with property LBP_CM
+                         or LBP_ZWJ, per (LB9).  */
+                      || (j > 1 && (input[j - 1] == 0x0308 || input[j - 1] == 0x200D)
+                          && input[j - 2] == 0x1F8FF)))
+                  /* There is a disagreement regarding whether to allow a line break
+                     after a U+0020 SPACE character at the start of the text.
+                     We consider that the start of the text is equivalent to the
+                     state after a newline was seen; hence the loop starts with
+                     property LBP_BK.  By the rules (LB4,LB5,LB6) an extra line
+                     break after a mandatory line break is undesired, even with
+                     intervening spaces (because these rules come before (LB18)).
+                     Whereas the LineBreakTest.txt file allows a line break after
+                     the space.
+                     Similarly when the first two characters at the start of the
+                     text have property LBP_CM and LBP_ZWJ, respectively. (LB9).  */
+                  if (!(((j == 1 || (j > 1 && ((input[j - 2] >= 0x000A && input[j - 2] <= 0x000D) || input[j - 2] == 0x0085)))
+                         && input[j - 1] == 0x0020)
+                        || ((j == 2 || (j > 2 && ((input[j - 3] >= 0x000A && input[j - 3] <= 0x000D) || input[j - 3] == 0x0085)))
+                            && ((input[j - 2] == 0x0020 && input[j - 1] == 0x0020)
+                                || (input[j - 2] == 0x0308 && input[j - 1] == 0x200D)
+                                || (input[j - 2] == 0x200D && input[j - 1] == 0x0308)))))
+                    matches &= (!(breaks[j] == UC_BREAK_PROHIBITED
+                                  || breaks[j] == UC_BREAK_MANDATORY
+                                  || breaks[j] == UC_BREAK_CR_BEFORE_LF)
+                                || (j > 0 && breaks[j - 1] == UC_BREAK_MANDATORY))
+                               == breaks_expected[j];
           }
       }
       if (!matches)

@@ -43,7 +43,7 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
 {
   if (n > 0)
     {
-      int LBP_AI_REPLACEMENT = (is_cjk_encoding (encoding) ? LBP_ID1 : LBP_AL1);
+      int LBP_AI_REPLACEMENT = (is_cjk_encoding (encoding) ? LBP_ID : LBP_AL1);
       const uint32_t *s_end = s + n;
 
       /* We need 2 characters of lookahead:
@@ -143,7 +143,7 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                   break;
                 case LBP_CB:
                   /* This is arbitrary.  */
-                  prop = LBP_ID1;
+                  prop = LBP_ID;
                   break;
                 case LBP_SA:
                   /* We don't handle complex scripts yet.
