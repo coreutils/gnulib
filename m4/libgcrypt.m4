@@ -10,7 +10,7 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# Last-changed: 2024-06-13
+# Last-changed: 2025-09-23
 
 
 dnl
@@ -127,7 +127,7 @@ AC_DEFUN([AM_PATH_LIBGCRYPT],
   fi
 
   use_gpgrt_config=""
-  if test x"$GPGRT_CONFIG" != x -a "$GPGRT_CONFIG" != "no"; then
+  if test x"$GPGRT_CONFIG" != x && test "$GPGRT_CONFIG" != "no"; then
     if $GPGRT_CONFIG libgcrypt --exists; then
       LIBGCRYPT_CONFIG="$GPGRT_CONFIG libgcrypt"
       AC_MSG_NOTICE([Use gpgrt-config as libgcrypt-config])
