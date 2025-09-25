@@ -41,6 +41,10 @@ see https://www.gnu.org/licenses/.  */
 
 #include "mini-mpq.h"
 
+#ifndef MINI_GMP_ENABLE_FLOAT
+#define MINI_GMP_ENABLE_FLOAT 1
+#endif
+
 #ifndef GMP_LIMB_HIGHBIT
 /* Define macros and static functions already defined by mini-gmp.c */
 #define GMP_LIMB_BITS (sizeof(mp_limb_t) * CHAR_BIT)
@@ -420,6 +424,7 @@ mpq_inv (mpq_t r, const mpq_t q)
 }
 
 
+#if MINI_GMP_ENABLE_FLOAT
 /* MPQ to/from double. */
 void
 mpq_set_d (mpq_t r, double x)
@@ -472,7 +477,7 @@ mpq_get_d (const mpq_t u)
 
   return ret;
 }
-
+#endif /* MINI_GMP_ENABLE_FLOAT */
 
 /* MPQ and strings/streams. */
 char *

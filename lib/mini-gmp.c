@@ -51,7 +51,11 @@ see https://www.gnu.org/licenses/.  */
 
 #include "mini-gmp.h"
 
-#if !defined(MINI_GMP_DONT_USE_FLOAT_H)
+#ifndef MINI_GMP_ENABLE_FLOAT
+#define MINI_GMP_ENABLE_FLOAT 1
+#endif
+
+#if MINI_GMP_ENABLE_FLOAT
 #include <float.h>
 #endif
 
@@ -1705,6 +1709,7 @@ mpz_roinit_n (mpz_t x, mp_srcptr xp, mp_size_t xs)
 }
 
 
+#if MINI_GMP_ENABLE_FLOAT
 /* Conversions and comparison to double. */
 void
 mpz_set_d (mpz_t r, double x)
@@ -1861,6 +1866,7 @@ mpz_cmp_d (const mpz_t x, double d)
 	return mpz_cmpabs_d (x, d);
     }
 }
+#endif /* MINI_GMP_ENABLE_FLOAT */
 
 
 /* MPZ comparisons and the like. */
