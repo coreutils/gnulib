@@ -1,5 +1,6 @@
 Description:
 xsetenv() function: set an environment variable, with out-of-memory checking.
+unsetenv() function: remove an environment variable.
 
 Files:
 lib/xsetenv.h
