@@ -938,7 +938,7 @@ rule for an info file should update it in the source directory.  When
 users build the package, ordinarily Make will not update the Info files
 because they will already be up to date.
 
-@itemx html
+@item html
 @itemx pdf
 @itemx ps
 Generate documentation files in the given format.  These targets
