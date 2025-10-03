@@ -1,0 +1,18 @@
+Files:
+tests/unilbrk/test-unilbrk-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-unilbrk-h-c++
+check_PROGRAMS += test-unilbrk-h-c++
+test_unilbrk_h_c___SOURCES = unilbrk/test-unilbrk-h-c++.cc
+test_unilbrk_h_c___LDADD = $(LDADD) $(LIBUNISTRING)
+endif
