@@ -1,0 +1,13 @@
+Files:
+tests/uniconv/test-uniconv-h.c
+
+Depends-on:
+uniconv/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uniconv-h
+check_PROGRAMS += test-uniconv-h
+test_uniconv_h_SOURCES = uniconv/test-uniconv-h.c
+test_uniconv_h_LDADD = $(LDADD) $(LIBUNISTRING)

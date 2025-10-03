@@ -1,0 +1,18 @@
+Files:
+tests/uniconv/test-uniconv-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-uniconv-h-c++
+check_PROGRAMS += test-uniconv-h-c++
+test_uniconv_h_c___SOURCES = uniconv/test-uniconv-h-c++.cc
+test_uniconv_h_c___LDADD = $(LDADD) $(LIBUNISTRING)
+endif
