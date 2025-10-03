@@ -1,0 +1,13 @@
+Files:
+tests/unimetadata/test-unimetadata-h.c
+
+Depends-on:
+unimetadata/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unimetadata-h
+check_PROGRAMS += test-unimetadata-h
+test_unimetadata_h_SOURCES = unimetadata/test-unimetadata-h.c
+test_unimetadata_h_LDADD = $(LDADD) $(LIBUNISTRING)
