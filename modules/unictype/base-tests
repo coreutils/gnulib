@@ -1,0 +1,13 @@
+Files:
+tests/unictype/test-unictype-h.c
+
+Depends-on:
+unictype/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unictype-h
+check_PROGRAMS += test-unictype-h
+test_unictype_h_SOURCES = unictype/test-unictype-h.c
+test_unictype_h_LDADD = $(LDADD) $(LIBUNISTRING)
