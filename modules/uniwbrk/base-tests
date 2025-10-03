@@ -1,0 +1,13 @@
+Files:
+tests/uniwbrk/test-uniwbrk-h.c
+
+Depends-on:
+uniwbrk/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uniwbrk-h
+check_PROGRAMS += test-uniwbrk-h
+test_uniwbrk_h_SOURCES = uniwbrk/test-uniwbrk-h.c
+test_uniwbrk_h_LDADD = $(LDADD) $(LIBUNISTRING)
