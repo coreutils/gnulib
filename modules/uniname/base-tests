@@ -1,0 +1,13 @@
+Files:
+tests/uniname/test-uniname-h.c
+
+Depends-on:
+uniname/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uniname-h
+check_PROGRAMS += test-uniname-h
+test_uniname_h_SOURCES = uniname/test-uniname-h.c
+test_uniname_h_LDADD = $(LDADD) $(LIBUNISTRING)
