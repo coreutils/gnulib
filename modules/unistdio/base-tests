@@ -1,0 +1,13 @@
+Files:
+tests/unistdio/test-unistdio-h.c
+
+Depends-on:
+unistdio/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unistdio-h
+check_PROGRAMS += test-unistdio-h
+test_unistdio_h_SOURCES = unistdio/test-unistdio-h.c
+test_unistdio_h_LDADD = $(LDADD) $(LIBUNISTRING)

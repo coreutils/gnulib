@@ -1,0 +1,18 @@
+Files:
+tests/unistdio/test-unistdio-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-unistdio-h-c++
+check_PROGRAMS += test-unistdio-h-c++
+test_unistdio_h_c___SOURCES = unistdio/test-unistdio-h-c++.cc
+test_unistdio_h_c___LDADD = $(LDADD) $(LIBUNISTRING)
+endif
