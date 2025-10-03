@@ -1,0 +1,13 @@
+Files:
+tests/unistr/test-unistr-h.c
+
+Depends-on:
+unistr/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unistr-h
+check_PROGRAMS += test-unistr-h
+test_unistr_h_SOURCES = unistr/test-unistr-h.c
+test_unistr_h_LDADD = $(LDADD) $(LIBUNISTRING)
