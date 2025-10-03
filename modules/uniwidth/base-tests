@@ -1,0 +1,13 @@
+Files:
+tests/uniwidth/test-uniwidth-h.c
+
+Depends-on:
+uniwidth/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uniwidth-h
+check_PROGRAMS += test-uniwidth-h
+test_uniwidth_h_SOURCES = uniwidth/test-uniwidth-h.c
+test_uniwidth_h_LDADD = $(LDADD) $(LIBUNISTRING)
