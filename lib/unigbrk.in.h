@@ -111,6 +111,9 @@ extern const uint32_t *
        u32_grapheme_next (const uint32_t *s, const uint32_t *end)
        _UC_ATTRIBUTE_PURE;
 #ifndef _LIBUNISTRING_NO_CONST_GENERICS
+# ifdef __cplusplus
+}
+# endif
 /* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
    want compiler warnings for 'const' related mistakes.  */
 # ifdef __cplusplus
@@ -176,6 +179,9 @@ template <>
                 default   :              u32_grapheme_next ((s), (end)))
 #  endif
 # endif
+# ifdef __cplusplus
+extern "C" {
+# endif
 #endif
 
 /* Returns the start of the previous grapheme cluster before S, or NULL if the
@@ -192,6 +198,9 @@ extern const uint32_t *
        u32_grapheme_prev (const uint32_t *s, const uint32_t *start)
        _UC_ATTRIBUTE_PURE;
 #ifndef _LIBUNISTRING_NO_CONST_GENERICS
+# ifdef __cplusplus
+}
+# endif
 /* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
    want compiler warnings for 'const' related mistakes.  */
 # ifdef __cplusplus
@@ -256,6 +265,9 @@ template <>
                 uint32_t *: (uint32_t *) u32_grapheme_prev ((s), (start)), \
                 default   :              u32_grapheme_prev ((s), (start)))
 #  endif
+# endif
+# ifdef __cplusplus
+extern "C" {
 # endif
 #endif
 
