@@ -1,0 +1,13 @@
+Files:
+tests/unicase/test-unicase-h.c
+
+Depends-on:
+unicase/base-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unicase-h
+check_PROGRAMS += test-unicase-h
+test_unicase_h_SOURCES = unicase/test-unicase-h.c
+test_unicase_h_LDADD = $(LDADD) $(LIBUNISTRING)
