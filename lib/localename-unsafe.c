@@ -1320,7 +1320,7 @@ gl_locale_name_canonicalize (char *name)
 
   /* Convert new-style locale names with language tags (ISO 639 and ISO 15924)
      to Unix (ISO 639 and ISO 3166) names.  */
-  typedef struct { const char langtag[7+1]; const char unixy[12+1]; }
+  typedef struct { const char langtag[8+1]; const char unixy[5+1]; }
           langtag_entry;
   static const langtag_entry langtag_table[] = {
     /* Mac OS X has "az-Arab", "az-Cyrl", "az-Latn".
