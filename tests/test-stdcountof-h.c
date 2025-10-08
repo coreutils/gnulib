@@ -46,11 +46,13 @@ test_func (int parameter[3])
   (void) _gl_verify_is_array (unbounded);
   (void) _gl_verify_is_array (bounded);
   (void) _gl_verify_is_array (multidimensional);
+  (void) _gl_verify_is_array ("string");
 #endif
 
   ASSERT (countof (bounded) == 10);
   ASSERT (countof (multidimensional) == 10);
   ASSERT (countof (local_bounded) == 20);
+  ASSERT (countof ("string") == 6 + 1);
 
 #if 0 /* These produce compilation errors.  */
 # ifdef _gl_verify_is_array
@@ -72,6 +74,7 @@ test_func (int parameter[3])
   ASSERT (_Generic (countof (bounded),          size_t: 1, default: 0));
   ASSERT (_Generic (countof (multidimensional), size_t: 1, default: 0));
   ASSERT (_Generic (countof (local_bounded),    size_t: 1, default: 0));
+  ASSERT (_Generic (countof ("string"),         size_t: 1, default: 0));
 #endif
 }
 
