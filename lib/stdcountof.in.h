@@ -67,11 +67,15 @@ template <typename T>
 /* Bounded arrays.  */
 template <typename T, size_t N>
   struct _gl_array_type_test<T[N]> { static const int is_array = 1; };
+/* String literals.  */
+template <typename T, size_t N>
+  struct _gl_array_type_test<T const (&)[N]> { static const int is_array = 1; };
 #   define _gl_verify_is_array(a) \
      sizeof (_gl_verify_type<_gl_array_type_test<decltype(a)>::is_array>)
 #  else
   /* Use template argument deduction.
-     Use sizeof to get a constant expression from an unknown type.  */
+     Use sizeof to get a constant expression from an unknown type.
+     Note: This approach does not work for countof (((int[]) { a, b, c })).  */
 /* Default case.  */
 template <typename T>
   struct _gl_array_type_test { double large; };
