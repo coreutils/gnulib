@@ -19,6 +19,11 @@ macOS 10.13.
 This function crashes when passed a pointer to a NULL buffer together with a
 pointer to a non-zero buffer size on some platforms:
 FreeBSD 8.0.
+@item
+This function does not NUL terminate the buffer when the first
+character read is EOF on some platforms:
+@c https://sourceware.org/PR28038
+glibc 2.42.
 @end itemize
 
 Portability problems not fixed by Gnulib:
