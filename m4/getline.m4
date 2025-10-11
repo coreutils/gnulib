@@ -1,5 +1,5 @@
 # getline.m4
-# serial 34
+# serial 35
 
 dnl Copyright (C) 1998-2003, 2005-2007, 2009-2025 Free Software Foundation,
 dnl Inc.
@@ -89,8 +89,8 @@ AC_DEFUN([gl_FUNC_GETLINE],
             *)                  am_cv_func_working_getline="$gl_cross_guess_normal" ;;
           esac
          ])
-      rm -f conftest.data conftest.empty
-    ])
+       rm -f conftest.data conftest.empty
+      ])
   else
     am_cv_func_working_getline=no
     case "$gl_cv_onwards_func_getline" in

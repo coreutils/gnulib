@@ -1,5 +1,5 @@
 # getdelim.m4
-# serial 20
+# serial 21
 
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl
@@ -98,7 +98,7 @@ AC_DEFUN([gl_FUNC_GETDELIM],
            ;;
        esac
        rm -f conftest.data conftest.empty
-    ])
+      ])
     case "$gl_cv_func_working_getdelim" in
       *yes) ;;
       *) REPLACE_GETDELIM=1 ;;
