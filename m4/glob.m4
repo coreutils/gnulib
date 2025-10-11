@@ -1,5 +1,5 @@
 # glob.m4
-# serial 30
+# serial 31
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,16 +23,45 @@ AC_DEFUN([gl_GLOB],
     esac
   else
 
-    AC_CACHE_CHECK([for GNU glob interface version 1 or 2],
-      [gl_cv_gnu_glob_interface_version_1_2],
-[     AC_COMPILE_IFELSE([AC_LANG_SOURCE(
-[[#include <gnu-versions.h>
-char a[_GNU_GLOB_INTERFACE_VERSION == 1 || _GNU_GLOB_INTERFACE_VERSION == 2 ? 1 : -1];]])],
-        [gl_cv_gnu_glob_interface_version_1_2=yes],
-        [gl_cv_gnu_glob_interface_version_1_2=no])])
-    if test "$gl_cv_gnu_glob_interface_version_1_2" = "no"; then
-      REPLACE_GLOB=1
-    fi
+    AC_CACHE_CHECK([whether glob overflows the stack with recursive calls],
+      [gl_cv_glob_overflows_stack],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+            #include <stddef.h>
+            #include <stdlib.h>
+            #include <string.h>
+            #include <glob.h>
+            int
+            main (void)
+            {
+              /* Test that glob with many trailing slashes or slashes following
+                 a wildcard does not overflow the stack as it did in glibc 2.42
+                 and earlier.  */
+              char *p = malloc (10000);
+              glob_t g;
+              int res = 0;
+              if (p != NULL)
+                {
+                  memset (p, '/', 9999);
+                  p[9999] = '\0';
+                  res = glob (p, 0, NULL, &g);
+                  globfree (&g);
+                }
+              return !(res == 0);
+            }]])],
+         [gl_cv_glob_overflows_stack=no],
+         [gl_cv_glob_overflows_stack=yes],
+         [case "$host_os" in
+                               # Guess yes on glibc systems.
+            *-gnu* | gnu*)     gl_cv_glob_overflows_stack="guessing yes" ;;
+          esac
+         ])
+      ])
+
+    case $gl_cv_glob_overflows_stack in
+      *yes) REPLACE_GLOB=1 ;;
+      *) REPLACE_GLOB=0 ;;
+    esac
 
     if test $REPLACE_GLOB = 0; then
       AC_CACHE_CHECK([whether glob lists broken symlinks],

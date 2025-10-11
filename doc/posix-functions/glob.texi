@@ -20,6 +20,13 @@ glibc 2.26, AIX 7.2, HP-UX 11, Solaris 11.4.
 On platforms where @code{off_t} is a 32-bit type, this function may not
 work correctly on huge directories 2 GiB and larger.
 @xref{Large File Support}.
+@item
+This function makes a recursive call for every trailing @code{/} and
+every @code{/} following a wildcard character on some platforms, which
+can cause the stack to overflow:
+@c https://sourceware.org/PR30635
+@c https://sourceware.org/PR33537
+glibc 2.42.
 @end itemize
 
 Portability problems not fixed by Gnulib:
