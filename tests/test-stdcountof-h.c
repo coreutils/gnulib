@@ -105,3 +105,12 @@ main ()
 
   return test_exit_status;
 }
+
+/* A definition of the variables a, b, c is not required by ISO C, because
+   these identifiers are only used as part of 'sizeof' expressions whose
+   results are integer expressions.  See ISO C 23 § 6.9.1.(5).  However,
+   MSVC 14 generates actual references to these variables.  We thus need
+   to define these variables; otherwise we get link errors.  */
+#if defined _MSC_VER && !defined __clang__
+int a, b, c;
+#endif
