@@ -95,5 +95,29 @@ main ()
       globfree (&g);
     }
 
+  /* Check for a glibc 2.42 bug where recursive calls cause the stack to
+     overflow.  Test cases based on the following:
+     <https://sourceware.org/PR30635>.
+     <https://sourceware.org/PR33537>.  */
+  char *pattern = malloc (10000);
+  if (pattern != NULL)
+    {
+      /* "/////////".  */
+      memset (pattern, '/', 9999);
+      pattern[9999] = '\0';
+      res = glob (pattern, 0, NULL, &g);
+      ASSERT (res == 0);
+      globfree (&g);
+
+      /* "/*/////sh".  */
+      pattern[1] = '*';
+      pattern[9997] = 's';
+      pattern[9998] = 'h';
+      res = glob (pattern, 0, NULL, &g);
+      ASSERT (res == 0);
+      globfree (&g);
+      free (pattern);
+    }
+
   return test_exit_status;
 }
