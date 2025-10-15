@@ -95,6 +95,7 @@ main ()
       globfree (&g);
     }
 
+#if !(defined _WIN32 && !defined __CYGWIN__)
   /* Check for a glibc 2.42 bug where recursive calls cause the stack to
      overflow.  Test cases based on the following:
      <https://sourceware.org/PR30635>.
@@ -119,6 +120,7 @@ main ()
 
       free (pattern);
     }
+#endif
 
   return test_exit_status;
 }
