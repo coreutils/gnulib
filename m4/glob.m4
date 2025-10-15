@@ -1,5 +1,5 @@
 # glob.m4
-# serial 32
+# serial 33
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,23 +39,35 @@ AC_DEFUN([gl_GLOB],
                  and earlier.  */
               char *p = malloc (10000);
               glob_t g;
-              int res = 0;
+              int result = 0;
               if (p != NULL)
                 {
+                  /* This test fails on glibc <= 2.42 (stack overflow).  */
                   memset (p, '/', 9999);
                   p[9999] = '\0';
-                  res = glob (p, 0, NULL, &g);
+                  if (glob (p, 0, NULL, &g) != 0)
+                    result |= 1;
+                  globfree (&g);
+                  /* This test fails on Cygwin 3.6.4 (return value
+                     GLOB_ABORTED).  */
+                  memset (p, '/', 9997);
+                  p[1] = '*';
+                  strcpy (p + 9997, "sh");
+                  if (glob (p, 0, NULL, &g) != 0)
+                    result |= 2;
                   globfree (&g);
                 }
-              return !(res == 0);
+              return result;
             }]])],
          [gl_cv_glob_overflows_stack=no],
          [gl_cv_glob_overflows_stack=yes],
          [case "$host_os" in
-                               # Guess yes on glibc systems.
-            *-gnu* | gnu*)     gl_cv_glob_overflows_stack="guessing yes" ;;
-                               # If we don't know, obey --enable-cross-guesses.
-            *)                 gl_cv_glob_overflows_stack="$gl_cross_guess_inverted" ;;
+                           # Guess yes on glibc systems.
+            *-gnu* | gnu*) gl_cv_glob_overflows_stack="guessing yes" ;;
+                           # Guess yes on Cygwin.
+            cygwin*)       gl_cv_glob_overflows_stack="guessing yes" ;;
+                           # If we don't know, obey --enable-cross-guesses.
+            *)             gl_cv_glob_overflows_stack="$gl_cross_guess_inverted" ;;
           esac
          ])
       ])

@@ -26,7 +26,8 @@ every @code{/} following a wildcard character on some platforms, which
 can cause the stack to overflow:
 @c https://sourceware.org/PR30635
 @c https://sourceware.org/PR33537
-glibc 2.42.
+glibc 2.42,
+Cygwin.
 @end itemize
 
 Portability problems not fixed by Gnulib:
