@@ -1,5 +1,5 @@
 # glob.m4
-# serial 31
+# serial 32
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,6 +54,8 @@ AC_DEFUN([gl_GLOB],
          [case "$host_os" in
                                # Guess yes on glibc systems.
             *-gnu* | gnu*)     gl_cv_glob_overflows_stack="guessing yes" ;;
+                               # If we don't know, obey --enable-cross-guesses.
+            *)                 gl_cv_glob_overflows_stack="$gl_cross_guess_inverted" ;;
           esac
          ])
       ])
