@@ -110,12 +110,13 @@ main ()
       globfree (&g);
 
       /* "/*/////sh".  */
+      memset (pattern, '/', 9997);
       pattern[1] = '*';
-      pattern[9997] = 's';
-      pattern[9998] = 'h';
+      strcpy (pattern + 9997, "sh");
       res = glob (pattern, 0, NULL, &g);
       ASSERT (res == 0);
       globfree (&g);
+
       free (pattern);
     }
 
