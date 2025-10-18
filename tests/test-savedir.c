@@ -47,6 +47,7 @@ test_savedir_sort_none (void)
   for (char *namep = name_space; *namep != '\0'; namep += strlen (namep) + 1)
     {
       int index = *namep - 'a';
+      ASSERT (strlen (namep) == 1);
       ASSERT (index < sizeof seen);
       seen[index] = true;
     }
@@ -68,7 +69,10 @@ test_savedir_sort_name (void)
   /* Check that files "a" to "z" appear in order.  */
   for (char *namep = name_space; *namep != '\0';
        namep += strlen (namep) + 1, i += 1)
-    ASSERT (*namep - 'a' == i);
+    {
+      ASSERT (strlen (namep) == 1);
+      ASSERT (*namep - 'a' == i);
+    }
 
   /* Make sure no extra files were seen.  */
   ASSERT (i == ('z' - 'a') + 1);
