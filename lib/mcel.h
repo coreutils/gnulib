@@ -45,6 +45,8 @@
 
    You can select from G using G.ch, G.err, and G.len.
    G is an encoding error if G.err is nonzero, a character otherwise.
+   Note G.err may occur even in the "C" locale on some systems.
+   In any case G.len will be 1 if G.err is set.
 
    The mcel_scanz function is similar except it works with a
    string of unknown but positive length that is terminated with '\0'.
