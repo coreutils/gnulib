@@ -27,7 +27,7 @@ can cause the stack to overflow:
 @c https://sourceware.org/PR30635
 @c https://sourceware.org/PR33537
 glibc 2.42,
-Cygwin.
+Cygwin, Android.
 @end itemize
 
 Portability problems not fixed by Gnulib:

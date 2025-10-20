@@ -1,5 +1,5 @@
 # glob.m4
-# serial 33
+# serial 34
 dnl Copyright (C) 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,12 +42,14 @@ AC_DEFUN([gl_GLOB],
               int result = 0;
               if (p != NULL)
                 {
-                  /* This test fails on glibc <= 2.42 (stack overflow).  */
+                  /* This test fails on glibc <= 2.42 (stack overflow),
+                     Android.  */
                   memset (p, '/', 9999);
                   p[9999] = '\0';
                   if (glob (p, 0, NULL, &g) != 0)
                     result |= 1;
                   globfree (&g);
+                  #if !defined __ANDROID__
                   /* This test fails on Cygwin 3.6.4 (return value
                      GLOB_ABORTED).  */
                   memset (p, '/', 9997);
@@ -56,18 +58,21 @@ AC_DEFUN([gl_GLOB],
                   if (glob (p, 0, NULL, &g) != 0)
                     result |= 2;
                   globfree (&g);
+                  #endif
                 }
               return result;
             }]])],
          [gl_cv_glob_overflows_stack=no],
          [gl_cv_glob_overflows_stack=yes],
          [case "$host_os" in
-                           # Guess yes on glibc systems.
-            *-gnu* | gnu*) gl_cv_glob_overflows_stack="guessing yes" ;;
-                           # Guess yes on Cygwin.
-            cygwin*)       gl_cv_glob_overflows_stack="guessing yes" ;;
-                           # If we don't know, obey --enable-cross-guesses.
-            *)             gl_cv_glob_overflows_stack="$gl_cross_guess_inverted" ;;
+                             # Guess yes on glibc systems.
+            *-gnu* | gnu*)   gl_cv_glob_overflows_stack="guessing yes" ;;
+                             # Guess yes on Cygwin.
+            cygwin*)         gl_cv_glob_overflows_stack="guessing yes" ;;
+                             # Guess yes on Android.
+            linux*-android*) gl_cv_glob_overflows_stack="guessing yes" ;;
+                             # If we don't know, obey --enable-cross-guesses.
+            *)               gl_cv_glob_overflows_stack="$gl_cross_guess_inverted" ;;
           esac
          ])
       ])

@@ -110,6 +110,8 @@ main ()
       ASSERT (res == 0);
       globfree (&g);
 
+      /* On Android, /bin/sh does not exist.  It's /system/bin/sh instead.  */
+# if !defined __ANDROID__
       /* "/*/////sh".  */
       memset (pattern, '/', 9997);
       pattern[1] = '*';
@@ -117,6 +119,7 @@ main ()
       res = glob (pattern, 0, NULL, &g);
       ASSERT (res == 0);
       globfree (&g);
+# endif
 
       free (pattern);
     }
