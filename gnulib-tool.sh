@@ -1886,7 +1886,7 @@ func_all_modules ()
 # returns true if module exists in dir
 func_exists_local_module ()
 {
-    test -d "$1/modules" && test -f "$1/modules/$2";
+  test -d "$1/modules" && test -f "$1/modules/$2"
 }
 
 # func_exists_module module
