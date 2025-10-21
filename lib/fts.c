@@ -2046,6 +2046,7 @@ static int
 internal_function
 fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 {
+        fts_assert (0 <= fd || dir != NULL);
         int ret;
         bool is_dotdot = dir && streq (dir, "..");
         int newfd;
