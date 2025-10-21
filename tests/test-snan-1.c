@@ -83,14 +83,14 @@ main ()
   #endif
   /* This test does not work on eglibc 2.13/mips64
      (bug in libc function __addtf3).
-     This test does not work on FreeBSD/arm64 and OpenBSD/mips64
-     (bug in libc function __addtf3).
+     This test does not work on FreeBSD/arm64, Android/arm64,
+     and OpenBSD/mips64 (bug in libc function __addtf3).
      This test does not work on FreeBSD/sparc64 and NetBSD/sparc64
      (bug in libc function _Qp_add).
      This test does not work on MSVC/i386, because of the general IA-32
      problem (see above) and 'long double' == 'double'.  */
   #if !((((__GLIBC__ == 2 && __GLIBC_MINOR__ < 19 && defined __mips64) \
-          || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __mips64__ || defined __sparc))) \
+          || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined __ANDROID__) && (defined __aarch64__ || defined __mips64__ || defined __sparc))) \
          && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE) \
         || ((defined __i386 || defined _M_IX86) && HAVE_SAME_LONG_DOUBLE_AS_DOUBLE))
   {
