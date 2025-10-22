@@ -27,5 +27,5 @@ MacOS X 10.5, Solaris 11.3.
 @item
 This function sets the field @code{tm_zone} to @code{"GMT"}
 instead of @code{"UTC"} on some platforms:
-glibc, NetBSD, OpenBSD, Minix, Cygwin, Android.
+glibc, NetBSD, OpenBSD 7.7, Minix, Cygwin, Android.
 @end itemize
