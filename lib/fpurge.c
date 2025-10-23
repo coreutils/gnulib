@@ -37,7 +37,7 @@ fpurge (FILE *fp)
   /* The __fpurge function does not have a return value.  */
   return 0;
 
-#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin >= 1.7 */
+#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, 2.0 <= OpenBSD <= 7.7, DragonFly, Mac OS X, Cygwin >= 1.7 */
 
   /* Call the system's fpurge function.  */
 # undef fpurge
@@ -45,8 +45,8 @@ fpurge (FILE *fp)
   extern int fpurge (FILE *);
 # endif
   int result = fpurge (fp);
-# if defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+# if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD <= 7.7, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   if (result == 0)
     /* Correct the invariants that fpurge broke.
        <stdio.h> on BSD systems says:
@@ -75,8 +75,8 @@ fpurge (FILE *fp)
       fp->_IO_save_base = NULL;
     }
   return 0;
-# elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+# elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD < 2.0, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   fp_->_p = fp_->_bf._base;
   fp_->_r = 0;
   fp_->_w = ((fp_->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */

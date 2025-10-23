@@ -55,8 +55,8 @@ fseeko (FILE *fp, off_t offset, int whence)
   if (fp_->_IO_read_end == fp_->_IO_read_ptr
       && fp_->_IO_write_ptr == fp_->_IO_write_base
       && fp_->_IO_save_base == NULL)
-#elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD <= 7.7, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 # if defined __SL64 && defined __SCLE /* Cygwin */
   if ((fp->_flags & __SL64) == 0)
     {
@@ -104,6 +104,9 @@ fseeko (FILE *fp, off_t offset, int whence)
 #elif defined EPLAN9                /* Plan9 */
   if (fp->rp == fp->buf
       && fp->wp == fp->buf)
+#elif defined __OpenBSD__ && !defined __sferror /* OpenBSD >= 7.8 */
+  /* fseeko and fflush work as advertised.  */
+  if (0)
 #elif FUNC_FFLUSH_STDIN < 0 && 200809 <= _POSIX_VERSION
   /* Cross-compiling to some other system advertising conformance to
      POSIX.1-2008 or later.  Assume fseeko and fflush work as advertised.
@@ -120,8 +123,8 @@ fseeko (FILE *fp, off_t offset, int whence)
       off_t pos = lseek (fileno (fp), offset, whence);
       if (pos == -1)
         {
-#if defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-          /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+#if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+          /* FreeBSD, NetBSD, OpenBSD <= 7.7, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
           fp_->_flags &= ~__SOFF;
 #endif
           return -1;
@@ -131,8 +134,8 @@ fseeko (FILE *fp, off_t offset, int whence)
       /* GNU libc, BeOS, Haiku, Linux libc5 */
       fp_->_flags &= ~_IO_EOF_SEEN;
       fp_->_offset = pos;
-#elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-      /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+      /* FreeBSD, NetBSD, OpenBSD <= 7.7, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 # if defined __CYGWIN__ || (defined __NetBSD__ && __NetBSD_Version__ >= 600000000) || defined __minix
       /* fp_->_offset is typed as an integer.  */
       fp_->_offset = pos;
