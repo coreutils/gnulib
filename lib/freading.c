@@ -25,6 +25,10 @@
    <https://sourceware.org/bugzilla/show_bug.cgi?id=4359>  */
 #if !(HAVE___FREADING && (!defined __GLIBC__ || defined __UCLIBC__ || __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 7)))
 
+/* This code is not compiled on systems that have a working __freading function,
+   namely glibc >= 2.7, OpenBSD >= 7.6, Solaris >= 7, UnixWare >= 7.1.4.MP4,
+   Cygwin >= 1.7.34, Android API >= 28, musl libc, Haiku >= hrev58760.  */
+
 bool
 freading (FILE *fp)
 {
@@ -36,8 +40,8 @@ freading (FILE *fp)
   return ((fp->_flags & _IO_NO_WRITES) != 0
           || ((fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) == 0
               && fp->_IO_read_base != NULL));
-# elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin < 1.7.34, Minix 3, Android */
+# elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD < 7.6, DragonFly, Mac OS X, Cygwin < 1.7.34, Minix 3, Android */
   return (fp_->_flags & __SRD) != 0;
 # elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOREAD) != 0;

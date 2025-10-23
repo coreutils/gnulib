@@ -28,7 +28,7 @@ extern size_t __sreadahead (FILE *);
 #endif
 
 /* This file is not used on systems that have the __freadahead function,
-   namely musl libc, Haiku >= hrev58760.  */
+   namely OpenBSD >= 7.6, musl libc, Haiku >= hrev58760.  */
 
 size_t
 freadahead (FILE *fp)
@@ -40,8 +40,8 @@ freadahead (FILE *fp)
   return (fp->_IO_read_end - fp->_IO_read_ptr)
          + (fp->_flags & _IO_IN_BACKUP ? fp->_IO_save_end - fp->_IO_save_base :
             0);
-#elif defined __sferror || defined __OpenBSD__ || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD < 7.6, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   if ((fp_->_flags & __SWR) != 0 || fp_->_r < 0)
     return 0;
 # if defined __DragonFly__
