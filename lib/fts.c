@@ -1017,11 +1017,18 @@ check_for_dir:
                       fts_assert (p->fts_statp->st_size == FTS_NO_STAT_REQUIRED);
                   }
 
+                /* Skip files with different device numbers when FTS_MOUNT
+                   is set.  */
+                if (ISSET (FTS_MOUNT) && p->fts_info != FTS_NS &&
+                    p->fts_level != FTS_ROOTLEVEL &&
+                    p->fts_statp->st_dev != sp->fts_dev)
+                      goto next;
+
                 if (p->fts_info == FTS_D)
                   {
-                    /* Now that P->fts_statp is guaranteed to be valid,
-                       if this is a command-line directory, record its
-                       device number, to be used for FTS_XDEV.  */
+                    /* Now that P->fts_statp is guaranteed to be valid, if
+                       this is a command-line directory, record its device
+                       number, to be used for FTS_MOUNT and FTS_XDEV.  */
                     if (p->fts_level == FTS_ROOTLEVEL)
                       sp->fts_dev = p->fts_statp->st_dev;
                     Dprintf (("  entering: %s\n", p->fts_path));
@@ -1529,19 +1536,21 @@ mem1:                           saved_errno = errno;
                            entry. In many cases, it will simply fts_stat it,
                            but we can take advantage of any d_type information
                            to optimize away the unnecessary stat calls.  I.e.,
-                           if FTS_NOSTAT is in effect and we're not following
-                           symlinks (FTS_PHYSICAL) and d_type indicates this
-                           is *not* a directory, then we won't have to stat it
-                           at all.  If it *is* a directory, then (currently)
-                           we stat it regardless, in order to get device and
-                           inode numbers.  Some day we might optimize that
-                           away, too, for directories where d_ino is known to
-                           be valid.  */
+                           if FTS_NOSTAT is in effect, we don't need device
+                           numbers unconditionally (FTS_MOUNT) and we're not
+                           following symlinks (FTS_PHYSICAL) and d_type
+                           indicates this is *not* a directory, then we won't
+                           have to stat it  at all.  If it *is* a directory,
+                           then (currently) we stat it regardless, in order to
+                           get device and inode numbers.  Some day we might
+                           optimize that away, too, for directories where
+                           d_ino is known to be valid.  */
                         bool skip_stat = (ISSET(FTS_NOSTAT)
                                           && DT_IS_KNOWN(dp)
                                           && ! DT_MUST_BE(dp, DT_DIR)
                                           && (ISSET(FTS_PHYSICAL)
-                                              || ! DT_MUST_BE(dp, DT_LNK)));
+                                              || ! DT_MUST_BE(dp, DT_LNK))
+                                          && ! ISSET(FTS_MOUNT));
                         p->fts_info = FTS_NSOK;
                         /* Propagate dirent.d_type information back
                            to caller, when possible.  */
