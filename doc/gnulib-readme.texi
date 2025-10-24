@@ -672,7 +672,7 @@ options appropriate for your compiler.  For example:
 ./configure \
  CPPFLAGS='-Wall'\
  CFLAGS='-g3 -O2'\
-' -D_FORTIFY_SOURCE=2'\
+' -D_FORTIFY_SOURCE=3'\
 ' -fsanitize=undefined'\
 ' -fsanitize-undefined-trap-on-error'
 @end example
@@ -682,7 +682,7 @@ Here:
 
 @itemize @bullet
 @item
-@code{-D_FORTIFY_SOURCE=2} enables extra security hardening checks in
+@code{-D_FORTIFY_SOURCE=3} enables extra security hardening checks in
 the GNU C library.
 @item
 @code{-fsanitize=undefined} enables GCC's undefined behavior sanitizer

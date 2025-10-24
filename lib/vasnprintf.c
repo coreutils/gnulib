@@ -6959,7 +6959,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 /* The following platforms forbid %n:
                      - On glibc2 systems from 2004-10-18 or newer, the use of
                        %n in format strings in writable memory may crash the
-                       program (if compiled with _FORTIFY_SOURCE=2).
+                       program (if compiled with _FORTIFY_SOURCE >= 2).
                      - On macOS 10.13 or newer, the use of %n in format
                        strings in writable memory by default crashes the
                        program.

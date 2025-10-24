@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-/* On GNU/Hurd, when compiling with -D_FORTIFY_SOURCE=2, avoid an error
+/* On GNU/Hurd, when compiling with _FORTIFY_SOURCE >= 2, avoid an error
    "*** longjmp causes uninitialized stack frame ***: terminated".
    Cf. <https://sourceware.org/PR32522>  */
 #ifdef __gnu_hurd__

@@ -24,7 +24,7 @@ you need to clear the @code{SS_ONSTACK} flag in the @code{stack_t}
 structure managed by the kernel.
 @item
 This function may crash when the invoker code was compiled with option
-@code{-D_FORTIFY_SOURCE=2},
+@code{_FORTIFY_SOURCE >= 2}
 @c https://sourceware.org/PR32522
 on Hurd.
 @end itemize

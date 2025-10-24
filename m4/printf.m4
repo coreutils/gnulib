@@ -937,7 +937,7 @@ int main ()
   _CrtSetReportMode (_CRT_ASSERT, 0);
 #endif
   signal (SIGABRT, abort_handler);
-  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
+  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE >= 2)
      support %n in format strings in read-only memory but not in writable
      memory.  */
   strcpy (fmtstring, "%d %n");
@@ -1849,7 +1849,7 @@ int main ()
 {
   int count = -1;
   signal (SIGABRT, abort_handler);
-  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
+  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE >= 2)
      support %n in format strings in read-only memory but not in writable
      memory.  */
   strcpy (fmtstring, "%d %n");
