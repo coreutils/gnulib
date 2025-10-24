@@ -673,8 +673,9 @@ options appropriate for your compiler.  For example:
  CPPFLAGS='-Wall'\
  CFLAGS='-g3 -O2'\
 ' -D_FORTIFY_SOURCE=3'\
+' -D_GLIBCXX_ASSERTIONS'\
 ' -fsanitize=undefined'\
-' -fsanitize-undefined-trap-on-error'
+' -fsanitize-trap=all'
 @end example
 
 @noindent
@@ -682,23 +683,24 @@ Here:
 
 @itemize @bullet
 @item
-@code{-D_FORTIFY_SOURCE=3} enables extra security hardening checks in
-the GNU C library.
+@code{-D_FORTIFY_SOURCE=3} and @code{-D_GLIBCXX_ASSERTIONS}
+enable extra security hardening checks in
+the GNU C library and GNU C++ library, respectively.
 @item
 @code{-fsanitize=undefined} enables GCC's undefined behavior sanitizer
 (@code{ubsan}), and
 @item
-@code{-fsanitize-undefined-trap-on-error} causes @code{ubsan} to
+@code{-fsanitize-trap=all} causes @code{ubsan} to
 abort the program (through an ``illegal instruction'' signal).  This
 measure stops exploit attempts and also allows you to debug the issue.
 @end itemize
 
-Without the @code{-fsanitize-undefined-trap-on-error} option,
+Without the @code{-fsanitize-trap=all} option,
 @code{-fsanitize=undefined} causes messages to be printed, and
 execution continues after an undefined behavior situation.
 The message printing causes GCC-like compilers to arrange for the
 program to dynamically link to libraries it might not otherwise need.
-With GCC, instead of @code{-fsanitize-undefined-trap-on-error} you can
+With GCC, instead of @code{-fsanitize-trap=all} you can
 use the @code{-static-libubsan} option to arrange for two of the extra
 libraries (@code{libstdc++} and @code{libubsan}) to be linked
 statically rather than dynamically, though this typically bloats the
@@ -707,5 +709,10 @@ dynamically.
 
 It is also good to occasionally run the programs under @code{valgrind}
 (@pxref{Running self-tests under valgrind}).
+
+GCC's @code{-fhardened} option can also be used, but with caution
+because it is designed for production more than testing, and therefore
+enables @code{-ftrivial-auto-var-init=zero} which can mask program
+errors.
 
 @include join-gnu.texi
