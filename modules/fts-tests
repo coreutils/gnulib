@@ -3,6 +3,7 @@ longrunning-test
 
 Files:
 tests/test-fts.c
+tests/macros.h
 
 Depends-on:
 c99

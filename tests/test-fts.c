@@ -26,6 +26,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 #define BASE "t-fts.tmp"
 static char base[] = BASE; /* Not const, since argv needs non-const.  */
 static char const base_d[] = BASE "/d";
@@ -84,6 +86,39 @@ remove_tree (void)
     }
   else if (errno != ENOENT)
     perror_exit (base, 3);
+}
+
+static void
+test_fts_mount (void)
+{
+  FTSENT *ent;
+  char *const root[] = { "/", NULL };
+  FTS *ftsp = fts_open (root, FTS_PHYSICAL | FTS_MOUNT | FTS_CWDFD, NULL);
+  dev_t root_dev;
+
+  ASSERT (ftsp != NULL);
+
+  /* Make sure each directory directly below the root directory has the same
+     device ID when we use FTS_MOUNT.  */
+  while ((ent = fts_read (ftsp)))
+    {
+      switch (ent->fts_info)
+        {
+        case FTS_D:
+          if (ent->fts_level == FTS_ROOTLEVEL)
+            root_dev = ent->fts_statp->st_dev;
+          else
+            {
+              ASSERT (ent->fts_statp->st_dev == root_dev);
+              ASSERT (fts_set (ftsp, ent, FTS_SKIP) == 0);
+            }
+          break;
+        default:
+          break;
+        }
+    }
+
+  ASSERT (fts_close (ftsp) == 0);
 }
 
 int
@@ -167,6 +202,8 @@ main (void)
     }
 
   fts_dealloc ();
+
+  test_fts_mount ();
 
   return 0;
 }
