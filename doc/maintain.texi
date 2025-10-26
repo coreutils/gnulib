@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 22, 2025
+@set lastupdate October 25, 2025
 @c %**end of header
 @documentencoding UTF-8
 
@@ -2606,7 +2606,7 @@ As usual, run @samp{gendocs.sh --help} for a description of all the
 options, environment variables, and more information.
 
 Please email bug reports, enhancement requests, or other
-correspondence about @command{gendocs} to @email{bug-texinfo@@gnu.org}.
+correspondence about @command{gendocs} to @email{bug-gnulib@@gnu.org}.
 
 
 @node CVS Keywords in Web Pages
