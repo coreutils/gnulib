@@ -23,4 +23,10 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 Some file systems do not support symbolic links.
+@item
+If the target is the empty string, this function can create an empty
+symbolic link instead of failing with @code{ENOENT} as GNU/Linux does:
+FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.8, Solaris 11.4.
+On Solaris, the empty symbolic link @code{""} resolves like @code{"."} does;
+on the other operating systems, resolution fails with @code{ENOENT}.
 @end itemize
