@@ -48,7 +48,8 @@ test_func (int parameter[3])
   (void) _gl_verify_is_array (multidimensional);
   (void) _gl_verify_is_array ("string");
   (void) _gl_verify_is_array (L"wide string");
-# if __STDC_VERSION__ >= 201112L || __cplusplus >= 201103L
+# if ((__STDC_VERSION__ >= 201112L || __cplusplus >= 201103L) \
+      && !defined __SUNPRO_C)
   (void) _gl_verify_is_array (u8"UTF-8 string");
   (void) _gl_verify_is_array (u"UTF-16 string");
   (void) _gl_verify_is_array (U"UTF-32 string");
@@ -60,7 +61,8 @@ test_func (int parameter[3])
   ASSERT (countof (local_bounded) == 20);
   ASSERT (countof ("string") == 6 + 1);
   ASSERT (countof (L"wide string") == 11 + 1);
-#if __STDC_VERSION__ >= 201112L || __cplusplus >= 201103L
+# if ((__STDC_VERSION__ >= 201112L || __cplusplus >= 201103L) \
+      && !defined __SUNPRO_C)
   ASSERT (countof (u8"UTF-8 string") == 12 + 1);
   ASSERT (countof (u"UTF-16 string") == 13 + 1);
   ASSERT (countof (U"UTF-32 string") == 13 + 1);
@@ -88,7 +90,7 @@ test_func (int parameter[3])
   ASSERT (_Generic (countof (local_bounded),    size_t: 1, default: 0));
   ASSERT (_Generic (countof ("string"),         size_t: 1, default: 0));
   ASSERT (_Generic (countof (L"wide string"),   size_t: 1, default: 0));
-# if __STDC_VERSION__ >= 201112L
+# if __STDC_VERSION__ >= 201112L && !defined __SUNPRO_C
   ASSERT (_Generic (countof (u8"UTF-8 string"), size_t: 1, default: 0));
   ASSERT (_Generic (countof (u"UTF-16 string"), size_t: 1, default: 0));
   ASSERT (_Generic (countof (U"UTF-32 string"), size_t: 1, default: 0));
@@ -109,8 +111,9 @@ main ()
 /* A definition of the variables a, b, c is not required by ISO C, because
    these identifiers are only used as part of 'sizeof' expressions whose
    results are integer expressions.  See ISO C 23 § 6.9.1.(5).  However,
-   MSVC 14 generates actual references to these variables.  We thus need
-   to define these variables; otherwise we get link errors.  */
-#if defined _MSC_VER && !defined __clang__
+   MSVC 14 and Oracle Developer Studio 12.6 generate actual references
+   to these variables.  We thus need to define these variables;
+   otherwise we get link errors.  */
+#if (defined _MSC_VER && !defined __clang__) || defined __SUNPRO_C
 int a, b, c;
 #endif
