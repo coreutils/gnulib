@@ -2894,6 +2894,7 @@ func_all_modules ()
   func_module getdtablesize
   func_module isapipe
   func_module openat-safer
+  func_module openat2
   func_module pipe-posix
   func_module pipe2
   func_module pipe2-safer

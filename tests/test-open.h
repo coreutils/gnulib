@@ -32,8 +32,9 @@
 # define ALWAYS_INLINE
 #endif
 
-/* This file is designed to test both open(n,buf[,mode]) and
-   openat(AT_FDCWD,n,buf[,mode]).  FUNC is the function to test.
+/* This file is designed to test open(n,buf[,mode]),
+   openat(dfd,n,buf[,mode]), and openat2(dfd,n,how,size).
+   FUNC is the function to test; for openat and openat2 it is a wrapper.
    Assumes that BASE and ASSERT are already defined, and that
    appropriate headers are already included.  If PRINT, warn before
    skipping symlink tests with status 77.  */

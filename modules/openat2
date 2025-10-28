@@ -1,0 +1,49 @@
+Description:
+openat2() function: Open a file at a directory.
+
+Files:
+lib/openat2.c
+m4/openat2.m4
+
+Depends-on:
+fcntl-h
+extensions
+close           [test $HAVE_OPENAT2 = 0]
+eloop-threshold [test $HAVE_OPENAT2 = 0]
+errno-h         [test $HAVE_OPENAT2 = 0]
+filename        [test $HAVE_OPENAT2 = 0]
+ialloc          [test $HAVE_OPENAT2 = 0]
+idx             [test $HAVE_OPENAT2 = 0]
+largefile       [test $HAVE_OPENAT2 = 0]
+openat          [test $HAVE_OPENAT2 = 0]
+readlinkat      [test $HAVE_OPENAT2 = 0]
+stdckdint-h     [test $HAVE_OPENAT2 = 0]
+sys_stat-h      [test $HAVE_OPENAT2 = 0]
+unistd-h        [test $HAVE_OPENAT2 = 0]
+verify          [test $HAVE_OPENAT2 = 0]
+
+configure.ac:
+gl_FUNC_OPENAT2
+gl_CONDITIONAL([GL_COND_OBJ_OPENAT2],
+               [test $HAVE_OPENAT2 = 0])
+AM_COND_IF([GL_COND_OBJ_OPENAT], [
+  gl_PREREQ_OPENAT2
+])
+gl_FCNTL_MODULE_INDICATOR([openat2])
+
+Makefile.am:
+if GL_COND_OBJ_OPENAT2
+lib_SOURCES += openat2.c
+endif
+
+Include:
+<fcntl.h>
+
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
+License:
+GPL
+
+Maintainer:
+all
