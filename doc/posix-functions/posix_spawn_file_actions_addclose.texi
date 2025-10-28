@@ -15,6 +15,9 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9,
 @item
 This function does not reject a negative file descriptor on some platforms:
 musl libc.
+@item
+This function does not reject an out-of-range file descriptor on some platforms:
+NetBSD.
 @end itemize
 
 Portability problems not fixed by Gnulib:

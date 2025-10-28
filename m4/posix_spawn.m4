@@ -1,5 +1,5 @@
 # posix_spawn.m4
-# serial 25
+# serial 26
 dnl Copyright (C) 2008-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -571,6 +571,8 @@ AC_DEFUN([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE],
   else
     dnl On musl libc, posix_spawn_file_actions_addclose succeeds even if the fd
     dnl argument is negative.
+    dnl On NetBSD 10.0, posix_spawn_file_actions_addclose succeeds even if the
+    dnl fd argument is out of range.
     AC_CACHE_CHECK([whether posix_spawn_file_actions_addclose works],
       [gl_cv_func_posix_spawn_file_actions_addclose_works],
       [AC_RUN_IFELSE(
@@ -583,13 +585,16 @@ int main ()
     return 1;
   if (posix_spawn_file_actions_addclose (&actions, -5) == 0)
     return 2;
+  if (posix_spawn_file_actions_addclose (&actions, 10000000) == 0)
+    return 3;
   return 0;
 }]])],
          [gl_cv_func_posix_spawn_file_actions_addclose_works=yes],
          [gl_cv_func_posix_spawn_file_actions_addclose_works=no],
-         [# Guess no on musl libc and Solaris, yes otherwise.
+         [# Guess no on musl libc and NetBSD and Solaris, yes otherwise.
           case "$host_os" in
             *-musl* | midipix*) gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+            netbsd*)            gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
             solaris*)           gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
                                 # Guess no on native Windows.
             mingw* | windows*)  gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
