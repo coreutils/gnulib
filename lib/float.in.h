@@ -115,7 +115,7 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 
 /* On PowerPC with gcc 15 when using __ibm128 long double, the value of
    LDBL_MIN_EXP, LDBL_MIN, LDBL_MAX, and LDBL_NORM_MAX are wrong.  */
-#if ((defined _ARCH_PPC || defined _POWER) && LDBL_MANT_DIG == 106 \
+#if (defined _ARCH_PPC && LDBL_MANT_DIG == 106 \
      && defined __GNUC__)
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP DBL_MIN_EXP

@@ -267,7 +267,7 @@ free_pages (uintptr_t pages, size_t size)
 # define PAGESIZE pagesize
 /* On Cygwin and Linux/PowerPC, PAGESIZE is 65536.  On macOS 11, it is 16384.
    On all other platforms, it is either 4096 or 8192.  */
-# if defined __CYGWIN__ || (defined __linux__ && defined __powerpc__)
+# if defined __CYGWIN__ || (defined __linux__ && defined _ARCH_PPC)
 #  define PAGESIZE_MAX 65536
 # else
 #  define PAGESIZE_MAX 16384

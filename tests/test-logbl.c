@@ -42,7 +42,7 @@ SIGNATURE_CHECK (logbl, long double, (long double));
    precision used for 'double'.  */
 #ifdef __sgi
 # define MIN_NORMAL_EXP (LDBL_MIN_EXP + 57)
-#elif defined __ppc || defined __ppc__ || defined __powerpc || defined __powerpc__
+#elif defined _ARCH_PPC
 # define MIN_NORMAL_EXP (LDBL_MIN_EXP + 53)
 #else
 # define MIN_NORMAL_EXP LDBL_MIN_EXP

@@ -487,7 +487,7 @@ fegetexcept (void)
   return FE_ALL_EXCEPT & (fcsr << 16);
 }
 
-# elif defined __powerpc__
+# elif defined _ARCH_PPC
 
 #  if defined __linux__
 #   include <sys/prctl.h>
@@ -829,7 +829,7 @@ fegetexcept (void)
   return mask_to_exceptions (trapbits);
 }
 
-# elif defined _AIX && defined __powerpc__ /* AIX */
+# elif defined _AIX && defined _ARCH_PPC /* AIX */
 
 #  include <fptrap.h>
 /* Documentation:

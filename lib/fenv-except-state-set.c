@@ -268,7 +268,7 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif defined _ARCH_PPC
 
 /* On all OSes, fexcept_t is binary-equivalent to an 'unsigned int'.  */
 
@@ -546,7 +546,7 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
   return 0;
 }
 
-# elif defined _AIX && defined __powerpc__ /* AIX */
+# elif defined _AIX && defined _ARCH_PPC /* AIX */
 
 #  include <float.h>
 #  include <fpxcp.h>

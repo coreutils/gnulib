@@ -37,7 +37,7 @@
    previously saved environment, but not during an fesetenv (FE_DFL_ENV)
    invocation.  */
 
-#if defined _AIX && defined __powerpc__ /* AIX */
+#if defined _AIX && defined _ARCH_PPC /* AIX */
 
 /* On AIX, fenv_t is a struct { unsigned short rmode; unsigned int fpstat, trapstate; }.  */
 
@@ -813,7 +813,7 @@ fesetenv (fenv_t const *envp)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif defined _ARCH_PPC
 
 /* On all OSes except *BSD and AIX, fenv_t is a 'double'.
    On *BSD, it's an 'unsigned int'.
