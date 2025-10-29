@@ -211,7 +211,7 @@ feclearexcept (int exceptions)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif defined _ARCH_PPC
 
 int
 feclearexcept (int exceptions)
@@ -343,7 +343,7 @@ feclearexcept (int exceptions)
   return 0;
 }
 
-# elif defined _AIX && defined __powerpc__ /* AIX */
+# elif defined _AIX && defined _ARCH_PPC /* AIX */
 
 #  include <float.h>
 #  include <fpxcp.h>

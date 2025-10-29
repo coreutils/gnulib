@@ -28,7 +28,7 @@ SIGNATURE_CHECK (setpayloadl, int, (long double *, long double));
 #include "isnanl-nolibm.h"
 #include "macros.h"
 
-#if defined __powerpc__ && LDBL_MANT_DIG == 106
+#if defined _ARCH_PPC && LDBL_MANT_DIG == 106
   /* This is PowerPC "double double", a pair of two doubles.  NaN is represented
      as the corresponding 64-bit IEEE value in the first double; the second is
      irrelevant and therefore does not contain a payload.  */

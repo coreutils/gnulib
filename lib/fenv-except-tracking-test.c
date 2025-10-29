@@ -24,7 +24,7 @@
 
 #include "fenv-private.h"
 
-#if defined _AIX && defined __powerpc__ /* AIX */
+#if defined _AIX && defined _ARCH_PPC /* AIX */
 
 /* On AIX, the register fpscr is augmented with a 32-bit word named fpscrx
    in thread-local storage.  Instead of accessing fpscr, we must access the
@@ -158,7 +158,7 @@ fetestexcept (int exceptions)
   return fcsr & FE_ALL_EXCEPT & exceptions;
 }
 
-# elif defined __powerpc__
+# elif defined _ARCH_PPC
 
 int
 fetestexcept (int exceptions)

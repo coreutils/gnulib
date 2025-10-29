@@ -33,7 +33,7 @@
 #ifdef __sgi
 # define MIN_NORMAL_EXP (LDBL_MIN_EXP + 57)
 # define MIN_SUBNORMAL_EXP MIN_NORMAL_EXP
-#elif defined __ppc || defined __ppc__ || defined __powerpc || defined __powerpc__
+#elif defined _ARCH_PPC
 # define MIN_NORMAL_EXP (LDBL_MIN_EXP + 53)
 # define MIN_SUBNORMAL_EXP MIN_NORMAL_EXP
 #else
