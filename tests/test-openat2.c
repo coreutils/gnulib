@@ -317,6 +317,20 @@ do_test_flags (void)
     }
 }
 
+static bool
+is_nofollow_error (int err)
+{
+#ifdef EFTYPE /* NetBSD openat+O_NOFOLLOW on symlink */
+  if (err == EFTYPE)
+    return true;
+#endif
+#ifdef EMLINK /* FreeBSD openat+O_NOFOLLOW on symlink */
+  if (err == EMLINK)
+    return true;
+#endif
+  return err == ELOOP;
+}
+
 static void
 do_test_resolve (void)
 {
@@ -331,7 +345,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
 		sizeof (struct open_how));
-  ASSERT (errno == ELOOP || errno == EXDEV);
+  ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* Same as before, ESCAPING_LINK_2 links to ESCAPING_LINK.  */
@@ -342,7 +356,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
 		sizeof (struct open_how));
-  ASSERT (errno == ELOOP || errno == EXDEV);
+  ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* ESCAPING_LINK links to the temporary directory itself (dfd).  */
@@ -353,7 +367,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
 		sizeof (struct open_how));
-  ASSERT (errno == ELOOP || errno == EXDEV);
+  ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* Although it points to a valid file in same path, the link refers to
@@ -365,7 +379,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
 		sizeof (struct open_how));
-  ASSERT (errno == ELOOP || errno == EXDEV);
+  ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   fd = openat2 (dfd,
@@ -375,7 +389,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
 		sizeof (struct open_how));
-  ASSERT (errno == ELOOP);
+  ASSERT (is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   fd = openat2 (dfd,
@@ -385,7 +399,7 @@ do_test_resolve (void)
                    .resolve = RESOLVE_IN_ROOT | RESOLVE_NO_SYMLINKS,
                  }),
 	       sizeof (struct open_how));
-  ASSERT (errno == ELOOP | errno == ENOENT);
+  ASSERT ((errno == ENOENT) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   {
