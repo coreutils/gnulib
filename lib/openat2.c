@@ -512,13 +512,11 @@ openat2 (int dfd, char const *filename,
                        | O_NOLINK | O_NOLINKS | O_NONBLOCK | O_NOTRANS
                        | O_RSYNC | O_SYNC
                        | O_TEXT | O_TMPFILE | O_TRUNC | O_TTY_INIT))))
-           | ((how->flags & (O_DIRECTORY | O_CREAT))
-              == (O_DIRECTORY | O_CREAT))
+           | (!!(how->flags & O_CREAT)
+              & !!(how->flags & (O_DIRECTORY | O_TMPFILE)))
            | (!!(how->flags & O_TMPFILE & ~O_DIRECTORY)
-              & ((how->flags & (O_ACCMODE | O_DIRECTORY))
-                 != (O_WRONLY | O_DIRECTORY))
-              & ((how->flags & (O_ACCMODE | O_DIRECTORY))
-                 != (O_RDWR | O_DIRECTORY)))
+              & ((how->flags & (O_ACCMODE | O_PATH)) != O_WRONLY)
+              & ((how->flags & (O_ACCMODE | O_PATH)) != O_RDWR))
            | (how->mode
               & ~ (how->flags & (O_CREAT | (O_TMPFILE & ~O_DIRECTORY))
                    ? (S_ISUID | S_ISGID | S_ISVTX
