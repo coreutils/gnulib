@@ -315,7 +315,7 @@ fesetround (int rounding_direction)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 /* The AIX header files have different values for the rounding directions
    than all the other platforms: The values 0 and 1 are swapped.

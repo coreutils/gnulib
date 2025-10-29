@@ -268,7 +268,7 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 /* On all OSes, fexcept_t is binary-equivalent to an 'unsigned int'.  */
 

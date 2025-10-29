@@ -813,7 +813,7 @@ fesetenv (fenv_t const *envp)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 /* On all OSes except *BSD and AIX, fenv_t is a 'double'.
    On *BSD, it's an 'unsigned int'.

@@ -83,7 +83,7 @@ is_running_under_qemu_user (void)
           if (strcasestr (buf, "SPARC") != NULL)
             return true;
 # endif
-# if !defined __powerpc__
+# if !(defined __ppc__ || defined __powerpc__)
           if (strstr (buf, "POWER") != NULL)
             return true;
 # endif

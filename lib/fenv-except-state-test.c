@@ -103,7 +103,7 @@ fetestexceptflag (fexcept_t const *saved_flags, int exceptions)
   return flags & FE_ALL_EXCEPT & exceptions;
 }
 
-#elif defined __powerpc__
+#elif (defined __ppc__ || defined __powerpc__)
 
 int
 fetestexceptflag (fexcept_t const *saved_flags, int exceptions)

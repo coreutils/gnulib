@@ -314,7 +314,7 @@ feraiseexcept (int exceptions)
   return 0;
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 int
 feraiseexcept (int exceptions)

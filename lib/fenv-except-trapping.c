@@ -487,7 +487,7 @@ fegetexcept (void)
   return FE_ALL_EXCEPT & (fcsr << 16);
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 #  if defined __linux__
 #   include <sys/prctl.h>

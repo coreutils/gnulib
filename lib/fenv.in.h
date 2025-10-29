@@ -125,7 +125,7 @@ typedef struct
   }
 fenv_t;
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 typedef double /* yuck! */ fenv_t; /* fpscr register */
 
@@ -328,7 +328,7 @@ _GL_CXXALIASWARN (feholdexcept);
 #  define FE_UPWARD      (2 << 8)
 #  define FE_DOWNWARD    (3 << 8)
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 /* Attention: AIX has different values for these macros!  */
 #  define FE_TONEAREST   0
@@ -497,7 +497,7 @@ _GL_CXXALIASWARN (fesetround);
 #  define FE_DIVBYZERO  (1U << 19)
 #  define FE_INVALID    (1U << 20)
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 #  define FE_INEXACT    (1U << 25)
 #  define FE_DIVBYZERO  (1U << 26)
@@ -764,7 +764,7 @@ typedef unsigned short fexcept_t;
 
 typedef unsigned int fexcept_t;
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 typedef unsigned int fexcept_t;
 

@@ -158,7 +158,7 @@ fetestexcept (int exceptions)
   return fcsr & FE_ALL_EXCEPT & exceptions;
 }
 
-# elif defined __powerpc__
+# elif (defined __ppc__ || defined __powerpc__)
 
 int
 fetestexcept (int exceptions)

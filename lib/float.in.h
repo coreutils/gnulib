@@ -119,7 +119,7 @@ extern const union gl_long_double_union gl_LDBL_MAX;
    wrong.
    Assume these bugs are fixed in any GCC new enough
    to define __LDBL_NORM_MAX__.  */
-#if (defined __powerpc__ && LDBL_MANT_DIG == 106 \
+#if ((defined __ppc__ || defined __powerpc__) && LDBL_MANT_DIG == 106 \
      && defined __GNUC__ && !defined __LDBL_NORM_MAX__)
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP (-968)

@@ -1,5 +1,5 @@
 # isfinite.m4
-# serial 21
+# serial 22
 dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,7 +84,7 @@ int main ()
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
     /* Another NaN, more precisely crafted.  */
     m.value = NaNl ();
-    #if defined __powerpc__ && LDBL_MANT_DIG == 106
+    #if (defined __ppc__ || defined __powerpc__) && LDBL_MANT_DIG == 106
       /* This is PowerPC "double double", a pair of two doubles.  Inf and NaN are
          represented as the corresponding 64-bit IEEE values in the first double;
          the second is ignored.  Manipulate only the first double.  */
