@@ -16,6 +16,7 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include <stdio.h>
+#include <sys/types.h>
 #include <time.h>
 
 #ifdef __cplusplus
@@ -29,9 +30,11 @@ extern "C" {
 
    Output to stream FP the result of formatting (according to the
    nstrftime format string, FMT) the time data, *TM, and the ZONE
-   and NANOSECONDS values.  */
-size_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
-                    timezone_t zone, int nanoseconds);
+   and NANOSECONDS values.
+
+   Return the number of bytes written to the stream (always >= 0).  */
+off64_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
+                     timezone_t zone, int nanoseconds);
 
 
 #ifdef __cplusplus

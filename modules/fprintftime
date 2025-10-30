@@ -8,6 +8,7 @@ lib/strftime.c
 
 Depends-on:
 stdio-h
+sys_types-h
 nstrftime
 time_rz
 

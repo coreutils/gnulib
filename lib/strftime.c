@@ -198,12 +198,17 @@ enum pad_style
 # define mktime(tp) __mktime64 (tp)
 #endif
 
+/* For functions that fill an in-memory string, the number of bytes fits in a
+   size_t.  For functions that write to a stream, the number of bytes fits in
+   an off64_t (a type that is always at least 64 bits large).  */
 #if FPRINTFTIME
 # define STREAM_OR_CHAR_T FILE
 # define STRFTIME_ARG(x) /* empty */
+# define byte_count_t off64_t
 #else
 # define STREAM_OR_CHAR_T CHAR_T
 # define STRFTIME_ARG(x) x,
+# define byte_count_t size_t
 #endif
 
 #if FPRINTFTIME
@@ -894,12 +899,13 @@ static CHAR_T const c_month_names[][sizeof "September"] =
 # define ns 0
 #endif
 
-static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
-                                   const CHAR_T *, const struct tm *,
-                                   CAL_ARGS (const struct calendar *,
-                                             struct calendar_date *)
-                                   bool, enum pad_style, int, bool *
-                                   extra_args_spec LOCALE_PARAM);
+static byte_count_t __strftime_internal (STREAM_OR_CHAR_T *,
+                                         STRFTIME_ARG (size_t)
+                                         const CHAR_T *, const struct tm *,
+                                         CAL_ARGS (const struct calendar *,
+                                                   struct calendar_date *)
+                                         bool, enum pad_style, int, bool *
+                                         extra_args_spec LOCALE_PARAM);
 
 #if !defined _LIBC \
     && (!(HAVE_ONLY_C_LOCALE || (USE_C_LOCALE && !HAVE_STRFTIME_L)) \
@@ -1107,7 +1113,7 @@ get_tm_zone (timezone_t tz, char *ubuf, int ubufsize, int modifier,
    characters written.  If S is NULL, nothing will be written
    anywhere, so to determine how many characters would be
    written, use NULL for S and (size_t) -1 for MAXSIZE.  */
-size_t
+byte_count_t
 my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
              const CHAR_T *format,
              const struct tm *tp extra_args_spec LOCALE_PARAM)
@@ -1150,7 +1156,7 @@ libc_hidden_def (my_strftime)
    UPCASE indicates that the result should be converted to upper case.
    YR_SPEC and WIDTH specify the padding and width for the year.
    *TZSET_CALLED indicates whether tzset has been called here.  */
-static size_t
+static byte_count_t
 __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                      const CHAR_T *format,
                      const struct tm *tp,
@@ -1221,7 +1227,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define ampm (L_("AMPM") + 2 * (tp->tm_hour > 11))
 # define ap_len 2
 #endif
-  size_t i = 0;
+  byte_count_t i = 0;
   STREAM_OR_CHAR_T *p = s;
   const CHAR_T *f;
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
