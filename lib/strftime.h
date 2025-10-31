@@ -72,22 +72,23 @@ extern "C" {
    Store the result, as a string with a trailing NUL character, at the
    beginning of the array __S[0..__MAXSIZE-1] and return the length of
    that string, not counting the trailing NUL, and without changing errno.
-   If unsuccessful, possibly change the array __S, set errno, and return 0;
+   If unsuccessful, possibly change the array __S, set errno, and return -1;
    errno == ERANGE means the string didn't fit.
 
    This function is like strftime, but with two more arguments:
      * __TZ instead of the local timezone information,
-     * __NS as the number of nanoseconds in the %N directive.
+     * __NS as the number of nanoseconds in the %N directive,
+   and with a failure return value of -1 instead of 0.
  */
-size_t nstrftime (char *restrict __s, size_t __maxsize,
-                  char const *__format,
-                  struct tm const *__tp, timezone_t __tz, int __ns);
+ptrdiff_t nstrftime (char *restrict __s, size_t __maxsize,
+                     char const *__format,
+                     struct tm const *__tp, timezone_t __tz, int __ns);
 
 /* Like nstrftime, except that it uses the "C" locale instead of the
    current locale.  */
-size_t c_nstrftime (char *restrict __s, size_t __maxsize,
-                    char const *__format,
-                    struct tm const *__tp, timezone_t __tz, int __ns);
+ptrdiff_t c_nstrftime (char *restrict __s, size_t __maxsize,
+                       char const *__format,
+                       struct tm const *__tp, timezone_t __tz, int __ns);
 
 #ifdef __cplusplus
 }

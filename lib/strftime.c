@@ -205,7 +205,8 @@ enum pad_style
 #if FPRINTFTIME
 # define STREAM_OR_CHAR_T FILE
 # define STRFTIME_ARG(x) /* empty */
-typedef off64_t byte_count_t, sbyte_count_t;
+typedef off64_t byte_count_t;
+typedef off64_t sbyte_count_t;
 # define SBYTE_COUNT_MAX 0x7fffffffffffffff
 #else
 # define STREAM_OR_CHAR_T CHAR_T
@@ -213,6 +214,18 @@ typedef off64_t byte_count_t, sbyte_count_t;
 typedef size_t byte_count_t;
 typedef ptrdiff_t sbyte_count_t;
 # define SBYTE_COUNT_MAX PTRDIFF_MAX
+#endif
+
+/* The functions strftime[_l], wcsftime[_l] defined by glibc have a return type
+   'size_t', for compatibility with POSIX, and return 0 upon failure.
+   The functions defined by Gnulib have a signed return type, and return -1
+   upon failure.  */
+#ifdef _LIBC
+typedef size_t retval_t;
+# define FAILURE 0
+#else
+typedef sbyte_count_t retval_t;
+# define FAILURE -1
 #endif
 
 #if FPRINTFTIME
@@ -249,7 +262,7 @@ typedef ptrdiff_t sbyte_count_t;
       if (_incr >= maxsize - i)                                               \
         {                                                                     \
           errno = ERANGE;                                                     \
-          return 0;                                                           \
+          return FAILURE;                                                     \
         }                                                                     \
       if (p)                                                                  \
         {                                                                     \
@@ -908,14 +921,14 @@ static CHAR_T const c_month_names[][sizeof "September"] =
 # define ns 0
 #endif
 
-static byte_count_t __strftime_internal (STREAM_OR_CHAR_T *,
-                                         STRFTIME_ARG (size_t)
-                                         const CHAR_T *, const struct tm *,
-                                         CAL_ARGS (const struct calendar *,
-                                                   struct calendar_date *)
-                                         bool, enum pad_style,
-                                         sbyte_count_t, bool *
-                                         extra_args_spec LOCALE_PARAM);
+static retval_t __strftime_internal (STREAM_OR_CHAR_T *,
+                                     STRFTIME_ARG (size_t)
+                                     const CHAR_T *, const struct tm *,
+                                     CAL_ARGS (const struct calendar *,
+                                               struct calendar_date *)
+                                     bool, enum pad_style,
+                                     sbyte_count_t, bool *
+                                     extra_args_spec LOCALE_PARAM);
 
 #if !defined _LIBC \
     && (!(HAVE_ONLY_C_LOCALE || (USE_C_LOCALE && !HAVE_STRFTIME_L)) \
@@ -1118,13 +1131,16 @@ get_tm_zone (timezone_t tz, char *ubuf, int ubufsize, int modifier,
 }
 
 /* Write information from TP into S according to the format
-   string FORMAT.  Return the humber of bytes written.
+   string FORMAT.  Return the number of bytes written.
+   Upon failure:
+     - return 0 for the functions defined by glibc,
+     - return -1 for the functions defined by Gnulib.
 
    If !FPRINTFTIME, write no more than MAXSIZE bytes (including the
    terminating '\0'), and if S is NULL do not write into S.
    To determine how many characters would be written, use NULL for S
    and (size_t) -1 for MAXSIZE.  */
-byte_count_t
+retval_t
 my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
              const CHAR_T *format,
              const struct tm *tp extra_args_spec LOCALE_PARAM)
@@ -1167,7 +1183,7 @@ libc_hidden_def (my_strftime)
    UPCASE indicates that the result should be converted to upper case.
    YR_SPEC and WIDTH specify the padding and width for the year.
    *TZSET_CALLED indicates whether tzset has been called here.  */
-static byte_count_t
+static retval_t
 __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                      const CHAR_T *format,
                      const struct tm *tp,
@@ -1239,7 +1255,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define ampm (L_("AMPM") + 2 * (tp->tm_hour > 11))
 # define ap_len 2
 #endif
-  byte_count_t i = 0;
+  retval_t i = 0;
   STREAM_OR_CHAR_T *p = s;
   const CHAR_T *f;
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
@@ -1603,13 +1619,15 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           subwidth = -1;
         subformat_width:
           {
-            byte_count_t len =
+            retval_t len =
               __strftime_internal (NULL, STRFTIME_ARG ((size_t) -1)
                                    subfmt, tp,
                                    CAL_ARGS (cal, caldate)
                                    to_uppcase, pad, subwidth,
                                    tzset_called
                                    extra_args LOCALE_ARG);
+            if (FAILURE < 0 && len < 0)
+              return FAILURE; /* errno is set here */
             add (len, __strftime_internal (p,
                                            STRFTIME_ARG (maxsize - i)
                                            subfmt, tp,
@@ -1894,7 +1912,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                     if (ckd_add (&i, i, padding) && FPRINTFTIME)
                       {
                         errno = ERANGE;
-                        return 0;
+                        return FAILURE;
                       }
                     width -= padding;
                   }
@@ -2057,7 +2075,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             if (ltm.tm_yday < 0)
               {
                 errno = EOVERFLOW;
-                return 0;
+                return FAILURE;
               }
 
             /* Generate string value for T using time_t arithmetic;
@@ -2276,12 +2294,12 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             mbstate_t st = {0};
             size_t len = __mbsrtowcs_l (p, &z, maxsize - i, &st, loc);
             if (len == (size_t) -1)
-              return 0;
+              return FAILURE;
             size_t incr = len < w ? w : len;
             if (incr >= maxsize - i)
               {
                 errno = ERANGE;
-                return 0;
+                return FAILURE;
               }
             if (p)
               {

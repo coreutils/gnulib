@@ -23,12 +23,12 @@
 #define TZ_ANGLE_BRACKETS_SHOULD_WORK (200112 <= _POSIX_VERSION)
 
 /* A wrapper around FUNC that checks the return value.  */
-static size_t
+static ptrdiff_t
 FUNC_CHECKED (char *restrict s, size_t maxsize,
               char const *format,
               struct tm const *tp, timezone_t tz, int ns)
 {
-  size_t ret = FUNC (s, maxsize, format, tp, tz, ns);
+  ptrdiff_t ret = FUNC (s, maxsize, format, tp, tz, ns);
   if (ret > 0)
     {
       ASSERT (ret < maxsize);
@@ -67,12 +67,12 @@ posixtm_test (void)
       char buf[1000];
       time_t t = T[i].in;
       struct tm *tm = gmtime (&t);
-      size_t n;
+      ptrdiff_t n;
 
       ASSERT (tm);
 
       n = FUNC_CHECKED (buf, sizeof buf, T[i].fmt, tm, NULL, T[i].in_ns);
-      if (n == 0)
+      if (n == -1)
         {
           fail = 1;
           printf ("%s failed with format %s\n", FUNC_NAME, T[i].fmt);
@@ -206,7 +206,7 @@ tzalloc_test (void)
       static char const format[] = "%Y-%m-%d %H:%M:%S %z (%Z)";
       char buf[1000];
       struct tm tm;
-      size_t n;
+      ptrdiff_t n;
 
       if (!tz && tza->setting)
         {
@@ -233,7 +233,7 @@ tzalloc_test (void)
         }
 
       n = FUNC_CHECKED (buf, sizeof buf, format, &tm, tz, 0);
-      if (n == 0)
+      if (n == -1)
         {
           fail = 1;
           printf ("%s: %ld: %s failed\n", setting, lt, FUNC_NAME);
@@ -280,8 +280,8 @@ quarter_test (void)
       struct tm qtm = { .tm_mon = mon - 1 };
       char fmt[3] = {'%','q','\0'};
 
-      size_t r = FUNC_CHECKED (out, sizeof (out), fmt, &qtm, NULL, 0);
-      if (r == 0)
+      ptrdiff_t r = FUNC_CHECKED (out, sizeof (out), fmt, &qtm, NULL, 0);
+      if (r == -1)
         {
           printf ("%s(\"%%q\") failed\n", FUNC_NAME);
           fflush (stdout);
@@ -310,12 +310,12 @@ errno_test (void)
   int fail = 0;
   struct tm tm = { .tm_year = 2020 - 1900, .tm_mday = 1 };
   char buf[INT_BUFSIZE_BOUND (time_t)];
-  size_t n;
+  ptrdiff_t n;
   int bigyear = LLONG_MAX - 1900 < INT_MAX ? LLONG_MAX - 1900 : INT_MAX;
 
   errno = 0;
   n = FUNC_CHECKED (buf, 0, "%m", &tm, NULL, 0);
-  if (! (n == 0 && errno == ERANGE))
+  if (! (n == -1 && errno == ERANGE))
     {
       fail = 1;
       printf ("%s failed to set errno = ERANGE\n", FUNC_NAME);
@@ -335,7 +335,7 @@ errno_test (void)
   tm.tm_year = bigyear;
   errno = 0;
   n = FUNC_CHECKED (buf, sizeof buf, "%s", &tm, NULL, 0);
-  if (n == 0)
+  if (n == -1)
     {
       if (errno != EOVERFLOW)
         {
@@ -369,7 +369,8 @@ errno_test (void)
           else
             {
               char buf1[sizeof buf];
-              size_t n1 = FUNC_CHECKED (buf1, sizeof buf1, "%s", tmp, NULL, 0);
+              ptrdiff_t n1 =
+                FUNC_CHECKED (buf1, sizeof buf1, "%s", tmp, NULL, 0);
               buf1[n1] = '\0';
               if (! STREQ (buf, buf1))
                 {
@@ -400,7 +401,7 @@ locales_test (language_t language)
   struct tm *tm = gmtime (&t);
   int ns = 123456789;
   char buf[100];
-  size_t n;
+  ptrdiff_t n;
 
   n = FUNC_CHECKED (buf, sizeof buf, "%+4Y-%m-%d %H:%M:%S.%N", tm, NULL, ns);
   ASSERT (n > 0);

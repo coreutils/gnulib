@@ -68,7 +68,7 @@ main ()
 #else
 
   char buf[100];
-  size_t ret;
+  ptrdiff_t ret;
   /* Native Windows does not support dates before 1970-01-01.  */
 # if !(defined _WIN32 && !defined __CYGWIN__)
   {

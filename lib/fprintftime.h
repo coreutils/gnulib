@@ -32,7 +32,8 @@ extern "C" {
    nstrftime format string, FMT) the time data, *TM, and the ZONE
    and NANOSECONDS values.
 
-   Return the number of bytes written to the stream (always >= 0).  */
+   Return the number of bytes written to the stream.
+   Upon failure, return -1 with errno set.  */
 off64_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
                      timezone_t zone, int nanoseconds);
 

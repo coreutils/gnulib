@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   if (strcmp (argv[1], "1") == 0)
     {
       /* Test a non-ASCII French month name.  */
-      size_t n = nstrftime (buf, sizeof (buf), "%B", tm, NULL, ns);
+      ptrdiff_t n = nstrftime (buf, sizeof (buf), "%B", tm, NULL, ns);
       ASSERT (n > 0);
       printf ("buf = |%s|\n", buf);
       fflush (stdout);
@@ -59,7 +59,7 @@ main (int argc, char *argv[])
   if (strcmp (argv[1], "2") == 0)
     {
       /* Test a non-ASCII Japanese weekday name.  */
-      size_t n = nstrftime (buf, sizeof (buf), "%A", tm, NULL, ns);
+      ptrdiff_t n = nstrftime (buf, sizeof (buf), "%A", tm, NULL, ns);
       ASSERT (n > 0);
       printf ("buf = |%s|\n", buf);
       fflush (stdout);
