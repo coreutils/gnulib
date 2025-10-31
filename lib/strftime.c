@@ -1891,7 +1891,11 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                   {
                     if (p)
                       memset_space (p, padding);
-                    i += padding;
+                    if (ckd_add (&i, i, padding) && FPRINTFTIME)
+                      {
+                        errno = ERANGE;
+                        return 0;
+                      }
                     width -= padding;
                   }
                 width_add1 (0, sign_char);
