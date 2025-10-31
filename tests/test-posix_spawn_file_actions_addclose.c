@@ -54,9 +54,10 @@ main (void)
     errno = 0;
     ASSERT (posix_spawn_file_actions_addclose (&actions, -1) == EBADF);
   }
-  /* This behaviour is not mandated by POSIX, but happens to pass on all
-     platforms except musl libc and Cygwin.  */
-#if !(defined MUSL_LIBC || defined __CYGWIN__)
+  /* This behaviour is not mandated by POSIX, following
+     <https://austingroupbugs.net/view.php?id=418>,
+     but happens to pass on all platforms except musl libc, NetBSD, Cygwin.  */
+#if !(defined MUSL_LIBC || defined __NetBSD__ || defined __CYGWIN__)
   {
     int bad_fd = big_fd ();
     errno = 0;
