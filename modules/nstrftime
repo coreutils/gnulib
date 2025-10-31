@@ -25,6 +25,7 @@ localcharset
 localename-unsafe
 bool
 stdckdint-h
+stdint-h
 time_rz
 
 configure.ac:

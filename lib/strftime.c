@@ -110,6 +110,7 @@
 #include <locale.h>
 #include <stdckdint.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -204,16 +205,24 @@ enum pad_style
 #if FPRINTFTIME
 # define STREAM_OR_CHAR_T FILE
 # define STRFTIME_ARG(x) /* empty */
-# define byte_count_t off64_t
+typedef off64_t byte_count_t, sbyte_count_t;
+# define SBYTE_COUNT_MAX 0x7fffffffffffffff
 #else
 # define STREAM_OR_CHAR_T CHAR_T
 # define STRFTIME_ARG(x) x,
-# define byte_count_t size_t
+typedef size_t byte_count_t;
+typedef ptrdiff_t sbyte_count_t;
+# define SBYTE_COUNT_MAX PTRDIFF_MAX
 #endif
 
 #if FPRINTFTIME
 # define memset_byte(P, Len, Byte) \
-  do { size_t _i; for (_i = 0; _i < Len; _i++) fputc (Byte, P); } while (0)
+   do \
+     { \
+       for (byte_count_t _i = Len; 0 < _i; _i--) \
+         fputc (Byte, P); \
+     } \
+   while (false)
 # define memset_space(P, Len) memset_byte (P, Len, ' ')
 # define memset_zero(P, Len) memset_byte (P, Len, '0')
 #elif defined COMPILE_WIDE
@@ -234,9 +243,9 @@ enum pad_style
 #define width_add(width, n, f)                                                \
   do                                                                          \
     {                                                                         \
-      size_t _n = (n);                                                        \
-      size_t _w = pad == NO_PAD || width < 0 ? 0 : width;                    \
-      size_t _incr = _n < _w ? _w : _n;                                       \
+      byte_count_t _n = n;                                                    \
+      byte_count_t _w = pad == NO_PAD || width < 0 ? 0 : width;               \
+      byte_count_t _incr = _n < _w ? _w : _n;                                 \
       if (_incr >= maxsize - i)                                               \
         {                                                                     \
           errno = ERANGE;                                                     \
@@ -246,7 +255,7 @@ enum pad_style
         {                                                                     \
           if (_n < _w)                                                        \
             {                                                                 \
-              size_t _delta = _w - _n;                                        \
+              byte_count_t _delta = _w - _n;                                  \
               if (pad == ALWAYS_ZERO_PAD || pad == SIGN_PAD)                  \
                 memset_zero (p, _delta);                                      \
               else                                                            \
@@ -367,7 +376,7 @@ enum pad_style
 
 #if FPRINTFTIME
 static void
-fwrite_lowcase (FILE *fp, const CHAR_T *src, size_t len)
+fwrite_lowcase (FILE *fp, const CHAR_T *src, off64_t len)
 {
   while (len-- > 0)
     {
@@ -377,7 +386,7 @@ fwrite_lowcase (FILE *fp, const CHAR_T *src, size_t len)
 }
 
 static void
-fwrite_uppcase (FILE *fp, const CHAR_T *src, size_t len)
+fwrite_uppcase (FILE *fp, const CHAR_T *src, off64_t len)
 {
   while (len-- > 0)
     {
@@ -904,7 +913,8 @@ static byte_count_t __strftime_internal (STREAM_OR_CHAR_T *,
                                          const CHAR_T *, const struct tm *,
                                          CAL_ARGS (const struct calendar *,
                                                    struct calendar_date *)
-                                         bool, enum pad_style, int, bool *
+                                         bool, enum pad_style,
+                                         sbyte_count_t, bool *
                                          extra_args_spec LOCALE_PARAM);
 
 #if !defined _LIBC \
@@ -1108,11 +1118,12 @@ get_tm_zone (timezone_t tz, char *ubuf, int ubufsize, int modifier,
 }
 
 /* Write information from TP into S according to the format
-   string FORMAT, writing no more that MAXSIZE characters
-   (including the terminating '\0') and returning number of
-   characters written.  If S is NULL, nothing will be written
-   anywhere, so to determine how many characters would be
-   written, use NULL for S and (size_t) -1 for MAXSIZE.  */
+   string FORMAT.  Return the humber of bytes written.
+
+   If !FPRINTFTIME, write no more than MAXSIZE bytes (including the
+   terminating '\0'), and if S is NULL do not write into S.
+   To determine how many characters would be written, use NULL for S
+   and (size_t) -1 for MAXSIZE.  */
 byte_count_t
 my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
              const CHAR_T *format,
@@ -1163,14 +1174,15 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                      CAL_ARGS (const struct calendar *cal,
                                struct calendar_date *caldate)
                      bool upcase,
-                     enum pad_style yr_spec, int width, bool *tzset_called
+                     enum pad_style yr_spec, sbyte_count_t width,
+                     bool *tzset_called
                      extra_args_spec LOCALE_PARAM)
 {
 #if defined _LIBC && defined USE_IN_EXTENDED_LOCALE_MODEL
   struct __locale_data *const current = loc->__locales[LC_TIME];
 #endif
 #if FPRINTFTIME
-  size_t maxsize = (size_t) -1;
+  byte_count_t maxsize = SBYTE_COUNT_MAX;
 #endif
 
   int saved_errno = errno;
@@ -1266,7 +1278,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
       size_t colons;
       bool change_case = false;
       int format_char;
-      int subwidth;
+      sbyte_count_t subwidth;
 
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
       switch (*f)
@@ -1390,7 +1402,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             {
               if (ckd_mul (&width, width, 10)
                   || ckd_add (&width, width, *f - L_('0')))
-                width = INT_MAX;
+                width = SBYTE_COUNT_MAX;
               ++f;
             }
           while (ISDIGIT (*f));
@@ -1591,12 +1603,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           subwidth = -1;
         subformat_width:
           {
-            size_t len = __strftime_internal (NULL, STRFTIME_ARG ((size_t) -1)
-                                              subfmt, tp,
-                                              CAL_ARGS (cal, caldate)
-                                              to_uppcase, pad, subwidth,
-                                              tzset_called
-                                              extra_args LOCALE_ARG);
+            byte_count_t len =
+              __strftime_internal (NULL, STRFTIME_ARG ((size_t) -1)
+                                   subfmt, tp,
+                                   CAL_ARGS (cal, caldate)
+                                   to_uppcase, pad, subwidth,
+                                   tzset_called
+                                   extra_args LOCALE_ARG);
             add (len, __strftime_internal (p,
                                            STRFTIME_ARG (maxsize - i)
                                            subfmt, tp,
@@ -1868,8 +1881,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             if (digits_base >= 0x100)
               number_digits = number_bytes / 2;
 #endif
-            int shortage = width - !!sign_char - number_digits;
-            int padding = pad == NO_PAD || shortage <= 0 ? 0 : shortage;
+            byte_count_t shortage = width - !!sign_char - number_digits;
+            byte_count_t padding = (pad == NO_PAD || shortage <= 0
+                                    ? 0 : shortage);
 
             if (sign_char)
               {
