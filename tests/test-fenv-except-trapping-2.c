@@ -455,15 +455,15 @@ main (int argc, char *argv[])
          - gcc >= 8 generates 'com*' or 'fcom*' instructions and thus passes
            the test.  */
       #if (__GLIBC__ >= 2 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && (__GNUC__ < 8 || defined __clang__)) \
-          || (__GLIBC__ >= 2 && (defined __powerpc__ || (defined __s390__ || defined __s390x__))) \
+          || (__GLIBC__ >= 2 && (defined _ARCH_PPC || (defined __s390__ || defined __s390x__))) \
           || (__GLIBC__ >= 2 && __FreeBSD_kernel__ && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
-          || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
+          || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined _ARCH_PPC)) \
           || ((defined __APPLE__ && defined __MACH__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86) || defined __aarch64__)) \
           || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
-          || ((defined __FreeBSD__ || defined __NetBSD__) && defined __powerpc__) \
+          || ((defined __FreeBSD__ || defined __NetBSD__) && defined _ARCH_PPC) \
           || (defined __OpenBSD__ && defined __mips64) \
           || (defined __minix && (defined __i386 || defined _M_IX86)) \
-          || (defined _AIX && defined __powerpc__) \
+          || (defined _AIX && defined _ARCH_PPC) \
           || (defined __sun && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
           || (defined __CYGWIN__ && (defined __x86_64__ || defined _M_X64)) \
           || (defined _WIN32 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \

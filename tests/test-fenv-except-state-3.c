@@ -71,7 +71,7 @@ main ()
   /* On older i386 and on PowerPC, there is no way to implement
      fesetexceptflag() such that it does not trigger a trap.  fesetexceptflag()
      is expected to fail in this case.  */
-# if !((defined __i386 || defined _M_IX86) || (defined __ppc__ || defined __powerpc__))
+# if !((defined __i386 || defined _M_IX86) || defined _ARCH_PPC)
   ASSERT (rc == 0);
 # endif
 

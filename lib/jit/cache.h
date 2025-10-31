@@ -79,7 +79,7 @@ clear_cache (void *start, void *end)
   sync_instruction_memory (start, (char *) end - (char *) start);
 
 /* No operating system provided function. Dispatch according to the CPU.  */
-#elif (defined __GNUC__ || defined __clang__) && defined __powerpc__
+#elif (defined __GNUC__ || defined __clang__) && defined _ARCH_PPC
   /* XXX Is this enough, or do we also need the 'clf' instruction?  */
   uintptr_t addr = (uintptr_t) start & ~(intptr_t)3;
   uintptr_t end_addr = (uintptr_t) end;

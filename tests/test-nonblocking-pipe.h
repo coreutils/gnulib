@@ -37,7 +37,7 @@
 # define PIPE_DATA_BLOCK_SIZE 270000
 #elif defined __linux__ && defined __sparc
 # define PIPE_DATA_BLOCK_SIZE 140000
-#elif defined __linux__ && defined __powerpc__
+#elif defined __linux__ && defined _ARCH_PPC
 # define PIPE_DATA_BLOCK_SIZE 1100000
 #elif defined _WIN32 && !defined __CYGWIN__
 # define PIPE_DATA_BLOCK_SIZE 10000

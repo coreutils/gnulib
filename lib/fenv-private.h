@@ -278,7 +278,7 @@ extern void __ieee_set_fp_control (unsigned long);
 # define _FPU_GETCW(cw) __asm__ __volatile__ ("movfcsr2gr %0,$r0" : "=r" (cw))
 # define _FPU_SETCW(cw) __asm__ __volatile__ ("movgr2fcsr $r0,%0" : : "r" (cw))
 
-#elif (defined __ppc__ || defined __powerpc__)
+#elif defined _ARCH_PPC
 
 /* fpscr bits 28..25 indicate which floating-point exceptions, other than
    FE_INVALID, have occurred since the respective bit was last set to zero.
@@ -372,7 +372,7 @@ extern void __ieee_set_fp_control (unsigned long);
 
 #endif
 
-#if defined _AIX && defined __powerpc__ /* AIX */
+#if defined _AIX && defined _ARCH_PPC /* AIX */
 
 /* <fpxcp.h> defines a type fpflag_t and macros FP_*.  */
 
