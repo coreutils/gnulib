@@ -1199,9 +1199,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #endif
 #if FPRINTFTIME
   byte_count_t maxsize = SBYTE_COUNT_MAX;
-#endif
-
+#else
   int saved_errno = errno;
+#endif
 
 #ifdef _NL_CURRENT
   /* We cannot make the following values variables since we must delay
@@ -2415,8 +2415,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #if ! FPRINTFTIME
   if (p && maxsize != 0)
     *p = L_('\0');
+  errno = saved_errno;
 #endif
 
-  errno = saved_errno;
   return i;
 }
