@@ -207,13 +207,11 @@ enum pad_style
 # define STRFTIME_ARG(x) /* empty */
 typedef off64_t byte_count_t;
 typedef off64_t sbyte_count_t;
-# define SBYTE_COUNT_MAX 0x7fffffffffffffff
 #else
 # define STREAM_OR_CHAR_T CHAR_T
 # define STRFTIME_ARG(x) x,
 typedef size_t byte_count_t;
 typedef ptrdiff_t sbyte_count_t;
-# define SBYTE_COUNT_MAX PTRDIFF_MAX
 #endif
 
 /* The functions strftime[_l], wcsftime[_l] defined by glibc have a return type
@@ -260,13 +258,23 @@ typedef sbyte_count_t retval_t;
 #endif
 
 #define add(n, f) width_add (width, n, f)
+
+/* Add INCR, returning true if I would become too large.
+   INCR should not have side effects.  */
+#if FPRINTFTIME
+# define incr_overflow(incr) ckd_add (&i, i, incr)
+#else
+/* Use <= not <, to leave room for trailing NUL.  */
+# define incr_overflow(incr) (maxsize - i <= (incr) || (i += (incr), false))
+#endif
+
 #define width_add(width, n, f)                                                \
   do                                                                          \
     {                                                                         \
       byte_count_t _n = n;                                                    \
       byte_count_t _w = pad == NO_PAD || width < 0 ? 0 : width;               \
       byte_count_t _incr = _n < _w ? _w : _n;                                 \
-      if (_incr >= maxsize - i)                                               \
+      if (incr_overflow (_incr))                                              \
         {                                                                     \
           errno = ERANGE;                                                     \
           return FAILURE;                                                     \
@@ -284,7 +292,6 @@ typedef sbyte_count_t retval_t;
           f;                                                                  \
           advance (p, _n);                                                    \
         }                                                                     \
-      i += _incr;                                                             \
     } while (0)
 
 #define add1(c) width_add1 (width, c)
@@ -1180,9 +1187,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #if defined _LIBC && defined USE_IN_EXTENDED_LOCALE_MODEL
   struct __locale_data *const current = loc->__locales[LC_TIME];
 #endif
-#if FPRINTFTIME
-  byte_count_t maxsize = SBYTE_COUNT_MAX;
-#endif
 #if FAILURE == 0
   int saved_errno = errno;
 #endif
@@ -1402,7 +1406,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             {
               if (ckd_mul (&width, width, 10)
                   || ckd_add (&width, width, *f - L_('0')))
-                width = SBYTE_COUNT_MAX;
+                return FAILURE;
               ++f;
             }
           while (ISDIGIT (*f));
