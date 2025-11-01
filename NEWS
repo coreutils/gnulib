@@ -78,14 +78,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2025-10-31  nstrftime       The return type changed from size_t to ptrdiff_t.
-            c-nstrftime     The return value in case of failure changed from 0
-                            to -1.
-
-2025-10-31  fprintftime     The return value in case of failure changed from 0
-                            to -1.
-
-2025-10-30  fprintftime     The return value is changed from size_t to off64_t.
+2025-11-01  nstrftime       The return type is now signed not size_t,
+            c-nstrftime     the failure return value is now -1 not 0,
+            fprintftime     and errno is no longer preserved on success.
+                            The return type is now off64_t for fprintftime,
+                            ptrdiff_t for the others.
 
 2025-08-05  git-merge-changelog  This module is removed.  Use the package from
                             https://git.savannah.gnu.org/git/vc-changelog.git

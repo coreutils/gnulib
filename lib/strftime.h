@@ -71,14 +71,15 @@ extern "C" {
 
    Store the result, as a string with a trailing NUL character, at the
    beginning of the array __S[0..__MAXSIZE-1] and return the length of
-   that string, not counting the trailing NUL, and without changing errno.
+   that string, not counting the trailing NUL.
    If unsuccessful, possibly change the array __S, set errno, and return -1;
    errno == ERANGE means the string didn't fit.
 
    This function is like strftime, but with two more arguments:
      * __TZ instead of the local timezone information,
      * __NS as the number of nanoseconds in the %N directive,
-   and with a failure return value of -1 instead of 0.
+   and on success it does not preserve errno,
+   and on failure it returns -1 not 0.
  */
 ptrdiff_t nstrftime (char *restrict __s, size_t __maxsize,
                      char const *__format,

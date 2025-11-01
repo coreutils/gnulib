@@ -1182,7 +1182,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #endif
 #if FPRINTFTIME
   byte_count_t maxsize = SBYTE_COUNT_MAX;
-#else
+#endif
+#if FAILURE == 0
   int saved_errno = errno;
 #endif
 
@@ -2398,6 +2399,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #if ! FPRINTFTIME
   if (p && maxsize != 0)
     *p = L_('\0');
+#endif
+
+#if FAILURE == 0
   errno = saved_errno;
 #endif
 
