@@ -75,11 +75,21 @@ do_prepare ()
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  ASSERT (mkdirat (AT_FDCWD, temp_dir, 0700) == 0);
+  dfd = openat2 (AT_FDCWD, temp_dir,
+                 (&(struct open_how) { .flags = O_RDONLY | O_DIRECTORY }),
+                 sizeof (struct open_how));
+  ASSERT (0 <= dfd);
+}
+
+static void
+do_prepare_symlinks ()
+{
   /*
      Construct a test directory with the following structure:
 
      temp_dir/
-        |- escaping_link -> /tmp
+        |- escaping_link -> /
         |- escaping_link_2 -> escaping_link
         |- some_file
         |- invalid_link -> some_file/invalid
@@ -88,11 +98,6 @@ do_prepare ()
 	   |- some_file
   */
 
-  ASSERT (mkdirat (AT_FDCWD, temp_dir, 0700) == 0);
-  dfd = openat2 (AT_FDCWD, temp_dir,
-                 (&(struct open_how) { .flags = O_RDONLY | O_DIRECTORY }),
-                 sizeof (struct open_how));
-  ASSERT (0 <= dfd);
   ASSERT (symlinkat ("/", dfd, "escaping_link") == 0);
   ASSERT (symlinkat ("escaping_link", dfd, "escaping_link_2") == 0);
   ASSERT (symlinkat ("some_file/invalid", dfd, "invalid_link") == 0);
@@ -522,11 +527,15 @@ main ()
   ASSERT (test_open (do_open, false) == result);
   ASSERT (close (dfd) == 0);
 
-  do_prepare ();
   do_test_struct ();
+
+  do_prepare ();
   do_test_flags ();
+#if !(defined _WIN32 && !defined __CYGWIN__)
+  do_prepare_symlinks ();
   do_test_resolve ();
   do_test_basic ();
+#endif
 
   /* Check that even when *-safer modules are in use, plain openat2 can
      land in fd 0.  Do this test last, since it is destructive to
