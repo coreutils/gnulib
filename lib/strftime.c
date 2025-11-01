@@ -225,7 +225,7 @@ typedef size_t retval_t;
 # define FAILURE 0
 #else
 typedef sbyte_count_t retval_t;
-# define FAILURE -1
+# define FAILURE (-1)
 #endif
 
 #if FPRINTFTIME
