@@ -229,12 +229,19 @@ typedef sbyte_count_t retval_t;
 #endif
 
 #if FPRINTFTIME
-# define memset_byte(P, Len, Byte) \
+# define FPUTC(Byte, P) \
    do \
      { \
-       for (byte_count_t _i = Len; 0 < _i; _i--) \
-         fputc (Byte, P); \
+       int _r = fputc (Byte, P); \
+       if (_r < 0) \
+         return _r; \
      } \
+   while (false)
+
+# define memset_byte(P, Len, Byte) \
+   do \
+     for (byte_count_t _i = Len; 0 < _i; _i--) \
+       FPUTC (Byte, P); \
    while (false)
 # define memset_space(P, Len) memset_byte (P, Len, ' ')
 # define memset_zero(P, Len) memset_byte (P, Len, '0')
@@ -282,7 +289,7 @@ typedef sbyte_count_t retval_t;
 
 #define add1(c) width_add1 (width, c)
 #if FPRINTFTIME
-# define width_add1(width, c) width_add (width, 1, fputc (c, p))
+# define width_add1(width, c) width_add (width, 1, FPUTC (c, p))
 #else
 # define width_add1(width, c) width_add (width, 1, *p = c)
 #endif
@@ -293,19 +300,15 @@ typedef sbyte_count_t retval_t;
     width_add (width, n,                                                      \
      do                                                                       \
        {                                                                      \
+         CHAR_T const *_s = s;                                                \
          if (to_lowcase)                                                      \
-           fwrite_lowcase (p, (s), _n);                                       \
+           for (byte_count_t _i = 0; _i < _n; _i++)                           \
+             FPUTC (TOLOWER ((UCHAR_T) _s[_i], loc), p);                      \
          else if (to_uppcase)                                                 \
-           fwrite_uppcase (p, (s), _n);                                       \
-         else                                                                 \
-           {                                                                  \
-             /* Ignore the value of fwrite.  The caller can determine whether \
-                an error occurred by inspecting ferror (P).  All known fwrite \
-                implementations set the stream's error indicator when they    \
-                fail due to ENOMEM etc., even though C11 and POSIX.1-2008 do  \
-                not require this.  */                                         \
-             fwrite (s, _n, 1, p);                                            \
-           }                                                                  \
+           for (byte_count_t _i = 0; _i < _n; _i++)                           \
+             FPUTC (TOUPPER ((UCHAR_T) _s[_i], loc), p);                      \
+         else if (fwrite (_s, _n, 1, p) == 0)                                 \
+           return -1;                                                         \
        }                                                                      \
      while (0)                                                                \
     )
@@ -387,27 +390,7 @@ typedef sbyte_count_t retval_t;
 # pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif
 
-#if FPRINTFTIME
-static void
-fwrite_lowcase (FILE *fp, const CHAR_T *src, off64_t len)
-{
-  while (len-- > 0)
-    {
-      fputc (TOLOWER ((UCHAR_T) *src, loc), fp);
-      ++src;
-    }
-}
-
-static void
-fwrite_uppcase (FILE *fp, const CHAR_T *src, off64_t len)
-{
-  while (len-- > 0)
-    {
-      fputc (TOUPPER ((UCHAR_T) *src, loc), fp);
-      ++src;
-    }
-}
-#else
+#if !FPRINTFTIME
 static CHAR_T *memcpy_lowcase (CHAR_T *dest, const CHAR_T *src,
                                size_t len LOCALE_PARAM);
 
