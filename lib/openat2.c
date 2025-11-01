@@ -267,8 +267,12 @@ do_openat2 (int *fd, char const *filename,
             }
         }
       idx_t h = g;
-      while (1 < h && !ISSLASH (e[- --h]))
-        continue;
+      while (h > 1)
+        {
+          h--;
+          if (ISSLASH (e[-h]))
+            break;
+        }
 
       /* Properties of the file name through the first component's end,
          or to file name end if there is no component.  */
