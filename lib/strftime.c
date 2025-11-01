@@ -234,7 +234,7 @@ typedef sbyte_count_t retval_t;
      { \
        int _r = fputc (Byte, P); \
        if (_r < 0) \
-         return _r; \
+         return FAILURE; \
      } \
    while (false)
 
@@ -308,7 +308,7 @@ typedef sbyte_count_t retval_t;
            for (byte_count_t _i = 0; _i < _n; _i++)                           \
              FPUTC (TOUPPER ((UCHAR_T) _s[_i], loc), p);                      \
          else if (fwrite (_s, _n, 1, p) == 0)                                 \
-           return -1;                                                         \
+           return FAILURE;                                                    \
        }                                                                      \
      while (0)                                                                \
     )
