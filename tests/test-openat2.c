@@ -36,6 +36,7 @@ SIGNATURE_CHECK (openat2, int, (int, char const *,
 # include <signal.h>
 #endif
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-openat2.t"
@@ -71,6 +72,9 @@ do_open (char const *name, int flags, ...)
 static void
 do_prepare ()
 {
+  /* Remove any leftovers from a previous partial run.  */
+  ignore_value (system ("rm -rf " BASE "*"));
+
   /*
      Construct a test directory with the following structure:
 

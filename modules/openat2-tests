@@ -7,6 +7,7 @@ tests/macros.h
 Depends-on:
 close
 fcntl
+ignore-value
 mkdirat
 stdcountof-h
 stdint-h
