@@ -1189,6 +1189,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #endif
 #if FAILURE == 0
   int saved_errno = errno;
+#elif !FPRINTFTIME
+  if (PTRDIFF_MAX < maxsize)
+    maxsize = PTRDIFF_MAX;
 #endif
 
 #ifdef _NL_CURRENT

@@ -76,6 +76,13 @@ extern "C" {
    If unsuccessful, possibly change the array __S, set errno, and return -1;
    errno == ERANGE means the string didn't fit.
 
+   As a glibc extension if __S is null, do not store anything, and
+   return the value that would have been returned had __S been non-null.
+
+   A __MAXSIZE greater than PTRDIFF_MAX is silently treated as if
+   it were PTRDIFF_MAX, so that the caller can safely add 1 to
+   any return value without overflow.
+
    This function is like strftime, but with two more arguments:
      * __TZ instead of the local timezone information,
      * __NS as the number of nanoseconds in the %N directive,
