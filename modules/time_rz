@@ -9,6 +9,7 @@ m4/time_rz.m4
 Depends-on:
 c99
 extensions
+free-posix
 time-h
 flexmember     [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
 idx            [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
@@ -22,14 +23,10 @@ unsetenv       [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test
 
 configure.ac:
 gl_TIME_RZ
-gl_CONDITIONAL([GL_COND_OBJ_TIME_RZ],
-               [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1])
 gl_TIME_MODULE_INDICATOR([time_rz])
 
 Makefile.am:
-if GL_COND_OBJ_TIME_RZ
 lib_SOURCES += time_rz.c
-endif
 
 Include:
 <time.h>

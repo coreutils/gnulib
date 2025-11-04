@@ -27,7 +27,10 @@
 /* Specification.  */
 #include <time.h>
 
-#if NEED_TIMEZONE_NULL_SUPPORT          /* Android API level >= 35 */
+#include <errno.h>
+
+#if HAVE_TZALLOC
+# if NEED_TIMEZONE_NULL_SUPPORT          /* Android API level >= 35 */
 
 struct tm *
 localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
@@ -48,10 +51,19 @@ mktime_z (timezone_t tz, struct tm *tm)
   else
     return mktime_z (tz, tm);
 }
+# endif
+
+void
+tzfree (timezone_t tz)
+# undef tzfree
+{
+  int err = errno;
+  tzfree (tz);
+  errno = err;
+}
 
 #else
 
-# include <errno.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <string.h>
@@ -212,9 +224,7 @@ set_tz (timezone_t tz)
         return old_tz;
       if (! change_env (tz))
         {
-          int saved_errno = errno;
           tzfree (old_tz);
-          errno = saved_errno;
           return NULL;
         }
       return old_tz;
