@@ -306,12 +306,13 @@ all practical POSIX or C platforms.
 
 @itemize @bullet
 @item
-Clang's @option{-fsanitize=undefined} option causes the program to
-crash if it adds zero to a null pointer -- behavior that is undefined
-in strict C, but which yields a null pointer on all practical porting
-targets and which the Gnulib portability guidelines allow.
+In Clang 19 and earlier, the @option{-fsanitize=undefined} option
+causes the program to crash if it adds zero to a null pointer --
+behavior that is undefined in strict C17 and earlier, but which yields
+a null pointer in C23 and later and on all practical porting targets,
+and which the Gnulib portability guidelines allow.
 
-If you use Clang with @option{-fsanitize=undefined}, you can work
+If you use Clang 19 or earlier with @option{-fsanitize=undefined}, you can work
 around the problem by also using @samp{-fno-sanitize=pointer-overflow},
 although this may also disable some unrelated and useful pointer checks.
 Perhaps someday the Clang developers will fix the infelicity.
