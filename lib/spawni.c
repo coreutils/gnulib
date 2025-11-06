@@ -882,7 +882,8 @@ __spawni (pid_t *pid, const char *file,
   (void) &flags;
 
   /* Generate the new process.  */
-#if HAVE_VFORK
+  /* Use of vfork() on Solaris/SPARC crashes; avoid it there.  */
+#if HAVE_VFORK && !(defined __sun && defined __sparc)
   if ((flags & POSIX_SPAWN_USEVFORK) != 0
       /* If no major work is done, allow using vfork.  Note that we
          might perform the path searching.  But this would be done by
