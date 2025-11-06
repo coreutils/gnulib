@@ -869,11 +869,6 @@ __spawni (pid_t *pid, const char *file,
           const posix_spawnattr_t *attrp, const char *const argv[],
           const char *const envp[], int use_path)
 {
-  pid_t new_pid;
-  char *path, *p, *name;
-  size_t len;
-  size_t pathlen;
-
   /* Do this once.  */
   short int flags = attrp == NULL ? 0 : attrp->_flags;
 
@@ -881,7 +876,45 @@ __spawni (pid_t *pid, const char *file,
        "variable 'flags' might be clobbered by 'longjmp' or 'vfork'"  */
   (void) &flags;
 
+  use_path = use_path && strchr (file, '/') == NULL;
+
+  /* Prepare a stack-allocated copy of $PATH and FILE, for iterating through
+     $PATH.  We do this already in the parent, because on Linux/SPARC,
+     Linux/ppc64, Linux/ppc64le, and Solaris/SPARC, it causes a SIGBUS or
+     SIGSEGV when done in the child process after vfork() and when $PATH is long
+     (ca. 4 KB or so).  */
+  char *path, *name;
+  if (use_path)
+    {
+      /* We have to search for FILE on the path.  */
+      path = getenv ("PATH");
+      if (path == NULL)
+        {
+#if HAVE_CONFSTR
+          /* There is no 'PATH' in the environment.
+             The default search path is the current directory
+             followed by the path 'confstr' returns for '_CS_PATH'.  */
+          size_t len = confstr (_CS_PATH, (char *) NULL, 0);
+          path = (char *) alloca (1 + len);
+          path[0] = ':';
+          (void) confstr (_CS_PATH, path + 1, len);
+#else
+          /* Pretend that the PATH contains only the current directory.  */
+          path = "";
+#endif
+        }
+
+      size_t len = strlen (file) + 1;
+      size_t pathlen = strlen (path);
+      name = alloca (pathlen + len + 1);
+      /* Copy the file name at the top.  */
+      name = (char *) memcpy (name + pathlen + 1, file, len);
+      /* And add the slash.  */
+      *--name = '/';
+    }
+
   /* Generate the new process.  */
+  pid_t new_pid;
 #if HAVE_VFORK
   if ((flags & POSIX_SPAWN_USEVFORK) != 0
       /* If no major work is done, allow using vfork.  Note that we
@@ -1028,42 +1061,16 @@ __spawni (pid_t *pid, const char *file,
         }
     }
 
-  if (! use_path || strchr (file, '/') != NULL)
+  if (! use_path)
     {
-      /* The FILE parameter is actually a path.  */
+      /* No need to iterate through $PATH.  Use FILE directly.  */
       execve (file, (char * const *) argv, (char * const *) envp);
 
       /* Oh, oh.  'execve' returns.  This is bad.  */
       _exit (SPAWN_ERROR);
     }
 
-  /* We have to search for FILE on the path.  */
-  path = getenv ("PATH");
-  if (path == NULL)
-    {
-#if HAVE_CONFSTR
-      /* There is no 'PATH' in the environment.
-         The default search path is the current directory
-         followed by the path 'confstr' returns for '_CS_PATH'.  */
-      len = confstr (_CS_PATH, (char *) NULL, 0);
-      path = (char *) alloca (1 + len);
-      path[0] = ':';
-      (void) confstr (_CS_PATH, path + 1, len);
-#else
-      /* Pretend that the PATH contains only the current directory.  */
-      path = "";
-#endif
-    }
-
-  len = strlen (file) + 1;
-  pathlen = strlen (path);
-  name = alloca (pathlen + len + 1);
-  /* Copy the file name at the top.  */
-  name = (char *) memcpy (name + pathlen + 1, file, len);
-  /* And add the slash.  */
-  *--name = '/';
-
-  p = path;
+  char *p = path;
   do
     {
       char *startp;
