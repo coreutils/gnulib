@@ -23,10 +23,14 @@ stdint-h
 
 configure.ac:
 gl_FUNC_ACL
+gl_CONDITIONAL([GL_COND_OBJ_ACL_ENTRIES], [test $NEED_ACL_ENTRIES = 1])
 
 Makefile.am:
 lib_SOURCES += acl-errno-valid.c acl-internal.c \
   get-permissions.c set-permissions.c
+if GL_COND_OBJ_ACL_ENTRIES
+lib_SOURCES += acl_entries.c
+endif
 
 Include:
 "acl.h"

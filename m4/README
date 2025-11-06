@@ -22,7 +22,12 @@ that makes it easy.
 
   AC_DEFUN([gl_FUNC_FOO],
   [
-    AC_REPLACE_FUNCS(foo)
+    AC_CHECK_FUNCS([foo])
+    if test $ac_cv_func_foo = yes; then
+      HAVE_FOO=1
+    else
+      HAVE_FOO=0
+    fi
     if test $ac_cv_func_foo = no; then
       gl_PREREQ_FOO
     fi
