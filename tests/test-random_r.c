@@ -31,7 +31,7 @@ SIGNATURE_CHECK (random_r, int, (struct random_data *, int32_t *));
 
 #include "macros.h"
 
-/* Note: This test crashes on glibc/SPARC systems.
+/* Note: This test crashes on glibc/SPARC systems with glibc < 2.41.
    Reported at <https://sourceware.org/PR30584>.  */
 
 static int
