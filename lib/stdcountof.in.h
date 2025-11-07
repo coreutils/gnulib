@@ -47,8 +47,9 @@
    Attempts to produce an error if A is a pointer, e.g. in
      void func (int a[10]) { ... }
  */
-#define countof(a) \
-  ((size_t) (sizeof (a) / sizeof ((a)[0]) + 0 * _gl_verify_is_array (a)))
+#define countof(...) \
+  ((size_t) (sizeof (__VA_ARGS__) / sizeof (__VA_ARGS__)[0] \
+             + 0 * _gl_verify_is_array (__VA_ARGS__)))
 
 /* Attempts to verify that A is an array.  */
 #if defined __cplusplus
@@ -75,8 +76,8 @@ template <typename T, size_t N>
 /* String literals.  */
 template <typename T, size_t N>
   struct _gl_array_type_test<T const (&)[N]> { static const int is_array = 1; };
-#   define _gl_verify_is_array(a) \
-     sizeof (_gl_verify_type<_gl_array_type_test<decltype(a)>::is_array>)
+#   define _gl_verify_is_array(...) \
+     sizeof (_gl_verify_type<_gl_array_type_test<decltype(__VA_ARGS__)>::is_array>)
 #  else
   /* Use template argument deduction.
      Use sizeof to get a constant expression from an unknown type.
@@ -93,22 +94,22 @@ template <typename T, size_t N>
 /* The T& parameter is essential here: it prevents decay (array-to-pointer
    conversion).  */
 template <typename T> _gl_array_type_test<T> _gl_array_type_test_helper(T&);
-#   define _gl_verify_is_array(a) \
-     sizeof (_gl_verify_type<(sizeof (_gl_array_type_test_helper(a)) < sizeof (double) ? 1 : -1)>)
+#   define _gl_verify_is_array(...) \
+     sizeof (_gl_verify_type<(sizeof (_gl_array_type_test_helper(__VA_ARGS__)) < sizeof (double) ? 1 : -1)>)
 #  endif
 # else
 /* The compiler does not have the necessary functionality.  */
-#  define _gl_verify_is_array(a) 0
+#  define _gl_verify_is_array(...) 0
 # endif
 #else
 /* In C, we can use typeof and __builtin_types_compatible_p.  */
 /* Work around clang bug <https://github.com/llvm/llvm-project/issues/143284>.  */
 # if _GL_GNUC_PREREQ (3, 1) && ! defined __clang__ /* || defined __clang__ */
-#  define _gl_verify_is_array(a) \
-    sizeof (struct { unsigned int _gl_verify_error_if_negative : __builtin_types_compatible_p (typeof (a), typeof (&*(a))) ? -1 : 1; })
+#  define _gl_verify_is_array(...) \
+    sizeof (struct { unsigned int _gl_verify_error_if_negative : __builtin_types_compatible_p (typeof (__VA_ARGS__), typeof (&*(__VA_ARGS__))) ? -1 : 1; })
 # else
 /* The compiler does not have the necessary built-ins.  */
-#  define _gl_verify_is_array(a) 0
+#  define _gl_verify_is_array(...) 0
 # endif
 #endif
 

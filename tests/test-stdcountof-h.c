@@ -80,6 +80,7 @@ test_func (int parameter[3])
 
   {
     extern int a, b, c;
+    ASSERT (countof ((int[]) { a, b, c }) == 3);
     ASSERT (countof (((int[]) { a, b, c })) == 3);
   }
 
