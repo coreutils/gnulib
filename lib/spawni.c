@@ -917,10 +917,7 @@ __spawni (pid_t *pid, const char *file,
   pid_t new_pid;
 #if HAVE_VFORK
   if ((flags & POSIX_SPAWN_USEVFORK) != 0
-      /* If no major work is done, allow using vfork.  Note that we
-         might perform the path searching.  But this would be done by
-         a call to execvp(), too, and such a call must be OK according
-         to POSIX.  */
+      /* If no major work is done, allow using vfork.  */
       || ((flags & (POSIX_SPAWN_SETSIGMASK | POSIX_SPAWN_SETSIGDEF
                     | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER
                     | POSIX_SPAWN_SETPGROUP | POSIX_SPAWN_RESETIDS)) == 0
