@@ -25,6 +25,16 @@ instead of failing and setting @code{errno} to @code{ENOTDIR}, on some
 platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=32570
 GNU/Hurd with glibc 2.41.
+@item
+@code{renameat2 (ATFDCWD, "dir", AT_FDCWD, "new/" ...)} fails with
+@code{errno} set to @code{ENOENT}, on some platforms:
+@c https://sourceware.org/PR33607
+GNU/Hurd with glibc 2.42.
+@item
+@code{renameat2 (ATFDCWD, "dir/", AT_FDCWD, "new" ...)} fails with
+@code{errno} set to @code{ENOTDIR}, on some platforms:
+@c https://sourceware.org/PR33608
+GNU/Hurd with glibc 2.42.
 @end itemize
 
 @mindex renameatu

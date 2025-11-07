@@ -114,7 +114,19 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
   err = errno;
 #endif
 
-  if (! (ret_val < 0 && (err == EINVAL || err == ENOSYS || err == ENOTSUP)))
+
+  if (! (ret_val < 0 && (err == EINVAL || err == ENOSYS || err == ENOTSUP
+#if RENAME_TRAILING_SLASH_SOURCE_BUG
+                         || ! (err == ENOTDIR
+                               && ! (0 < strlen (src)
+                                     && src[strlen (src) - 1] == '/'))
+#endif
+#if RENAME_TRAILING_SLASH_DEST_BUG
+                         || ! (err == ENOENT
+                               && ! (0 < strlen (dst)
+                                     && dst[strlen (dst) - 1] == '/'))
+#endif
+                        )))
     return ret_val;
 
 #if HAVE_RENAMEAT
