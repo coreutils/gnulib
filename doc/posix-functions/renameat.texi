@@ -30,6 +30,21 @@ Solaris 11.4.
 This function ignores trailing slashes on symlinks on some platforms,
 such that @code{renameat(fd,"link/",fd,"new")} corrupts @file{link}:
 Solaris 9.
+@item
+@code{renameat (AT_FDCWD, "file", AT_FDCWD, "new/")} succeeds instead of
+failing and setting @code{errno} to @code{ENOTDIR}, on some platforms:
+@c https://sourceware.org/PR32570
+GNU/Hurd with glibc 2.41.
+@item
+@code{renameat (ATFDCWD, "dir", AT_FDCWD, "new/")} fails with
+@code{errno} set to @code{ENOENT}, on some platforms:
+@c https://sourceware.org/PR33607
+GNU/Hurd with glibc 2.42.
+@item
+@code{renameat (ATFDCWD, "dir/", AT_FDCWD, "new")} fails with
+@code{errno} set to @code{ENOTDIR}, on some platforms:
+@c https://sourceware.org/PR33608
+GNU/Hurd with glibc 2.42.
 @end itemize
 
 Portability problems not fixed by Gnulib:
