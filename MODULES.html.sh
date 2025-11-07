@@ -1658,7 +1658,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module stdlib
+  func_module stdlib-h
   func_module strtol
   func_module strtoul
   func_module memcmp
@@ -1734,7 +1734,6 @@ func_all_modules ()
 
   func_begin_table
   func_module calloc-gnu
-  func_module eealloc
   func_module free-posix
   func_module malloc-gnu
   func_module memalign
@@ -1827,7 +1826,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module putenv
+  func_module putenv-gnu
   func_module secure_getenv
   func_module setenv
   func_module unsetenv
@@ -2057,7 +2056,6 @@ func_all_modules ()
   func_module crypto/gc-md4
   func_module crypto/gc-md5
   func_module crypto/gc-pbkdf2
-  func_module crypto/gc-pbkdf2-sha1
   func_module crypto/gc-random
   func_module crypto/gc-rijndael
   func_module crypto/gc-sha1
@@ -2141,17 +2139,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module stdarg
-  func_end_table
-
-  element="Boolean type and values <stdbool.h>"
-  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
-  func_section_wrap isoc_sup_stdbool
-  func_wrap H3
-  func_echo "$element"
-
-  func_begin_table
-  func_module stdbool
+  func_module stdarg-h
   func_end_table
 
   element="Basic types <stddef.h>"
@@ -2161,7 +2149,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module stddef
+  func_module stddef-h
   func_end_table
 
   element="Integer types and values <stdint.h>"
@@ -2172,7 +2160,7 @@ func_all_modules ()
 
   func_begin_table
   func_module size_max
-  func_module stdint
+  func_module stdint-h
   func_end_table
 
   element="Input/output <stdio.h>"
@@ -2182,7 +2170,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module stdio
+  func_module stdio-h
   func_module snprintf
   func_module vsnprintf
   func_end_table
@@ -2207,7 +2195,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module ctype
+  func_module ctype-h
   func_end_table
 
   element="Functions for greatest-width integer types <inttypes.h>"
@@ -2219,7 +2207,8 @@ func_all_modules ()
   func_begin_table
   func_module imaxabs
   func_module imaxdiv
-  func_module inttypes
+  func_module inttypes-h
+  func_module inttypes-h-incomplete
   func_module strtoimax
   func_module strtoumax
   func_end_table
@@ -2241,7 +2230,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module wchar
+  func_module wchar-h
   func_module btowc
   func_module wctob
   func_module mbsinit
@@ -2269,7 +2258,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module float
+  func_module float-h
   func_end_table
 
   element="Mathematics <math.h>"
@@ -2328,7 +2317,7 @@ func_all_modules ()
   func_module log1p
   func_module logb
   func_module logl
-  func_module math
+  func_module math-h
   func_module mathl
   func_module modf
   func_module nextafter
@@ -2430,7 +2419,6 @@ func_all_modules ()
   func_begin_table
   func_module noreturn
   func_module std-gnu11
-  func_module stdalign
   func_end_table
 
   element="Support for standard extensions to ISO C 11"
@@ -2441,11 +2429,12 @@ func_all_modules ()
   func_begin_table
   func_module attribute
   func_module builtin-expect
+  func_module fenv-h
   func_module ieee754-h
   func_module limits-h
   func_end_table
 
-  element="Support for systems lacking draft ISO C 23"
+  element="Support for systems lacking ISO C 23"
   func_section_wrap c23_ext
   func_wrap H2
   func_echo "$element"
@@ -2460,7 +2449,7 @@ func_all_modules ()
   func_module alignasof
   func_module nullptr
   func_module std-gnu23
-  func_module stdckdint
+  func_module stdckdint-h
   func_end_table
 
   element="Memory management functions <stdlib.h>"
@@ -2543,13 +2532,13 @@ func_all_modules ()
   func_module chownat
   func_module close
   func_module connect
-  func_module dirent
+  func_module dirent-h
   func_module dprintf
   func_module dprintf-posix
   func_module dup2
   func_module duplocale
   func_module environ
-  func_module errno
+  func_module errno-h
   func_module execl
   func_module execle
   func_module execlp
@@ -2594,11 +2583,11 @@ func_all_modules ()
   func_module inet_pton
   func_module ioctl
   func_module isblank
-  func_module langinfo
+  func_module langinfo-h
   func_module link
   func_module linkat
   func_module listen
-  func_module locale
+  func_module locale-h
   func_module lseek
   func_module lstat
   func_module malloc-posix
@@ -2608,9 +2597,9 @@ func_all_modules ()
   func_module mkfifo
   func_module mknod
   func_module mkstemp
-  func_module net_if
-  func_module netdb
-  func_module netinet_in
+  func_module net_if-h
+  func_module netdb-h
+  func_module netinet_in-h
   func_module nl_langinfo
   func_module open
   func_module perror
@@ -2651,7 +2640,7 @@ func_all_modules ()
   func_module recvfrom
   func_module remove
   func_module scandir
-  func_module sched
+  func_module sched-h
   func_module select
   func_module send
   func_module sendto
@@ -2662,12 +2651,12 @@ func_all_modules ()
   func_module sleep
   func_module snprintf-posix
   func_module socket
-  func_module spawn
+  func_module spawn-h
   func_module sprintf-posix
   func_module stat
   func_module strdup-posix
-  func_module string
-  func_module strings
+  func_module string-h
+  func_module strings-h
   func_module tempname
   func_module time
   func_module time_r
@@ -2679,26 +2668,26 @@ func_all_modules ()
   func_module rename
   func_module renameat
   func_module rmdir
-  func_module search
+  func_module search-h
   func_module sigaction
   func_module sigprocmask
   func_module socklen
   func_module ssize_t
   func_module strptime
   func_module strtok_r
-  func_module sys_select
-  func_module sys_socket
-  func_module sys_stat
-  func_module sys_time
-  func_module sys_times
-  func_module sys_uio
-  func_module sys_utsname
-  func_module sys_wait
+  func_module sys_select-h
+  func_module sys_socket-h
+  func_module sys_stat-h
+  func_module sys_time-h
+  func_module sys_times-h
+  func_module sys_uio-h
+  func_module sys_utsname-h
+  func_module sys_wait-h
   func_module truncate
   func_module tsearch
   func_module ttyname_r
   func_module uname
-  func_module unistd
+  func_module unistd-h
   func_module unlink
   func_module unlockpt
   func_module utime
@@ -2849,8 +2838,8 @@ func_all_modules ()
   func_module stat-time
   func_module symlink
   func_module symlinkat
-  func_module sys_file
-  func_module sys_ioctl
+  func_module sys_file-h
+  func_module sys_ioctl-h
   func_module tmpdir
   func_module unlinkdir
   func_module utimecmp
@@ -3030,8 +3019,6 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module termcap
-  func_module termcap-h
   func_module terminfo
   func_module terminfo-h
   func_end_table
@@ -3091,7 +3078,7 @@ func_all_modules ()
   func_begin_table
   func_module libunistring
   func_module libunistring-optional
-  func_module unitypes
+  func_module unitypes-h
   func_module ucs4-utf8
   func_module ucs4-utf16
   func_module utf8-ucs4-unsafe
@@ -3676,15 +3663,15 @@ func_all_modules ()
   func_module posixver
   func_module progname
   func_module ptsname_r
-  func_module pty
+  func_module pty-h
   func_module quotearg
   func_module quote
   func_module readutmp
   func_module random_r
   func_module selinux-h
   func_module selinux-at
-  func_module sysexits
-  func_module sys_random
+  func_module sysexits-h
+  func_module sys_random-h
   func_module u64
   func_module verror
   func_end_table
@@ -3754,7 +3741,6 @@ func_all_modules ()
   func_module gnupload
   func_module maintainer-makefile
   func_module mktempd
-  func_module non-recursive-gnulib-prefix-hack
   func_module readme-release
   func_module test-framework-sh
   func_module update-copyright
@@ -3774,7 +3760,6 @@ func_all_modules ()
   func_module nocrash
   func_module perl
   func_module posix-shell
-  func_module uptime
   func_end_table
 }
 
