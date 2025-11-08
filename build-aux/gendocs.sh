@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2025-06-09.19
+scriptversion=2025-11-08.12
 
 # Copyright 2003-2025 Free Software Foundation, Inc.
 #
@@ -346,7 +346,8 @@ html_split()
   split_html_dir=$PACKAGE.html
   (
     cd ${split_html_dir} || exit 1
-    ln -sf ${PACKAGE}.html index.html
+    test -f index.html || test ! -f ${PACKAGE}.html ||
+      ln -s ${PACKAGE}.html index.html
     tar -czf "$abs_outdir/${PACKAGE}.html_$1.tar.gz" -- *.html
   )
   eval html_$1_tgz_size=`calcsize "$outdir/${PACKAGE}.html_$1.tar.gz"`
