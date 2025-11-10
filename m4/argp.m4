@@ -1,5 +1,5 @@
 # argp.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2003-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,11 +12,14 @@ AC_DEFUN([gl_ARGP],
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  dnl Rename argp_parse to another symbol, so that clang's ASAN does not
-  dnl intercept it.
-  dnl See <https://lists.gnu.org/archive/html/bug-gnulib/2023-12/msg00035.html>.
-  AC_DEFINE([argp_parse], [rpl_argp_parse],
-    [Define to the name of argp_parse outside libc.])
+  AC_CHECK_FUNCS_ONCE([argp_parse])
+  if test $ac_cv_func_argp_parse != no; then
+    dnl Rename argp_parse to another symbol, so that clang's ASAN does not
+    dnl intercept it. See
+    dnl <https://lists.gnu.org/archive/html/bug-gnulib/2023-12/msg00035.html>.
+    AC_DEFINE([argp_parse], [rpl_argp_parse],
+      [Define to the name of argp_parse outside libc.])
+  fi
 
   AC_CHECK_DECLS([program_invocation_name],
     [],
