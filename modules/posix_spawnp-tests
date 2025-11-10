@@ -4,6 +4,7 @@ tests/test-posix_spawn-dup2-stdout.in.sh
 tests/test-posix_spawn-dup2-stdin.c
 tests/test-posix_spawn-dup2-stdin.in.sh
 tests/test-posix_spawnp-script.c
+tests/test-posix_spawnp-vfork.c
 tests/executable-script
 tests/executable-script.sh
 tests/executable-shell-script
@@ -35,11 +36,13 @@ Makefile.am:
 TESTS += \
   test-posix_spawn-dup2-stdout \
   test-posix_spawn-dup2-stdin \
-  test-posix_spawnp-script
+  test-posix_spawnp-script \
+  test-posix_spawnp-vfork
 check_PROGRAMS += \
   test-posix_spawn-dup2-stdout \
   test-posix_spawn-dup2-stdin \
-  test-posix_spawnp-script
+  test-posix_spawnp-script \
+  test-posix_spawnp-vfork
 
 BUILT_SOURCES += test-posix_spawn-dup2-stdout.sh
 test-posix_spawn-dup2-stdout.sh: test-posix_spawn-dup2-stdout.in.sh
