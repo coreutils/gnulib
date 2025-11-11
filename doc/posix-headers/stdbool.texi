@@ -34,8 +34,12 @@ Portability problems not fixed by Gnulib:
 the program is intended to be compiled by a C++ compiler.
 (With the advent of C23, @samp{_Bool} is obsolescent anyway.)
 @item
-You cannot assume that @code{_Bool} is a typedef; it might be a macro.
+You cannot assume that @code{_Bool} is a keyword or a typedef;
+@c In ISO C 99 § 6.4.1.(1) it is listed as a keyword.
+@c Older released of Mac OS X and FreeBSD define it as a typedef.
+it might be a macro.
 For example, C23 allows @code{_Bool} to be a macro.
+@c See ISO C 23 § 6.4.1.(3) footnote 63.
 @item
 Bit-fields of type @samp{bool} are not supported.  Portable code
 should use @samp{unsigned int foo : 1;} rather than @samp{bool foo : 1;}.
