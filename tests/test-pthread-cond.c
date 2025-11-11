@@ -204,11 +204,11 @@ test_pthread_cond_timedwait (void)
                           pthread_cond_timedwait_routine, &skipped)
           == 0);
 
-  /* Sleep for 2 seconds.  */
+  /* Sleep for 3 seconds.  */
   {
     struct timespec remaining;
 
-    remaining.tv_sec = 2;
+    remaining.tv_sec = 3;
     remaining.tv_nsec = 0;
 
     do
