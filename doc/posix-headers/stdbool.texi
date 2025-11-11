@@ -36,7 +36,7 @@ the program is intended to be compiled by a C++ compiler.
 @item
 You cannot assume that @code{_Bool} is a keyword or a typedef;
 @c In ISO C 99 § 6.4.1.(1) it is listed as a keyword.
-@c Older released of Mac OS X and FreeBSD define it as a typedef.
+@c Older releases of Mac OS X and FreeBSD define it as a typedef.
 it might be a macro.
 For example, C23 allows @code{_Bool} to be a macro.
 @c See ISO C 23 § 6.4.1.(3) footnote 63.
