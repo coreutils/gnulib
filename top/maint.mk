@@ -160,6 +160,9 @@ news-check-lines-spec ?= 1,10
 # An ERE quoted for the shell, for matching a version+date line prefix.
 news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
 
+# Like news-check-regexp, but as an unquoted BRE for .prev-version.
+news-check-regexp-prev ?= ^\*.* $(PREV_VERSION_REGEXP) ([0-9-]*)
+
 # Prevent programs like 'sort' from considering distinct strings to be equal.
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.
 export LC_ALL = C
@@ -1257,9 +1260,9 @@ sc_const_long_option:
 	halt='add "const" to the above declarations'			\
 	  $(_sc_search_regexp)
 
+NEWS_file ?= NEWS
 NEWS_hash =								\
-  $$($(SED) -n '/^\*.* $(PREV_VERSION_REGEXP) ([0-9-]*)/,$$p'		\
-       $(srcdir)/NEWS							\
+  $$($(SED) -n '/$(news-check-regexp-prev)/,$$p' $(srcdir)/$(NEWS_file)	\
      | perl -0777 -pe							\
 	's/^Copyright.+?Free\sSoftware\sFoundation,\sInc\.\n//ms'	\
      | md5sum -								\
@@ -1267,14 +1270,14 @@ NEWS_hash =								\
 
 # Ensure that we don't accidentally insert an entry into an old NEWS block.
 sc_immutable_NEWS:
-	@if test -f $(srcdir)/NEWS; then				\
+	@if test -f $(srcdir)/$(NEWS_file); then			\
 	  test "$(NEWS_hash)" = '$(old_NEWS_hash)' && : ||		\
 	    { echo '$(ME): you have modified old NEWS' 1>&2; exit 1; };	\
 	fi
 
 # Update the hash stored above.  Do this after each release and
 # for any corrections to old entries.
-update-NEWS-hash: NEWS
+update-NEWS-hash: $(NEWS_file)
 	$(AM_V_GEN)perl -pi						\
 	  -e 's/^(old_NEWS_hash[ \t]+:?=[ \t]+).*/$${1}'"$(NEWS_hash)/"	\
 	  $(srcdir)/cfg.mk
@@ -1301,12 +1304,12 @@ sc_makefile_at_at_check:
 	    $$($(VC_LIST_EXCEPT) | $(GREP) -E '(^|/)(Makefile\.am|[^/]+\.mk)$$') \
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
-news-check: NEWS
+news-check: $(NEWS_file)
 	$(AM_V_GEN)if $(SED) -n $(news-check-lines-spec)p $<		\
 	    | $(GREP) -E $(news-check-regexp) >/dev/null; then		\
 	  :;								\
 	else								\
-	  echo 'NEWS: $$(news-check-regexp) failed to match' 1>&2;	\
+	  echo '$<: $$(news-check-regexp) failed to match' 1>&2;	\
 	  exit 1;							\
 	fi
 
@@ -1567,7 +1570,7 @@ announce_gen_args ?=
 
 announcement_Cc_ ?= $(announcement_Cc_$(release-type))
 announcement_mail_headers_ ?= $(announcement_mail_headers_$(release-type))
-announcement: NEWS ChangeLog $(rel-files)
+announcement: $(NEWS_file) ChangeLog $(rel-files)
 # Not $(AM_V_GEN) since the output of this command serves as
 # announcement message: it would start with " GEN announcement".
 	$(AM_V_at)$(srcdir)/$(_build-aux)/announce-gen			\
@@ -1582,18 +1585,22 @@ announcement: NEWS ChangeLog $(rel-files)
 	    $$(test -n "$(gpg_keyring_url)" &&				\
 	       echo --gpg-keyring-url="$(gpg_keyring_url)")		\
 	    --srcdir=$(srcdir)						\
-	    --news=$(srcdir)/NEWS					\
+	    --news=$(srcdir)/$(NEWS_file)				\
 	    --bootstrap-tools=$(bootstrap-tools)			\
 	    "$$(case ,$(bootstrap-tools), in (*,gnulib,*)		\
 	       echo --gnulib-version=$(gnulib-version);; esac)"		\
 	    $(addprefix --url-dir=, $(url_dir_list))			\
 	    $(announce_gen_args)
 
+release_commit_args ?= \
+  --news=$(NEWS_file) \
+  --stub='$(gl_noteworthy_news_)' \
+  --stub-lines='$(news-check-lines-spec)'
 .PHONY: release-commit
 release-commit:
 	$(AM_V_GEN)cd $(srcdir)				\
 	  && $(_build-aux)/do-release-commit-and-tag	\
-	       -C $(abs_builddir) $(RELEASE)
+	       -C $(abs_builddir) $(release_commit_args) $(RELEASE)
 
 ## ---------------- ##
 ## Updating files.  ##
@@ -1621,7 +1628,7 @@ upload:
 
 define emit-commit-log
   printf '%s\n' 'maint: post-release administrivia' ''			\
-    '* NEWS: Add header line for next release.'				\
+    '* $(NEWS_file): Add header line for next release.'			\
     '* .prev-version: Record previous version.'				\
     '* cfg.mk (old_NEWS_hash): Auto-update.'
 endef
@@ -1690,7 +1697,8 @@ release:
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep
 
-gl_noteworthy_news_ = * Noteworthy changes in release ?.? (????-??-??) [?]
+# Keep consistent with news-check-regexp and news-check-regexp-prev.
+gl_noteworthy_news_ ?= * Noteworthy changes in release ?.? (????-??-??) [?]
 .PHONY: release-prep
 release-prep:
 	$(AM_V_GEN)$(MAKE) --no-print-directory -s announcement \
@@ -1701,9 +1709,15 @@ release-prep:
 	fi
 	$(AM_V_at)echo $(VERSION) > $(prev_version_file)
 	$(AM_V_at)$(MAKE) update-NEWS-hash
-	$(AM_V_at)perl -pi						\
-	  -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"'	\
-	  $(srcdir)/NEWS
+	$(AM_V_at)n=$$($(SED) -n -E				\
+	  '$(news-check-lines-spec){/'$(news-check-regexp)'/=}'	\
+	  $(srcdir)/$(NEWS_file)); [ -n "$$n" ]			\
+	  && env gl_n=$$n gl_s='$(gl_noteworthy_news_)'		\
+	         perl -pi -e '$$. == $$ENV{gl_n} '		\
+	                  -e '  and print "$$ENV{gl_s}\n\n\n"'	\
+                      $(srcdir)/$(NEWS_file)			\
+	  || { printf '$(NEWS_file): %s failed to match\n'	\
+	              '$$(news-check-regexp)' 1>&2; exit 1; }
 	$(AM_V_at)msg=$$($(emit-commit-log)) || exit 1;		\
 	cd $(srcdir) && $(VC) commit -m "$$msg" -a
 
