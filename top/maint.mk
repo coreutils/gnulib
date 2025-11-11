@@ -1275,7 +1275,8 @@ sc_immutable_NEWS:
 # Update the hash stored above.  Do this after each release and
 # for any corrections to old entries.
 update-NEWS-hash: NEWS
-	perl -pi -e 's/^(old_NEWS_hash[ \t]+:?=[ \t]+).*/$${1}'"$(NEWS_hash)/" \
+	$(AM_V_GEN)perl -pi						\
+	  -e 's/^(old_NEWS_hash[ \t]+:?=[ \t]+).*/$${1}'"$(NEWS_hash)/"	\
 	  $(srcdir)/cfg.mk
 
 # Ensure that we use only the standard $(VAR) notation,
@@ -1531,7 +1532,7 @@ gnulib-version ?= \
      fi)
 bootstrap-tools ?= autoconf,automake,gnulib
 
-gpgv = $$(gpgv2 --version >/dev/null && echo gpgv2 || echo gpgv)
+gpgv = $$(command -v gpgv2 >/dev/null && echo gpgv2 || echo gpgv)
 # If it's not already specified, derive the GPG key ID from
 # the signed tag we've just applied to mark this release.
 gpg_key_ID ?=								\
