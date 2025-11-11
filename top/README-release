@@ -28,7 +28,7 @@ Here are most of the steps we (maintainers) follow when making a release.
     c=check ve=check-very-expensive; git grep -q "^$ve:\$" && c=$ve
     make $c syntax-check distcheck
 
-* To (i) set the date, version number, and release TYPE on line 3 of
+* To (i) set the date, version number, and release TYPE near the top of
   NEWS, (ii) commit that, and (iii) tag the release, run
 
     # "TYPE" must be stable, beta or alpha
