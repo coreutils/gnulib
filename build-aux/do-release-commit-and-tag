@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2025-06-10.02 # UTC
+VERSION=2025-11-12.12 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -42,12 +42,22 @@ directory.
 Requirements:
 - you use git for version-control
 - a version-controlled .prev-version file
-- a NEWS file, with line 3 identical to this:
+- a NEWS file, by default with line 3 identical to this:
 $noteworthy_stub
 
 Options:
   --branch=BRANCH     set release branch (default: $branch)
   -C, --builddir=DIR  location of (configured) Makefile (default: $builddir)
+
+  --news=FILE         NEWS file name (default: $news)
+  --stub=STR          release heading placeholder (default:
+                      $noteworthy_stub)
+  --stub-version=STR  release version placeholder (default: $ver_stub)
+  --stub-date=STR     release date placeholder (default: $date_stub)
+  --stub-type=STR     release type placeholder (default: $type_stub)
+  --stub-lines=RANGE  sed line address range to search for heading
+                      (default: $stub_range)
+
   --help              print this help, then exit
   --version           print version number, then exit
 
@@ -80,11 +90,16 @@ EOF
 
 # Constants.
 noteworthy='* Noteworthy changes in release'
-noteworthy_stub="$noteworthy ?.? (????-??-??) [?]"
 
 # Variables.
 branch=$(git branch | sed -ne '/^\* /{s///;p;q;}')
 builddir=.
+news=NEWS
+ver_stub='?.?'
+date_stub='(????-??-??)'
+type_stub='[?]'
+noteworthy_stub="$noteworthy $ver_stub $date_stub $type_stub"
+stub_range=3
 
 while test $# != 0
 do
@@ -102,6 +117,12 @@ do
     --help|--version) ${1#--};;
     --branch) shift; branch=$1; shift ;;
     -C|--builddir) shift; builddir=$1; shift ;;
+    --news) shift; news=$1; shift ;;
+    --stub) shift; noteworthy_stub=$1; shift ;;
+    --stub-version) shift; ver_stub=$1; shift ;;
+    --stub-date) shift; date_stub=$1; shift ;;
+    --stub-type) shift; type_stub=$1; shift ;;
+    --stub-lines) shift; stub_range=$1; shift ;;
     --*) die "unrecognized option: $1";;
     *) break;;
   esac
@@ -150,22 +171,32 @@ Makefile=$builddir/Makefile
 pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' "$Makefile") \
   || die "failed to determine package name from $Makefile"
 
-# Check that line 3 of NEWS is the stub line about to be replaced.
-test "$(sed -n 3p NEWS)" = "$noteworthy_stub" \
-  || die "line 3 of NEWS must be exactly '$noteworthy_stub'"
+# Check that stub about to be replaced is in given NEWS line range.
+stub_line=$(sed -n "${stub_range}p" $news \
+              | env gl_stub="$noteworthy_stub" \
+                    awk '$0 == ENVIRON["gl_stub"] { print NR }')
+test -n "$stub_line" \
+  || die "one of line(s) $stub_range of $news must be exactly '$noteworthy_stub'"
 
 ## --------------- ##
 ## Then, changes.  ##
 ## --------------- ##
 
 # Update NEWS to have today's date, plus desired version number and $type.
-perl -MPOSIX -ni -e 'my $today = strftime "%F", localtime time;' \
- -e 'my ($type, $ver) = qw('"$type $ver"');' \
- -e 'my $pfx = "'"$noteworthy"'";' \
- -e 'print $.==3 ? "$pfx $ver ($today) [$type]\n" : $_' \
-     NEWS || die 'failed to update NEWS'
+env gl_ver=$ver gl_ver_stub="$ver_stub" \
+    gl_type=$type gl_type_stub="$type_stub" \
+    gl_date_stub="$date_stub" gl_line="$stub_line" \
+    perl -MPOSIX -pi \
+         -e 'if ($. == $ENV{gl_line}) {' \
+         -e '  my $today = strftime "%F", localtime time;' \
+         -e '  s/\Q$ENV{gl_ver_stub}/$ENV{gl_ver}/;' \
+         -e '  s/\Q$ENV{gl_date_stub}/($today)/;' \
+         -e '  s/\Q$ENV{gl_type_stub}/[$ENV{gl_type}]/;' \
+         -e '}' \
+         $news \
+    || die 'failed to update NEWS'
 
-printf "version %s\n\n* NEWS: Record release date.\n" "$ver" \
+printf "version %s\n\n* ${news}: Record release date.\n" "$ver" \
     | git commit -F -  -a || die 'git commit failed'
 git tag -s -m "$pkg $ver" v$ver HEAD || die 'git tag failed'
 
