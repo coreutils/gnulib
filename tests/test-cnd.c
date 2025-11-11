@@ -197,11 +197,11 @@ test_cnd_timedwait (void)
   ASSERT (thrd_create (&thread, cnd_timedwait_routine, &skipped)
           == thrd_success);
 
-  /* Sleep for 2 seconds.  */
+  /* Sleep for 3 seconds.  */
   {
     struct timespec remaining;
 
-    remaining.tv_sec = 2;
+    remaining.tv_sec = 3;
     remaining.tv_nsec = 0;
 
     do

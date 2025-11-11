@@ -191,9 +191,9 @@ test_timedcond (void)
   /* Create a separate thread.  */
   thread = gl_thread_create (timedcond_routine, &skipped);
 
-  /* Sleep for 2 seconds.  */
+  /* Sleep for 3 seconds.  */
   {
-    int remaining = 2;
+    int remaining = 3;
 
     do
       {
