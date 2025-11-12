@@ -1,0 +1,25 @@
+Description:
+Determine whether a file is local or remote.
+
+Files:
+lib/file-remote.h
+lib/file-remote.c
+
+Depends-on:
+cygpath
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += file-remote.c
+
+Include:
+"file-remote.h"
+
+Link:
+
+License:
+GPL
+
+Maintainer:
+all
