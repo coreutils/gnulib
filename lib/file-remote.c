@@ -145,7 +145,6 @@ file_is_remote (const char *file)
     case 0x7461636F /* S_MAGIC_OCFS2 */:
     case 0x794C7630 /* S_MAGIC_OVERLAYFS */:
     case 0xAAD7AAEA /* S_MAGIC_PANFS */:
-    case 0x50495045 /* S_MAGIC_PIPEFS */:
     case 0x7C7C6673 /* S_MAGIC_PRL_FS */:
     case 0x0000517B /* S_MAGIC_SMB */:
     case 0xFE534D42 /* S_MAGIC_SMB2 */:
