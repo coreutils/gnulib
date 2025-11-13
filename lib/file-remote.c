@@ -43,8 +43,15 @@
 #elif defined __CYGWIN__                                    /* Cygwin */
 # include "cygpath.h"
 #elif defined __HAIKU__                                     /* Haiku */
+# include <sys/stat.h>
 # include <fs_info.h>
 # include <errno.h>
+#else                                                       /* Unknown OS */
+# if defined SLOW_AND_OVERKILL
+#  include <sys/stat.h>
+#  include "mountlist.h"
+#  include <errno.h>
+# endif
 #endif
 
 #if defined _WIN32 || defined __CYGWIN__                    /* Windows */
@@ -231,16 +238,14 @@ file_is_remote (const char *file)
 #elif defined _WIN32 && !defined __CYGWIN__                 /* Native Windows */
   return windows_file_is_remote (file);
 #elif defined __HAIKU__                                     /* Haiku */
-  /* Documentation:
-     https://www.haiku-os.org/legacy-docs/bebook/TheStorageKit_Functions.html#dev_for_path
-     out-of-date: This function actually sets errno when it fails.  */
-  dev_t device = dev_for_path (file);
-  if (device < 0)
+  struct stat statbuf;
+  if (stat (file, &statbuf) < 0)
     return -1;
+  dev_t device = statbuf.st_dev;
   /* Documentation:
      https://www.haiku-os.org/legacy-docs/bebook/TheStorageKit_Functions.html#fs_stat_dev
      https://www.haiku-os.org/legacy-docs/bebook/TheStorageKit_DefinedTypes.html#fs_info
-     This function too actually sets errno when it fails.  */
+     This function actually sets errno when it fails.  */
   struct fs_info fs;
   if (fs_stat_dev (device, &fs) != B_OK)
     return -1;
@@ -249,8 +254,46 @@ file_is_remote (const char *file)
           || strcmp (fs.fsh_name, "netfs") == 0
           || strcmp (fs.fsh_name, "websearchfs") == 0);
 #else                                                       /* Unknown OS */
+# if defined SLOW_AND_OVERKILL
+  /* This makes many system calls, is therefore slow, and
+     is also not multithread-safe.  */
+  struct stat statbuf;
+  if (stat (file, &statbuf) < 0)
+    return -1;
+  dev_t device = statbuf.st_dev;
+  struct mount_entry *me_list = read_file_system_list (true);
+  if (me_list == NULL)
+    {
+      errno = EIO;
+      return -1;
+    }
+  int result = 0;
+  {
+    struct mount_entry *me;
+    for (me = me_list; me != NULL; )
+      {
+        if (me->me_dev == device)
+          {
+            result = me->me_remote;
+            break;
+          }
+        me = me->me_next;
+      }
+  }
+  {
+    struct mount_entry *me;
+    for (me = me_list; me != NULL; )
+      {
+        struct mount_entry *next = me->me_next;
+        free_mount_entry (me);
+        me = next;
+      }
+  }
+  return result;
+# else
   /* Assume all file systems are local.  */
   return 0;
+# endif
 #endif
 }
 
