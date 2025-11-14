@@ -149,6 +149,12 @@ url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
                      https://ftpmirror.gnu.org/$(PACKAGE),		\
                      https://$(gnu_rel_host)/gnu/$(PACKAGE))
 
+# NEWS.md takes precedence over NEWS.
+# Override this in cfg.mk if you use a different file name.
+ifeq ($(origin NEWS_file),undefined)
+  NEWS_file := NEWS$(and $(wildcard $(srcdir)/NEWS.md),.md)
+endif
+
 # An ERE matching the release date (typically today, but not necessarily).
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
@@ -161,10 +167,10 @@ today = [0-9]{4,}-[0-9][0-9]-[0-9][0-9]
 news-check-lines-spec ?= 1,10
 
 # An ERE quoted for the shell, for matching a version+date line prefix.
-news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
+news-check-regexp ?= '^[\#*].* $(VERSION_REGEXP) \($(today)\)'
 
 # Like news-check-regexp, but as an unquoted BRE for .prev-version.
-news-check-regexp-prev ?= ^\*.* $(PREV_VERSION_REGEXP) ([0-9-]*)
+news-check-regexp-prev ?= ^[\#*].* $(PREV_VERSION_REGEXP) ([0-9-]*)
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.
@@ -1263,7 +1269,6 @@ sc_const_long_option:
 	halt='add "const" to the above declarations'			\
 	  $(_sc_search_regexp)
 
-NEWS_file ?= NEWS
 NEWS_hash =								\
   $$($(SED) -n '/$(news-check-regexp-prev)/,$$p' $(srcdir)/$(NEWS_file)	\
      | perl -0777 -pe							\
@@ -1701,7 +1706,9 @@ release:
 release-prep-hook ?= release-prep
 
 # Keep consistent with news-check-regexp and news-check-regexp-prev.
-gl_noteworthy_news_ ?= * Noteworthy changes in release ?.? (????-??-??) [?]
+gl_noteworthy_news_ ?= \
+  $(if $(filter %.md,$(NEWS_file)),#,*) \
+  Noteworthy changes in release ?.? (????-??-??) [?]
 .PHONY: release-prep
 release-prep:
 	$(AM_V_GEN)$(MAKE) --no-print-directory -s announcement \
@@ -1714,7 +1721,7 @@ release-prep:
 	$(AM_V_at)$(MAKE) update-NEWS-hash
 	$(AM_V_at)n=$$($(SED) -n -E				\
 	  '$(news-check-lines-spec){/'$(news-check-regexp)'/=}'	\
-	  $(srcdir)/$(NEWS_file)); [ -n "$$n" ]			\
+	  $(srcdir)/$(NEWS_file)); test -n "$$n"		\
 	  && env gl_n=$$n gl_s='$(gl_noteworthy_news_)'		\
 	         perl -pi -e '$$. == $$ENV{gl_n} '		\
 	                  -e '  and print "$$ENV{gl_s}\n\n\n"'	\
