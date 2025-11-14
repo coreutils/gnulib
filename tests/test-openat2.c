@@ -94,8 +94,8 @@ do_prepare_symlinks ()
         |- some_file
         |- invalid_link -> some_file/invalid
         |- valid_link -> some_file
-	|- subdir/
-	   |- some_file
+        |- subdir/
+           |- some_file
   */
 
   ASSERT (symlinkat ("/", dfd, "escaping_link") == 0);
@@ -169,10 +169,10 @@ do_test_struct ()
       if (!t->err)
         ASSERT (close (fd) == 0);
       else
-	{
+        {
           ASSERT (errno == t->err);
           ASSERT (fd == -1);
-	}
+        }
     }
 }
 
@@ -310,11 +310,11 @@ do_test_flags (void)
 
       int fd = openat2 (dfd, filename, &t->how, sizeof (struct open_how));
       if (fd < 0 && errno == EOPNOTSUPP)
-	{
-	  /* Skip the testcase if FS does not support the operation (e.g.
-	     valid O_TMPFILE on NFS).  */
-	  continue;
-	}
+        {
+          /* Skip the testcase if FS does not support the operation (e.g.
+             valid O_TMPFILE on NFS).  */
+          continue;
+        }
 
       if (!t->err)
         ASSERT (close (fd) == 0);
@@ -322,7 +322,7 @@ do_test_flags (void)
         {
           ASSERT (errno == t->err);
           ASSERT (fd == -1);
-	}
+        }
     }
 }
 
@@ -348,66 +348,66 @@ do_test_resolve (void)
   /* ESCAPING_LINK links to /tmp, which escapes the temporary test
      directory.  */
   fd = openat2 (dfd,
-		"escaping_link",
-		(&(struct open_how)
+                "escaping_link",
+                (&(struct open_how)
                  {
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* Same as before, ESCAPING_LINK_2 links to ESCAPING_LINK.  */
   fd = openat2 (dfd,
-		"escaping_link_2",
-		(&(struct open_how)
+                "escaping_link_2",
+                (&(struct open_how)
                  {
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* ESCAPING_LINK links to the temporary directory itself (dfd).  */
   fd = openat2 (dfd,
-		"escaping_link",
-		(&(struct open_how)
+                "escaping_link",
+                (&(struct open_how)
                  {
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   /* Although it points to a valid file in same path, the link refers to
      an absolute path.  */
   fd = openat2 (dfd,
-		"invalid_link",
-		(&(struct open_how)
+                "invalid_link",
+                (&(struct open_how)
                  {
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT ((errno == EXDEV) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   fd = openat2 (dfd,
-		"valid_link",
-		(&(struct open_how)
+                "valid_link",
+                (&(struct open_how)
                  {
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT (is_nofollow_error (errno));
   ASSERT (fd == -1);
 
   fd = openat2 (dfd,
-	       "should-not-work",
+               "should-not-work",
                 (&(struct open_how)
                  {
                    .resolve = RESOLVE_IN_ROOT | RESOLVE_NO_SYMLINKS,
                  }),
-	       sizeof (struct open_how));
+               sizeof (struct open_how));
   ASSERT ((errno == ENOENT) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
@@ -426,20 +426,20 @@ do_test_resolve (void)
        and tst-openat2/subdir file descriptors.  */
     fd = openat2 (subdfd,
                   "some_file",
-		  (&(struct open_how)
+                  (&(struct open_how)
                    {
                      .resolve = RESOLVE_IN_ROOT,
                    }),
-		  sizeof (struct open_how));
+                  sizeof (struct open_how));
     ASSERT (close (fd) == 0);
 
     fd = openat2 (dfd,
                   "subdir/some_file",
-		  (&(struct open_how)
+                  (&(struct open_how)
                    {
                      .resolve = RESOLVE_IN_ROOT,
                    }),
-		  sizeof (struct open_how));
+                  sizeof (struct open_how));
     ASSERT (close (fd) == 0);
   }
 }
@@ -450,13 +450,13 @@ do_test_basic ()
   int fd;
 
   fd = openat2 (dfd,
-		"some-file",
-		(&(struct open_how)
+                "some-file",
+                (&(struct open_how)
                  {
                    .flags = O_CREAT|O_RDWR|O_EXCL,
                    .mode = 0666,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT (0 <= fd);
   ASSERT (write (fd, "hello", 5) == 5);
 
@@ -464,13 +464,13 @@ do_test_basic ()
      another file.  This must fail.  */
   {
     int fd2 = openat2 (fd,
-		       "should-not-work",
-		       (&(struct open_how)
+                       "should-not-work",
+                       (&(struct open_how)
                         {
                           .flags = O_CREAT|O_RDWR|O_EXCL,
                           .mode = 0666,
                         }),
-		       sizeof (struct open_how));
+                       sizeof (struct open_how));
     ASSERT (errno == ENOTDIR);
     ASSERT (fd2 == -1);
   }
@@ -488,13 +488,13 @@ do_test_basic ()
   ASSERT (close (dfd) == 0);
 
   fd = openat2 (dfd,
-		"some-file",
-		(&(struct open_how)
+                "some-file",
+                (&(struct open_how)
                  {
                    .flags = O_CREAT|O_RDWR|O_EXCL,
                    .mode = 0666,
                  }),
-		sizeof (struct open_how));
+                sizeof (struct open_how));
   ASSERT (errno == EBADF);
   ASSERT (fd == -1);
 
