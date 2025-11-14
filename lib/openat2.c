@@ -331,8 +331,38 @@ do_openat2 (int *fd, char const *filename,
 
           if (subfd < 0)
             {
-              if (maxlinks <= 0 || errno != ELOOP)
-                return negative_errno ();
+              int openerr = negative_errno ();
+              if (! ((openerr == -ELOOP)
+                     | (!!(subflags & O_DIRECTORY) & (openerr == -ENOTDIR))))
+                return openerr;
+
+              /* Likely a symlink.
+                 Try to read symlink contents into buffer start.
+                 But if the root prefix might be needed,
+                 leave room for it at buffer start.  */
+              idx_t rootlen = f - g;
+              char *slink;
+              ssize_t slinklen;
+              for (idx_t more = rootlen + 1; ; more = bufsize - f + 1)
+                {
+                  bufsize = maybe_grow (buf, bufsize, stackbuf, more, f);
+                  if (bufsize < 0)
+                    return bufsize;
+                  e = *buf + bufsize;
+                  slink = *buf + rootlen;
+                  idx_t slinksize = bufsize - f - rootlen;
+                  slinklen = readlinkat (*fd, &e[-f], slink, slinksize);
+                  if (slinklen < 0)
+                    {
+                      int readlinkerr = negative_errno ();
+                      return readlinkerr == -EINVAL ? -ENOTDIR : readlinkerr;
+                    }
+                  if (slinklen < slinksize)
+                    break;
+                }
+
+              if (maxlinks <= 0)
+                return -ELOOP;
               maxlinks--;
 
               /* A symlink and the symlink loop count is not exhausted.
@@ -358,27 +388,6 @@ do_openat2 (int *fd, char const *filename,
                     return -ELOOP;
                 }
 #endif
-
-              /* Read symlink contents into buffer start.
-                 But if the root prefix might be needed,
-                 leave room for it at buffer start.  */
-              idx_t rootlen = f - g;
-              char *slink;
-              ssize_t slinklen;
-              for (idx_t more = rootlen + 1; ; more = bufsize - f + 1)
-                {
-                  bufsize = maybe_grow (buf, bufsize, stackbuf, more, f);
-                  if (bufsize < 0)
-                    return bufsize;
-                  e = *buf + bufsize;
-                  slink = *buf + rootlen;
-                  idx_t slinksize = bufsize - f - rootlen;
-                  slinklen = readlinkat (*fd, &e[-f], slink, slinksize);
-                  if (slinklen < 0)
-                    return negative_errno ();
-                  if (slinklen < slinksize)
-                    break;
-                }
 
               /* Compute KEPT, the number of trailing bytes in the file
                  name that will be appended to the symlink contents.  */

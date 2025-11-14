@@ -89,6 +89,8 @@ do_prepare_symlinks ()
      Construct a test directory with the following structure:
 
      temp_dir/
+        |- dirlink -> subdir
+        |- dirlinkslash -> subdir/
         |- escaping_link -> /
         |- escaping_link_2 -> escaping_link
         |- some_file
@@ -98,6 +100,8 @@ do_prepare_symlinks ()
            |- some_file
   */
 
+  ASSERT (symlinkat ("subdir", dfd, "dirlink") == 0);
+  ASSERT (symlinkat ("subdir/", dfd, "dirlinkslash") == 0);
   ASSERT (symlinkat ("/", dfd, "escaping_link") == 0);
   ASSERT (symlinkat ("escaping_link", dfd, "escaping_link_2") == 0);
   ASSERT (symlinkat ("some_file/invalid", dfd, "invalid_link") == 0);
@@ -345,6 +349,28 @@ do_test_resolve (void)
 {
   int fd;
 
+  fd = openat2 (dfd,
+                "dirlink",
+                (&(struct open_how)
+                 {
+                   .flags = O_RDONLY | O_DIRECTORY,
+                   .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
+                 }),
+                sizeof (struct open_how));
+  ASSERT (is_nofollow_error (errno));
+  ASSERT (fd == -1);
+
+  fd = openat2 (dfd,
+                "dirlinkslash",
+                (&(struct open_how)
+                 {
+                   .flags = O_RDONLY | O_DIRECTORY,
+                   .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
+                 }),
+                sizeof (struct open_how));
+  ASSERT (is_nofollow_error (errno));
+  ASSERT (fd == -1);
+
   /* ESCAPING_LINK links to /tmp, which escapes the temporary test
      directory.  */
   fd = openat2 (dfd,
@@ -485,6 +511,8 @@ do_test_basic ()
 
   ASSERT (unlinkat (dfd, "some-file", 0) == 0);
 
+  ASSERT (unlinkat (dfd, "dirlink", 0) == 0);
+  ASSERT (unlinkat (dfd, "dirlinkslash", 0) == 0);
   ASSERT (unlinkat (dfd, "escaping_link", 0) == 0);
   ASSERT (unlinkat (dfd, "escaping_link_2", 0) == 0);
   ASSERT (unlinkat (dfd, "invalid_link", 0) == 0);
