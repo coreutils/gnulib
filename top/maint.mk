@@ -64,11 +64,14 @@ VC_LIST = $(srcdir)/$(_build-aux)/vc-list-files -C $(srcdir)
 
 # You can override this variable in cfg.mk if your gnulib submodule lives
 # in a different location.
-gnulib_dir ?= $(shell if test -n "$(GNULIB_SRCDIR)" && test -f "$(GNULIB_SRCDIR)/gnulib-tool"; then \
-			echo "$(GNULIB_SRCDIR)"; \
-		else \
-			echo $(srcdir)/gnulib; \
-		fi)
+ifeq ($(origin gnulib_dir),undefined)
+  gnulib_dir := $(shell if test -n "$(GNULIB_SRCDIR)" \
+                             && test -f "$(GNULIB_SRCDIR)/gnulib-tool"; then \
+                          echo "$(GNULIB_SRCDIR)"; \
+                        else \
+                          echo $(srcdir)/gnulib; \
+                        fi)
+endif
 
 # You can override this variable in cfg.mk to set your own regexp
 # matching files to ignore.
