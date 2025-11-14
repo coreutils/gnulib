@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2025-07-30 01:47'; # UTC
+my $VERSION = '2025-11-14 18:29'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -111,8 +111,9 @@ EOF
   exit $exit_code;
 }
 
+=over
 
-=item C<%size> = C<sizes (@file)>
+=item C<%size = sizes (@file)>
 
 Compute the sizes of the C<@file> and return them as a hash.  Return
 C<undef> if one of the computation failed.
@@ -139,9 +140,9 @@ sub sizes (@)
   return $fail ? undef : %res;
 }
 
-=item C<print_locations ($title, \@url, \%size, @file)
+=item C<print_locations ($title, \@url, \%size, @file)>
 
-Print a section C<$title> dedicated to the list of <@file>, which
+Print a section C<$title> dedicated to the list of C<@file>, which
 sizes are stored in C<%size>, and which are available from the C<@url>.
 
 =cut
@@ -163,7 +164,7 @@ sub print_locations ($\@\%@)
   print "\n";
 }
 
-=item C<print_checksums (@file)
+=item C<print_checksums (@file)>
 
 Print the SHA1 and SHA256 signature section for each C<@file>.
 
@@ -214,7 +215,7 @@ sub print_checksums ($@)
     }
 }
 
-=item C<print_news_deltas ($news_file, $prev_version, $curr_version)
+=item C<print_news_deltas ($news_file, $prev_version, $curr_version)>
 
 Print the section of the NEWS file C<$news_file> addressing changes
 between versions C<$prev_version> and C<$curr_version>.
@@ -719,6 +720,10 @@ EOF
 
   exit 0;
 }
+
+=back
+
+=cut
 
 ### Setup "GNU" style for perl-mode and cperl-mode.
 ## Local Variables:
