@@ -351,6 +351,7 @@ do_test_resolve (void)
                 "escaping_link",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
                 sizeof (struct open_how));
@@ -362,6 +363,7 @@ do_test_resolve (void)
                 "escaping_link_2",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
                 sizeof (struct open_how));
@@ -373,6 +375,7 @@ do_test_resolve (void)
                 "escaping_link",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
                 sizeof (struct open_how));
@@ -385,6 +388,7 @@ do_test_resolve (void)
                 "invalid_link",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
                 sizeof (struct open_how));
@@ -395,6 +399,7 @@ do_test_resolve (void)
                 "valid_link",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_BENEATH | RESOLVE_NO_SYMLINKS,
                  }),
                 sizeof (struct open_how));
@@ -405,6 +410,7 @@ do_test_resolve (void)
                "should-not-work",
                 (&(struct open_how)
                  {
+                   .flags = O_RDONLY,
                    .resolve = RESOLVE_IN_ROOT | RESOLVE_NO_SYMLINKS,
                  }),
                sizeof (struct open_how));
@@ -428,6 +434,7 @@ do_test_resolve (void)
                   "some_file",
                   (&(struct open_how)
                    {
+                     .flags = O_RDONLY,
                      .resolve = RESOLVE_IN_ROOT,
                    }),
                   sizeof (struct open_how));
@@ -437,6 +444,7 @@ do_test_resolve (void)
                   "subdir/some_file",
                   (&(struct open_how)
                    {
+                     .flags = O_RDONLY,
                      .resolve = RESOLVE_IN_ROOT,
                    }),
                   sizeof (struct open_how));
