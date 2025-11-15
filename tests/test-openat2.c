@@ -371,6 +371,28 @@ do_test_resolve (void)
   ASSERT (is_nofollow_error (errno));
   ASSERT (fd == -1);
 
+  fd = openat2 (dfd,
+                "dirlink/nosuch",
+                (&(struct open_how)
+                 {
+                   .flags = O_RDONLY | O_DIRECTORY,
+                   .resolve = RESOLVE_IN_ROOT,
+                 }),
+                sizeof (struct open_how));
+  ASSERT (errno == ENOENT);
+  ASSERT (fd == -1);
+
+  fd = openat2 (dfd,
+                "dirlinkslash/nosuch",
+                (&(struct open_how)
+                 {
+                   .flags = O_RDONLY | O_DIRECTORY,
+                   .resolve = RESOLVE_IN_ROOT,
+                 }),
+                sizeof (struct open_how));
+  ASSERT (errno == ENOENT);
+  ASSERT (fd == -1);
+
   /* ESCAPING_LINK links to /tmp, which escapes the temporary test
      directory.  */
   fd = openat2 (dfd,

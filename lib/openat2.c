@@ -322,10 +322,11 @@ do_openat2 (int *fd, char const *filename,
 
           /* Open the current component, as either an internal directory or
              the final open.  Do not follow symlinks.  */
+          char eh = e[-h];
           int subflags = ((!final
                            ? O_PATHSEARCH | O_CLOEXEC | O_CLOFORK
                            : flags)
-                          | O_NOFOLLOW | (e[-h] ? O_DIRECTORY : 0));
+                          | O_NOFOLLOW | (eh ? O_DIRECTORY : 0));
           e[-h] = '\0';
           int subfd = openat (*fd, &e[-f], subflags, mode);
 
@@ -412,7 +413,10 @@ do_openat2 (int *fd, char const *filename,
                   kept = nextf;
                 }
               else
-                kept = h;
+                {
+                  e[-h] = eh;
+                  kept = h;
+                }
 
               if (ISSLASH ('\\'))
                 slink[slinklen] = '\0';  /* For IS_RELATIVE_FILE_NAME.  */
