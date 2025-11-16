@@ -157,10 +157,8 @@ main (int argc, char *argv[])
       breaks[0] = breaks_expected[0] = 1;
       if (memcmp (breaks, breaks_expected, i - 1) != 0)
         {
-          int j;
-
           fprintf (stderr, "%s:%d: expected: ", filename, lineno);
-          for (j = 0; j < i - 1; j++)
+          for (int j = 0; j < i - 1; j++)
             {
               int input_wbp = uc_wordbreak_property (input[j]);
               fprintf (stderr, "%s U+%04X (%s) ",
@@ -169,7 +167,7 @@ main (int argc, char *argv[])
             }
           fprintf (stderr, "\n");
           fprintf (stderr, "%s:%d: actual:   ", filename, lineno);
-          for (j = 0; j < i - 1; j++)
+          for (int j = 0; j < i - 1; j++)
             {
               int input_wbp = uc_wordbreak_property (input[j]);
               fprintf (stderr, "%s U+%04X (%s) ",

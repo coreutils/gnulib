@@ -54,12 +54,11 @@ main (int argc, char *argv[])
 
     if (memcmp (out, expect, 32) != 0)
       {
-        size_t i;
         printf ("sm3 mismatch. expected:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) out[i] & 0xFF);
         printf ("\n");
         return 1;
@@ -74,12 +73,11 @@ main (int argc, char *argv[])
 
     if (memcmp (out, expect, 32) != 0)
       {
-        size_t i;
         printf ("sm3' mismatch. expected:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) out[i] & 0xFF);
         printf ("\n");
         return 1;
@@ -109,12 +107,11 @@ main (int argc, char *argv[])
 
     if (memcmp (p, expect, 32) != 0)
       {
-        size_t i;
         printf ("sm3 mismatch. expected:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 32; i++)
+        for (size_t i = 0; i < 32; i++)
           printf ("%02x ", (unsigned int) p[i] & 0xFF);
         printf ("\n");
         return 1;

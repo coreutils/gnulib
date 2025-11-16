@@ -31,8 +31,7 @@ SIGNATURE_CHECK (ffsl, int, (long int));
 static int
 naive (long int i)
 {
-  unsigned long int j;
-  for (j = 0; j < NBITS; j++)
+  for (unsigned long int j = 0; j < NBITS; j++)
     if (i & (1UL << j))
       return j + 1;
   return 0;
@@ -41,23 +40,20 @@ naive (long int i)
 int
 main (int argc, char *argv[])
 {
-  long int x;
-  int i;
-
-  for (x = -128; x <= 128; x++)
+  for (long int x = -128; x <= 128; x++)
     ASSERT (ffsl (x) == naive (x));
-  for (i = 0; i < NBITS; i++)
+  for (int i = 0; i < NBITS; i++)
     {
       ASSERT (ffsl (1UL << i) == naive (1UL << i));
       ASSERT (ffsl (1UL << i) == i + 1);
       ASSERT (ffsl (-1UL << i) == i + 1);
     }
-  for (i = 0; i < NBITS - 1; i++)
+  for (int i = 0; i < NBITS - 1; i++)
     {
       ASSERT (ffsl (3UL << i) == i + 1);
       ASSERT (ffsl (-3UL << i) == i + 1);
     }
-  for (i = 0; i < NBITS - 2; i++)
+  for (int i = 0; i < NBITS - 2; i++)
     {
       ASSERT (ffsl (5UL << i) == i + 1);
       ASSERT (ffsl (-5UL << i) == i + 1);

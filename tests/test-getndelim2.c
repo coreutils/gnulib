@@ -100,11 +100,8 @@ main (void)
 
   /* Larger file size.  */
   rewind (f);
-  {
-    int i;
-    for (i = 0; i < 16; i++)
-      fprintf (f, "%500x%c", i + 0u, i % 2 ? '\n' : '\r');
-  }
+  for (int i = 0; i < 16; i++)
+    fprintf (f, "%500x%c", i + 0u, i % 2 ? '\n' : '\r');
   rewind (f);
   {
     char buffer[502];

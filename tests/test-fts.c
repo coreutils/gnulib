@@ -127,7 +127,6 @@ main (void)
   FTS *ftsp;
   FTSENT *e;
   char buf[sizeof BASE + 100];
-  int i;
   enum { needles = 4 };
   int needles_seen = 0;
   struct stat st;
@@ -144,7 +143,7 @@ main (void)
     perror_exit (base, 4);
   if (mkdir (base_d, 0777) != 0)
     perror_exit (base_d, 5);
-  for (i = 1; i <= 65536; i++)
+  for (int i = 1; i <= 65536; i++)
     {
       sprintf (buf, "%s/d/%i", base, i);
       if (mkdir (buf, 0777) != 0)
@@ -160,7 +159,7 @@ main (void)
     }
 
   /* Create empty files BASE/d/1/needle etc.  */
-  for (i = 1; i <= needles; i++)
+  for (int i = 1; i <= needles; i++)
     {
       int fd;
       sprintf (buf, "%s/d/%d/needle", base, i);

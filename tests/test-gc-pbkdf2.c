@@ -95,7 +95,6 @@ const struct pkcs5 pkcs5[] = {
 int
 main (int argc, char *argv[])
 {
-  size_t i;
   int rc;
   char out[BUFSIZ];
 
@@ -107,7 +106,7 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  for (i = 0; i < sizeof (pkcs5) / sizeof (pkcs5[0]); i++)
+  for (size_t i = 0; i < sizeof (pkcs5) / sizeof (pkcs5[0]); i++)
     {
       rc = gc_pbkdf2_hmac (pkcs5[i].hash,
                            pkcs5[i].password, strlen (pkcs5[i].password),

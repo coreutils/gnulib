@@ -130,10 +130,9 @@ static struct test tests[] = {
 int
 main (void)
 {
-  struct test *t;
   bool ok = true;
 
-  for (t = tests; t->name; t++)
+  for (struct test *t = tests; t->name; t++)
     {
       char *dir = dir_name (t->name);
       int dirlen = dir_len (t->name);

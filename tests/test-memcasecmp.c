@@ -58,8 +58,7 @@ main (void)
   {
     char foo[21];
     char bar[21];
-    int i;
-    for (i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
       {
         char *a = foo + i;
         char *b = bar + i;

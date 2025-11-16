@@ -35,12 +35,11 @@ check (const uint8_t *input, size_t input_length, ucs4_t *puc)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
     *ptr++ = 'x';
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u8_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -53,13 +52,12 @@ check (const uint8_t *input, size_t input_length, ucs4_t *puc)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
     *ptr++ = 0xC3;
     *ptr++ = 0x97;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u8_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -72,14 +70,13 @@ check (const uint8_t *input, size_t input_length, ucs4_t *puc)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
     *ptr++ = 0xE2;
     *ptr++ = 0x84;
     *ptr++ = 0x82;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u8_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -92,7 +89,6 @@ check (const uint8_t *input, size_t input_length, ucs4_t *puc)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
@@ -100,7 +96,7 @@ check (const uint8_t *input, size_t input_length, ucs4_t *puc)
     *ptr++ = 0x9D;
     *ptr++ = 0x94;
     *ptr++ = 0x9E;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u8_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -129,11 +125,10 @@ check_invalid (const uint8_t *input, size_t input_length)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 'x';
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -147,12 +142,11 @@ check_invalid (const uint8_t *input, size_t input_length)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 0xC3;
     *ptr++ = 0x97;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -166,13 +160,12 @@ check_invalid (const uint8_t *input, size_t input_length)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 0xE2;
     *ptr++ = 0x84;
     *ptr++ = 0x82;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -186,14 +179,13 @@ check_invalid (const uint8_t *input, size_t input_length)
   {
     uint8_t buf[100];
     uint8_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 0xF0;
     *ptr++ = 0x9D;
     *ptr++ = 0x94;
     *ptr++ = 0x9E;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -213,10 +205,9 @@ main ()
 
   /* Test ISO 646 unit input.  */
   {
-    ucs4_t c;
     uint8_t buf[1];
 
-    for (c = 0; c < 0x80; c++)
+    for (ucs4_t c = 0; c < 0x80; c++)
       {
         buf[0] = c;
         uc = 0xBADFACE;

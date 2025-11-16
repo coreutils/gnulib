@@ -39,33 +39,29 @@ main ()
   int fd[1];
   pid_t pid;
 
-  {
-    size_t i;
+  for (size_t i = 0; i < 2; i++)
+    {
+      const char *progname =
+        (i == 0 ? "executable-script" : "executable-script.sh");
+      const char *prog_path =
+        (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
+      const char *prog_argv[2] = { prog_path, NULL };
 
-    for (i = 0; i < 2; i++)
-      {
-        const char *progname =
-          (i == 0 ? "executable-script" : "executable-script.sh");
-        const char *prog_path =
-          (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
-        const char *prog_argv[2] = { prog_path, NULL };
-
-        pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL, NULL,
-                              NULL, false, true, false, fd);
-        if (pid >= 0)
-          {
-            /* Wait for child.  */
-            ASSERT (wait_subprocess (pid, progname, true, true, true, false,
-                                     NULL)
-                    == 127);
-          }
-        else
-          {
-            ASSERT (pid == -1);
-            ASSERT (errno == ENOEXEC);
-          }
-      }
-  }
+      pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL, NULL,
+                            NULL, false, true, false, fd);
+      if (pid >= 0)
+        {
+          /* Wait for child.  */
+          ASSERT (wait_subprocess (pid, progname, true, true, true, false,
+                                   NULL)
+                  == 127);
+        }
+      else
+        {
+          ASSERT (pid == -1);
+          ASSERT (errno == ENOEXEC);
+        }
+    }
 
 #if defined _WIN32 && !defined __CYGWIN__
   /* On native Windows, scripts - even with '#!' marker - are not executable.

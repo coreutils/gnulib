@@ -240,11 +240,9 @@ test_long_name (void)
      So clean up here, right away, even though the driving
      shell script would also clean up.  */
   {
-    size_t i;
-
     /* Try rmdir first, in case the chdir failed.  */
     rmdir (DIR_NAME);
-    for (i = 0; i <= n_chdirs; i++)
+    for (size_t i = 0; i <= n_chdirs; i++)
       {
         if (chdir ("..") < 0)
           break;

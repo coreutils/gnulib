@@ -76,19 +76,14 @@ main (int argc, char *argv[])
 
   if (argc > 1)
     {
-      int unlimited;
-
-      for (unlimited = 0; unlimited < 2; unlimited++)
+      for (int unlimited = 0; unlimited < 2; unlimited++)
         {
           #define BUFSIZE 10
           wchar_t buf[BUFSIZE];
           const char *src;
 
-          {
-            size_t i;
-            for (i = 0; i < BUFSIZE; i++)
-              buf[i] = (wchar_t) 0xBADFACE;
-          }
+          for (size_t i = 0; i < BUFSIZE; i++)
+            buf[i] = (wchar_t) 0xBADFACE;
 
           switch (argv[1][0])
             {
@@ -116,10 +111,9 @@ main (int argc, char *argv[])
                   ASSERT (buf[1] == (wchar_t) 0xBADFACE);
               }
               {
-                int c;
                 char input[2];
 
-                for (c = 0; c < 0x100; c++)
+                for (int c = 0; c < 0x100; c++)
                   if (c != 0)
                     {
                       /* We are testing all nonnull bytes.  */

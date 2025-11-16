@@ -28,10 +28,9 @@ int
 main (int argc, char *argv[])
 {
   const char *program_name = argv[0];
-  int i;
 
   /* Parse the command-line arguments.  */
-  for (i = 1; i < argc; i++)
+  for (int i = 1; i < argc; i++)
     {
       const char *arg = argv[i];
       if (str_startswith (arg, "--color="))

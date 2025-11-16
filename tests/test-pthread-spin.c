@@ -91,10 +91,10 @@ random_account (void)
 static void
 check_accounts (void)
 {
-  int i, sum;
+  int sum;
 
   sum = 0;
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     sum += account[i];
   if (sum != ACCOUNT_COUNT * 1000)
     abort ();
@@ -112,9 +112,7 @@ static pthread_spinlock_t my_lock;
 static void *
 lock_mutator_thread (void *arg)
 {
-  int repeat;
-
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       int i1, i2, value;
 
@@ -168,12 +166,11 @@ lock_checker_thread (void *arg)
 static void
 test_pthread_spin (void)
 {
-  int i;
   pthread_t checkerthread;
   pthread_t threads[THREAD_COUNT];
 
   /* Initialization.  */
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     account[i] = 1000;
   init_atomic_int (&lock_checker_done);
   set_atomic_int_value (&lock_checker_done, 0);
@@ -181,11 +178,11 @@ test_pthread_spin (void)
   /* Spawn the threads.  */
   ASSERT (pthread_create (&checkerthread, NULL, lock_checker_thread, NULL)
           == 0);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_create (&threads[i], NULL, lock_mutator_thread, NULL) == 0);
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_join (threads[i], NULL) == 0);
   set_atomic_int_value (&lock_checker_done, 1);
   ASSERT (pthread_join (checkerthread, NULL) == 0);

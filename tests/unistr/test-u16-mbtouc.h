@@ -33,10 +33,9 @@ test_function (int (*my_u16_mbtouc) (ucs4_t *, const uint16_t *, size_t))
 
   /* Test ISO 646 unit input.  */
   {
-    ucs4_t c;
     uint16_t buf[1];
 
-    for (c = 0; c < 0x80; c++)
+    for (ucs4_t c = 0; c < 0x80; c++)
       {
         buf[0] = c;
         uc = 0xBADFACE;

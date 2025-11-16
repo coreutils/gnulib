@@ -130,9 +130,8 @@ main (int argc, char *argv[])
     {
       /* Perform the test and test whether it triggers a permanent memory
          allocation of more than MAX_ALLOC_TOTAL bytes.  */
-      int repeat;
 
-      for (repeat = 0; repeat < NUM_ROUNDS; repeat++)
+      for (int repeat = 0; repeat < NUM_ROUNDS; repeat++)
         {
           /* This may produce a temporary memory allocation of 11000 bytes.
              but should not result in a permanent memory allocation.  */

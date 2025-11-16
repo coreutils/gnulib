@@ -49,9 +49,8 @@ main (void)
   {
     char smallbuf[1024];
     size_t n = strlen (buf);
-    size_t i;
 
-    for (i = 0; i <= n; i++)
+    for (size_t i = 0; i <= n; i++)
       {
         err = getlogin_r (smallbuf, i);
         if (i == 0)

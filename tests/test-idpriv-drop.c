@@ -77,7 +77,6 @@ int
 main (int argc, char *argv[])
 {
   bool verbose = false;
-  int i;
 
 #if HAVE_GETUID
   int uid = getuid ();
@@ -89,7 +88,7 @@ main (int argc, char *argv[])
   /* Parse arguments.
      -v  enables verbose output.
    */
-  for (i = 1; i < argc; i++)
+  for (int i = 1; i < argc; i++)
     {
       const char *arg = argv[i];
       if (strcmp (arg, "-v") == 0)

@@ -129,7 +129,6 @@ main (_GL_UNUSED int argc, char **argv)
   struct timespec expected;
   struct timespec now;
   const char *p;
-  int i;
   long gmtoff;
   time_t ref_time = 1304250918;
 
@@ -428,7 +427,7 @@ main (_GL_UNUSED int argc, char **argv)
   /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
   ASSERT (setenv ("TZ", "UTC0", 1) == 0);
   tzset ();
-  for (i = 0; day_table[i]; i++)
+  for (int i = 0; day_table[i]; i++)
     {
       unsigned int thur2 = SOME_TIMEPOINT + 7 * 24 * 3600; /* 2nd thursday */
       char tmp[32];

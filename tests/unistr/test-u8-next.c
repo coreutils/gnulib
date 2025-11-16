@@ -39,10 +39,9 @@ main ()
 
   /* Test ISO 646 unit input.  */
   {
-    ucs4_t c;
     uint8_t buf[2];
 
-    for (c = 1; c < 0x80; c++)
+    for (ucs4_t c = 1; c < 0x80; c++)
       {
         buf[0] = c;
         buf[1] = 0;

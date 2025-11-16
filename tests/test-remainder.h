@@ -27,8 +27,6 @@ my_ldexp (DOUBLE x, int d)
 static void
 test_function (void)
 {
-  int i;
-  int j;
   const DOUBLE TWO_MANT_DIG =
     /* Assume MANT_DIG <= 5 * 31.
        Use the identity
@@ -40,8 +38,8 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
+  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
+    for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -63,8 +61,8 @@ test_function (void)
           }
       }
 
-  for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
+  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
+    for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(1.0e9) * RANDOM[i]; /* 0.0 <= x <= 10^9 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -102,8 +100,8 @@ test_function (void)
   {
     int large_exp = (MAX_EXP - 1 < 1000 ? MAX_EXP - 1 : 1000);
     DOUBLE large = my_ldexp (L_(1.0), large_exp); /* = 2^large_exp */
-    for (i = 0; i < SIZEOF (RANDOM) / 10; i++)
-      for (j = 0; j < SIZEOF (RANDOM) / 10; j++)
+    for (int i = 0; i < SIZEOF (RANDOM) / 10; i++)
+      for (int j = 0; j < SIZEOF (RANDOM) / 10; j++)
         {
           DOUBLE x = large * RANDOM[i]; /* 0.0 <= x <= 2^large_exp */
           DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */

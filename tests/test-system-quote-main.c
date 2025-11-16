@@ -177,8 +177,6 @@ check_all (enum system_command_interpreter interpreter,
   /* Check the system_quote_length, system_quote_copy, system_quote
      functions.  */
   {
-    int c;
-
     /* Empty argument.  */
     check_one (interpreter, prog, "");
 
@@ -294,7 +292,7 @@ check_all (enum system_command_interpreter interpreter,
     check_one (interpreter, prog, "%PATH%");
 
     /* All other characters don't need quoting.  */
-    for (c = 1; c <= UCHAR_MAX; c++)
+    for (int c = 1; c <= UCHAR_MAX; c++)
       if (strchr ("\t\n\r !\"#$&'()*;<=>?^[\\]`{|}~", c) == NULL)
         {
           char s[5];
@@ -324,12 +322,9 @@ main (int argc, char *argv[])
 #ifdef WINDOWS_NATIVE
   /* Make PROG suitable for native Windows system calls and cmd.exe:
      Replace '/' with '\\'.  */
-  {
-    char *p;
-    for (p = prog; *p != '\0'; p++)
-      if (*p == '/')
-        *p = '\\';
-  }
+  for (char *p = prog; *p != '\0'; p++)
+    if (*p == '/')
+      *p = '\\';
 #endif
 
 #ifdef WINDOWS_NATIVE

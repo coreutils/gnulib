@@ -62,9 +62,8 @@ static void *
 random_invocator_thread (void *arg)
 {
   long *storage = (long *) arg;
-  int repeat;
 
-  for (repeat = 0; repeat < REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat < REPEAT_COUNT; repeat++)
     {
       storage[repeat] = random ();
       yield ();
@@ -81,46 +80,35 @@ main ()
   /* First, get the expected sequence of random() results.  */
   srandom (seed);
   long *expected = XNMALLOC (REPEAT_COUNT, long);
-  {
-    int repeat;
-    for (repeat = 0; repeat < REPEAT_COUNT; repeat++)
-      expected[repeat] = random ();
-  }
+  for (int repeat = 0; repeat < REPEAT_COUNT; repeat++)
+    expected[repeat] = random ();
 
   /* Then, run REPEAT_COUNT invocations of random() each, in THREAD_COUNT
      separate threads.  */
   gl_thread_t threads[THREAD_COUNT];
   long *thread_results[THREAD_COUNT];
   srandom (seed);
-  {
-    int i;
-    for (i = 0; i < THREAD_COUNT; i++)
-      thread_results[i] = XNMALLOC (REPEAT_COUNT, long);
-    for (i = 0; i < THREAD_COUNT; i++)
-      threads[i] =
-        gl_thread_create (random_invocator_thread, thread_results[i]);
-  }
+  for (int i = 0; i < THREAD_COUNT; i++)
+    thread_results[i] = XNMALLOC (REPEAT_COUNT, long);
+  for (int i = 0; i < THREAD_COUNT; i++)
+    threads[i] = gl_thread_create (random_invocator_thread, thread_results[i]);
 
   /* Wait for the threads to terminate.  */
-  {
-    int i;
-    for (i = 0; i < THREAD_COUNT; i++)
-      gl_thread_join (threads[i], NULL);
-  }
+  for (int i = 0; i < THREAD_COUNT; i++)
+    gl_thread_join (threads[i], NULL);
 
   /* Finally, determine whether the threads produced the same sequence of
      random() results.  */
   {
-    int expected_index;
     int result_index[THREAD_COUNT];
-    int i;
 
-    for (i = 0; i < THREAD_COUNT; i++)
+    for (int i = 0; i < THREAD_COUNT; i++)
       result_index[i] = 0;
 
-    for (expected_index = 0; expected_index < REPEAT_COUNT; expected_index++)
+    for (int expected_index = 0; expected_index < REPEAT_COUNT; expected_index++)
       {
         long expected_value = expected[expected_index];
+        int i;
 
         for (i = 0; i < THREAD_COUNT; i++)
           {

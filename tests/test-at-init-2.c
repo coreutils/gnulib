@@ -29,10 +29,8 @@ AT_INIT (init_squares);
 static void
 init_squares (void)
 {
-  int i;
-
   sum_of_squares = 0;
-  for (i = 0; i <= 100; i++)
+  for (int i = 0; i <= 100; i++)
     sum_of_squares += i * i;
 }
 

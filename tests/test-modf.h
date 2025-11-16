@@ -17,7 +17,6 @@
 static void
 test_function (void)
 {
-  int i;
   const DOUBLE TWO_MANT_DIG =
     /* Assume MANT_DIG <= 5 * 31.
        Use the identity
@@ -29,7 +28,7 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < SIZEOF (RANDOM); i++)
     {
       DOUBLE x = RANDOM[i]; /* 0.0 <= x < 1.0 */
       DOUBLE y;

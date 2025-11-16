@@ -93,9 +93,7 @@ typedef struct { uint32_t bits[BAG_SIZE / 32]; } bag_t;
 static void
 init_bag_empty (bag_t *bagp)
 {
-  size_t i;
-
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     bagp->bits[i] = 0;
 }
 
@@ -131,9 +129,7 @@ bag_from_list (gl_list_t list)
 _GL_ATTRIBUTE_MAYBE_UNUSED static bool
 bag_is_empty (bag_t bag)
 {
-  size_t i;
-
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     if (bag.bits[i] != 0)
       return false;
   return true;
@@ -143,9 +139,7 @@ bag_is_empty (bag_t bag)
 static bool
 bag_is_subset (bag_t bag1, bag_t bag2)
 {
-  size_t i;
-
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     if ((bag1.bits[i] & ~bag2.bits[i]) != 0)
       return false;
   return true;
@@ -155,9 +149,7 @@ bag_is_subset (bag_t bag1, bag_t bag2)
 static bool
 bag_equals (bag_t bag1, bag_t bag2)
 {
-  size_t i;
-
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     if (bag1.bits[i] != bag2.bits[i])
       return false;
   return true;
@@ -169,9 +161,8 @@ _GL_ATTRIBUTE_MAYBE_UNUSED static bag_t
 bag_or (bag_t bag1, bag_t bag2)
 {
   bag_t bag;
-  size_t i;
 
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     bag.bits[i] = bag1.bits[i] | bag2.bits[i];
 
   return bag;
@@ -183,9 +174,8 @@ static bag_t
 bag_xor (bag_t bag1, bag_t bag2)
 {
   bag_t bag;
-  size_t i;
 
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     bag.bits[i] = bag1.bits[i] ^ bag2.bits[i];
 
   return bag;
@@ -196,9 +186,8 @@ _GL_ATTRIBUTE_MAYBE_UNUSED static bag_t
 bag_and_not (bag_t bag1, bag_t bag2)
 {
   bag_t bag;
-  size_t i;
 
-  for (i = 0; i < BAG_SIZE / 32; i++)
+  for (size_t i = 0; i < BAG_SIZE / 32; i++)
     bag.bits[i] = bag1.bits[i] & ~bag2.bits[i];
 
   return bag;
@@ -290,11 +279,10 @@ sigint_handler (int signo)
          thread.  By the time we get here, the mutator thread can have done
          any number of mutations; it is reasonable to assume that this number
          of mutations is small.  */
-      size_t i;
       bag_t changes_from_i_to_newest;
       init_bag_empty (&changes_from_i_to_newest);
 
-      for (i = recent_newest_index;;)
+      for (size_t i = recent_newest_index;;)
         {
           if (bag_is_subset (bag_xor (bag, recent_bags[i % NUM_RECENT_BAGS]),
                              changes_from_i_to_newest)
@@ -361,9 +349,7 @@ signal_sending_thread (void *arg)
   if (test != 3)
     block_sigint ();
 
-  int repeat;
-
-  for (repeat = 1000; repeat > 0; repeat--)
+  for (int repeat = 1000; repeat > 0; repeat--)
     {
       num_signals_sent++; send_signal ();
       num_signals_sent++; send_signal ();
@@ -439,19 +425,18 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (50);
     const void **contents =
       (const void **) malloc (initial_size * sizeof (const void *));
-    size_t i;
 
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       contents[i] = RANDOM_OBJECT ();
 
     list1 = gl_list_nx_create_empty (GL_LINKED_LIST, NULL, NULL, NULL, true);
     ASSERT (list1 != NULL);
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       ASSERT (gl_list_nx_add_first (list1, contents[i]) != NULL);
 
     list2 = gl_list_nx_create_empty (GL_LINKED_LIST, NULL, NULL, NULL, true);
     ASSERT (list2 != NULL);
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       ASSERT (gl_list_nx_add_last (list2, contents[i]) != NULL);
 
     recent_oldest_index = 0;

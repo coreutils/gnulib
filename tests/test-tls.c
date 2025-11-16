@@ -89,13 +89,12 @@ static void *
 worker_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
-  int i, j, repeat;
   unsigned int values[KEYS_COUNT];
 
   dbgprintf ("Worker %p started\n", gl_thread_self_pointer ());
 
   /* Initialize the per-thread storage.  */
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       values[i] = (((unsigned long) random () >> 3) % 1000000) * THREAD_COUNT + id;
       /* Hopefully no arithmetic overflow.  */
@@ -106,7 +105,7 @@ worker_thread (void *arg)
 
   /* Verify that the initial value is NULL.  */
   dbgprintf ("Worker %p before initial verify\n", gl_thread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if (gl_tls_get (mykeys[i]) != NULL)
       abort ();
   dbgprintf ("Worker %p after  initial verify\n", gl_thread_self_pointer ());
@@ -114,7 +113,7 @@ worker_thread (void *arg)
 
   /* Initialize the per-thread storage.  */
   dbgprintf ("Worker %p before first tls_set\n", gl_thread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       unsigned int *ptr = (unsigned int *) malloc (sizeof (unsigned int));
       *ptr = values[i];
@@ -124,11 +123,11 @@ worker_thread (void *arg)
   perhaps_yield ();
 
   /* Shuffle around the pointers.  */
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       dbgprintf ("Worker %p doing value swapping\n", gl_thread_self_pointer ());
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
-      j = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int j = ((unsigned long) random () >> 3) % KEYS_COUNT;
       if (i != j)
         {
           void *vi = gl_tls_get (mykeys[i]);
@@ -142,7 +141,7 @@ worker_thread (void *arg)
 
   /* Verify that all the values are from this thread.  */
   dbgprintf ("Worker %p before final verify\n", gl_thread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if ((*(unsigned int *) gl_tls_get (mykeys[i]) % THREAD_COUNT) != id)
       abort ();
   dbgprintf ("Worker %p after  final verify\n", gl_thread_self_pointer ());
@@ -155,28 +154,26 @@ worker_thread (void *arg)
 static void
 test_tls (void)
 {
-  int pass, i;
-
-  for (pass = 0; pass < 2; pass++)
+  for (int pass = 0; pass < 2; pass++)
     {
       gl_thread_t threads[THREAD_COUNT];
 
       if (pass == 0)
-        for (i = 0; i < KEYS_COUNT; i++)
+        for (int i = 0; i < KEYS_COUNT; i++)
           gl_tls_key_init (mykeys[i], free);
       else
-        for (i = KEYS_COUNT - 1; i >= 0; i--)
+        for (int i = KEYS_COUNT - 1; i >= 0; i--)
           gl_tls_key_init (mykeys[i], free);
 
       /* Spawn the threads.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         threads[i] = gl_thread_create (worker_thread, (void *) (uintptr_t) i);
 
       /* Wait for the threads to terminate.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         gl_thread_join (threads[i], NULL);
 
-      for (i = 0; i < KEYS_COUNT; i++)
+      for (int i = 0; i < KEYS_COUNT; i++)
         gl_tls_key_destroy (mykeys[i]);
     }
 }
@@ -308,12 +305,11 @@ dtorcheck1_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   gl_tls_key_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     gl_tls_key_init (keys[i], destructor_table[i]);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     gl_tls_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1));
 
   return NULL;
@@ -323,23 +319,21 @@ static void
 test_tls_dtorcheck1 (void)
 {
   gl_thread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     threads[id] = gl_thread_create (dtorcheck1_thread, (void *) (uintptr_t) id);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     gl_thread_join (threads[id], NULL);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       gl_tls_key_destroy (dtorcheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */
@@ -357,12 +351,11 @@ dtorcheck2_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   gl_tls_key_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     gl_tls_key_init (keys[i], destructor_table[id]);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     gl_tls_set (keys[i], (void *) (uintptr_t) (10 * i + id + 1));
 
   return NULL;
@@ -372,23 +365,21 @@ static void
 test_tls_dtorcheck2 (void)
 {
   gl_thread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     threads[id] = gl_thread_create (dtorcheck2_thread, (void *) (uintptr_t) id);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     gl_thread_join (threads[id], NULL);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       gl_tls_key_destroy (dtorcheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */
@@ -423,20 +414,18 @@ racecheck_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   gl_tls_key_t *keys = racecheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int repeat;
-  int i;
 
   dbgprintf ("Worker %p started\n", gl_thread_self_pointer ());
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       gl_tls_key_init (keys[i], destructor_table[i]);
       gl_tls_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1));
     }
 
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
       dbgprintf ("Worker %p reallocating key %d\n", gl_thread_self_pointer (), i);
       gl_tls_key_destroy (keys[i]);
       gl_tls_key_init (keys[i], destructor_table[i]);
@@ -451,23 +440,21 @@ static void
 test_tls_racecheck (void)
 {
   gl_thread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     threads[id] = gl_thread_create (racecheck_thread, (void *) (uintptr_t) id);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     gl_thread_join (threads[id], NULL);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       gl_tls_key_destroy (racecheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */

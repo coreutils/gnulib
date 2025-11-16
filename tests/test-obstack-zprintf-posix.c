@@ -206,8 +206,7 @@ test_function (ptrdiff_t (*my_obstack_zprintf) (struct obstack *, const char *, 
     ASSERT (len >= 0);
     char *result = obstack_finish (&obs);
     ASSERT (len == 4000 + 3);
-    size_t i;
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (memcmp (result + 4000 - 7, "1234567 99", 7 + 3) == 0);
     obstack_free (&obs, result);

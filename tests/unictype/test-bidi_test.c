@@ -37,12 +37,8 @@ main ()
   ASSERT (!uc_is_bidi_class ('7', UC_BIDI_L));
   ASSERT (!uc_is_bidi_class ('7', UC_BIDI_R));
 
-  {
-    unsigned int c;
-
-    for (c = 0; c < 0x110000; c++)
-      ASSERT (uc_is_bidi_class (c, uc_bidi_class (c)));
-  }
+  for (unsigned int c = 0; c < 0x110000; c++)
+    ASSERT (uc_is_bidi_class (c, uc_bidi_class (c)));
 
   return test_exit_status;
 }

@@ -114,12 +114,11 @@ main (int argc, char *argv[])
 
   if (memcmp (scratch, ciphertext_4, sizeof (ciphertext_4)))
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < sizeof (ciphertext_4); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_4); i++)
         printf ("%02x ", ciphertext_4[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < sizeof (ciphertext_4); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_4); i++)
         printf ("%02x ", scratch[i] & 0xFF);
       printf ("\n");
       return 1;
@@ -136,12 +135,11 @@ main (int argc, char *argv[])
 
   if (memcmp (scratch, ciphertext_5, sizeof (ciphertext_5)))
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < sizeof (ciphertext_5); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_5); i++)
         printf ("%02x ", ciphertext_5[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < sizeof (ciphertext_5); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_5); i++)
         printf ("%02x ", scratch[i] & 0xFF);
       printf ("\n");
       return 1;
@@ -158,12 +156,11 @@ main (int argc, char *argv[])
 
   if (memcmp (scratch, ciphertext_6, sizeof (ciphertext_6)))
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < sizeof (ciphertext_6); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_6); i++)
         printf ("%02x ", ciphertext_6[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < sizeof (ciphertext_6); i++)
+      for (size_t i = 0; i < sizeof (ciphertext_6); i++)
         printf ("%02x ", scratch[i] & 0xFF);
       printf ("\n");
       return 1;

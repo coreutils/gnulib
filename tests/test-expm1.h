@@ -17,8 +17,6 @@
 static void
 test_function (void)
 {
-  int i;
-  int j;
   const DOUBLE TWO_MANT_DIG =
     /* Assume MANT_DIG <= 5 * 31.
        Use the identity
@@ -31,6 +29,7 @@ test_function (void)
 
   /* Arguments near zero.  */
   {
+    int i;
     DOUBLE x;
 
     for (i = -1, x = L_(0.5); i >= MIN_EXP; i--, x *= L_(0.5))
@@ -66,7 +65,7 @@ test_function (void)
 #endif
        : L_(5.0));
 
-    for (i = 0; i < SIZEOF (RANDOM); i++)
+    for (int i = 0; i < SIZEOF (RANDOM); i++)
       {
         DOUBLE x = L_(2.0) * RANDOM[i]; /* 0.0 <= x <= 2.0 */
         DOUBLE y = EXPM1 (x);
@@ -92,8 +91,8 @@ test_function (void)
 #endif
        : L_(9.0));
 
-    for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
-      for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
+    for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
+      for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
         {
           DOUBLE x = L_(2.0) * RANDOM[i] - L_(1.0); /* -1.0 <= x <= 1.0 */
           DOUBLE y = L_(2.0) * RANDOM[j] - L_(1.0); /* -1.0 <= y <= 1.0 */

@@ -36,7 +36,6 @@ main (void)
 {
   char *cwd;
   int fd;
-  int i;
 
   cwd = getcwd (NULL, 0);
   ASSERT (cwd);
@@ -75,7 +74,7 @@ main (void)
   }
 
   /* Repeat test twice, once in '.' and once in '..'.  */
-  for (i = 0; i < 2; i++)
+  for (int i = 0; i < 2; i++)
     {
       ASSERT (chdir (&".."[1 - i]) == 0);
       ASSERT (fchdir (fd) == 0);

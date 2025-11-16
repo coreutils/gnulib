@@ -31,8 +31,7 @@ SIGNATURE_CHECK (ffs, int, (int));
 static int
 naive (int i)
 {
-  unsigned int j;
-  for (j = 0; j < NBITS; j++)
+  for (unsigned int j = 0; j < NBITS; j++)
     if (i & (1U << j))
       return j + 1;
   return 0;
@@ -41,23 +40,20 @@ naive (int i)
 int
 main (int argc, char *argv[])
 {
-  int x;
-  int i;
-
-  for (x = -128; x <= 128; x++)
+  for (int x = -128; x <= 128; x++)
     ASSERT (ffs (x) == naive (x));
-  for (i = 0; i < NBITS; i++)
+  for (int i = 0; i < NBITS; i++)
     {
       ASSERT (ffs (1U << i) == naive (1U << i));
       ASSERT (ffs (1U << i) == i + 1);
       ASSERT (ffs (-1U << i) == i + 1);
     }
-  for (i = 0; i < NBITS - 1; i++)
+  for (int i = 0; i < NBITS - 1; i++)
     {
       ASSERT (ffs (3U << i) == i + 1);
       ASSERT (ffs (-3U << i) == i + 1);
     }
-  for (i = 0; i < NBITS - 2; i++)
+  for (int i = 0; i < NBITS - 2; i++)
     {
       ASSERT (ffs (5U << i) == i + 1);
       ASSERT (ffs (-5U << i) == i + 1);

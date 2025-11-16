@@ -380,10 +380,9 @@ main (int argc, char *argv[])
 {
   int codepage = atoi (argv[argc - 1]);
   int result;
-  int i;
 
   result = 77;
-  for (i = 1; i < argc - 1; i++)
+  for (int i = 1; i < argc - 1; i++)
     {
       int ret = test_one_locale (argv[i], codepage);
 

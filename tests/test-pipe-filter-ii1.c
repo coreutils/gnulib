@@ -72,9 +72,8 @@ done_read (void *data_read, size_t num_bytes_read, void *private_data)
   struct locals *l = (struct locals *) private_data;
   const char *p = l->input + l->nread;
   const char *q = (const char *) data_read;
-  size_t i;
 
-  for (i = 0; i < num_bytes_read; i++, q++)
+  for (size_t i = 0; i < num_bytes_read; i++, q++)
     {
       /* Handle conversion NL -> CRLF possibly done by the child process.  */
       if (!(O_BINARY && *q == '\r'))

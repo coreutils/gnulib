@@ -32,9 +32,7 @@
 int
 main (void)
 {
-  int check_filepos;
-
-  for (check_filepos = 0; check_filepos <= 1; check_filepos++)
+  for (int check_filepos = 0; check_filepos <= 1; check_filepos++)
     {
       FILE *fp;
 

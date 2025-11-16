@@ -29,14 +29,13 @@ int
 main (void)
 {
   struct mount_entry *mounts;
-  struct mount_entry *p;
 
   mounts = read_file_system_list (false);
 
   /* Assume at least one mount point.  */
   ASSERT (mounts != NULL);
 
-  for (p = mounts; p != NULL;)
+  for (struct mount_entry *p = mounts; p != NULL;)
     {
       struct mount_entry *next = p->me_next;
       printf ("%s %s %s %s %s\n",

@@ -40,8 +40,6 @@ static FILE *myerr;
 int
 main (void)
 {
-  int i;
-  int j;
   int dfd;
   int fd;
   char buf[2];
@@ -64,14 +62,14 @@ main (void)
 
   /* Four iterations, with progressively more standard descriptors
      closed.  */
-  for (i = -1; i <= STDERR_FILENO; i++)
+  for (int i = -1; i <= STDERR_FILENO; i++)
     {
       ASSERT (fchdir (dfd) == 0);
       if (0 <= i)
         ASSERT (close (i) == 0);
 
       /* Execute once in ".", once in "..".  */
-      for (j = 0; j <= 1; j++)
+      for (int j = 0; j <= 1; j++)
         {
           if (j)
             ASSERT (chdir ("..") == 0);

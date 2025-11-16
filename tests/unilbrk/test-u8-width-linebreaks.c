@@ -38,10 +38,9 @@ test_function (int (*my_u8_width_linebreaks) (const uint8_t *, size_t, int, int,
 
     {
       char *p = (char *) malloc (SIZEOF (input));
-      size_t i;
 
       my_u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
-      for (i = 0; i < 91; i++)
+      for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
@@ -52,10 +51,9 @@ test_function (int (*my_u8_width_linebreaks) (const uint8_t *, size_t, int, int,
 
     {
       char *p = (char *) malloc (SIZEOF (input));
-      size_t i;
 
       my_u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
-      for (i = 0; i < 91; i++)
+      for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 13 || i == 39 || i == 61 ? UC_BREAK_POSSIBLE :

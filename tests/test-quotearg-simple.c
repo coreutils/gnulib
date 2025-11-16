@@ -270,7 +270,6 @@ use_quote_double_quotes (const char *str, size_t *len)
 int
 main (_GL_UNUSED int argc, char *argv[])
 {
-  int i;
   bool ascii_only = MB_CUR_MAX == 1 && !isprint ((unsigned char) LQ[0]);
 
   /* This part of the program is hard-wired to the C locale since it
@@ -285,7 +284,7 @@ main (_GL_UNUSED int argc, char *argv[])
      testing for quoting of str7, use the ascii_only flag to decide
      what to expect for the 8-bit data being quoted.  */
   ASSERT (!isprint ('\033'));
-  for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
+  for (int i = literal_quoting_style; i <= clocale_quoting_style; i++)
     {
       set_quoting_style (NULL, (enum quoting_style) i);
       if (!(i == locale_quoting_style || i == clocale_quoting_style)
@@ -329,7 +328,7 @@ main (_GL_UNUSED int argc, char *argv[])
 
   ASSERT (set_quoting_flags (NULL, 0) == QA_SPLIT_TRIGRAPHS);
 
-  for (i = 0; i < sizeof custom_quotes / sizeof *custom_quotes; ++i)
+  for (int i = 0; i < sizeof custom_quotes / sizeof *custom_quotes; ++i)
     {
       set_custom_quoting (NULL,
                           custom_quotes[i][0], custom_quotes[i][1]);

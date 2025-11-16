@@ -78,21 +78,19 @@ test_cmp (void)
   {
     UNIT foo[21];
     UNIT bar[21];
-    int i;
-    for (i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
       {
         UNIT *a = foo + i;
         UNIT *b = bar + i;
-        int j;
-        for (j = 0; j < 8; j++)
+        for (int j = 0; j < 8; j++)
           a[j] = '-';
         a[8] = '0';
-        for (j = 9; j < 16; j++)
+        for (int j = 9; j < 16; j++)
           a[j] = '1';
-        for (j = 0; j < 8; j++)
+        for (int j = 0; j < 8; j++)
           b[j] = '-';
         b[8] = '1';
-        for (j = 9; j < 16; j++)
+        for (int j = 9; j < 16; j++)
           b[j] = '0';
         ASSERT (U_CMP (a, b, 16) < 0);
       }

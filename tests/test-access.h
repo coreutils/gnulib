@@ -33,11 +33,10 @@ static int
 is_administrator (void)
 {
   gid_t list[100];
-  int i;
   int count = getgroups (sizeof (list) / sizeof (list[0]), list);
   if (count < 0)
     return 0;
-  for (i = 0; i < count; i++)
+  for (int i = 0; i < count; i++)
     {
       gid_t id = list[i];
       struct group *details = getgrgid (id);

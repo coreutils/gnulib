@@ -78,13 +78,12 @@ is_cloexec (int fd)
 int
 main ()
 {
-  int use_cloexec;
   int bad_fd = getdtablesize ();
 
 #if O_CLOEXEC
-  for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
+  for (int use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
 #else
-  use_cloexec = 0;
+  int use_cloexec = 0;
 #endif
     {
       const char *file = "test-dup3.tmp";

@@ -31,10 +31,9 @@ int
 main ()
 {
   unsigned int c;
-  size_t i;
 
   c = 0;
-  for (i = 0; i < SIZEOF (mapping); i++)
+  for (size_t i = 0; i < SIZEOF (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
         ASSERT (uc_decimal_value (c) == -1);

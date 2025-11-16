@@ -31,9 +31,8 @@ static void
 test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 {
   char buf[8];
-  int size;
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length = size;
       char *result = my_asnprintf (NULL, &length, "%d", 12345);
@@ -43,7 +42,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
     }
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length;
       char *result;
@@ -62,7 +61,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     }
 
   /* Note: This test assumes IEEE 754 representation of 'double' floats.  */
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length;
       char *result;

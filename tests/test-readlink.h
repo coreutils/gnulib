@@ -78,13 +78,10 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (errno == ENOTDIR || errno == EINVAL); /* AIX yields EINVAL */
   ASSERT (unlink (BASE "file") == 0);
   ASSERT (unlink (BASE "link2") == 0);
-  {
-    /* Up till now, no readlink has been successful, so buf should be
-       unchanged.  */
-    int i;
-    for (i = 0; i < sizeof buf; i++)
-      ASSERT (buf[i] == (char) 0xff);
-  }
+  /* Up till now, no readlink has been successful, so buf should be
+     unchanged.  */
+  for (int i = 0; i < sizeof buf; i++)
+    ASSERT (buf[i] == (char) 0xff);
   {
     size_t len = strlen (BASE "dir");
     /* When passing too small of a buffer, expect the truncated

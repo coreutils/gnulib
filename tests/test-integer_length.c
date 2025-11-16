@@ -27,8 +27,7 @@
 static int
 naive (unsigned int x)
 {
-  int j;
-  for (j = NBITS - 1; j >= 0; j--)
+  for (int j = NBITS - 1; j >= 0; j--)
     if (x & (1U << j))
       return j + 1;
   return 0;
@@ -37,27 +36,24 @@ naive (unsigned int x)
 int
 main (int argc, char *argv[])
 {
-  unsigned int x;
-  int i;
-
-  for (x = 0; x <= 256; x++)
+  for (unsigned int x = 0; x <= 256; x++)
     ASSERT (integer_length (x) == naive (x));
-  for (i = 0; i < NBITS; i++)
+  for (int i = 0; i < NBITS; i++)
     {
       ASSERT (integer_length (1U << i) == naive (1U << i));
       ASSERT (integer_length (1U << i) == i + 1);
       ASSERT (integer_length (-1U << i) == NBITS);
     }
-  for (i = 0; i < NBITS - 1; i++)
+  for (int i = 0; i < NBITS - 1; i++)
     ASSERT (integer_length (3U << i) == i + 2);
-  for (i = 0; i < NBITS - 2; i++)
+  for (int i = 0; i < NBITS - 2; i++)
     ASSERT (integer_length (-3U << i) == NBITS);
-  for (i = 0; i < NBITS - 2; i++)
+  for (int i = 0; i < NBITS - 2; i++)
     {
       ASSERT (integer_length (5U << i) == i + 3);
       ASSERT (integer_length (7U << i) == i + 3);
     }
-  for (i = 0; i < NBITS - 3; i++)
+  for (int i = 0; i < NBITS - 3; i++)
     {
       ASSERT (integer_length (-5U << i) == NBITS);
       ASSERT (integer_length (-7U << i) == NBITS);

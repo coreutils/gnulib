@@ -105,11 +105,10 @@ test_one_locale (const char *name, int codepage)
 
   /* Test single-byte input.  */
   {
-    int c;
     char buf[1];
 
     memset (&state, '\0', sizeof (mbstate_t));
-    for (c = 0; c < 0x100; c++)
+    for (int c = 0; c < 0x100; c++)
       switch (c)
         {
         case '\t': case '\v': case '\f':
@@ -534,10 +533,9 @@ main (int argc, char *argv[])
 {
   int codepage = atoi (argv[argc - 1]);
   int result;
-  int i;
 
   result = 77;
-  for (i = 1; i < argc - 1; i++)
+  for (int i = 1; i < argc - 1; i++)
     {
       int ret = test_one_locale (argv[i], codepage);
 

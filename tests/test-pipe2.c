@@ -94,11 +94,8 @@ get_nonblocking_flag (int fd)
 int
 main ()
 {
-  int use_nonblocking;
-  int use_cloexec;
-
-  for (use_nonblocking = 0; use_nonblocking <= !!O_NONBLOCK; use_nonblocking++)
-    for (use_cloexec = 0; use_cloexec <= !!O_CLOEXEC; use_cloexec++)
+  for (int use_nonblocking = 0; use_nonblocking <= !!O_NONBLOCK; use_nonblocking++)
+    for (int use_cloexec = 0; use_cloexec <= !!O_CLOEXEC; use_cloexec++)
       {
         int o_flags;
         int fd[2];

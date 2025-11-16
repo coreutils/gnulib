@@ -58,7 +58,6 @@ read_normalization_test_file (const char *filename,
 {
   FILE *stream;
   unsigned int lineno;
-  int part_index;
   struct normalization_test_line *lines;
   size_t lines_length;
   size_t lines_allocated;
@@ -70,7 +69,7 @@ read_normalization_test_file (const char *filename,
       exit (1);
     }
 
-  for (part_index = 0; part_index < 6; part_index++)
+  for (int part_index = 0; part_index < 6; part_index++)
     {
       file->parts[part_index].lines = NULL;
       file->parts[part_index].lines_length = 0;
@@ -78,7 +77,7 @@ read_normalization_test_file (const char *filename,
 
   lineno = 0;
 
-  part_index = -1;
+  int part_index = -1;
   lines = NULL;
   lines_length = 0;
   lines_allocated = 0;
@@ -89,7 +88,6 @@ read_normalization_test_file (const char *filename,
       char *ptr;
       int c;
       struct normalization_test_line line;
-      size_t sequence_index;
 
       lineno++;
 
@@ -139,9 +137,9 @@ read_normalization_test_file (const char *filename,
         }
       ptr = buf;
       line.lineno = lineno;
-      for (sequence_index = 0; sequence_index < 5; sequence_index++)
+      for (size_t sequence_index = 0; sequence_index < 5; sequence_index++)
         line.sequences[sequence_index] = NULL;
-      for (sequence_index = 0; sequence_index < 5; sequence_index++)
+      for (size_t sequence_index = 0; sequence_index < 5; sequence_index++)
         {
           uint32_t *sequence = XNMALLOC (1, uint32_t);
           size_t sequence_length = 0;
@@ -210,9 +208,8 @@ read_normalization_test_file (const char *filename,
     /* Collect all c1 values from the part 1 in an array.  */
     const struct normalization_test_part *p = &file->parts[1];
     ucs4_t *c1_array = XNMALLOC (p->lines_length + 1, ucs4_t);
-    size_t line_index;
 
-    for (line_index = 0; line_index < p->lines_length; line_index++)
+    for (size_t line_index = 0; line_index < p->lines_length; line_index++)
       {
         const uint32_t *sequence = p->lines[line_index].sequences[0];
         /* In part 1, every sequences[0] consists of a single character.  */
@@ -247,14 +244,11 @@ test_specific (const struct normalization_test_file *file,
                              const uint32_t *c4, size_t c4_length,
                              const uint32_t *c5, size_t c5_length))
 {
-  size_t part_index;
-
-  for (part_index = 0; part_index < 6; part_index++)
+  for (size_t part_index = 0; part_index < 6; part_index++)
     {
       const struct normalization_test_part *p = &file->parts[part_index];
-      size_t line_index;
 
-      for (line_index = 0; line_index < p->lines_length; line_index++)
+      for (size_t line_index = 0; line_index < p->lines_length; line_index++)
         {
           const struct normalization_test_line *l = &p->lines[line_index];
 
@@ -276,9 +270,8 @@ test_other (const struct normalization_test_file *file, uninorm_t nf)
      NormalizationTest.txt file, the character maps to itself in each
      of the four normalization forms.  */
   const ucs4_t *p = file->part1_c1_sorted;
-  ucs4_t uc;
 
-  for (uc = 0; uc < 0x110000; uc++)
+  for (ucs4_t uc = 0; uc < 0x110000; uc++)
     {
       if (uc >= 0xD800 && uc < 0xE000)
         {
@@ -307,19 +300,15 @@ test_other (const struct normalization_test_file *file, uninorm_t nf)
 void
 free_normalization_test_file (struct normalization_test_file *file)
 {
-  size_t part_index;
-
-  for (part_index = 0; part_index < 6; part_index++)
+  for (size_t part_index = 0; part_index < 6; part_index++)
     {
       const struct normalization_test_part *p = &file->parts[part_index];
-      size_t line_index;
 
-      for (line_index = 0; line_index < p->lines_length; line_index++)
+      for (size_t line_index = 0; line_index < p->lines_length; line_index++)
         {
           const struct normalization_test_line *l = &p->lines[line_index];
-          size_t sequence_index;
 
-          for (sequence_index = 0; sequence_index < 5; sequence_index++)
+          for (size_t sequence_index = 0; sequence_index < 5; sequence_index++)
             free (l->sequences[sequence_index]);
         }
       free (p->lines);

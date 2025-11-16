@@ -93,43 +93,35 @@ main (void)
   }
 
   /* Alignment tests.  */
-  {
-    int i, j;
-    for (i = 0; i < 32; i++)
-      {
-        for (j = 0; j < 128; j++)
-          input[i + j] = j;
-        for (j = 0; j < 128; j++)
-          {
-            ASSERT (U_CHR (input + i, 128, j) == input + i + j);
-          }
-      }
-  }
+  for (int i = 0; i < 32; i++)
+    {
+      for (int j = 0; j < 128; j++)
+        input[i + j] = j;
+      for (int j = 0; j < 128; j++)
+        {
+          ASSERT (U_CHR (input + i, 128, j) == input + i + j);
+        }
+    }
 
   /* Check that uN_chr() does not read past the first occurrence of the
      byte being searched.  */
   {
     UNIT *page_boundary = zerosize_ptr ();
-    size_t n;
 
     if (page_boundary != NULL)
       {
-        for (n = 1; n <= 500 / sizeof (UNIT); n++)
+        for (size_t n = 1; n <= 500 / sizeof (UNIT); n++)
           {
             UNIT *mem = page_boundary - n;
             U_SET (mem, 'X', n);
             ASSERT (U_CHR (mem, n, 'U') == NULL);
 
-            {
-              size_t i;
-
-              for (i = 0; i < n; i++)
-                {
-                  mem[i] = 'U';
-                  ASSERT (U_CHR (mem, 4000, 'U') == mem + i);
-                  mem[i] = 'X';
-                }
-            }
+            for (size_t i = 0; i < n; i++)
+              {
+                mem[i] = 'U';
+                ASSERT (U_CHR (mem, 4000, 'U') == mem + i);
+                mem[i] = 'X';
+              }
           }
       }
   }

@@ -60,44 +60,41 @@ main ()
 
   /* Check that fd = 0, 1, 2 are now open to the controlling terminal for the
      current process and that it is a session of its own.  */
-  {
-    int fd;
-    for (fd = 0; fd < 3; fd++)
-      if (!(tcgetpgrp (fd) == getpid ()))
-        {
-          ignore_value (freopen ("err", "w+", stderr));
-          fprintf (stderr, "tcgetpgrp(%d) = %ld whereas getpid() = %ld\n",
-                   fd, (long) tcgetpgrp (fd), (long) getpid ());
-          fflush (stderr);
-          abort ();
-        }
-    for (fd = 0; fd < 3; fd++)
+  for (int fd = 0; fd < 3; fd++)
+    if (!(tcgetpgrp (fd) == getpid ()))
       {
-        pid_t sid = tcgetsid (fd);
-        if (sid == -1)
-          {
-            if (!(errno == ENOSYS))
-              {
-                ignore_value (freopen ("err", "w+", stderr));
-                fprintf (stderr, "tcgetsid(%d) = -1 and errno = %d\n",
-                         fd, errno);
-                fflush (stderr);
-                abort ();
-              }
-          }
-        else
-          {
-            if (!(sid == getpid ()))
-              {
-                ignore_value (freopen ("err", "w+", stderr));
-                fprintf (stderr, "tcgetsid(%d) = %ld whereas getpid() = %ld\n",
-                         fd, (long) tcgetsid (fd), (long) getpid ());
-                fflush (stderr);
-                abort ();
-              }
-          }
+        ignore_value (freopen ("err", "w+", stderr));
+        fprintf (stderr, "tcgetpgrp(%d) = %ld whereas getpid() = %ld\n",
+                 fd, (long) tcgetpgrp (fd), (long) getpid ());
+        fflush (stderr);
+        abort ();
       }
-  }
+  for (int fd = 0; fd < 3; fd++)
+    {
+      pid_t sid = tcgetsid (fd);
+      if (sid == -1)
+        {
+          if (!(errno == ENOSYS))
+            {
+              ignore_value (freopen ("err", "w+", stderr));
+              fprintf (stderr, "tcgetsid(%d) = -1 and errno = %d\n",
+                       fd, errno);
+              fflush (stderr);
+              abort ();
+            }
+        }
+      else
+        {
+          if (!(sid == getpid ()))
+            {
+              ignore_value (freopen ("err", "w+", stderr));
+              fprintf (stderr, "tcgetsid(%d) = %ld whereas getpid() = %ld\n",
+                       fd, (long) tcgetsid (fd), (long) getpid ());
+              fflush (stderr);
+              abort ();
+            }
+        }
+    }
 
   return 0;
 }

@@ -90,7 +90,6 @@ extremal (struct timespec a)
 int
 main (void)
 {
-  int i, j, k;
   struct timespec test[nprototypes + 1];
   int ntests;
   int computed_hz = 1;
@@ -98,7 +97,7 @@ main (void)
 
   test[0] = make_timespec (TYPE_MINIMUM (time_t), -1);
   ntests = 1;
-  for (i = 0; i < nprototypes; i++)
+  for (int i = 0; i < nprototypes; i++)
     {
       int s = prototype[i].s;
       if (TYPE_SIGNED (time_t) || 0 <= s)
@@ -110,11 +109,11 @@ main (void)
         }
     }
 
-  for (i = 0; i < LOG10_TIMESPEC_HZ; i++)
+  for (int i = 0; i < LOG10_TIMESPEC_HZ; i++)
     computed_hz *= 10;
   ASSERT (computed_hz == TIMESPEC_HZ);
 
-  for (i = 0; i < ntests; i++)
+  for (int i = 0; i < ntests; i++)
     {
       struct timespec a = test[i];
 
@@ -126,7 +125,7 @@ main (void)
       ASSERT (sign (timespec_sign (a)) == cmp (a, make_timespec (0, 0)));
 
       if (valid (a))
-        for (j = 0; j < ntests; j++)
+        for (int j = 0; j < ntests; j++)
           {
             struct timespec b = test[j];
             if (valid (b))
@@ -141,7 +140,7 @@ main (void)
                     ASSERT (eq (a, timespec_sub (sum, b)));
                     ASSERT (eq (b, timespec_sub (sum, a)));
 
-                    for (k = 0; k < ntests; k++)
+                    for (int k = 0; k < ntests; k++)
                       {
                         struct timespec c = test[k];
                         if (valid (c))

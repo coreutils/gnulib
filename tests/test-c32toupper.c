@@ -99,55 +99,51 @@ main (int argc, char *argv[])
      See <https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57339>.  */
   if (!(argc > 1 && argv[1][0] == '4'))
 #endif
-  {
-    int c;
-
-    for (c = 0; c < 0x100; c++)
-      switch (c)
-        {
-        case '\t': case '\v': case '\f':
-        case ' ': case '!': case '"': case '#': case '%':
-        case '&': case '\'': case '(': case ')': case '*':
-        case '+': case ',': case '-': case '.': case '/':
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
-        case ':': case ';': case '<': case '=': case '>':
-        case '?':
-        case 'A': case 'B': case 'C': case 'D': case 'E':
-        case 'F': case 'G': case 'H': case 'I': case 'J':
-        case 'K': case 'L': case 'M': case 'N': case 'O':
-        case 'P': case 'Q': case 'R': case 'S': case 'T':
-        case 'U': case 'V': case 'W': case 'X': case 'Y':
-        case 'Z':
-        case '[': case '\\': case ']': case '^': case '_':
-        case 'a': case 'b': case 'c': case 'd': case 'e':
-        case 'f': case 'g': case 'h': case 'i': case 'j':
-        case 'k': case 'l': case 'm': case 'n': case 'o':
-        case 'p': case 'q': case 'r': case 's': case 't':
-        case 'u': case 'v': case 'w': case 'x': case 'y':
-        case 'z': case '{': case '|': case '}': case '~':
-          /* c is in the ISO C "basic character set".  */
-          buf[0] = (unsigned char) c;
-          mb = for_character (buf, 1);
-          switch (c)
-            {
-            case 'a': case 'b': case 'c': case 'd': case 'e':
-            case 'f': case 'g': case 'h': case 'i': case 'j':
-            case 'k': case 'l': case 'm': case 'n': case 'o':
-            case 'p': case 'q': case 'r': case 's': case 't':
-            case 'u': case 'v': case 'w': case 'x': case 'y':
-            case 'z':
-              ASSERT (mb.nbytes == 1);
-              ASSERT ((unsigned char) mb.buf[0] == (unsigned char) c - 'a' + 'A');
-              break;
-            default:
-              ASSERT (mb.nbytes == 1);
-              ASSERT ((unsigned char) mb.buf[0] == c);
-              break;
-            }
-          break;
-        }
-  }
+  for (int c = 0; c < 0x100; c++)
+    switch (c)
+      {
+      case '\t': case '\v': case '\f':
+      case ' ': case '!': case '"': case '#': case '%':
+      case '&': case '\'': case '(': case ')': case '*':
+      case '+': case ',': case '-': case '.': case '/':
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case ':': case ';': case '<': case '=': case '>':
+      case '?':
+      case 'A': case 'B': case 'C': case 'D': case 'E':
+      case 'F': case 'G': case 'H': case 'I': case 'J':
+      case 'K': case 'L': case 'M': case 'N': case 'O':
+      case 'P': case 'Q': case 'R': case 'S': case 'T':
+      case 'U': case 'V': case 'W': case 'X': case 'Y':
+      case 'Z':
+      case '[': case '\\': case ']': case '^': case '_':
+      case 'a': case 'b': case 'c': case 'd': case 'e':
+      case 'f': case 'g': case 'h': case 'i': case 'j':
+      case 'k': case 'l': case 'm': case 'n': case 'o':
+      case 'p': case 'q': case 'r': case 's': case 't':
+      case 'u': case 'v': case 'w': case 'x': case 'y':
+      case 'z': case '{': case '|': case '}': case '~':
+        /* c is in the ISO C "basic character set".  */
+        buf[0] = (unsigned char) c;
+        mb = for_character (buf, 1);
+        switch (c)
+          {
+          case 'a': case 'b': case 'c': case 'd': case 'e':
+          case 'f': case 'g': case 'h': case 'i': case 'j':
+          case 'k': case 'l': case 'm': case 'n': case 'o':
+          case 'p': case 'q': case 'r': case 's': case 't':
+          case 'u': case 'v': case 'w': case 'x': case 'y':
+          case 'z':
+            ASSERT (mb.nbytes == 1);
+            ASSERT ((unsigned char) mb.buf[0] == (unsigned char) c - 'a' + 'A');
+            break;
+          default:
+            ASSERT (mb.nbytes == 1);
+            ASSERT ((unsigned char) mb.buf[0] == c);
+            break;
+          }
+        break;
+      }
 
   if (argc > 1)
     switch (argv[1][0])

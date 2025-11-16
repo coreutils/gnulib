@@ -53,10 +53,9 @@ main ()
   { /* Small memory allocations.  */
     #define N 10000
     void *ptrs[N];
-    size_t i;
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       ptrs[i] = malloc (15);
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       {
         errno = 1789;
         free (ptrs[i]);
@@ -67,10 +66,9 @@ main ()
   { /* Medium memory allocations.  */
     #define N 1000
     void *ptrs[N];
-    size_t i;
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       ptrs[i] = malloc (729);
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       {
         errno = 1789;
         free (ptrs[i]);
@@ -81,10 +79,9 @@ main ()
   { /* Large memory allocations.  */
     #define N 10
     void *ptrs[N];
-    size_t i;
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       ptrs[i] = malloc (5318153);
-    for (i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
       {
         errno = 1789;
         free (ptrs[i]);
@@ -152,8 +149,7 @@ main ()
               /* Now add as many mappings as we can.
                  Stop at 65536, in order not to crash the machine (in case the
                  limit has been increased by the system administrator).  */
-              size_t i;
-              for (i = 0; i < 65536; i++)
+              for (size_t i = 0; i < 65536; i++)
                 if (mmap (NULL, pagesize, PROT_READ, MAP_FILE | MAP_PRIVATE, fd, 0)
                     == (void *)(-1))
                   break;

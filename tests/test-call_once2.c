@@ -108,9 +108,8 @@ static int
 once_contender_thread (void *arg)
 {
   int id = (int) (intptr_t) arg;
-  int repeat;
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Tell the main thread that we're ready.  */
       ASSERT (mtx_lock (&ready_lock[id]) == thrd_success);
@@ -145,17 +144,16 @@ once_contender_thread (void *arg)
 static void
 test_once (void)
 {
-  int i, repeat;
   thrd_t threads[THREAD_COUNT];
 
   /* Initialize all variables.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     {
       ready[i] = 0;
       ASSERT (mtx_init (&ready_lock[i], mtx_plain) == thrd_success);
     }
 #if ENABLE_LOCKING
-  for (i = 0; i < REPEAT_COUNT; i++)
+  for (int i = 0; i < REPEAT_COUNT; i++)
     gl_rwlock_init (fire_signal[i]);
 #else
   fire_signal_state = 0;
@@ -163,24 +161,24 @@ test_once (void)
 
 #if ENABLE_LOCKING
   /* Block all fire_signals.  */
-  for (i = REPEAT_COUNT-1; i >= 0; i--)
+  for (int i = REPEAT_COUNT-1; i >= 0; i--)
     gl_rwlock_wrlock (fire_signal[i]);
 #endif
 
   /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (thrd_create (&threads[i],
                          once_contender_thread, (void *) (intptr_t) i)
             == thrd_success);
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Wait until every thread is ready.  */
       dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
       for (;;)
         {
           int ready_count = 0;
-          for (i = 0; i < THREAD_COUNT; i++)
+          for (int i = 0; i < THREAD_COUNT; i++)
             {
               ASSERT (mtx_lock (&ready_lock[i]) == thrd_success);
               ready_count += ready[i];
@@ -210,7 +208,7 @@ test_once (void)
       performed = 0;
 
       /* Preparation for the next round: Reset the ready flags.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         {
           ASSERT (mtx_lock (&ready_lock[i]) == thrd_success);
           ready[i] = 0;
@@ -227,7 +225,7 @@ test_once (void)
     }
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (thrd_join (threads[i], NULL) == thrd_success);
 }
 

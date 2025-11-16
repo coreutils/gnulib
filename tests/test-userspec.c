@@ -97,43 +97,39 @@ same_diag (char const *s, char const *t)
 int
 main (void)
 {
-  unsigned int i;
   int fail = 0;
 
   /* Find a UID that has both a user name and login group name,
      but skip UID 0.  */
-  {
-    uid_t uid;
-    for (uid = 1200; 0 < uid; uid--)
-      {
-        struct group *gr;
-        struct passwd *pw = getpwuid (uid);
-        unsigned int j;
-        size_t len;
-        if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
-          continue;
-        j = ARRAY_CARDINALITY (T) - 1;
-        len = strlen (pw->pw_name);
-        if (sizeof T[j].in - 2 < len)
-          continue;
+  for (uid_t uid = 1200; 0 < uid; uid--)
+    {
+      struct group *gr;
+      struct passwd *pw = getpwuid (uid);
+      unsigned int j;
+      size_t len;
+      if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
+        continue;
+      j = ARRAY_CARDINALITY (T) - 1;
+      len = strlen (pw->pw_name);
+      if (sizeof T[j].in - 2 < len)
+        continue;
 
-        /* Store "username:" in T[j].in.  */
-        memcpy(T[j].in, pw->pw_name, len);
-        strcpy(T[j].in + len, ":");
+      /* Store "username:" in T[j].in.  */
+      memcpy(T[j].in, pw->pw_name, len);
+      strcpy(T[j].in + len, ":");
 
-        T[j].uid = uid;
-        T[j].gid = gr->gr_gid;
-        T[j].user_name = xstrdup (pw->pw_name);
-        T[j].group_name = xstrdup (gr->gr_name);
-        T[j].result = NULL;
-        break;
-      }
-  }
+      T[j].uid = uid;
+      T[j].gid = gr->gr_gid;
+      T[j].user_name = xstrdup (pw->pw_name);
+      T[j].group_name = xstrdup (gr->gr_name);
+      T[j].result = NULL;
+      break;
+    }
 
   char *user_name = NULL;
   char *group_name = NULL;
 
-  for (i = 0; i < ARRAY_CARDINALITY (T); i++)
+  for (unsigned int i = 0; i < ARRAY_CARDINALITY (T); i++)
     {
       uid_t uid = (uid_t) -1;
       gid_t gid = (gid_t) -1;

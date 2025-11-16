@@ -163,8 +163,7 @@ test_function (ptrdiff_t (*my_snzprintf) (char *, size_t, const char *, ...))
   { /* This test would fail on AIX 7.1.  */
     ptrdiff_t retval =
       my_snzprintf (result, sizeof (result), "%.4000d %d", 1234567, 99);
-    size_t i;
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
     ASSERT (retval == strlen (result));

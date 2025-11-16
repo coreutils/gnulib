@@ -68,14 +68,13 @@ test_errors (int fd, const char *slave)
   char buffer[256];
   size_t len;
   size_t buflen_max;
-  size_t buflen;
   int result;
 
   len = strlen (slave);
   buflen_max = len + 5;
   if (buflen_max > sizeof buffer)
     buflen_max = sizeof buffer;
-  for (buflen = 0; buflen <= buflen_max; buflen++)
+  for (size_t buflen = 0; buflen <= buflen_max; buflen++)
     {
       memset (buffer, 'X', sizeof buffer);
       result = ptsname_r (fd, buffer, buflen);
@@ -219,45 +218,64 @@ main (void)
 #elif defined __gnu_hurd__ /* Hurd */
 
   /* Try various master names of Hurd: /dev/pty[p-q][0-9a-v]  */
-  {
-    int char1;
-    int char2;
+  for (int char1 = 'p'; char1 <= 'q'; char1++)
+    for (int char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
+      {
+        char master_name[32];
+        int fd;
 
-    for (char1 = 'p'; char1 <= 'q'; char1++)
-      for (char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
-        {
-          char master_name[32];
-          int fd;
+        sprintf (master_name, "/dev/pty%c%c", char1, char2);
+        fd = open (master_name, O_RDONLY);
+        if (fd >= 0)
+          {
+            char buffer[256];
+            int result;
+            char slave_name[32];
 
-          sprintf (master_name, "/dev/pty%c%c", char1, char2);
-          fd = open (master_name, O_RDONLY);
-          if (fd >= 0)
-            {
-              char buffer[256];
-              int result;
-              char slave_name[32];
+            result = ptsname_r (fd, buffer, sizeof buffer);
+            ASSERT (result == 0);
+            sprintf (slave_name, "/dev/tty%c%c", char1, char2);
+            ASSERT (same_slave (buffer, slave_name));
 
-              result = ptsname_r (fd, buffer, sizeof buffer);
-              ASSERT (result == 0);
-              sprintf (slave_name, "/dev/tty%c%c", char1, char2);
-              ASSERT (same_slave (buffer, slave_name));
+            test_errors (fd, buffer);
 
-              test_errors (fd, buffer);
-
-              close (fd);
-            }
-        }
-  }
+            close (fd);
+          }
+      }
 
 #else
 
   /* Try various master names of Mac OS X: /dev/pty[p-w][0-9a-f]  */
-  {
-    int char1;
-    int char2;
+  for (int char1 = 'p'; char1 <= 'w'; char1++)
+    for (int char2 = '0'; char2 <= 'f'; (char2 == '9' ? char2 = 'a' : char2++))
+      {
+        char master_name[32];
+        int fd;
 
-    for (char1 = 'p'; char1 <= 'w'; char1++)
-      for (char2 = '0'; char2 <= 'f'; (char2 == '9' ? char2 = 'a' : char2++))
+        sprintf (master_name, "/dev/pty%c%c", char1, char2);
+        fd = open (master_name, O_RDONLY);
+        if (fd >= 0)
+          {
+            char buffer[256];
+            int result;
+            char slave_name[32];
+
+            result = ptsname_r (fd, buffer, sizeof buffer);
+            ASSERT (result == 0);
+            sprintf (slave_name, "/dev/tty%c%c", char1, char2);
+            ASSERT (same_slave (buffer, slave_name));
+
+            test_errors (fd, buffer);
+
+            /* This call hangs on AIX.  */
+            close (fd);
+          }
+      }
+
+  /* Try various master names of *BSD: /dev/pty[p-sP-S][0-9a-v]  */
+  for (int upper = 0; upper <= 1; upper++)
+    for (int char1 = (upper ? 'P' : 'p'); char1 <= (upper ? 'S' : 's'); char1++)
+      for (int char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
         {
           char master_name[32];
           int fd;
@@ -277,44 +295,9 @@ main (void)
 
               test_errors (fd, buffer);
 
-              /* This call hangs on AIX.  */
               close (fd);
             }
         }
-  }
-
-  /* Try various master names of *BSD: /dev/pty[p-sP-S][0-9a-v]  */
-  {
-    int upper;
-    int char1;
-    int char2;
-
-    for (upper = 0; upper <= 1; upper++)
-      for (char1 = (upper ? 'P' : 'p'); char1 <= (upper ? 'S' : 's'); char1++)
-        for (char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
-          {
-            char master_name[32];
-            int fd;
-
-            sprintf (master_name, "/dev/pty%c%c", char1, char2);
-            fd = open (master_name, O_RDONLY);
-            if (fd >= 0)
-              {
-                char buffer[256];
-                int result;
-                char slave_name[32];
-
-                result = ptsname_r (fd, buffer, sizeof buffer);
-                ASSERT (result == 0);
-                sprintf (slave_name, "/dev/tty%c%c", char1, char2);
-                ASSERT (same_slave (buffer, slave_name));
-
-                test_errors (fd, buffer);
-
-                close (fd);
-              }
-          }
-  }
 
 #endif
 

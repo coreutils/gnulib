@@ -64,11 +64,11 @@ string_hash (const void *x)
 static void
 check_equals (gl_list_t list1, gl_list_t list2)
 {
-  size_t n, i;
+  size_t n;
 
   n = gl_list_size (list1);
   ASSERT (n == gl_list_size (list2));
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       ASSERT (gl_list_get_at (list1, i) == gl_list_get_at (list2, i));
     }
@@ -126,10 +126,8 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (50);
     const void **contents =
       (const void **) malloc (initial_size * sizeof (const void *));
-    size_t i;
-    unsigned int repeat;
 
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       contents[i] = RANDOM_OBJECT ();
 
     /* Create list1.  */
@@ -141,7 +139,7 @@ main (int argc, char *argv[])
     list2 = gl_list_nx_create_empty (GL_RBTREEHASH_LIST,
                                      string_equals, string_hash, NULL, true);
     ASSERT (list2 != NULL);
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       ASSERT (gl_list_nx_add_last (list2, contents[i]) != NULL);
 
     /* Create list3.  */
@@ -155,7 +153,7 @@ main (int argc, char *argv[])
     check_equals_by_forward_iteration (list1, list2);
     check_equals_by_backward_iteration (list1, list2);
 
-    for (repeat = 0; repeat < 10000; repeat++)
+    for (unsigned int repeat = 0; repeat < 10000; repeat++)
       {
         unsigned int operation = RANDOM (18);
         switch (operation)
@@ -436,7 +434,7 @@ main (int argc, char *argv[])
               iter1 = gl_list_iterator (list1);
               iter2 = gl_list_iterator (list2);
               iter3 = gl_list_iterator (list3);
-              for (i = 0; i < n; i++)
+              for (size_t i = 0; i < n; i++)
                 {
                   ASSERT (gl_list_iterator_next (&iter1, &elt, NULL));
                   ASSERT (gl_list_get_at (list1, i) == elt);
@@ -462,7 +460,7 @@ main (int argc, char *argv[])
               iter1 = gl_list_iterator_from_to (list1, start, end);
               iter2 = gl_list_iterator_from_to (list2, start, end);
               iter3 = gl_list_iterator_from_to (list3, start, end);
-              for (i = start; i < end; i++)
+              for (size_t i = start; i < end; i++)
                 {
                   ASSERT (gl_list_iterator_next (&iter1, &elt, NULL));
                   ASSERT (gl_list_get_at (list1, i) == elt);

@@ -84,12 +84,11 @@ check_equals (gl_map_t map1, gl_list_t keys, gl_list_t values)
   gl_map_iterator_t iter1;
   const void *key1;
   const void *value1;
-  size_t i;
 
   ASSERT (gl_list_size (keys) == n);
   ASSERT (gl_list_size (values) == n);
   iter1 = gl_map_iterator (map1);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       ASSERT (gl_map_iterator_next (&iter1, &key1, &value1));
       pairs_of_map1[i].key = key1;
@@ -100,7 +99,7 @@ check_equals (gl_map_t map1, gl_list_t keys, gl_list_t values)
 
   if (n > 0)
     qsort (pairs_of_map1, n, sizeof (struct pair), cmp_pairs_in_array);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       ASSERT (pairs_of_map1[i].key == gl_list_get_at (keys, i));
       ASSERT (pairs_of_map1[i].value == gl_list_get_at (values, i));
@@ -127,8 +126,6 @@ main (int argc, char *argv[])
 
   {
     size_t initial_size = RANDOM (20);
-    size_t i;
-    unsigned int repeat;
 
     /* Create map1.  */
     map1 = gl_map_nx_create_empty (GL_ARRAY_MAP,
@@ -142,7 +139,7 @@ main (int argc, char *argv[])
     check_all (map1, keys, values);
 
     /* Initialize them.  */
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       {
         const char *key = RANDOM_OBJECT ();
         const char *value = RANDOM_OBJECT ();
@@ -160,7 +157,7 @@ main (int argc, char *argv[])
         check_all (map1, keys, values);
       }
 
-    for (repeat = 0; repeat < 100000; repeat++)
+    for (unsigned int repeat = 0; repeat < 100000; repeat++)
       {
         unsigned int operation = RANDOM (3);
         switch (operation)

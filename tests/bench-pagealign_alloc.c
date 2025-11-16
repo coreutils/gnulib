@@ -35,15 +35,13 @@ static size_t pagesize;
 static int
 allocate_some_pages (void)
 {
-  int i;
-
-  for (i = 1; i <= 9; i++)
+  for (int i = 1; i <= 9; i++)
     if (pagealign_alloc (pagesize) == NULL)
       return -1;
-  for (i = 1; i <= 2; i++)
+  for (int i = 1; i <= 2; i++)
     if (pagealign_alloc (2 * pagesize) == NULL)
       return -1;
-  for (i = 1; i <= 1; i++)
+  for (int i = 1; i <= 1; i++)
     if (pagealign_alloc (3 * pagesize) == NULL)
       return -1;
 
@@ -112,8 +110,7 @@ main (int argc, char *argv[])
   pagesize = getpagesize ();
 
   /* Execute each test.  */
-  size_t i;
-  for (i = 0; i < strlen (tests); i++)
+  for (size_t i = 0; i < strlen (tests); i++)
     {
       char test = tests[i];
 

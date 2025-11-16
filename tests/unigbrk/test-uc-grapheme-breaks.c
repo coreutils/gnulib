@@ -61,30 +61,27 @@ test_uc_grapheme_breaks (const char *expected, ucs4_t *s, size_t n,
                           const char *filename, int lineno)
 {
   char breaks[16];
-  size_t i;
 
   ASSERT (n <= 16);
 
   uc_grapheme_breaks (s, n, breaks);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     if (breaks[i] != (expected[i] == '#'))
       {
-        size_t j;
-
         fprintf (stderr, "wrong grapheme breaks:\n");
 
         fprintf (stderr, "   input:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, " %04X", s[j]);
         putc ('\n', stderr);
 
         fprintf (stderr, "expected:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, "    %d", expected[j] == '#');
         putc ('\n', stderr);
 
         fprintf (stderr, "  actual:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, "    %d", breaks[j]);
         putc ('\n', stderr);
 

@@ -153,11 +153,9 @@ check (float x)
 int
 main ()
 {
-  unsigned int highbits;
-  unsigned int lowbits;
   int error = 0;
-  for (highbits = 0; highbits < (1 << NUM_HIGHBITS); highbits++)
-    for (lowbits = 0; lowbits < (1 << NUM_LOWBITS); lowbits++)
+  for (unsigned int highbits = 0; highbits < (1 << NUM_HIGHBITS); highbits++)
+    for (unsigned int lowbits = 0; lowbits < (1 << NUM_LOWBITS); lowbits++)
       {
         /* Combine highbits and lowbits into a floating-point number,
            sign-extending the lowbits to 32-NUM_HIGHBITS bits.  */

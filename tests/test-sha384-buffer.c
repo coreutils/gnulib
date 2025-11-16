@@ -37,12 +37,11 @@ main (void)
   if (memcmp (sha384_buffer (in1, strlen (in1), buf),
               out1, SHA384_DIGEST_SIZE) != 0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < SHA384_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SHA384_DIGEST_SIZE; i++)
         printf ("%02x ", out1[i] & 0xFFu);
       printf ("\ncomputed:\n");
-      for (i = 0; i < SHA384_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SHA384_DIGEST_SIZE; i++)
         printf ("%02x ", buf[i] & 0xFFu);
       printf ("\n");
       return 1;

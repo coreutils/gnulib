@@ -76,7 +76,6 @@ int
 main (int argc, char *argv[])
 {
   int test;
-  int fd;
 
   if (argc != 3)
     {
@@ -128,7 +127,7 @@ main (int argc, char *argv[])
   /* Plug any file descriptor leaks inherited from outside world before
      starting, so that child has a clean slate (at least for the fds that we
      might be manipulating).  */
-  for (fd = 3; fd < 7; fd++)
+  for (int fd = 3; fd < 7; fd++)
     close (fd);
 
   test_pipe (argv[1], test >= 4);

@@ -52,9 +52,8 @@ main (int argc, char *argv[])
   void *aligned16_blocks[SIZEOF (sizes)];
   void *aligned32_blocks[SIZEOF (sizes)];
   void *aligned64_blocks[SIZEOF (sizes)];
-  size_t i;
 
-  for (i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < SIZEOF (sizes); i++)
     {
       size_t size = sizes[i];
 
@@ -89,7 +88,7 @@ main (int argc, char *argv[])
       memset (aligned64_blocks[i], 'z', size);
     }
 
-  for (i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < SIZEOF (sizes); i++)
     {
       free (aligned2_blocks[i]);
       free (aligned4_blocks[i]);

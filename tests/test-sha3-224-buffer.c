@@ -51,12 +51,11 @@ check (char const *message, size_t len, char const *expect)
   if (memcmp (sha3_224_buffer (message, len, buf),
               expect, SHA3_224_DIGEST_SIZE) != 0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < SHA3_224_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SHA3_224_DIGEST_SIZE; i++)
         printf ("%02x ", expect[i] & 0xFFu);
       printf ("\ncomputed:\n");
-      for (i = 0; i < SHA3_224_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SHA3_224_DIGEST_SIZE; i++)
         printf ("%02x ", buf[i] & 0xFFu);
       printf ("\n");
       return 1;

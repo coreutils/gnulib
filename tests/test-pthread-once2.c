@@ -109,9 +109,8 @@ static void *
 once_contender_thread (void *arg)
 {
   int id = (int) (intptr_t) arg;
-  int repeat;
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Tell the main thread that we're ready.  */
       ASSERT (pthread_mutex_lock (&ready_lock[id]) == 0);
@@ -146,11 +145,10 @@ once_contender_thread (void *arg)
 static void
 test_once (void)
 {
-  int i, repeat;
   pthread_t threads[THREAD_COUNT];
 
   /* Initialize all variables.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     {
       pthread_mutexattr_t attr;
 
@@ -161,7 +159,7 @@ test_once (void)
       ASSERT (pthread_mutexattr_destroy (&attr) == 0);
     }
 #if ENABLE_LOCKING
-  for (i = 0; i < REPEAT_COUNT; i++)
+  for (int i = 0; i < REPEAT_COUNT; i++)
     ASSERT (pthread_rwlock_init (&fire_signal[i], NULL) == 0);
 #else
   fire_signal_state = 0;
@@ -169,24 +167,24 @@ test_once (void)
 
 #if ENABLE_LOCKING
   /* Block all fire_signals.  */
-  for (i = REPEAT_COUNT-1; i >= 0; i--)
+  for (int i = REPEAT_COUNT-1; i >= 0; i--)
     ASSERT (pthread_rwlock_wrlock (&fire_signal[i]) == 0);
 #endif
 
   /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_create (&threads[i], NULL,
                             once_contender_thread, (void *) (intptr_t) i)
             == 0);
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Wait until every thread is ready.  */
       dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
       for (;;)
         {
           int ready_count = 0;
-          for (i = 0; i < THREAD_COUNT; i++)
+          for (int i = 0; i < THREAD_COUNT; i++)
             {
               ASSERT (pthread_mutex_lock (&ready_lock[i]) == 0);
               ready_count += ready[i];
@@ -216,7 +214,7 @@ test_once (void)
       performed = 0;
 
       /* Preparation for the next round: Reset the ready flags.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         {
           ASSERT (pthread_mutex_lock (&ready_lock[i]) == 0);
           ready[i] = 0;
@@ -233,7 +231,7 @@ test_once (void)
     }
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_join (threads[i], NULL) == 0);
 }
 

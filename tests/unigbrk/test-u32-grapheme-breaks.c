@@ -35,14 +35,13 @@ test_u32_grapheme_breaks (const char *expected, ...)
   uint32_t s[16];
   va_list args;
   char breaks[16];
-  size_t i;
 
   ASSERT (n <= 16);
 
   memset (breaks, 0xcc, n);
 
   va_start (args, expected);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       int unit = va_arg (args, int);
       ASSERT (unit >= 0);
@@ -52,25 +51,23 @@ test_u32_grapheme_breaks (const char *expected, ...)
   va_end (args);
 
   u32_grapheme_breaks (s, n, breaks);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     if (breaks[i] != (expected[i] == '#'))
       {
-        size_t j;
-
         fprintf (stderr, "wrong grapheme breaks:\n");
 
         fprintf (stderr, "   input:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, " %04X", s[j]);
         putc ('\n', stderr);
 
         fprintf (stderr, "expected:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, "    %d", expected[j] == '#');
         putc ('\n', stderr);
 
         fprintf (stderr, "  actual:");
-        for (j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
           fprintf (stderr, "    %d", breaks[j]);
         putc ('\n', stderr);
 

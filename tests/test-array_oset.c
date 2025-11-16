@@ -46,11 +46,10 @@ check_equals (gl_oset_t set1, gl_list_t set2)
   const void *elt1;
   const void *elt2;
   gl_list_node_t node2;
-  size_t i;
 
   iter1 = gl_oset_iterator (set1);
   iter2 = gl_list_iterator (set2);
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       ASSERT (gl_oset_iterator_next (&iter1, &elt1));
       ASSERT (gl_list_iterator_next (&iter2, &elt2, &node2));
@@ -81,9 +80,8 @@ gl_sortedlist_indexof_atleast (gl_list_t set,
 {
   /* This implementation is slow, but easy to verify.  */
   size_t count = gl_list_size (set);
-  size_t index;
 
-  for (index = 0; index < count; index++)
+  for (size_t index = 0; index < count; index++)
     if (threshold_fn (gl_list_get_at (set, index), threshold))
       return index;
   return (size_t)(-1);
@@ -101,8 +99,6 @@ main (int argc, char *argv[])
 
   {
     size_t initial_size = RANDOM (20);
-    size_t i;
-    unsigned int repeat;
 
     /* Create set1.  */
     set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
@@ -114,7 +110,7 @@ main (int argc, char *argv[])
     check_all (set1, set2);
 
     /* Initialize them.  */
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       {
         const char *obj = RANDOM_OBJECT ();
         ASSERT (gl_oset_nx_add (set1, obj)
@@ -124,7 +120,7 @@ main (int argc, char *argv[])
         check_all (set1, set2);
       }
 
-    for (repeat = 0; repeat < 100000; repeat++)
+    for (unsigned int repeat = 0; repeat < 100000; repeat++)
       {
         unsigned int operation = RANDOM (4);
         switch (operation)

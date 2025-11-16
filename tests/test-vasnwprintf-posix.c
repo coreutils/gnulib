@@ -93,11 +93,10 @@ static void
 test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *, ...))
 {
   wchar_t buf[8];
-  int size;
 
   /* Test return value convention.  */
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length = size;
       wchar_t *result = my_asnwprintf (NULL, &length, L"%d", 12345);
@@ -107,7 +106,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
     }
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length;
       wchar_t *result;
@@ -1065,8 +1064,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"123432123432123*********************.000000" },
         { 1.234321234321234e36, L"123432123432123**********************.000000" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -1397,8 +1395,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"123432123432123*********************.000000" },
         { 1.234321234321234e36L, L"123432123432123**********************.000000" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2118,8 +2115,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"1.234321e+35" },
         { 1.234321234321234e36, L"1.234321e+36" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2486,8 +2482,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"1.234321e+35" },
         { 1.234321234321234e36L, L"1.234321e+36" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2936,8 +2931,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"1.23432e+35" },
         { 1.234321234321234e36, L"1.23432e+36" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -3290,8 +3284,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"1.23432e+35" },
         { 1.234321234321234e36L, L"1.23432e+36" }
       };
-    size_t k;
-    for (k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < SIZEOF (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -3708,9 +3701,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000d %d", 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (wcscmp (result + 4000 - 7, L"1234567 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3721,9 +3713,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.*d %d", 4000, 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (wcscmp (result + 4000 - 7, L"1234567 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3734,10 +3725,9 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000d %d", -1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
     ASSERT (result[0] == '-');
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[1 + i] == '0');
     ASSERT (wcscmp (result + 1 + 4000 - 7, L"1234567 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3748,9 +3738,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000u %d", 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (wcscmp (result + 4000 - 7, L"1234567 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3761,9 +3750,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000o %d", 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (wcscmp (result + 4000 - 7, L"4553207 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3774,9 +3762,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000x %d", 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
-    for (i = 0; i < 4000 - 6; i++)
+    for (size_t i = 0; i < 4000 - 6; i++)
       ASSERT (result[i] == '0');
     ASSERT (wcscmp (result + 4000 - 6, L"12d687 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3787,11 +3774,10 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%#.4000x %d", 1234567, 99);
-    size_t i;
     ASSERT (result != NULL);
     ASSERT (result[0] == '0');
     ASSERT (result[1] == 'x');
-    for (i = 0; i < 4000 - 6; i++)
+    for (size_t i = 0; i < 4000 - 6; i++)
       ASSERT (result[2 + i] == '0');
     ASSERT (wcscmp (result + 2 + 4000 - 6, L"12d687 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3802,11 +3788,10 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.4000f %d", 1.0, 99);
-    size_t i;
     ASSERT (result != NULL);
     ASSERT (result[0] == '1');
     ASSERT (result[1] == '.');
-    for (i = 0; i < 4000; i++)
+    for (size_t i = 0; i < 4000; i++)
       ASSERT (result[2 + i] == '0');
     ASSERT (wcscmp (result + 2 + 4000, L" 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3817,11 +3802,10 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%.511f %d", 1.0, 99);
-    size_t i;
     ASSERT (result != NULL);
     ASSERT (result[0] == '1');
     ASSERT (result[1] == '.');
-    for (i = 0; i < 511; i++)
+    for (size_t i = 0; i < 511; i++)
       ASSERT (result[2 + i] == '0');
     ASSERT (wcscmp (result + 2 + 511, L" 99") == 0);
     ASSERT (length == wcslen (result));
@@ -3833,14 +3817,16 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     size_t length;
     wchar_t *result;
     wchar_t winput[5000];
-    size_t i;
 
-    for (i = 0; i < sizeof (input) - 1; i++)
-      input[i] = 'a' + ((1000000 / (i + 1)) % 26);
-    input[i] = '\0';
+    {
+      size_t i;
+      for (i = 0; i < sizeof (input) - 1; i++)
+        input[i] = 'a' + ((1000000 / (i + 1)) % 26);
+      input[i] = '\0';
+    }
     result = my_asnwprintf (NULL, &length, L"%.4000s %d", input, 99);
     ASSERT (result != NULL);
-    for (i = 0; i < sizeof (input); i++)
+    for (size_t i = 0; i < sizeof (input); i++)
       winput[i] = (wchar_t) input[i];
     ASSERT (wmemcmp (result, winput, 4000) == 0);
     ASSERT (wcscmp (result + 4000, L" 99") == 0);
@@ -3899,9 +3885,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
        invocations of mbrtowc(), and in the "C" and "POSIX" locales, "an
        [EILSEQ] error cannot occur since all byte values are valid characters",
        says POSIX:2018.  */
-    int c;
-
-    for (c = 0; c < 0x100; c++)
+    for (int c = 0; c < 0x100; c++)
       {
         char s[2] = { c, '\0' };
         size_t length;
@@ -3957,53 +3941,43 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   /* To verify that these tests succeed, it is necessary to run them under
      a tool that checks against invalid memory accesses, such as ElectricFence
      or "valgrind --tool=memcheck".  */
-  {
-    size_t i;
+  for (size_t i = 1; i <= 8; i++)
+    {
+      char *block;
+      size_t length;
+      wchar_t *result;
+      wchar_t *wblock;
 
-    for (i = 1; i <= 8; i++)
-      {
-        char *block;
-        size_t length;
-        wchar_t *result;
-        wchar_t *wblock;
-        size_t j;
+      block = (char *) malloc (i);
+      memcpy (block, "abcdefgh", i);
+      result = my_asnwprintf (NULL, &length, L"%.*s", (int) i, block);
+      ASSERT (result != NULL);
+      wblock = (wchar_t *) malloc (i * sizeof (wchar_t));
+      for (size_t j = 0; j < i; j++)
+        wblock[j] = (wchar_t) block[j];
+      ASSERT (wmemcmp (result, wblock, i) == 0);
+      ASSERT (result[i] == '\0');
+      ASSERT (length == wcslen (result));
+      free (result);
+      free (block);
+    }
+  for (size_t i = 1; i <= 8; i++)
+    {
+      wchar_t *block;
+      size_t length;
+      wchar_t *result;
 
-        block = (char *) malloc (i);
-        memcpy (block, "abcdefgh", i);
-        result = my_asnwprintf (NULL, &length, L"%.*s", (int) i, block);
-        ASSERT (result != NULL);
-        wblock = (wchar_t *) malloc (i * sizeof (wchar_t));
-        for (j = 0; j < i; j++)
-          wblock[j] = (wchar_t) block[j];
-        ASSERT (wmemcmp (result, wblock, i) == 0);
-        ASSERT (result[i] == '\0');
-        ASSERT (length == wcslen (result));
-        free (result);
-        free (block);
-      }
-  }
-  {
-    size_t i;
-
-    for (i = 1; i <= 8; i++)
-      {
-        wchar_t *block;
-        size_t j;
-        size_t length;
-        wchar_t *result;
-
-        block = (wchar_t *) malloc (i * sizeof (wchar_t));
-        for (j = 0; j < i; j++)
-          block[j] = "abcdefgh"[j];
-        result = my_asnwprintf (NULL, &length, L"%.*ls", (int) i, block);
-        ASSERT (result != NULL);
-        ASSERT (wmemcmp (result, L"abcdefgh", i) == 0);
-        ASSERT (result[i] == '\0');
-        ASSERT (length == wcslen (result));
-        free (result);
-        free (block);
-      }
-  }
+      block = (wchar_t *) malloc (i * sizeof (wchar_t));
+      for (size_t j = 0; j < i; j++)
+        block[j] = "abcdefgh"[j];
+      result = my_asnwprintf (NULL, &length, L"%.*ls", (int) i, block);
+      ASSERT (result != NULL);
+      ASSERT (wmemcmp (result, L"abcdefgh", i) == 0);
+      ASSERT (result[i] == '\0');
+      ASSERT (length == wcslen (result));
+      free (result);
+      free (block);
+    }
 
   /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
   {
@@ -4117,9 +4091,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   { /* The conversion of %c to wide character is done as if through btowc(),
        and in the "C" and "POSIX" locales, "btowc() shall not return WEOF if
        c has a value in the range 0 to 255 inclusive", says POSIX:2018.  */
-    int c;
-
-    for (c = 0; c < 0x100; c++)
+    for (int c = 0; c < 0x100; c++)
       {
         size_t length;
         wchar_t *result = my_asnwprintf (NULL, &length, L"%c", c);

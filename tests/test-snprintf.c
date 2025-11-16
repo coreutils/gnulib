@@ -31,13 +31,12 @@ int
 main ()
 {
   char buf[8];
-  int size;
   int retval;
 
   retval = snprintf (NULL, 0, "%d", 12345);
   ASSERT (retval == 5);
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       memcpy (buf, "DEADBEEF", 8);
       retval = snprintf (buf, size, "%d", 12345);

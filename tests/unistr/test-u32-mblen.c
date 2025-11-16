@@ -43,10 +43,9 @@ main ()
 
   /* Test ISO 646 unit input.  */
   {
-    ucs4_t c;
     uint32_t buf[1];
 
-    for (c = 1; c < 0x80; c++)
+    for (ucs4_t c = 1; c < 0x80; c++)
       {
         buf[0] = c;
         ret = u32_mblen (buf, 1);

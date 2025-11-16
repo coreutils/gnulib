@@ -32,8 +32,6 @@ SIGNATURE_CHECK (btoc32, wint_t, (int));
 int
 main (int argc, char *argv[])
 {
-  int c;
-
   /* configure should already have checked that the locale is supported.  */
   if (setlocale (LC_ALL, "") == NULL)
     return 1;
@@ -54,7 +52,7 @@ main (int argc, char *argv[])
       {
       case '1':
         /* C or POSIX locale.  */
-        for (c = 0; c < 0x100; c++)
+        for (int c = 0; c < 0x100; c++)
           if (c != 0)
             {
               /* We are testing all nonnull bytes.  */
@@ -75,17 +73,17 @@ main (int argc, char *argv[])
 
       case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-        for (c = 0; c < 0x80; c++)
+        for (int c = 0; c < 0x80; c++)
           ASSERT (btoc32 (c) == c);
-        for (c = 0xA0; c < 0x100; c++)
+        for (int c = 0xA0; c < 0x100; c++)
           ASSERT (btoc32 (c) != WEOF);
         return test_exit_status;
 
       case '3':
         /* Locale encoding is UTF-8.  */
-        for (c = 0; c < 0x80; c++)
+        for (int c = 0; c < 0x80; c++)
           ASSERT (btoc32 (c) == c);
-        for (c = 0x80; c < 0x100; c++)
+        for (int c = 0x80; c < 0x100; c++)
           ASSERT (btoc32 (c) == WEOF);
         return test_exit_status;
       }

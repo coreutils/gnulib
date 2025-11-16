@@ -41,16 +41,14 @@ uint_to_exceptions (unsigned int a)
 int
 main ()
 {
-  unsigned int a, b;
-
   /* Run through all possible valid arguments to feenableexcept and
      fedisableexcept.
      An alternative way of coding this iteration, without the uint_to_exceptions
      function, would be using the trick from
      Jörg Arndt: Matters Computational <https://www.jjj.de/fxt/fxtbook.pdf>
      § 1.25.1 Generating bit subsets of a given word  */
-  for (a = 0; a < 0x20; a++)
-    for (b = 0; b < 0x20; b++)
+  for (unsigned int a = 0; a < 0x20; a++)
+    for (unsigned int b = 0; b < 0x20; b++)
       {
         unsigned int c = a & ~b;
 

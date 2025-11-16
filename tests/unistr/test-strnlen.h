@@ -27,13 +27,12 @@ static void
 check (const UNIT *input, size_t input_length)
 {
   size_t length;
-  size_t n;
 
   ASSERT (input_length > 0);
   ASSERT (input[input_length - 1] == 0);
   length = input_length - 1; /* = U_STRLEN (input) */
 
-  for (n = 0; n <= 2 * length + 2; n++)
+  for (size_t n = 0; n <= 2 * length + 2; n++)
     check_single (input, length, n);
 
   /* Check that U_STRNLEN (S, N) does not look at more than
@@ -43,14 +42,13 @@ check (const UNIT *input, size_t input_length)
 
     if (page_boundary != NULL)
       {
-        for (n = 0; n <= 2 * length + 2; n++)
+        for (size_t n = 0; n <= 2 * length + 2; n++)
           {
             size_t n_to_copy = (n <= length ? n : length + 1);
             UNIT *copy;
-            size_t i;
 
             copy = (UNIT *) page_boundary - n_to_copy;
-            for (i = 0; i < n_to_copy; i++)
+            for (size_t i = 0; i < n_to_copy; i++)
               copy[i] = input[i];
 
             check_single (copy, length, n);

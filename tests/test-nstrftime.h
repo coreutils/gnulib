@@ -60,9 +60,8 @@ static int
 posixtm_test (void)
 {
   int fail = 0;
-  unsigned int i;
 
-  for (i = 0; T[i].fmt; i++)
+  for (unsigned int i = 0; T[i].fmt; i++)
     {
       char buf[1000];
       time_t t = T[i].in;
@@ -195,9 +194,8 @@ static int
 tzalloc_test (void)
 {
   int fail = 0;
-  int i;
 
-  for (i = 0; LT[i].tza; i++)
+  for (int i = 0; LT[i].tza; i++)
     {
       struct tzalloc_test *tza = LT[i].tza;
       long lt = LT[i].t;
@@ -270,10 +268,9 @@ static int
 quarter_test (void)
 {
   int fail = 0;
-  size_t mon;
 
   /* Check %q.  */
-  for (mon = 1; mon <= 12; mon++)
+  for (size_t mon = 1; mon <= 12; mon++)
     {
       char out[2];
       char exp[2] = {0,};

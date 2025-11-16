@@ -125,10 +125,10 @@ random_account (void)
 static void
 check_accounts (void)
 {
-  int i, sum;
+  int sum;
 
   sum = 0;
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     sum += account[i];
   if (sum != ACCOUNT_COUNT * 1000)
     abort ();
@@ -146,9 +146,7 @@ gl_lock_define_initialized(static, my_lock)
 static void *
 lock_mutator_thread (_GL_UNUSED void *arg)
 {
-  int repeat;
-
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       int i1, i2, value;
 
@@ -202,23 +200,22 @@ lock_checker_thread (_GL_UNUSED void *arg)
 static void
 test_lock (void)
 {
-  int i;
   gl_thread_t checkerthread;
   gl_thread_t threads[THREAD_COUNT];
 
   /* Initialization.  */
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     account[i] = 1000;
   init_atomic_int (&lock_checker_done);
   set_atomic_int_value (&lock_checker_done, 0);
 
   /* Spawn the threads.  */
   checkerthread = gl_thread_create (lock_checker_thread, NULL);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     threads[i] = gl_thread_create (lock_mutator_thread, NULL);
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     gl_thread_join (threads[i], NULL);
   set_atomic_int_value (&lock_checker_done, 1);
   gl_thread_join (checkerthread, NULL);
@@ -237,9 +234,7 @@ gl_rwlock_define_initialized(static, my_rwlock)
 static void *
 rwlock_mutator_thread (_GL_UNUSED void *arg)
 {
-  int repeat;
-
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       int i1, i2, value;
 
@@ -287,27 +282,26 @@ rwlock_checker_thread (_GL_UNUSED void *arg)
 static void
 test_rwlock (void)
 {
-  int i;
   gl_thread_t checkerthreads[THREAD_COUNT];
   gl_thread_t threads[THREAD_COUNT];
 
   /* Initialization.  */
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     account[i] = 1000;
   init_atomic_int (&rwlock_checker_done);
   set_atomic_int_value (&rwlock_checker_done, 0);
 
   /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     checkerthreads[i] = gl_thread_create (rwlock_checker_thread, NULL);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     threads[i] = gl_thread_create (rwlock_mutator_thread, NULL);
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     gl_thread_join (threads[i], NULL);
   set_atomic_int_value (&rwlock_checker_done, 1);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     gl_thread_join (checkerthreads[i], NULL);
   check_accounts ();
 }
@@ -348,9 +342,7 @@ recshuffle (void)
 static void *
 reclock_mutator_thread (_GL_UNUSED void *arg)
 {
-  int repeat;
-
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       recshuffle ();
 
@@ -390,23 +382,22 @@ reclock_checker_thread (_GL_UNUSED void *arg)
 static void
 test_recursive_lock (void)
 {
-  int i;
   gl_thread_t checkerthread;
   gl_thread_t threads[THREAD_COUNT];
 
   /* Initialization.  */
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     account[i] = 1000;
   init_atomic_int (&reclock_checker_done);
   set_atomic_int_value (&reclock_checker_done, 0);
 
   /* Spawn the threads.  */
   checkerthread = gl_thread_create (reclock_checker_thread, NULL);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     threads[i] = gl_thread_create (reclock_mutator_thread, NULL);
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     gl_thread_join (threads[i], NULL);
   set_atomic_int_value (&reclock_checker_done, 1);
   gl_thread_join (checkerthread, NULL);
@@ -443,9 +434,8 @@ static void *
 once_contender_thread (void *arg)
 {
   int id = (int) (intptr_t) arg;
-  int repeat;
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Tell the main thread that we're ready.  */
       gl_lock_lock (ready_lock[id]);
@@ -480,17 +470,16 @@ once_contender_thread (void *arg)
 static void
 test_once (void)
 {
-  int i, repeat;
   gl_thread_t threads[THREAD_COUNT];
 
   /* Initialize all variables.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     {
       ready[i] = 0;
       gl_lock_init (ready_lock[i]);
     }
 #if ENABLE_LOCKING
-  for (i = 0; i < REPEAT_COUNT; i++)
+  for (int i = 0; i < REPEAT_COUNT; i++)
     gl_rwlock_init (fire_signal[i]);
 #else
   fire_signal_state = 0;
@@ -498,23 +487,23 @@ test_once (void)
 
 #if ENABLE_LOCKING
   /* Block all fire_signals.  */
-  for (i = REPEAT_COUNT-1; i >= 0; i--)
+  for (int i = REPEAT_COUNT-1; i >= 0; i--)
     gl_rwlock_wrlock (fire_signal[i]);
 #endif
 
   /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     threads[i] =
       gl_thread_create (once_contender_thread, (void *) (intptr_t) i);
 
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
+  for (int repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Wait until every thread is ready.  */
       dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
       for (;;)
         {
           int ready_count = 0;
-          for (i = 0; i < THREAD_COUNT; i++)
+          for (int i = 0; i < THREAD_COUNT; i++)
             {
               gl_lock_lock (ready_lock[i]);
               ready_count += ready[i];
@@ -544,7 +533,7 @@ test_once (void)
       performed = 0;
 
       /* Preparation for the next round: Reset the ready flags.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         {
           gl_lock_lock (ready_lock[i]);
           ready[i] = 0;
@@ -561,7 +550,7 @@ test_once (void)
     }
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     gl_thread_join (threads[i], NULL);
 }
 

@@ -42,13 +42,10 @@ main (void)
   ASSERT (di_set_insert (dis, 5, (ino_t) -1) == 1);
   ASSERT (di_set_insert (dis, 5, (ino_t) -1) == 0); /* dup */
 
-  {
-    unsigned int i;
-    for (i = 0; i < 3000; i++)
-      ASSERT (di_set_insert (dis, 9, i) == 1);
-    for (i = 0; i < 3000; i++)
-      ASSERT (di_set_insert (dis, 9, i) == 0); /* duplicate fails */
-  }
+  for (unsigned int i = 0; i < 3000; i++)
+    ASSERT (di_set_insert (dis, 9, i) == 1);
+  for (unsigned int i = 0; i < 3000; i++)
+    ASSERT (di_set_insert (dis, 9, i) == 0); /* duplicate fails */
 
   di_set_free (dis);
 

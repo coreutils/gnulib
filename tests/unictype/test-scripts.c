@@ -40,28 +40,23 @@ main ()
   ASSERT (!uc_is_script (0x05DA, uc_script_byname ("Latin")));
   ASSERT (uc_is_script (0x05DA, uc_script_byname ("Hebrew")));
 
-  {
-    unsigned int c;
-
-    for (c = 0; c < 0x110000; c++)
-      {
-        const uc_script_t *script = uc_script (c);
-        if (script != NULL)
-          ASSERT (uc_is_script (c, script));
-      }
-  }
+  for (unsigned int c = 0; c < 0x110000; c++)
+    {
+      const uc_script_t *script = uc_script (c);
+      if (script != NULL)
+        ASSERT (uc_is_script (c, script));
+    }
 
   /* Test the uc_all_scripts function.  */
   {
     const uc_script_t *scripts;
     size_t nscripts;
-    size_t i;
     bool found;
 
     uc_all_scripts (&scripts, &nscripts);
 
     found = false;
-    for (i = 0; i < nscripts; i++)
+    for (size_t i = 0; i < nscripts; i++)
       {
         ASSERT (scripts[i].name != NULL);
         if (strcmp (scripts[i].name, "Hebrew") == 0)

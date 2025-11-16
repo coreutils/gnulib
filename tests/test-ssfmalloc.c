@@ -284,17 +284,12 @@ main (int argc, char *argv[])
      Also verify that there are no unexpected modifications to the contents of
      these blocks.  */
   {
-    unsigned int repeat;
     char *blocks[SIZEOF (block_sizes)];
 
-    {
-      size_t i;
+    for (size_t i = 0; i < SIZEOF (block_sizes); i++)
+      blocks[i] = NULL;
 
-      for (i = 0; i < SIZEOF (block_sizes); i++)
-        blocks[i] = NULL;
-    }
-
-    for (repeat = 0; repeat < 100000; repeat++)
+    for (unsigned int repeat = 0; repeat < 100000; repeat++)
       {
         unsigned int operation = RANDOM (2);
 
@@ -331,18 +326,14 @@ main (int argc, char *argv[])
       }
 
     /* Free the remaining blocks.  */
-    {
-      size_t i;
-
-      for (i = 0; i < SIZEOF (block_sizes); i++)
-        if (blocks[i] != NULL)
-          {
-            uintptr_t block = (uintptr_t) blocks[i];
-            size_t size = block_sizes[i];
-            verify_block (block, size);
-            free_block (block);
-          }
-    }
+    for (size_t i = 0; i < SIZEOF (block_sizes); i++)
+      if (blocks[i] != NULL)
+        {
+          uintptr_t block = (uintptr_t) blocks[i];
+          size_t size = block_sizes[i];
+          verify_block (block, size);
+          free_block (block);
+        }
   }
 
   return test_exit_status;

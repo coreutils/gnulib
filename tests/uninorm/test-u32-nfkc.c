@@ -304,71 +304,67 @@ test_u32_nfkc (void)
 #endif
 
   /* Check that the sorting is not O(n²) but O(n log n).  */
-  {
-    int pass;
-    for (pass = 0; pass < 3; pass++)
-      {
-        size_t repeat = 1;
-        size_t m = 100000;
-        uint32_t *input = (uint32_t *) malloc (2 * m * sizeof (uint32_t));
-        if (input != NULL)
-          {
-            uint32_t *expected = input + m;
-            size_t m1 = m / 2;
-            size_t m2 = (m - 1) / 2;
-            /* NB: m1 + m2 == m - 1.  */
-            uint32_t *p;
-            size_t i;
+  for (int pass = 0; pass < 3; pass++)
+    {
+      size_t repeat = 1;
+      size_t m = 100000;
+      uint32_t *input = (uint32_t *) malloc (2 * m * sizeof (uint32_t));
+      if (input != NULL)
+        {
+          uint32_t *expected = input + m;
+          size_t m1 = m / 2;
+          size_t m2 = (m - 1) / 2;
+          /* NB: m1 + m2 == m - 1.  */
+          uint32_t *p;
 
-            input[0] = 0x0041;
-            p = input + 1;
-            switch (pass)
-              {
-              case 0:
-                for (i = 0; i < m1; i++)
+          input[0] = 0x0041;
+          p = input + 1;
+          switch (pass)
+            {
+            case 0:
+              for (size_t i = 0; i < m1; i++)
+                *p++ = 0x0319;
+              for (size_t i = 0; i < m2; i++)
+                *p++ = 0x0300;
+              break;
+
+            case 1:
+              for (size_t i = 0; i < m2; i++)
+                *p++ = 0x0300;
+              for (size_t i = 0; i < m1; i++)
+                *p++ = 0x0319;
+              break;
+
+            case 2:
+              for (size_t i = 0; i < m2; i++)
+                {
                   *p++ = 0x0319;
-                for (i = 0; i < m2; i++)
                   *p++ = 0x0300;
-                break;
+                }
+              for (size_t i = m2; i < m1; i++)
+                *p++ = 0x0319;
+              break;
 
-              case 1:
-                for (i = 0; i < m2; i++)
-                  *p++ = 0x0300;
-                for (i = 0; i < m1; i++)
-                  *p++ = 0x0319;
-                break;
+            default:
+              abort ();
+            }
 
-              case 2:
-                for (i = 0; i < m2; i++)
-                  {
-                    *p++ = 0x0319;
-                    *p++ = 0x0300;
-                  }
-                for (; i < m1; i++)
-                  *p++ = 0x0319;
-                break;
+          expected[0] = 0x00C0;
+          p = expected + 1;
+          for (size_t i = 0; i < m1; i++)
+            *p++ = 0x0319;
+          for (size_t i = 0; i < m2 - 1; i++)
+            *p++ = 0x0300;
 
-              default:
-                abort ();
-              }
+          for (; repeat > 0; repeat--)
+            {
+              ASSERT (check (input, m,        expected, m - 1) == 0);
+              ASSERT (check (expected, m - 1, expected, m - 1) == 0);
+            }
 
-            expected[0] = 0x00C0;
-            p = expected + 1;
-            for (i = 0; i < m1; i++)
-              *p++ = 0x0319;
-            for (i = 0; i < m2 - 1; i++)
-              *p++ = 0x0300;
-
-            for (; repeat > 0; repeat--)
-              {
-                ASSERT (check (input, m,        expected, m - 1) == 0);
-                ASSERT (check (expected, m - 1, expected, m - 1) == 0);
-              }
-
-            free (input);
-          }
-      }
-  }
+          free (input);
+        }
+    }
 }
 
 #else

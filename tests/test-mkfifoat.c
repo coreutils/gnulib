@@ -67,7 +67,6 @@ do_mknodat (char const *name, mode_t mode)
 int
 main (void)
 {
-  int i;
   test_func funcs[2] = { mkfifoat, test_mknodat };
   int result;
 
@@ -83,7 +82,7 @@ main (void)
   ASSERT (test_mkfifo (do_mknodat, false) == result);
 
   /* Test directory-relative handling of both functions.  */
-  for (i = 0; i < 2; i++)
+  for (int i = 0; i < 2; i++)
     {
       struct stat st;
       test_func func = funcs[i];

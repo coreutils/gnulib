@@ -32,9 +32,8 @@ static void
 test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *, ...))
 {
   wchar_t buf[8];
-  int size;
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length = size;
       wchar_t *result = my_asnwprintf (NULL, &length, L"%d", 12345);
@@ -44,7 +43,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
     }
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length;
       wchar_t *result;
@@ -63,7 +62,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     }
 
   /* Note: This test assumes IEEE 754 representation of 'double' floats.  */
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length;
       wchar_t *result;

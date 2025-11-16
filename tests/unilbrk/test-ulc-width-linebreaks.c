@@ -37,10 +37,9 @@ test_function (int (*my_ulc_width_linebreaks) (const char *, size_t, int, int, i
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_ulc_width_linebreaks (input, SIZEOF (input), 12, 0, 0, NULL, "ISO-8859-1", p);
-    for (i = 0; i < 36; i++)
+    for (size_t i = 0; i < 36; i++)
       {
         ASSERT (p[i] == (i == 35 ? UC_BREAK_MANDATORY :
                          i == 11 || i == 15 || i == 31 ? UC_BREAK_POSSIBLE :

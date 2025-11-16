@@ -57,11 +57,9 @@ main (void)
     {one, two, three, NULL}
   };
 
-  int use_stream;
-  for (use_stream = 0; use_stream < 2; use_stream++)
+  for (int use_stream = 0; use_stream < 2; use_stream++)
     {
-      size_t i;
-      for (i = 0; i < ARRAY_CARDINALITY (av); i++)
+      for (size_t i = 0; i < ARRAY_CARDINALITY (av); i++)
         {
           FILE *fp;
           struct argv_iterator *ai;

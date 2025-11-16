@@ -53,12 +53,11 @@ main (int argc, char *argv[])
 
     if (memcmp (out, expect, 16) != 0)
       {
-        size_t i;
         printf ("md2 1 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", out[i] & 0xFF);
         printf ("\n");
         return 1;
@@ -72,12 +71,11 @@ main (int argc, char *argv[])
 
     if (memcmp (out, expect, 16) != 0)
       {
-        size_t i;
         printf ("md2 2 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", out[i] & 0xFF);
         printf ("\n");
         return 1;
@@ -106,13 +104,12 @@ main (int argc, char *argv[])
       }
 
     if (memcmp (p, expect, 16) != 0)
-        {
-        size_t i;
+      {
         printf ("md2 3 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", expect[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
+        for (size_t i = 0; i < 16; i++)
           printf ("%02x ", p[i] & 0xFF);
         printf ("\n");
         return 1;

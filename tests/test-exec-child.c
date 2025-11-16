@@ -27,9 +27,8 @@ int
 main (int argc, char* argv[])
 {
   /* Print the arguments.  */
-  int i;
   printf ("argc = %d\n", argc);
-  for (i = 1; i < argc; i++)
+  for (int i = 1; i < argc; i++)
     printf ("argv[%d] = |%s|\n", i, argv[i]);
 
   /* Print a particular environment variable.  */

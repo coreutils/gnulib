@@ -87,8 +87,7 @@ static void
 init_atomic_int (struct atomic_int *ai)
 {
   sem_t *s;
-  unsigned int count;
-  for (count = 0; ; count++)
+  for (unsigned int count = 0; ; count++)
     {
       char name[80];
       /* Use getpid() in the name, so that different processes running at the

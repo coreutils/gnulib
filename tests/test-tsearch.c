@@ -104,9 +104,7 @@ cmp_fn (const void *a, const void *b)
 static void
 memfry (int *string)
 {
-  int i;
-
-  for (i = 0; i < SIZE; ++i)
+  for (int i = 0; i < SIZE; ++i)
     {
       int32_t j;
       int c;
@@ -144,13 +142,11 @@ walk_action (const void *nodep, const VISIT which, const int depth)
 static void
 walk_tree (void *root, int expected_count)
 {
-  int i;
-
   memset (z, 0, sizeof z);
   max_depth = 0;
 
   twalk (root, walk_action);
-  for (i = 0; i < expected_count; ++i)
+  for (int i = 0; i < expected_count; ++i)
     if (z[i] != 1)
       {
         fputs ("Node was not visited.\n", stdout);
@@ -172,16 +168,14 @@ walk_tree (void *root, int expected_count)
 static void
 mangle_tree (enum order how, enum action what, void **root, int lag)
 {
-  int i;
-
   if (how == randomorder)
     {
-      for (i = 0; i < SIZE; ++i)
+      for (int i = 0; i < SIZE; ++i)
         y[i] = i;
       memfry (y);
     }
 
-  for (i = 0; i < SIZE + lag; ++i)
+  for (int i = 0; i < SIZE + lag; ++i)
     {
       void *elem;
       int j, k;
@@ -267,7 +261,6 @@ main (int argc, char **argv)
 {
   int total_error = 0;
   void *root = NULL;
-  int i, j;
 
 #if HAVE_INITSTATE
   static char state[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -275,13 +268,13 @@ main (int argc, char **argv)
   initstate (SEED, state, 8);
 #endif
 
-  for (i = 0; i < SIZE; ++i)
+  for (int i = 0; i < SIZE; ++i)
     x[i] = i;
 
   /* Do this loop several times to get different permutations for the
      random case.  */
   fputs ("Series I\n", stdout);
-  for (i = 0; i < PASSES; ++i)
+  for (int i = 0; i < PASSES; ++i)
     {
       fprintf (stdout, "Pass %d... ", i + 1);
       fflush (stdout);
@@ -324,7 +317,7 @@ main (int argc, char **argv)
       walk_tree (root, SIZE);
       mangle_tree (randomorder, delete, &root, 0);
 
-      for (j = 1; j < SIZE; j *= 2)
+      for (int j = 1; j < SIZE; j *= 2)
         {
           mangle_tree (randomorder, build_and_del, &root, j);
         }
@@ -334,7 +327,7 @@ main (int argc, char **argv)
     }
 
   fputs ("Series II\n", stdout);
-  for (i = 1; i < SIZE; i *= 2)
+  for (int i = 1; i < SIZE; i *= 2)
     {
       fprintf (stdout, "For size %d... ", i);
       fflush (stdout);

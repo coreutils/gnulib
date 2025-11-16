@@ -35,11 +35,10 @@ main (void)
   /* Check a spin-lock initialized through gl_spinlock_init.  */
   {
     gl_spinlock_define (, local_spin_lock)
-    int i;
 
     gl_spinlock_init (local_spin_lock);
 
-    for (i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
       {
         gl_spinlock_lock (local_spin_lock);
         gl_spinlock_unlock (local_spin_lock);

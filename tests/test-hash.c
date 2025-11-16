@@ -80,8 +80,6 @@ get_seed (char const *str, unsigned int *seed)
 int
 main (int argc, char **argv)
 {
-  unsigned int i;
-  unsigned int k;
   unsigned int table_size[] = {1, 2, 3, 4, 5, 23, 53};
   Hash_table *ht;
   Hash_tuning tuning;
@@ -105,7 +103,7 @@ main (int argc, char **argv)
       srand (seed);
     }
 
-  for (i = 0; i < ARRAY_CARDINALITY (table_size); i++)
+  for (unsigned int i = 0; i < ARRAY_CARDINALITY (table_size); i++)
     {
       size_t sz = table_size[i];
       ht = hash_initialize (sz, NULL, hash_pjw, hash_compare_strings, NULL);
@@ -186,14 +184,14 @@ main (int argc, char **argv)
   tuning.growth_threshold = 0.89;
 
   /* Run with default tuning, then with custom tuning settings.  */
-  for (k = 0; k < 2; k++)
+  for (unsigned int k = 0; k < 2; k++)
     {
       Hash_tuning const *tune = (k == 0 ? NULL : &tuning);
       /* Now, each entry is malloc'd.  */
       ht = hash_initialize (4651, tune, hash_pjw,
                             hash_compare_strings, hash_freer);
       ASSERT (ht);
-      for (i = 0; i < 10000; i++)
+      for (unsigned int i = 0; i < 10000; i++)
         {
           unsigned int op = rand () % 10;
           switch (op)

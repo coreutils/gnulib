@@ -74,8 +74,7 @@ do_float_test (char test, int repeat)
   struct timings_state ts;
   timing_start (&ts);
 
-  int count;
-  for (count = 0; count < repeat; count++)
+  for (int count = 0; count < repeat; count++)
     {
       for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
@@ -110,8 +109,7 @@ do_double_test (char test, int repeat)
   struct timings_state ts;
   timing_start (&ts);
 
-  int count;
-  for (count = 0; count < repeat; count++)
+  for (int count = 0; count < repeat; count++)
     {
       for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
@@ -146,8 +144,7 @@ do_long_double_test (char test, int repeat)
   struct timings_state ts;
   timing_start (&ts);
 
-  int count;
-  for (count = 0; count < repeat; count++)
+  for (int count = 0; count < repeat; count++)
     {
       for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
@@ -178,8 +175,7 @@ main (int argc, char *argv[])
   int repeat = atoi (argv[2]);
 
   /* Execute each test.  */
-  size_t i;
-  for (i = 0; i < strlen (tests); i++)
+  for (size_t i = 0; i < strlen (tests); i++)
     {
       char test = tests[i];
 

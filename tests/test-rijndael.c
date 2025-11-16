@@ -34,7 +34,6 @@ main (int argc, char *argv[])
     "\x00\x00\x00\x00\x00\x00\x00\x00";
   char ct[] = "\xC3\x4C\x05\x2C\xC0\xDA\x8D\x73"
     "\x45\x1A\xFE\x5F\x03\xBE\x29\x7F";
-  size_t round;
 
   rc = rijndaelMakeKey (&key, RIJNDAEL_DIR_ENCRYPT,
                         128, "00000000000000000000000000000000");
@@ -47,7 +46,7 @@ main (int argc, char *argv[])
 
   memset (in, 0, RIJNDAEL_BITSPERBLOCK / 8);
 
-  for (round = 0; round < 10000; round++)
+  for (size_t round = 0; round < 10000; round++)
     {
       rc = rijndaelBlockEncrypt (&cipher, &key, in, 128, out);
       if (rc < 0)
@@ -58,12 +57,11 @@ main (int argc, char *argv[])
 
   if (memcmp (out, ct, RIJNDAEL_BITSPERBLOCK / 8) != 0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
+      for (size_t i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
         printf ("%02x ", ct[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
+      for (size_t i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
         printf ("%02x ", out[i] & 0xFF);
       printf ("\n");
       return 1;
@@ -78,7 +76,7 @@ main (int argc, char *argv[])
   if (rc != 0)
     printf ("cipherInit failed %d\n", rc);
 
-  for (round = 0; round < 10000; round++)
+  for (size_t round = 0; round < 10000; round++)
     {
       memcpy (in, out, RIJNDAEL_BITSPERBLOCK / 8);
 
@@ -89,12 +87,11 @@ main (int argc, char *argv[])
 
   if (memcmp (out, pt, RIJNDAEL_BITSPERBLOCK / 8) != 0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
+      for (size_t i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
         printf ("%02x ", pt[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
+      for (size_t i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
         printf ("%02x ", out[i] & 0xFF);
       printf ("\n");
       return 1;

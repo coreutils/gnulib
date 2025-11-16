@@ -38,7 +38,6 @@ static FILE *myerr;
 int
 main (void)
 {
-  int i;
   DIR *dp;
   /* The dirent-safer module works without the use of fdopendir (which
      would also pull in fchdir and openat); but if those modules were
@@ -62,7 +61,7 @@ main (void)
 
   /* Four iterations, with progressively more standard descriptors
      closed.  */
-  for (i = -1; i <= STDERR_FILENO; i++)
+  for (int i = -1; i <= STDERR_FILENO; i++)
     {
       if (0 <= i)
         ASSERT (close (i) == 0);

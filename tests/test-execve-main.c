@@ -33,8 +33,7 @@ static const char *
 get_environ_assignment (const char *name)
 {
   size_t name_len = strlen (name);
-  char **p;
-  for (p = environ; *p != NULL; p++)
+  for (char **p = environ; *p != NULL; p++)
     {
       const char *assignment = *p;
       if (strncmp (assignment, name, name_len) == 0

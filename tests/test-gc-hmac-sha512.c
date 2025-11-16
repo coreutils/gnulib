@@ -52,12 +52,11 @@ main (int argc, char *argv[])
 
     if (memcmp (digest, out, GC_SHA512_DIGEST_SIZE) != 0)
       {
-        size_t i;
         printf ("hash 1 mismatch. expected:\n");
-        for (i = 0; i < GC_SHA512_DIGEST_SIZE; i++)
+        for (size_t i = 0; i < GC_SHA512_DIGEST_SIZE; i++)
           printf ("%02x ", digest[i] & 0xFF);
         printf ("\ncomputed:\n");
-        for (i = 0; i < GC_SHA512_DIGEST_SIZE; i++)
+        for (size_t i = 0; i < GC_SHA512_DIGEST_SIZE; i++)
           printf ("%02x ", out[i] & 0xFF);
         printf ("\n");
         return 1;

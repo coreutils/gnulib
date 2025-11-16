@@ -229,10 +229,9 @@ test_float (void)
   /* Check the value of FLT_MAX.  */
   {
     volatile float m = FLT_MAX;
-    int n;
 
     ASSERT (m + m > m);
-    for (n = 0; n <= 2 * FLT_MANT_DIG; n++)
+    for (int n = 0; n <= 2 * FLT_MANT_DIG; n++)
       {
         volatile float pow2_n = pow2f (n); /* 2^n */
         volatile float x = m + (m / pow2_n);
@@ -254,12 +253,11 @@ test_float (void)
   {
     volatile float e = FLT_EPSILON;
     volatile float me;
-    int n;
 
     me = 1.0f + e;
     ASSERT (me > 1.0f);
     ASSERT (me - 1.0f == e);
-    for (n = 0; n <= 2 * FLT_MANT_DIG; n++)
+    for (int n = 0; n <= 2 * FLT_MANT_DIG; n++)
       {
         volatile float half_n = pow2f (- n); /* 2^-n */
         volatile float x = me - half_n;
@@ -328,10 +326,9 @@ test_double (void)
   /* Check the value of DBL_MAX.  */
   {
     volatile double m = DBL_MAX;
-    int n;
 
     ASSERT (m + m > m);
-    for (n = 0; n <= 2 * DBL_MANT_DIG; n++)
+    for (int n = 0; n <= 2 * DBL_MANT_DIG; n++)
       {
         volatile double pow2_n = pow2d (n); /* 2^n */
         volatile double x = m + (m / pow2_n);
@@ -353,12 +350,11 @@ test_double (void)
   {
     volatile double e = DBL_EPSILON;
     volatile double me;
-    int n;
 
     me = 1.0 + e;
     ASSERT (me > 1.0);
     ASSERT (me - 1.0 == e);
-    for (n = 0; n <= 2 * DBL_MANT_DIG; n++)
+    for (int n = 0; n <= 2 * DBL_MANT_DIG; n++)
       {
         volatile double half_n = pow2d (- n); /* 2^-n */
         volatile double x = me - half_n;
@@ -463,10 +459,9 @@ test_long_double (void)
   if (LDBL_IS_IEC_60559)
     {
       volatile long double m = LDBL_MAX;
-      int n;
 
       ASSERT (m + m > m);
-      for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
+      for (int n = 0; n <= 2 * LDBL_MANT_DIG; n++)
         {
           volatile long double pow2_n = pow2l (n); /* 2^n */
           volatile long double x = m + (m / pow2_n);
@@ -488,12 +483,11 @@ test_long_double (void)
   {
     volatile long double e = LDBL_EPSILON;
     volatile long double me;
-    int n;
 
     me = 1.0L + e;
     ASSERT (me > 1.0L);
     ASSERT (me - 1.0L == e);
-    for (n = 0; n <= 2 * LDBL_MANT_DIG; n++)
+    for (int n = 0; n <= 2 * LDBL_MANT_DIG; n++)
       {
         volatile long double half_n = pow2l (- n); /* 2^-n */
         volatile long double x = normalize_long_double (me - half_n);

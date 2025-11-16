@@ -55,7 +55,6 @@ do_rename (char const *name1, char const *name2)
 int
 main (void)
 {
-  int i;
   int dfd;
   char *cwd;
   int result;
@@ -125,7 +124,7 @@ main (void)
      last scenario (two relative paths given, neither one AT_FDCWD)
      has two paths, based on whether the two fds are equivalent, so we
      do the other variant after the loop.  */
-  for (i = 0; i < 16; i++)
+  for (int i = 0; i < 16; i++)
     {
       int fd1 = (i & 8) ? dfd : AT_FDCWD;
       char *file1 = file_name_concat ((i & 4) ? ".." : cwd, BASE "xx", NULL);

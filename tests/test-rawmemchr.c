@@ -55,29 +55,25 @@ main (void)
   ASSERT (rawmemchr (input, '\0') == input + n);
 
   /* Alignment tests.  */
-  {
-    int i, j;
-    for (i = 0; i < 32; i++)
-      {
-        for (j = 0; j < 256; j++)
-          input[i + j] = j;
-        for (j = 0; j < 256; j++)
-          {
-            ASSERT (rawmemchr (input + i, j) == input + i + j);
-          }
-      }
-  }
+  for (int i = 0; i < 32; i++)
+    {
+      for (int j = 0; j < 256; j++)
+        input[i + j] = j;
+      for (int j = 0; j < 256; j++)
+        {
+          ASSERT (rawmemchr (input + i, j) == input + i + j);
+        }
+    }
 
   /* Ensure that no unaligned oversized reads occur.  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
-    size_t i;
 
     if (!page_boundary)
       page_boundary = input + 4096;
     memset (page_boundary - 512, '1', 511);
     page_boundary[-1] = '2';
-    for (i = 1; i <= 512; i++)
+    for (size_t i = 1; i <= 512; i++)
       ASSERT (rawmemchr (page_boundary - i, (i * 0x01010100) | '2')
               == page_boundary - 1);
   }

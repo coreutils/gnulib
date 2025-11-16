@@ -32,17 +32,15 @@
 int
 main (int argc, char *argv[])
 {
-  int i, j;
-
 #define TEST_COUNT_LEADING_ZEROS(FUNC, TYPE, BITS, MAX, ONE)     \
   ASSERT (FUNC (0) == BITS);                                     \
-  for (i = 0; i < BITS; i++)                                     \
+  for (int i = 0; i < BITS; i++)                                 \
     {                                                            \
       ASSERT (FUNC (ONE << i) == BITS - i - 1);                  \
-      for (j = 0; j < i; j++)                                    \
+      for (int j = 0; j < i; j++)                                \
         ASSERT (FUNC ((ONE << i) | (ONE << j)) == BITS - i - 1); \
     }                                                            \
-  for (i = 0; i < 1000; i++)                                     \
+  for (int i = 0; i < 1000; i++)                                 \
     {                                                            \
       /* RAND_MAX is most often 0x7fff or 0x7fffffff.  */        \
       TYPE value =                                               \
@@ -57,7 +55,7 @@ main (int argc, char *argv[])
            ^ (((TYPE) rand () >> 3) << 22)                       \
            ^ (((TYPE) rand () >> 3) << 22 << 22));               \
       int count = 0;                                             \
-      for (j = 0; j < BITS; j++)                                 \
+      for (int j = 0; j < BITS; j++)                             \
         if (value & (ONE << j))                                  \
           count = BITS - j - 1;                                  \
       ASSERT (count == FUNC (value));                            \

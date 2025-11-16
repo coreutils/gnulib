@@ -145,9 +145,7 @@ test_open (int (*func) (char const *, int, ...), bool print)
     {
       /* Since the O_CLOEXEC handling goes through a special code path at its
          first invocation, test it twice.  */
-      int i;
-
-      for (i = 0; i < 2; i++)
+      for (int i = 0; i < 2; i++)
         {
           int flags;
 

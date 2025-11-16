@@ -27,12 +27,11 @@ static unsigned char *
 init_data (size_t data_block_size)
 {
   unsigned char *data;
-  unsigned int i;
 
   data = (unsigned char *) malloc (2 * data_block_size);
   ASSERT (data != NULL);
 
-  for (i = 0; i < 2 * data_block_size; i++)
+  for (unsigned int i = 0; i < 2 * data_block_size; i++)
     data[i] = (unsigned char) (i * i + (7 * i) % 61 + 4);
 
   return data;

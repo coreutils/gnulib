@@ -30,12 +30,11 @@ test (const char *in, const char *out)
   if (memcmp (sm3_buffer (in, strlen (in), buf),
               out, SM3_DIGEST_SIZE) != 0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < SM3_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SM3_DIGEST_SIZE; i++)
         printf ("%02x ", out[i] & 0xFFu);
       printf ("\ncomputed:\n");
-      for (i = 0; i < SM3_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < SM3_DIGEST_SIZE; i++)
         printf ("%02x ", buf[i] & 0xFFu);
       printf ("\n");
       return 1;
@@ -60,9 +59,8 @@ main (void)
       "\xde\xbe\x9f\xf9\x22\x75\xb8\xa1\x38\x60\x48\x89\xc1\x8e\x5a\x4d"
       "\x6f\xdb\x70\xe5\x38\x7e\x57\x65\x29\x3d\xcb\xa3\x9c\x0c\x57\x32",
     };
-  size_t i;
 
-  for (i = 0; i < sizeof (in) / sizeof (in[0]); i++)
+  for (size_t i = 0; i < sizeof (in) / sizeof (in[0]); i++)
     {
       if (test (in[i], out[i]))
         return 1;

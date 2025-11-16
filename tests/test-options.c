@@ -84,8 +84,6 @@ options_loop (enum non_option_handling nonopt_handling,
 static void
 test_getopt_long (void)
 {
-  int start;
-
   /* Test disambiguation of options.  */
   {
     static const struct program_option options[] =
@@ -240,7 +238,7 @@ test_getopt_long (void)
       };
 
     /* Test processing of boolean short options.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -270,7 +268,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -301,7 +299,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 3);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -331,7 +329,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -364,7 +362,7 @@ test_getopt_long (void)
       }
 
     /* Test processing of boolean long options.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -394,7 +392,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -425,7 +423,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 3);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -488,7 +486,7 @@ test_getopt_long (void)
       };
 
     /* Test processing of short options with arguments.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -517,7 +515,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -547,7 +545,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 3);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -581,7 +579,7 @@ test_getopt_long (void)
       }
 
     /* Test processing of long options with arguments.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -610,7 +608,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -640,7 +638,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 3);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -694,7 +692,7 @@ test_getopt_long (void)
       };
 
     /* Test processing of short options with optional arguments.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -723,7 +721,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -753,7 +751,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -785,7 +783,7 @@ test_getopt_long (void)
       }
 
     /* Test processing of long options with optional arguments.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -814,7 +812,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -844,7 +842,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -874,7 +872,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 2);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -922,7 +920,7 @@ test_getopt_long (void)
       };
 
     /* Check that invalid options are recognized.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -954,7 +952,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 'x');
         ASSERT (optind == 5);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -988,7 +986,7 @@ test_getopt_long (void)
       }
 
     /* Check that unexpected arguments are recognized.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1019,7 +1017,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 'a');
         ASSERT (optind == 4);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1054,7 +1052,7 @@ test_getopt_long (void)
       }
 
     /* Check that by default, non-options arguments are moved to the end.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1097,7 +1095,7 @@ test_getopt_long (void)
       }
 
     /* Check that '--' ends the argument processing.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1151,7 +1149,7 @@ test_getopt_long (void)
 
     /* Check that the PROCESS_NON_OPTIONS flag causes non-options to be
        returned in order.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1197,7 +1195,7 @@ test_getopt_long (void)
       }
 
     /* Check that '--' ends the argument processing.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1271,7 +1269,7 @@ test_getopt_long (void)
 
     /* Check that the NON_OPTION_TERMINATES_OPTIONS flag causes the first
        non-option to terminate the loop.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1312,7 +1310,7 @@ test_getopt_long (void)
         ASSERT (unrecognized == 0);
         ASSERT (optind == 1);
       }
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1342,7 +1340,7 @@ test_getopt_long (void)
       }
 
     /* Check that '--' ends the argument processing.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1403,8 +1401,6 @@ test_getopt_long (void)
 static void
 test_getopt_long_posix (void)
 {
-  int start;
-
   {
     static const struct program_option options[] =
       {
@@ -1421,7 +1417,7 @@ test_getopt_long_posix (void)
       };
 
     /* Check that POSIXLY_CORRECT stops parsing the same as leading '+'.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1479,7 +1475,7 @@ test_getopt_long_posix (void)
       };
 
     /* Check that POSIXLY_CORRECT doesn't change optional arguments.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;
@@ -1525,7 +1521,7 @@ test_getopt_long_posix (void)
       };
 
     /* Check that leading - still sees options after non-options.  */
-    for (start = 0; start <= 1; start++)
+    for (int start = 0; start <= 1; start++)
       {
         const char *p_value = NULL;
         const char *q_value = NULL;

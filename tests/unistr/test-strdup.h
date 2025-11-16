@@ -22,15 +22,13 @@ main ()
   /* Test small copying operations.  */
   {
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e', 0 };
-    size_t n;
 
-    for (n = 1; n <= SIZEOF (src); n++)
+    for (size_t n = 1; n <= SIZEOF (src); n++)
       {
         UNIT *result = U_STRDUP (src + SIZEOF (src) - n);
-        size_t i;
 
         ASSERT (result != NULL);
-        for (i = 0; i < n; i++)
+        for (size_t i = 0; i < n; i++)
           ASSERT (result[i] == src[SIZEOF (src) - n + i]);
 
         free (result);

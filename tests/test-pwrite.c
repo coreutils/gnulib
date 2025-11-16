@@ -37,7 +37,6 @@ main (void)
   int fd;
   char buf[] = "0123456789";
   off_t pos = 2;
-  size_t i;
   off_t init_pos;
 
   ASSERT (file);
@@ -53,7 +52,7 @@ main (void)
   init_pos = lseek (fd, pos, SEEK_SET);
   ASSERT (init_pos == pos);
 
-  for (i = 0; i < N; i+=2)
+  for (size_t i = 0; i < N; i+=2)
     {
       const char byte = 'W';
       ASSERT (pwrite (fd, &byte, 1, i) == 1);

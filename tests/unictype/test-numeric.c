@@ -33,10 +33,9 @@ main ()
 {
   unsigned int c;
   uc_fraction_t value;
-  size_t i;
 
   c = 0;
-  for (i = 0; i < SIZEOF (mapping); i++)
+  for (size_t i = 0; i < SIZEOF (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
         {

@@ -301,15 +301,12 @@ cmp_double (const void *a, const void *b)
 int
 main ()
 {
-  size_t n;
-
   /* Test merge_sort_fromto.  */
-  for (n = 1; n <= NMAX; n++)
+  for (size_t n = 1; n <= NMAX; n++)
     {
       struct foo *dst;
       struct foo *tmp;
       double *qsort_result;
-      size_t i;
 
       dst = (struct foo *) malloc ((n + 1) * sizeof (struct foo));
       dst[n].x = 0x4A6A71FE; /* canary */
@@ -324,14 +321,14 @@ main ()
 
       /* Verify the result.  */
       qsort_result = (double *) malloc (n * sizeof (double));
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         qsort_result[i] = data[i].x;
       qsort (qsort_result, n, sizeof (double), cmp_double);
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         ASSERT (dst[i].x == qsort_result[i]);
 
       /* Verify the stability.  */
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         if (i > 0 && dst[i - 1].x == dst[i].x)
           ASSERT (dst[i - 1].index < dst[i].index);
 
@@ -341,19 +338,18 @@ main ()
     }
 
   /* Test merge_sort_inplace.  */
-  for (n = 1; n <= NMAX; n++)
+  for (size_t n = 1; n <= NMAX; n++)
     {
       struct foo *src;
       struct foo *tmp;
       double *qsort_result;
-      size_t i;
 
       src = (struct foo *) malloc ((n + 1) * sizeof (struct foo));
       src[n].x = 0x4A6A71FE; /* canary */
       tmp = (struct foo *) malloc ((n + 1) * sizeof (struct foo));
       tmp[n].x = 0x587EF149; /* canary */
 
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         src[i] = data[i];
 
       merge_sort_inplace (src, n, tmp);
@@ -364,14 +360,14 @@ main ()
 
       /* Verify the result.  */
       qsort_result = (double *) malloc (n * sizeof (double));
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         qsort_result[i] = data[i].x;
       qsort (qsort_result, n, sizeof (double), cmp_double);
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         ASSERT (src[i].x == qsort_result[i]);
 
       /* Verify the stability.  */
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         if (i > 0 && src[i - 1].x == src[i].x)
           ASSERT (src[i - 1].index < src[i].index);
 

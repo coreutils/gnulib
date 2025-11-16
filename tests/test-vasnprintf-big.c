@@ -104,8 +104,7 @@ main ()
                   {
                     ASSERT (strlen (s) == len);
                     ASSERT (len == n1 + n2 + 3);
-                    size_t i;
-                    for (i = 0; i <= len; i++)
+                    for (size_t i = 0; i <= len; i++)
                       s[i] = (i == 0 ? 'x' :
                               i <= n1 ? 'a' :
                               i == n1 + 1 ? 'y' :
@@ -143,8 +142,7 @@ main ()
               {
                 ASSERT (strlen (s) == len);
                 ASSERT (len == n1 + 2);
-                size_t i;
-                for (i = 0; i <= len; i++)
+                for (size_t i = 0; i <= len; i++)
                   s[i] = (i == 0 ? 'x' :
                           i <= n1 ? 'a' :
                           i == n1 + 1 ? 'y' :
@@ -180,8 +178,7 @@ main ()
                   {
                     ASSERT (strlen (s) == len);
                     ASSERT (len == n1 + 2);
-                    size_t i;
-                    for (i = 0; i <= len; i++)
+                    for (size_t i = 0; i <= len; i++)
                       s[i] = (i == 0 ? 'x' :
                               i <= n1 ? 'a' :
                               i == n1 + 1 ? 'y' :
@@ -216,8 +213,7 @@ main ()
               {
                 ASSERT (strlen (s) == len);
                 ASSERT (len == n1 + 2);
-                size_t i;
-                for (i = 0; i <= len; i++)
+                for (size_t i = 0; i <= len; i++)
                   s[i] = (i == 0 ? 'x' :
                           i <= n1 ? 'a' :
                           i == n1 + 1 ? 'y' :
@@ -253,8 +249,7 @@ main ()
                   {
                     ASSERT (strlen (s) == len);
                     ASSERT (len == n1 + 2);
-                    size_t i;
-                    for (i = 0; i <= len; i++)
+                    for (size_t i = 0; i <= len; i++)
                       s[i] = (i == 0 ? 'x' :
                               i <= n1 ? 'a' :
                               i == n1 + 1 ? 'y' :

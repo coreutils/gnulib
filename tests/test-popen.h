@@ -31,7 +31,6 @@ main (int argc, char **argv)
 {
   size_t len;
   char *cmd;
-  int i;
 
   /* Children - use the pipe.  */
   if (argc > 1)
@@ -53,7 +52,7 @@ main (int argc, char **argv)
   strcpy (cmd, argv[0]);
   cmd[len] = ' ';
   cmd[len + 2] = '\0';
-  for (i = 0; i < 2; i++)
+  for (int i = 0; i < 2; i++)
     {
       FILE *child;
       int status;

@@ -27,7 +27,6 @@ my_ldexp (DOUBLE x, int d)
 static void
 test_function (void)
 {
-  int i;
   VOLATILE DOUBLE x;
   DOUBLE y;
 
@@ -61,73 +60,76 @@ test_function (void)
   ASSERT (LOGB (MINUS_ZERO) == - HUGEVAL);
 
   /* From here on, this test assumes FLT_RADIX == 2.  */
+  {
+    int i;
 
-  for (i = 1, x = L_(1.0); i <= MAX_EXP; i++, x *= L_(2.0))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (i = 1, x = L_(1.0); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
+    for (i = 1, x = L_(1.0); i <= MAX_EXP; i++, x *= L_(2.0))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (i = 1, x = L_(1.0); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
 
-  for (i = 1, x = - L_(1.0); i <= MAX_EXP; i++, x *= L_(2.0))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (i = 1, x = - L_(1.0); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (; i >= MIN_EXP - 100 && x < L_(0.0); i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
+    for (i = 1, x = - L_(1.0); i <= MAX_EXP; i++, x *= L_(2.0))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (i = 1, x = - L_(1.0); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (; i >= MIN_EXP - 100 && x < L_(0.0); i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
 
-  for (i = 1, x = L_(1.01); i <= MAX_EXP; i++, x *= L_(2.0))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (i = 1, x = L_(1.01); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
+    for (i = 1, x = L_(1.01); i <= MAX_EXP; i++, x *= L_(2.0))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (i = 1, x = L_(1.01); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
 
-  for (i = 1, x = L_(1.73205); i <= MAX_EXP; i++, x *= L_(2.0))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (i = 1, x = L_(1.73205); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1));
-    }
-  for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
-    {
-      y = LOGB (x);
-      ASSERT (y == (DOUBLE)(i - 1) || y == (DOUBLE)i);
-    }
+    for (i = 1, x = L_(1.73205); i <= MAX_EXP; i++, x *= L_(2.0))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (i = 1, x = L_(1.73205); i >= MIN_NORMAL_EXP; i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1));
+      }
+    for (; i >= MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
+      {
+        y = LOGB (x);
+        ASSERT (y == (DOUBLE)(i - 1) || y == (DOUBLE)i);
+      }
+  }
 
   /* Randomized tests.  */
-  for (i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < SIZEOF (RANDOM); i++)
     {
       x = L_(20.0) * RANDOM[i] - L_(10.0); /* -10.0 <= x <= 10.0 */
       if (x != L_(0.0))

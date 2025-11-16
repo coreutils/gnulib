@@ -39,8 +39,7 @@ noop_test (char const *text, char const *text_end, int repeat)
 
   for (int count = 0; count < repeat; count++)
     {
-      char const *iter;
-      for (iter = text; iter < text_end; iter++)
+      for (char const *iter = text; iter < text_end; iter++)
         sum += (uintptr_t) iter;
     }
 
@@ -284,8 +283,7 @@ main (int argc, char *argv[])
   text_init ();
 
   /* Execute each test.  */
-  size_t i;
-  for (i = 0; i < strlen (tests); i++)
+  for (size_t i = 0; i < strlen (tests); i++)
     {
       char test = tests[i];
 

@@ -28,24 +28,19 @@ main ()
   ASSERT (strcmp (uc_block ('x')->name, "Basic Latin") == 0);
   ASSERT (strcmp (uc_block (0x20AC)->name, "Currency Symbols") == 0);
 
-  {
-    unsigned int c;
-
-    for (c = 0; c < 0x110000; c++)
-      {
-        const uc_block_t *block = uc_block (c);
-        ASSERT (block == NULL || uc_is_block (c, block));
-      }
-  }
+  for (unsigned int c = 0; c < 0x110000; c++)
+    {
+      const uc_block_t *block = uc_block (c);
+      ASSERT (block == NULL || uc_is_block (c, block));
+    }
 
   {
     const uc_block_t *blocks;
     size_t nblocks;
-    size_t i;
 
     uc_all_blocks (&blocks, &nblocks);
 
-    for (i = 0; i < nblocks; i++)
+    for (size_t i = 0; i < nblocks; i++)
       {
         if (strcmp (blocks[i].name, "Hebrew") == 0)
           {
@@ -54,11 +49,9 @@ main ()
           }
       }
 
-    for (i = 0; i < nblocks; i++)
+    for (size_t i = 0; i < nblocks; i++)
       {
-        unsigned int c;
-
-        for (c = blocks[i].start; c <= blocks[i].end; c++)
+        for (unsigned int c = blocks[i].start; c <= blocks[i].end; c++)
           ASSERT (uc_block (c) == &blocks[i]);
       }
   }

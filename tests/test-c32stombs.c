@@ -40,16 +40,12 @@ main (int argc, char *argv[])
   if (argc > 1)
     {
       char32_t input[10];
-      size_t n;
       #define BUFSIZE 20
       char buf[BUFSIZE];
       size_t ret;
 
-      {
-        size_t i;
-        for (i = 0; i < BUFSIZE; i++)
-          buf[i] = '_';
-      }
+      for (size_t i = 0; i < BUFSIZE; i++)
+        buf[i] = '_';
 
       switch (argv[1][0])
         {
@@ -61,7 +57,7 @@ main (int argc, char *argv[])
             ret = mbstoc32s (input, original, 10);
             ASSERT (ret == 5);
 
-            for (n = 0; n < 10; n++)
+            for (size_t n = 0; n < 10; n++)
               {
                 ret = c32stombs (NULL, input, n);
                 ASSERT (ret == 5);
@@ -86,7 +82,7 @@ main (int argc, char *argv[])
             ret = mbstoc32s (input, original, 10);
             ASSERT (ret == 5);
 
-            for (n = 0; n < 15; n++)
+            for (size_t n = 0; n < 15; n++)
               {
                 ret = c32stombs (NULL, input, n);
                 ASSERT (ret == 10);
@@ -115,7 +111,7 @@ main (int argc, char *argv[])
             ret = mbstoc32s (input, original, 10);
             ASSERT (ret == 5);
 
-            for (n = 0; n < 10; n++)
+            for (size_t n = 0; n < 10; n++)
               {
                 ret = c32stombs (NULL, input, n);
                 ASSERT (ret == 8);
@@ -151,7 +147,7 @@ main (int argc, char *argv[])
             ret = mbstoc32s (input, original, 10);
             ASSERT (ret == 5);
 
-            for (n = 0; n < 15; n++)
+            for (size_t n = 0; n < 15; n++)
               {
                 ret = c32stombs (NULL, input, n);
                 ASSERT (ret == 12);

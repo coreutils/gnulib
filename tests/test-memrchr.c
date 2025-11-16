@@ -75,18 +75,15 @@ main (void)
   }
 
   /* Alignment tests.  */
-  {
-    int i, j;
-    for (i = 0; i < 32; i++)
-      {
-        for (j = 0; j < 256; j++)
-          input[i + j] = j;
-        for (j = 0; j < 256; j++)
-          {
-            ASSERT (memrchr (input + i, j, 256) == input + i + j);
-          }
-      }
-  }
+  for (int i = 0; i < 32; i++)
+    {
+      for (int j = 0; j < 256; j++)
+        input[i + j] = j;
+      for (int j = 0; j < 256; j++)
+        {
+          ASSERT (memrchr (input + i, j, 256) == input + i + j);
+        }
+    }
 
   free (input);
 

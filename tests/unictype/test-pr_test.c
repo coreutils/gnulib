@@ -26,9 +26,8 @@ int
 main ()
 {
   uc_property_t pr = UC_PROPERTY_COMPOSITE;
-  unsigned int c;
 
-  for (c = 0; c < 0x110000; c++)
+  for (unsigned int c = 0; c < 0x110000; c++)
     ASSERT (uc_is_property (c, pr) == uc_is_property_composite (c));
 
   return test_exit_status;

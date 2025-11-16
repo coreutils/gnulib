@@ -67,16 +67,15 @@ main (int argc, char *argv[])
 
   size_t pagesize = getpagesize ();
 
-  int i;
-  for (i = 0; i < n; i++)
+  for (int i = 0; i < n; i++)
     pages[i] = pagealign_xalloc (pagesize);
 
   /* Free half of the pages in allocation order and the other half of the pages
      in reverse allocation order.  */
   int half = n / 2;
-  for (i = 0; i < half; i++)
+  for (int i = 0; i < half; i++)
     pagealign_free (pages[i]);
-  for (i = n - 1; i >= half; i--)
+  for (int i = n - 1; i >= half; i--)
     pagealign_free (pages[i]);
 
   return 0;

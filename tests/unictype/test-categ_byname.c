@@ -208,19 +208,17 @@ main ()
 
   {
     uc_general_category_t ct = uc_general_category_byname ("Nd");
-    unsigned int c;
 
-    for (c = 0x30; c <= 0x39; c++)
+    for (unsigned int c = 0x30; c <= 0x39; c++)
       ASSERT (uc_is_general_category (c, ct));
-    for (c = 0x40; c < 0x80; c++)
+    for (unsigned int c = 0x40; c < 0x80; c++)
       ASSERT (!uc_is_general_category (c, ct));
   }
 
   {
     uc_general_category_t ct = uc_general_category_byname ("Nl");
-    unsigned int c;
 
-    for (c = 0x2160; c < 0x2180; c++)
+    for (unsigned int c = 0x2160; c < 0x2180; c++)
       ASSERT (uc_is_general_category (c, ct));
     ASSERT (!uc_is_general_category (0x0BF1, ct));
     ASSERT (!uc_is_general_category (0x0D71, ct));
@@ -228,9 +226,8 @@ main ()
 
   {
     uc_general_category_t ct = uc_general_category_byname ("Foo");
-    unsigned int c;
 
-    for (c = 0; c < 0x110000; c++)
+    for (unsigned int c = 0; c < 0x110000; c++)
       ASSERT (!uc_is_general_category (c, ct));
   }
 

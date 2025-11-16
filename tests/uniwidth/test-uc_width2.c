@@ -60,9 +60,7 @@ add_to_interval (ucs4_t uc, char width)
 int
 main ()
 {
-  ucs4_t uc;
-
-  for (uc = 0; uc < 0x110000; uc++)
+  for (ucs4_t uc = 0; uc < 0x110000; uc++)
     {
       int w1 = uc_width (uc, "UTF-8");
       int w2 = uc_width (uc, "GBK");

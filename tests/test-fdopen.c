@@ -39,8 +39,7 @@ main (void)
     #define COUNT 1000
   #endif
 
-  int i;
-  for (i = 0; i < COUNT; i++)
+  for (int i = 0; i < COUNT; i++)
     {
       errno = 0;
       if (! fdopen (STDOUT_FILENO, "w"))

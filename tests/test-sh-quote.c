@@ -57,8 +57,6 @@ main (void)
 {
   /* Check the shell_quote_length, shell_quote_copy, shell_quote functions.  */
   {
-    int c;
-
     /* Empty argument.  */
     check_one ("", "''");
 
@@ -156,7 +154,7 @@ main (void)
     check_one ("foo'bar\"baz", "'foo'\\''bar\"baz'"); /* or "\"foo'bar\\\"baz\"" */
 
     /* All other characters don't need quoting.  */
-    for (c = 1; c <= UCHAR_MAX; c++)
+    for (int c = 1; c <= UCHAR_MAX; c++)
       if (strchr ("\t\n\r !\"#$&'()*;<=>?^[\\]`{|}~", c) == NULL)
         {
           char s[5];

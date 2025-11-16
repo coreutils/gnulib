@@ -43,11 +43,10 @@ main (void)
   /* Check a spin-lock initialized through asyncsafe_spin_init.  */
   {
     asyncsafe_spinlock_t local_spin_lock;
-    int i;
 
     asyncsafe_spin_init (&local_spin_lock);
 
-    for (i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
       {
         sigset_t saved_set;
         asyncsafe_spin_lock (&local_spin_lock, false, &set, &saved_set);

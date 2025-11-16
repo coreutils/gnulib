@@ -47,10 +47,9 @@ main (_GL_UNUSED int argc, char *argv[])
       {"a", "//b",  "a//b"},
       {"", "a", "a"},  /* this might deserve a diagnostic */
     };
-  unsigned int i;
   bool fail = false;
 
-  for (i = 0; i < sizeof tests / sizeof tests[0]; i++)
+  for (unsigned int i = 0; i < sizeof tests / sizeof tests[0]; i++)
     {
       char *base_in_result;
       char const *const *t = tests[i];

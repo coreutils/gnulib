@@ -102,10 +102,10 @@ random_account (void)
 static void
 check_accounts (void)
 {
-  int i, sum;
+  int sum;
 
   sum = 0;
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     sum += account[i];
   if (sum != ACCOUNT_COUNT * 1000)
     abort ();
@@ -123,9 +123,7 @@ static pthread_rwlock_t my_rwlock = PTHREAD_RWLOCK_INITIALIZER;
 static void *
 rwlock_mutator_thread (void *arg)
 {
-  int repeat;
-
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       int i1, i2, value;
 
@@ -173,30 +171,29 @@ rwlock_checker_thread (void *arg)
 static void
 test_rwlock (void)
 {
-  int i;
   pthread_t checkerthreads[THREAD_COUNT];
   pthread_t threads[THREAD_COUNT];
 
   /* Initialization.  */
-  for (i = 0; i < ACCOUNT_COUNT; i++)
+  for (int i = 0; i < ACCOUNT_COUNT; i++)
     account[i] = 1000;
   init_atomic_int (&rwlock_checker_done);
   set_atomic_int_value (&rwlock_checker_done, 0);
 
   /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_create (&checkerthreads[i], NULL,
                             rwlock_checker_thread, NULL)
             == 0);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_create (&threads[i], NULL, rwlock_mutator_thread, NULL)
             == 0);
 
   /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_join (threads[i], NULL) == 0);
   set_atomic_int_value (&rwlock_checker_done, 1);
-  for (i = 0; i < THREAD_COUNT; i++)
+  for (int i = 0; i < THREAD_COUNT; i++)
     ASSERT (pthread_join (checkerthreads[i], NULL) == 0);
   check_accounts ();
 }

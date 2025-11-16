@@ -25,10 +25,8 @@
 int
 main ()
 {
-  ucs4_t uc;
-
   /* Test width of ASCII characters.  */
-  for (uc = 0x0020; uc < 0x007F; uc++)
+  for (ucs4_t uc = 0x0020; uc < 0x007F; uc++)
     ASSERT (uc_width (uc, "ISO-8859-2") == 1);
 
   /* Test width of some non-spacing characters.  */

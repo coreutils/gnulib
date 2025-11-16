@@ -35,9 +35,8 @@ main ()
         '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
-    size_t n;
 
-    for (n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= SIZEOF (input); n++)
       {
         size_t len = u16_mbsnlen (input, n);
         ASSERT (len == n);
@@ -55,9 +54,8 @@ main ()
         1, 2, 3, 3, 4, 5, 5, 6, 7,
         8, 8, 9, 10, 10
       };
-    size_t n;
 
-    for (n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= SIZEOF (input); n++)
       {
         size_t len = u16_mbsnlen (input, n);
         ASSERT (len == expected[n]);

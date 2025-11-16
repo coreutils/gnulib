@@ -45,7 +45,7 @@ main (int argc, _GL_UNUSED char *argv[])
 {
   char origname[HOST_NAME_MAX];
   char newname[HOST_NAME_MAX];
-  int rcs, i;
+  int rcs;
 
   /* skip the tests if we don't have root privilege.  this does not
      consider things like CAP_SYS_ADMIN (linux) or PRIV_SYS_ADMIN
@@ -113,6 +113,7 @@ main (int argc, _GL_UNUSED char *argv[])
 #if !(defined __CYGWIN__ || defined __HAIKU__)
   {
     char longname[HOST_NAME_MAX + 2];
+    int i;
 
     /* glibc does allow setting a zero length name, so the lower bound
        needs no test. validate that we are constrained by

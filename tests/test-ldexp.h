@@ -21,7 +21,6 @@
 static void
 test_function (void)
 {
-  int i;
   volatile DOUBLE x;
   volatile DOUBLE y;
 
@@ -91,43 +90,45 @@ test_function (void)
     y = LDEXP (x, -5); ASSERT (y == x * L_(0.03125));
   }
 
-  for (i = 1, x = L_(1.73205); i <= MAX_EXP; i++, x *= L_(2.0))
-    {
-      y = LDEXP (x, 0); ASSERT (y == x);
+  {
+    int i;
+
+    for (i = 1, x = L_(1.73205); i <= MAX_EXP; i++, x *= L_(2.0))
       {
-        volatile DOUBLE expected;
-        y = LDEXP (x, 5);
-        expected = x * L_(32.0);
-        ASSERT (y == expected);
-      }
-      y = LDEXP (x, -5); ASSERT (y == x * 0.03125L);
-      y = LDEXP (x, INT_MIN); ASSERT (y == 0);
-    }
-  for (i = 1, x = L_(1.73205); i >= MIN_EXP; i--, x *= L_(0.5))
-    {
-      y = LDEXP (x, 0); ASSERT (y == x);
-      y = LDEXP (x, 5); ASSERT (y == x * L_(32.0));
-      if (i - 5 >= MIN_EXP)
+        y = LDEXP (x, 0); ASSERT (y == x);
         {
-          y = LDEXP (x, -5); ASSERT (y == x * L_(0.03125));
+          volatile DOUBLE expected;
+          y = LDEXP (x, 5);
+          expected = x * L_(32.0);
+          ASSERT (y == expected);
         }
-    }
-  for (; i >= LDBL_MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
-    {
-      y = LDEXP (x, 0); ASSERT (y == x);
-      y = LDEXP (x, 5); ASSERT (y == x * L_(32.0));
-    }
+        y = LDEXP (x, -5); ASSERT (y == x * 0.03125L);
+        y = LDEXP (x, INT_MIN); ASSERT (y == 0);
+      }
+    for (i = 1, x = L_(1.73205); i >= MIN_EXP; i--, x *= L_(0.5))
+      {
+        y = LDEXP (x, 0); ASSERT (y == x);
+        y = LDEXP (x, 5); ASSERT (y == x * L_(32.0));
+        if (i - 5 >= MIN_EXP)
+          {
+            y = LDEXP (x, -5); ASSERT (y == x * L_(0.03125));
+          }
+      }
+    for (; i >= LDBL_MIN_EXP - 100 && x > L_(0.0); i--, x *= L_(0.5))
+      {
+        y = LDEXP (x, 0); ASSERT (y == x);
+        y = LDEXP (x, 5); ASSERT (y == x * L_(32.0));
+      }
+  }
 
   /* Randomized tests.  */
-  for (i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < SIZEOF (RANDOM); i++)
     {
-      int u, v;
-
       x = L_(20.0) * RANDOM[i] - L_(10.0); /* -10.0 <= x <= 10.0 */
       /* LDEXP only does rounding when it returns a denormalized number
          or there is underflow.  It doesn't happen here.  */
-      for (u = -10; u <= 10; u++)
-        for (v = -10; v <= 10; v++)
+      for (int u = -10; u <= 10; u++)
+        for (int v = -10; v <= 10; v++)
           ASSERT (LDEXP (x, u + v) == LDEXP (LDEXP (x, u), v));
     }
 }

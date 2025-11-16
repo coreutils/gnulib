@@ -33,12 +33,10 @@ SIGNATURE_CHECK (wcwidth, int, (wchar_t));
 int
 main ()
 {
-  wchar_t wc;
-
 #if !GNULIB_WCHAR_SINGLE_LOCALE
 # ifdef C_CTYPE_ASCII
   /* Test width of ASCII characters.  */
-  for (wc = 0x20; wc < 0x7F; wc++)
+  for (wchar_t wc = 0x20; wc < 0x7F; wc++)
     ASSERT (wcwidth (wc) == 1);
 # endif
 #endif
@@ -53,7 +51,7 @@ main ()
       && strcmp (locale_charset (), "UTF-8") == 0)
     {
       /* Test width of ASCII characters.  */
-      for (wc = 0x20; wc < 0x7F; wc++)
+      for (wchar_t wc = 0x20; wc < 0x7F; wc++)
         ASSERT (wcwidth (wc) == 1);
 
       /* Test width of some non-spacing characters.  */

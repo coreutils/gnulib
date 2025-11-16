@@ -41,11 +41,10 @@ main ()
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     ulc_wordbreaks (input, SIZEOF (input), p);
 
-    for (i = 0; i < 36; i++)
+    for (size_t i = 0; i < 36; i++)
       {
         ASSERT (p[i] == ((i >= 4 && i <= 5)
                          || (i >= 9 && i <= 17)

@@ -78,8 +78,7 @@ is_running_under_virtualbox_kvm (void)
             {
               buf[n] = '\0';
               char *saveptr;
-              char *word;
-              for (word = strtok_r (buf, " \n", &saveptr);
+              for (char *word = strtok_r (buf, " \n", &saveptr);
                    word != NULL;
                    word = strtok_r (NULL, " \n", &saveptr))
                 {
@@ -116,8 +115,7 @@ num_cpus (void)
           int n = read (fd, buf, sizeof (buf));
           if (n <= 0)
             break;
-          int i;
-          for (i = 0; i < n; i++)
+          for (int i = 0; i < n; i++)
             {
               if (last_char_was_newline && buf[i] == '\n')
                 blank_lines++;

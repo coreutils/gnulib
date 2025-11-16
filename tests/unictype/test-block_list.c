@@ -33,9 +33,8 @@ main ()
   {
     const uc_block_t *latin_block = NULL;
     const uc_block_t *hebrew_block = NULL;
-    size_t i;
 
-    for (i = 0; i < nblocks; i++)
+    for (size_t i = 0; i < nblocks; i++)
       {
         if (strcmp (blocks[i].name, "Latin") == 0)
           latin_block = &blocks[i];

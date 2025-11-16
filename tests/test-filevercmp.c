@@ -166,8 +166,6 @@ test_filevercmp (char const *a, char const *b)
 int
 main (void)
 {
-  const char *const *i;
-
   /* Following tests taken from test-strverscmp.c */
   ASSERT (filevercmp ("", "") == 0);
   ASSERT (filevercmp ("a", "a") == 0);
@@ -179,10 +177,9 @@ main (void)
   ASSERT (filevercmp ("0a", "0") > 0);
 
   /* compare each version string with each other - O(n^2) */
-  for (i = examples; *i; i++)
+  for (const char * const *i = examples; *i; i++)
     {
-      const char *const *j;
-      for (j = examples; *j; j++)
+      for (const char * const *j = examples; *j; j++)
         {
           int result = test_filevercmp (*i, *j);
           if (result < 0)
@@ -194,7 +191,7 @@ main (void)
         }
     }
 
-  for (i = equals; i < equals + sizeof equals / sizeof *equals; i++)
+  for (const char * const *i = equals; i < equals + sizeof equals / sizeof *equals; i++)
     for (; *i; i++)
       for (char const *const *j = i; *j; j++)
         {

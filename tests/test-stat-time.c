@@ -107,8 +107,6 @@ do_stat (const char *filename, struct stat *p)
 static void
 prepare_test (struct stat *statinfo, struct timespec *modtimes)
 {
-  int i;
-
   create_file (filename_stamp1);
   nap ();
   create_file (filename_testfile);
@@ -125,7 +123,7 @@ prepare_test (struct stat *statinfo, struct timespec *modtimes)
   do_stat (filename_stamp3,   &statinfo[3]);
 
   /* Now use our access functions. */
-  for (i = 0; i < NFILES; ++i)
+  for (int i = 0; i < NFILES; ++i)
     {
       modtimes[i] = get_stat_mtime (&statinfo[i]);
     }
@@ -134,8 +132,6 @@ prepare_test (struct stat *statinfo, struct timespec *modtimes)
 static void
 test_mtime (const struct stat *statinfo, struct timespec *modtimes)
 {
-  int i;
-
   /* Use the struct stat fields directly. */
   /* mtime(stamp1) < mtime(stamp2) */
   ASSERT (statinfo[0].st_mtime < statinfo[2].st_mtime
@@ -159,7 +155,7 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
               && modtimes[2].tv_nsec < modtimes[3].tv_nsec));
 
   /* verify equivalence */
-  for (i = 0; i < NFILES; ++i)
+  for (int i = 0; i < NFILES; ++i)
     {
       struct timespec ts;
       ts = get_stat_mtime (&statinfo[i]);
@@ -195,10 +191,8 @@ test_birthtime (const struct stat *statinfo,
                 const struct timespec *modtimes,
                 struct timespec *birthtimes)
 {
-  int i;
-
   /* Collect the birth times.  */
-  for (i = 0; i < NFILES; ++i)
+  for (int i = 0; i < NFILES; ++i)
     {
       birthtimes[i] = get_stat_birthtime (&statinfo[i]);
       if (birthtimes[i].tv_nsec < 0)

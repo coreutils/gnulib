@@ -71,11 +71,10 @@ main (int argc, char *argv[])
     {
       size_t size = atoi (argv[1]);
       double *base;
-      size_t i;
 
       base = malloc (size * sizeof (double));
 
-      for (i = 0; i < size; i++)
+      for (size_t i = 0; i < size; i++)
         base[i] = i * i;
 
       qsort (base, size, sizeof (double), doublecmp);

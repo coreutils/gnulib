@@ -123,9 +123,8 @@ main (int argc, char *argv[])
         , ACL_TYPE_EXTENDED
 # endif
       };
-    int t;
 
-    for (t = 0; t < sizeof (types) / sizeof (types[0]); t++)
+    for (int t = 0; t < sizeof (types) / sizeof (types[0]); t++)
       {
         int type = types[t];
         acl_t acl1;
@@ -261,7 +260,6 @@ main (int argc, char *argv[])
     {
       aclent_t *entries1 = XNMALLOC (count1, aclent_t);
       aclent_t *entries2 = XNMALLOC (count2, aclent_t);
-      int i;
 
       if (count1 > 0 && acl (file1, GETACL, count1, entries1) < count1)
         {
@@ -275,7 +273,7 @@ main (int argc, char *argv[])
           fflush (stderr);
           abort ();
         }
-      for (i = 0; i < count1; i++)
+      for (int i = 0; i < count1; i++)
         {
           if (entries1[i].a_type != entries2[i].a_type)
             {
@@ -322,7 +320,6 @@ main (int argc, char *argv[])
     ace_t *entries1 = XNMALLOC (count1, ace_t);
     ace_t *entries2 = XNMALLOC (count2, ace_t);
     int ret;
-    int i;
 
     ret = acl (file1, ACE_GETACL, count1, entries1);
     if (ret < 0 && errno == EINVAL)
@@ -350,7 +347,7 @@ main (int argc, char *argv[])
         return 1;
       }
 
-    for (i = 0; i < count1; i++)
+    for (int i = 0; i < count1; i++)
       {
         if (entries1[i].a_type != entries2[i].a_type)
           {
@@ -416,7 +413,6 @@ main (int argc, char *argv[])
     {
       struct acl_entry *entries1 = XNMALLOC (count1, struct acl_entry);
       struct acl_entry *entries2 = XNMALLOC (count2, struct acl_entry);
-      int i;
 
       if (getacl (file1, count1, entries1) < count1)
         {
@@ -430,7 +426,7 @@ main (int argc, char *argv[])
           fflush (stderr);
           abort ();
         }
-      for (i = 0; i < count1; i++)
+      for (int i = 0; i < count1; i++)
         {
           if (entries1[i].uid != entries2[i].uid)
             {
@@ -491,7 +487,6 @@ main (int argc, char *argv[])
     {
       struct acl *entries1 = XNMALLOC (count1, struct acl);
       struct acl *entries2 = XNMALLOC (count2, struct acl);
-      int i;
 
       if (acl ((char *) file1, ACL_GET, count1, entries1) < count1)
         {
@@ -505,7 +500,7 @@ main (int argc, char *argv[])
           fflush (stderr);
           abort ();
         }
-      for (i = 0; i < count1; i++)
+      for (int i = 0; i < count1; i++)
         {
           if (entries1[i].a_type != entries2[i].a_type)
             {
@@ -669,7 +664,6 @@ main (int argc, char *argv[])
     {
       struct acl *entries1 = XNMALLOC (count1, struct acl);
       struct acl *entries2 = XNMALLOC (count2, struct acl);
-      int i;
 
       if (acl ((char *) file1, ACL_GET, count1, entries1) < count1)
         {
@@ -683,7 +677,7 @@ main (int argc, char *argv[])
           fflush (stderr);
           abort ();
         }
-      for (i = 0; i < count1; i++)
+      for (int i = 0; i < count1; i++)
         {
           if (entries1[i].a_type != entries2[i].a_type)
             {

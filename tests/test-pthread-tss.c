@@ -92,13 +92,12 @@ static void *
 worker_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
-  int i, j, repeat;
   unsigned int values[KEYS_COUNT];
 
   dbgprintf ("Worker %p started\n", pthread_self_pointer ());
 
   /* Initialize the per-thread storage.  */
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       values[i] = (((unsigned long) random () >> 3) % 1000000) * THREAD_COUNT + id;
       /* Hopefully no arithmetic overflow.  */
@@ -109,7 +108,7 @@ worker_thread (void *arg)
 
   /* Verify that the initial value is NULL.  */
   dbgprintf ("Worker %p before initial verify\n", pthread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if (pthread_getspecific (mykeys[i]) != NULL)
       abort ();
   dbgprintf ("Worker %p after  initial verify\n", pthread_self_pointer ());
@@ -118,7 +117,7 @@ worker_thread (void *arg)
   /* Initialize the per-thread storage.  */
   dbgprintf ("Worker %p before first pthread_setspecific\n",
              pthread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       unsigned int *ptr = (unsigned int *) malloc (sizeof (unsigned int));
       *ptr = values[i];
@@ -129,11 +128,11 @@ worker_thread (void *arg)
   perhaps_yield ();
 
   /* Shuffle around the pointers.  */
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       dbgprintf ("Worker %p doing value swapping\n", pthread_self_pointer ());
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
-      j = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int j = ((unsigned long) random () >> 3) % KEYS_COUNT;
       if (i != j)
         {
           void *vi = pthread_getspecific (mykeys[i]);
@@ -147,7 +146,7 @@ worker_thread (void *arg)
 
   /* Verify that all the values are from this thread.  */
   dbgprintf ("Worker %p before final verify\n", pthread_self_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if ((*(unsigned int *) pthread_getspecific (mykeys[i]) % THREAD_COUNT)
         != id)
       abort ();
@@ -161,30 +160,28 @@ worker_thread (void *arg)
 static void
 test_tss (void)
 {
-  int pass, i;
-
-  for (pass = 0; pass < 2; pass++)
+  for (int pass = 0; pass < 2; pass++)
     {
       pthread_t threads[THREAD_COUNT];
 
       if (pass == 0)
-        for (i = 0; i < KEYS_COUNT; i++)
+        for (int i = 0; i < KEYS_COUNT; i++)
           ASSERT (pthread_key_create (&mykeys[i], free) == 0);
       else
-        for (i = KEYS_COUNT - 1; i >= 0; i--)
+        for (int i = KEYS_COUNT - 1; i >= 0; i--)
           ASSERT (pthread_key_create (&mykeys[i], free) == 0);
 
       /* Spawn the threads.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         ASSERT (pthread_create (&threads[i], NULL,
                                 worker_thread, (void *) (uintptr_t) i)
                 == 0);
 
       /* Wait for the threads to terminate.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         ASSERT (pthread_join (threads[i], NULL) == 0);
 
-      for (i = 0; i < KEYS_COUNT; i++)
+      for (int i = 0; i < KEYS_COUNT; i++)
         ASSERT (pthread_key_delete (mykeys[i]) == 0);
     }
 }
@@ -320,12 +317,11 @@ dtorcheck1_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   pthread_key_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (pthread_key_create (&keys[i], destructor_table[i]) == 0);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (pthread_setspecific (keys[i],
                                  (void *) (uintptr_t) (10 * id + i + 1))
             == 0);
@@ -337,25 +333,23 @@ static void
 test_tss_dtorcheck1 (void)
 {
   pthread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_create (&threads[id], NULL,
                             dtorcheck1_thread, (void *) (uintptr_t) id)
             == 0);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_join (threads[id], NULL) == 0);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       ASSERT (pthread_key_delete (dtorcheck_keys[id][i]) == 0);
 
   /* Check that the destructor was invoked for each key.  */
@@ -373,12 +367,11 @@ dtorcheck2_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   pthread_key_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (pthread_key_create (&keys[i], destructor_table[id]) == 0);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (pthread_setspecific (keys[i],
                                  (void *) (uintptr_t) (10 * i + id + 1))
             == 0);
@@ -390,25 +383,23 @@ static void
 test_tss_dtorcheck2 (void)
 {
   pthread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_create (&threads[id], NULL,
                             dtorcheck2_thread, (void *) (uintptr_t) id)
             == 0);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_join (threads[id], NULL) == 0);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       ASSERT (pthread_key_delete (dtorcheck_keys[id][i]) == 0);
 
   /* Check that the destructor was invoked for each key.  */
@@ -447,12 +438,10 @@ racecheck_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   pthread_key_t *keys = racecheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int repeat;
-  int i;
 
   dbgprintf ("Worker %p started\n", pthread_self_pointer ());
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       ASSERT (pthread_key_create (&keys[i], destructor_table[i]) == 0);
       ASSERT (pthread_setspecific (keys[i],
@@ -460,9 +449,9 @@ racecheck_thread (void *arg)
               == 0);
     }
 
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
       dbgprintf ("Worker %p reallocating key %d\n", pthread_self_pointer (), i);
       ASSERT (pthread_key_delete (keys[i]) == 0);
       ASSERT (pthread_key_create (&keys[i], destructor_table[i]) == 0);
@@ -479,25 +468,23 @@ static void
 test_tss_racecheck (void)
 {
   pthread_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_create (&threads[id], NULL,
                             racecheck_thread, (void *) (uintptr_t) id)
             == 0);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (pthread_join (threads[id], NULL) == 0);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       ASSERT (pthread_key_delete (racecheck_keys[id][i]) == 0);
 
   /* Check that the destructor was invoked for each key.  */

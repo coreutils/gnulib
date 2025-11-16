@@ -44,9 +44,7 @@ static struct {
 int
 main (void)
 {
-  int i;
-
-  for (i = 0; i < sizeof float_tests / sizeof *float_tests; i++)
+  for (int i = 0; i < sizeof float_tests / sizeof *float_tests; i++)
     {
       union ieee754_float u;
       u.f = float_tests[i].x;
@@ -58,7 +56,7 @@ main (void)
         return 3;
     }
 
-  for (i = 0; i < sizeof double_tests / sizeof *double_tests; i++)
+  for (int i = 0; i < sizeof double_tests / sizeof *double_tests; i++)
     {
       union ieee754_double u;
       u.d = double_tests[i].x;

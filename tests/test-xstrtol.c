@@ -43,11 +43,9 @@ main (int argc, char **argv)
   if (argc > 1)
     {
       /* Test cases given on the command line.  */
-      int i;
-
       error_print_progname = print_no_progname;
 
-      for (i = 1; i < argc; i++)
+      for (int i = 1; i < argc; i++)
         {
           char *p;
           __strtol_t val;

@@ -32,16 +32,12 @@ test_function (void)
   ASSERT (!signbit (y));
 
   /* Randomized tests.  */
-  {
-    int i;
-
-    for (i = 0; i < SIZEOF (RANDOM); i++)
-      {
-        x = L_(10.0) * RANDOM[i]; /* 0.0 <= x <= 10.0 */
-        ASSERT (FABS (x) == x);
-        ASSERT (FABS (- x) == x);
-      }
-  }
+  for (int i = 0; i < SIZEOF (RANDOM); i++)
+    {
+      x = L_(10.0) * RANDOM[i]; /* 0.0 <= x <= 10.0 */
+      ASSERT (FABS (x) == x);
+      ASSERT (FABS (- x) == x);
+    }
 }
 
 volatile DOUBLE x;

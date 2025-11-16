@@ -221,12 +221,11 @@ static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
 {
   struct test_args *args = state->input;
-  int i;
 
   switch (key)
     {
     case ARGP_KEY_INIT:
-      for (i = 0; state->root_argp->children[i].argp; i++)
+      for (int i = 0; state->root_argp->children[i].argp; i++)
         state->child_inputs[i] = args;
       break;
 
@@ -458,7 +457,6 @@ int
 main (int argc, char **argv)
 {
   struct argp_child argp_children[3], group1_children[2], group2_children[2];
-  test_fp *fun;
 
   group1_children[0] = group1_1_child;
   group1_children[1].argp = NULL;
@@ -480,7 +478,7 @@ main (int argc, char **argv)
       return argp_parse (&test_argp, argc, argv, 0, NULL, &test_args);
     }
 
-  for (fun = test_fun; *fun; fun++)
+  for (test_fp *fun = test_fun; *fun; fun++)
     (*fun) (&test_argp);
 
   if (failure_count)

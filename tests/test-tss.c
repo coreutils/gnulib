@@ -89,13 +89,12 @@ static int
 worker_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
-  int i, j, repeat;
   unsigned int values[KEYS_COUNT];
 
   dbgprintf ("Worker %p started\n", thrd_current_pointer ());
 
   /* Initialize the per-thread storage.  */
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       values[i] = (((unsigned long) random () >> 3) % 1000000) * THREAD_COUNT + id;
       /* Hopefully no arithmetic overflow.  */
@@ -106,7 +105,7 @@ worker_thread (void *arg)
 
   /* Verify that the initial value is NULL.  */
   dbgprintf ("Worker %p before initial verify\n", thrd_current_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if (tss_get (mykeys[i]) != NULL)
       abort ();
   dbgprintf ("Worker %p after  initial verify\n", thrd_current_pointer ());
@@ -114,7 +113,7 @@ worker_thread (void *arg)
 
   /* Initialize the per-thread storage.  */
   dbgprintf ("Worker %p before first tss_set\n", thrd_current_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       unsigned int *ptr = (unsigned int *) malloc (sizeof (unsigned int));
       *ptr = values[i];
@@ -124,11 +123,11 @@ worker_thread (void *arg)
   perhaps_yield ();
 
   /* Shuffle around the pointers.  */
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       dbgprintf ("Worker %p doing value swapping\n", thrd_current_pointer ());
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
-      j = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int j = ((unsigned long) random () >> 3) % KEYS_COUNT;
       if (i != j)
         {
           void *vi = tss_get (mykeys[i]);
@@ -142,7 +141,7 @@ worker_thread (void *arg)
 
   /* Verify that all the values are from this thread.  */
   dbgprintf ("Worker %p before final verify\n", thrd_current_pointer ());
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     if ((*(unsigned int *) tss_get (mykeys[i]) % THREAD_COUNT) != id)
       abort ();
   dbgprintf ("Worker %p after  final verify\n", thrd_current_pointer ());
@@ -155,29 +154,27 @@ worker_thread (void *arg)
 static void
 test_tss (void)
 {
-  int pass, i;
-
-  for (pass = 0; pass < 2; pass++)
+  for (int pass = 0; pass < 2; pass++)
     {
       thrd_t threads[THREAD_COUNT];
 
       if (pass == 0)
-        for (i = 0; i < KEYS_COUNT; i++)
+        for (int i = 0; i < KEYS_COUNT; i++)
           ASSERT (tss_create (&mykeys[i], free) == thrd_success);
       else
-        for (i = KEYS_COUNT - 1; i >= 0; i--)
+        for (int i = KEYS_COUNT - 1; i >= 0; i--)
           ASSERT (tss_create (&mykeys[i], free) == thrd_success);
 
       /* Spawn the threads.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         ASSERT (thrd_create (&threads[i], worker_thread, (void *) (uintptr_t) i)
                 == thrd_success);
 
       /* Wait for the threads to terminate.  */
-      for (i = 0; i < THREAD_COUNT; i++)
+      for (int i = 0; i < THREAD_COUNT; i++)
         ASSERT (thrd_join (threads[i], NULL) == thrd_success);
 
-      for (i = 0; i < KEYS_COUNT; i++)
+      for (int i = 0; i < KEYS_COUNT; i++)
         tss_delete (mykeys[i]);
     }
 }
@@ -309,12 +306,11 @@ dtorcheck1_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   tss_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1))
             == thrd_success);
 
@@ -325,24 +321,22 @@ static void
 test_tss_dtorcheck1 (void)
 {
   thrd_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_create (&threads[id], dtorcheck1_thread, (void *) (uintptr_t) id)
             == thrd_success);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_join (threads[id], NULL) == thrd_success);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       tss_delete (dtorcheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */
@@ -360,12 +354,11 @@ dtorcheck2_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   tss_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int i;
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (tss_create (&keys[i], destructor_table[id]) == thrd_success);
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * i + id + 1))
             == thrd_success);
 
@@ -376,24 +369,22 @@ static void
 test_tss_dtorcheck2 (void)
 {
   thrd_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_create (&threads[id], dtorcheck2_thread, (void *) (uintptr_t) id)
             == thrd_success);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_join (threads[id], NULL) == thrd_success);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       tss_delete (dtorcheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */
@@ -428,21 +419,19 @@ racecheck_thread (void *arg)
 {
   unsigned int id = (unsigned int) (uintptr_t) arg;
   tss_t *keys = racecheck_keys[id]; /* an array of KEYS_COUNT keys */
-  int repeat;
-  int i;
 
   dbgprintf ("Worker %p started\n", thrd_current_pointer ());
 
-  for (i = 0; i < KEYS_COUNT; i++)
+  for (int i = 0; i < KEYS_COUNT; i++)
     {
       ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
       ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1))
               == thrd_success);
     }
 
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
-      i = ((unsigned long) random () >> 3) % KEYS_COUNT;
+      int i = ((unsigned long) random () >> 3) % KEYS_COUNT;
       dbgprintf ("Worker %p reallocating key %d\n", thrd_current_pointer (), i);
       tss_delete (keys[i]);
       ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
@@ -458,24 +447,22 @@ static void
 test_tss_racecheck (void)
 {
   thrd_t threads[THREAD_COUNT];
-  unsigned int id;
-  int i;
   uintptr_t expected_sum;
 
   sum = 0;
 
   /* Spawn the threads.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_create (&threads[id], racecheck_thread, (void *) (uintptr_t) id)
             == thrd_success);
 
   /* Wait for the threads to terminate.  */
-  for (id = 0; id < THREAD_COUNT; id++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
     ASSERT (thrd_join (threads[id], NULL) == thrd_success);
 
   /* Clean up the keys.  */
-  for (id = 0; id < THREAD_COUNT; id++)
-    for (i = 0; i < KEYS_COUNT; i++)
+  for (unsigned int id = 0; id < THREAD_COUNT; id++)
+    for (int i = 0; i < KEYS_COUNT; i++)
       tss_delete (racecheck_keys[id][i]);
 
   /* Check that the destructor was invoked for each key.  */

@@ -55,7 +55,6 @@ check (const uint32_t *input, size_t input_length,
 {
   struct accumulator accu;
   struct uninorm_filter *filter;
-  size_t i;
 
   accu.result = NULL;
   accu.length = 0;
@@ -64,7 +63,7 @@ check (const uint32_t *input, size_t input_length,
   filter = uninorm_filter_create (UNINORM_NFC, write_to_accumulator, &accu);
   ASSERT (filter != NULL);
 
-  for (i = 0; i < input_length; i++)
+  for (size_t i = 0; i < input_length; i++)
     ASSERT (uninorm_filter_write (filter, input[i]) == 0);
 
   ASSERT (uninorm_filter_free (filter) == 0);

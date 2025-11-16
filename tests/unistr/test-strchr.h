@@ -86,28 +86,24 @@ test_strchr (void)
   }
 
   /* Alignment tests.  */
-  {
-    int i, j;
-    for (i = 0; i < 32; i++)
-      {
-        for (j = 0; j < 127; j++)
-          input[i + j] = j + 1;
-        input[i + 128] = 0;
-        for (j = 0; j < 127; j++)
-          {
-            ASSERT (U_STRCHR (input + i, j + 1) == input + i + j);
-          }
-      }
-  }
+  for (int i = 0; i < 32; i++)
+    {
+      for (int j = 0; j < 127; j++)
+        input[i + j] = j + 1;
+      input[i + 128] = 0;
+      for (int j = 0; j < 127; j++)
+        {
+          ASSERT (U_STRCHR (input + i, j + 1) == input + i + j);
+        }
+    }
 
   /* Check that uN_strchr() does not read past the end of the string.  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
-    size_t n;
 
     if (page_boundary != NULL)
       {
-        for (n = 2; n <= 500 / sizeof (UNIT); n++)
+        for (size_t n = 2; n <= 500 / sizeof (UNIT); n++)
           {
             UNIT *mem = (UNIT *) (page_boundary - n * sizeof (UNIT));
             U_SET (mem, 'X', n - 2);
@@ -130,27 +126,22 @@ test_strchr (void)
      byte being searched.  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
-    size_t n;
 
     if (page_boundary != NULL)
       {
-        for (n = 2; n <= 500 / sizeof (UNIT); n++)
+        for (size_t n = 2; n <= 500 / sizeof (UNIT); n++)
           {
             UNIT *mem = (UNIT *) (page_boundary - n * sizeof (UNIT));
             U_SET (mem, 'X', n - 1);
             mem[n - 1] = 0;
             ASSERT (U_STRCHR (mem, 'U') == NULL);
 
-            {
-              size_t i;
-
-              for (i = 0; i < n; i++)
-                {
-                  mem[i] = 'U';
-                  ASSERT (U_STRCHR (mem, 'U') == mem + i);
-                  mem[i] = 'X';
-                }
-            }
+            for (size_t i = 0; i < n; i++)
+              {
+                mem[i] = 'U';
+                ASSERT (U_STRCHR (mem, 'U') == mem + i);
+                mem[i] = 'X';
+              }
           }
       }
   }

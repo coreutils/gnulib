@@ -37,8 +37,7 @@ do_test (char test, int repeat, const char *locale_name, const char *text)
       timing_start (&ts);
 
       size_t text_len = strlen (text);
-      int count;
-      for (count = 0; count < repeat; count++)
+      for (int count = 0; count < repeat; count++)
         {
           unsigned long long sum = 0;
           const char *text_end = text + text_len;
@@ -91,8 +90,7 @@ main (int argc, char *argv[])
   text_init ();
 
   /* Execute each test.  */
-  size_t i;
-  for (i = 0; i < strlen (tests); i++)
+  for (size_t i = 0; i < strlen (tests); i++)
     {
       char test = tests[i];
 

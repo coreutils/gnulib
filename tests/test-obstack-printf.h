@@ -69,7 +69,6 @@ test_function (RETTYPE (*my_obstack_printf) (struct obstack *, const char *, ...
     char *base = obstack_base (&obs);
     char *new_base;
     RETTYPE result;
-    int i;
 
     ASSERT (obstack_chunk_size (&obs) < 10000);
     result = my_obstack_printf (&obs, "%010000d", 0);
@@ -77,7 +76,7 @@ test_function (RETTYPE (*my_obstack_printf) (struct obstack *, const char *, ...
     ASSERT (result == obstack_object_size (&obs));
     new_base = obstack_base (&obs);
     ASSERT (base != new_base);
-    for (i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; i++)
       ASSERT (new_base[i] == '0');
   }
 

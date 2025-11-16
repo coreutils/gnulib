@@ -35,12 +35,11 @@ check (const uint16_t *input, size_t input_length, ucs4_t *puc)
   {
     uint16_t buf[100];
     uint16_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
     *ptr++ = 0x2102;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u16_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -53,13 +52,12 @@ check (const uint16_t *input, size_t input_length, ucs4_t *puc)
   {
     uint16_t buf[100];
     uint16_t *ptr;
-    size_t i;
     ucs4_t uc1;
 
     ptr = buf;
     *ptr++ = 0xD835;
     *ptr++ = 0xDD1E;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     if (u16_prev (&uc1, ptr + input_length, buf) != ptr)
@@ -88,11 +86,10 @@ check_invalid (const uint16_t *input, size_t input_length)
   {
     uint16_t buf[100];
     uint16_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 0x2102;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -106,12 +103,11 @@ check_invalid (const uint16_t *input, size_t input_length)
   {
     uint16_t buf[100];
     uint16_t *ptr;
-    size_t i;
 
     ptr = buf;
     *ptr++ = 0xD835;
     *ptr++ = 0xDD1E;
-    for (i = 0; i < input_length; i++)
+    for (size_t i = 0; i < input_length; i++)
       ptr[i] = input[i];
 
     uc = 0xBADFACE;
@@ -131,10 +127,9 @@ main ()
 
   /* Test ISO 646 unit input.  */
   {
-    ucs4_t c;
     uint16_t buf[1];
 
-    for (c = 0; c < 0x80; c++)
+    for (ucs4_t c = 0; c < 0x80; c++)
       {
         buf[0] = c;
         uc = 0xBADFACE;

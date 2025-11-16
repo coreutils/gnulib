@@ -118,7 +118,6 @@ static struct posixtm_test const T[] =
 int
 main (void)
 {
-  unsigned int i;
   char curr_year_str[30];
   struct tm *tm;
   time_t t_now;
@@ -136,7 +135,7 @@ main (void)
   n_bytes = strftime (curr_year_str, sizeof curr_year_str, "%Y", tm);
   ASSERT (0 < n_bytes);
 
-  for (i = 0; T[i].in; i++)
+  for (unsigned int i = 0; T[i].in; i++)
     {
       time_t t_out;
       time_t t_exp;

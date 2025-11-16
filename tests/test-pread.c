@@ -37,7 +37,6 @@ main (void)
   char const *file = "in";
   int fd;
   char buf[] = "0123456789";
-  off_t pos;
 
   ASSERT (file);
 
@@ -49,13 +48,12 @@ main (void)
   fd = open (file, O_RDONLY);
   ASSERT (0 <= fd);
 
-  for (pos = 0; pos < 3; pos++)
+  for (off_t pos = 0; pos < 3; pos++)
     {
-      size_t i;
       off_t init_pos = lseek (fd, pos, SEEK_SET);
       ASSERT (init_pos == pos);
 
-      for (i = 0; i < N; i++)
+      for (size_t i = 0; i < N; i++)
         {
           char byte_buf;
           ASSERT (pread (fd, &byte_buf, 1, i) == 1);

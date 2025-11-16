@@ -278,9 +278,8 @@ main (int argc, char *argv[])
       "with_multilib_list\n";
     size_t h_len = strlen (h);
     char *haystack = malloc (h_len + 1);
-    size_t i;
     ASSERT (haystack);
-    for (i = 0; i < h_len - strlen (needle); i++)
+    for (size_t i = 0; i < h_len - strlen (needle); i++)
       {
         const char *p;
         memcpy (haystack, h, h_len + 1);

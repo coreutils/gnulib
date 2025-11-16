@@ -20,10 +20,9 @@ int
 main ()
 {
   unsigned int c;
-  size_t i;
 
   c = 0;
-  for (i = 0; i < SIZEOF (set); i++)
+  for (size_t i = 0; i < SIZEOF (set); i++)
     {
       for (; c < set[i].start; c++)
         ASSERT (!PREDICATE (c));

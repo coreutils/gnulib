@@ -67,7 +67,7 @@ simple (int pass, char const *host, char const *service)
   static int skip = 0;
   struct addrinfo hints;
   struct addrinfo *hints_p;
-  struct addrinfo *ai0, *ai;
+  struct addrinfo *ai0;
   int res;
   int err;
 
@@ -141,7 +141,7 @@ simple (int pass, char const *host, char const *service)
       return 1;
     }
 
-  for (ai = ai0; ai; ai = ai->ai_next)
+  for (struct addrinfo *ai = ai0; ai; ai = ai->ai_next)
     {
       void *ai_addr = ai->ai_addr;
       struct sockaddr_in *sock_addr = ai_addr;

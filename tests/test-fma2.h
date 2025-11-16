@@ -53,27 +53,22 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
     volatile DOUBLE z;
     volatile DOUBLE result;
     volatile DOUBLE expected;
-    int xs;
-    int xe;
-    int ys;
-    int ye;
-    int ze;
     DOUBLE sign;
 
-    for (xs = 0; xs < 2; xs++)
-      for (xe = -XE_RANGE; xe <= XE_RANGE; xe++)
+    for (int xs = 0; xs < 2; xs++)
+      for (int xe = -XE_RANGE; xe <= XE_RANGE; xe++)
         {
           x = pow_m1[xs] * POW2 (xe); /* (-1)^xs * 2^xe */
 
-          for (ys = 0; ys < 2; ys++)
-            for (ye = -YE_RANGE; ye <= YE_RANGE; ye++)
+          for (int ys = 0; ys < 2; ys++)
+            for (int ye = -YE_RANGE; ye <= YE_RANGE; ye++)
               {
                 y = pow_m1[ys] * POW2 (ye); /* (-1)^ys * 2^ye */
 
                 sign = pow_m1[xs + ys];
 
                 /* Test addition (same signs).  */
-                for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                   {
                     z = sign * POW2 (ze); /* (-1)^(xs+ys) * 2^ze */
                     result = my_fma (x, y, z);
@@ -94,7 +89,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                   }
 
                 /* Test subtraction (opposite signs).  */
-                for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                   {
                     z = - sign * POW2 (ze); /* (-1)^(xs+ys+1) * 2^ze */
                     result = my_fma (x, y, z);
@@ -125,23 +120,17 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
     volatile DOUBLE z;
     volatile DOUBLE result;
     volatile DOUBLE expected;
-    int i;
-    int xs;
-    int xe;
-    int ys;
-    int ye;
-    int ze;
     DOUBLE sign;
 
-    for (i = 1; i <= MANT_BIT - 1; i++)
-      for (xs = 0; xs < 2; xs++)
-        for (xe = -XE_RANGE; xe <= XE_RANGE; xe++)
+    for (int i = 1; i <= MANT_BIT - 1; i++)
+      for (int xs = 0; xs < 2; xs++)
+        for (int xe = -XE_RANGE; xe <= XE_RANGE; xe++)
           {
             x = /* (-1)^xs * (2^xe + 2^(xe-i)) */
               pow_m1[xs] * (POW2 (xe) + POW2 (xe - i));
 
-            for (ys = 0; ys < 2; ys++)
-              for (ye = -YE_RANGE; ye <= YE_RANGE; ye++)
+            for (int ys = 0; ys < 2; ys++)
+              for (int ye = -YE_RANGE; ye <= YE_RANGE; ye++)
                 {
                   y = /* (-1)^ys * (2^ye + 2^(ye-i)) */
                     pow_m1[ys] * (POW2 (ye) + POW2 (ye - i));
@@ -152,7 +141,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                      (-1)^(xs+ys) * (2^(xe+ye) + 2^(xe+ye-i+1) + 2^(xe+ye-2*i)) */
 
                   /* Test addition (same signs).  */
-                  for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                  for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                     {
                       z = sign * POW2 (ze); /* (-1)^(xs+ys) * 2^ze */
                       result = my_fma (x, y, z);
@@ -249,7 +238,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
 
                   /* Test subtraction (opposite signs).  */
                   if (i > 1)
-                    for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                    for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                       {
                         z = - sign * POW2 (ze); /* (-1)^(xs+ys+1) * 2^ze */
                         result = my_fma (x, y, z);
@@ -364,23 +353,17 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
     volatile DOUBLE z;
     volatile DOUBLE result;
     volatile DOUBLE expected;
-    int i;
-    int xs;
-    int xe;
-    int ys;
-    int ye;
-    int ze;
     DOUBLE sign;
 
-    for (i = 1; i <= MANT_BIT - 1; i++)
-      for (xs = 0; xs < 2; xs++)
-        for (xe = -XE_RANGE; xe <= XE_RANGE; xe++)
+    for (int i = 1; i <= MANT_BIT - 1; i++)
+      for (int xs = 0; xs < 2; xs++)
+        for (int xe = -XE_RANGE; xe <= XE_RANGE; xe++)
           {
             x = /* (-1)^xs * (2^xe + 2^(xe-i)) */
               pow_m1[xs] * (POW2 (xe) + POW2 (xe - i));
 
-            for (ys = 0; ys < 2; ys++)
-              for (ye = -YE_RANGE; ye <= YE_RANGE; ye++)
+            for (int ys = 0; ys < 2; ys++)
+              for (int ye = -YE_RANGE; ye <= YE_RANGE; ye++)
                 {
                   y = /* (-1)^ys * (2^ye - 2^(ye-i)) */
                     pow_m1[ys] * (POW2 (ye) - POW2 (ye - i));
@@ -391,7 +374,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                      (-1)^(xs+ys) * (2^(xe+ye) - 2^(xe+ye-2*i)) */
 
                   /* Test addition (same signs).  */
-                  for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                  for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                     {
                       z = sign * POW2 (ze); /* (-1)^(xs+ys) * 2^ze */
                       result = my_fma (x, y, z);
@@ -450,7 +433,7 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
 
                   /* Test subtraction (opposite signs).  */
                   if (i > 1)
-                    for (ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
+                    for (int ze = MIN_EXP - MANT_BIT; ze <= MAX_EXP - 1;)
                       {
                         z = - sign * POW2 (ze); /* (-1)^(xs+ys+1) * 2^ze */
                         result = my_fma (x, y, z);

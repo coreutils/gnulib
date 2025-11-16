@@ -161,8 +161,7 @@ sigint_handler (int signo)
          thread.  By the time we get here, the mutator thread can have done
          any number of mutations; it is reasonable to assume that this number
          of mutations is small.  */
-      size_t i;
-      for (i = recent_sums_newest_index - 1;;)
+      for (size_t i = recent_sums_newest_index - 1;;)
         {
           if (sum == recent_sums[i % NUM_RECENT_SUMS]
               && i >= recent_sums_oldest_index)
@@ -228,9 +227,7 @@ signal_sending_thread (void *arg)
   if (test != 3)
     block_sigint ();
 
-  int repeat;
-
-  for (repeat = 1000; repeat > 0; repeat--)
+  for (int repeat = 1000; repeat > 0; repeat--)
     {
       num_signals_sent++; send_signal ();
       num_signals_sent++; send_signal ();
@@ -314,23 +311,22 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (50);
     const void **contents =
       (const void **) malloc (initial_size * sizeof (const void *));
-    size_t i;
 
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       contents[i] = RANDOM_OBJECT ();
 
     list1 = gl_list_nx_create_empty (GL_LINKED_LIST, NULL, NULL, NULL, true);
     ASSERT (list1 != NULL);
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       ASSERT (gl_list_nx_add_first (list1, contents[i]) != NULL);
 
     list2 = gl_list_nx_create_empty (GL_LINKED_LIST, NULL, NULL, NULL, true);
     ASSERT (list2 != NULL);
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       ASSERT (gl_list_nx_add_last (list2, contents[i]) != NULL);
 
     uintptr_t initial_sum = 0;
-    for (i = 0; i < initial_size; i++)
+    for (size_t i = 0; i < initial_size; i++)
       initial_sum += (uintptr_t) contents[i];
     recent_sums_oldest_index = 0;
     recent_sums[0] = initial_sum;

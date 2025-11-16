@@ -60,7 +60,6 @@ int
 main (void)
 {
   uint32_t p;
-  size_t i, j;
   char data[MAX_ALIGNMENT * 3];
 
   p = crc32_update_no_xor (42, "foo", 3);
@@ -101,7 +100,7 @@ main (void)
 
   /* Test for trailing unaligned bytes */
 
-  for (i = 0; i < MAX_ALIGNMENT; i++)
+  for (size_t i = 0; i < MAX_ALIGNMENT; i++)
     {
       p = crc32_update_no_xor (0, randomb, MAX_ALIGNMENT + i);
       if (p != trailing_unaligned_byte_hashes[i])
@@ -114,7 +113,7 @@ main (void)
 
   /* Test for leading unaligned bytes */
 
-  for (i = 0; i < MAX_ALIGNMENT; i++)
+  for (size_t i = 0; i < MAX_ALIGNMENT; i++)
     {
       p = crc32_update_no_xor (0, randomb + i, (MAX_ALIGNMENT * 2) - i);
       if (p != leading_unaligned_byte_hashes[i])
@@ -127,8 +126,8 @@ main (void)
 
   /* Combined test of multiple lengths at multiple alignments */
 
-  for (i = 0; i < MAX_ALIGNMENT; i++)
-    for (j = 0; j < MAX_ALIGNMENT; j++)
+  for (size_t i = 0; i < MAX_ALIGNMENT; i++)
+    for (size_t j = 0; j < MAX_ALIGNMENT; j++)
       {
         memcpy (data + i, randomb, MAX_ALIGNMENT * 2);
         p = crc32_update_no_xor (0, data + i, j);

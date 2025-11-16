@@ -71,14 +71,13 @@ first_pass (void)
 static void
 second_pass (void)
 {
-  size_t i;
   char *ptr;
 
   /* Return to the start of the file.  */
   setusershell ();
 
   /* Make sure order is preserved.  */
-  for (i = 0; i < shell_count; ++i)
+  for (size_t i = 0; i < shell_count; ++i)
     {
       ptr = getusershell ();
       ASSERT (ptr != NULL);

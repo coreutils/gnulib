@@ -44,15 +44,12 @@ main ()
 #if HAVE_ICONV
   static enum iconv_ilseq_handler handlers[] =
     { iconveh_error, iconveh_question_mark, iconveh_escape_sequence };
-  size_t h;
-  size_t o;
-  size_t i;
 
   /* Assume that iconv() supports at least the encodings ASCII, ISO-8859-1,
      ISO-8859-2, and UTF-8.  */
 
   /* Test conversion from ISO-8859-1 to UTF-16 with no errors.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -62,7 +59,7 @@ main ()
           'e', 'n', ' ', 'B', 0xFC, 'b', 'c', 'h', 'e', 'n', ' ', 'o', 'h',
           'n', 'e', ' ', 'A', 'u', 'g', 'e', 'n', 'm', 'a', 0xDF
         };
-      for (o = 0; o < 2; o++)
+      for (size_t o = 0; o < 2; o++)
         {
           size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
           size_t length;
@@ -75,7 +72,7 @@ main ()
           ASSERT (u16_cmp (result, expected, SIZEOF (expected)) == 0);
           if (o)
             {
-              for (i = 0; i < 37; i++)
+              for (size_t i = 0; i < 37; i++)
                 ASSERT (offsets[i] == i);
               ASSERT (offsets[37] == MAGIC);
               free (offsets);
@@ -85,7 +82,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to UTF-16 with no errors.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -94,7 +91,7 @@ main ()
           'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
           's', 'k', 'i'
         };
-      for (o = 0; o < 2; o++)
+      for (size_t o = 0; o < 2; o++)
         {
           size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
           size_t length;
@@ -107,7 +104,7 @@ main ()
           ASSERT (u16_cmp (result, expected, SIZEOF (expected)) == 0);
           if (o)
             {
-              for (i = 0; i < 16; i++)
+              for (size_t i = 0; i < 16; i++)
                 ASSERT (offsets[i] == i);
               ASSERT (offsets[16] == MAGIC);
               free (offsets);
@@ -122,7 +119,7 @@ main ()
   if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
       /* Test conversions from autodetect_jp to UTF-16.  */
-      for (h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < SIZEOF (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
@@ -130,7 +127,7 @@ main ()
             {
               0x3053, 0x3093, 0x306B, 0x3061, 0x306F
             };
-          for (o = 0; o < 2; o++)
+          for (size_t o = 0; o < 2; o++)
             {
               size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
               size_t length;
@@ -143,7 +140,7 @@ main ()
               ASSERT (u16_cmp (result, expected, SIZEOF (expected)) == 0);
               if (o)
                 {
-                  for (i = 0; i < 10; i++)
+                  for (size_t i = 0; i < 10; i++)
                     ASSERT (offsets[i] == ((i % 2) == 0 ? i / 2 : (size_t)(-1)));
                   ASSERT (offsets[10] == MAGIC);
                   free (offsets);
@@ -151,7 +148,7 @@ main ()
               free (result);
             }
         }
-      for (h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < SIZEOF (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
@@ -159,7 +156,7 @@ main ()
             {
               0x3053, 0x3093, 0x306B, 0x3061, 0x306F
             };
-          for (o = 0; o < 2; o++)
+          for (size_t o = 0; o < 2; o++)
             {
               size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
               size_t length;
@@ -172,7 +169,7 @@ main ()
               ASSERT (u16_cmp (result, expected, SIZEOF (expected)) == 0);
               if (o)
                 {
-                  for (i = 0; i < 10; i++)
+                  for (size_t i = 0; i < 10; i++)
                     ASSERT (offsets[i] == ((i % 2) == 0 ? i / 2 : (size_t)(-1)));
                   ASSERT (offsets[10] == MAGIC);
                   free (offsets);
@@ -180,7 +177,7 @@ main ()
               free (result);
             }
         }
-      for (h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < SIZEOF (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
@@ -188,7 +185,7 @@ main ()
             {
               0x3053, 0x3093, 0x306B, 0x3061, 0x306F
             };
-          for (o = 0; o < 2; o++)
+          for (size_t o = 0; o < 2; o++)
             {
               size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
               size_t length;
@@ -201,7 +198,7 @@ main ()
               ASSERT (u16_cmp (result, expected, SIZEOF (expected)) == 0);
               if (o)
                 {
-                  for (i = 0; i < 16; i++)
+                  for (size_t i = 0; i < 16; i++)
                     ASSERT (offsets[i] == (i == 0 ? 0 :
                                            i == 5 ? 1 :
                                            i == 7 ? 2 :

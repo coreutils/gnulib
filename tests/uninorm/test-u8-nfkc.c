@@ -314,95 +314,91 @@ test_u8_nfkc (void)
 #endif
 
   /* Check that the sorting is not O(n²) but O(n log n).  */
-  {
-    int pass;
-    for (pass = 0; pass < 3; pass++)
-      {
-        size_t repeat = 1;
-        size_t m = 100000;
-        uint8_t *input = (uint8_t *) malloc (2 * (2 * m - 1) * sizeof (uint8_t));
-        if (input != NULL)
-          {
-            uint8_t *expected = input + (2 * m - 1);
-            size_t m1 = m / 2;
-            size_t m2 = (m - 1) / 2;
-            /* NB: m1 + m2 == m - 1.  */
-            uint8_t *p;
-            size_t i;
+  for (int pass = 0; pass < 3; pass++)
+    {
+      size_t repeat = 1;
+      size_t m = 100000;
+      uint8_t *input = (uint8_t *) malloc (2 * (2 * m - 1) * sizeof (uint8_t));
+      if (input != NULL)
+        {
+          uint8_t *expected = input + (2 * m - 1);
+          size_t m1 = m / 2;
+          size_t m2 = (m - 1) / 2;
+          /* NB: m1 + m2 == m - 1.  */
+          uint8_t *p;
 
-            input[0] = 0x41;
-            p = input + 1;
-            switch (pass)
-              {
-              case 0:
-                for (i = 0; i < m1; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x99;
-                  }
-                for (i = 0; i < m2; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x80;
-                  }
-                break;
+          input[0] = 0x41;
+          p = input + 1;
+          switch (pass)
+            {
+            case 0:
+              for (size_t i = 0; i < m1; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x99;
+                }
+              for (size_t i = 0; i < m2; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x80;
+                }
+              break;
 
-              case 1:
-                for (i = 0; i < m2; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x80;
-                  }
-                for (i = 0; i < m1; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x99;
-                  }
-                break;
+            case 1:
+              for (size_t i = 0; i < m2; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x80;
+                }
+              for (size_t i = 0; i < m1; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x99;
+                }
+              break;
 
-              case 2:
-                for (i = 0; i < m2; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x99;
-                    *p++ = 0xCC;
-                    *p++ = 0x80;
-                  }
-                for (; i < m1; i++)
-                  {
-                    *p++ = 0xCC;
-                    *p++ = 0x99;
-                  }
-                break;
+            case 2:
+              for (size_t i = 0; i < m2; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x99;
+                  *p++ = 0xCC;
+                  *p++ = 0x80;
+                }
+              for (size_t i = m2; i < m1; i++)
+                {
+                  *p++ = 0xCC;
+                  *p++ = 0x99;
+                }
+              break;
 
-              default:
-                abort ();
-              }
+            default:
+              abort ();
+            }
 
-            expected[0] = 0xC3;
-            expected[1] = 0x80;
-            p = expected + 2;
-            for (i = 0; i < m1; i++)
-              {
-                *p++ = 0xCC;
-                *p++ = 0x99;
-              }
-            for (i = 0; i < m2 - 1; i++)
-              {
-                *p++ = 0xCC;
-                *p++ = 0x80;
-              }
+          expected[0] = 0xC3;
+          expected[1] = 0x80;
+          p = expected + 2;
+          for (size_t i = 0; i < m1; i++)
+            {
+              *p++ = 0xCC;
+              *p++ = 0x99;
+            }
+          for (size_t i = 0; i < m2 - 1; i++)
+            {
+              *p++ = 0xCC;
+              *p++ = 0x80;
+            }
 
-            for (; repeat > 0; repeat--)
-              {
-                ASSERT (check (input, 2 * m - 1,    expected, 2 * m - 2) == 0);
-                ASSERT (check (expected, 2 * m - 2, expected, 2 * m - 2) == 0);
-              }
+          for (; repeat > 0; repeat--)
+            {
+              ASSERT (check (input, 2 * m - 1,    expected, 2 * m - 2) == 0);
+              ASSERT (check (expected, 2 * m - 2, expected, 2 * m - 2) == 0);
+            }
 
-            free (input);
-          }
-      }
-  }
+          free (input);
+        }
+    }
 }
 
 #else

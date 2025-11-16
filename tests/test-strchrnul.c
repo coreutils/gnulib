@@ -64,21 +64,18 @@ main (void)
   }
 
   /* Alignment tests.  */
-  {
-    int i, j;
-    for (i = 0; i < 32; i++)
-      {
-        for (j = 0; j < 256; j++)
-          input[i + j] = (j + 1) & 0xff;
-        for (j = 1; j < 256; j++)
-          {
-            ASSERT (strchrnul (input + i, j) == input + i + j - 1);
-            input[i + j - 1] = (j == 1 ? 2 : 1);
-            ASSERT (strchrnul (input + i, j) == input + i + 255);
-            input[i + j - 1] = j;
-          }
-      }
-  }
+  for (int i = 0; i < 32; i++)
+    {
+      for (int j = 0; j < 256; j++)
+        input[i + j] = (j + 1) & 0xff;
+      for (int j = 1; j < 256; j++)
+        {
+          ASSERT (strchrnul (input + i, j) == input + i + j - 1);
+          input[i + j - 1] = (j == 1 ? 2 : 1);
+          ASSERT (strchrnul (input + i, j) == input + i + 255);
+          input[i + j - 1] = j;
+        }
+    }
 
   free (input);
 

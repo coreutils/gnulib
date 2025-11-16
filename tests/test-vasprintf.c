@@ -45,9 +45,7 @@ my_asprintf (char **result, const char *format, ...)
 static void
 test_vasprintf ()
 {
-  int repeat;
-
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
       int retval = my_asprintf (&result, "%d", 12345);
@@ -57,7 +55,7 @@ test_vasprintf ()
       free (result);
     }
 
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
       int retval = my_asprintf (&result, "%08lx", 12345UL);
@@ -71,9 +69,7 @@ test_vasprintf ()
 static void
 test_asprintf ()
 {
-  int repeat;
-
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
       int retval = asprintf (&result, "%d", 12345);
@@ -83,7 +79,7 @@ test_asprintf ()
       free (result);
     }
 
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
       int retval = asprintf (&result, "%08lx", 12345UL);

@@ -37,10 +37,8 @@ int
 main ()
 {
 #if HAVE_ALLOCA
-  int i;
-
   /* Repeat a lot of times, to make sure there's no memory leak.  */
-  for (i = 0; i < 100000; i++)
+  for (int i = 0; i < 100000; i++)
     {
       /* Try various values.
          n = 0 gave a crash on Alpha with gcc-2.5.8.

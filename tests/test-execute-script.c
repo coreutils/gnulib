@@ -46,22 +46,18 @@ main ()
   FILE *fp = freopen (DATA_FILENAME, "w", stdout);
   ASSERT (fp != NULL);
 
-  {
-    size_t i;
+  for (size_t i = 0; i < 2; i++)
+    {
+      const char *progname =
+        (i == 0 ? "executable-script" : "executable-script.sh");
+      const char *prog_path =
+        (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
+      const char *prog_argv[2] = { prog_path, NULL };
 
-    for (i = 0; i < 2; i++)
-      {
-        const char *progname =
-          (i == 0 ? "executable-script" : "executable-script.sh");
-        const char *prog_path =
-          (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
-        const char *prog_argv[2] = { prog_path, NULL };
-
-        int ret = execute (progname, prog_argv[0], prog_argv, NULL, NULL,
-                           false, false, false, false, true, false, NULL);
-        ASSERT (ret == 127);
-      }
-  }
+      int ret = execute (progname, prog_argv[0], prog_argv, NULL, NULL,
+                         false, false, false, false, true, false, NULL);
+      ASSERT (ret == 127);
+    }
 
 #if defined _WIN32 && !defined __CYGWIN__
   /* On native Windows, scripts - even with '#!' marker - are not executable.

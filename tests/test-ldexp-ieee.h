@@ -17,22 +17,20 @@
 static void
 test_function (void)
 {
-  int exp;
-
   /* [MX] shaded specification in POSIX.  */
 
   /* NaN.  */
-  for (exp = -100000; exp <= 100000; exp += 100000)
+  for (int exp = -100000; exp <= 100000; exp += 100000)
     ASSERT (ISNAN (LDEXP (NAN, exp)));
 
   /* Signed zero.  */
-  for (exp = -100000; exp <= 100000; exp += 100000)
+  for (int exp = -100000; exp <= 100000; exp += 100000)
     {
       DOUBLE z = LDEXP (L_(0.0), exp);
       ASSERT (z == L_(0.0));
       ASSERT (!signbit (z));
     }
-  for (exp = -100000; exp <= 100000; exp += 100000)
+  for (int exp = -100000; exp <= 100000; exp += 100000)
     {
       DOUBLE z = LDEXP (MINUS_ZERO, exp);
       ASSERT (z == L_(0.0));
@@ -40,8 +38,8 @@ test_function (void)
     }
 
   /* Infinity.  */
-  for (exp = -100000; exp <= 100000; exp += 100000)
+  for (int exp = -100000; exp <= 100000; exp += 100000)
     ASSERT (LDEXP (INFINITY, exp) == INFINITY);
-  for (exp = -100000; exp <= 100000; exp += 100000)
+  for (int exp = -100000; exp <= 100000; exp += 100000)
     ASSERT (LDEXP (- INFINITY, exp) == - INFINITY);
 }

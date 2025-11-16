@@ -22,15 +22,13 @@ main ()
   /* Test small copying operations.  */
   {
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e' };
-    size_t n;
 
-    for (n = 0; n <= SIZEOF (src); n++)
+    for (size_t n = 0; n <= SIZEOF (src); n++)
       {
         UNIT *result = U_CPY_ALLOC (src, n);
-        size_t i;
 
         ASSERT (result != NULL);
-        for (i = 0; i < n; i++)
+        for (size_t i = 0; i < n; i++)
           ASSERT (result[i] == src[i]);
 
         free (result);

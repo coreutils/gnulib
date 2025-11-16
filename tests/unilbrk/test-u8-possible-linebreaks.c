@@ -38,10 +38,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
     {
       char *p = (char *) malloc (SIZEOF (input));
-      size_t i;
 
       my_u8_possible_linebreaks (input, SIZEOF (input), "GB18030", p);
-      for (i = 0; i < 91; i++)
+      for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
@@ -57,10 +56,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
 
     {
       char *p = (char *) malloc (SIZEOF (input));
-      size_t i;
 
       my_u8_possible_linebreaks (input, SIZEOF (input), "GB2312", p);
-      for (i = 0; i < 91; i++)
+      for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
@@ -79,10 +77,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   {
     static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING = "a\nb\rc\r\nd";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 8; i++)
+    for (size_t i = 0; i < 8; i++)
       {
         ASSERT (p[i] == (i == 1 || i == 3 || i == 6 ? UC_BREAK_MANDATORY :
                          i == 5 ? (version < 2 ? UC_BREAK_MANDATORY : UC_BREAK_CR_BEFORE_LF) :
@@ -96,10 +93,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   {
     static const uint8_t input[6] _GL_ATTRIBUTE_NONSTRING = "x\342\200\213 y";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 6; i++)
+    for (size_t i = 0; i < 6; i++)
       {
         ASSERT (p[i] == (i == 5 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
       }
@@ -110,10 +106,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
   {
     static const uint8_t input[21] _GL_ATTRIBUTE_NONSTRING = "<P>Some sentence.</P>";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 21; i++)
+    for (size_t i = 0; i < 21; i++)
       {
         ASSERT (p[i] == (i == 8 || i == 17 || i == 19 ? UC_BREAK_POSSIBLE :
                          UC_BREAK_PROHIBITED));
@@ -127,10 +122,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
       "a\314\200\314\201e\314\200 \314\201o \314\200 o\302\240\314\200\n"
       "\314\200";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 24; i++)
+    for (size_t i = 0; i < 24; i++)
       {
         ASSERT (p[i] == (i == 21 ? UC_BREAK_MANDATORY :
                          i == 9 || i == 13 || i == 16 ? UC_BREAK_POSSIBLE :
@@ -149,10 +143,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
       "\342\230\235\360\237\217\277\n" /* "☝🏿" */
       "\342\230\235\342\200\215\360\237\217\277\n";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 101; i++)
+    for (size_t i = 0; i < 101; i++)
       {
         ASSERT (p[i] == (i == 24 || i == 58
                          || i == 68 || i == 81
@@ -171,10 +164,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
     static const uint8_t input[16] _GL_ATTRIBUTE_NONSTRING =
       "\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 16; i++)
+    for (size_t i = 0; i < 16; i++)
       {
         ASSERT (p[i] == (i == 8 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
       }
@@ -187,10 +179,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
     static const uint8_t input[15] _GL_ATTRIBUTE_NONSTRING = /* "ab-אב-αβ-ω" */
       "ab-\327\220\327\221-\316\261\316\262-\317\211";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 15; i++)
+    for (size_t i = 0; i < 15; i++)
       {
         ASSERT (p[i] == (i == 3 || i == 13 ? UC_BREAK_POSSIBLE :
                          UC_BREAK_PROHIBITED));
@@ -206,10 +197,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
       "\345\255\227\346\213\241\345\274\265G\343\200\214\343\203\246"
       "\343\203\213\343\202\263\343\203\274\343\203\211\343\200\215";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 49; i++)
+    for (size_t i = 0; i < 49; i++)
       {
         ASSERT (p[i] == (i == 3 || i == 6 || i == 9 || i == 12 || i == 15
                          || i == 18 || i == 21 || i == 24 || i == 27
@@ -225,10 +215,9 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
     static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING =
       "\360\237\277\274\360\237\217\277";
     char *p = (char *) malloc (SIZEOF (input));
-    size_t i;
 
     my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 8; i++)
+    for (size_t i = 0; i < 8; i++)
       {
         ASSERT (p[i] == UC_BREAK_PROHIBITED);
       }

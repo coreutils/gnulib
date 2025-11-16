@@ -54,14 +54,12 @@ test_u32_grapheme_prev (size_t len, ...)
   prev = u32_grapheme_prev (end, s);
   if (prev != end - len)
     {
-      size_t i;
-
       if (prev == NULL)
         fputs ("u32_grapheme_prev returned NULL", stderr);
       else
         fprintf (stderr, "u32_grapheme_prev skipped %tu units", end - prev);
       fprintf (stderr, ", expected %zu:\n", len);
-      for (i = 0; i < n; i++)
+      for (size_t i = 0; i < n; i++)
         fprintf (stderr, " %04x", s[i]);
       putc ('\n', stderr);
       fflush (stderr);

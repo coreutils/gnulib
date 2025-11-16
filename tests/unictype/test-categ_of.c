@@ -25,29 +25,24 @@
 int
 main ()
 {
-  {
-    unsigned int c;
-    for (c = 0; c < 0x110000; c++)
-      ASSERT (uc_is_general_category (c, uc_general_category (c)));
-  }
+  for (unsigned int c = 0; c < 0x110000; c++)
+    ASSERT (uc_is_general_category (c, uc_general_category (c)));
 
   {
     uc_general_category_t decimal_digits = uc_general_category ('7');
-    unsigned int c;
 
-    for (c = 0x30; c <= 0x39; c++)
+    for (unsigned int c = 0x30; c <= 0x39; c++)
       ASSERT (uc_is_general_category (c, decimal_digits));
-    for (c = 0x40; c < 0x80; c++)
+    for (unsigned int c = 0x40; c < 0x80; c++)
       ASSERT (!uc_is_general_category (c, decimal_digits));
   }
 
   {
     uc_general_category_t lowercase_letters = uc_general_category ('x');
-    unsigned int c;
 
-    for (c = 0x41; c <= 0x5A; c++)
+    for (unsigned int c = 0x41; c <= 0x5A; c++)
       ASSERT (!uc_is_general_category (c, lowercase_letters));
-    for (c = 0x61; c <= 0x7A; c++)
+    for (unsigned int c = 0x61; c <= 0x7A; c++)
       ASSERT (uc_is_general_category (c, lowercase_letters));
   }
 

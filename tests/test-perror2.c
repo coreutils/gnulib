@@ -95,8 +95,7 @@ main (void)
   /* Test that perror uses the same message as strerror.  */
   {
     int errs[] = { EACCES, 0, -3, };
-    int i;
-    for (i = 0; i < SIZEOF (errs); i++)
+    for (int i = 0; i < SIZEOF (errs); i++)
       {
         char buf[256];
         const char *err = strerror (errs[i]);

@@ -30,7 +30,6 @@ SIGNATURE_CHECK (strnlen, size_t, (char const *, size_t));
 int
 main (void)
 {
-  size_t i;
   char *page_boundary = (char *) zerosize_ptr ();
   if (!page_boundary)
     {
@@ -46,7 +45,7 @@ main (void)
   ASSERT (strnlen ("", 0x100000) == 0);
 
   /* Memory fence and alignment testing.  */
-  for (i = 0; i < 512; i++)
+  for (size_t i = 0; i < 512; i++)
     {
       char *start = page_boundary - i;
       size_t j = i;

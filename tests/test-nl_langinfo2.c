@@ -33,7 +33,6 @@ main (int argc, char *argv[])
 {
 #if HAVE_WORKING_USELOCALE
   /* Check that nl_langinfo() uses the per-thread locale.  */
-  int pass;
   bool skipped_all = true;
 
   /* Extract a few items from the C locale.  */
@@ -59,7 +58,7 @@ main (int argc, char *argv[])
   ASSERT (strlen (c_CRNCYSTR) <= 1); /* "-", "+", ".", or "" */
   ASSERT (c_strcasestr (c_YESEXPR, "y" /* from "yes" */) != NULL);
 
-  for (pass = 1; pass <= 2; pass++)
+  for (int pass = 1; pass <= 2; pass++)
     {
       /* pass    locale
           1        traditional French locale

@@ -206,8 +206,7 @@ test_function (ptrdiff_t (*my_aszprintf) (char **, const char *, ...))
     ptrdiff_t retval =
       my_aszprintf (&result, "%.4000d %d", 1234567, 99);
     ASSERT (result != NULL);
-    size_t i;
-    for (i = 0; i < 4000 - 7; i++)
+    for (size_t i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
     ASSERT (retval == strlen (result));

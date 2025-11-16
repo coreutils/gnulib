@@ -48,9 +48,8 @@ main ()
         56, 56, 56, 57, 57, 57, 58,
         59, 59, 59, 60, 60, 60, 61
       };
-    size_t n;
 
-    for (n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= SIZEOF (input); n++)
       {
         size_t len = u8_mbsnlen (input, n);
         ASSERT (len == expected[n]);
@@ -82,10 +81,9 @@ main ()
   }
   /* 3.2. Lonely start characters.  */
   {
-    ucs4_t c;
     uint8_t input[2];
 
-    for (c = 0xC0; c <= 0xFF; c++)
+    for (ucs4_t c = 0xC0; c <= 0xFF; c++)
       {
         input[0] = c;
         input[1] = ' ';

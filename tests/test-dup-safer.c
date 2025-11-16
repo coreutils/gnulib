@@ -113,7 +113,6 @@ is_mode (int fd, int mode)
 int
 main (void)
 {
-  int i;
   int fd;
   int bad_fd = getdtablesize ();
 
@@ -128,7 +127,7 @@ main (void)
 
   /* Four iterations, with progressively more standard descriptors
      closed.  */
-  for (i = -1; i <= STDERR_FILENO; i++)
+  for (int i = -1; i <= STDERR_FILENO; i++)
     {
       if (0 <= i)
         ASSERT (close (i) == 0);

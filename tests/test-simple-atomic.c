@@ -55,9 +55,8 @@ static void *
 int_mutator_thread (void *arg)
 {
   int *pcounter = (int *) arg;
-  int repeat;
 
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       if (atomic_compare_and_swap (&int_variable, 0, 10) == 0)
         pcounter[0]++;
@@ -90,9 +89,8 @@ static void *
 ptr_mutator_thread (void *arg)
 {
   int *pcounter = (int *) arg;
-  int repeat;
 
-  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+  for (int repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       if (atomic_compare_and_swap_ptr (&ptr_variable, 0, 10) == 0)
         pcounter[0]++;
@@ -161,32 +159,30 @@ main ()
   /* Check atomicity of atomic_compare_and_swap.  */
   {
     void * (*funcs[2]) (void *) = { int_mutator_thread, ptr_mutator_thread };
-    int f;
-    for (f = 0; f < 2; f++)
+    for (int f = 0; f < 2; f++)
       {
         void * (*func) (void *) = funcs[f];
-        int i, j;
         gl_thread_t threads[THREAD_COUNT];
 
         /* Initialization.  */
-        for (i = 0; i < THREAD_COUNT; i++)
-          for (j = 0; j < 5; j++)
+        for (int i = 0; i < THREAD_COUNT; i++)
+          for (int j = 0; j < 5; j++)
             counter[i][j] = 0;
 
         /* Spawn the threads.  */
-        for (i = 0; i < THREAD_COUNT; i++)
+        for (int i = 0; i < THREAD_COUNT; i++)
           threads[i] = gl_thread_create (func, &counter[i][0]);
 
         /* Wait for the threads to terminate.  */
-        for (i = 0; i < THREAD_COUNT; i++)
+        for (int i = 0; i < THREAD_COUNT; i++)
           gl_thread_join (threads[i], NULL);
 
         /* Sum up the work that the threads have done.  */
         unsigned int sum[5];
-        for (j = 0; j < 5; j++)
+        for (int j = 0; j < 5; j++)
           {
             sum[j] = 0;
-            for (i = 0; i < THREAD_COUNT; i++)
+            for (int i = 0; i < THREAD_COUNT; i++)
               sum[j] += counter[i][j];
           }
 

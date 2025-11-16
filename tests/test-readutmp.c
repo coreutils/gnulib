@@ -102,8 +102,7 @@ main (int argc, char *argv[])
                           XNMALLOC (num_entries, STRUCT_UTMP));
 
       idx_t boot_time_count = 0;
-      idx_t i;
-      for (i = 0; i < num_entries; i++)
+      for (idx_t i = 0; i < num_entries; i++)
         {
           const STRUCT_UTMP *entry = &entries[i];
 

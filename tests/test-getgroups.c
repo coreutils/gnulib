@@ -79,8 +79,7 @@ main (int argc, _GL_UNUSED char **argv)
      list the returned groups.  */
   if (1 < argc)
     {
-      int i;
-      for (i = 0; i < result; i++)
+      for (int i = 0; i < result; i++)
         printf ("%d\n", (int) groups[i]);
     }
   free (groups);

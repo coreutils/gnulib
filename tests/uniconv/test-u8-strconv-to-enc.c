@@ -32,13 +32,12 @@ main ()
 #if HAVE_ICONV
   static enum iconv_ilseq_handler handlers[] =
     { iconveh_error, iconveh_question_mark, iconveh_escape_sequence };
-  size_t h;
 
   /* Assume that iconv() supports at least the encodings ASCII, ISO-8859-1,
      ISO-8859-2, and UTF-8.  */
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint8_t input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -50,7 +49,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint8_t input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
@@ -83,7 +82,7 @@ main ()
 
 # if 0
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint8_t input[] = "\342";

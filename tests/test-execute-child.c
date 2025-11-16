@@ -185,8 +185,7 @@ main (int argc, char *argv[])
         char buf[300];
         buf[0] = '\0';
         char *p = buf;
-        int fd;
-        for (fd = 0; fd < 20; fd++)
+        for (int fd = 0; fd < 20; fd++)
           if (is_open (fd) && !(is_qemu && fd == 3))
             {
               sprintf (p, "%d ", fd);

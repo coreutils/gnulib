@@ -58,11 +58,10 @@ main (int argc, char *argv[])
 
   /* Test single-byte input.  */
   {
-    int c;
     char buf[1];
 
     memset (&state, '\0', sizeof (mbstate_t));
-    for (c = 0; c < 0x100; c++)
+    for (int c = 0; c < 0x100; c++)
       switch (c)
         {
         case '\t': case '\v': case '\f':
@@ -124,11 +123,10 @@ main (int argc, char *argv[])
       case '1':
         /* C or POSIX locale.  */
         {
-          int c;
           char buf[1];
 
           memset (&state, '\0', sizeof (mbstate_t));
-          for (c = 0; c < 0x100; c++)
+          for (int c = 0; c < 0x100; c++)
             if (c != 0)
               {
                 /* We are testing all nonnull bytes.  */

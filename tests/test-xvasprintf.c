@@ -48,10 +48,9 @@ my_xasprintf (const char *format, ...)
 static void
 test_xvasprintf (void)
 {
-  int repeat;
   char *result;
 
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       result = my_xasprintf ("%d", 12345);
       ASSERT (result != NULL);
@@ -87,10 +86,9 @@ test_xvasprintf (void)
 static void
 test_xasprintf (void)
 {
-  int repeat;
   char *result;
 
-  for (repeat = 0; repeat <= 8; repeat++)
+  for (int repeat = 0; repeat <= 8; repeat++)
     {
       result = xasprintf ("%d", 12345);
       ASSERT (result != NULL);

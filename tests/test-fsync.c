@@ -29,12 +29,11 @@ SIGNATURE_CHECK (fsync, int, (int));
 int
 main (void)
 {
-  int fd;
   const char *file = "test-fsync.txt";
 
   /* Assuming stdin and stdout are ttys, fsync is allowed to fail, but
      may succeed as an extension.  */
-  for (fd = 0; fd < 2; fd++)
+  for (int fd = 0; fd < 2; fd++)
     if (fsync (fd) != 0)
       {
         ASSERT (errno == EINVAL /* POSIX */
@@ -64,24 +63,28 @@ main (void)
   }
 #endif
 
-  fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
-  ASSERT (0 <= fd);
-  ASSERT (write (fd, "hello", 5) == 5);
-  ASSERT (fsync (fd) == 0);
-  ASSERT (close (fd) == 0);
+  {
+    int fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
+    ASSERT (0 <= fd);
+    ASSERT (write (fd, "hello", 5) == 5);
+    ASSERT (fsync (fd) == 0);
+    ASSERT (close (fd) == 0);
+  }
 
   /* For a read-only regular file input file descriptor, fsync should
      succeed (since at least atime changes can be synchronized).
      On AIX and Cygwin, this test would fail.  */
 #if !(defined _AIX || defined __CYGWIN__)
-  fd = open (file, O_RDONLY);
-  ASSERT (0 <= fd);
   {
-    char buf[1];
-    ASSERT (read (fd, buf, sizeof buf) == sizeof buf);
+    int fd = open (file, O_RDONLY);
+    ASSERT (0 <= fd);
+    {
+      char buf[1];
+      ASSERT (read (fd, buf, sizeof buf) == sizeof buf);
+    }
+    ASSERT (fsync (fd) == 0);
+    ASSERT (close (fd) == 0);
   }
-  ASSERT (fsync (fd) == 0);
-  ASSERT (close (fd) == 0);
 #endif
 
   ASSERT (unlink (file) == 0);

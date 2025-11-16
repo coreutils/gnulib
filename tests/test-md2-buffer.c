@@ -37,12 +37,11 @@ main (int argc, char *argv[])
   if (memcmp (md2_buffer (in1, strlen (in1), buf), out1, MD2_DIGEST_SIZE) !=
       0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < MD2_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < MD2_DIGEST_SIZE; i++)
         printf ("%02x ", out1[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < MD2_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < MD2_DIGEST_SIZE; i++)
         printf ("%02x ", buf[i] & 0xFF);
       printf ("\n");
       return 1;
@@ -51,12 +50,11 @@ main (int argc, char *argv[])
   if (memcmp (md2_buffer (in2, strlen (in2), buf), out2, MD2_DIGEST_SIZE) !=
       0)
     {
-      size_t i;
       printf ("expected:\n");
-      for (i = 0; i < MD2_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < MD2_DIGEST_SIZE; i++)
         printf ("%02x ", out2[i] & 0xFF);
       printf ("\ncomputed:\n");
-      for (i = 0; i < MD2_DIGEST_SIZE; i++)
+      for (size_t i = 0; i < MD2_DIGEST_SIZE; i++)
         printf ("%02x ", buf[i] & 0xFF);
       printf ("\n");
       return 1;

@@ -80,11 +80,10 @@ const struct pkcs5 pkcs5[] = {
 int
 main (int argc, char *argv[])
 {
-  size_t i;
   int rc;
   char out[BUFSIZ];
 
-  for (i = 0; i < sizeof (pkcs5) / sizeof (pkcs5[0]); i++)
+  for (size_t i = 0; i < sizeof (pkcs5) / sizeof (pkcs5[0]); i++)
     {
       rc = gc_pbkdf2_sha1 (pkcs5[i].password, strlen (pkcs5[i].password),
                            pkcs5[i].salt, strlen (pkcs5[i].salt),

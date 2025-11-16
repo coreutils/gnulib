@@ -88,11 +88,8 @@ main (int argc, char *argv[])
       #if HAVE_CLOSE_RANGE
       if (close_range (3, 20 - 1, 0) < 0)
       #endif
-        {
-          int fd;
-          for (fd = 3; fd < 20; fd++)
-            close (fd);
-        }
+        for (int fd = 3; fd < 20; fd++)
+          close (fd);
       break;
     default:
       break;

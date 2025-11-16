@@ -140,8 +140,7 @@ main (int argc, char *argv[])
       ASSERT (0);
     }
 
-  int fd;
-  for (fd = 3; fd < 7; fd++)
+  for (int fd = 3; fd < 7; fd++)
     if (!(is_qemu && fd == 3))
       {
         errno = 0;

@@ -24,32 +24,28 @@ test_function (void)
   ASSERT (ISNAN (RINT (NAN)));
 
   /* Randomized tests.  */
-  {
-    int i;
+  for (int i = 0; i < SIZEOF (RANDOM); i++)
+    {
+      DOUBLE x;
 
-    for (i = 0; i < SIZEOF (RANDOM); i++)
-      {
-        DOUBLE x;
+      x = L_(0.5) * RANDOM[i];
+      ASSERT (RINT (x) == L_(0.0));
+      x = - x;
+      ASSERT (RINT (x) == L_(0.0));
 
-        x = L_(0.5) * RANDOM[i];
-        ASSERT (RINT (x) == L_(0.0));
-        x = - x;
-        ASSERT (RINT (x) == L_(0.0));
+      x = L_(1.0) - L_(0.5) * RANDOM[i];
+      ASSERT (RINT (x) == L_(1.0));
+      x = - x;
+      ASSERT (RINT (x) == - L_(1.0));
 
-        x = L_(1.0) - L_(0.5) * RANDOM[i];
-        ASSERT (RINT (x) == L_(1.0));
-        x = - x;
-        ASSERT (RINT (x) == - L_(1.0));
+      x = L_(1.0) + L_(0.5) * RANDOM[i];
+      ASSERT (RINT (x) == L_(1.0));
+      x = - x;
+      ASSERT (RINT (x) == - L_(1.0));
 
-        x = L_(1.0) + L_(0.5) * RANDOM[i];
-        ASSERT (RINT (x) == L_(1.0));
-        x = - x;
-        ASSERT (RINT (x) == - L_(1.0));
-
-        x = L_(2.0) - L_(0.5) * RANDOM[i];
-        ASSERT (RINT (x) == L_(2.0));
-        x = - x;
-        ASSERT (RINT (x) == - L_(2.0));
-      }
-  }
+      x = L_(2.0) - L_(0.5) * RANDOM[i];
+      ASSERT (RINT (x) == L_(2.0));
+      x = - x;
+      ASSERT (RINT (x) == - L_(2.0));
+    }
 }

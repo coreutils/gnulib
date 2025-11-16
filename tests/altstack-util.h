@@ -49,15 +49,13 @@ prepare_alternate_stack (void)
 static void
 check_alternate_stack_no_overflow (void)
 {
-  unsigned int i;
-
-  for (i = MYSTACK_CRUMPLE_ZONE; i > 0; i--)
+  for (unsigned int i = MYSTACK_CRUMPLE_ZONE; i > 0; i--)
     if (*(mystack - i) != 's')
       {
         printf ("Alternate stack was exceeded by %u bytes!!\n", i);
         exit (1);
       }
-  for (i = MYSTACK_CRUMPLE_ZONE; i > 0; i--)
+  for (unsigned int i = MYSTACK_CRUMPLE_ZONE; i > 0; i--)
     if (*(mystack + MYSTACK_SIZE - 1 + i) != 's')
       {
         printf ("Alternate stack was exceeded by %u bytes!!\n", i);

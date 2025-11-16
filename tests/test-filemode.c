@@ -65,10 +65,9 @@ static const struct mode_to_string table[] =
 int
 main (void)
 {
-  size_t i;
   char buffer[12];
 
-  for (i = 0; i < SIZEOF (table); ++i)
+  for (size_t i = 0; i < SIZEOF (table); ++i)
     {
       strmode (table[i].mode, buffer);
       ASSERT (STREQ (table[i].str, buffer));

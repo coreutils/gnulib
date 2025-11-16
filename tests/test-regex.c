@@ -127,16 +127,14 @@ bug_regex11 (void)
 {
   regex_t re;
   regmatch_t rm[5];
-  size_t i;
-  int n;
 
-  for (i = 0; i < sizeof (tests) / sizeof (tests[0]); ++i)
+  for (size_t i = 0; i < sizeof (tests) / sizeof (tests[0]); ++i)
     {
-      n = regcomp (&re, tests[i].pattern, tests[i].flags);
-      if (n != 0)
+      int err = regcomp (&re, tests[i].pattern, tests[i].flags);
+      if (err != 0)
         {
           char buf[500];
-          regerror (n, &re, buf, sizeof (buf));
+          regerror (err, &re, buf, sizeof (buf));
           report_error ("%s: regcomp %zd failed: %s", tests[i].pattern, i, buf);
           continue;
         }
@@ -148,7 +146,7 @@ bug_regex11 (void)
           continue;
         }
 
-      for (n = 0; n < tests[i].nmatch; ++n)
+      for (int n = 0; n < tests[i].nmatch; ++n)
         if (rm[n].rm_so != tests[i].rm[n].rm_so
               || rm[n].rm_eo != tests[i].rm[n].rm_eo)
           {
@@ -169,7 +167,6 @@ main (void)
 {
   static struct re_pattern_buffer regex;
   unsigned char folded_chars[UCHAR_MAX + 1];
-  int i;
   const char *s;
   struct re_registers regs;
 
@@ -203,11 +200,11 @@ main (void)
         else
           {
             memset (&regs, 0, sizeof regs);
-            i = re_search (&regex, data, sizeof data - 1,
-                           0, sizeof data - 1, &regs);
-            if (i != -1)
+            int ret = re_search (&regex, data, sizeof data - 1,
+                                 0, sizeof data - 1, &regs);
+            if (ret != -1)
               report_error ("re_search '%s' on '%s' returned %d",
-                            pat, data, i);
+                            pat, data, ret);
             regfree (&regex);
             free (regs.start);
             free (regs.end);
@@ -240,11 +237,11 @@ main (void)
           else
             {
               memset (&regs, 0, sizeof regs);
-              i = re_search (&regex, data, sizeof data - 1,
-                             0, sizeof data - 1, NULL);
-              if (i != 0 && i != 21)
+              int ret = re_search (&regex, data, sizeof data - 1,
+                                   0, sizeof data - 1, NULL);
+              if (ret != 0 && ret != 21)
                 report_error ("re_search '%s' on '%s' returned %d",
-                              pat, data, i);
+                              pat, data, ret);
               regfree (&regex);
               free (regs.start);
               free (regs.end);
@@ -277,11 +274,12 @@ main (void)
               static char const data[] = "\xc4\xb0";
 
               memset (&regs, 0, sizeof regs);
-              i = re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
-                             &regs);
-              if (i != 0)
+              int ret =
+                re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
+                           &regs);
+              if (ret != 0)
                 report_error ("re_search '%s' on '%s' returned %d",
-                              pat, data, i);
+                              pat, data, ret);
               regfree (&regex);
               free (regs.start);
               free (regs.end);
@@ -307,10 +305,11 @@ main (void)
       /* This should fail, but succeeds for glibc-2.5.  */
       memset (&regs, 0, sizeof regs);
       static char const data[] = "a\nb";
-      i = re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1, &regs);
-      if (i != -1)
+      int ret =
+        re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1, &regs);
+      if (ret != -1)
         report_error ("re_search '%s' on '%s' returned %d",
-                      pat_3957, data, i);
+                      pat_3957, data, ret);
       regfree (&regex);
       free (regs.start);
       free (regs.end);
@@ -320,7 +319,7 @@ main (void)
      in grep-2.3.  */
   re_set_syntax (RE_SYNTAX_POSIX_EGREP);
   memset (&regex, 0, sizeof regex);
-  for (i = 0; i <= UCHAR_MAX; i++)
+  for (int i = 0; i <= UCHAR_MAX; i++)
     folded_chars[i] = i;
   regex.translate = folded_chars;
   static char const pat75[] = "a[[:@:>@:]]b\n";
@@ -365,10 +364,10 @@ main (void)
     {
       memset (&regs, 0, sizeof regs);
       static char const data[] = "an";
-      i = re_match (&regex, data, sizeof data - 1, 0, &regs);
-      if (i != 2)
+      int ret = re_match (&regex, data, sizeof data - 1, 0, &regs);
+      if (ret != 2)
         report_error ("re_match '%s' on '%s' at 2 returned %d",
-                      pat_stolfi, data, i);
+                      pat_stolfi, data, ret);
       regfree (&regex);
       free (regs.start);
       free (regs.end);
@@ -384,9 +383,9 @@ main (void)
     {
       memset (&regs, 0, sizeof regs);
       static char const data[] = "wxy";
-      i = re_search (&regex, data, sizeof data - 1, 2, -2, &regs);
-      if (i != 1)
-        report_error ("re_search '%s' on '%s' returned %d", pat_x, data, i);
+      int ret = re_search (&regex, data, sizeof data - 1, 2, -2, &regs);
+      if (ret != 1)
+        report_error ("re_search '%s' on '%s' returned %d", pat_x, data, ret);
       regfree (&regex);
       free (regs.start);
       free (regs.end);
@@ -403,9 +402,9 @@ main (void)
     {
       memset (&regs, 0, sizeof regs);
       static char const data[] = "WXY";
-      i = re_search (&regex, data, sizeof data - 1, 0, 3, &regs);
-      if (i < 0)
-        report_error ("re_search '%s' on '%s' returned %d", pat_x, data, i);
+      int ret = re_search (&regex, data, sizeof data - 1, 0, 3, &regs);
+      if (ret < 0)
+        report_error ("re_search '%s' on '%s' returned %d", pat_x, data, ret);
       regfree (&regex);
       free (regs.start);
       free (regs.end);
@@ -423,9 +422,10 @@ main (void)
       memset (&regs, 0, sizeof regs);
       static char const data[] = "a";
       int datalen = sizeof data - 1;
-      i = re_search (&regex, data, datalen, 0, datalen, &regs);
-      if (i != 0)
-        report_error ("re_search '%s' on '%s' returned %d", pat_sub2, data, i);
+      int ret = re_search (&regex, data, datalen, 0, datalen, &regs);
+      if (ret != 0)
+        report_error ("re_search '%s' on '%s' returned %d",
+                      pat_sub2, data, ret);
       else if (regs.num_regs < 2)
         report_error ("re_search '%s' on '%s' returned only %d registers",
                       pat_sub2, data, (int) regs.num_regs);

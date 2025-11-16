@@ -43,48 +43,44 @@ test_single_locale_common (locale_t locale)
        - in the "POSIX" locale (which is usually the same as the "C" locale),
          the blank characters include only the ASCII <space> and <tab>
          characters.  */
-  {
-    int c;
-
-    for (c = 0; c < 0x100; c++)
-      switch (c)
-        {
-        case '\t':
-        #if !(defined __FreeBSD__ || defined __NetBSD__)
-        case '\v':
-        #endif
-        #if !defined __NetBSD__
-        case '\f':
-        #endif
-        case ' ': case '!': case '"': case '#': case '%':
-        case '&': case '\'': case '(': case ')': case '*':
-        case '+': case ',': case '-': case '.': case '/':
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
-        case ':': case ';': case '<': case '=': case '>':
-        case '?':
-        case 'A': case 'B': case 'C': case 'D': case 'E':
-        case 'F': case 'G': case 'H': case 'I': case 'J':
-        case 'K': case 'L': case 'M': case 'N': case 'O':
-        case 'P': case 'Q': case 'R': case 'S': case 'T':
-        case 'U': case 'V': case 'W': case 'X': case 'Y':
-        case 'Z':
-        case '[': case '\\': case ']': case '^': case '_':
-        case 'a': case 'b': case 'c': case 'd': case 'e':
-        case 'f': case 'g': case 'h': case 'i': case 'j':
-        case 'k': case 'l': case 'm': case 'n': case 'o':
-        case 'p': case 'q': case 'r': case 's': case 't':
-        case 'u': case 'v': case 'w': case 'x': case 'y':
-        case 'z': case '{': case '|': case '}': case '~':
-          /* c is in the ISO C "basic character set".  */
-          is = isblank_l ((unsigned char) c, locale);
-          if (c == '\t' || c == ' ')
-            ASSERT (is != 0);
-          else
-            ASSERT (is == 0);
-          break;
-        }
-  }
+  for (int c = 0; c < 0x100; c++)
+    switch (c)
+      {
+      case '\t':
+      #if !(defined __FreeBSD__ || defined __NetBSD__)
+      case '\v':
+      #endif
+      #if !defined __NetBSD__
+      case '\f':
+      #endif
+      case ' ': case '!': case '"': case '#': case '%':
+      case '&': case '\'': case '(': case ')': case '*':
+      case '+': case ',': case '-': case '.': case '/':
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case ':': case ';': case '<': case '=': case '>':
+      case '?':
+      case 'A': case 'B': case 'C': case 'D': case 'E':
+      case 'F': case 'G': case 'H': case 'I': case 'J':
+      case 'K': case 'L': case 'M': case 'N': case 'O':
+      case 'P': case 'Q': case 'R': case 'S': case 'T':
+      case 'U': case 'V': case 'W': case 'X': case 'Y':
+      case 'Z':
+      case '[': case '\\': case ']': case '^': case '_':
+      case 'a': case 'b': case 'c': case 'd': case 'e':
+      case 'f': case 'g': case 'h': case 'i': case 'j':
+      case 'k': case 'l': case 'm': case 'n': case 'o':
+      case 'p': case 'q': case 'r': case 's': case 't':
+      case 'u': case 'v': case 'w': case 'x': case 'y':
+      case 'z': case '{': case '|': case '}': case '~':
+        /* c is in the ISO C "basic character set".  */
+        is = isblank_l ((unsigned char) c, locale);
+        if (c == '\t' || c == ' ')
+          ASSERT (is != 0);
+        else
+          ASSERT (is == 0);
+        break;
+      }
 }
 
 int

@@ -45,52 +45,48 @@ test_single_locale_common (locale_t locale)
          the uppercase characters include only the ASCII A ... Z characters,
          and the corresponding characters a ... z are lowercase.
    */
-  {
-    int c;
-
-    for (c = 0; c < 0x100; c++)
-      switch (c)
-        {
-        case '\t': case '\v': case '\f':
-        case ' ': case '!': case '"': case '#': case '%':
-        case '&': case '\'': case '(': case ')': case '*':
-        case '+': case ',': case '-': case '.': case '/':
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
-        case ':': case ';': case '<': case '=': case '>':
-        case '?':
-        case 'A': case 'B': case 'C': case 'D': case 'E':
-        case 'F': case 'G': case 'H': case 'I': case 'J':
-        case 'K': case 'L': case 'M': case 'N': case 'O':
-        case 'P': case 'Q': case 'R': case 'S': case 'T':
-        case 'U': case 'V': case 'W': case 'X': case 'Y':
-        case 'Z':
-        case '[': case '\\': case ']': case '^': case '_':
-        case 'a': case 'b': case 'c': case 'd': case 'e':
-        case 'f': case 'g': case 'h': case 'i': case 'j':
-        case 'k': case 'l': case 'm': case 'n': case 'o':
-        case 'p': case 'q': case 'r': case 's': case 't':
-        case 'u': case 'v': case 'w': case 'x': case 'y':
-        case 'z': case '{': case '|': case '}': case '~':
-          /* c is in the ISO C "basic character set".  */
-          tc = tolower_l ((unsigned char) c, locale);
-          switch (c)
-            {
-            case 'A': case 'B': case 'C': case 'D': case 'E':
-            case 'F': case 'G': case 'H': case 'I': case 'J':
-            case 'K': case 'L': case 'M': case 'N': case 'O':
-            case 'P': case 'Q': case 'R': case 'S': case 'T':
-            case 'U': case 'V': case 'W': case 'X': case 'Y':
-            case 'Z':
-              ASSERT (tc == (unsigned char) c - 'A' + 'a');
-              break;
-            default:
-              ASSERT (tc == c);
-              break;
-            }
-          break;
-        }
-  }
+  for (int c = 0; c < 0x100; c++)
+    switch (c)
+      {
+      case '\t': case '\v': case '\f':
+      case ' ': case '!': case '"': case '#': case '%':
+      case '&': case '\'': case '(': case ')': case '*':
+      case '+': case ',': case '-': case '.': case '/':
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case ':': case ';': case '<': case '=': case '>':
+      case '?':
+      case 'A': case 'B': case 'C': case 'D': case 'E':
+      case 'F': case 'G': case 'H': case 'I': case 'J':
+      case 'K': case 'L': case 'M': case 'N': case 'O':
+      case 'P': case 'Q': case 'R': case 'S': case 'T':
+      case 'U': case 'V': case 'W': case 'X': case 'Y':
+      case 'Z':
+      case '[': case '\\': case ']': case '^': case '_':
+      case 'a': case 'b': case 'c': case 'd': case 'e':
+      case 'f': case 'g': case 'h': case 'i': case 'j':
+      case 'k': case 'l': case 'm': case 'n': case 'o':
+      case 'p': case 'q': case 'r': case 's': case 't':
+      case 'u': case 'v': case 'w': case 'x': case 'y':
+      case 'z': case '{': case '|': case '}': case '~':
+        /* c is in the ISO C "basic character set".  */
+        tc = tolower_l ((unsigned char) c, locale);
+        switch (c)
+          {
+          case 'A': case 'B': case 'C': case 'D': case 'E':
+          case 'F': case 'G': case 'H': case 'I': case 'J':
+          case 'K': case 'L': case 'M': case 'N': case 'O':
+          case 'P': case 'Q': case 'R': case 'S': case 'T':
+          case 'U': case 'V': case 'W': case 'X': case 'Y':
+          case 'Z':
+            ASSERT (tc == (unsigned char) c - 'A' + 'a');
+            break;
+          default:
+            ASSERT (tc == c);
+            break;
+          }
+        break;
+      }
 }
 
 int

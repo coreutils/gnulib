@@ -20,11 +20,10 @@ static void
 test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, ...))
 {
   uint16_t buf[8];
-  int size;
 
   /* Test return value convention.  */
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       size_t length = size;
       uint16_t *result = my_asnprintf (NULL, &length, "%d", 12345);
@@ -36,7 +35,7 @@ test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, .
       free (result);
     }
 
-  for (size = 0; size <= 8; size++)
+  for (int size = 0; size <= 8; size++)
     {
       static const uint16_t initializer[] =
         { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F', 0 };

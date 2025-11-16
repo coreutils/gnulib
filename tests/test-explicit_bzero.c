@@ -202,10 +202,9 @@ static void
 test_stack (void)
 {
   int count = 0;
-  int repeat;
   char *volatile last_stackbuf;
 
-  for (repeat = 2 * 1000; repeat > 0; repeat--)
+  for (int repeat = 2 * 1000; repeat > 0; repeat--)
     {
       /* This odd way of writing two consecutive statements
            do_secret_stuff (1, &last_stackbuf);

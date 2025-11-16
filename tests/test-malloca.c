@@ -35,13 +35,11 @@ void (*func) (int) = do_allocation;
 int
 main ()
 {
-  int i;
-
   /* This slows down malloc a lot.  */
   unsetenv ("MALLOC_PERTURB_");
 
   /* Repeat a lot of times, to make sure there's no memory leak.  */
-  for (i = 0; i < 50000; i++)
+  for (int i = 0; i < 50000; i++)
     {
       /* Try various values.
          n = 0 gave a crash on Alpha with gcc-2.5.8.
