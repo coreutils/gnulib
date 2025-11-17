@@ -139,11 +139,15 @@ main (int argc, char *argv[])
       fflush (stdout);
 
       /* If the first time is more than 5 years in the past or the last time
-         is more than a week in the future, the time_t members are wrong.  */
+         is more than a week in the future, the time_t members are wrong.
+         Except that CI environments built on Docker sometimes have a boot time
+         long ago in the past, such as 2020-11-13 for CentOS 7.  Such CI
+         environments lack the USER environment variable.  */
       time_t first = UT_TIME_MEMBER (&entries[0]);
       time_t last = UT_TIME_MEMBER (&entries[num_entries - 1]);
       time_t now = time (NULL);
-      ASSERT (first >= now - 157680000);
+      if (getenv ("USER") != NULL)
+        ASSERT (first >= now - 157680000);
       ASSERT (last <= now + 604800);
 
       /* read_utmp should not produce multiple BOOT_TIME entries.  */

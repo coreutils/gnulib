@@ -22,6 +22,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 #include "macros.h"
@@ -41,9 +42,13 @@ main (int argc, char *argv[])
   printf ("Boot time (UTC): %s.%09ld\n", timbuf, (long) boot_time.tv_nsec);
 
   /* If the boot time is more than 5 years in the past or more than a week
-     in the future, the value must be wrong.  */
+     in the future, the value must be wrong.
+     Except that CI environments built on Docker sometimes have a boot time
+     long ago in the past, such as 2020-11-13 for CentOS 7.  Such CI
+     environments lack the USER environment variable.  */
   time_t now = time (NULL);
-  ASSERT (tim >= now - 157680000);
+  if (getenv ("USER") != NULL)
+    ASSERT (tim >= now - 157680000);
   ASSERT (tim <= now + 604800);
 
   return test_exit_status;
