@@ -8227,6 +8227,7 @@ for use with GNU Automake (in particular).
 * Package version management::
 * VCS To ChangeLog::
 * gitlog-to-changelog::
+* maintainer-makefile::
 @end menu
 
 @include havelib.texi
@@ -8248,6 +8249,8 @@ for use with GNU Automake (in particular).
 @include vcs-to-changelog.texi
 
 @include gitlog-to-changelog.texi
+
+@include maintainer-makefile.texi
 
 
 @node Build Infrastructure Files
@@ -8473,9 +8476,9 @@ test suite on Android.
 @node Release Management Files
 @chapter Release Management Files
 
-Gnulib also contain a few scripts that are useful for the release
+Gnulib also contains a few scripts that are useful for the release
 management of a package.  They can be used directly off the Gnulib
-checkout; they don't need to copied first.
+checkout; they don't need to be copied first.
 
 @menu
 * For building shared libraries::

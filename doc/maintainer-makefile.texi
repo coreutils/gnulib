@@ -1,0 +1,94 @@
+@node maintainer-makefile
+@section maintainer-makefile
+
+@c Copyright (C) 2025 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@cindex making releases
+@mindex maintainer-makefile
+
+Software projects are generally expected to adhere to specific coding
+and maintenance conventions.  GNU projects in particular follow the
+conventions laid out in the GNU Coding Standards and Information for GNU
+Maintainers manuals.  The Gnulib module @code{maintainer-makefile} helps
+automate many of these processes by providing a common framework with
+overridable defaults.
+
+@mindex gnumakefile
+The module includes the files @file{GNUmakefile} (from the
+@code{gnumakefile} module) and @file{maint.mk}, which define several
+convenient targets.  Each target usually comes with a description of its
+workings and the variables that control it.  You can override variables
+and define rules in a file named @file{cfg.mk}, which @file{GNUmakefile}
+will look for.  Some targets may not be relevant to your project, or may
+invoke programs that you do not have installed; you are not required to
+set all of them up.
+
+Below is a summary of the available targets.
+
+@table @code
+@item coverage
+Generate code coverage reports.
+
+@item refresh-gnulib-patches
+@item refresh-po
+Check for updates to external files.
+
+@item release-commit
+@item release
+@item upload
+@item web-manual-update
+Automate the process of making, announcing, and distributing a new
+project release.
+
+@cindex @file{NEWS}, @file{NEWS.md} files
+@mindex announce-gen
+@mindex do-release-commit-and-tag
+These rely on several other modules, including
+@code{do-release-commit-and-tag} and @code{announce-gen}, and expect a
+GNU-like project structure by default.  For example, your project should
+maintain a file @file{NEWS} or @file{NEWS.md} which highlights important
+changes between releases, from new to old.  The section for each release
+is introduced by a heading typically indicating its version, date, and
+type.  Here are some examples:
+
+@example
+* Noteworthy changes in release 1.2 (2025-11-17) [stable]
+# Noteworthy changes in release 1.2 (2025-11-17)
+## Major changes in 1.2.3 (2025-11-17) [beta]
+Changes in 1.2.3 (2025-11-17)
+@end example
+
+The first such heading in the file stands as a placeholder for
+as-yet-unreleased changes.  It typically looks like a template for
+subsequent headings, with details replaced by question marks.  For
+example:
+
+@example
+# Noteworthy changes in release ?.? (????-??-??) [?]
+@end example
+
+Though this file was traditionally named @file{NEWS}, more recent
+versions of Automake and Gnulib also accept @file{NEWS.md}.  If the
+tooling infrastructure you use supports only @file{NEWS} but you would
+prefer to maintain a @file{NEWS.md}, you can try defining the former as
+a symlink to the latter.  In any case, maintaining both names as
+distinct files can be confusing and is therefore discouraged.
+
+@mindex readme-release
+See also the module @code{readme-release}, which outlines a typical GNU
+release process.
+
+@item syntax-check
+Search the project for many suspicious constructs, including unportable
+syntax, stale copyright notices, and misspellings.
+
+@item update-copyright
+@mindex update-copyright
+Update all copyright year lists.
+@end table
