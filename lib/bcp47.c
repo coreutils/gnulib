@@ -274,8 +274,7 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
   /* Determine script from the modifier.  */
   if (modifier_len > 0)
     {
-      size_t i;
-      for (i = 0; i < NUM_SCRIPTS; i++)
+      for (size_t i = 0; i < NUM_SCRIPTS; i++)
         if (strlen (scripts[i].name) == modifier_len
             && memeq (scripts[i].name, modifier_start, modifier_len))
           script_subtag = scripts[i].code;
@@ -457,11 +456,8 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
     goto fail;
 
   /* Copy the language to the result buffer, converting it to lower case.  */
-  {
-    size_t i;
-    for (i = 0; i < language_len; i++)
-      xpg[i] = c_tolower (language_start[i]);
-  }
+  for (size_t i = 0; i < language_len; i++)
+    xpg[i] = c_tolower (language_start[i]);
 
   /* Canonicalize the language.  */
   /* For Quechua, Microsoft uses the ISO 639-3 code "quz" instead of the
@@ -482,11 +478,8 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
   /* Copy the region to a temporary buffer, converting it to upper case.  */
   char territory[3];
   size_t territory_len = region_len; /* == 2 or 3 */
-  {
-    size_t i;
-    for (i = 0; i < region_len; i++)
-      territory[i] = c_toupper (region_start[i]);
-  }
+  for (size_t i = 0; i < region_len; i++)
+    territory[i] = c_toupper (region_start[i]);
 
   /* Determine script from the script subtag.  */
   const char *script = NULL;
@@ -494,8 +487,7 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
   if (script_len > 0)
     {
       /* Here script_len == 4.  */
-      size_t i;
-      for (i = 0; i < NUM_SCRIPTS; i++)
+      for (size_t i = 0; i < NUM_SCRIPTS; i++)
         if (c_toupper (script_start[0] == scripts[i].code[0])
             && c_tolower (script_start[1] == scripts[i].code[1])
             && c_tolower (script_start[2] == scripts[i].code[2])

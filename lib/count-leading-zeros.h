@@ -64,11 +64,10 @@ extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
 # define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
     do                                                                  \
       {                                                                 \
-        int count;                                                      \
         unsigned int leading_32;                                        \
         if (! x)                                                        \
           return CHAR_BIT * sizeof x;                                   \
-        for (count = 0;                                                 \
+        for (int count = 0;                                             \
              (leading_32 = ((x >> (sizeof (TYPE) * CHAR_BIT - 32))      \
                             & 0xffffffffU),                             \
               count < CHAR_BIT * sizeof x - 32 && !leading_32);         \

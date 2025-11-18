@@ -89,13 +89,12 @@ get_ppid_of (pid_t pid)
       if (nread >= 0)
         {
           char *bufend = buf + nread;
-          char *p;
 
           /* NUL-terminate the buffer.  */
           *bufend = '\0';
 
           /* Search for a line that starts with "PPid:".  */
-          for (p = buf;;)
+          for (char *p = buf;;)
             {
               if (bufend - p >= 5 && memeq (p, "PPid:", 5))
                 {

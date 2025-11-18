@@ -250,12 +250,11 @@ argz_extract (const char *argz, size_t len, char **argv)
 error_t
 argz_create (char *const argv[], char **argz, size_t *len)
 {
-  int argc;
   size_t tlen = 0;
   char *const *ap;
   char *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
+  for (int argc = 0; argv[argc] != NULL; ++argc)
     tlen += strlen (argv[argc]) + 1;
 
   if (tlen == 0)

@@ -82,8 +82,7 @@ struniq (const char *string)
   size_t slot = hashcode % STRUNIQ_HASH_TABLE_SIZE;
   size_t size;
   struct struniq_hash_node *new_node;
-  struct struniq_hash_node *p;
-  for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
+  for (struct struniq_hash_node *p = struniq_hash_table[slot]; p != NULL; p = p->next)
     if (streq (p->contents, string))
       return p->contents;
   size = strlen (string) + 1;
@@ -100,7 +99,7 @@ struniq (const char *string)
     if (mt) gl_lock_lock (struniq_lock);
     /* Check whether another thread already added the string while we were
        waiting on the lock.  */
-    for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
+    for (struct struniq_hash_node *p = struniq_hash_table[slot]; p != NULL; p = p->next)
       if (streq (p->contents, string))
         {
           free (new_node);

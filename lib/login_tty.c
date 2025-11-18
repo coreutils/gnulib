@@ -27,8 +27,6 @@
 int
 login_tty (int slave_fd)
 {
-  int i;
-
   /* Create a new session.  */
   setsid ();
 
@@ -42,7 +40,7 @@ login_tty (int slave_fd)
             a controlling terminal.
        We assume condition 1, try to ensure condition 2, and then open() it.
    */
-  for (i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
     if (i != slave_fd)
       close (i);
 #ifdef TIOCSCTTY
@@ -65,7 +63,7 @@ login_tty (int slave_fd)
 
   /* Assign fd to the standard input, standard output, and standard error of
      the current process.  */
-  for (i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
     if (slave_fd != i)
       if (dup2 (slave_fd, i) < 0)
         return -1;

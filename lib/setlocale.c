@@ -638,31 +638,23 @@ search (const struct table_entry *table, size_t table_size, const char *string,
           /* Found an i with
                strcmp (language_table[i].code, string) == 0.
              Find the entire interval of such i.  */
-          {
-            size_t i;
-
-            for (i = mid; i > lo; )
-              {
-                i--;
-                if (strcmp (table[i].code, string) < 0)
-                  {
-                    lo = i + 1;
-                    break;
-                  }
-              }
-          }
-          {
-            size_t i;
-
-            for (i = mid + 1; i < hi; i++)
-              {
-                if (strcmp (table[i].code, string) > 0)
-                  {
-                    hi = i;
-                    break;
-                  }
-              }
-          }
+          for (size_t i = mid; i > lo; )
+            {
+              i--;
+              if (strcmp (table[i].code, string) < 0)
+                {
+                  lo = i + 1;
+                  break;
+                }
+            }
+          for (size_t i = mid + 1; i < hi; i++)
+            {
+              if (strcmp (table[i].code, string) > 0)
+                {
+                  hi = i;
+                  break;
+                }
+            }
           /* The set of i with
                strcmp (language_table[i].code, string) == 0
              is the interval [lo, hi-1].  */
@@ -745,14 +737,13 @@ setlocale_unixlike (int category, const char *locale)
       /* Look it up in language_table.  */
       {
         range_t range;
-        size_t i;
 
         search (language_table,
                 sizeof (language_table) / sizeof (language_table[0]),
                 llCC_buf,
                 &range);
 
-        for (i = range.lo; i < range.hi; i++)
+        for (size_t i = range.lo; i < range.hi; i++)
           {
             /* Try the replacement in language_table[i].  */
             if (is_utf8)
@@ -805,58 +796,49 @@ setlocale_unixlike (int category, const char *locale)
                           CC_buf,
                           &country_range);
                   if (country_range.lo < country_range.hi)
-                    {
-                      size_t i;
-                      size_t j;
+                    for (size_t i = language_range.lo; i < language_range.hi; i++)
+                      for (size_t j = country_range.lo; j < country_range.hi; j++)
+                        {
+                          /* Concatenate the replacements.  */
+                          const char *part1 = language_table[i].english;
+                          size_t part1_len = strlen (part1);
+                          const char *part2 = country_table[j].english;
+                          size_t part2_len = strlen (part2) + 1;
+                          char buf[64+64+6];
 
-                      for (i = language_range.lo; i < language_range.hi; i++)
-                        for (j = country_range.lo; j < country_range.hi; j++)
-                          {
-                            /* Concatenate the replacements.  */
-                            const char *part1 = language_table[i].english;
-                            size_t part1_len = strlen (part1);
-                            const char *part2 = country_table[j].english;
-                            size_t part2_len = strlen (part2) + 1;
-                            char buf[64+64+6];
+                          if (!(part1_len + 1 + part2_len + 6 <= sizeof (buf)))
+                            abort ();
+                          memcpy (buf, part1, part1_len);
+                          buf[part1_len] = '_';
+                          memcpy (buf + part1_len + 1, part2, part2_len);
+                          if (is_utf8)
+                            strcat (buf, ".65001");
 
-                            if (!(part1_len + 1 + part2_len + 6 <= sizeof (buf)))
-                              abort ();
-                            memcpy (buf, part1, part1_len);
-                            buf[part1_len] = '_';
-                            memcpy (buf + part1_len + 1, part2, part2_len);
-                            if (is_utf8)
-                              strcat (buf, ".65001");
-
-                            /* Try the concatenated replacements.  */
-                            result = setlocale (category, buf);
-                            if (result != NULL)
-                              return result;
-                          }
-                    }
+                          /* Try the concatenated replacements.  */
+                          result = setlocale (category, buf);
+                          if (result != NULL)
+                            return result;
+                        }
 
                   /* Try omitting the country entirely.  This may set a locale
                      corresponding to the wrong country, but is better than
                      failing entirely.  */
-                  {
-                    size_t i;
-
-                    for (i = language_range.lo; i < language_range.hi; i++)
-                      {
-                        /* Try only the language replacement.  */
-                        if (is_utf8)
-                          {
-                            char buf[64+6];
-                            strcpy (buf, language_table[i].english);
-                            strcat (buf, ".65001");
-                            result = setlocale (category, buf);
-                          }
-                        else
-                          result =
-                            setlocale (category, language_table[i].english);
-                        if (result != NULL)
-                          return result;
-                      }
-                  }
+                  for (size_t i = language_range.lo; i < language_range.hi; i++)
+                    {
+                      /* Try only the language replacement.  */
+                      if (is_utf8)
+                        {
+                          char buf[64+6];
+                          strcpy (buf, language_table[i].english);
+                          strcat (buf, ".65001");
+                          result = setlocale (category, buf);
+                        }
+                      else
+                        result =
+                          setlocale (category, language_table[i].english);
+                      if (result != NULL)
+                        return result;
+                    }
                 }
             }
           }

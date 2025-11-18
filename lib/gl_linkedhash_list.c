@@ -57,9 +57,8 @@ static void
 remove_from_bucket (gl_list_t list, gl_list_node_t node)
 {
   size_t bucket = node->h.hashcode % list->table_size;
-  gl_hash_entry_t *p;
 
-  for (p = &list->table[bucket]; ; p = &(*p)->hash_next)
+  for (gl_hash_entry_t *p = &list->table[bucket]; ; p = &(*p)->hash_next)
     {
       if (*p == &node->h)
         {

@@ -73,13 +73,12 @@ shell_quote_argv (const char * const *argv)
 {
   if (*argv != NULL)
     {
-      const char * const *argp;
       size_t length;
       char *command;
       char *p;
 
       length = 0;
-      for (argp = argv; ; )
+      for (const char * const *argp = argv; ; )
         {
           length += shell_quote_length (*argp) + 1;
           argp++;
@@ -90,7 +89,7 @@ shell_quote_argv (const char * const *argv)
       command = XNMALLOC (length, char);
 
       p = command;
-      for (argp = argv; ; )
+      for (const char * const *argp = argv; ; )
         {
           p = shell_quote_copy (p, *argp);
           argp++;

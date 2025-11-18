@@ -164,7 +164,6 @@ inet_ntop6 (const unsigned char *src, char *dst, socklen_t size)
     int base, len;
   } best, cur;
   unsigned int words[NS_IN6ADDRSZ / NS_INT16SZ];
-  int i;
 
   /*
    * Preprocess:
@@ -172,13 +171,13 @@ inet_ntop6 (const unsigned char *src, char *dst, socklen_t size)
    *      Find the longest run of 0x00's in src[] for :: shorthanding.
    */
   memset (words, '\0', sizeof words);
-  for (i = 0; i < NS_IN6ADDRSZ; i += 2)
+  for (int i = 0; i < NS_IN6ADDRSZ; i += 2)
     words[i / 2] = (src[i] << 8) | src[i + 1];
   best.base = -1;
   cur.base = -1;
   IF_LINT(best.len = 0);
   IF_LINT(cur.len = 0);
-  for (i = 0; i < (NS_IN6ADDRSZ / NS_INT16SZ); i++)
+  for (int i = 0; i < (NS_IN6ADDRSZ / NS_INT16SZ); i++)
     {
       if (words[i] == 0)
         {
@@ -209,7 +208,7 @@ inet_ntop6 (const unsigned char *src, char *dst, socklen_t size)
    * Format the result.
    */
   tp = tmp;
-  for (i = 0; i < (NS_IN6ADDRSZ / NS_INT16SZ); i++)
+  for (int i = 0; i < (NS_IN6ADDRSZ / NS_INT16SZ); i++)
     {
       /* Are we inside the best run of 0x00's? */
       if (best.base != -1 && i >= best.base && i < (best.base + best.len))

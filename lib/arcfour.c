@@ -56,12 +56,13 @@ arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
 void
 arcfour_setkey (arcfour_context * context, const char *key, size_t keylen)
 {
-  size_t i, j, k;
   char *sbox = context->sbox;
 
   context->idx_i = context->idx_j = 0;
-  for (i = 0; i < ARCFOUR_SBOX_SIZE; i++)
+  for (size_t i = 0; i < ARCFOUR_SBOX_SIZE; i++)
     sbox[i] = i;
+
+  size_t i, j, k;
   for (i = j = k = 0; i < ARCFOUR_SBOX_SIZE; i++)
     {
       char t;

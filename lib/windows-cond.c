@@ -134,9 +134,7 @@ glwthread_waitqueue_notify_first (glwthread_waitqueue_t *wq)
 static void
 glwthread_waitqueue_notify_all (glwthread_waitqueue_t *wq)
 {
-  struct glwthread_waitqueue_link *l;
-
-  for (l = wq->wq_list.wql_next; l != &wq->wq_list; )
+  for (struct glwthread_waitqueue_link *l = wq->wq_list.wql_next; l != &wq->wq_list; )
     {
       struct glwthread_waitqueue_element *elt =
         (struct glwthread_waitqueue_element *) l;

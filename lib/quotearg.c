@@ -256,7 +256,6 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           char const *left_quote,
                           char const *right_quote)
 {
-  size_t i;
   size_t len = 0;
   size_t orig_buffersize = 0;
   char const *quote_string = NULL;
@@ -393,7 +392,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
       abort ();
     }
 
-  for (i = 0;  ! (argsize == SIZE_MAX ? arg[i] == '\0' : i == argsize);  i++)
+  for (size_t i = 0;  ! (argsize == SIZE_MAX ? arg[i] == '\0' : i == argsize);  i++)
     {
       unsigned char c;
       unsigned char esc;
@@ -644,8 +643,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                         if ('[' == 0x5b && elide_outer_quotes
                             && quoting_style == shell_always_quoting_style)
                           {
-                            size_t j;
-                            for (j = 1; j < bytes; j++)
+                            for (size_t j = 1; j < bytes; j++)
                               switch (arg[i + m + j])
                                 {
                                 case '[': case '\\': case '^':
@@ -837,8 +835,7 @@ void
 quotearg_free (void)
 {
   struct slotvec *sv = slotvec;
-  int i;
-  for (i = 1; i < nslots; i++)
+  for (int i = 1; i < nslots; i++)
     free (sv[i].val);
   if (sv[0].val != slot0)
     {

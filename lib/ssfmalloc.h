@@ -287,8 +287,7 @@ static inline void
 add_update (uintptr_t page, struct page_pool *pool)
 {
   size_t count = pool->update_queue_count;
-  size_t i;
-  for (i = 0; i < count; i++)
+  for (size_t i = 0; i < count; i++)
     if (pool->update_queue[i] == page)
       /* It's already in the queue.  */
       return;
@@ -306,8 +305,7 @@ static inline void
 drop_update (uintptr_t page, struct page_pool *pool)
 {
   size_t count = pool->update_queue_count;
-  size_t i;
-  for (i = 0; i < count; i++)
+  for (size_t i = 0; i < count; i++)
     if (pool->update_queue[i] == page)
       {
         /* It's in the queue.  Remove it.  */
@@ -577,8 +575,7 @@ allocate_medium_block_in_page (size_t size, uintptr_t page)
   size_t best_i = (size_t)(-1);
   size_t best_length = (size_t)(-1);
   size_t num_gaps = pageptr->num_gaps;
-  size_t i;
-  for (i = 0; i < num_gaps; i++)
+  for (size_t i = 0; i < num_gaps; i++)
     {
       size_t length = pageptr->gaps[i].end - pageptr->gaps[i].start;
       if (length >= size)
@@ -602,7 +599,7 @@ allocate_medium_block_in_page (size_t size, uintptr_t page)
     abort ();
 
   /* Split the gap, leaving an empty gap and a remaining gap.  */
-  for (i = num_gaps - 1; ; i--)
+  for (size_t i = num_gaps - 1; ; i--)
     {
       pageptr->gaps[i + 1] = pageptr->gaps[i];
       if (i == best_i)
@@ -665,8 +662,7 @@ free_medium_block_in_page (uintptr_t block, uintptr_t page)
   gaps[index].end = gaps[index + 1].end;
 
   size_t num_gaps = pageptr->num_gaps - 1;
-  size_t i;
-  for (i = index + 1; i < num_gaps; i++)
+  for (size_t i = index + 1; i < num_gaps; i++)
     gaps[i] = gaps[i + 1];
   pageptr->num_gaps = num_gaps;
 }

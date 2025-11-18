@@ -739,19 +739,18 @@ multiply (mpn_t src1, mpn_t src2, mpn_t *dest)
       /* Here 1 <= len1 <= len2.  */
       size_t dlen;
       mp_limb_t *dp;
-      size_t k, i, j;
 
       dlen = len1 + len2;
       dp = (mp_limb_t *) malloc (dlen * sizeof (mp_limb_t));
       if (dp == NULL)
         return NOMEM_PTR;
-      for (k = len2; k > 0; )
+      for (size_t k = len2; k > 0; )
         dp[--k] = 0;
-      for (i = 0; i < len1; i++)
+      for (size_t i = 0; i < len1; i++)
         {
           mp_limb_t digit1 = p1[i];
           mp_twolimb_t carry = 0;
-          for (j = 0; j < len2; j++)
+          for (size_t j = 0; j < len2; j++)
             {
               mp_limb_t digit2 = p2[j];
               carry += (mp_twolimb_t) digit1 * (mp_twolimb_t) digit2;
@@ -887,8 +886,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
         mp_limb_t remainder = 0;
         const mp_limb_t *sourceptr = a_ptr + a_len;
         mp_limb_t *destptr = q_ptr + a_len;
-        size_t count;
-        for (count = a_len; count > 0; count--)
+        for (size_t count = a_len; count > 0; count--)
           {
             mp_twolimb_t num =
               ((mp_twolimb_t) remainder << GMP_LIMB_BITS) | *--sourceptr;
@@ -989,8 +987,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
             const mp_limb_t *sourceptr = b_ptr;
             mp_limb_t *destptr = tmp_roomptr;
             mp_twolimb_t accu = 0;
-            size_t count;
-            for (count = b_len; count > 0; count--)
+            for (size_t count = b_len; count > 0; count--)
               {
                 accu += (mp_twolimb_t) *sourceptr++ << s;
                 *destptr++ = (mp_limb_t) accu;
@@ -1017,8 +1014,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
           const mp_limb_t *sourceptr = a_ptr;
           mp_limb_t *destptr = r_ptr;
           mp_twolimb_t accu = 0;
-          size_t count;
-          for (count = a_len; count > 0; count--)
+          for (size_t count = a_len; count > 0; count--)
             {
               accu += (mp_twolimb_t) *sourceptr++ << s;
               *destptr++ = (mp_limb_t) accu;
@@ -1094,8 +1090,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
                   const mp_limb_t *sourceptr = b_ptr;
                   mp_limb_t *destptr = r_ptr + j;
                   mp_twolimb_t carry = 0;
-                  size_t count;
-                  for (count = b_len; count > 0; count--)
+                  for (size_t count = b_len; count > 0; count--)
                     {
                       /* Here 0 <= carry <= q*.  */
                       carry =
@@ -1119,8 +1114,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
                       const mp_limb_t *sourceptr = b_ptr;
                       mp_limb_t *destptr = r_ptr + j;
                       mp_limb_t carry = 0;
-                      size_t count;
-                      for (count = b_len; count > 0; count--)
+                      for (size_t count = b_len; count > 0; count--)
                         {
                           mp_limb_t source1 = *sourceptr++;
                           mp_limb_t source2 = *destptr;
@@ -1152,8 +1146,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
         {
           mp_limb_t ptr = r_ptr + r_len;
           mp_twolimb_t accu = 0;
-          size_t count;
-          for (count = r_len; count > 0; count--)
+          for (size_t count = r_len; count > 0; count--)
             {
               accu = (mp_twolimb_t) (mp_limb_t) accu << GMP_LIMB_BITS;
               accu += (mp_twolimb_t) *--ptr << (GMP_LIMB_BITS - s);
@@ -1168,29 +1161,25 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
   /* Compare r << 1 with b.  */
   if (r_len > b_len)
     goto increment_q;
-  {
-    size_t i;
-    for (i = b_len;;)
-      {
-        mp_limb_t r_i =
-          (i <= r_len && i > 0 ? r_ptr[i - 1] >> (GMP_LIMB_BITS - 1) : 0)
-          | (i < r_len ? r_ptr[i] << 1 : 0);
-        mp_limb_t b_i = (i < b_len ? b_ptr[i] : 0);
-        if (r_i > b_i)
-          goto increment_q;
-        if (r_i < b_i)
-          goto keep_q;
-        if (i == 0)
-          break;
-        i--;
-      }
-  }
+  for (size_t i = b_len;;)
+    {
+      mp_limb_t r_i =
+        (i <= r_len && i > 0 ? r_ptr[i - 1] >> (GMP_LIMB_BITS - 1) : 0)
+        | (i < r_len ? r_ptr[i] << 1 : 0);
+      mp_limb_t b_i = (i < b_len ? b_ptr[i] : 0);
+      if (r_i > b_i)
+        goto increment_q;
+      if (r_i < b_i)
+        goto keep_q;
+      if (i == 0)
+        break;
+      i--;
+    }
   if (q_len > 0 && ((q_ptr[0] & 1) != 0))
     /* q is odd.  */
     increment_q:
     {
-      size_t i;
-      for (i = 0; i < q_len; i++)
+      for (size_t i = 0; i < q_len; i++)
         if (++(q_ptr[i]) != 0)
           goto keep_q;
       q_ptr[q_len++] = 1;
@@ -1236,8 +1225,7 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
           /* Divide a by 10^9, in-place.  */
           mp_limb_t remainder = 0;
           mp_limb_t *ptr = a_ptr + a_len;
-          size_t count;
-          for (count = a_len; count > 0; count--)
+          for (size_t count = a_len; count > 0; count--)
             {
               mp_twolimb_t num =
                 ((mp_twolimb_t) remainder << GMP_LIMB_BITS) | *--ptr;
@@ -1245,7 +1233,7 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
               remainder = num % 1000000000;
             }
           /* Store the remainder as 9 decimal digits.  */
-          for (count = 9; count > 0; count--)
+          for (size_t count = 9; count > 0; count--)
             {
               *d_ptr++ = '0' + (remainder % 10);
               remainder = remainder / 10;
@@ -1282,7 +1270,6 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
   mpn_t m;
   int exp;
   long double y;
-  size_t i;
 
   /* Allocate memory for result.  */
   m.nlimbs = (LDBL_MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
@@ -1328,7 +1315,7 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
     }
 #   endif
 #  endif
-  for (i = LDBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
+  for (size_t i = LDBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
     {
       mp_limb_t hi, lo;
       y *= (mp_limb_t) 1 << (GMP_LIMB_BITS / 2);
@@ -1370,7 +1357,6 @@ decode_double (double x, int *ep, mpn_t *mp)
   mpn_t m;
   int exp;
   double y;
-  size_t i;
 
   /* Allocate memory for result.  */
   m.nlimbs = (DBL_MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
@@ -1416,7 +1402,7 @@ decode_double (double x, int *ep, mpn_t *mp)
     }
 #   endif
 #  endif
-  for (i = DBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
+  for (size_t i = DBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
     {
       mp_limb_t hi, lo;
       y *= (mp_limb_t) 1 << (GMP_LIMB_BITS / 2);
@@ -1502,13 +1488,11 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
           1, 5, 25, 125, 625, 3125, 15625, 78125, 390625, 1953125, 9765625,
           48828125, 244140625, 1220703125
         };
-      unsigned int n13;
-      for (n13 = 0; n13 <= abs_n; n13 += 13)
+      for (unsigned int n13 = 0; n13 <= abs_n; n13 += 13)
         {
           mp_limb_t digit1 = small_pow5[n13 + 13 <= abs_n ? 13 : abs_n - n13];
-          size_t j;
           mp_twolimb_t carry = 0;
-          for (j = 0; j < pow5_len; j++)
+          for (size_t j = 0; j < pow5_len; j++)
             {
               mp_limb_t digit2 = pow5_ptr[j];
               carry += (mp_twolimb_t) digit1 * (mp_twolimb_t) digit2;
@@ -1528,8 +1512,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
         {
           mp_limb_t *ptr = pow5_ptr;
           mp_twolimb_t accu = 0;
-          size_t count;
-          for (count = pow5_len; count > 0; count--)
+          for (size_t count = pow5_len; count > 0; count--)
             {
               accu += (mp_twolimb_t) *ptr << s_bits;
               *ptr++ = (mp_limb_t) accu;
@@ -1543,13 +1526,12 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
         }
       if (s_limbs > 0)
         {
-          size_t count;
-          for (count = pow5_len; count > 0;)
+          for (size_t count = pow5_len; count > 0;)
             {
               count--;
               pow5_ptr[s_limbs + count] = pow5_ptr[count];
             }
-          for (count = s_limbs; count > 0;)
+          for (size_t count = s_limbs; count > 0;)
             {
               count--;
               pow5_ptr[count] = 0;
@@ -1590,8 +1572,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
           /* Construct 2^|s|.  */
           {
             mp_limb_t *ptr = pow5_ptr + pow5_len;
-            size_t i;
-            for (i = 0; i < s_limbs; i++)
+            for (size_t i = 0; i < s_limbs; i++)
               ptr[i] = 0;
             ptr[s_limbs] = (mp_limb_t) 1 << s_bits;
             denominator.limbs = ptr;
@@ -1616,17 +1597,13 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
             }
           {
             mp_limb_t *destptr = num_ptr;
-            {
-              size_t i;
-              for (i = 0; i < s_limbs; i++)
-                *destptr++ = 0;
-            }
+            for (size_t i = 0; i < s_limbs; i++)
+              *destptr++ = 0;
             if (s_bits > 0)
               {
                 const mp_limb_t *sourceptr = m.limbs;
                 mp_twolimb_t accu = 0;
-                size_t count;
-                for (count = m.nlimbs; count > 0; count--)
+                for (size_t count = m.nlimbs; count > 0; count--)
                   {
                     accu += (mp_twolimb_t) *sourceptr++ << s_bits;
                     *destptr++ = (mp_limb_t) accu;
@@ -1638,8 +1615,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
             else
               {
                 const mp_limb_t *sourceptr = m.limbs;
-                size_t count;
-                for (count = m.nlimbs; count > 0; count--)
+                for (size_t count = m.nlimbs; count > 0; count--)
                   *destptr++ = *sourceptr++;
               }
             numerator.limbs = num_ptr;
@@ -3563,13 +3539,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (has_precision || has_width)
                     {
                       /* We know the number of wide characters in advance.  */
-                      size_t remaining;
 #  if HAVE_MBRTOWC
                       mbstate_t state;
                       mbszero (&state);
 #  endif
                       ENSURE_ALLOCATION (xsum (length, characters));
-                      for (remaining = characters; remaining > 0; remaining--)
+                      for (size_t remaining = characters; remaining > 0; remaining--)
                         {
                           wchar_t wc;
                           int count;
@@ -3735,12 +3710,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto out_of_memory;
                     {
                       TCHAR_T *tmpptr = tmpsrc;
-                      size_t remaining;
 #   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       mbszero (&state);
 #   endif
-                      for (remaining = bytes; remaining > 0; )
+                      for (size_t remaining = bytes; remaining > 0; )
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                           int count;
@@ -3814,13 +3788,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (has_precision || has_width)
                     {
                       /* We know the number of bytes in advance.  */
-                      size_t remaining;
 #   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       mbszero (&state);
 #   endif
                       ENSURE_ALLOCATION (xsum (length, bytes));
-                      for (remaining = bytes; remaining > 0; )
+                      for (size_t remaining = bytes; remaining > 0; )
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                           int count;
@@ -4679,9 +4652,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               {
                                 /* Round the mantissa.  */
                                 long double tail = mantissa;
-                                size_t q;
 
-                                for (q = precision; ; q--)
+                                for (size_t q = precision; ; q--)
                                   {
                                     int digit = (int) tail;
                                     tail -= digit;
@@ -4696,7 +4668,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                     tail *= 16.0L;
                                   }
                                 if (tail != 0.0L)
-                                  for (q = precision; q > 0; q--)
+                                  for (size_t q = precision; q > 0; q--)
                                     tail *= 0.0625L;
                                 mantissa += tail;
                               }
@@ -4754,9 +4726,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               else
                                 {
                                   char expbuf[6 + 1];
-                                  const char *ep;
                                   sprintf (expbuf, "%+d", exponent);
-                                  for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                  for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                     p++;
                                 }
 #  endif
@@ -4830,9 +4801,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               {
                                 /* Round the mantissa.  */
                                 double tail = mantissa;
-                                size_t q;
 
-                                for (q = precision; ; q--)
+                                for (size_t q = precision; ; q--)
                                   {
                                     int digit = (int) tail;
                                     tail -= digit;
@@ -4847,7 +4817,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                     tail *= 16.0;
                                   }
                                 if (tail != 0.0)
-                                  for (q = precision; q > 0; q--)
+                                  for (size_t q = precision; q > 0; q--)
                                     tail *= 0.0625;
                                 mantissa += tail;
                               }
@@ -4905,9 +4875,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               else
                                 {
                                   char expbuf[6 + 1];
-                                  const char *ep;
                                   sprintf (expbuf, "%+d", exponent);
-                                  for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                  for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                     p++;
                                 }
 #  endif
@@ -5451,9 +5420,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 else
                                   {
                                     char expbuf[6 + 1];
-                                    const char *ep;
                                     sprintf (expbuf, "%+.2d", exponent);
-                                    for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                    for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                       p++;
                                   }
 #   endif
@@ -5706,9 +5674,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                         else
                                           {
                                             char expbuf[6 + 1];
-                                            const char *ep;
                                             sprintf (expbuf, "%+.2d", exponent);
-                                            for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                            for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                               p++;
                                           }
 #   endif
@@ -6070,9 +6037,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   else
                                     {
                                       char expbuf[6 + 1];
-                                      const char *ep;
                                       sprintf (expbuf, decimal_format, exponent);
-                                      for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                      for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                         p++;
                                     }
                                 }
@@ -6337,9 +6303,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                           else
                                             {
                                               char expbuf[6 + 1];
-                                              const char *ep;
                                               sprintf (expbuf, decimal_format, exponent);
-                                              for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+                                              for (const char *ep = expbuf; (*p = *ep) != '\0'; ep++)
                                                 p++;
                                             }
                                         }
@@ -7747,7 +7712,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           {
                             const TCHAR_T *tmpsrc;
                             DCHAR_T *tmpdst;
-                            size_t n;
 
 # if USE_SNPRINTF
                             if (result == resultbuf)
@@ -7772,7 +7736,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             /* Copy backwards, because of overlapping.  */
                             tmpsrc += count;
                             tmpdst += count;
-                            for (n = count; n > 0; n--)
+                            for (size_t n = count; n > 0; n--)
                               *--tmpdst = *--tmpsrc;
                           }
                       }
@@ -7957,8 +7921,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       {
                         /* Convert the %f result to upper case for %F.  */
                         DCHAR_T *rp = result + length;
-                        size_t rc;
-                        for (rc = count; rc > 0; rc--, rp++)
+                        for (size_t rc = count; rc > 0; rc--, rp++)
                           if (*rp >= 'a' && *rp <= 'z')
                             *rp = *rp - 'a' + 'A';
                       }

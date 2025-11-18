@@ -189,7 +189,6 @@ __srandom_r (unsigned int seed, struct random_data *buf)
 {
   int type;
   int32_t *state;
-  long int i;
   int32_t word;
   int32_t *dst;
   int kc;
@@ -211,7 +210,7 @@ __srandom_r (unsigned int seed, struct random_data *buf)
   dst = state;
   word = seed;
   kc = buf->rand_deg;
-  for (i = 1; i < kc; ++i)
+  for (long int i = 1; i < kc; ++i)
     {
       /* This does:
            state[i] = (16807 * state[i - 1]) % 2147483647;

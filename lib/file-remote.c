@@ -268,27 +268,21 @@ file_is_remote (const char *file)
       return -1;
     }
   int result = 0;
-  {
-    struct mount_entry *me;
-    for (me = me_list; me != NULL; )
-      {
-        if (me->me_dev == device)
-          {
-            result = me->me_remote;
-            break;
-          }
-        me = me->me_next;
-      }
-  }
-  {
-    struct mount_entry *me;
-    for (me = me_list; me != NULL; )
-      {
-        struct mount_entry *next = me->me_next;
-        free_mount_entry (me);
-        me = next;
-      }
-  }
+  for (struct mount_entry *me = me_list; me != NULL; )
+    {
+      if (me->me_dev == device)
+        {
+          result = me->me_remote;
+          break;
+        }
+      me = me->me_next;
+    }
+  for (struct mount_entry *me = me_list; me != NULL; )
+    {
+      struct mount_entry *next = me->me_next;
+      free_mount_entry (me);
+      me = next;
+    }
   return result;
 # else
   /* Assume all file systems are local.  */

@@ -185,9 +185,8 @@ do_remaining_delayed_dup2 (struct inheritable_handles *inh_handles,
                            HANDLE curr_process)
 {
   size_t handles_count = inh_handles->count;
-  int newfd;
 
-  for (newfd = 0; newfd < handles_count; newfd++)
+  for (int newfd = 0; newfd < handles_count; newfd++)
     if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
         && (inh_handles->ih[newfd].flags & DELAYED_DUP2_NEWFD) != 0)
       if (do_delayed_dup2 (newfd, inh_handles, curr_process) < 0)
@@ -204,9 +203,8 @@ shrink_inheritable_handles (struct inheritable_handles *inh_handles)
 {
   struct IHANDLE *ih = inh_handles->ih;
   size_t handles_count = inh_handles->count;
-  unsigned int fd;
 
-  for (fd = 0; fd < handles_count; fd++)
+  for (unsigned int fd = 0; fd < handles_count; fd++)
     {
       HANDLE handle = ih[fd].handle;
 
@@ -232,9 +230,8 @@ close_inheritable_handles (struct inheritable_handles *inh_handles)
 {
   struct IHANDLE *ih = inh_handles->ih;
   size_t handles_count = inh_handles->count;
-  unsigned int fd;
 
-  for (fd = 0; fd < handles_count; fd++)
+  for (unsigned int fd = 0; fd < handles_count; fd++)
     {
       HANDLE handle = ih[fd].handle;
 
@@ -691,9 +688,8 @@ __spawni (pid_t *pid, const char *prog_filename,
   if (file_actions != NULL)
     {
       HANDLE curr_process = GetCurrentProcess ();
-      int cnt;
 
-      for (cnt = 0; cnt < file_actions->_used; ++cnt)
+      for (int cnt = 0; cnt < file_actions->_used; ++cnt)
         {
           struct __spawn_action *action = &file_actions->_actions[cnt];
 
@@ -951,13 +947,12 @@ __spawni (pid_t *pid, const char *file,
          done better but it requires system specific solutions since
          the sigset_t data type can be very different on different
          architectures.  */
-      int sig;
       struct sigaction sa;
 
       memset (&sa, '\0', sizeof (sa));
       sa.sa_handler = SIG_DFL;
 
-      for (sig = 1; sig < NSIG; ++sig)
+      for (int sig = 1; sig < NSIG; ++sig)
         if (sigismember (&attrp->_sd, sig) != 0
             && sigaction (sig, &sa, NULL) != 0)
           _exit (SPAWN_ERROR);
@@ -994,69 +989,65 @@ __spawni (pid_t *pid, const char *file,
 
   /* Execute the file actions.  */
   if (file_actions != NULL)
-    {
-      int cnt;
+    for (int cnt = 0; cnt < file_actions->_used; ++cnt)
+      {
+        struct __spawn_action *action = &file_actions->_actions[cnt];
 
-      for (cnt = 0; cnt < file_actions->_used; ++cnt)
-        {
-          struct __spawn_action *action = &file_actions->_actions[cnt];
+        switch (action->tag)
+          {
+          case spawn_do_close:
+            if (close_not_cancel (action->action.close_action.fd) != 0)
+              /* Signal the error.  */
+              _exit (SPAWN_ERROR);
+            break;
 
-          switch (action->tag)
+          case spawn_do_open:
             {
-            case spawn_do_close:
-              if (close_not_cancel (action->action.close_action.fd) != 0)
-                /* Signal the error.  */
+              int new_fd = open_not_cancel (action->action.open_action.path,
+                                            action->action.open_action.oflag
+                                            | O_LARGEFILE,
+                                            action->action.open_action.mode);
+
+              if (new_fd == -1)
+                /* The 'open' call failed.  */
                 _exit (SPAWN_ERROR);
-              break;
 
-            case spawn_do_open:
-              {
-                int new_fd = open_not_cancel (action->action.open_action.path,
-                                              action->action.open_action.oflag
-                                              | O_LARGEFILE,
-                                              action->action.open_action.mode);
+              /* Make sure the desired file descriptor is used.  */
+              if (new_fd != action->action.open_action.fd)
+                {
+                  if (dup2 (new_fd, action->action.open_action.fd)
+                      != action->action.open_action.fd)
+                    /* The 'dup2' call failed.  */
+                    _exit (SPAWN_ERROR);
 
-                if (new_fd == -1)
-                  /* The 'open' call failed.  */
-                  _exit (SPAWN_ERROR);
-
-                /* Make sure the desired file descriptor is used.  */
-                if (new_fd != action->action.open_action.fd)
-                  {
-                    if (dup2 (new_fd, action->action.open_action.fd)
-                        != action->action.open_action.fd)
-                      /* The 'dup2' call failed.  */
-                      _exit (SPAWN_ERROR);
-
-                    if (close_not_cancel (new_fd) != 0)
-                      /* The 'close' call failed.  */
-                      _exit (SPAWN_ERROR);
-                  }
-              }
-              break;
-
-            case spawn_do_dup2:
-              if (dup2 (action->action.dup2_action.fd,
-                        action->action.dup2_action.newfd)
-                  != action->action.dup2_action.newfd)
-                /* The 'dup2' call failed.  */
-                _exit (SPAWN_ERROR);
-              break;
-
-            case spawn_do_chdir:
-              if (chdir (action->action.chdir_action.path) < 0)
-                /* The 'chdir' call failed.  */
-                _exit (SPAWN_ERROR);
-              break;
-
-            case spawn_do_fchdir:
-              if (fchdir (action->action.fchdir_action.fd) < 0)
-                /* The 'fchdir' call failed.  */
-                _exit (SPAWN_ERROR);
-              break;
+                  if (close_not_cancel (new_fd) != 0)
+                    /* The 'close' call failed.  */
+                    _exit (SPAWN_ERROR);
+                }
             }
-        }
-    }
+            break;
+
+          case spawn_do_dup2:
+            if (dup2 (action->action.dup2_action.fd,
+                      action->action.dup2_action.newfd)
+                != action->action.dup2_action.newfd)
+              /* The 'dup2' call failed.  */
+              _exit (SPAWN_ERROR);
+            break;
+
+          case spawn_do_chdir:
+            if (chdir (action->action.chdir_action.path) < 0)
+              /* The 'chdir' call failed.  */
+              _exit (SPAWN_ERROR);
+            break;
+
+          case spawn_do_fchdir:
+            if (fchdir (action->action.fchdir_action.fd) < 0)
+              /* The 'fchdir' call failed.  */
+              _exit (SPAWN_ERROR);
+            break;
+          }
+      }
 
   if (! use_path)
     {

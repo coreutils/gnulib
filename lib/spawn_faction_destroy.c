@@ -33,10 +33,8 @@ posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *file_actions)
 #if !REPLACE_POSIX_SPAWN
   return posix_spawn_file_actions_destroy (file_actions);
 #else
-  int i;
-
   /* Free the paths in the open actions.  */
-  for (i = 0; i < file_actions->_used; ++i)
+  for (int i = 0; i < file_actions->_used; ++i)
     {
       struct __spawn_action *sa = &file_actions->_actions[i];
       switch (sa->tag)

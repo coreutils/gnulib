@@ -212,11 +212,10 @@ main (int argc, char * argv[])
       char *input = read_file (stdin);
       int length = strlen (input);
       char *breaks = malloc (length);
-      int i;
 
       u8_width_linebreaks_v2 ((uint8_t *) input, length, width, 0, 0, NULL, "UTF-8", breaks);
 
-      for (i = 0; i < length; i++)
+      for (int i = 0; i < length; i++)
         {
           switch (breaks[i])
             {

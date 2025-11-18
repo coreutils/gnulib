@@ -128,8 +128,6 @@ dtor_table_shrink_used (void)
 void
 glwthread_tls_process_destructors (void)
 {
-  unsigned int repeat;
-
   dtor_table_ensure_initialized ();
 
   EnterCriticalSection (&dtor_table_lock);
@@ -141,7 +139,7 @@ glwthread_tls_process_destructors (void)
     }
   dtor_processing_threads++;
 
-  for (repeat = GLWTHREAD_DESTRUCTOR_ITERATIONS; repeat > 0; repeat--)
+  for (unsigned int repeat = GLWTHREAD_DESTRUCTOR_ITERATIONS; repeat > 0; repeat--)
     {
       unsigned int destructors_run = 0;
 
@@ -157,9 +155,8 @@ glwthread_tls_process_destructors (void)
              entry as inactive, but it will not otherwise change dtors_used nor
              the contents of the first dtors_used entries of dtor_table.  */
       unsigned int i_limit = dtors_used;
-      unsigned int i;
 
-      for (i = 0; i < i_limit; i++)
+      for (unsigned int i = 0; i < i_limit; i++)
         {
           struct dtor current = dtor_table[i];
           if (current.destructor != NULL)
@@ -299,9 +296,8 @@ glwthread_tls_key_delete (glwthread_tls_key_t key)
       /* Find the key in dtor_table.  */
       {
         unsigned int i_limit = dtors_used;
-        unsigned int i;
 
-        for (i = 0; i < i_limit; i++)
+        for (unsigned int i = 0; i < i_limit; i++)
           if (dtor_table[i].key == key)
             {
               if (i < dtors_used - 1)
@@ -317,9 +313,8 @@ glwthread_tls_key_delete (glwthread_tls_key_t key)
       /* Be careful not to disturb the glwthread_tls_process_destructors
          invocations that are executing in other threads.  */
       unsigned int i_limit = dtors_used;
-      unsigned int i;
 
-      for (i = 0; i < i_limit; i++)
+      for (unsigned int i = 0; i < i_limit; i++)
         if (dtor_table[i].destructor != NULL /* skip inactive entries */
             && dtor_table[i].key == key)
           {

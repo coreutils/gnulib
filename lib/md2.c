@@ -58,11 +58,11 @@ md2_read_ctx (const struct md2_ctx *ctx, void *resbuf)
 void *
 md2_finish_ctx (struct md2_ctx *ctx, void *resbuf)
 {
-  unsigned long i, k;
+  unsigned long k;
 
   /* pad the message */
   k = 16 - ctx->curlen;
-  for (i = ctx->curlen; i < 16; i++)
+  for (unsigned long i = ctx->curlen; i < 16; i++)
     {
       ctx->buf[i] = (unsigned char) k;
     }
@@ -146,11 +146,10 @@ static const unsigned char PI_SUBST[256] = {
 static void
 md2_update_chksum (struct md2_ctx *ctx)
 {
-  int j;
   unsigned char L;
 
   L = ctx->chksum[15];
-  for (j = 0; j < 16; j++)
+  for (int j = 0; j < 16; j++)
     {
       /* caution, the RFC says its "C[j] = S[M[i*16+j] xor L]" but the
          reference source code [and test vectors] say otherwise. */
@@ -161,11 +160,10 @@ md2_update_chksum (struct md2_ctx *ctx)
 static void
 md2_compress (struct md2_ctx *ctx)
 {
-  size_t j, k;
   unsigned char t;
 
   /* copy block */
-  for (j = 0; j < 16; j++)
+  for (size_t j = 0; j < 16; j++)
     {
       ctx->X[16 + j] = ctx->buf[j];
       ctx->X[32 + j] = ctx->X[j] ^ ctx->X[16 + j];
@@ -174,9 +172,9 @@ md2_compress (struct md2_ctx *ctx)
   t = (unsigned char) 0;
 
   /* do 18 rounds */
-  for (j = 0; j < 18; j++)
+  for (size_t j = 0; j < 18; j++)
     {
-      for (k = 0; k < 48; k++)
+      for (size_t k = 0; k < 48; k++)
         {
           t = (ctx->X[k] ^= PI_SUBST[(int) (t & 255)]);
         }

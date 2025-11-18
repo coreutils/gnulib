@@ -32,8 +32,7 @@ pipe_safer (int fd[2])
 {
   if (pipe (fd) == 0)
     {
-      int i;
-      for (i = 0; i < 2; i++)
+      for (int i = 0; i < 2; i++)
         {
           fd[i] = fd_safer (fd[i]);
           if (fd[i] < 0)

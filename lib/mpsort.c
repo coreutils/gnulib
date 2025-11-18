@@ -104,7 +104,6 @@ mpsort_with_tmp (void const **restrict base, size_t n,
     {
       size_t n1 = n / 2;
       size_t n2 = n - n1;
-      size_t i;
       size_t t = 0;
       size_t tlim = n1;
       size_t b = n1;
@@ -122,7 +121,7 @@ mpsort_with_tmp (void const **restrict base, size_t n,
       tt = tmp[t];
       bb = base[b];
 
-      for (i = 0; ; )
+      for (size_t i = 0; ; )
         if (cmp (tt, bb) <= 0)
           {
             base[i++] = tt;

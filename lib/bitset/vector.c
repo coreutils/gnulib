@@ -893,8 +893,7 @@ vbitset_or_and_cmp (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_windex size = VBITSET_SIZE (dst);
 
   bool changed = false;
-  unsigned i;
-  for (i = 0; i < size; i++, dstp++)
+  for (unsigned int i = 0; i < size; i++)
     {
       bitset_word tmp = (*src1p++ | *src2p++) & *src3p++;
 
@@ -903,6 +902,7 @@ vbitset_or_and_cmp (bitset dst, bitset src1, bitset src2, bitset src3)
           changed = true;
           *dstp = tmp;
         }
+      dstp++;
     }
   return changed;
 }

@@ -109,9 +109,8 @@ fill_lc_all_name (void)
   else
     {
       /* Produce a mixed locale name.  */
-      size_t i;
-      char *q;
-      for (i = 0, q = lc_all_name; i < 12; i++)
+      char *q = lc_all_name;
+      for (size_t i = 0; i < 12; i++)
         {
           const char *p = cat_names[i];
           size_t n = strlen (p);
@@ -178,10 +177,9 @@ setlocale_fixed (int category, const char *name)
       if (name != NULL)
         {
           char single_name[256+1];
-          int i;
 
           /* Test whether NAME is valid.  */
-          for (i = 12-1; i >= 0; i--)
+          for (int i = 12-1; i >= 0; i--)
             if (extract_single_name (single_name, index_to_cat (i), name) < 0)
               return NULL;
           /* Now single_name contains the one for the index 0,
@@ -190,7 +188,7 @@ setlocale_fixed (int category, const char *name)
             return NULL;
 
           /* Fill lc_cat_name[].  */
-          for (i = 12-1; i >= 0; i--)
+          for (int i = 12-1; i >= 0; i--)
             {
               if (extract_single_name (single_name, index_to_cat (i), name) < 0)
                 abort ();

@@ -1430,8 +1430,7 @@ gl_locale_name_canonicalize (char *name)
 
   /* Step 3: Convert new-style dash to Unix underscore. */
   {
-    char *p;
-    for (p = name; *p != '\0'; p++)
+    for (char *p = name; *p != '\0'; p++)
       if (*p == '-')
         *p = '_';
   }
@@ -1454,9 +1453,7 @@ gl_locale_name_canonicalize (char *name)
 {
   /* FIXME: This is probably incomplete: it does not handle "zh-Hans" and
      "zh-Hant".  */
-  char *p;
-
-  for (p = name; *p != '\0'; p++)
+  for (char *p = name; *p != '\0'; p++)
     if (*p == '-')
       {
         *p = '_';

@@ -315,10 +315,9 @@ strong_alias (_obstack_free, obstack_free)
 _OBSTACK_INDEX_T
 _obstack_memory_used (struct obstack *h)
 {
-  struct _obstack_chunk *lp;
   _OBSTACK_INDEX_T nbytes = 0;
 
-  for (lp = h->chunk; lp != NULL; lp = lp->prev)
+  for (struct _obstack_chunk *lp = h->chunk; lp != NULL; lp = lp->prev)
     {
       nbytes += lp->limit - (char *) lp;
     }

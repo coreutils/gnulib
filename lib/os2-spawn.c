@@ -102,7 +102,6 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
 {
   size_t argc;
   const char **new_argv;
-  size_t i;
 
   /* Count number of arguments.  */
   for (argc = 0; argv[argc] != NULL; argc++)
@@ -120,7 +119,7 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
 
   /* Put quoted arguments into the new argument vector.  */
   size_t needed_size = 0;
-  for (i = 0; i < argc; i++)
+  for (size_t i = 0; i < argc; i++)
     {
       const char *string = argv[i];
       const char *quoted_string = (string[0] == '\0' ? "\"\"" : string);
@@ -144,7 +143,7 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
     }
   *mem_to_free = mem;
 
-  for (i = 0; i < argc; i++)
+  for (size_t i = 0; i < argc; i++)
     {
       const char *string = argv[i];
 

@@ -68,10 +68,9 @@ static struct userid *nogroup_alist;
 char *
 getuser (uid_t uid)
 {
-  struct userid *tail;
   struct userid *match = NULL;
 
-  for (tail = user_alist; tail; tail = tail->next)
+  for (struct userid *tail = user_alist; tail; tail = tail->next)
     {
       if (tail->id.u == uid)
         {
@@ -104,15 +103,14 @@ getuser (uid_t uid)
 uid_t *
 getuidbyname (const char *user)
 {
-  struct userid *tail;
   struct passwd *pwent;
 
-  for (tail = user_alist; tail; tail = tail->next)
+  for (struct userid *tail = user_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *user && streq (tail->name, user))
       return &tail->id.u;
 
-  for (tail = nouser_alist; tail; tail = tail->next)
+  for (struct userid *tail = nouser_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *user && streq (tail->name, user))
       return NULL;
@@ -128,7 +126,8 @@ getuidbyname (const char *user)
     }
 #endif
 
-  tail = xmalloc (FLEXSIZEOF (struct userid, name, strlen (user) + 1));
+  struct userid *tail =
+    xmalloc (FLEXSIZEOF (struct userid, name, strlen (user) + 1));
   strcpy (tail->name, user);
 
   /* Add to the head of the list, so most recently used is first.  */
@@ -150,10 +149,9 @@ getuidbyname (const char *user)
 char *
 getgroup (gid_t gid)
 {
-  struct userid *tail;
   struct userid *match = NULL;
 
-  for (tail = group_alist; tail; tail = tail->next)
+  for (struct userid *tail = group_alist; tail; tail = tail->next)
     {
       if (tail->id.g == gid)
         {
@@ -186,15 +184,14 @@ getgroup (gid_t gid)
 gid_t *
 getgidbyname (const char *group)
 {
-  struct userid *tail;
   struct group *grent;
 
-  for (tail = group_alist; tail; tail = tail->next)
+  for (struct userid *tail = group_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *group && streq (tail->name, group))
       return &tail->id.g;
 
-  for (tail = nogroup_alist; tail; tail = tail->next)
+  for (struct userid *tail = nogroup_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *group && streq (tail->name, group))
       return NULL;
@@ -210,7 +207,8 @@ getgidbyname (const char *group)
     }
 #endif
 
-  tail = xmalloc (FLEXSIZEOF (struct userid, name, strlen (group) + 1));
+  struct userid *tail =
+    xmalloc (FLEXSIZEOF (struct userid, name, strlen (group) + 1));
   strcpy (tail->name, group);
 
   /* Add to the head of the list, so most recently used is first.  */

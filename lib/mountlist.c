@@ -425,9 +425,9 @@ dev_from_mount_options (char const *mount_options)
 static void
 unescape_tab (char *str)
 {
-  size_t i, j = 0;
+  size_t j = 0;
   size_t len = strlen (str) + 1;
-  for (i = 0; i < len; i++)
+  for (size_t i = 0; i < len; i++)
     {
       if (str[i] == '\\' && (i + 4 < len)
           && str[i + 1] >= '0' && str[i + 1] <= '3'
@@ -729,9 +729,7 @@ read_file_system_list (bool need_fs_type)
       if (fs_stat_dev (dev, &fi) >= 0)
         {
           /* Note: fi.dev == dev. */
-          struct rootdir_entry *re;
-
-          for (re = rootdir_list; re; re = re->next)
+          for (struct rootdir_entry *re = rootdir_list; re; re = re->next)
             if (re->dev == fi.dev && re->ino == fi.root)
               break;
 
@@ -764,7 +762,7 @@ read_file_system_list (bool need_fs_type)
 
 #if defined MOUNTED_GETFSSTAT   /* (obsolete) Apple Darwin 1.3 */
   {
-    int numsys, counter;
+    int numsys;
     size_t bufsize;
     struct statfs *stats;
 
@@ -784,7 +782,7 @@ read_file_system_list (bool need_fs_type)
         return NULL;
       }
 
-    for (counter = 0; counter < numsys; counter++)
+    for (int counter = 0; counter < numsys; counter++)
       {
         me = xmalloc (sizeof *me);
         me->me_devname = xstrdup (stats[counter].f_mntfromname);
@@ -1105,9 +1103,8 @@ read_file_system_list (bool need_fs_type)
        if ASCII 'A' + i is an available drive.  See:
        <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getlogicaldrives>.  */
     DWORD value = GetLogicalDrives ();
-    unsigned int i;
 
-    for (i = 0; i < 26; ++i)
+    for (unsigned int i = 0; i < 26; ++i)
       {
         if (value & (1U << i))
           {

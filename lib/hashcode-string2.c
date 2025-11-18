@@ -31,10 +31,9 @@
 size_t
 hash_pjw (const void *x, size_t tablesize)
 {
-  const char *s;
   size_t h = 0;
 
-  for (s = x; *s; s++)
+  for (const char *s = x; *s; s++)
     h = *s + ((h << 9) | (h >> (SIZE_BITS - 9)));
 
   return h % tablesize;

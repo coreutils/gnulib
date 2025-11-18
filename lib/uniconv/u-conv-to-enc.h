@@ -64,9 +64,7 @@ FUNC (const char *tocode,
     {
       /* Convert scaled_offsets[srclen * sizeof (UNIT)] to
          offsets[srclen].  */
-      size_t i;
-
-      for (i = 0; i < srclen; i++)
+      for (size_t i = 0; i < srclen; i++)
         offsets[i] = scaled_offsets[i * sizeof (UNIT)];
       free (scaled_offsets);
     }
@@ -122,11 +120,11 @@ FUNC (const char *tocode,
     }
   if (offsets != NULL)
     {
+      for (size_t iunit = 0; iunit < srclen; iunit++)
+        offsets[iunit] = (size_t)(-1);
+
       size_t iunit;     /* offset into src */
       size_t i8;        /* offset into utf8_src */
-
-      for (iunit = 0; iunit < srclen; iunit++)
-        offsets[iunit] = (size_t)(-1);
 
       iunit = 0;
       i8 = 0;

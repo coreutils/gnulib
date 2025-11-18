@@ -82,11 +82,10 @@ readtoken (FILE *stream,
            token_buffer *tokenbuffer)
 {
   int c;
-  idx_t i;
   word isdelim[(UCHAR_MAX + bits_per_word) / bits_per_word];
 
   memset (isdelim, 0, sizeof isdelim);
-  for (i = 0; i < n_delim; i++)
+  for (idx_t i = 0; i < n_delim; i++)
     {
       unsigned char ch = delim[i];
       set_nth_bit (ch, isdelim);
@@ -100,7 +99,7 @@ readtoken (FILE *stream,
 
   char *p = tokenbuffer->buffer;
   idx_t n = tokenbuffer->size;
-  i = 0;
+  idx_t i = 0;
   for (;;)
     {
       if (c < 0 && i == 0)

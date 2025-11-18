@@ -94,15 +94,14 @@ _sd_c_casecmp (idx_t a_nbytes, const char *a_data,
   /* Don't use memcasecmp here, since it uses the current locale, not the
      "C" locale.  */
   idx_t n = (a_nbytes < b_nbytes ? a_nbytes : b_nbytes);
-  idx_t i;
-  for (i = 0; i < n; i++)
+  for (idx_t i = 0; i < n; i++)
     {
       int ac = c_tolower ((unsigned char) a_data[i]);
       int bc = c_tolower ((unsigned char) b_data[i]);
       if (ac != bc)
         return (UCHAR_MAX <= INT_MAX ? ac - bc : _GL_CMP (ac, bc));
     }
-  /* Here i = n = min (a_nbytes, b_nbytes).  */
+  /* Found n = min (a_nbytes, b_nbytes) equal characters.  */
   return _GL_CMP (a_nbytes, b_nbytes);
 }
 
@@ -301,15 +300,11 @@ sd_concat (rw_string_desc_t *resultp, idx_t n, /* [rw_]string_desc_t string1, */
     string_desc_t string1 = va_arg (strings, string_desc_t);
     total += string1._nbytes;
     if (n > 1)
-      {
-        idx_t i;
-
-        for (i = n - 1; i > 0; i--)
-          {
-            string_desc_t arg = va_arg (strings, string_desc_t);
-            total += arg._nbytes;
-          }
-      }
+      for (idx_t i = n - 1; i > 0; i--)
+        {
+          string_desc_t arg = va_arg (strings, string_desc_t);
+          total += arg._nbytes;
+        }
     va_end (strings);
   }
 
@@ -325,17 +320,13 @@ sd_concat (rw_string_desc_t *resultp, idx_t n, /* [rw_]string_desc_t string1, */
     memcpy (combined, string1._data, string1._nbytes);
     pos += string1._nbytes;
     if (n > 1)
-      {
-        idx_t i;
-
-        for (i = n - 1; i > 0; i--)
-          {
-            string_desc_t arg = va_arg (strings, string_desc_t);
-            if (arg._nbytes > 0)
-              memcpy (combined + pos, arg._data, arg._nbytes);
-            pos += arg._nbytes;
-          }
-      }
+      for (idx_t i = n - 1; i > 0; i--)
+        {
+          string_desc_t arg = va_arg (strings, string_desc_t);
+          if (arg._nbytes > 0)
+            memcpy (combined + pos, arg._data, arg._nbytes);
+          pos += arg._nbytes;
+        }
     va_end (strings);
   }
 

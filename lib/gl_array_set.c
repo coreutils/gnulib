@@ -78,17 +78,13 @@ gl_array_search (gl_set_t set, const void *elt)
       const void **elements = set->elements;
       if (equals != NULL)
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (equals (elements[i], elt))
               return true;
         }
       else
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (elements[i] == elt)
               return true;
         }
@@ -145,11 +141,10 @@ gl_array_remove_at (gl_set_t set, size_t position)
 {
   size_t count = set->count;
   const void **elements = set->elements;
-  size_t i;
 
   if (set->base.dispose_fn != NULL)
     set->base.dispose_fn (elements[position]);
-  for (i = position + 1; i < count; i++)
+  for (size_t i = position + 1; i < count; i++)
     elements[i - 1] = elements[i];
   set->count = count - 1;
 }
@@ -166,9 +161,7 @@ gl_array_remove (gl_set_t set, const void *elt)
 
       if (equals != NULL)
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (equals (elements[i], elt))
               {
                 gl_array_remove_at (set, i);
@@ -177,9 +170,7 @@ gl_array_remove (gl_set_t set, const void *elt)
         }
       else
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (elements[i] == elt)
               {
                 gl_array_remove_at (set, i);

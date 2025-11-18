@@ -289,8 +289,7 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
                       && (path = fpath, 1)))
                 {
                   const char *last_dot = NULL;
-                  const char *p;
-                  for (p = path; *p != '\0'; p++)
+                  for (const char *p = path; *p != '\0'; p++)
                     if (*p == '.')
                       last_dot = p;
                   if (last_dot != NULL)

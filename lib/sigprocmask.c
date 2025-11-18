@@ -211,9 +211,8 @@ int
 sigpending (sigset_t *set)
 {
   sigset_t pending = 0;
-  int sig;
 
-  for (sig = 0; sig < NSIG; sig++)
+  for (int sig = 0; sig < NSIG; sig++)
     if (pending_array[sig])
       pending |= 1U << sig;
   *set = pending;
@@ -258,24 +257,19 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
       to_block = new_blocked_set & ~blocked_set;
 
       if (to_block != 0)
-        {
-          int sig;
-
-          for (sig = 0; sig < NSIG; sig++)
-            if ((to_block >> sig) & 1)
-              {
-                pending_array[sig] = 0;
-                if ((old_handlers[sig] = signal (sig, blocked_handler)) != SIG_ERR)
-                  blocked_set |= 1U << sig;
-              }
-        }
+        for (int sig = 0; sig < NSIG; sig++)
+          if ((to_block >> sig) & 1)
+            {
+              pending_array[sig] = 0;
+              if ((old_handlers[sig] = signal (sig, blocked_handler)) != SIG_ERR)
+                blocked_set |= 1U << sig;
+            }
 
       if (to_unblock != 0)
         {
           sig_atomic_t received[NSIG];
-          int sig;
 
-          for (sig = 0; sig < NSIG; sig++)
+          for (int sig = 0; sig < NSIG; sig++)
             if ((to_unblock >> sig) & 1)
               {
                 if (signal (sig, old_handlers[sig]) != blocked_handler)
@@ -290,7 +284,7 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
             else
               received[sig] = 0;
 
-          for (sig = 0; sig < NSIG; sig++)
+          for (int sig = 0; sig < NSIG; sig++)
             if (received[sig])
               raise (sig);
         }

@@ -144,7 +144,6 @@ execute_csharp_using_mono (const char *assembly_path,
       char *old_monopath;
       const char **argv =
         (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-      unsigned int i;
       bool err;
 
       /* Set MONO_PATH.  */
@@ -152,7 +151,7 @@ execute_csharp_using_mono (const char *assembly_path,
 
       argv[0] = "mono";
       argv[1] = assembly_path;
-      for (i = 0; i <= nargs; i++)
+      for (unsigned int i = 0; i <= nargs; i++)
         argv[2 + i] = args[i];
 
       if (verbose)
@@ -226,8 +225,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
           /* Copy the DLLs.  */
           char *assembly_dir = dir_name (assembly_path);
 
-          unsigned int l;
-          for (l = 0; l < libdirs_count; l++)
+          for (unsigned int l = 0; l < libdirs_count; l++)
             {
               const char *libdir = libdirs[l];
 
@@ -244,8 +242,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
                   num_dlls = 0;
                 }
 
-              int i;
-              for (i = 0; i < num_dlls; i++)
+              for (int i = 0; i < num_dlls; i++)
                 {
                   char *target_dll =
                     xconcatenated_filename (assembly_dir, dlls[i]->d_name,
@@ -292,8 +289,8 @@ execute_csharp_using_dotnet (const char *assembly_path,
                                      libdir_dll, absolute_target_dll);
                               free (libdir_dll);
                               free (target_dll);
-                              for (i = 0; i < num_dlls; i++)
-                                free (dlls[i]);
+                              for (int ii = 0; ii < num_dlls; ii++)
+                                free (dlls[ii]);
                               free (dlls);
                               free (assembly_dir);
                               while (tmpfiles_count > 0)
@@ -312,7 +309,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
                   free (target_dll);
                 }
 
-              for (i = 0; i < num_dlls; i++)
+              for (int i = 0; i < num_dlls; i++)
                 free (dlls[i]);
               free (dlls);
             }
@@ -340,12 +337,11 @@ execute_csharp_using_dotnet (const char *assembly_path,
         {
           const char **argv =
             (const char **) xmalloca ((3 + nargs + 1) * sizeof (const char *));
-          unsigned int i;
 
           argv[0] = "dotnet";
           argv[1] = "exec";
           argv[2] = assembly_path_converted;
-          for (i = 0; i <= nargs; i++)
+          for (unsigned int i = 0; i <= nargs; i++)
             argv[3 + i] = args[i];
 
           if (verbose)
@@ -506,14 +502,13 @@ execute_csharp_using_dotnet (const char *assembly_path,
                           const char **argv =
                             (const char **)
                             xmalloca ((5 + nargs + 1) * sizeof (const char *));
-                          unsigned int i;
 
                           argv[0] = "dotnet";
                           argv[1] = "exec";
                           argv[2] = "--runtimeconfig";
                           argv[3] = runtimeconfig_converted;
                           argv[4] = assembly_path_converted;
-                          for (i = 0; i <= nargs; i++)
+                          for (unsigned int i = 0; i <= nargs; i++)
                             argv[5 + i] = args[i];
 
                           if (verbose)
@@ -587,7 +582,6 @@ execute_csharp_using_sscli (const char *assembly_path,
       char *old_clixpath;
       const char **argv =
         (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-      unsigned int i;
       bool err;
 
       /* Set clix' PATH variable.  */
@@ -595,7 +589,7 @@ execute_csharp_using_sscli (const char *assembly_path,
 
       argv[0] = "clix";
       argv[1] = assembly_path_converted;
-      for (i = 0; i <= nargs; i++)
+      for (unsigned int i = 0; i <= nargs; i++)
         argv[2 + i] = args[i];
 
       if (verbose)

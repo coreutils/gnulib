@@ -188,7 +188,6 @@ compile_using_envjavac (const char *javac,
   char *command;
   const char *argv[4];
   int exitstatus;
-  unsigned int i;
   char *p;
 
   command_length = strlen (javac);
@@ -198,7 +197,7 @@ compile_using_envjavac (const char *javac,
     command_length += 3;
   if (directory != NULL)
     command_length += 4 + shell_quote_length (directory);
-  for (i = 0; i < java_sources_count; i++)
+  for (unsigned int i = 0; i < java_sources_count; i++)
     command_length += 1 + shell_quote_length (java_sources[i]);
   command_length += 1;
 
@@ -224,7 +223,7 @@ compile_using_envjavac (const char *javac,
       p += 4;
       p = shell_quote_copy (p, directory);
     }
-  for (i = 0; i < java_sources_count; i++)
+  for (unsigned int i = 0; i < java_sources_count; i++)
     {
       *p++ = ' ';
       p = shell_quote_copy (p, java_sources[i]);
@@ -268,7 +267,6 @@ compile_using_javac (const char * const *java_sources,
   const char **argv;
   const char **argp;
   int exitstatus;
-  unsigned int i;
 
   argc =
     1 + (nowarn_option != NULL ? 1 : 0) + (source_option ? 2 : 0)
@@ -299,7 +297,7 @@ compile_using_javac (const char * const *java_sources,
       *argp++ = "-d";
       *argp++ = directory;
     }
-  for (i = 0; i < java_sources_count; i++)
+  for (unsigned int i = 0; i < java_sources_count; i++)
     *argp++ = java_sources[i];
   *argp = NULL;
   /* Ensure argv length was correctly calculated.  */

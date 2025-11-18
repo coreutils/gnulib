@@ -24,11 +24,10 @@
 void
 i_ring_init (I_ring *ir, int default_val)
 {
-  int i;
   ir->ir_empty = true;
   ir->ir_front = 0;
   ir->ir_back = 0;
-  for (i = 0; i < I_RING_SIZE; i++)
+  for (int i = 0; i < I_RING_SIZE; i++)
     ir->ir_data[i] = default_val;
   ir->ir_default_val = default_val;
 }

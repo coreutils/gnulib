@@ -659,12 +659,8 @@ gl_tree_remove_node_from_tree (gl_list_t list, gl_list_node_t node)
             parent->right = child;
 
           /* Update branch_size fields of the parent nodes.  */
-          {
-            gl_list_node_t p;
-
-            for (p = parent; p != NULL; p = p->parent)
-              p->branch_size--;
-          }
+          for (gl_list_node_t p = parent; p != NULL; p = p->parent)
+            p->branch_size--;
 
           if (child == NULL && node->color == BLACK)
             rebalance_after_remove (list, child, parent);
@@ -691,12 +687,8 @@ gl_tree_remove_node_from_tree (gl_list_t list, gl_list_node_t node)
             parent->right = child;
 
           /* Update branch_size fields of the parent nodes.  */
-          {
-            gl_list_node_t p;
-
-            for (p = parent; p != NULL; p = p->parent)
-              p->branch_size--;
-          }
+          for (gl_list_node_t p = parent; p != NULL; p = p->parent)
+            p->branch_size--;
         }
     }
   else
@@ -735,12 +727,8 @@ gl_tree_remove_node_from_tree (gl_list_t list, gl_list_node_t node)
         }
 
       /* Update branch_size fields of the parent nodes.  */
-      {
-        gl_list_node_t p;
-
-        for (p = subst_parent; p != NULL; p = p->parent)
-          p->branch_size--;
-      }
+      for (gl_list_node_t p = subst_parent; p != NULL; p = p->parent)
+        p->branch_size--;
 
       /* Copy subst into node's position.
          (This is safer than to copy subst's value into node, keep node in
@@ -816,12 +804,8 @@ gl_tree_nx_add_first (gl_list_t list, const void *elt)
       new_node->parent = node;
 
       /* Update branch_size fields of the parent nodes.  */
-      {
-        gl_list_node_t p;
-
-        for (p = node; p != NULL; p = p->parent)
-          p->branch_size++;
-      }
+      for (gl_list_node_t p = node; p != NULL; p = p->parent)
+        p->branch_size++;
 
       /* Color and rebalance.  */
       rebalance_after_add (list, new_node, node);
@@ -882,12 +866,8 @@ gl_tree_nx_add_last (gl_list_t list, const void *elt)
       new_node->parent = node;
 
       /* Update branch_size fields of the parent nodes.  */
-      {
-        gl_list_node_t p;
-
-        for (p = node; p != NULL; p = p->parent)
-          p->branch_size++;
-      }
+      for (gl_list_node_t p = node; p != NULL; p = p->parent)
+        p->branch_size++;
 
       /* Color and rebalance.  */
       rebalance_after_add (list, new_node, node);
@@ -942,12 +922,8 @@ gl_tree_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->parent = node;
 
   /* Update branch_size fields of the parent nodes.  */
-  {
-    gl_list_node_t p;
-
-    for (p = node; p != NULL; p = p->parent)
-      p->branch_size++;
-  }
+  for (gl_list_node_t p = node; p != NULL; p = p->parent)
+    p->branch_size++;
 
   /* Color and rebalance.  */
   rebalance_after_add (list, new_node, node);
@@ -1001,12 +977,8 @@ gl_tree_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->parent = node;
 
   /* Update branch_size fields of the parent nodes.  */
-  {
-    gl_list_node_t p;
-
-    for (p = node; p != NULL; p = p->parent)
-      p->branch_size++;
-  }
+  for (gl_list_node_t p = node; p != NULL; p = p->parent)
+    p->branch_size++;
 
   /* Color and rebalance.  */
   rebalance_after_add (list, new_node, node);

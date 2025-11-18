@@ -95,55 +95,48 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
      the size of the decomposition tables, because for example for
      U+1FC1 the recursive canonical decomposition and the recursive
      compatibility decomposition are different.  */
-  {
-    int curr;
+  for (int curr = 0; curr < decomposed_count; )
+    {
+      /* Invariant: decomposed[0..curr-1] is fully decomposed, i.e.
+         all elements are atomic.  */
+      ucs4_t curr_decomposed[UC_DECOMPOSITION_MAX_LENGTH];
+      int curr_decomposed_count;
 
-    for (curr = 0; curr < decomposed_count; )
-      {
-        /* Invariant: decomposed[0..curr-1] is fully decomposed, i.e.
-           all elements are atomic.  */
-        ucs4_t curr_decomposed[UC_DECOMPOSITION_MAX_LENGTH];
-        int curr_decomposed_count;
+      curr_decomposed_count =
+        filter->decomposer (decomposed[curr], curr_decomposed);
+      if (curr_decomposed_count >= 0)
+        {
+          /* Move curr_decomposed[0..curr_decomposed_count-1] over
+             decomposed[curr], making room.  It's not worth using
+             memcpy() here, since the counts are so small.  */
+          int shift = curr_decomposed_count - 1;
 
-        curr_decomposed_count =
-          filter->decomposer (decomposed[curr], curr_decomposed);
-        if (curr_decomposed_count >= 0)
-          {
-            /* Move curr_decomposed[0..curr_decomposed_count-1] over
-               decomposed[curr], making room.  It's not worth using
-               memcpy() here, since the counts are so small.  */
-            int shift = curr_decomposed_count - 1;
-
-            if (shift < 0)
-              abort ();
-            if (shift > 0)
-              {
-                int j;
-
-                decomposed_count += shift;
-                if (decomposed_count > UC_DECOMPOSITION_MAX_LENGTH)
-                  abort ();
-                for (j = decomposed_count - 1 - shift; j > curr; j--)
-                  decomposed[j + shift] = decomposed[j];
-              }
-            for (; shift >= 0; shift--)
-              decomposed[curr + shift] = curr_decomposed[shift];
-          }
-        else
-          {
-            /* decomposed[curr] is atomic.  */
-            curr++;
-          }
-      }
-  }
+          if (shift < 0)
+            abort ();
+          if (shift > 0)
+            {
+              decomposed_count += shift;
+              if (decomposed_count > UC_DECOMPOSITION_MAX_LENGTH)
+                abort ();
+              for (int j = decomposed_count - 1 - shift; j > curr; j--)
+                decomposed[j + shift] = decomposed[j];
+            }
+          for (; shift >= 0; shift--)
+            decomposed[curr + shift] = curr_decomposed[shift];
+        }
+      else
+        {
+          /* decomposed[curr] is atomic.  */
+          curr++;
+        }
+    }
 
   {
     /* Cache sortbuf and sortbuf_count in local register variables.  */
     struct ucs4_with_ccc *sortbuf = filter->sortbuf;
     size_t sortbuf_count = filter->sortbuf_count;
-    int i;
 
-    for (i = 0; i < decomposed_count; i++)
+    for (int i = 0; i < decomposed_count; i++)
       {
         /* Fetch the next character from the decomposition.  */
         ucs4_t uc = decomposed[i];
@@ -151,8 +144,6 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
 
         if (ccc == 0)
           {
-            size_t j;
-
             /* Apply the canonical ordering algorithm to the accumulated
                sequence of characters.  */
             if (sortbuf_count > 1)
@@ -183,7 +174,7 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
                         (also a starter).  */
                 if (sortbuf_count > 0 && sortbuf[0].ccc == 0)
                   {
-                    for (j = 1; j < sortbuf_count; )
+                    for (size_t j = 1; j < sortbuf_count; )
                       {
                         if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
                           {
@@ -191,11 +182,9 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
                               filter->composer (sortbuf[0].code, sortbuf[j].code);
                             if (combined)
                               {
-                                size_t k;
-
                                 sortbuf[0].code = combined;
                                 /* sortbuf[0].ccc = 0, still valid.  */
-                                for (k = j + 1; k < sortbuf_count; k++)
+                                for (size_t k = j + 1; k < sortbuf_count; k++)
                                   sortbuf[k - 1] = sortbuf[k];
                                 sortbuf_count--;
                                 continue;
@@ -220,7 +209,7 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
                   }
               }
 
-            for (j = 0; j < sortbuf_count; j++)
+            for (size_t j = 0; j < sortbuf_count; j++)
               {
                 ucs4_t muc = sortbuf[j].code;
 
@@ -286,7 +275,6 @@ uninorm_filter_flush (struct uninorm_filter *filter)
   /* Cache sortbuf and sortbuf_count in local register variables.  */
   struct ucs4_with_ccc * const sortbuf = filter->sortbuf;
   size_t sortbuf_count = filter->sortbuf_count;
-  size_t j;
 
   /* Apply the canonical ordering algorithm to the accumulated
      sequence of characters.  */
@@ -318,7 +306,7 @@ uninorm_filter_flush (struct uninorm_filter *filter)
               (also a starter).  */
       if (sortbuf_count > 0 && sortbuf[0].ccc == 0)
         {
-          for (j = 1; j < sortbuf_count; )
+          for (size_t j = 1; j < sortbuf_count; )
             {
               if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
                 {
@@ -326,11 +314,9 @@ uninorm_filter_flush (struct uninorm_filter *filter)
                     filter->composer (sortbuf[0].code, sortbuf[j].code);
                   if (combined)
                     {
-                      size_t k;
-
                       sortbuf[0].code = combined;
                       /* sortbuf[0].ccc = 0, still valid.  */
-                      for (k = j + 1; k < sortbuf_count; k++)
+                      for (size_t k = j + 1; k < sortbuf_count; k++)
                         sortbuf[k - 1] = sortbuf[k];
                       sortbuf_count--;
                       continue;
@@ -341,7 +327,7 @@ uninorm_filter_flush (struct uninorm_filter *filter)
         }
     }
 
-  for (j = 0; j < sortbuf_count; j++)
+  for (size_t j = 0; j < sortbuf_count; j++)
     {
       ucs4_t muc = sortbuf[j].code;
 

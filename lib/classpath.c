@@ -54,7 +54,6 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
 {
   const char *old_classpath;
   unsigned int length;
-  unsigned int i;
   char *result;
   char *p;
 
@@ -63,7 +62,7 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
     old_classpath = "";
 
   length = 0;
-  for (i = 0; i < classpaths_count; i++)
+  for (unsigned int i = 0; i < classpaths_count; i++)
     length += strlen (classpaths[i]) + 1;
   length += strlen (old_classpath);
   if (classpaths_count > 0 && old_classpath[0] == '\0')
@@ -71,7 +70,7 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
 
   result = XNMALLOC (length + 1, char);
   p = result;
-  for (i = 0; i < classpaths_count; i++)
+  for (unsigned int i = 0; i < classpaths_count; i++)
     {
       memcpy (p, classpaths[i], strlen (classpaths[i]));
       p += strlen (classpaths[i]);

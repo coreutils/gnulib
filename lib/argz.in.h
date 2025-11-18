@@ -123,8 +123,7 @@ extern error_t argz_replace (char **restrict /*argz*/,
 
    or
 
-    char *entry;
-    for (entry = argz; entry; entry = argz_next (argz, argz_len, entry))
+    for (char *entry = argz; entry; entry = argz_next (argz, argz_len, entry))
       ...;
 */
 

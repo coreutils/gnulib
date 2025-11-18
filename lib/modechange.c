@@ -136,10 +136,10 @@ mode_compile (char const *mode_string)
   /* The array of mode-change directives to be returned.  */
   struct mode_change *mc;
   size_t used = 0;
-  char const *p;
 
   if ('0' <= *mode_string && *mode_string < '8')
     {
+      char const *p;
       unsigned int octal_mode = 0;
       mode_t mode;
       mode_t mentioned;
@@ -166,13 +166,14 @@ mode_compile (char const *mode_string)
   /* Allocate enough space to hold the result.  */
   {
     size_t needed = 1;
-    for (p = mode_string; *p; p++)
+    for (char const *p = mode_string; *p; p++)
       needed += (*p == '=' || *p == '+' || *p == '-');
     mc = xnmalloc (needed, sizeof *mc);
   }
 
   /* One loop iteration for each
      '[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+'.  */
+  char const *p;
   for (p = mode_string; ; p++)
     {
       /* Which bits in the mode are operated on.  */

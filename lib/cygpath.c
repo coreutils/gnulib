@@ -47,12 +47,10 @@
 char *
 cygpath_w (const char *filename)
 {
-  int repeat;
-
   /* Try several times, since there is a small time window during which the
      size returned by the previous call may not be sufficient, namely when a
      directory gets renamed.  */
-  for (repeat = 3; repeat > 0; repeat--)
+  for (int repeat = 3; repeat > 0; repeat--)
     {
       ssize_t size = cygwin_conv_path (CCP_POSIX_TO_WIN_A | CCP_RELATIVE, filename, NULL, 0);
       if (size < 0)

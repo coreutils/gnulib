@@ -94,7 +94,6 @@ execute_java_class (const char *class_name,
       char *old_classpath;
       const char **argv =
         (const char **) xmalloca ((1 + nargs + 1) * sizeof (const char *));
-      unsigned int i;
 
       /* Set CLASSPATH.  */
       old_classpath =
@@ -102,7 +101,7 @@ execute_java_class (const char *class_name,
                        verbose);
 
       argv[0] = exe_pathname;
-      for (i = 0; i <= nargs; i++)
+      for (unsigned int i = 0; i <= nargs; i++)
         argv[1 + i] = args[i];
 
       if (verbose)
@@ -134,7 +133,6 @@ execute_java_class (const char *class_name,
         unsigned int command_length;
         char *command;
         const char *argv[4];
-        const char * const *arg;
         char *p;
 
         /* Set CLASSPATH.  */
@@ -144,7 +142,7 @@ execute_java_class (const char *class_name,
 
         command_length = strlen (java);
         command_length += 1 + shell_quote_length (class_name);
-        for (arg = args; *arg != NULL; arg++)
+        for (const char * const *arg = args; *arg != NULL; arg++)
           command_length += 1 + shell_quote_length (*arg);
         command_length += 1;
 
@@ -156,7 +154,7 @@ execute_java_class (const char *class_name,
         p += strlen (java);
         *p++ = ' ';
         p = shell_quote_copy (p, class_name);
-        for (arg = args; *arg != NULL; arg++)
+        for (const char * const *arg = args; *arg != NULL; arg++)
           {
             *p++ = ' ';
             p = shell_quote_copy (p, *arg);
@@ -217,7 +215,6 @@ execute_java_class (const char *class_name,
         char *old_classpath;
         const char **argv =
           (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-        unsigned int i;
 
         /* Set CLASSPATH.  We don't use the "-classpath ..." option because
            in JDK 1.1.x its argument should also contain the JDK's classes.zip,
@@ -228,7 +225,7 @@ execute_java_class (const char *class_name,
 
         argv[0] = "java";
         argv[1] = class_name;
-        for (i = 0; i <= nargs; i++)
+        for (unsigned int i = 0; i <= nargs; i++)
           argv[2 + i] = args[i];
 
         if (verbose)
@@ -273,7 +270,6 @@ execute_java_class (const char *class_name,
         char *old_classpath;
         const char **argv =
           (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-        unsigned int i;
 
         /* Set CLASSPATH.  We don't use the "-classpath ..." option because
            in JDK 1.1.x its argument should also contain the JDK's classes.zip,
@@ -284,7 +280,7 @@ execute_java_class (const char *class_name,
 
         argv[0] = "jre";
         argv[1] = class_name;
-        for (i = 0; i <= nargs; i++)
+        for (unsigned int i = 0; i <= nargs; i++)
           argv[2 + i] = args[i];
 
         if (verbose)

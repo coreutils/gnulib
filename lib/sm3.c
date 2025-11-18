@@ -93,10 +93,9 @@ set_uint32 (char *cp, uint32_t v)
 void *
 sm3_read_ctx (const struct sm3_ctx *ctx, void *resbuf)
 {
-  int i;
   char *r = resbuf;
 
-  for (i = 0; i < 8; i++)
+  for (int i = 0; i < 8; i++)
     set_uint32 (r + i * sizeof ctx->state[0], SWAP (ctx->state[i]));
 
   return resbuf;
@@ -311,15 +310,14 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
     {
       uint32_t tw;
       uint32_t ss1, ss2;
-      int j;
 
-      for (j = 0; j < 16; j++)
+      for (int j = 0; j < 16; j++)
         {
           x[j] = SWAP (*words);
           words++;
         }
 
-      j = -1;
+      int j = -1;
 
       dbg_printf (" j    A        B        C        D        E  "
                   "      F        G        H\n"

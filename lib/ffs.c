@@ -58,8 +58,7 @@ ffs (int i)
     }
   else
     {
-      unsigned int j;
-      for (j = 0; j < CHAR_BIT * sizeof i; j++)
+      for (unsigned int j = 0; j < CHAR_BIT * sizeof i; j++)
         if (i & (1U << j))
           return j + 1;
       return 0;

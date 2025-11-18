@@ -181,10 +181,9 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
   if (1 < ng)
     {
       gid_t first = *g;
-      gid_t *next;
       gid_t *groups_end = g + ng;
 
-      for (next = g + 1; next < groups_end; next++)
+      for (gid_t *next = g + 1; next < groups_end; next++)
         {
           if (*next == first || *next == *g)
             ng--;

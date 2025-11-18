@@ -45,11 +45,10 @@ make_crc_table (int bits)
 {
   unsigned long c;
 
-  int n, k;
-  for (n = 0; n < 256; n++)
+  for (int n = 0; n < 256; n++)
     {
       c = (unsigned long) n;
-      for (k = 0; k < bits; k++)
+      for (int k = 0; k < bits; k++)
         {
           if (c & 1)
             c = 0xedb88320L ^ (c >> 1);

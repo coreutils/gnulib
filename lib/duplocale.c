@@ -71,7 +71,6 @@ duplocale (locale_t locale)
       char base_name[SETLOCALE_NULL_MAX];
       int err;
       locale_t base_copy;
-      unsigned int i;
 
       err = setlocale_null_r (LC_CTYPE, base_name, sizeof (base_name));
       if (err)
@@ -83,7 +82,7 @@ duplocale (locale_t locale)
       if (base_copy == NULL)
         return NULL;
 
-      for (i = 0; i < SIZEOF (categories); i++)
+      for (unsigned int i = 0; i < SIZEOF (categories); i++)
         {
           int category = categories[i].cat;
           int category_mask = categories[i].mask;

@@ -209,13 +209,12 @@ gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
 {
   size_t count = set->count;
   const void **elements;
-  size_t i;
 
   if (count == set->allocated)
     if (grow (set) < 0)
       return -1;
   elements = set->elements;
-  for (i = count; i > position; i--)
+  for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
   set->count = count + 1;
@@ -229,12 +228,11 @@ gl_array_remove_at (gl_oset_t set, size_t position)
 {
   size_t count = set->count;
   const void **elements;
-  size_t i;
 
   elements = set->elements;
   if (set->base.dispose_fn != NULL)
     set->base.dispose_fn (elements[position]);
-  for (i = position + 1; i < count; i++)
+  for (size_t i = position + 1; i < count; i++)
     elements[i - 1] = elements[i];
   set->count = count - 1;
 }
@@ -368,9 +366,8 @@ gl_array_update (gl_oset_t set, const void *elt,
               /* Move the element from old_index to low.  */
               size_t new_index = low;
               const void **elements = set->elements;
-              size_t i;
 
-              for (i = old_index; i > new_index; i--)
+              for (size_t i = old_index; i > new_index; i--)
                 elements[i] = elements[i - 1];
               elements[new_index] = elt;
               return true;
@@ -384,9 +381,8 @@ gl_array_update (gl_oset_t set, const void *elt,
               if (new_index > old_index)
                 {
                   const void **elements = set->elements;
-                  size_t i;
 
-                  for (i = old_index; i < new_index; i++)
+                  for (size_t i = old_index; i < new_index; i++)
                     elements[i] = elements[i + 1];
                   elements[new_index] = elt;
                   return true;

@@ -107,9 +107,10 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
       size_t hashcode = new_node->h.hashcode;
       const void *value = new_node->value;
       gl_listelement_equals_fn equals = list->base.equals_fn;
-      gl_hash_entry_t *entryp;
 
-      for (entryp = &list->table[bucket]; *entryp != NULL; entryp = &(*entryp)->hash_next)
+      for (gl_hash_entry_t *entryp = &list->table[bucket];
+           *entryp != NULL;
+           entryp = &(*entryp)->hash_next)
         {
           gl_hash_entry_t entry = *entryp;
 
@@ -194,9 +195,8 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
       size_t hashcode = old_node->h.hashcode;
       const void *value = old_node->value;
       gl_listelement_equals_fn equals = list->base.equals_fn;
-      gl_hash_entry_t *entryp;
 
-      for (entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
+      for (gl_hash_entry_t *entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
         {
           gl_hash_entry_t entry = *entryp;
 
@@ -240,9 +240,7 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
   else
     {
       /* If no duplicates are allowed, multiple nodes are not needed.  */
-      gl_hash_entry_t *entryp;
-
-      for (entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
+      for (gl_hash_entry_t *entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
         {
           if (*entryp == &old_node->h)
             {

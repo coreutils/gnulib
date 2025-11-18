@@ -1020,8 +1020,7 @@ underlying_strftime (timezone_t tz, char *ubuf, size_t ubufsize,
                 {
                   /* The last word has length >= 3.  */
                   bool found_letter = false;
-                  const char *p;
-                  for (p = space + 1; *p != '\0'; p++)
+                  for (const char *p = space + 1; *p != '\0'; p++)
                     if ((*p >= 'A' && *p <= 'Z')
                         || (*p >= 'a' && *p <= 'z'))
                       {
@@ -1248,7 +1247,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #endif
   retval_t i = 0;
   STREAM_OR_CHAR_T *p = s;
-  const CHAR_T *f;
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
   const char *format_end = NULL;
 #endif
@@ -1260,7 +1258,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
     if (hour12 == 0)
       hour12 = 12;
 
-  for (f = format; *f != '\0'; width = -1, f++)
+  for (const CHAR_T *f = format; *f != '\0'; width = -1, f++)
     {
       enum pad_style pad = ZERO_PAD;
       int modifier;             /* Field modifier ('E', 'O', or 0).  */
@@ -1659,8 +1657,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                           {
                             /* The last word has length >= 3.  */
                             bool found_letter = false;
-                            const char *wp;
-                            for (wp = space + 1; *wp != '\0'; wp++)
+                            for (const char *wp = space + 1; *wp != '\0'; wp++)
                               if ((*wp >= 'A' && *wp <= 'Z')
                                   || (*wp >= 'a' && *wp <= 'z'))
                                 {

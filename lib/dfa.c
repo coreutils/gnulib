@@ -2254,15 +2254,15 @@ state_index (struct dfa *d, position_set const *s, int context)
 {
   size_t hash = 0;
   int constraint = 0;
-  state_num i;
 
-  for (i = 0; i < s->nelem; ++i)
+  for (state_num i = 0; i < s->nelem; ++i)
     {
       idx_t ind = s->elems[i].index;
       hash ^= ind + s->elems[i].constraint;
     }
 
   /* Try to find a state that exactly matches the proposed one.  */
+  state_num i;
   for (i = 0; i < d->sindex; ++i)
     {
       if (hash != d->states[i].hash || s->nelem != d->states[i].elems.nelem
@@ -3347,8 +3347,7 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
     {
       if (MAX_TRCOUNT <= d->mb_trcount)
         {
-          state_num s3;
-          for (s3 = -1; s3 < d->tralloc; s3++)
+          for (state_num s3 = -1; s3 < d->tralloc; s3++)
             {
               free (d->mb_trans[s3]);
               d->mb_trans[s3] = NULL;
@@ -3675,8 +3674,7 @@ free_mbdata (struct dfa *d)
 
   if (d->mb_trans)
     {
-      state_num s;
-      for (s = -1; s < d->tralloc; s++)
+      for (state_num s = -1; s < d->tralloc; s++)
         free (d->mb_trans[s]);
       free (d->mb_trans - 2);
     }

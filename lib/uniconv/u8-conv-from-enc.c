@@ -48,21 +48,17 @@ u8_conv_from_encoding (const char *fromcode,
         }
 
       if (offsets != NULL)
-        {
-          size_t i;
-
-          for (i = 0; i < srclen; )
-            {
-              int count = u8_mblen ((const uint8_t *) src + i, srclen - i);
-              /* We can rely on count > 0 because of the previous u8_check.  */
-              if (count <= 0)
-                abort ();
-              offsets[i] = i;
-              i++;
-              while (--count > 0)
-                offsets[i++] = (size_t)(-1);
-            }
-        }
+        for (size_t i = 0; i < srclen; )
+          {
+            int count = u8_mblen ((const uint8_t *) src + i, srclen - i);
+            /* We can rely on count > 0 because of the previous u8_check.  */
+            if (count <= 0)
+              abort ();
+            offsets[i] = i;
+            i++;
+            while (--count > 0)
+              offsets[i++] = (size_t)(-1);
+          }
 
       /* Memory allocation.  */
       if (resultbuf != NULL && *lengthp >= srclen)

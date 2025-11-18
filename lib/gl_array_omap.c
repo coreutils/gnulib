@@ -206,13 +206,12 @@ gl_array_nx_add_at (gl_omap_t map, size_t position,
 {
   size_t count = map->count;
   struct pair *pairs;
-  size_t i;
 
   if (count == map->allocated)
     if (grow (map) < 0)
       return -1;
   pairs = map->pairs;
-  for (i = count; i > position; i--)
+  for (size_t i = count; i > position; i--)
     pairs[i] = pairs[i - 1];
   pairs[position].key = key;
   pairs[position].value = value;
@@ -267,12 +266,11 @@ gl_array_remove_at (gl_omap_t map, size_t position)
 {
   size_t count = map->count;
   struct pair *pairs;
-  size_t i;
 
   pairs = map->pairs;
   if (map->base.kdispose_fn != NULL)
     map->base.kdispose_fn (pairs[position].key);
-  for (i = position + 1; i < count; i++)
+  for (size_t i = position + 1; i < count; i++)
     pairs[i - 1] = pairs[i];
   map->count = count - 1;
 }

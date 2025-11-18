@@ -142,9 +142,7 @@ integer_length (unsigned int x)
       {
         /* Naive loop.
            Works for any value of NBITS.  */
-        int j;
-
-        for (j = NBITS - 1; j >= 0; j--)
+        for (int j = NBITS - 1; j >= 0; j--)
           if (x & (1U << j))
             return j + 1;
         return 0;

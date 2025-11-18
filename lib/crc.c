@@ -93,7 +93,7 @@ crc32_update_no_xor_slice_by_n (uint32_t crc, const char *buf,
                                 size_t num_bytes)
 {
   uint64_t local_buf;
-  size_t i, shift_amount;
+  size_t shift_amount;
 
   memcpy (&local_buf, buf, num_bytes);
   local_buf = le64toh (local_buf) ^ crc;
@@ -103,7 +103,7 @@ crc32_update_no_xor_slice_by_n (uint32_t crc, const char *buf,
   else
     crc = crc >> (num_bytes * 8);
 
-  for (i = 0; i < num_bytes; i++)
+  for (size_t i = 0; i < num_bytes; i++)
     {
       shift_amount = ((num_bytes - i - 1) * 8);
       crc = crc ^ crc32_sliceby8_table[i][(local_buf >> shift_amount) & 0xFF];
@@ -196,8 +196,6 @@ static const uint32_t crc32_table[256] = {
 uint32_t
 crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
 {
-  size_t n;
-
 #ifdef GL_CRC_X86_64_PCLMUL
   if (!pclmul_checked)
     {
@@ -210,7 +208,7 @@ crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
     return crc32_update_no_xor_pclmul (crc, buf, len);
 #endif
 
-  for (n = 0; n < len; n++)
+  for (size_t n = 0; n < len; n++)
     crc = crc32_table[(crc ^ buf[n]) & 0xff] ^ (crc >> 8);
 
   return crc;

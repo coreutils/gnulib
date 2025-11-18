@@ -155,11 +155,11 @@ mem_iconveha_notranslit (const char *src, size_t srclen,
     return retval;
   else
     {
-      struct autodetect_alias *alias;
-
       /* Unsupported from_codeset or to_codeset. Check whether the caller
          requested autodetection.  */
-      for (alias = autodetect_list; alias != NULL; alias = alias->next)
+      for (struct autodetect_alias *alias = autodetect_list;
+           alias != NULL;
+           alias = alias->next)
         if (streq (from_codeset, alias->name))
           {
             const char * const *encodings;
@@ -265,11 +265,11 @@ str_iconveha_notranslit (const char *src,
     return result;
   else
     {
-      struct autodetect_alias *alias;
-
       /* Unsupported from_codeset or to_codeset. Check whether the caller
          requested autodetection.  */
-      for (alias = autodetect_list; alias != NULL; alias = alias->next)
+      for (struct autodetect_alias *alias = autodetect_list;
+           alias != NULL;
+           alias = alias->next)
         if (streq (from_codeset, alias->name))
           {
             const char * const *encodings;

@@ -286,10 +286,9 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
     case GC_AES256:
       {
         rijndael_rc rc;
-        size_t i;
         char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
 
-        for (i = 0; i < keylen; i++)
+        for (size_t i = 0; i < keylen; i++)
           sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFFU);
 
         rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
@@ -344,10 +343,9 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
         case GC_CBC:
           {
             rijndael_rc rc;
-            size_t i;
             char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
 
-            for (i = 0; i < ivlen; i++)
+            for (size_t i = 0; i < ivlen; i++)
               sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFFU);
 
             rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
@@ -389,8 +387,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
           for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
                data += ARCTWO_BLOCK_SIZE)
             {
-              size_t i;
-              for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+              for (size_t i = 0; i < ARCTWO_BLOCK_SIZE; i++)
                 data[i] ^= ctx->arctwoIV[i];
               arctwo_encrypt (&ctx->arctwoContext, data, data,
                               ARCTWO_BLOCK_SIZE);
@@ -460,11 +457,10 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
                data += ARCTWO_BLOCK_SIZE)
             {
               char tmpIV[ARCTWO_BLOCK_SIZE];
-              size_t i;
               memcpy (tmpIV, data, ARCTWO_BLOCK_SIZE);
               arctwo_decrypt (&ctx->arctwoContext, data, data,
                               ARCTWO_BLOCK_SIZE);
-              for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+              for (size_t i = 0; i < ARCTWO_BLOCK_SIZE; i++)
                 data[i] ^= ctx->arctwoIV[i];
               memcpy (ctx->arctwoIV, tmpIV, ARCTWO_BLOCK_SIZE);
             }

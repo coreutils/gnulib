@@ -92,8 +92,7 @@ getlogin (void)
             if (read_utmp (UTMP_FILE, &n, &entries, READ_UTMP_USER_PROCESS)
                 == 0)
               {
-                idx_t i;
-                for (i = 0; i < n; i++)
+                for (idx_t i = 0; i < n; i++)
                   if (streq (entries[i].ut_line, tty + 5))
                     {
                       if (strlen (entries[i].ut_user) < 64)

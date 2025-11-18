@@ -26,8 +26,7 @@
 void
 freelocale (locale_t locale)
 {
-  int i;
-  for (i = 6; --i >= 0; )
+  for (int i = 6; --i >= 0; )
     {
 #if HAVE_WINDOWS_LOCALE_T
       if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))

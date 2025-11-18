@@ -77,14 +77,12 @@ ulc_wordbreaks (const char *s, size_t n, char *p)
 
                   if (m == 0 || q != NULL)
                     {
-                      size_t i;
-
                       /* Determine the word breaks of the UTF-8 string.  */
                       u8_wordbreaks (t, m, q);
 
                       /* Translate the result back to the original string.  */
                       memset (p, 0, n);
-                      for (i = 0; i < n; i++)
+                      for (size_t i = 0; i < n; i++)
                         if (offsets[i] != (size_t)(-1))
                           p[i] = q[offsets[i]];
 
@@ -179,11 +177,10 @@ main (int argc, char * argv[])
       char *input = read_file (stdin);
       int length = strlen (input);
       char *breaks = malloc (length);
-      int i;
 
       ulc_wordbreaks (input, length, breaks);
 
-      for (i = 0; i < length; i++)
+      for (int i = 0; i < length; i++)
         {
           switch (breaks[i])
             {

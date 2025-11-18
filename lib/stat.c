@@ -287,8 +287,7 @@ rpl_stat (char const *name, struct stat *buf)
           if (info.nFileSizeHigh > 0 || info.nFileSizeLow > 0)
             {
               const char *last_dot = NULL;
-              const char *p;
-              for (p = info.cFileName; *p != '\0'; p++)
+              for (const char *p = info.cFileName; *p != '\0'; p++)
                 if (*p == '.')
                   last_dot = p;
               if (last_dot != NULL)

@@ -281,15 +281,65 @@ FUNC (const UNIT *s, size_t n,
 
        found_mapping:
         /* Found the mapping: uc maps to mapped_uc[0..mapped_count-1].  */
-        {
-          unsigned int i;
+        for (unsigned int i = 0; i < mapped_count; i++)
+          {
+            ucs4_t muc = mapped_uc[i];
 
-          for (i = 0; i < mapped_count; i++)
+            /* Append muc to the result accumulator.  */
+            if (length < allocated)
+              {
+                int ret = U_UCTOMB (result + length, muc, allocated - length);
+                if (ret == -1)
+                  {
+                    errno = EINVAL;
+                    goto fail;
+                  }
+                if (ret >= 0)
+                  {
+                    length += ret;
+                    goto done_appending;
+                  }
+              }
             {
-              ucs4_t muc = mapped_uc[i];
-
-              /* Append muc to the result accumulator.  */
-              if (length < allocated)
+              size_t old_allocated = allocated;
+              size_t new_allocated = 2 * old_allocated;
+              if (new_allocated < 64)
+                new_allocated = 64;
+              if (new_allocated < old_allocated) /* integer overflow? */
+                abort ();
+              {
+                UNIT *larger_result;
+                if (result == NULL)
+                  {
+                    larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
+                    if (larger_result == NULL)
+                      {
+                        errno = ENOMEM;
+                        goto fail;
+                      }
+                  }
+                else if (result == resultbuf)
+                  {
+                    larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
+                    if (larger_result == NULL)
+                      {
+                        errno = ENOMEM;
+                        goto fail;
+                      }
+                    U_CPY (larger_result, resultbuf, length);
+                  }
+                else
+                  {
+                    larger_result =
+                      (UNIT *) realloc (result, new_allocated * sizeof (UNIT));
+                    if (larger_result == NULL)
+                      {
+                        errno = ENOMEM;
+                        goto fail;
+                      }
+                  }
+                result = larger_result;
+                allocated = new_allocated;
                 {
                   int ret = U_UCTOMB (result + length, muc, allocated - length);
                   if (ret == -1)
@@ -297,69 +347,15 @@ FUNC (const UNIT *s, size_t n,
                       errno = EINVAL;
                       goto fail;
                     }
-                  if (ret >= 0)
-                    {
-                      length += ret;
-                      goto done_appending;
-                    }
-                }
-              {
-                size_t old_allocated = allocated;
-                size_t new_allocated = 2 * old_allocated;
-                if (new_allocated < 64)
-                  new_allocated = 64;
-                if (new_allocated < old_allocated) /* integer overflow? */
-                  abort ();
-                {
-                  UNIT *larger_result;
-                  if (result == NULL)
-                    {
-                      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
-                      if (larger_result == NULL)
-                        {
-                          errno = ENOMEM;
-                          goto fail;
-                        }
-                    }
-                  else if (result == resultbuf)
-                    {
-                      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
-                      if (larger_result == NULL)
-                        {
-                          errno = ENOMEM;
-                          goto fail;
-                        }
-                      U_CPY (larger_result, resultbuf, length);
-                    }
-                  else
-                    {
-                      larger_result =
-                        (UNIT *) realloc (result, new_allocated * sizeof (UNIT));
-                      if (larger_result == NULL)
-                        {
-                          errno = ENOMEM;
-                          goto fail;
-                        }
-                    }
-                  result = larger_result;
-                  allocated = new_allocated;
-                  {
-                    int ret = U_UCTOMB (result + length, muc, allocated - length);
-                    if (ret == -1)
-                      {
-                        errno = EINVAL;
-                        goto fail;
-                      }
-                    if (ret < 0)
-                      abort ();
-                    length += ret;
-                    goto done_appending;
-                  }
+                  if (ret < 0)
+                    abort ();
+                  length += ret;
+                  goto done_appending;
                 }
               }
-             done_appending: ;
             }
-        }
+           done_appending: ;
+          }
 
         if (!uc_is_case_ignorable (uc))
           last_char_except_ignorable = uc;

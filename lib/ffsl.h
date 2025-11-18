@@ -71,8 +71,6 @@ FUNC (TYPE i)
 
   if (chunk_count > 1)
     {
-      size_t k;
-
       /* It is tempting to write  if (!j)  here, but if we do this,
          Solaris 10/x86 "cc -O" miscompiles the code.  */
       if (!i)
@@ -81,7 +79,7 @@ FUNC (TYPE i)
       if ((unsigned int) j)
         return ffs ((unsigned int) j);
       /* Generic loop.  */
-      for (k = 1; k < chunk_count - 1; k++)
+      for (size_t k = 1; k < chunk_count - 1; k++)
         if ((unsigned int) (j >> (k * chunk_bits)) != 0)
           return k * chunk_bits + ffs ((unsigned int) (j >> (k * chunk_bits)));
     }

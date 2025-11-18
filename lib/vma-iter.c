@@ -1114,58 +1114,55 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
           vma_t *vmas = (vma_t *) auxmap;
 
           vma_t *vp = vmas;
-          {
-            prmap_t* mp;
-            for (mp = maps;;)
-              {
-                unsigned long start, end;
+          for (prmap_t *mp = maps;;)
+            {
+              unsigned long start, end;
 
-                start = (unsigned long) mp->pr_vaddr;
-                end = start + mp->pr_size;
-                if (start == 0 && end == 0 && mp->pr_mflags == 0)
-                  break;
-                /* Discard empty VMAs and kernel VMAs.  */
-                if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
-                  {
-                    unsigned int flags;
-                    flags = 0;
-                    if (mp->pr_mflags & MA_READ)
-                      flags |= VMA_PROT_READ;
-                    if (mp->pr_mflags & MA_WRITE)
-                      flags |= VMA_PROT_WRITE;
-                    if (mp->pr_mflags & MA_EXEC)
-                      flags |= VMA_PROT_EXECUTE;
+              start = (unsigned long) mp->pr_vaddr;
+              end = start + mp->pr_size;
+              if (start == 0 && end == 0 && mp->pr_mflags == 0)
+                break;
+              /* Discard empty VMAs and kernel VMAs.  */
+              if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
+                {
+                  unsigned int flags;
+                  flags = 0;
+                  if (mp->pr_mflags & MA_READ)
+                    flags |= VMA_PROT_READ;
+                  if (mp->pr_mflags & MA_WRITE)
+                    flags |= VMA_PROT_WRITE;
+                  if (mp->pr_mflags & MA_EXEC)
+                    flags |= VMA_PROT_EXECUTE;
 
-                    if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-                      {
-                        /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                           = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-                        if (start < auxmap_start)
-                          {
-                            vp->start = start;
-                            vp->end = auxmap_start;
-                            vp->flags = flags;
-                            vp++;
-                          }
-                        if (auxmap_end - 1 < end - 1)
-                          {
-                            vp->start = auxmap_end;
-                            vp->end = end;
-                            vp->flags = flags;
-                            vp++;
-                          }
-                      }
-                    else
-                      {
-                        vp->start = start;
-                        vp->end = end;
-                        vp->flags = flags;
-                        vp++;
-                      }
-                  }
-                mp++;
-              }
-          }
+                  if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+                    {
+                      /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                         = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+                      if (start < auxmap_start)
+                        {
+                          vp->start = start;
+                          vp->end = auxmap_start;
+                          vp->flags = flags;
+                          vp++;
+                        }
+                      if (auxmap_end - 1 < end - 1)
+                        {
+                          vp->start = auxmap_end;
+                          vp->end = end;
+                          vp->flags = flags;
+                          vp++;
+                        }
+                    }
+                  else
+                    {
+                      vp->start = start;
+                      vp->end = end;
+                      vp->flags = flags;
+                      vp++;
+                    }
+                }
+              mp++;
+            }
 
           size_t nvmas = vp - vmas;
           /* Sort the array in ascending order.
@@ -1173,32 +1170,25 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
              Insertion-sort is OK in this case, despite its worst-case running
              time of O(N²), since the number of VMAs will rarely be larger than
              1000.  */
-          {
-            size_t i;
-            for (i = 1; i < nvmas; i++)
-              {
-                /* Invariant: Here vmas[0..i-1] is sorted.  */
-                size_t j;
-                for (j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
-                  {
-                    vma_t tmp = vmas[j - 1];
-                    vmas[j - 1] = vmas[j];
-                    vmas[j] = tmp;
-                  }
-                /* Invariant: Here vmas[0..i] is sorted.  */
-              }
-          }
+          for (size_t i = 1; i < nvmas; i++)
+            {
+              /* Invariant: Here vmas[0..i-1] is sorted.  */
+              for (size_t j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
+                {
+                  vma_t tmp = vmas[j - 1];
+                  vmas[j - 1] = vmas[j];
+                  vmas[j] = tmp;
+                }
+              /* Invariant: Here vmas[0..i] is sorted.  */
+            }
 
           /* Invoke the callback.  */
-          {
-            size_t i;
-            for (i = 0; i < nvmas; i++)
-              {
-                vma_t *vpi = &vmas[i];
-                if (callback (data, vpi->start, vpi->end, vpi->flags))
-                  break;
-              }
-          }
+          for (size_t i = 0; i < nvmas; i++)
+            {
+              vma_t *vpi = &vmas[i];
+              if (callback (data, vpi->start, vpi->end, vpi->flags))
+                break;
+            }
 
           munmap (auxmap, memneed);
           break;
@@ -1233,7 +1223,6 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   unsigned long auxmap_start;
   unsigned long auxmap_end;
   prmap_t* maps;
-  prmap_t* mp;
 
   pagesize = getpagesize ();
 
@@ -1274,7 +1263,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   if (ioctl (fd, PIOCMAP, maps) < 0)
     goto fail1;
 
-  for (mp = maps;;)
+  for (prmap_t *mp = maps;;)
     {
       unsigned long start, end;
       unsigned int flags;
@@ -1337,7 +1326,6 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   unsigned long auxmap_end;
   prmap_t* maps;
   prmap_t* maps_end;
-  prmap_t* mp;
 
   pagesize = getpagesize ();
 
@@ -1407,7 +1395,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
     maps_end = maps + nmaps;
   }
 
-  for (mp = maps; mp < maps_end; mp++)
+  for (prmap_t *mp = maps; mp < maps_end; mp++)
     {
       unsigned long start, end;
       unsigned int flags;
@@ -1453,9 +1441,8 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 #elif HAVE_PSTAT_GETPROCVM /* HP-UX */
 
   unsigned long pagesize = getpagesize ();
-  int i;
 
-  for (i = 0; ; i++)
+  for (int i = 0; ; i++)
     {
       struct pst_vm_status info;
       int ret = pstat_getprocvm (&info, sizeof (info), 0, i);
@@ -1482,10 +1469,9 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 #elif defined __APPLE__ && defined __MACH__ /* Mac OS X */
 
   task_t task = mach_task_self ();
-  vm_address_t address;
   vm_size_t size;
 
-  for (address = VM_MIN_ADDRESS;; address += size)
+  for (vm_address_t address = VM_MIN_ADDRESS;; address += size)
     {
       int more;
       mach_port_t object_name;
@@ -1550,10 +1536,9 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      https://www.gnu.org/software/hurd/gnumach-doc/Memory-Attributes.html */
 
   task_t task = mach_task_self ();
-  vm_address_t address;
   vm_size_t size;
 
-  for (address = 0;; address += size)
+  for (vm_address_t address = 0;; address += size)
     {
       vm_prot_t protection;
       vm_prot_t max_protection;

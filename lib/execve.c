@@ -59,8 +59,7 @@ execve (const char *program, char * const *argv, char * const *env)
          can't do so since we have no way to enumerate them.  */
       {
         unsigned int fdmax = _getmaxstdio ();
-        unsigned int fd;
-        for (fd = 0; fd < fdmax; fd++)
+        for (unsigned int fd = 0; fd < fdmax; fd++)
           close (fd);
       }
 

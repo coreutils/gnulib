@@ -70,7 +70,6 @@ int
 putenv (char *string)
 {
   const char *name_end = strchr (string, '=');
-  char **ep;
 
   if (name_end == NULL)
     {
@@ -105,7 +104,7 @@ putenv (char *string)
       name_x[name_end - string + 1] = ' ';
       name_x[name_end - string + 2] = 0;
       putenv_result = _putenv (name_x);
-      for (ep = environ; *ep; ep++)
+      for (char **ep = environ; *ep; ep++)
         if (streq (*ep, name_x))
           {
             *ep = string;
@@ -125,6 +124,7 @@ putenv (char *string)
       return putenv_result;
     }
 #else
+  char **ep;
   for (ep = environ; *ep; ep++)
     if (strncmp (*ep, string, name_end - string) == 0
         && (*ep)[name_end - string] == '=')

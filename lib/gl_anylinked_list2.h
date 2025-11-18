@@ -144,17 +144,13 @@ gl_linked_nx_create (gl_list_implementation_t implementation,
   return list;
 
  fail2:
-  {
-    gl_list_node_t node;
+  for (gl_list_node_t node = tail; node != &list->root; )
+    {
+      gl_list_node_t prev = node->prev;
 
-    for (node = tail; node != &list->root; )
-      {
-        gl_list_node_t prev = node->prev;
-
-        free (node);
-        node = prev;
-      }
-  }
+      free (node);
+      node = prev;
+    }
 #if WITH_HASHTABLE
   free (list->table);
  fail1:
@@ -354,9 +350,8 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
       {
         /* Look for the first match in the hash bucket.  */
         gl_list_node_t found = NULL;
-        gl_list_node_t node;
 
-        for (node = (gl_list_node_t) list->table[bucket];
+        for (gl_list_node_t node = (gl_list_node_t) list->table[bucket];
              node != NULL;
              node = (gl_list_node_t) node->h.hash_next)
           if (node->h.hashcode == hashcode
@@ -369,7 +364,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
             }
         if (start_index > 0)
           /* Look whether found's index is < start_index.  */
-          for (node = list->root.next; ; node = node->next)
+          for (gl_list_node_t node = list->root.next; ; node = node->next)
             {
               if (node == found)
                 return NULL;
@@ -380,7 +375,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
           /* Look whether found's index is >= end_index.  */
           {
             end_index = count - end_index;
-            for (node = list->root.prev; ; node = node->prev)
+            for (gl_list_node_t node = list->root.prev; ; node = node->prev)
               {
                 if (node == found)
                   return NULL;
@@ -395,9 +390,8 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
         /* Look whether there is more than one match in the hash bucket.  */
         bool multiple_matches = false;
         gl_list_node_t first_match = NULL;
-        gl_list_node_t node;
 
-        for (node = (gl_list_node_t) list->table[bucket];
+        for (gl_list_node_t node = (gl_list_node_t) list->table[bucket];
              node != NULL;
              node = (gl_list_node_t) node->h.hash_next)
           if (node->h.hashcode == hashcode
@@ -418,7 +412,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
             /* We need the match with the smallest index.  But we don't have
                a fast mapping node -> index.  So we have to walk the list.  */
             end_index -= start_index;
-            node = list->root.next;
+            gl_list_node_t node = list->root.next;
             for (; start_index > 0; start_index--)
               node = node->next;
 
@@ -438,7 +432,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
           {
             if (start_index > 0)
               /* Look whether first_match's index is < start_index.  */
-              for (node = list->root.next; node != &list->root; node = node->next)
+              for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
                 {
                   if (node == first_match)
                     return NULL;
@@ -449,7 +443,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
               /* Look whether first_match's index is >= end_index.  */
               {
                 end_index = list->count - end_index;
-                for (node = list->root.prev; ; node = node->prev)
+                for (gl_list_node_t node = list->root.prev; ; node = node->prev)
                   {
                     if (node == first_match)
                       return NULL;
@@ -916,9 +910,8 @@ static void
 gl_linked_list_free (gl_list_t list)
 {
   gl_listelement_dispose_fn dispose = list->base.dispose_fn;
-  gl_list_node_t node;
 
-  for (node = list->root.next; node != &list->root; )
+  for (gl_list_node_t node = list->root.next; node != &list->root; )
     {
       gl_list_node_t next = node->next;
       if (dispose != NULL)
@@ -973,13 +966,12 @@ gl_linked_iterator_from_to (gl_list_t list,
     {
       /* n1 is the maximum, use n2 and n3.  */
       gl_list_node_t node;
-      size_t i;
 
       node = &list->root;
-      for (i = n3; i > 0; i--)
+      for (size_t i = n3; i > 0; i--)
         node = node->prev;
       result.q = node;
-      for (i = n2; i > 0; i--)
+      for (size_t i = n2; i > 0; i--)
         node = node->prev;
       result.p = node;
     }
@@ -987,15 +979,14 @@ gl_linked_iterator_from_to (gl_list_t list,
     {
       /* n2 is the maximum, use n1 and n3.  */
       gl_list_node_t node;
-      size_t i;
 
       node = list->root.next;
-      for (i = n1; i > 0; i--)
+      for (size_t i = n1; i > 0; i--)
         node = node->next;
       result.p = node;
 
       node = &list->root;
-      for (i = n3; i > 0; i--)
+      for (size_t i = n3; i > 0; i--)
         node = node->prev;
       result.q = node;
     }
@@ -1003,13 +994,12 @@ gl_linked_iterator_from_to (gl_list_t list,
     {
       /* n3 is the maximum, use n1 and n2.  */
       gl_list_node_t node;
-      size_t i;
 
       node = list->root.next;
-      for (i = n1; i > 0; i--)
+      for (size_t i = n1; i > 0; i--)
         node = node->next;
       result.p = node;
-      for (i = n2; i > 0; i--)
+      for (size_t i = n2; i > 0; i--)
         node = node->next;
       result.q = node;
     }
@@ -1051,9 +1041,7 @@ static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_linked_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
 {
-  gl_list_node_t node;
-
-  for (node = list->root.next; node != &list->root; node = node->next)
+  for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     {
       int cmp = compar (node->value, elt);
 
@@ -1188,9 +1176,7 @@ static gl_list_node_t
 gl_linked_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
 {
-  gl_list_node_t node;
-
-  for (node = list->root.next; node != &list->root; node = node->next)
+  for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     if (compar (node->value, elt) >= 0)
       return gl_linked_nx_add_before (list, node, elt);
   return gl_linked_nx_add_last (list, elt);
@@ -1200,9 +1186,7 @@ static bool
 gl_linked_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
 {
-  gl_list_node_t node;
-
-  for (node = list->root.next; node != &list->root; node = node->next)
+  for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     {
       int cmp = compar (node->value, elt);
 

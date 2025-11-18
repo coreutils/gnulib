@@ -323,9 +323,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
                       {
                         /* We have a good enough best diagonal; now insist
                            that it end with a significant snake.  */
-                        int k;
-
-                        for (k = 1; XREF_YREF_EQUAL (x - k, y - k); k++)
+                        for (int k = 1; XREF_YREF_EQUAL (x - k, y - k); k++)
                           if (k == SNAKE_LIMIT)
                             {
                               best = v;
@@ -362,9 +360,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
                       {
                         /* We have a good enough best diagonal; now insist
                            that it end with a significant snake.  */
-                        int k;
-
-                        for (k = 0; XREF_YREF_EQUAL (x + k, y + k); k++)
+                        for (int k = 0; XREF_YREF_EQUAL (x + k, y + k); k++)
                           if (k == SNAKE_LIMIT - 1)
                             {
                               best = v;

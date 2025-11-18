@@ -85,17 +85,13 @@ gl_array_indexof (gl_map_t map, const void *key)
       gl_mapkey_equals_fn equals = map->base.equals_fn;
       if (equals != NULL)
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (equals (map->pairs[i].key, key))
               return i;
         }
       else
         {
-          size_t i;
-
-          for (i = 0; i < count; i++)
+          for (size_t i = 0; i < count; i++)
             if (map->pairs[i].key == key)
               return i;
         }
@@ -174,12 +170,11 @@ gl_array_remove_at (gl_map_t map, size_t position)
 {
   size_t count = map->count;
   struct pair *pairs;
-  size_t i;
 
   pairs = map->pairs;
   if (map->base.kdispose_fn != NULL)
     map->base.kdispose_fn (pairs[position].key);
-  for (i = position + 1; i < count; i++)
+  for (size_t i = position + 1; i < count; i++)
     pairs[i - 1] = pairs[i];
   map->count = count - 1;
 }

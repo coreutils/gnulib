@@ -35,15 +35,11 @@ xsd_concat (idx_t n, /* [rw_]string_desc_t string1, */ ...)
     string_desc_t string1 = va_arg (strings, string_desc_t);
     total += string1._nbytes;
     if (n > 1)
-      {
-        idx_t i;
-
-        for (i = n - 1; i > 0; i--)
-          {
-            string_desc_t arg = va_arg (strings, string_desc_t);
-            total += arg._nbytes;
-          }
-      }
+      for (idx_t i = n - 1; i > 0; i--)
+        {
+          string_desc_t arg = va_arg (strings, string_desc_t);
+          total += arg._nbytes;
+        }
     va_end (strings);
   }
 
@@ -58,17 +54,13 @@ xsd_concat (idx_t n, /* [rw_]string_desc_t string1, */ ...)
     memcpy (combined, string1._data, string1._nbytes);
     pos += string1._nbytes;
     if (n > 1)
-      {
-        idx_t i;
-
-        for (i = n - 1; i > 0; i--)
-          {
-            string_desc_t arg = va_arg (strings, string_desc_t);
-            if (arg._nbytes > 0)
-              memcpy (combined + pos, arg._data, arg._nbytes);
-            pos += arg._nbytes;
-          }
-      }
+      for (idx_t i = n - 1; i > 0; i--)
+        {
+          string_desc_t arg = va_arg (strings, string_desc_t);
+          if (arg._nbytes > 0)
+            memcpy (combined + pos, arg._data, arg._nbytes);
+          pos += arg._nbytes;
+        }
     va_end (strings);
   }
 

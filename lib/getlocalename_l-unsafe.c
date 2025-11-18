@@ -97,10 +97,9 @@ get_locale_t_name_unsafe (int category, locale_t locale)
          happen if the application uses the original newlocale()/duplocale()
          functions instead of the overridden ones.  */
       const char *name = "";
-      struct locale_hash_node *p;
       /* Lock while looking up the hash node.  */
       gl_rwlock_rdlock (locale_lock);
-      for (p = locale_hash_table[slot]; p != NULL; p = p->next)
+      for (struct locale_hash_node *p = locale_hash_table[slot]; p != NULL; p = p->next)
         if (p->locale == locale)
           {
             name = p->names.category_name[category - LCMIN];
@@ -147,10 +146,8 @@ newlocale (int category_mask, const char *name, locale_t base)
        & ~category_mask) == 0)
     {
       /* Use name, ignore base.  */
-      int i;
-
       name = struniq (name);
-      for (i = 0; i < 6; i++)
+      for (int i = 0; i < 6; i++)
         names.category_name[i] = name;
     }
   else
@@ -158,9 +155,7 @@ newlocale (int category_mask, const char *name, locale_t base)
       /* Use base, possibly also name.  */
       if (base == NULL)
         {
-          int i;
-
-          for (i = 0; i < 6; i++)
+          for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
               int mask;
@@ -194,9 +189,7 @@ newlocale (int category_mask, const char *name, locale_t base)
         }
       else if (base == LC_GLOBAL_LOCALE)
         {
-          int i;
-
-          for (i = 0; i < 6; i++)
+          for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
               int mask;
@@ -244,8 +237,7 @@ newlocale (int category_mask, const char *name, locale_t base)
             if (p->locale == base)
               break;
 
-          int i;
-          for (i = 0; i < 6; i++)
+          for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
               int mask;
@@ -358,9 +350,7 @@ duplocale (locale_t locale)
   node->locale = result;
   if (locale == LC_GLOBAL_LOCALE)
     {
-      int i;
-
-      for (i = 0; i < 6; i++)
+      for (int i = 0; i < 6; i++)
         {
           int category = i + LCMIN;
           node->names.category_name[i] =
@@ -389,9 +379,7 @@ duplocale (locale_t locale)
           /* This can happen if the application uses the original
              newlocale()/duplocale() functions instead of the overridden
              ones.  */
-          int i;
-
-          for (i = 0; i < 6; i++)
+          for (int i = 0; i < 6; i++)
             node->names.category_name[i] = "";
         }
     }
@@ -438,12 +426,11 @@ freelocale (locale_t locale)
     size_t hashcode = locale_hash_function (locale);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
     struct locale_hash_node *found;
-    struct locale_hash_node **p;
 
     found = NULL;
     /* Lock while removing the hash node.  */
     gl_rwlock_wrlock (locale_lock);
-    for (p = &locale_hash_table[slot]; *p != NULL; p = &(*p)->next)
+    for (struct locale_hash_node **p = &locale_hash_table[slot]; *p != NULL; p = &(*p)->next)
       if ((*p)->locale == locale)
         {
           found = *p;

@@ -189,7 +189,7 @@ getfield (FILE *stream, char *buffer, int delim)
 static void
 fill_attributes (const char *unicodedata_filename)
 {
-  unsigned int i, j;
+  unsigned int j;
   FILE *stream;
   char field0[FIELDLEN];
   char field1[FIELDLEN];
@@ -208,7 +208,7 @@ fill_attributes (const char *unicodedata_filename)
   char field14[FIELDLEN];
   int lineno = 0;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_attributes[i].name = NULL;
 
   stream = fopen (unicodedata_filename, "r");
@@ -246,7 +246,7 @@ fill_attributes (const char *unicodedata_filename)
                    unicodedata_filename, lineno);
           exit (1);
         }
-      i = strtoul (field0, NULL, 16);
+      unsigned int i = strtoul (field0, NULL, 16);
       if (field1[0] == '<'
           && strlen (field1) >= 9
           && str_endswith (field1, ", First>"))
@@ -682,7 +682,6 @@ static void
 debug_output_predicate (const char *filename, bool (*predicate) (unsigned int))
 {
   FILE *stream;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -692,13 +691,13 @@ debug_output_predicate (const char *filename, bool (*predicate) (unsigned int))
     }
 
 #if 0 /* This yields huge text output.  */
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
         fprintf (stream, "0x%04X\n", ch);
       }
 #else
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
         unsigned int first = ch;
@@ -727,7 +726,6 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -746,7 +744,7 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
         unsigned int first = ch;
@@ -785,7 +783,6 @@ static void
 output_predicate (const char *filename, bool (*predicate) (unsigned int), const char *name, const char *comment, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct predicate_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -814,7 +811,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   t.q = 7; /* or: 6 */
   predicate_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       predicate_table_add (&t, ch);
 
@@ -831,7 +828,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     if (i != 1)
       fprintf (stream, "#define header_%d %d\n", i,
                ((uint32_t *) t.result)[i]);
@@ -850,7 +847,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level1_size > 1)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 1) == 0)
@@ -870,7 +867,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 1)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 1) == 0)
@@ -890,7 +887,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 4) == 0)
         fprintf (stream, "\n   ");
@@ -1100,7 +1097,6 @@ static void
 output_category (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct category_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
   uint16_t *level3_packed;
@@ -1127,7 +1123,7 @@ output_category (const char *filename, const char *version)
   t.q = 9;
   category_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value;
       unsigned int log2_value;
@@ -1162,7 +1158,7 @@ output_category (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define category_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -1178,7 +1174,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1198,7 +1194,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1222,7 +1218,7 @@ output_category (const char *filename, const char *version)
   level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 5 / 16 + 1, sizeof (uint16_t));
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 5) / 16;
       unsigned int k = (i * 5) % 16;
@@ -1234,7 +1230,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1274,7 +1270,6 @@ static void
 output_combclass (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct combclass_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -1300,7 +1295,7 @@ output_combclass (const char *filename, const char *version)
   t.q = 9;
   combclass_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     if (unicode_attributes[ch].name != NULL)
       {
         int value = atoi (unicode_attributes[ch].combining);
@@ -1321,7 +1316,7 @@ output_combclass (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define combclass_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -1336,7 +1331,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1356,7 +1351,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1376,7 +1371,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1647,7 +1642,6 @@ static void
 output_bidi_category (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct bidi_category_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
   uint16_t *level3_packed;
@@ -1674,7 +1668,7 @@ output_bidi_category (const char *filename, const char *version)
   t.q = 9;
   bidi_category_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = get_bidi_category (ch);
 
@@ -1696,7 +1690,7 @@ output_bidi_category (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define bidi_category_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -1712,7 +1706,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1732,7 +1726,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1754,7 +1748,7 @@ output_bidi_category (const char *filename, const char *version)
   level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 5 / 16 + 1, sizeof (uint16_t));
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 5) / 16;
       unsigned int k = (i * 5) % 16;
@@ -1766,7 +1760,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1815,7 +1809,6 @@ output_decimal_digit_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -1836,7 +1829,7 @@ output_decimal_digit_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = get_decdigit_value (ch);
 
@@ -1865,7 +1858,6 @@ static void
 output_decimal_digit (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct decdigit_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -1891,7 +1883,7 @@ output_decimal_digit (const char *filename, const char *version)
   t.q = 9;
   decdigit_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = 1 + get_decdigit_value (ch);
 
@@ -1913,7 +1905,7 @@ output_decimal_digit (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define decdigit_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -1929,7 +1921,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1949,7 +1941,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -1970,7 +1962,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << (t.p - 1); i++)
+  for (unsigned int i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2012,7 +2004,6 @@ output_digit_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -2033,7 +2024,7 @@ output_digit_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = get_digit_value (ch);
 
@@ -2062,7 +2053,6 @@ static void
 output_digit (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct decdigit_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -2088,7 +2078,7 @@ output_digit (const char *filename, const char *version)
   t.q = 9;
   decdigit_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = 1 + get_digit_value (ch);
 
@@ -2110,7 +2100,7 @@ output_digit (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define digit_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -2126,7 +2116,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2146,7 +2136,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2167,7 +2157,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << (t.p - 1); i++)
+  for (unsigned int i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2226,7 +2216,6 @@ output_numeric_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -2247,7 +2236,7 @@ output_numeric_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uc_fraction_t value = get_numeric_value (ch);
 
@@ -2285,7 +2274,6 @@ output_numeric (const char *filename, const char *version)
   FILE *stream;
   uc_fraction_t fractions[160];
   unsigned int nfractions;
-  unsigned int ch, i, j;
   struct numeric_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
   uint16_t *level3_packed;
@@ -2310,10 +2298,11 @@ output_numeric (const char *filename, const char *version)
 
   /* Create table of occurring fractions.  */
   nfractions = 0;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uc_fraction_t value = get_numeric_value (ch);
 
+      unsigned int i;
       for (i = 0; i < nfractions; i++)
         if (value.numerator == fractions[i].numerator
             && value.denominator == fractions[i].denominator)
@@ -2326,7 +2315,7 @@ output_numeric (const char *filename, const char *version)
                 || (value.denominator == fractions[i].denominator
                     && value.numerator < fractions[i].numerator))
               break;
-          for (j = nfractions; j > i; j--)
+          for (unsigned int j = nfractions; j > i; j--)
             fractions[j] = fractions[j - 1];
           fractions[i] = value;
           nfractions++;
@@ -2336,7 +2325,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "static const uc_fraction_t u_numeric_values[%d] =\n",
            nfractions);
   fprintf (stream, "{\n");
-  for (i = 0; i < nfractions; i++)
+  for (unsigned int i = 0; i < nfractions; i++)
     {
       fprintf (stream, "  { %d, %d }", fractions[i].numerator,
                fractions[i].denominator);
@@ -2350,10 +2339,11 @@ output_numeric (const char *filename, const char *version)
   t.q = 9;
   numeric_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uc_fraction_t value = get_numeric_value (ch);
 
+      unsigned int i;
       for (i = 0; i < nfractions; i++)
         if (value.numerator == fractions[i].numerator
             && value.denominator == fractions[i].denominator)
@@ -2376,7 +2366,7 @@ output_numeric (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define numeric_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -2392,7 +2382,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2412,7 +2402,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2434,7 +2424,7 @@ output_numeric (const char *filename, const char *version)
   level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 8 / 16 + 1, sizeof (uint16_t));
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 8) / 16;
       unsigned int k = (i * 8) % 16;
@@ -2446,7 +2436,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 8 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 8 / 16 + 1; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 8 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2506,7 +2496,6 @@ fill_mirror (const char *bidimirroring_filename)
       int c;
       unsigned int uc1;
       unsigned int uc2;
-      unsigned int i;
 
       lineno++;
       c = getc (stream);
@@ -2559,7 +2548,7 @@ fill_mirror (const char *bidimirroring_filename)
           exit (1);
         }
       /* Have we seen uc1 or uc2 already?  */
-      for (i = 0; i < mirror_pairs_count; i++)
+      for (unsigned int i = 0; i < mirror_pairs_count; i++)
         {
           if (uc1 == mirror_pairs[i].uc[0])
             {
@@ -2574,43 +2563,46 @@ fill_mirror (const char *bidimirroring_filename)
               exit (1);
             }
         }
-      for (i = 0; i < mirror_pairs_count; i++)
-        if (uc1 == mirror_pairs[i].uc[1] || uc2 == mirror_pairs[i].uc[0])
-          break;
-      if (i < mirror_pairs_count)
-        {
-          if (uc1 != mirror_pairs[i].uc[1])
-            {
-              /* uc1 != mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0] */
-              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
-                       bidimirroring_filename, uc2);
-              exit (1);
-            }
-          if (uc2 != mirror_pairs[i].uc[0])
-            {
-              /* uc1 == mirror_pairs[i].uc[1], uc2 != mirror_pairs[i].uc[0] */
-              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
-                       bidimirroring_filename, uc1);
-              exit (1);
-            }
-          /* uc1 == mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0].
-             (uc1, uc2) is the reverse pair of a pair that we already had
-             encountered: (uc2, uc1).  */
-        }
-      else
-        {
-          /* A new pair.  */
-          if (mirror_pairs_count == SIZEOF (mirror_pairs))
-            {
-              fprintf (stderr, "%s contains more pairs than expected, "
-                       "increase mirror_pairs' size.\n",
-                       bidimirroring_filename);
-              exit (1);
-            }
-          mirror_pairs[mirror_pairs_count].uc[0] = uc1;
-          mirror_pairs[mirror_pairs_count].uc[1] = uc2;
-          mirror_pairs_count++;
-        }
+      {
+        unsigned int i;
+        for (i = 0; i < mirror_pairs_count; i++)
+          if (uc1 == mirror_pairs[i].uc[1] || uc2 == mirror_pairs[i].uc[0])
+            break;
+        if (i < mirror_pairs_count)
+          {
+            if (uc1 != mirror_pairs[i].uc[1])
+              {
+                /* uc1 != mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0] */
+                fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                         bidimirroring_filename, uc2);
+                exit (1);
+              }
+            if (uc2 != mirror_pairs[i].uc[0])
+              {
+                /* uc1 == mirror_pairs[i].uc[1], uc2 != mirror_pairs[i].uc[0] */
+                fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                         bidimirroring_filename, uc1);
+                exit (1);
+              }
+            /* uc1 == mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0].
+               (uc1, uc2) is the reverse pair of a pair that we already had
+               encountered: (uc2, uc1).  */
+          }
+        else
+          {
+            /* A new pair.  */
+            if (mirror_pairs_count == SIZEOF (mirror_pairs))
+              {
+                fprintf (stderr, "%s contains more pairs than expected, "
+                         "increase mirror_pairs' size.\n",
+                         bidimirroring_filename);
+                exit (1);
+              }
+            mirror_pairs[mirror_pairs_count].uc[0] = uc1;
+            mirror_pairs[mirror_pairs_count].uc[1] = uc2;
+            mirror_pairs_count++;
+          }
+      }
       /* Verify that uc1 and uc2 have the BidiMirrored property.  */
       if (!(unicode_attributes[uc1].name != NULL
             && unicode_attributes[uc1].mirrored))
@@ -2640,12 +2632,11 @@ get_mirror_value (unsigned int ch)
 {
   bool mirrored;
   unsigned int mirror_char;
-  unsigned int i;
 
   mirrored = (unicode_attributes[ch].name != NULL
               && unicode_attributes[ch].mirrored);
   mirror_char = 0xfffd;
-  for (i = 0; i < mirror_pairs_count; i++)
+  for (unsigned int i = 0; i < mirror_pairs_count; i++)
     if (ch == mirror_pairs[i].uc[0])
       {
         mirror_char = mirror_pairs[i].uc[1];
@@ -2678,7 +2669,6 @@ static void
 output_mirror (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct mirror_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -2704,7 +2694,7 @@ output_mirror (const char *filename, const char *version)
   t.q = 9;
   mirror_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = get_mirror_value (ch);
 
@@ -2724,7 +2714,7 @@ output_mirror (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define mirror_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -2739,7 +2729,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2759,7 +2749,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -2779,7 +2769,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2906,9 +2896,7 @@ static uint8_t unicode_indic_conjunct_break[0x110000];
 static void
 clear_properties (void)
 {
-  unsigned int i;
-
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_properties[i] = 0;
 }
 
@@ -2917,7 +2905,6 @@ clear_properties (void)
 static void
 fill_properties (const char *proplist_filename)
 {
-  unsigned int i;
   FILE *stream;
 
   stream = fopen (proplist_filename, "r");
@@ -3048,7 +3035,7 @@ fill_properties (const char *proplist_filename)
             }
 
           assert (i1 <= i2 && i2 < 0x110000);
-          for (i = i1; i <= i2; i++)
+          for (unsigned int i = i1; i <= i2; i++)
             unicode_indic_conjunct_break[i] = valuecode;
 
           goto done_line;
@@ -3061,7 +3048,7 @@ fill_properties (const char *proplist_filename)
         }
 
       assert (i1 <= i2 && i2 < 0x110000);
-      for (i = i1; i <= i2; i++)
+      for (unsigned int i = i1; i <= i2; i++)
         unicode_properties[i] |= 1ULL << propcode;
 
      done_line: ;
@@ -3079,11 +3066,10 @@ fill_properties (const char *proplist_filename)
 static void
 fill_property30 (char array[0x110000], const char *proplist_filename, const char *property_name)
 {
-  unsigned int i;
   FILE *stream;
   char buf[100+1];
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     array[i] = 0;
 
   stream = fopen (proplist_filename, "r");
@@ -3138,7 +3124,7 @@ fill_property30 (char array[0x110000], const char *proplist_filename, const char
           exit (1);
         }
       assert (i1 <= i2 && i2 < 0x110000);
-      for (i = i1; i <= i2; i++)
+      for (unsigned int i = i1; i <= i2; i++)
         array[i] = 1;
     }
 
@@ -4138,7 +4124,6 @@ output_indic_conjunct_break_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -4159,7 +4144,7 @@ output_indic_conjunct_break_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = unicode_indic_conjunct_break[ch];
 
@@ -4193,7 +4178,6 @@ static void
 output_indic_conjunct_break (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct indic_conjunct_break_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -4219,7 +4203,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   t.q = 4; /* or 5 */
   indic_conjunct_break_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uint8_t value = unicode_indic_conjunct_break[ch];
 
@@ -4242,7 +4226,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define indic_conjunct_break_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -4258,7 +4242,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -4278,7 +4262,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -4299,7 +4283,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 2 / 16 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4459,7 +4443,6 @@ static void
 fill_arabicshaping (const char *arabicshaping_filename)
 {
   FILE *stream;
-  unsigned int i;
   int lineno;
 
   stream = fopen (arabicshaping_filename, "r");
@@ -4469,7 +4452,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
       exit (1);
     }
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       unicode_joining_type[i] = (uint8_t)~(uint8_t)0;
       unicode_joining_group[i] = UC_JOINING_GROUP_NONE;
@@ -4495,6 +4478,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
       if (buf[0] == '\0' || buf[0] == '#')
         continue;
 
+      unsigned int i;
       if (sscanf (buf, "%X%[; ]%[^;]%[; ]%[^;]%[; ]%100[^\n]",
                   &i, separator1, schematic_name, separator2, joining_type_name,
                   separator3, joining_group_name) != 7)
@@ -4673,7 +4657,6 @@ output_joining_type_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -4694,7 +4677,7 @@ output_joining_type_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = unicode_joining_type[ch];
 
@@ -4728,7 +4711,6 @@ static void
 output_joining_type (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct joining_type_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
   uint8_t *level3_packed;
@@ -4755,7 +4737,7 @@ output_joining_type (const char *filename, const char *version)
   t.q = 9;
   joining_type_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uint8_t value = unicode_joining_type[ch];
 
@@ -4777,7 +4759,7 @@ output_joining_type (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define joining_type_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -4793,7 +4775,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -4813,7 +4795,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -4833,7 +4815,7 @@ output_joining_type (const char *filename, const char *version)
   /* Pack the level3 array.  Each entry needs 4 bits only.  */
   level3_packed =
     (uint8_t *) calloc ((t.level3_size << t.p) * 4 / 8, sizeof (uint8_t));
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 4) / 8;
       unsigned int k = (i * 4) % 8;
@@ -4843,7 +4825,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 4 / 8 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 4 / 8; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 4 / 8; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4984,7 +4966,6 @@ output_joining_group_test (const char *filename, const char *version)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -5005,7 +4986,7 @@ output_joining_group_test (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = unicode_joining_group[ch];
 
@@ -5039,7 +5020,6 @@ static void
 output_joining_group (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct joining_group_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
   uint16_t *level3_packed;
@@ -5066,7 +5046,7 @@ output_joining_group (const char *filename, const char *version)
   t.q = 9;
   joining_group_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       uint8_t value = unicode_joining_group[ch];
 
@@ -5088,7 +5068,7 @@ output_joining_group (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define joining_group_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -5104,7 +5084,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -5124,7 +5104,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -5146,7 +5126,7 @@ output_joining_group (const char *filename, const char *version)
   level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 7 / 16 + 1, sizeof (uint16_t));
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 7) / 16;
       unsigned int k = (i * 7) % 16;
@@ -5158,7 +5138,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5192,7 +5172,6 @@ static void
 fill_scripts (const char *scripts_filename)
 {
   FILE *stream;
-  unsigned int i;
 
   stream = fopen (scripts_filename, "r");
   if (stream == NULL)
@@ -5203,7 +5182,7 @@ fill_scripts (const char *scripts_filename)
 
   numscripts = 0;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_scripts[i] = (uint8_t)~(uint8_t)0;
 
   for (;;)
@@ -5243,7 +5222,7 @@ fill_scripts (const char *scripts_filename)
           assert (numscripts != 256);
         }
 
-      for (i = i1; i <= i2; i++)
+      for (unsigned int i = i1; i <= i2; i++)
         {
           if (unicode_scripts[i] != (uint8_t)~(uint8_t)0)
             fprintf (stderr, "0x%04X belongs to multiple scripts\n", i);
@@ -5271,7 +5250,6 @@ output_scripts (const char *version)
 {
   const char *filename = "unictype/scripts.h";
   FILE *stream;
-  unsigned int ch, s, i;
   struct script_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -5300,25 +5278,24 @@ output_scripts (const char *version)
   output_library_license (stream, true);
   fprintf (stream, "\n");
 
-  for (s = 0; s < numscripts; s++)
+  for (unsigned int s = 0; s < numscripts; s++)
     {
       char *lcp = strdup (scripts[s]);
-      char *cp;
 
-      for (cp = lcp; *cp != '\0'; cp++)
+      for (char *cp = lcp; *cp != '\0'; cp++)
         if (*cp >= 'A' && *cp <= 'Z')
           *cp += 'a' - 'A';
 
       scriptinfo[s].lowercase_name = lcp;
     }
 
-  for (s = 0; s < numscripts; s++)
+  for (unsigned int s = 0; s < numscripts; s++)
     {
       fprintf (stream, "static const uc_interval_t script_%s_intervals[] =\n",
                scriptinfo[s].lowercase_name);
       fprintf (stream, "{\n");
-      i = 0;
-      for (ch = 0; ch < 0x110000; ch++)
+      unsigned int i = 0;
+      for (unsigned int ch = 0; ch < 0x110000; ch++)
         if (unicode_scripts[ch] == s)
           {
             unsigned int start;
@@ -5344,7 +5321,7 @@ output_scripts (const char *version)
 
   fprintf (stream, "static const uc_script_t scripts[%d] =\n", numscripts);
   fprintf (stream, "{\n");
-  for (s = 0; s < numscripts; s++)
+  for (unsigned int s = 0; s < numscripts; s++)
     {
       fprintf (stream, "  {\n");
       fprintf (stream, "    sizeof (script_%s_intervals) / sizeof (uc_interval_t),\n",
@@ -5363,7 +5340,7 @@ output_scripts (const char *version)
   t.q = 9;
   script_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       unsigned int s = unicode_scripts[ch];
       if (s != (uint8_t)~(uint8_t)0)
@@ -5383,7 +5360,7 @@ output_scripts (const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define script_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -5398,7 +5375,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -5418,7 +5395,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -5440,7 +5417,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5465,7 +5442,6 @@ output_scripts_byname (const char *version)
 {
   const char *filename = "unictype/scripts_byname.gperf";
   FILE *stream;
-  unsigned int s;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -5496,7 +5472,7 @@ output_scripts_byname (const char *version)
   fprintf (stream, "%%pic\n");
   fprintf (stream, "%%define string-pool-name script_stringpool\n");
   fprintf (stream, "%%%%\n");
-  for (s = 0; s < numscripts; s++)
+  for (unsigned int s = 0; s < numscripts; s++)
     fprintf (stream, "%s, %u\n", scripts[s], s);
 
   if (ferror (stream) || fclose (stream))
@@ -5611,8 +5587,6 @@ output_blocks (const char *version)
   const unsigned int shift = 8; /* bits to shift away for array access */
   const unsigned int threshold = 0x28000; /* cut-off table here to save space */
   FILE *stream;
-  unsigned int i;
-  unsigned int i1;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -5634,7 +5608,7 @@ output_blocks (const char *version)
 
   fprintf (stream, "static const uc_block_t blocks[] =\n");
   fprintf (stream, "{\n");
-  for (i = 0; i < numblocks; i++)
+  for (unsigned int i = 0; i < numblocks; i++)
     {
       fprintf (stream, "  { 0x%04X, 0x%04X, \"%s\" }", blocks[i].start,
                blocks[i].end, blocks[i].name);
@@ -5648,7 +5622,7 @@ output_blocks (const char *version)
   fprintf (stream, "static const uint16_t blocks_level1[%d * 2] =\n",
            threshold >> shift);
   fprintf (stream, "{\n");
-  for (i1 = 0; i1 < (threshold >> shift); i1++)
+  for (unsigned int i1 = 0; i1 < (threshold >> shift); i1++)
     {
       unsigned int first_index = block_first_index (i1 << shift);
       unsigned int last_index = block_last_index (((i1 + 1) << shift) - 1);
@@ -6033,7 +6007,6 @@ static void
 output_ident_category (const char *filename, int (*predicate) (unsigned int), const char *name, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct identsyntax_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -6059,7 +6032,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   t.q = 5; /* or 4 */
   identsyntax_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int syntaxcode = predicate (ch);
 
@@ -6082,7 +6055,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define identsyntax_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -6098,7 +6071,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -6118,7 +6091,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -6139,7 +6112,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 2 / 16 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
+  for (unsigned int i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -6470,18 +6443,17 @@ output_charclass (FILE *stream, const char *classname,
                   bool (*func) (unsigned int))
 {
   char table[0x110000];
-  unsigned int i;
   bool need_semicolon;
   const int max_column = 75;
   int column;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     table[i] = (int) func (i);
 
   fprintf (stream, "%s ", classname);
   need_semicolon = false;
   column = 1000;
-  for (i = 0; i < 0x110000; )
+  for (unsigned int i = 0; i < 0x110000; )
     {
       if (!table[i])
         i++;
@@ -6528,18 +6500,17 @@ output_charmap (FILE *stream, const char *mapname,
                 unsigned int (*func) (unsigned int))
 {
   char table[0x110000];
-  unsigned int i;
   bool need_semicolon;
   const int max_column = 75;
   int column;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     table[i] = (func (i) != i);
 
   fprintf (stream, "%s ", mapname);
   need_semicolon = false;
   column = 1000;
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     if (table[i])
       {
         char buf[25+1];
@@ -6582,7 +6553,6 @@ static void
 output_tables (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -6621,7 +6591,7 @@ output_tables (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   /* Verification. */
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       /* toupper restriction: "Only characters specified for the keywords
          lower and upper shall be specified.  */
@@ -6746,14 +6716,13 @@ const char * unicode_width[0x110000];
 static void
 fill_width (const char *width_filename)
 {
-  unsigned int i, j;
   FILE *stream;
   char field0[FIELDLEN];
   char field1[FIELDLEN];
   char field2[FIELDLEN];
   int lineno = 0;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_width[i] = (unicode_attributes[i].name != NULL ? "N" : NULL);
 
   stream = fopen (width_filename, "r");
@@ -6798,11 +6767,11 @@ fill_width (const char *width_filename)
       /* Remove trailing spaces from field1.  */
       while (strlen (field1) > 0 && field1[strlen (field1) - 1] == ' ')
         field1[strlen (field1) - 1] = '\0';
-      i = strtoul (field0, NULL, 16);
+      unsigned int i = strtoul (field0, NULL, 16);
       if (strstr (field0, "..") != NULL)
         {
           /* Deal with a range.  */
-          j = strtoul (strstr (field0, "..") + 2, NULL, 16);
+          unsigned int j = strtoul (strstr (field0, "..") + 2, NULL, 16);
           for (; i <= j; i++)
             unicode_width[i] = strdup (field1);
         }
@@ -6872,7 +6841,6 @@ output_nonspacing_property (const char *filename, const char *version)
 {
   FILE *stream;
   int ind[0x110000 / 0x200];
-  unsigned int i;
   unsigned int i_max;
   int next_ind;
 
@@ -6895,13 +6863,12 @@ output_nonspacing_property (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   next_ind = 0;
-  for (i = 0; i < 0x110000 / 0x200; i++)
+  for (unsigned int i = 0; i < 0x110000 / 0x200; i++)
     {
       bool nontrivial = false;
-      unsigned int ch;
 
       if (i != 0xe0000 / 0x200) /* The 0xe0000 block is handled by code.  */
-        for (ch = i * 0x200; ch < (i + 1) * 0x200; ch++)
+        for (unsigned int ch = i * 0x200; ch < (i + 1) * 0x200; ch++)
           if (is_nonspacing (ch))
             {
               nontrivial = true;
@@ -6916,26 +6883,21 @@ output_nonspacing_property (const char *filename, const char *version)
   fprintf (stream, "static const unsigned char nonspacing_table_data[%d*64] = {\n",
            next_ind);
   i_max = 0;
-  for (i = 0; i < 0x110000 / 0x200; i++)
+  for (unsigned int i = 0; i < 0x110000 / 0x200; i++)
     {
       bool nontrivial = (ind[i] >= 0);
 
       if (nontrivial)
         {
-          unsigned int j;
-
           fprintf (stream, "  /* 0x%04x-0x%04x */\n", i * 0x200, (i + 1) * 0x200 - 1);
-          for (j = 0; j < 8; j++)
+          for (unsigned int j = 0; j < 8; j++)
             {
-              unsigned int k;
-
               fprintf (stream, " ");
-              for (k = 0; k < 8; k++)
+              for (unsigned int k = 0; k < 8; k++)
                 {
-                  unsigned int l;
                   unsigned char bits = 0;
 
-                  for (l = 0; l < 8; l++)
+                  for (unsigned int l = 0; l < 8; l++)
                     {
                       unsigned int ch = i * 0x200 + j * 0x40 + k * 8 + l;
 
@@ -6956,24 +6918,18 @@ output_nonspacing_property (const char *filename, const char *version)
   i_max = ((i_max + 8 - 1) / 8) * 8;
   fprintf (stream, "static const signed char nonspacing_table_ind[%u] = {\n",
            i_max);
-  {
-    unsigned int j;
-
-    for (j = 0; j < i_max / 8; j++)
-      {
-        unsigned int k;
-
-        fprintf (stream, " ");
-        for (k = 0; k < 8; k++)
-          {
-            i = j * 8 + k;
-            fprintf (stream, " %2d%c", ind[i],
-                     j == i_max / 8 - 1 && k == 8 - 1 ? ' ' : ',');
-          }
-        fprintf (stream, " /* 0x%04x-0x%04x */\n",
-                 j * 8 * 0x200, (j + 1) * 8 * 0x200 - 1);
-      }
-  }
+  for (unsigned int j = 0; j < i_max / 8; j++)
+    {
+      fprintf (stream, " ");
+      for (unsigned int k = 0; k < 8; k++)
+        {
+          unsigned int i = j * 8 + k;
+          fprintf (stream, " %2d%c", ind[i],
+                   j == i_max / 8 - 1 && k == 8 - 1 ? ' ' : ',');
+        }
+      fprintf (stream, " /* 0x%04x-0x%04x */\n",
+               j * 8 * 0x200, (j + 1) * 8 * 0x200 - 1);
+    }
   fprintf (stream, "};\n");
 
   if (ferror (stream) || fclose (stream))
@@ -7148,7 +7104,7 @@ static void
 output_width_property_test (const char *filename)
 {
   FILE *stream;
-  unsigned int interval_start, interval_end, ch;
+  unsigned int interval_start, interval_end;
   char interval_value;
 
   stream = fopen (filename, "w");
@@ -7160,7 +7116,7 @@ output_width_property_test (const char *filename)
 
   interval_value = 0;
   interval_start = interval_end = 0; /* avoid GCC warning */
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       char value = symbolic_width (ch);
       if (value != 0) /* skip Cc control characters and unassigned characters */
@@ -8686,9 +8642,7 @@ get_lbp (unsigned int ch)
 static void
 debug_output_lbp (FILE *stream)
 {
-  unsigned int i;
-
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int64_t attr = get_lbp (i);
       if (attr != (int64_t) 1 << LBP_XX)
@@ -8787,7 +8741,6 @@ int unicode_org_lbp[0x110000];
 static void
 fill_org_lbp (const char *linebreak_filename)
 {
-  unsigned int i, j;
   FILE *stream;
   char field0[FIELDLEN];
   char field1[FIELDLEN];
@@ -8805,7 +8758,7 @@ fill_org_lbp (const char *linebreak_filename)
      Extended_Pictographic characters to LBP_EBF, and ensure that they
      behave like LBP_EB.  */
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_org_lbp[i] =
       (is_property_extended_pictographic (i) ? LBP_EBF : LBP_XX);
 
@@ -8919,11 +8872,11 @@ fill_org_lbp (const char *linebreak_filename)
                    field2, linebreak_filename, lineno);
           exit (1);
         }
-      i = strtoul (field0, NULL, 16);
+      unsigned int i = strtoul (field0, NULL, 16);
       if (strstr (field0, "..") != NULL)
         {
           /* Deal with a range.  */
-          j = strtoul (strstr (field0, "..") + 2, NULL, 16);
+          unsigned int j = strtoul (strstr (field0, "..") + 2, NULL, 16);
           for (; i <= j; i++)
             unicode_org_lbp[i] =
               (unassigned1 && is_property_extended_pictographic (i) ? LBP_EBF : value);
@@ -8947,9 +8900,7 @@ fill_org_lbp (const char *linebreak_filename)
 static void
 debug_output_org_lbp (FILE *stream)
 {
-  unsigned int i;
-
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int attr = unicode_org_lbp[i];
       if (attr != LBP_XX)
@@ -9110,7 +9061,6 @@ lbp_value_to_string (unsigned int value)
 static void
 output_lbpea (FILE *stream1, FILE *stream2)
 {
-  unsigned int i;
   struct lbpea_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -9118,7 +9068,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   t.q = 9;
   lbpea_table_init (&t);
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int64_t attr = get_lbp (i);
       int ea = get_lbea (i);
@@ -9147,7 +9097,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream1, "#define lbrkprop_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream1, "\n");
@@ -9165,7 +9115,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level1_size > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -9185,7 +9135,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -9205,7 +9155,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       if (i > 0 && (i % 4) == 0)
@@ -9225,12 +9175,11 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
 {
   const char *filenames[2];
   FILE *streams[2];
-  size_t i;
 
   filenames[0] = filename1;
   filenames[1] = filename2;
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       streams[i] = fopen (filenames[i], "w");
       if (streams[i] == NULL)
@@ -9240,7 +9189,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
         }
     }
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       FILE *stream = streams[i];
 
@@ -9258,7 +9207,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
 
   output_lbpea (streams[0], streams[1]);
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       if (ferror (streams[i]) || fclose (streams[i]))
         {
@@ -9821,9 +9770,7 @@ get_wbp (unsigned int ch)
 static void
 debug_output_wbp (FILE *stream)
 {
-  unsigned int i;
-
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int attr = get_wbp (i);
       if (attr != 1 << WBP_OTHER)
@@ -9899,10 +9846,9 @@ int unicode_org_wbp[0x110000];
 static void
 fill_org_wbp (const char *wordbreakproperty_filename)
 {
-  unsigned int i;
   FILE *stream;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_org_wbp[i] = WBP_OTHER;
 
   stream = fopen (wordbreakproperty_filename, "r");
@@ -9964,7 +9910,7 @@ fill_org_wbp (const char *wordbreakproperty_filename)
         }
       assert (i1 <= i2 && i2 < 0x110000);
 
-      for (i = i1; i <= i2; i++)
+      for (unsigned int i = i1; i <= i2; i++)
         unicode_org_wbp[i] = propvalue;
     }
 
@@ -9979,9 +9925,7 @@ fill_org_wbp (const char *wordbreakproperty_filename)
 static void
 debug_output_org_wbp (FILE *stream)
 {
-  unsigned int i;
-
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int propvalue = unicode_org_wbp[i];
       if (propvalue != WBP_OTHER)
@@ -10046,7 +9990,6 @@ debug_output_org_wbrk_tables (const char *filename)
 static void
 output_wbp (FILE *stream)
 {
-  unsigned int i;
   struct wbp_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -10054,7 +9997,7 @@ output_wbp (FILE *stream)
   t.q = 9;
   wbp_table_init (&t);
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     {
       int attr = get_wbp (i);
 
@@ -10082,7 +10025,7 @@ output_wbp (FILE *stream)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define wbrkprop_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "\n");
@@ -10098,7 +10041,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10118,7 +10061,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10138,7 +10081,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
@@ -10256,7 +10199,6 @@ output_gbp_test (const char *filename)
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -10273,7 +10215,7 @@ output_gbp_test (const char *filename)
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int gbp = unicode_org_gbp[ch];
       const char *gbp_string;
@@ -10327,7 +10269,6 @@ static void
 output_gbp_table (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct gbp_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -10353,7 +10294,7 @@ output_gbp_table (const char *filename, const char *version)
   t.q = 9;
   gbp_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     gbp_table_add (&t, ch, unicode_org_gbp[ch]);
 
   gbp_table_finalize (&t);
@@ -10369,7 +10310,7 @@ output_gbp_table (const char *filename, const char *version)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define gbrkprop_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -10385,7 +10326,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10405,7 +10346,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10425,7 +10366,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
@@ -10476,11 +10417,10 @@ output_gbp_table (const char *filename, const char *version)
 static void
 fill_org_gbp (const char *graphemebreakproperty_filename)
 {
-  unsigned int i;
   FILE *stream;
   int lineno = 0;
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_org_gbp[i] = GBP_OTHER;
 
   stream = fopen (graphemebreakproperty_filename, "r");
@@ -10543,7 +10483,7 @@ fill_org_gbp (const char *graphemebreakproperty_filename)
         }
       assert (i1 <= i2 && i2 < 0x110000);
 
-      for (i = i1; i <= i2; i++)
+      for (unsigned int i = i1; i <= i2; i++)
         unicode_org_gbp[i] = propvalue;
     }
 
@@ -10668,9 +10608,6 @@ output_decomposition (FILE *stream1, FILE *stream2)
 {
   struct decomp_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
-  unsigned int offset;
-  unsigned int ch;
-  unsigned int i;
 
   t.p = 5;
   t.q = 5;
@@ -10679,39 +10616,40 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream1, "extern const unsigned char gl_uninorm_decomp_chars_table[];\n");
   fprintf (stream1, "\n");
   fprintf (stream2, "const unsigned char gl_uninorm_decomp_chars_table[] =\n{");
-  offset = 0;
+  {
+    unsigned int offset = 0;
+    for (unsigned int ch = 0; ch < 0x110000; ch++)
+      {
+        unsigned int length;
+        unsigned int decomposed[MAX_DECOMP_LENGTH];
+        int type = get_decomposition (ch, &length, decomposed);
 
-  for (ch = 0; ch < 0x110000; ch++)
-    {
-      unsigned int length;
-      unsigned int decomposed[MAX_DECOMP_LENGTH];
-      int type = get_decomposition (ch, &length, decomposed);
+        if (type >= 0)
+          {
+            assert (offset < (1 << 15));
+            decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
 
-      if (type >= 0)
-        {
-          assert (offset < (1 << 15));
-          decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
-
-          /* Produce length 3-bytes entries.  */
-          /* We would need a special representation of zero-length entries.  */
-          assert (length != 0);
-          for (i = 0; i < length; i++)
-            {
-              if (offset > 0)
-                fprintf (stream2, ",");
-              if ((offset % 4) == 0)
-                fprintf (stream2, "\n ");
-              assert (decomposed[i] < (1 << 18));
-              fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
-                       (((i+1 < length ? (1 << 23) : 0)
-                         | (i == 0 ? (type << 18) : 0)
-                         | decomposed[i]) >> 16) & 0xff,
-                       (decomposed[i] >> 8) & 0xff,
-                       decomposed[i] & 0xff);
-              offset++;
-            }
-        }
-    }
+            /* Produce length 3-bytes entries.  */
+            /* We would need a special representation of zero-length entries.  */
+            assert (length != 0);
+            for (unsigned int i = 0; i < length; i++)
+              {
+                if (offset > 0)
+                  fprintf (stream2, ",");
+                if ((offset % 4) == 0)
+                  fprintf (stream2, "\n ");
+                assert (decomposed[i] < (1 << 18));
+                fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
+                         (((i+1 < length ? (1 << 23) : 0)
+                           | (i == 0 ? (type << 18) : 0)
+                           | decomposed[i]) >> 16) & 0xff,
+                         (decomposed[i] >> 8) & 0xff,
+                         decomposed[i] & 0xff);
+                offset++;
+              }
+          }
+      }
+  }
 
   fprintf (stream2, "\n};\n");
   fprintf (stream2, "\n");
@@ -10728,7 +10666,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream1, "#define decomp_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream1, "\n");
@@ -10745,7 +10683,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level1_size > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10765,7 +10703,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -10785,7 +10723,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       uint16_t value = ((uint16_t *) (t.result + level3_offset))[i];
       if (i > 0 && (i % 8) == 0)
@@ -10805,12 +10743,11 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
 {
   const char *filenames[2];
   FILE *streams[2];
-  size_t i;
 
   filenames[0] = filename1;
   filenames[1] = filename2;
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       streams[i] = fopen (filenames[i], "w");
       if (streams[i] == NULL)
@@ -10820,7 +10757,7 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
         }
     }
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       FILE *stream = streams[i];
 
@@ -10838,7 +10775,7 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
 
   output_decomposition (streams[0], streams[1]);
 
-  for (i = 0; i < 2; i++)
+  for (size_t i = 0; i < 2; i++)
     {
       if (ferror (streams[i]) || fclose (streams[i]))
         {
@@ -10855,7 +10792,6 @@ static void
 fill_composition_exclusions (const char *compositionexclusions_filename)
 {
   FILE *stream;
-  unsigned int i;
 
   stream = fopen (compositionexclusions_filename, "r");
   if (stream == NULL)
@@ -10864,7 +10800,7 @@ fill_composition_exclusions (const char *compositionexclusions_filename)
       exit (1);
     }
 
-  for (i = 0; i < 0x110000; i++)
+  for (unsigned int i = 0; i < 0x110000; i++)
     unicode_composition_exclusions[i] = 0;
 
   for (;;)
@@ -10899,7 +10835,6 @@ static void
 debug_output_composition_tables (const char *filename)
 {
   FILE *stream;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -10908,7 +10843,7 @@ debug_output_composition_tables (const char *filename)
       exit (1);
     }
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       unsigned int length;
       unsigned int decomposed[MAX_DECOMP_LENGTH];
@@ -10956,7 +10891,6 @@ output_composition_tables (const char *filename, const char *filename2,
   unsigned int max_code1;
   unsigned int max_code2;
   FILE *stream;
-  unsigned int ch;
 
   max_code1 = 0;
   max_code2 = 0;
@@ -11010,7 +10944,7 @@ output_composition_tables (const char *filename, const char *filename2,
   fprintf (stream, "%%omit-struct-type\n");
   fprintf (stream, "%%%%\n");
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       unsigned int length;
       unsigned int decomposed[MAX_DECOMP_LENGTH];
@@ -11098,7 +11032,6 @@ output_simple_mapping_test (const char *filename,
 {
   FILE *stream;
   bool need_comma;
-  unsigned int ch;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -11120,7 +11053,7 @@ output_simple_mapping_test (const char *filename,
   fprintf (stream, "\n");
 
   need_comma = false;
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       unsigned int value = func (ch);
 
@@ -11162,7 +11095,6 @@ output_simple_mapping (const char *filename,
                        const char *version)
 {
   FILE *stream;
-  unsigned int ch, i;
   struct mapping_table t;
   unsigned int level1_offset, level2_offset, level3_offset;
 
@@ -11190,7 +11122,7 @@ output_simple_mapping (const char *filename,
   t.q = 9;
   mapping_table_init (&t);
 
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     {
       int value = (int) func (ch) - (int) ch;
 
@@ -11210,7 +11142,7 @@ output_simple_mapping (const char *filename,
     + t.level1_size * sizeof (uint32_t)
     + (t.level2_size << t.q) * sizeof (uint32_t);
 
-  for (i = 0; i < 5; i++)
+  for (unsigned int i = 0; i < 5; i++)
     fprintf (stream, "#define mapping_header_%d %d\n", i,
              ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
@@ -11225,7 +11157,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
+  for (unsigned int i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -11245,7 +11177,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
+  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
@@ -11265,7 +11197,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
+  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -11354,7 +11286,6 @@ fill_casing_rules (const char *specialcasing_filename)
       char buf[200+1];
       char *scanptr;
       char *endptr;
-      int i;
 
       unsigned int code;
       unsigned int lower_mapping[3];
@@ -11386,9 +11317,9 @@ fill_casing_rules (const char *specialcasing_filename)
       scanptr++;
 
       /* Scan lower mapping.  */
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         lower_mapping[i] = 0;
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         {
           while (*scanptr == ' ')
             scanptr++;
@@ -11410,9 +11341,9 @@ fill_casing_rules (const char *specialcasing_filename)
       scanptr++;
 
       /* Scan title mapping.  */
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         title_mapping[i] = 0;
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         {
           while (*scanptr == ' ')
             scanptr++;
@@ -11434,9 +11365,9 @@ fill_casing_rules (const char *specialcasing_filename)
       scanptr++;
 
       /* Scan upper mapping.  */
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         upper_mapping[i] = 0;
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         {
           while (*scanptr == ' ')
             scanptr++;
@@ -11583,7 +11514,6 @@ fill_casefolding_rules (const char *casefolding_filename)
       char buf[200+1];
       char *scanptr;
       char *endptr;
-      int i;
 
       unsigned int code;
       char type;
@@ -11633,9 +11563,9 @@ fill_casefolding_rules (const char *casefolding_filename)
       scanptr++;
 
       /* Scan casefold mapping.  */
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         mapping[i] = 0;
-      for (i = 0; i < 3; i++)
+      for (int i = 0; i < 3; i++)
         {
           while (*scanptr == ' ')
             scanptr++;
@@ -11677,7 +11607,7 @@ fill_casefolding_rules (const char *casefolding_filename)
               languages_count = 1;
             }
 
-          for (i = 0; i < languages_count; i++)
+          for (int i = 0; i < languages_count; i++)
             {
               /* Store a new rule.  */
               struct casefold_rule *new_rule =
@@ -11724,18 +11654,16 @@ to_casefold (unsigned int ch)
 static void
 redistribute_casefolding_rules (void)
 {
-  unsigned int ch, i, j;
-
   /* Fill unicode_casefold[].  */
-  for (ch = 0; ch < 0x110000; ch++)
+  for (unsigned int ch = 0; ch < 0x110000; ch++)
     unicode_casefold[ch] = ch;
-  for (i = 0; i < num_casefolding_rules; i++)
+  for (unsigned int i = 0; i < num_casefolding_rules; i++)
     {
       struct casefold_rule *cfrule = casefolding_rules[i];
 
       if (cfrule->language == NULL && cfrule->mapping[1] == 0)
         {
-          ch = cfrule->code;
+          unsigned int ch = cfrule->code;
           assert (ch < 0x110000);
           unicode_casefold[ch] = cfrule->mapping[0];
         }
@@ -11743,18 +11671,17 @@ redistribute_casefolding_rules (void)
 
   /* Extend the special casing rules by filling in their casefold_mapping[]
      field.  */
-  for (j = 0; j < num_casing_rules; j++)
+  for (unsigned int j = 0; j < num_casing_rules; j++)
     {
       struct special_casing_rule *rule = casing_rules[j];
-      unsigned int k;
 
       rule->casefold_mapping[0] = to_casefold (rule->code);
-      for (k = 1; k < 3; k++)
+      for (unsigned int k = 1; k < 3; k++)
         rule->casefold_mapping[k] = 0;
     }
 
   /* Now merge the other casefolding rules into casing_rules.  */
-  for (i = 0; i < num_casefolding_rules; i++)
+  for (unsigned int i = 0; i < num_casefolding_rules; i++)
     {
       struct casefold_rule *cfrule = casefolding_rules[i];
 
@@ -11765,7 +11692,7 @@ redistribute_casefolding_rules (void)
              have the same code and same or more specific language.  */
           struct special_casing_rule *found_rule = NULL;
 
-          for (j = 0; j < num_casing_rules; j++)
+          for (unsigned int j = 0; j < num_casing_rules; j++)
             {
               struct special_casing_rule *rule = casing_rules[j];
 
@@ -11797,7 +11724,7 @@ redistribute_casefolding_rules (void)
 
               /* Try to find a rule that applies to the same code, no language
                  restriction, and with context SCC_ALWAYS.  */
-              for (j = 0; j < num_casing_rules; j++)
+              for (unsigned int j = 0; j < num_casing_rules; j++)
                 {
                   struct special_casing_rule *rule = casing_rules[j];
 
@@ -11825,16 +11752,14 @@ redistribute_casefolding_rules (void)
                 }
               else
                 {
-                  unsigned int k;
-
                   new_rule->lower_mapping[0] = to_lower (cfrule->code);
-                  for (k = 1; k < 3; k++)
+                  for (unsigned int k = 1; k < 3; k++)
                     new_rule->lower_mapping[k] = 0;
                   new_rule->title_mapping[0] = to_title (cfrule->code);
-                  for (k = 1; k < 3; k++)
+                  for (unsigned int k = 1; k < 3; k++)
                     new_rule->title_mapping[k] = 0;
                   new_rule->upper_mapping[0] = to_upper (cfrule->code);
-                  for (k = 1; k < 3; k++)
+                  for (unsigned int k = 1; k < 3; k++)
                     new_rule->upper_mapping[k] = 0;
                 }
               memcpy (new_rule->casefold_mapping, cfrule->mapping,
@@ -11878,7 +11803,6 @@ static void
 output_casing_rules (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int i, j;
   unsigned int minor;
 
   stream = fopen (filename, "w");
@@ -11912,7 +11836,7 @@ output_casing_rules (const char *filename, const char *version)
   fprintf (stream, "%%%%\n");
 
   minor = 0;
-  for (i = 0; i < num_casing_rules; i++)
+  for (unsigned int i = 0; i < num_casing_rules; i++)
     {
       struct special_casing_rule *rule = casing_rules[i];
       int context;
@@ -11976,7 +11900,7 @@ output_casing_rules (const char *filename, const char *version)
         fprintf (stream, "{ '\\0', '\\0' }, ");
 
       fprintf (stream, "{ ");
-      for (j = 0; j < 3; j++)
+      for (unsigned int j = 0; j < 3; j++)
         {
           if (j > 0)
             fprintf (stream, ", ");
@@ -11991,7 +11915,7 @@ output_casing_rules (const char *filename, const char *version)
             fprintf (stream, "     0");
         }
       fprintf (stream, " }, { ");
-      for (j = 0; j < 3; j++)
+      for (unsigned int j = 0; j < 3; j++)
         {
           if (j > 0)
             fprintf (stream, ", ");
@@ -12006,7 +11930,7 @@ output_casing_rules (const char *filename, const char *version)
             fprintf (stream, "     0");
         }
       fprintf (stream, " }, { ");
-      for (j = 0; j < 3; j++)
+      for (unsigned int j = 0; j < 3; j++)
         {
           if (j > 0)
             fprintf (stream, ", ");
@@ -12021,7 +11945,7 @@ output_casing_rules (const char *filename, const char *version)
             fprintf (stream, "     0");
         }
       fprintf (stream, " }, { ");
-      for (j = 0; j < 3; j++)
+      for (unsigned int j = 0; j < 3; j++)
         {
           if (j > 0)
             fprintf (stream, ", ");

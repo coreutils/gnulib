@@ -152,13 +152,12 @@ create_temp_dir (const char *prefix, const char *parentdir,
 
   struct tempdir * volatile *tmpdirp = NULL;
   struct tempdir *tmpdir;
-  size_t i;
   char *xtemplate;
   char *tmpdirname;
 
   /* See whether it can take the slot of an earlier temporary directory
      already cleaned up.  */
-  for (i = 0; i < dir_cleanup_list.tempdir_count; i++)
+  for (size_t i = 0; i < dir_cleanup_list.tempdir_count; i++)
     if (dir_cleanup_list.tempdir_list[i] == NULL)
       {
         tmpdirp = &dir_cleanup_list.tempdir_list[i];
@@ -188,9 +187,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
               /* Don't use memcpy() here, because memcpy takes non-volatile
                  arguments and is therefore not guaranteed to complete all
                  memory stores before the next statement.  */
-              size_t k;
-
-              for (k = 0; k < old_allocated; k++)
+              for (size_t k = 0; k < old_allocated; k++)
                 new_array[k] = old_array[k];
             }
 
@@ -460,12 +457,11 @@ cleanup_temp_dir (struct temp_dir *dir)
 
   struct tempdir *tmpdir = (struct tempdir *)dir;
   int err = 0;
-  size_t i;
 
   err |= cleanup_temp_dir_contents (dir);
   err |= do_rmdir (tmpdir->dirname, dir->cleanup_verbose);
 
-  for (i = 0; i < dir_cleanup_list.tempdir_count; i++)
+  for (size_t i = 0; i < dir_cleanup_list.tempdir_count; i++)
     if (dir_cleanup_list.tempdir_list[i] == tmpdir)
       {
         /* Remove dir_cleanup_list.tempdir_list[i].  */

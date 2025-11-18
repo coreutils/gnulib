@@ -64,15 +64,11 @@ strchrnul (const char *s, int c_in)
       repeated_one |= repeated_one << 31 << 1;
       repeated_c |= repeated_c << 31 << 1;
       if (8 < sizeof (longword))
-        {
-          size_t i;
-
-          for (i = 64; i < sizeof (longword) * 8; i *= 2)
-            {
-              repeated_one |= repeated_one << i;
-              repeated_c |= repeated_c << i;
-            }
-        }
+        for (size_t i = 64; i < sizeof (longword) * 8; i *= 2)
+          {
+            repeated_one |= repeated_one << i;
+            repeated_c |= repeated_c << i;
+          }
     }
 
   /* Instead of the traditional loop which tests each byte, we will

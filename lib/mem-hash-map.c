@@ -208,14 +208,13 @@ resize (hash_table *htab)
 {
   size_t old_size = htab->size;
   hash_entry *table = htab->table;
-  size_t idx;
 
   htab->size = next_prime (htab->size * 2);
   htab->filled = 0;
   htab->first = NULL;
   htab->table = XCALLOC (1 + htab->size, hash_entry);
 
-  for (idx = 1; idx <= old_size; ++idx)
+  for (size_t idx = 1; idx <= old_size; ++idx)
     if (table[idx].used)
       insert_entry_2 (htab, table[idx].key, table[idx].keylen,
                       table[idx].used,

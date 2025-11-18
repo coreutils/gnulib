@@ -35,11 +35,8 @@ extended_PATH (const char * const *dll_dirs)
   size_t size;
   {
     size = 5;
-    {
-      size_t i;
-      for (i = 0; dll_dirs[i] != NULL; i++)
-        size += strlen (dll_dirs[i]) + 1;
-    }
+    for (size_t i = 0; dll_dirs[i] != NULL; i++)
+      size += strlen (dll_dirs[i]) + 1;
     size += strlen (old_PATH) + 1;
   }
   char *new_PATH = (char *) malloc (size);
@@ -51,20 +48,17 @@ extended_PATH (const char * const *dll_dirs)
       memcpy (p, "PATH=", 5);
       p += 5;
     }
-    {
-      size_t i;
-      for (i = 0; dll_dirs[i] != NULL; i++)
-        {
-          size_t l = strlen (dll_dirs[i]);
-          memcpy (p, dll_dirs[i], l);
-          p += l;
+    for (size_t i = 0; dll_dirs[i] != NULL; i++)
+      {
+        size_t l = strlen (dll_dirs[i]);
+        memcpy (p, dll_dirs[i], l);
+        p += l;
 #if defined _WIN32 && !defined __CYGWIN__
-          *p++ = ';';
+        *p++ = ';';
 #else
-          *p++ = ':';
+        *p++ = ':';
 #endif
-        }
-    }
+      }
     {
       size_t l = strlen (old_PATH);
       memcpy (p, old_PATH, l);
@@ -102,9 +96,8 @@ extended_environ (const char * const *dll_dirs)
        The guess will be exact if other threads don't make modifications.  */
     size_t size = 0;
     {
-      char **ep;
       char *p;
-      for (ep = envp; (p = *ep) != NULL; ep++)
+      for (char **ep = envp; (p = *ep) != NULL; ep++)
         if (strncmp (p, "PATH=", 5) != 0)
           size += 1;
     }
@@ -119,9 +112,8 @@ extended_environ (const char * const *dll_dirs)
     *nep++ = child_PATH;
     {
       size_t i = 0;
-      char **ep;
       char *p;
-      for (ep = envp; (p = *ep) != NULL; ep++)
+      for (char **ep = envp; (p = *ep) != NULL; ep++)
         if (strncmp (p, "PATH=", 5) != 0)
           {
             if (i == size)

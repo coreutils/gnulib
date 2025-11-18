@@ -35,11 +35,8 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
 {
   char U[GC_MAX_DIGEST_SIZE];
   char T[GC_MAX_DIGEST_SIZE];
-  unsigned int u;
   unsigned int l;
   unsigned int r;
-  unsigned int i;
-  unsigned int k;
   int rc;
   char *tmp;
   size_t tmplen = Slen + 4;
@@ -62,11 +59,11 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
 
   memcpy (tmp, S, Slen);
 
-  for (i = 1; i <= l; i++)
+  for (unsigned int i = 1; i <= l; i++)
     {
       memset (T, 0, hLen);
 
-      for (u = 1; u <= c; u++)
+      for (unsigned int u = 1; u <= c; u++)
         {
           if (u == 1)
             {
@@ -86,7 +83,7 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
               return rc;
             }
 
-          for (k = 0; k < hLen; k++)
+          for (unsigned int k = 0; k < hLen; k++)
             T[k] ^= U[k];
         }
 

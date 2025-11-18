@@ -91,10 +91,9 @@ static void
 cancel_handler (void *arg)
 {
   struct scandir_cancel_struct *cp = arg;
-  size_t i;
   void **v = cp->v;
 
-  for (i = 0; i < cp->cnt; ++i)
+  for (size_t i = 0; i < cp->cnt; ++i)
     free (v[i]);
   free (v);
   (void) __closedir (cp->dp);

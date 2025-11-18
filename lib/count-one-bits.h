@@ -65,8 +65,7 @@ count_one_bits_32 (unsigned int x)
     do                                                                  \
       {                                                                 \
         int count = 0;                                                  \
-        int bits;                                                       \
-        for (bits = 0; bits < sizeof (TYPE) * CHAR_BIT; bits += 32)     \
+        for (int bits = 0; bits < sizeof (TYPE) * CHAR_BIT; bits += 32) \
           {                                                             \
             count += count_one_bits_32 (x);                             \
             x = x >> 31 >> 1;                                           \

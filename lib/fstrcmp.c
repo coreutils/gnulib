@@ -104,7 +104,6 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   size_t xvec_length = strlen (string1);
   size_t yvec_length = strlen (string2);
   size_t length_sum = xvec_length + yvec_length;
-  ptrdiff_t i;
 
   ptrdiff_t fdiag_len;
   ptrdiff_t *buffer;
@@ -172,14 +171,14 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 
           /* Determine the occurrence counts in X.  */
           memset (occ_diff, 0, sizeof (occ_diff));
-          for (i = xvec_length - 1; i >= 0; i--)
+          for (ptrdiff_t i = xvec_length - 1; i >= 0; i--)
             occ_diff[(unsigned char) string1[i]]++;
           /* Subtract the occurrence counts in Y.  */
-          for (i = yvec_length - 1; i >= 0; i--)
+          for (ptrdiff_t i = yvec_length - 1; i >= 0; i--)
             occ_diff[(unsigned char) string2[i]]--;
           /* Sum up the absolute values.  */
           sum = 0;
-          for (i = 0; i <= UCHAR_MAX; i++)
+          for (ptrdiff_t i = 0; i <= UCHAR_MAX; i++)
             {
               ptrdiff_t d = occ_diff[i];
               sum += (d >= 0 ? d : -d);
@@ -202,7 +201,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   /* Set TOO_EXPENSIVE to be approximate square root of input size,
      bounded below by 4096.  */
   ctxt.too_expensive = 1;
-  for (i = xvec_length + yvec_length; i != 0; i >>= 2)
+  for (ptrdiff_t i = xvec_length + yvec_length; i != 0; i >>= 2)
     ctxt.too_expensive <<= 1;
   if (ctxt.too_expensive < 4096)
     ctxt.too_expensive = 4096;

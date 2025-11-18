@@ -102,9 +102,7 @@ gl_hash_search (gl_set_t set, const void *elt)
   gl_setelement_equals_fn equals = set->base.equals_fn;
 
   /* Look for a match in the hash bucket.  */
-  gl_list_node_t node;
-
-  for (node = (gl_list_node_t) set->table[bucket];
+  for (gl_list_node_t node = (gl_list_node_t) set->table[bucket];
        node != NULL;
        node = (gl_list_node_t) node->h.hash_next)
     if (node->h.hashcode == hashcode
@@ -126,18 +124,14 @@ gl_hash_nx_add (gl_set_t set, const void *elt)
   gl_setelement_equals_fn equals = set->base.equals_fn;
 
   /* Look for a match in the hash bucket.  */
-  {
-    gl_list_node_t node;
-
-    for (node = (gl_list_node_t) set->table[bucket];
-         node != NULL;
-         node = (gl_list_node_t) node->h.hash_next)
-      if (node->h.hashcode == hashcode
-          && (equals != NULL
-              ? equals (elt, node->value)
-              : elt == node->value))
-        return 0;
-  }
+  for (gl_list_node_t node = (gl_list_node_t) set->table[bucket];
+       node != NULL;
+       node = (gl_list_node_t) node->h.hash_next)
+    if (node->h.hashcode == hashcode
+        && (equals != NULL
+            ? equals (elt, node->value)
+            : elt == node->value))
+      return 0;
 
   /* Allocate a new node.  */
   gl_list_node_t node =
@@ -172,9 +166,7 @@ gl_hash_remove (gl_set_t set, const void *elt)
   gl_setelement_equals_fn equals = set->base.equals_fn;
 
   /* Look for the first match in the hash bucket.  */
-  gl_list_node_t *nodep;
-
-  for (nodep = (gl_list_node_t *) &set->table[bucket];
+  for (gl_list_node_t *nodep = (gl_list_node_t *) &set->table[bucket];
        *nodep != NULL;
        nodep = (gl_list_node_t *) &(*nodep)->h.hash_next)
     {
@@ -207,9 +199,8 @@ gl_hash_free (gl_set_t set)
     {
       gl_setelement_dispose_fn dispose = set->base.dispose_fn;
       struct gl_hash_entry **table = set->table;
-      size_t i;
 
-      for (i = set->table_size; i > 0; )
+      for (size_t i = set->table_size; i > 0; )
         {
           gl_hash_entry_t node = table[--i];
 

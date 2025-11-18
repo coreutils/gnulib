@@ -188,7 +188,6 @@ getprogname (void)
   if (first)
     {
       pid_t pid = getpid ();
-      int token;
       W_PSPROC buf;
       first = 0;
       memset (&buf, 0, sizeof(buf));
@@ -197,7 +196,8 @@ getprogname (void)
       buf.ps_pathptr   = (char *) malloc (buf.ps_pathlen   = PS_PATHBLEN);
       if (buf.ps_cmdptr && buf.ps_conttyptr && buf.ps_pathptr)
         {
-          for (token = 0; token >= 0;
+          for (int token = 0;
+               token >= 0;
                token = w_getpsent (token, &buf, sizeof(buf)))
             {
               if (token > 0 && buf.ps_pid == pid)

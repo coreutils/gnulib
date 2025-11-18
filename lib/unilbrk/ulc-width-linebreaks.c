@@ -83,13 +83,12 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
                       char *q = (char *) memory;
                       char *o8 = (o != NULL ? (char *) (q + m) : NULL);
                       int res_column;
-                      size_t i;
 
                       /* Translate the overrides to the UTF-8 string.  */
                       if (o != NULL)
                         {
                           memset (o8, UC_BREAK_UNDEFINED, m);
-                          for (i = 0; i < n; i++)
+                          for (size_t i = 0; i < n; i++)
                             if (offsets[i] != (size_t)(-1))
                               o8[offsets[i]] = o[i];
                         }
@@ -100,7 +99,7 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
 
                       /* Translate the result back to the original string.  */
                       memset (p, UC_BREAK_PROHIBITED, n);
-                      for (i = 0; i < n; i++)
+                      for (size_t i = 0; i < n; i++)
                         if (offsets[i] != (size_t)(-1))
                           p[i] = q[offsets[i]];
 
@@ -245,11 +244,10 @@ main (int argc, char * argv[])
       char *input = read_file (stdin);
       int length = strlen (input);
       char *breaks = malloc (length);
-      int i;
 
       ulc_width_linebreaks_v2 (input, length, width, 0, 0, NULL, locale_charset (), breaks);
 
-      for (i = 0; i < length; i++)
+      for (int i = 0; i < length; i++)
         {
           switch (breaks[i])
             {

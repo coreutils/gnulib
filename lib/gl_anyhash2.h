@@ -33,7 +33,6 @@ hash_resize (CONTAINER_T container, size_t estimate)
       gl_hash_entry_t *old_table = container->table;
       /* Allocate the new table.  */
       gl_hash_entry_t *new_table;
-      size_t i;
 
       if (size_overflow_p (xtimes (new_size, sizeof (gl_hash_entry_t))))
         goto fail;
@@ -43,7 +42,7 @@ hash_resize (CONTAINER_T container, size_t estimate)
         goto fail;
 
       /* Iterate through the entries of the old table.  */
-      for (i = container->table_size; i > 0; )
+      for (size_t i = container->table_size; i > 0; )
         {
           gl_hash_entry_t node = old_table[--i];
 

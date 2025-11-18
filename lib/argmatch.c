@@ -80,7 +80,6 @@ ptrdiff_t
 argmatch (const char *arg, const char *const *arglist,
           const void *vallist, size_t valsize)
 {
-  size_t i;                     /* Temporary index in ARGLIST.  */
   size_t arglen;                /* Length of ARG.  */
   ptrdiff_t matchind = -1;      /* Index of first nonexact match.  */
   bool ambiguous = false;       /* If true, multiple nonexact match(es).  */
@@ -88,7 +87,7 @@ argmatch (const char *arg, const char *const *arglist,
   arglen = strlen (arg);
 
   /* Test all elements for either exact match or abbreviated matches.  */
-  for (i = 0; arglist[i]; i++)
+  for (size_t i = 0; arglist[i]; i++)
     {
       if (!strncmp (arglist[i], arg, arglen))
         {
@@ -121,10 +120,8 @@ argmatch (const char *arg, const char *const *arglist,
 ptrdiff_t
 argmatch_exact (const char *arg, const char *const *arglist)
 {
-  size_t i;
-
   /* Test elements for exact match.  */
-  for (i = 0; arglist[i]; i++)
+  for (size_t i = 0; arglist[i]; i++)
     {
       if (streq (arglist[i], arg))
         return i;
@@ -157,13 +154,12 @@ void
 argmatch_valid (const char *const *arglist,
                 const void *vallist, size_t valsize)
 {
-  size_t i;
   const char *last_val = NULL;
 
   /* We try to put synonyms on the same line.  The assumption is that
      synonyms follow each other */
   fputs (_("Valid arguments are:"), stderr);
-  for (i = 0; arglist[i]; i++)
+  for (size_t i = 0; arglist[i]; i++)
     if ((i == 0)
         || !memeq (last_val, (char const *) vallist + valsize * i, valsize))
       {
@@ -216,9 +212,7 @@ argmatch_to_argument (const void *value,
                       const char *const *arglist,
                       const void *vallist, size_t valsize)
 {
-  size_t i;
-
-  for (i = 0; arglist[i]; i++)
+  for (size_t i = 0; arglist[i]; i++)
     if (memeq (value, (char const *) vallist + valsize * i, valsize))
       return arglist[i];
   return NULL;

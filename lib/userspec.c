@@ -301,9 +301,7 @@ parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
 int
 main (int argc, char **argv)
 {
-  int i;
-
-  for (i = 1; i < argc; i++)
+  for (int i = 1; i < argc; i++)
     {
       const char *e;
       char *username, *groupname;

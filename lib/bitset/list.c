@@ -787,16 +787,14 @@ lbitset_list (bitset bset, bitset_bindex *list,
 static bool
 lbitset_empty_p (bitset dst)
 {
-  lbitset_elt *elt;
-  lbitset_elt *next;
-
-  for (elt = LBITSET_HEAD (dst); elt; elt = next)
+  for (lbitset_elt *elt = LBITSET_HEAD (dst); elt; )
     {
-      next = elt->next;
+      lbitset_elt *next = elt->next;
       if (!lbitset_elt_zero_p (elt))
         return false;
       /* Weed as we go.  */
       lbitset_elt_unlink (dst, elt);
+      elt = next;
     }
 
   return true;

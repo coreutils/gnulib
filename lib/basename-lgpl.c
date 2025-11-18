@@ -29,13 +29,12 @@ char *
 last_component (char const *name)
 {
   char const *base = name + FILE_SYSTEM_PREFIX_LEN (name);
-  char const *p;
   bool last_was_slash = false;
 
   while (ISSLASH (*base))
     base++;
 
-  for (p = base; *p; p++)
+  for (char const *p = base; *p; p++)
     {
       if (ISSLASH (*p))
         last_was_slash = true;

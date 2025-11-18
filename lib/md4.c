@@ -230,8 +230,7 @@ md4_process_block (const void *buffer, size_t len, struct md4_ctx *ctx)
      the loop.  */
   while (words < endp)
     {
-      int t;
-      for (t = 0; t < 16; t++)
+      for (int t = 0; t < 16; t++)
         {
           x[t] = SWAP (*words);
           words++;

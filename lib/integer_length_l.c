@@ -84,9 +84,7 @@ FUNC (TYPE x)
   if (sizeof (TYPE) > 2 * sizeof (unsigned int))
     {
       /* Generic loop.  */
-      size_t i;
-
-      for (i = (sizeof (TYPE) - 1) / sizeof (unsigned int); i >= 2; i--)
+      for (size_t i = (sizeof (TYPE) - 1) / sizeof (unsigned int); i >= 2; i--)
         {
           unsigned int y = x >> (i * sizeof (unsigned int) * CHAR_BIT);
           if (y != 0)

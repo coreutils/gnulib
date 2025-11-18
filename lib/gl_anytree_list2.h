@@ -668,9 +668,7 @@ static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
                            const void *elt)
 {
-  gl_list_node_t node;
-
-  for (node = list->root; node != NULL; )
+  for (gl_list_node_t node = list->root; node != NULL; )
     {
       int cmp = compar (node->value, elt);
 
@@ -711,14 +709,12 @@ gl_tree_sortedlist_search_from_to (gl_list_t list,
                                    size_t low, size_t high,
                                    const void *elt)
 {
-  gl_list_node_t node;
-
   if (!(low <= high
         && high <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
 
-  for (node = list->root; node != NULL; )
+  for (gl_list_node_t node = list->root; node != NULL; )
     {
       size_t left_branch_size =
         (node->left != NULL ? node->left->branch_size : 0);

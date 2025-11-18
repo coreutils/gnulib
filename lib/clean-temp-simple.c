@@ -159,8 +159,6 @@ clean_temp_init_asyncsafe_close (void)
 static _GL_ASYNC_SAFE void
 cleanup_action (_GL_UNUSED int sig)
 {
-  size_t i;
-
   /* First close all file descriptors to temporary files.  */
   {
     gl_list_t fds = descriptors;
@@ -197,7 +195,7 @@ cleanup_action (_GL_UNUSED int sig)
       }
   }
 
-  for (i = 0; i < dir_cleanup_list.tempdir_count; i++)
+  for (size_t i = 0; i < dir_cleanup_list.tempdir_count; i++)
     {
       struct tempdir *dir = dir_cleanup_list.tempdir_list[i];
 

@@ -349,15 +349,12 @@ find_executable (const char *argv0)
      login(1) convention to add a '-' prefix to argv[0] is not supported.  */
   {
     bool has_slash = false;
-    {
-      const char *p;
-      for (p = argv0; *p; p++)
-        if (*p == '/')
-          {
-            has_slash = true;
-            break;
-          }
-    }
+    for (const char *p = argv0; *p; p++)
+      if (*p == '/')
+        {
+          has_slash = true;
+          break;
+        }
     if (!has_slash)
       {
         /* exec searches paths without slashes in the directory list given
@@ -366,10 +363,9 @@ find_executable (const char *argv0)
 
         if (path != NULL)
           {
-            const char *p;
             const char *p_next;
 
-            for (p = path; *p; p = p_next)
+            for (const char *p = path; *p; p = p_next)
               {
                 const char *q;
                 size_t p_len;

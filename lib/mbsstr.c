@@ -100,13 +100,13 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
           forall 0 <= x < table[i]: rhaystack[x..x+m-1] != needle[0..m-1].
      table[0] remains uninitialized.  */
   {
-    size_t i, j;
+    size_t j;
 
     /* i = 1: Nothing to verify for x = 0.  */
     table[1] = 1;
     j = 0;
 
-    for (i = 2; i < m; i++)
+    for (size_t i = 2; i < m; i++)
       {
         /* Here: j = i-1 - table[i-1].
            The inequality needle[x..i-1] != needle[0..i-1-x] is known to hold

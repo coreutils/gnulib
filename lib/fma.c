@@ -280,8 +280,7 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
     {
       /* Here we still have MANT_BIT-4*31 bits to extract from x.  */
       /* Generic loop.  */
-      size_t k;
-      for (k = 4; k < chunk_count; k++)
+      for (size_t k = 4; k < chunk_count; k++)
         {
           size_t chunk_bits = MIN (31, MANT_BIT - k * 31); /* > 0, <= 31 */
           mp_limb_t d;
@@ -335,17 +334,16 @@ static void
 multiply (mp_limb_t xlimbs[NLIMBS1], mp_limb_t ylimbs[NLIMBS1],
           mp_limb_t prod_limbs[2 * NLIMBS1])
 {
-  size_t k, i, j;
   enum { len1 = NLIMBS1 };
   enum { len2 = NLIMBS1 };
 
-  for (k = len2; k > 0; )
+  for (size_t k = len2; k > 0; )
     prod_limbs[--k] = 0;
-  for (i = 0; i < len1; i++)
+  for (size_t i = 0; i < len1; i++)
     {
       mp_limb_t digit1 = xlimbs[i];
       mp_twolimb_t carry = 0;
-      for (j = 0; j < len2; j++)
+      for (size_t j = 0; j < len2; j++)
         {
           mp_limb_t digit2 = ylimbs[j];
           carry += (mp_twolimb_t) digit1 * (mp_twolimb_t) digit2;
@@ -472,8 +470,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                 if (e == xye - 2 * MANT_BIT)
                   {
                     /* Simply copy the limbs of xylimbs.  */
-                    size_t i;
-                    for (i = 0; i < 2 * NLIMBS1; i++)
+                    for (size_t i = 0; i < 2 * NLIMBS1; i++)
                       summand1[i] = xylimbs[i];
                     summand1_len = 2 * NLIMBS1;
                   }
@@ -483,13 +480,12 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                     /* Left shift the limbs of xylimbs by ediff bits.  */
                     size_t ldiff = ediff / GMP_LIMB_BITS;
                     size_t shift = ediff % GMP_LIMB_BITS;
-                    size_t i;
-                    for (i = 0; i < ldiff; i++)
+                    for (size_t i = 0; i < ldiff; i++)
                       summand1[i] = 0;
                     if (shift > 0)
                       {
                         mp_limb_t carry = 0;
-                        for (i = 0; i < 2 * NLIMBS1; i++)
+                        for (size_t i = 0; i < 2 * NLIMBS1; i++)
                           {
                             summand1[ldiff + i] = (xylimbs[i] << shift) | carry;
                             carry = xylimbs[i] >> (GMP_LIMB_BITS - shift);
@@ -499,7 +495,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                       }
                     else
                       {
-                        for (i = 0; i < 2 * NLIMBS1; i++)
+                        for (size_t i = 0; i < 2 * NLIMBS1; i++)
                           summand1[ldiff + i] = xylimbs[i];
                         summand1_len = ldiff + 2 * NLIMBS1;
                       }
@@ -517,8 +513,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                 if (e == ze - MANT_BIT)
                   {
                     /* Simply copy the limbs of zlimbs.  */
-                    size_t i;
-                    for (i = 0; i < NLIMBS1; i++)
+                    for (size_t i = 0; i < NLIMBS1; i++)
                       summand2[i] = zlimbs[i];
                     summand2_len = NLIMBS1;
                   }
@@ -528,13 +523,12 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                     /* Left shift the limbs of zlimbs by ediff bits.  */
                     size_t ldiff = ediff / GMP_LIMB_BITS;
                     size_t shift = ediff % GMP_LIMB_BITS;
-                    size_t i;
-                    for (i = 0; i < ldiff; i++)
+                    for (size_t i = 0; i < ldiff; i++)
                       summand2[i] = 0;
                     if (shift > 0)
                       {
                         mp_limb_t carry = 0;
-                        for (i = 0; i < NLIMBS1; i++)
+                        for (size_t i = 0; i < NLIMBS1; i++)
                           {
                             summand2[ldiff + i] = (zlimbs[i] << shift) | carry;
                             carry = zlimbs[i] >> (GMP_LIMB_BITS - shift);
@@ -544,7 +538,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                       }
                     else
                       {
-                        for (i = 0; i < NLIMBS1; i++)
+                        for (size_t i = 0; i < NLIMBS1; i++)
                           summand2[ldiff + i] = zlimbs[i];
                         summand2_len = ldiff + NLIMBS1;
                       }
@@ -755,15 +749,12 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                                 & (((mp_limb_t) 1 << ((roundoff_bits - 1) % GMP_LIMB_BITS)) - 1))
                                == 0);
                             if (halfway)
-                              {
-                                int i;
-                                for (i = (roundoff_bits - 1) / GMP_LIMB_BITS - 1; i >= 0; i--)
-                                  if (sum[i] != 0)
-                                    {
-                                      halfway = false;
-                                      break;
-                                    }
-                              }
+                              for (int i = (roundoff_bits - 1) / GMP_LIMB_BITS - 1; i >= 0; i--)
+                                if (sum[i] != 0)
+                                  {
+                                    halfway = false;
+                                    break;
+                                  }
                             if (halfway)
                               /* Round to even.  Test bit roundoff_bits.  */
                               round_up = ((sum[roundoff_bits / GMP_LIMB_BITS]

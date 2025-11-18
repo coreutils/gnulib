@@ -139,13 +139,12 @@ main ()
       8191, 8192, 8193
     };
   static char dummy[8193];
-  unsigned int i, j;
 
-  for (i = 0; i < sizeof (sizes) / sizeof (sizes[0]); i++)
+  for (unsigned int i = 0; i < sizeof (sizes) / sizeof (sizes[0]); i++)
     {
       size_t size = sizes[i];
 
-      for (j = 0; j < 2; j++)
+      for (unsigned int j = 0; j < 2; j++)
         {
           /* Run a test depending on i and j:
              Write size bytes and then calls fflush if j==1.  */

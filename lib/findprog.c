@@ -48,7 +48,6 @@ find_in_path (const char *progname)
 #else
   /* Unix */
   char *path;
-  char *path_rest;
   char *cp;
 
   if (strchr (progname, '/') != NULL)
@@ -71,7 +70,7 @@ find_in_path (const char *progname)
     /* Out of memory.  */
     return progname;
 # endif
-  for (path_rest = path; ; path_rest = cp + 1)
+  for (char *path_rest = path; ; path_rest = cp + 1)
     {
       const char *dir;
       bool last;

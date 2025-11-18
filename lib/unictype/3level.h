@@ -113,7 +113,7 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
   uint32_t index1 = wc >> (t->q + t->p);
   uint32_t index2 = (wc >> t->p) & ((1 << t->q) - 1);
   uint32_t index3 = wc & ((1 << t->p) - 1);
-  size_t i, i1, i2;
+  size_t i1, i2;
 
   if (value == CONCAT(TABLE,_get) (t, wc))
     return;
@@ -144,7 +144,7 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
         }
       i1 = t->level2_size << t->q;
       i2 = (t->level2_size + 1) << t->q;
-      for (i = i1; i < i2; i++)
+      for (size_t i = i1; i < i2; i++)
         t->level2[i] = EMPTY;
       t->level1[index1] = t->level2_size++;
     }
@@ -162,7 +162,7 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
         }
       i1 = t->level3_size << t->p;
       i2 = (t->level3_size + 1) << t->p;
-      for (i = i1; i < i2; i++)
+      for (size_t i = i1; i < i2; i++)
         t->level3[i] = DEFAULT;
       t->level2[index2] = t->level3_size++;
     }
@@ -178,22 +178,19 @@ static void
 CONCAT(TABLE,_iterate) (struct TABLE *t,
                         void (*fn) (uint32_t wc, ELEMENT value))
 {
-  uint32_t index1;
-  for (index1 = 0; index1 < t->level1_size; index1++)
+  for (uint32_t index1 = 0; index1 < t->level1_size; index1++)
     {
       uint32_t lookup1 = t->level1[index1];
       if (lookup1 != EMPTY)
         {
           uint32_t lookup1_shifted = lookup1 << t->q;
-          uint32_t index2;
-          for (index2 = 0; index2 < (1 << t->q); index2++)
+          for (uint32_t index2 = 0; index2 < (1 << t->q); index2++)
             {
               uint32_t lookup2 = t->level2[index2 + lookup1_shifted];
               if (lookup2 != EMPTY)
                 {
                   uint32_t lookup2_shifted = lookup2 << t->p;
-                  uint32_t index3;
-                  for (index3 = 0; index3 < (1 << t->p); index3++)
+                  for (uint32_t index3 = 0; index3 < (1 << t->p); index3++)
                     {
                       ELEMENT lookup3 = t->level3[index3 + lookup2_shifted];
                       if (lookup3 != DEFAULT)
@@ -212,15 +209,16 @@ CONCAT(TABLE,_iterate) (struct TABLE *t,
 static void
 CONCAT(TABLE,_finalize) (struct TABLE *t)
 {
-  size_t i, j, k;
+  size_t k;
   uint32_t reorder3[t->level3_size];
   uint32_t reorder2[t->level2_size];
   uint32_t level1_offset, level2_offset, level3_offset, last_offset;
 
   /* Uniquify level3 blocks.  */
   k = 0;
-  for (j = 0; j < t->level3_size; j++)
+  for (size_t j = 0; j < t->level3_size; j++)
     {
+      size_t i;
       for (i = 0; i < k; i++)
         if (memeq (&t->level3[i << t->p], &t->level3[j << t->p],
                    (1 << t->p) * sizeof (ELEMENT)))
@@ -237,14 +235,15 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
     }
   t->level3_size = k;
 
-  for (i = 0; i < (t->level2_size << t->q); i++)
+  for (size_t i = 0; i < (t->level2_size << t->q); i++)
     if (t->level2[i] != EMPTY)
       t->level2[i] = reorder3[t->level2[i]];
 
   /* Uniquify level2 blocks.  */
   k = 0;
-  for (j = 0; j < t->level2_size; j++)
+  for (size_t j = 0; j < t->level2_size; j++)
     {
+      size_t i;
       for (i = 0; i < k; i++)
         if (memeq (&t->level2[i << t->q], &t->level2[j << t->q],
                    (1 << t->q) * sizeof (uint32_t)))
@@ -261,7 +260,7 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
     }
   t->level2_size = k;
 
-  for (i = 0; i < t->level1_size; i++)
+  for (size_t i = 0; i < t->level1_size; i++)
     if (t->level1[i] != EMPTY)
       t->level1[i] = reorder2[t->level1[i]];
 
@@ -290,19 +289,19 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   ((uint32_t *) t->result)[3] = (1 << t->q) - 1;
   ((uint32_t *) t->result)[4] = (1 << t->p) - 1;
 
-  for (i = 0; i < t->level1_size; i++)
+  for (size_t i = 0; i < t->level1_size; i++)
     ((uint32_t *) (t->result + level1_offset))[i] =
       (t->level1[i] == EMPTY
        ? 0
        : (t->level1[i] << t->q) * sizeof (uint32_t) + level2_offset);
 
-  for (i = 0; i < (t->level2_size << t->q); i++)
+  for (size_t i = 0; i < (t->level2_size << t->q); i++)
     ((uint32_t *) (t->result + level2_offset))[i] =
       (t->level2[i] == EMPTY
        ? 0
        : (t->level2[i] << t->p) * sizeof (ELEMENT) + level3_offset);
 
-  for (i = 0; i < (t->level3_size << t->p); i++)
+  for (size_t i = 0; i < (t->level3_size << t->p); i++)
     ((ELEMENT *) (t->result + level3_offset))[i] = t->level3[i];
 
   if (last_offset < t->result_size)

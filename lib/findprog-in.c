@@ -76,16 +76,12 @@ find_in_given_path (const char *progname, const char *path,
 {
   {
     bool has_slash = false;
-    {
-      const char *p;
-
-      for (p = progname; *p != '\0'; p++)
-        if (ISSLASH (*p))
-          {
-            has_slash = true;
-            break;
-          }
-    }
+    for (const char *p = progname; *p != '\0'; p++)
+      if (ISSLASH (*p))
+        {
+          has_slash = true;
+          break;
+        }
     if (has_slash)
       {
         /* If progname contains a slash, it is either absolute or relative to
@@ -99,7 +95,6 @@ find_in_given_path (const char *progname, const char *path,
             /* Try the various suffixes and see whether one of the files
                with such a suffix is actually executable.  */
             int failure_errno;
-            size_t i;
 
             const char *directory_as_prefix =
               (directory != NULL && IS_RELATIVE_FILE_NAME (progname)
@@ -109,21 +104,17 @@ find_in_given_path (const char *progname, const char *path,
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
             const char *progbasename;
 
-            {
-              const char *p;
-
-              progbasename = progname;
-              for (p = progname; *p != '\0'; p++)
-                if (ISSLASH (*p))
-                  progbasename = p + 1;
-            }
+            progbasename = progname;
+            for (const char *p = progname; *p != '\0'; p++)
+              if (ISSLASH (*p))
+                progbasename = p + 1;
 
             bool progbasename_has_dot = (strchr (progbasename, '.') != NULL);
             #endif
 
             /* Try all platform-dependent suffixes.  */
             failure_errno = ENOENT;
-            for (i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
+            for (size_t i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
               {
                 const char *suffix = suffixes[i];
 
@@ -224,7 +215,6 @@ find_in_given_path (const char *progname, const char *path,
       return NULL; /* errno is set here */
 
     int failure_errno;
-    char *path_rest;
     char *cp;
 
     #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
@@ -232,13 +222,12 @@ find_in_given_path (const char *progname, const char *path,
     #endif
 
     failure_errno = ENOENT;
-    for (path_rest = path_copy; ; path_rest = cp + 1)
+    for (char *path_rest = path_copy; ; path_rest = cp + 1)
       {
         const char *dir;
         bool last;
         char *dir_as_prefix_to_free;
         const char *dir_as_prefix;
-        size_t i;
 
         /* Extract next directory in PATH.  */
         dir = path_rest;
@@ -271,7 +260,7 @@ find_in_given_path (const char *progname, const char *path,
           }
 
         /* Try all platform-dependent suffixes.  */
-        for (i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
+        for (size_t i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
           {
             const char *suffix = suffixes[i];
 

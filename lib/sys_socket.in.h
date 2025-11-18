@@ -235,11 +235,10 @@ struct msghdr {
 _GL_SYS_SOCKET_INLINE int
 rpl_fd_isset (SOCKET fd, fd_set * set)
 {
-  u_int i;
   if (set == NULL)
     return 0;
 
-  for (i = 0; i < set->fd_count; i++)
+  for (u_int i = 0; i < set->fd_count; i++)
     if (set->fd_array[i] == fd)
       return 1;
 

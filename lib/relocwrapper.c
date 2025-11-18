@@ -148,9 +148,7 @@ static_assert (sizeof (libdirs) / sizeof (libdirs[0]) > 1);
 static void
 relocate_libdirs ()
 {
-  size_t i;
-
-  for (i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
+  for (size_t i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
     libdirs[i] = relocate (libdirs[i]);
 }
 
@@ -160,7 +158,6 @@ activate_libdirs ()
 {
   const char *old_value;
   size_t total;
-  size_t i;
   char *value;
   char *p;
 
@@ -169,7 +166,7 @@ activate_libdirs ()
     old_value = "";
 
   total = 0;
-  for (i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
+  for (size_t i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
     total += strlen (libdirs[i]) + 1;
   total += strlen (old_value) + 1;
 
@@ -180,7 +177,7 @@ activate_libdirs ()
       exit (1);
     }
   p = value;
-  for (i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
+  for (size_t i = 0; i < sizeof (libdirs) / sizeof (libdirs[0]) - 1; i++)
     {
       size_t len = strlen (libdirs[i]);
       memcpy (p, libdirs[i], len);

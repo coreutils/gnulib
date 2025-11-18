@@ -77,15 +77,13 @@ ulc_possible_linebreaks_internal (const char *s, size_t n, const char *encoding,
 
                   if (m == 0 || q != NULL)
                     {
-                      size_t i;
-
                       /* Determine the possible line breaks of the UTF-8
                          string.  */
                       u8_possible_linebreaks_loop (t, m, encoding, cr, q);
 
                       /* Translate the result back to the original string.  */
                       memset (p, UC_BREAK_PROHIBITED, n);
-                      for (i = 0; i < n; i++)
+                      for (size_t i = 0; i < n; i++)
                         if (offsets[i] != (size_t)(-1))
                           p[i] = q[offsets[i]];
 
@@ -218,11 +216,10 @@ main (int argc, char * argv[])
       char *input = read_file (stdin);
       int length = strlen (input);
       char *breaks = malloc (length);
-      int i;
 
       ulc_possible_linebreaks_v2 (input, length, locale_charset (), breaks);
 
-      for (i = 0; i < length; i++)
+      for (int i = 0; i < length; i++)
         {
           switch (breaks[i])
             {

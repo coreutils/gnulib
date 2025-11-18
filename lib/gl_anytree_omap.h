@@ -59,9 +59,8 @@ static bool
 gl_tree_search (gl_omap_t map, const void *key, const void **valuep)
 {
   gl_mapkey_compar_fn compar = map->base.compar_fn;
-  gl_omap_node_t node;
 
-  for (node = map->root; node != NULL; )
+  for (gl_omap_node_t node = map->root; node != NULL; )
     {
       int cmp = (compar != NULL
                  ? compar (node->key, key)
@@ -88,9 +87,7 @@ gl_tree_search_atleast (gl_omap_t map,
                         const void *threshold,
                         const void **keyp, const void **valuep)
 {
-  gl_omap_node_t node;
-
-  for (node = map->root; node != NULL; )
+  for (gl_omap_node_t node = map->root; node != NULL; )
     {
       if (! threshold_fn (node->key, threshold))
         node = node->right;
@@ -174,9 +171,8 @@ static bool
 gl_tree_getremove (gl_omap_t map, const void *key, const void **oldvaluep)
 {
   gl_mapkey_compar_fn compar = map->base.compar_fn;
-  gl_omap_node_t node;
 
-  for (node = map->root; node != NULL; )
+  for (gl_omap_node_t node = map->root; node != NULL; )
     {
       int cmp = (compar != NULL
                  ? compar (node->key, key)

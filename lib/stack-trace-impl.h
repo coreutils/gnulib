@@ -75,10 +75,8 @@ print_stack_trace_to (FILE *stream)
       char **symbols = backtrace_symbols (buffer, size);
       if (symbols != NULL)
         {
-          int i;
-
           fprintf (stream, "Stack trace:\n");
-          for (i = 0; i < size; i++)
+          for (int i = 0; i < size; i++)
             fprintf (stream, "%s\n", symbols[i]);
           fflush (stream);
 

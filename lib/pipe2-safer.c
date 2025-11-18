@@ -33,8 +33,7 @@ pipe2_safer (int fd[2], int flags)
   /* This is a generalization of the pipe_safer implementation.  */
   if (pipe2 (fd, flags) == 0)
     {
-      int i;
-      for (i = 0; i < 2; i++)
+      for (int i = 0; i < 2; i++)
         {
           fd[i] = fd_safer_flag (fd[i], flags);
           if (fd[i] < 0)

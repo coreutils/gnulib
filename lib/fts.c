@@ -1669,8 +1669,9 @@ getdevino (int fd)
 static void
 find_matching_ancestor (FTSENT const *e_curr, struct Active_dir const *ad)
 {
-  FTSENT const *ent;
-  for (ent = e_curr; ent->fts_level >= FTS_ROOTLEVEL; ent = ent->fts_parent)
+  for (FTSENT const *ent = e_curr;
+       ent->fts_level >= FTS_ROOTLEVEL;
+       ent = ent->fts_parent)
     {
       if (ad->ino == ent->fts_statp->st_ino
           && ad->dev == ent->fts_statp->st_dev)
@@ -1678,8 +1679,9 @@ find_matching_ancestor (FTSENT const *e_curr, struct Active_dir const *ad)
     }
   printf ("ERROR: tree dir, %s, not active\n", ad->fts_ent->fts_accpath);
   printf ("active dirs:\n");
-  for (ent = e_curr;
-       ent->fts_level >= FTS_ROOTLEVEL; ent = ent->fts_parent)
+  for (FTSENT const *ent = e_curr;
+       ent->fts_level >= FTS_ROOTLEVEL;
+       ent = ent->fts_parent)
     printf ("  %s(%"PRIuMAX"/%"PRIuMAX") to %s(%"PRIuMAX"/%"PRIuMAX")...\n",
             ad->fts_ent->fts_accpath,
             (uintmax_t) ad->dev,
@@ -1693,13 +1695,14 @@ void
 fts_cross_check (FTS const *sp)
 {
   FTSENT const *ent = sp->fts_cur;
-  FTSENT const *t;
   if ( ! ISSET (FTS_TIGHT_CYCLE_CHECK))
     return;
 
   Dprintf (("fts-cross-check cur=%s\n", ent->fts_path));
   /* Make sure every parent dir is in the tree.  */
-  for (t = ent->fts_parent; t->fts_level >= FTS_ROOTLEVEL; t = t->fts_parent)
+  for (FTSENT const *t = ent->fts_parent;
+       t->fts_level >= FTS_ROOTLEVEL;
+       t = t->fts_parent)
     {
       struct Active_dir ad;
       ad.ino = t->fts_statp->st_ino;
@@ -1713,14 +1716,12 @@ fts_cross_check (FTS const *sp)
   if (ent->fts_parent->fts_level >= FTS_ROOTLEVEL
       && (ent->fts_info == FTS_DP
           || ent->fts_info == FTS_D))
-    {
-      struct Active_dir *ad;
-      for (ad = hash_get_first (sp->fts_cycle.ht); ad != NULL;
-           ad = hash_get_next (sp->fts_cycle.ht, ad))
-        {
-          find_matching_ancestor (ent, ad);
-        }
-    }
+    for (struct Active_dir *ad = hash_get_first (sp->fts_cycle.ht);
+         ad != NULL;
+         ad = hash_get_next (sp->fts_cycle.ht, ad))
+      {
+        find_matching_ancestor (ent, ad);
+      }
 }
 
 static bool

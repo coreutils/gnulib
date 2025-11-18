@@ -71,7 +71,6 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
   setgrent ();
   while (1)
     {
-      char **cp;
       struct group *grp;
 
       errno = 0;
@@ -79,7 +78,7 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
       if (grp == NULL)
         break;
 
-      for (cp = grp->gr_mem; *cp; ++cp)
+      for (char **cp = grp->gr_mem; *cp; ++cp)
         {
           int n;
 

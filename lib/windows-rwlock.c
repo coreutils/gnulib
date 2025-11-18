@@ -64,14 +64,13 @@ glwthread_waitqueue_add (glwthread_waitqueue_t *wq)
           unsigned int old_count = wq->count;
           unsigned int old_alloc = wq->alloc;
           unsigned int old_offset = wq->offset;
-          unsigned int i;
           if (old_offset + old_count > old_alloc)
             {
               unsigned int limit = old_offset + old_count - old_alloc;
-              for (i = 0; i < limit; i++)
+              for (unsigned int i = 0; i < limit; i++)
                 new_array[old_alloc + i] = new_array[i];
             }
-          for (i = 0; i < old_count; i++)
+          for (unsigned int i = 0; i < old_count; i++)
             new_array[i] = new_array[old_offset + i];
           wq->offset = 0;
         }
@@ -107,9 +106,7 @@ glwthread_waitqueue_notify_first (glwthread_waitqueue_t *wq)
 static void
 glwthread_waitqueue_notify_all (glwthread_waitqueue_t *wq)
 {
-  unsigned int i;
-
-  for (i = 0; i < wq->count; i++)
+  for (unsigned int i = 0; i < wq->count; i++)
     {
       unsigned int index = wq->offset + i;
       if (index >= wq->alloc)

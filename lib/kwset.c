@@ -480,8 +480,7 @@ kwsprep (kwset_t kwset)
 
           /* Update the shifts at each node in the current node's chain
              of fails back to the root.  */
-          struct trie *fail;
-          for (fail = curr->fail; fail; fail = fail->fail)
+          for (struct trie *fail = curr->fail; fail; fail = fail->fail)
             {
               /* If the current node has some outgoing edge that the fail
                  doesn't, then the shift at the fail should be no larger

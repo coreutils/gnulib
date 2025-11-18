@@ -167,9 +167,7 @@ regex_quote_length (const char *string, const struct regex_quote_spec *spec)
     }
   else
     {
-      const char *iter;
-
-      for (iter = string; *iter != '\0'; iter++)
+      for (const char *iter = string; *iter != '\0'; iter++)
         {
           if (strchr (special, *iter))
             length += 1;
@@ -215,9 +213,7 @@ regex_quote_copy (char *p, const char *string, const struct regex_quote_spec *sp
     }
   else
     {
-      const char *iter;
-
-      for (iter = string; *iter != '\0'; iter++)
+      for (const char *iter = string; *iter != '\0'; iter++)
         {
           if (strchr (special, *iter))
             *p++ = '\\';

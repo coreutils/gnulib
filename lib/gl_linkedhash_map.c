@@ -130,9 +130,7 @@ gl_linkedhash_search (gl_map_t map, const void *key, const void **valuep)
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 
   /* Look for a match in the hash bucket.  */
-  gl_list_node_t node;
-
-  for (node = (gl_list_node_t) map->table[bucket];
+  for (gl_list_node_t node = (gl_list_node_t) map->table[bucket];
        node != NULL;
        node = (gl_list_node_t) node->h.hash_next)
     if (node->h.hashcode == hashcode
@@ -158,22 +156,18 @@ gl_linkedhash_nx_getput (gl_map_t map, const void *key, const void *value,
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 
   /* Look for a match in the hash bucket.  */
-  {
-    gl_list_node_t node;
-
-    for (node = (gl_list_node_t) map->table[bucket];
-         node != NULL;
-         node = (gl_list_node_t) node->h.hash_next)
-      if (node->h.hashcode == hashcode
-          && (equals != NULL
-              ? equals (key, node->key)
-              : key == node->key))
-        {
-          *oldvaluep = node->value;
-          node->value = value;
-          return 0;
-        }
-  }
+  for (gl_list_node_t node = (gl_list_node_t) map->table[bucket];
+       node != NULL;
+       node = (gl_list_node_t) node->h.hash_next)
+    if (node->h.hashcode == hashcode
+        && (equals != NULL
+            ? equals (key, node->key)
+            : key == node->key))
+      {
+        *oldvaluep = node->value;
+        node->value = value;
+        return 0;
+      }
 
   /* Allocate a new node.  */
   gl_list_node_t node =
@@ -213,9 +207,7 @@ gl_linkedhash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 
   /* Look for the first match in the hash bucket.  */
-  gl_list_node_t *nodep;
-
-  for (nodep = (gl_list_node_t *) &map->table[bucket];
+  for (gl_list_node_t *nodep = (gl_list_node_t *) &map->table[bucket];
        *nodep != NULL;
        nodep = (gl_list_node_t *) &(*nodep)->h.hash_next)
     {
@@ -255,9 +247,8 @@ gl_linkedhash_free (gl_map_t map)
 {
   gl_mapkey_dispose_fn kdispose = map->base.kdispose_fn;
   gl_mapvalue_dispose_fn vdispose = map->base.vdispose_fn;
-  gl_list_node_t node;
 
-  for (node = map->root.next; node != &map->root; )
+  for (gl_list_node_t node = map->root.next; node != &map->root; )
     {
       gl_list_node_t next = node->next;
       if (vdispose != NULL)

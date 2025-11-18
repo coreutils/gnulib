@@ -123,9 +123,8 @@ newlocale (int category_mask, const char *name, locale_t base)
     }
 # endif
 
-  int i;
   int err;
-  for (i = 0; i < 6; i++)
+  for (int i = 0; i < 6; i++)
     {
       int log2_lcmask = gl_index_to_log2_lcmask (i);
 
@@ -213,13 +212,33 @@ newlocale (int category_mask, const char *name, locale_t base)
 # endif
             }
         }
+
+      if (0)
+        {
+         fail_with_err:
+          while (--i >= 0)
+            {
+# if HAVE_WINDOWS_LOCALE_T
+              if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+                    || result->category[i].is_c_locale))
+                /* Documentation:
+                   <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
+                _free_locale (result->category[i].system_locale);
+# endif
+              free (result->category[i].name);
+            }
+          if (base == NULL)
+            free (result);
+          errno = err;
+          return NULL;
+        }
     }
 
   /* Success.  */
   if (base != NULL)
     {
       /* Copy the modified entries from RESULT to BASE.  */
-      for (i = 0; i < 6; i++)
+      for (int i = 0; i < 6; i++)
         {
           int log2_lcmask = gl_index_to_log2_lcmask (i);
           if ((category_mask & (1 << log2_lcmask)) != 0)
@@ -240,23 +259,6 @@ newlocale (int category_mask, const char *name, locale_t base)
     }
   else
     return result;
-
- fail_with_err:
-  while (--i >= 0)
-    {
-# if HAVE_WINDOWS_LOCALE_T
-      if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
-            || result->category[i].is_c_locale))
-        /* Documentation:
-           <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
-        _free_locale (result->category[i].system_locale);
-# endif
-      free (result->category[i].name);
-    }
-  if (base == NULL)
-    free (result);
-  errno = err;
-  return NULL;
 }
 
 #endif

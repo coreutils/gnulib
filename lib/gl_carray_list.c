@@ -396,7 +396,7 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
   if (position <= (count / 2))
     {
       /* Shift at most count/2 elements to the left.  */
-      size_t i2, i;
+      size_t i2;
 
       list->offset = (list->offset == 0 ? list->allocated : list->offset) - 1;
 
@@ -406,15 +406,15 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
           /* Here we must have list->offset > 0, hence list->allocated > 0.  */
           size_t i1 = list->allocated - 1;
           i2 -= list->allocated;
-          for (i = list->offset; i < i1; i++)
+          for (size_t i = list->offset; i < i1; i++)
             elements[i] = elements[i + 1];
           elements[i1] = elements[0];
-          for (i = 0; i < i2; i++)
+          for (size_t i = 0; i < i2; i++)
             elements[i] = elements[i + 1];
         }
       else
         {
-          for (i = list->offset; i < i2; i++)
+          for (size_t i = list->offset; i < i2; i++)
             elements[i] = elements[i + 1];
         }
       elements[i2] = elt;
@@ -422,7 +422,7 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
   else
     {
       /* Shift at most (count+1)/2 elements to the right.  */
-      size_t i1, i3, i;
+      size_t i1, i3;
 
       i1 = list->offset + position;
       i3 = list->offset + count;
@@ -430,7 +430,7 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
         {
           i1 -= list->allocated;
           i3 -= list->allocated;
-          for (i = i3; i > i1; i--)
+          for (size_t i = i3; i > i1; i--)
             elements[i] = elements[i - 1];
         }
       else if (i3 >= list->allocated)
@@ -438,15 +438,15 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
           /* Here we must have list->offset > 0, hence list->allocated > 0.  */
           size_t i2 = list->allocated - 1;
           i3 -= list->allocated;
-          for (i = i3; i > 0; i--)
+          for (size_t i = i3; i > 0; i--)
             elements[i] = elements[i - 1];
           elements[0] = elements[i2];
-          for (i = i2; i > i1; i--)
+          for (size_t i = i2; i > i1; i--)
             elements[i] = elements[i - 1];
         }
       else
         {
-          for (i = i3; i > i1; i--)
+          for (size_t i = i3; i > i1; i--)
             elements[i] = elements[i - 1];
         }
       elements[i1] = elt;
@@ -493,7 +493,7 @@ gl_carray_remove_at (gl_list_t list, size_t position)
   if (position <= ((count - 1) / 2))
     {
       /* Shift at most (count-1)/2 elements to the right.  */
-      size_t i0, i2, i;
+      size_t i0, i2;
 
       i0 = list->offset;
       i2 = list->offset + position;
@@ -504,17 +504,17 @@ gl_carray_remove_at (gl_list_t list, size_t position)
           i2 -= list->allocated;
           if (list->base.dispose_fn != NULL)
             list->base.dispose_fn (elements[i2]);
-          for (i = i2; i > 0; i--)
+          for (size_t i = i2; i > 0; i--)
             elements[i] = elements[i - 1];
           elements[0] = elements[i1];
-          for (i = i1; i > i0; i--)
+          for (size_t i = i1; i > i0; i--)
             elements[i] = elements[i - 1];
         }
       else
         {
           if (list->base.dispose_fn != NULL)
             list->base.dispose_fn (elements[i2]);
-          for (i = i2; i > i0; i--)
+          for (size_t i = i2; i > i0; i--)
             elements[i] = elements[i - 1];
         }
 
@@ -524,7 +524,7 @@ gl_carray_remove_at (gl_list_t list, size_t position)
   else
     {
       /* Shift at most count/2 elements to the left.  */
-      size_t i1, i3, i;
+      size_t i1, i3;
 
       i1 = list->offset + position;
       i3 = list->offset + count - 1;
@@ -534,7 +534,7 @@ gl_carray_remove_at (gl_list_t list, size_t position)
           i3 -= list->allocated;
           if (list->base.dispose_fn != NULL)
             list->base.dispose_fn (elements[i1]);
-          for (i = i1; i < i3; i++)
+          for (size_t i = i1; i < i3; i++)
             elements[i] = elements[i + 1];
         }
       else if (i3 >= list->allocated)
@@ -544,17 +544,17 @@ gl_carray_remove_at (gl_list_t list, size_t position)
           i3 -= list->allocated;
           if (list->base.dispose_fn != NULL)
             list->base.dispose_fn (elements[i1]);
-          for (i = i1; i < i2; i++)
+          for (size_t i = i1; i < i2; i++)
             elements[i] = elements[i + 1];
           elements[i2] = elements[0];
-          for (i = 0; i < i3; i++)
+          for (size_t i = 0; i < i3; i++)
             elements[i] = elements[i + 1];
         }
       else
         {
           if (list->base.dispose_fn != NULL)
             list->base.dispose_fn (elements[i1]);
-          for (i = i1; i < i3; i++)
+          for (size_t i = i1; i < i3; i++)
             elements[i] = elements[i + 1];
         }
     }
@@ -605,19 +605,16 @@ gl_carray_list_free (gl_list_t list)
                   /* Here we must have list->offset > 0, hence
                      list->allocated > 0.  */
                   size_t i2 = list->allocated - 1;
-                  size_t i;
 
                   i3 -= list->allocated;
-                  for (i = i1; i <= i2; i++)
+                  for (size_t i = i1; i <= i2; i++)
                     dispose (elements[i]);
-                  for (i = 0; i <= i3; i++)
+                  for (size_t i = 0; i <= i3; i++)
                     dispose (elements[i]);
                 }
               else
                 {
-                  size_t i;
-
-                  for (i = i1; i <= i3; i++)
+                  for (size_t i = i1; i <= i3; i++)
                     dispose (elements[i]);
                 }
             }

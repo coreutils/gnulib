@@ -148,12 +148,10 @@ iconv_carefully (iconv_t cd,
 
   do
     {
-      size_t insize;
-
       inptr_before = inptr;
       res = (size_t)(-1);
 
-      for (insize = 1; inptr + insize <= inptr_end; insize++)
+      for (size_t insize = 1; inptr + insize <= inptr_end; insize++)
         {
           res = iconv (cd,
                        (ICONV_CONST char **) &inptr, &insize,
@@ -215,9 +213,8 @@ iconv_carefully_1 (iconv_t cd,
   char *outptr = *outbuf;
   size_t outsize = *outbytesleft;
   size_t res = (size_t)(-1);
-  size_t insize;
 
-  for (insize = 1; inptr_before + insize <= inptr_end; insize++)
+  for (size_t insize = 1; inptr_before + insize <= inptr_end; insize++)
     {
       inptr = inptr_before;
       res = iconv (cd,
@@ -378,9 +375,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
   if (offsets != NULL)
     {
-      size_t i;
-
-      for (i = 0; i < srclen; i++)
+      for (size_t i = 0; i < srclen; i++)
         offsets[i] = (size_t)(-1);
 
       last_length = (size_t)(-1);
@@ -583,9 +578,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
      Use a conversion through UTF-8.  */
   if (offsets != NULL)
     {
-      size_t i;
-
-      for (i = 0; i < srclen; i++)
+      for (size_t i = 0; i < srclen; i++)
         offsets[i] = (size_t)(-1);
 
       last_length = (size_t)(-1);

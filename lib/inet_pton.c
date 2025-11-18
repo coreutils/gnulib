@@ -246,11 +246,10 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
        * overlapping regions, we'll do the shift by hand.
        */
       const int n = tp - colonp;
-      int i;
 
       if (tp == endp)
         return (0);
-      for (i = 1; i <= n; i++)
+      for (int i = 1; i <= n; i++)
         {
           endp[-i] = colonp[n - i];
           colonp[n - i] = 0;

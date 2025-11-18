@@ -154,7 +154,6 @@ compile_csharp_using_mono (const char * const *sources,
       size_t linelen[2];
       unsigned int l;
       int exitstatus;
-      unsigned int i;
 
       argc =
         1 + (output_is_library ? 1 : 0) + 1 + libdirs_count + libraries_count
@@ -171,14 +170,14 @@ compile_csharp_using_mono (const char * const *sources,
         strcpy (option + 5, output_file);
         *argp++ = option;
       }
-      for (i = 0; i < libdirs_count; i++)
+      for (unsigned int i = 0; i < libdirs_count; i++)
         {
           char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
           memcpy (option, "-lib:", 5);
           strcpy (option + 5, libdirs[i]);
           *argp++ = option;
         }
-      for (i = 0; i < libraries_count; i++)
+      for (unsigned int i = 0; i < libraries_count; i++)
         {
           char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
           memcpy (option, "-reference:", 11);
@@ -188,7 +187,7 @@ compile_csharp_using_mono (const char * const *sources,
         }
       if (debug)
         *argp++ = "-debug";
-      for (i = 0; i < sources_count; i++)
+      for (unsigned int i = 0; i < sources_count; i++)
         {
           const char *source_file = sources[i];
           if (strlen (source_file) >= 10
@@ -251,12 +250,12 @@ compile_csharp_using_mono (const char * const *sources,
       exitstatus =
         wait_subprocess (child, "mcs", false, false, true, true, NULL);
 
-      for (i = 1 + (output_is_library ? 1 : 0);
+      for (unsigned int i = 1 + (output_is_library ? 1 : 0);
            i < 1 + (output_is_library ? 1 : 0)
                + 1 + libdirs_count + libraries_count;
            i++)
         freea ((char *) argv[i]);
-      for (i = 0; i < sources_count; i++)
+      for (unsigned int i = 0; i < sources_count; i++)
         if (argv[argc - sources_count + i] != sources[i])
           freea ((char *) argv[argc - sources_count + i]);
       freea (argv);
@@ -542,7 +541,6 @@ compile_csharp_using_dotnet (const char * const *sources,
       const char **argv;
       const char **argp;
       int exitstatus;
-      unsigned int i;
 
       /* Get a list of all *.dll files in dotnet_runtime_dir.  */
       num_dlls = scandir (dotnet_runtime_dir, &dlls, name_is_dll, alphasort);
@@ -585,7 +583,7 @@ compile_csharp_using_dotnet (const char * const *sources,
         strcpy (option + 5, output_file_converted);
         *argp++ = option;
       }
-      for (i = 0; i < libdirs_count; i++)
+      for (unsigned int i = 0; i < libdirs_count; i++)
         {
           const char *libdir = libdirs[i];
           char *libdir_converted = cygpath_w (libdir);
@@ -595,7 +593,7 @@ compile_csharp_using_dotnet (const char * const *sources,
           strcpy (option + 5, libdir_converted);
           *argp++ = option;
         }
-      for (i = 0; i < libraries_count; i++)
+      for (unsigned int i = 0; i < libraries_count; i++)
         {
           char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
           memcpy (option, "-reference:", 11);
@@ -607,7 +605,7 @@ compile_csharp_using_dotnet (const char * const *sources,
         *argp++ = "-optimize+";
       if (debug)
         *argp++ = "-debug+";
-      for (i = 0; i < sources_count; i++)
+      for (unsigned int i = 0; i < sources_count; i++)
         {
           const char *source_file = sources[i];
           char *source_file_converted = cygpath_w (source_file);
@@ -638,7 +636,7 @@ compile_csharp_using_dotnet (const char * const *sources,
         strcpy (option + 5, dotnet_runtime_dir_converted);
         *argp++ = option;
       }
-      for (i = 0; i < num_dlls; i++)
+      for (unsigned int i = 0; i < num_dlls; i++)
         {
           char *option = (char *) xmalloca (11 + strlen (dlls[i]->d_name) + 1);
           memcpy (option, "-reference:", 11);
@@ -661,9 +659,9 @@ compile_csharp_using_dotnet (const char * const *sources,
                             false, false, false, false,
                             true, true, NULL);
 
-      for (i = 4; i < 5 + libdirs_count + libraries_count; i++)
+      for (unsigned int i = 4; i < 5 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
-      for (i = 0; i < 1 + num_dlls; i++)
+      for (unsigned int i = 0; i < 1 + num_dlls; i++)
         freea ((char *) argv[argc - (1 + num_dlls) + i]);
       while (mallocedp > malloced)
         free (*--mallocedp);
@@ -673,7 +671,7 @@ compile_csharp_using_dotnet (const char * const *sources,
       free (csc);
       free (roslyn_bin_dir);
       free (roslyn_dir);
-      for (i = 0; i < num_dlls; i++)
+      for (unsigned int i = 0; i < num_dlls; i++)
         free (dlls[i]);
       free (dlls);
 
@@ -750,7 +748,6 @@ compile_csharp_using_dotnet (const char * const *sources,
           const char **argv;
           const char **argp;
           int exitstatus;
-          unsigned int i;
 
           /* Here, we assume that 'csc' is a native Windows program, therefore
              we need to use cygpath_w.  */
@@ -776,7 +773,7 @@ compile_csharp_using_dotnet (const char * const *sources,
             strcpy (option + 5, output_file_converted);
             *argp++ = option;
           }
-          for (i = 0; i < libdirs_count; i++)
+          for (unsigned int i = 0; i < libdirs_count; i++)
             {
               const char *libdir = libdirs[i];
               char *libdir_converted = cygpath_w (libdir);
@@ -786,7 +783,7 @@ compile_csharp_using_dotnet (const char * const *sources,
               strcpy (option + 5, libdir_converted);
               *argp++ = option;
             }
-          for (i = 0; i < libraries_count; i++)
+          for (unsigned int i = 0; i < libraries_count; i++)
             {
               char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
               memcpy (option, "-reference:", 11);
@@ -798,7 +795,7 @@ compile_csharp_using_dotnet (const char * const *sources,
             *argp++ = "-optimize+";
           if (debug)
             *argp++ = "-debug+";
-          for (i = 0; i < sources_count; i++)
+          for (unsigned int i = 0; i < sources_count; i++)
             {
               const char *source_file = sources[i];
               char *source_file_converted = cygpath_w (source_file);
@@ -834,7 +831,7 @@ compile_csharp_using_dotnet (const char * const *sources,
                                 false, false, false, false,
                                 true, true, NULL);
 
-          for (i = 3; i < 4 + libdirs_count + libraries_count; i++)
+          for (unsigned int i = 3; i < 4 + libdirs_count + libraries_count; i++)
             freea ((char *) argv[i]);
           while (mallocedp > malloced)
             free (*--mallocedp);
@@ -921,7 +918,6 @@ compile_csharp_using_sscli (const char * const *sources,
       const char **argv;
       const char **argp;
       int exitstatus;
-      unsigned int i;
 
       /* Here, we assume that 'csc' is a native Windows program, therefore
          we need to use cygpath_w.  */
@@ -947,7 +943,7 @@ compile_csharp_using_sscli (const char * const *sources,
         strcpy (option + 5, output_file_converted);
         *argp++ = option;
       }
-      for (i = 0; i < libdirs_count; i++)
+      for (unsigned int i = 0; i < libdirs_count; i++)
         {
           const char *libdir = libdirs[i];
           char *libdir_converted = cygpath_w (libdir);
@@ -957,7 +953,7 @@ compile_csharp_using_sscli (const char * const *sources,
           strcpy (option + 5, libdir_converted);
           *argp++ = option;
         }
-      for (i = 0; i < libraries_count; i++)
+      for (unsigned int i = 0; i < libraries_count; i++)
         {
           char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
           memcpy (option, "-reference:", 11);
@@ -969,7 +965,7 @@ compile_csharp_using_sscli (const char * const *sources,
         *argp++ = "-optimize+";
       if (debug)
         *argp++ = "-debug+";
-      for (i = 0; i < sources_count; i++)
+      for (unsigned int i = 0; i < sources_count; i++)
         {
           const char *source_file = sources[i];
           char *source_file_converted = cygpath_w (source_file);
@@ -1005,7 +1001,7 @@ compile_csharp_using_sscli (const char * const *sources,
                             false, false, false, false,
                             true, true, NULL);
 
-      for (i = 3; i < 4 + libdirs_count + libraries_count; i++)
+      for (unsigned int i = 3; i < 4 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
       while (mallocedp > malloced)
         free (*--mallocedp);

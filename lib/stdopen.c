@@ -42,8 +42,7 @@
 int
 stdopen (void)
 {
-  int fd;
-  for (fd = STDIN_FILENO; fd <= STDERR_FILENO; fd++)
+  for (int fd = STDIN_FILENO; fd <= STDERR_FILENO; fd++)
     {
       if (fcntl (fd, F_GETFD) < 0)
         {

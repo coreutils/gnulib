@@ -56,13 +56,12 @@ quoted_arg_length (const char *string)
   bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
   size_t length;
   unsigned int backslashes;
-  const char *s;
 
   length = 0;
   backslashes = 0;
   if (quote_around)
     length++;
-  for (s = string; *s != '\0'; s++)
+  for (const char *s = string; *s != '\0'; s++)
     {
       char c = *s;
       if (c == '"')
@@ -89,21 +88,17 @@ quoted_arg_string (const char *string, char *mem)
   bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
   char *p;
   unsigned int backslashes;
-  const char *s;
 
   p = mem;
   backslashes = 0;
   if (quote_around)
     *p++ = '"';
-  for (s = string; *s != '\0'; s++)
+  for (const char *s = string; *s != '\0'; s++)
     {
       char c = *s;
       if (c == '"')
-        {
-          unsigned int j;
-          for (j = backslashes + 1; j > 0; j--)
-            *p++ = '\\';
-        }
+        for (unsigned int j = backslashes + 1; j > 0; j--)
+          *p++ = '\\';
       *p++ = c;
       if (c == '\\')
         backslashes++;
@@ -112,8 +107,7 @@ quoted_arg_string (const char *string, char *mem)
     }
   if (quote_around)
     {
-      unsigned int j;
-      for (j = backslashes; j > 0; j--)
+      for (unsigned int j = backslashes; j > 0; j--)
         *p++ = '\\';
       *p++ = '"';
     }
@@ -127,7 +121,6 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
 {
   size_t argc;
   const char **new_argv;
-  size_t i;
 
   /* Count number of arguments.  */
   for (argc = 0; argv[argc] != NULL; argc++)
@@ -146,7 +139,7 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
 
   /* Put quoted arguments into the new argument vector.  */
   size_t needed_size = 0;
-  for (i = 0; i < argc; i++)
+  for (size_t i = 0; i < argc; i++)
     {
       const char *string = argv[i];
       size_t length;
@@ -176,7 +169,7 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
     }
   *mem_to_free = mem;
 
-  for (i = 0; i < argc; i++)
+  for (size_t i = 0; i < argc; i++)
     {
       const char *string = argv[i];
 
@@ -211,9 +204,8 @@ compose_command (const char * const *argv)
 
   /* Determine the size of the needed block of memory.  */
   size_t total_size = 0;
-  const char * const *ap;
   const char *p;
-  for (ap = argv; (p = *ap) != NULL; ap++)
+  for (const char * const *ap = argv; (p = *ap) != NULL; ap++)
     total_size += strlen (p) + 1;
   size_t command_size = (total_size > 0 ? total_size : 1);
 
@@ -229,7 +221,7 @@ compose_command (const char * const *argv)
   if (total_size > 0)
     {
       char *cp = command;
-      for (ap = argv; (p = *ap) != NULL; ap++)
+      for (const char * const *ap = argv; (p = *ap) != NULL; ap++)
         {
           size_t size = strlen (p) + 1;
           memcpy (cp, p, size - 1);
@@ -256,11 +248,10 @@ compose_envblock (const char * const *envp, const char *new_PATH)
     /* Guess the size of the needed block of memory.
        The guess will be exact if other threads don't make modifications.  */
     size_t total_size = 0;
-    const char * const *ep;
     const char *p;
     if (new_PATH != NULL)
       total_size += strlen (new_PATH) + 1;
-    for (ep = envp; (p = *ep) != NULL; ep++)
+    for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
       if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
         total_size += strlen (p) + 1;
     size_t envblock_size = total_size;
@@ -279,7 +270,7 @@ compose_envblock (const char * const *envp, const char *new_PATH)
         memcpy (envblock + envblock_used, new_PATH, size);
         envblock_used += size;
       }
-    for (ep = envp; (p = *ep) != NULL; ep++)
+    for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
       if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
         {
           size_t size = strlen (p) + 1;
@@ -370,8 +361,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
   /* Fill in the array.  */
   {
     HANDLE curr_process = (duplicate ? GetCurrentProcess () : INVALID_HANDLE_VALUE);
-    unsigned int fd;
-    for (fd = 0; fd < handles_count; fd++)
+    for (unsigned int fd = 0; fd < handles_count; fd++)
       {
         ih[fd].handle = INVALID_HANDLE_VALUE;
         /* _get_osfhandle
@@ -400,8 +390,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
                                               curr_process, &ih[fd].handle,
                                               0, TRUE, DUPLICATE_SAME_ACCESS))
                           {
-                            unsigned int i;
-                            for (i = 0; i < fd; i++)
+                            for (unsigned int i = 0; i < fd; i++)
                               if (ih[i].handle != INVALID_HANDLE_VALUE
                                   && !(ih[i].flags & KEEP_OPEN_IN_PARENT))
                                 CloseHandle (ih[i].handle);
@@ -486,53 +475,50 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
                 & - (uintptr_t) sizeof (HANDLE));
 
   * (unsigned int *) hblock = handles_count;
-  {
-    unsigned int fd;
-    for (fd = 0; fd < handles_count; fd++)
-      {
-        handles_aligned[fd] = INVALID_HANDLE_VALUE;
-        flags[fd] = 0;
+  for (unsigned int fd = 0; fd < handles_count; fd++)
+    {
+      handles_aligned[fd] = INVALID_HANDLE_VALUE;
+      flags[fd] = 0;
 
-        HANDLE handle = inh_handles->ih[fd].handle;
-        if (handle != INVALID_HANDLE_VALUE
-            /* The first three are possibly already passed above.
-               But they need to passed here as well, if they have some flags.  */
-            && (fd >= 3 || (unsigned char) inh_handles->ih[fd].flags != 0))
-          {
-            DWORD hflags;
-            /* GetHandleInformation
-               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
-            if (GetHandleInformation (handle, &hflags))
-              {
-                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
-                  {
-                    /* fd denotes an inheritable descriptor.  */
-                    handles_aligned[fd] = handle;
-                    /* On Microsoft Windows, it would be sufficient to set
-                       flags[fd] = 1.  But on ReactOS or Wine, adding the bit
-                       that indicates the handle type may be necessary.  So,
-                       just do it everywhere.  */
-                    flags[fd] = 1 | (unsigned char) inh_handles->ih[fd].flags;
-                    switch (GetFileType (handle))
-                      {
-                      case FILE_TYPE_CHAR:
-                        flags[fd] |= 64;
-                        break;
-                      case FILE_TYPE_PIPE:
-                        flags[fd] |= 8;
-                        break;
-                      default:
-                        break;
-                      }
-                  }
-                else
-                  /* We shouldn't have any non-inheritable handles in
-                     inh_handles->handles.  */
-                  abort ();
-              }
-          }
-      }
-  }
+      HANDLE handle = inh_handles->ih[fd].handle;
+      if (handle != INVALID_HANDLE_VALUE
+          /* The first three are possibly already passed above.
+             But they need to passed here as well, if they have some flags.  */
+          && (fd >= 3 || (unsigned char) inh_handles->ih[fd].flags != 0))
+        {
+          DWORD hflags;
+          /* GetHandleInformation
+             <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+          if (GetHandleInformation (handle, &hflags))
+            {
+              if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                {
+                  /* fd denotes an inheritable descriptor.  */
+                  handles_aligned[fd] = handle;
+                  /* On Microsoft Windows, it would be sufficient to set
+                     flags[fd] = 1.  But on ReactOS or Wine, adding the bit
+                     that indicates the handle type may be necessary.  So,
+                     just do it everywhere.  */
+                  flags[fd] = 1 | (unsigned char) inh_handles->ih[fd].flags;
+                  switch (GetFileType (handle))
+                    {
+                    case FILE_TYPE_CHAR:
+                      flags[fd] |= 64;
+                      break;
+                    case FILE_TYPE_PIPE:
+                      flags[fd] |= 8;
+                      break;
+                    default:
+                      break;
+                    }
+                }
+              else
+                /* We shouldn't have any non-inheritable handles in
+                   inh_handles->handles.  */
+                abort ();
+            }
+        }
+    }
   if (handles != (char *) handles_aligned)
     memmove (handles, (char *) handles_aligned, handles_count * sizeof (HANDLE));
 

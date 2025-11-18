@@ -102,11 +102,10 @@ main (int argc, char * argv[])
       char *input = read_file (stdin);
       int length = strlen (input);
       char *breaks = malloc (length);
-      int i;
 
       u8_wordbreaks ((uint8_t *) input, length, breaks);
 
-      for (i = 0; i < length; i++)
+      for (int i = 0; i < length; i++)
         {
           switch (breaks[i])
             {

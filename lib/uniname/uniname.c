@@ -272,13 +272,12 @@ unicode_character_name (ucs4_t c, char *buf)
       /* Special case for CJK compatibility ideographs. Keeps the tables
          small.  */
       char *ptr;
-      int i;
 
       /* buf needs to have at least 28 + 5 + 1 bytes here.  */
       memcpy (buf, "CJK COMPATIBILITY IDEOGRAPH-", 28);
       ptr = buf + 28;
 
-      for (i = (c < 0x10000 ? 12 : 16); i >= 0; i -= 4)
+      for (int i = (c < 0x10000 ? 12 : 16); i >= 0; i -= 4)
         {
           unsigned int x = (c >> i) & 0xf;
           *ptr++ = (x < 10 ? '0' : 'A' - 10) + x;
@@ -482,21 +481,15 @@ unicode_name_character (const char *name)
 
                           if (n1 <= 2 && (n2 >= 1 && n2 <= 3) && n3 <= 2)
                             {
-                              unsigned int index1;
-
-                              for (index1 = 0; index1 < 19; index1++)
+                              for (unsigned int index1 = 0; index1 < 19; index1++)
                                 if (memeq (jamo_initial_short_name[index1], p1, n1)
                                     && jamo_initial_short_name[index1][n1] == '\0')
                                   {
-                                    unsigned int index2;
-
-                                    for (index2 = 0; index2 < 21; index2++)
+                                    for (unsigned int index2 = 0; index2 < 21; index2++)
                                       if (memeq (jamo_medial_short_name[index2], p2, n2)
                                           && jamo_medial_short_name[index2][n2] == '\0')
                                         {
-                                          unsigned int index3;
-
-                                          for (index3 = 0; index3 < 28; index3++)
+                                          for (unsigned int index3 = 0; index3 < 28; index3++)
                                             if (memeq (jamo_final_short_name[index3], p3, n3)
                                                 && jamo_final_short_name[index3][n3] == '\0')
                                               {

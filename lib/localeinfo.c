@@ -140,7 +140,6 @@ static_assert (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
 int
 case_folded_counterparts (wint_t c, char32_t folded[CASE_FOLDED_BUFSIZE])
 {
-  int i;
   int n = 0;
   wint_t uc = c32toupper (c);
   wint_t lc = c32tolower (uc);
@@ -148,7 +147,7 @@ case_folded_counterparts (wint_t c, char32_t folded[CASE_FOLDED_BUFSIZE])
     folded[n++] = uc;
   if (lc != uc && lc != c && c32toupper (lc) == uc)
     folded[n++] = lc;
-  for (i = 0; i < sizeof lonesome_lower / sizeof *lonesome_lower; i++)
+  for (int i = 0; i < sizeof lonesome_lower / sizeof *lonesome_lower; i++)
     {
       wint_t li = lonesome_lower[i];
       if (li != lc && li != uc && li != c && c32toupper (li) == uc)

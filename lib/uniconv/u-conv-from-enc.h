@@ -40,9 +40,8 @@ FUNC (const char *fromcode,
     {
       /* Convert 'char *' offsets to 'UNIT *' offsets.  */
       size_t *offsets_end = offsets + srclen;
-      size_t *o;
 
-      for (o = offsets; o < offsets_end; o++)
+      for (size_t *o = offsets; o < offsets_end; o++)
         if (*o != (size_t)(-1))
           *o = *o / sizeof (UNIT);
     }
@@ -72,11 +71,10 @@ FUNC (const char *fromcode,
     {
       size_t length = *lengthp;
       size_t *offsets_end = offsets + srclen;
-      size_t *o;
       size_t off8 = 0;  /* offset into utf8_string */
       size_t offunit = 0;       /* offset into result */
 
-      for (o = offsets; o < offsets_end; o++)
+      for (size_t *o = offsets; o < offsets_end; o++)
         if (*o != (size_t)(-1))
           {
             while (off8 < *o)

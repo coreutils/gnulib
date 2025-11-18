@@ -154,11 +154,10 @@ static void
 check_tree (node root)
 {
   int cnt = 0;
-  node p;
   if (root == NULL)
     return;
   root->red = 0;
-  for (p = root->left; p; p = p->left)
+  for (node p = root->left; p; p = p->left)
     cnt += !p->red;
   check_tree_recurse (root, 0, cnt);
 }

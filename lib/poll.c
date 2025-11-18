@@ -167,7 +167,7 @@ typedef DWORD (WINAPI *PNtQueryInformationFile)
 static int
 windows_compute_revents (HANDLE h, int *p_sought)
 {
-  int i, ret, happened;
+  int ret, happened;
   INPUT_RECORD *irbuffer;
   DWORD avail, nbuffer;
   BOOL bRet;
@@ -240,7 +240,7 @@ windows_compute_revents (HANDLE h, int *p_sought)
           if (!bRet || avail == 0)
             return POLLHUP;
 
-          for (i = 0; i < avail; i++)
+          for (int i = 0; i < avail; i++)
             if (irbuffer[i].EventType == KEY_EVENT)
               return *p_sought;
           return 0;
@@ -415,7 +415,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   FD_ZERO (&rfds);
   FD_ZERO (&wfds);
   FD_ZERO (&efds);
-  for (i = 0; i < nfd; i++)
+  for (int i = 0; i < nfd; i++)
     {
       if (pfd[i].fd < 0)
         continue;
@@ -446,7 +446,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
 
   /* establish results */
   rc = 0;
-  for (i = 0; i < nfd; i++)
+  for (int i = 0; i < nfd; i++)
     {
       pfd[i].revents = (pfd[i].fd < 0
                         ? 0
@@ -466,7 +466,6 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   BOOL poll_again;
   MSG msg;
   int rc = 0;
-  nfds_t i;
 
   if (nfd > INT_MAX || timeout < -1)
     {
@@ -485,7 +484,7 @@ restart:
   FD_ZERO (&xfds);
 
   /* Classify socket handles and create fd sets. */
-  for (i = 0; i < nfd; i++)
+  for (nfds_t i = 0; i < nfd; i++)
     {
       int sought = pfd[i].events;
       pfd[i].revents = 0;
@@ -576,7 +575,7 @@ restart:
   /* Place a sentinel at the end of the array.  */
   handle_array[nhandles] = NULL;
   nhandles = 1;
-  for (i = 0; i < nfd; i++)
+  for (nfds_t i = 0; i < nfd; i++)
     {
       int happened;
 

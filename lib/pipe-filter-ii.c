@@ -120,13 +120,12 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
   PSEMRECORD psr;
   ULONG ulUser;
   ULONG rc = (ULONG) -1;
-  DWORD i;
 
   psr = malloc (sizeof (*psr) * nCount);
   if (!psr)
     goto exit_return;
 
-  for (i = 0; i < nCount; ++i)
+  for (DWORD i = 0; i < nCount; ++i)
     {
       psr[i].hsemCur = (HSEM) pHandles[i]->hevDone;
       psr[i].ulUser  = WAIT_OBJECT_0 + i;

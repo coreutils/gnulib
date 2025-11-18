@@ -95,9 +95,8 @@ static bool
 gl_tree_search (gl_oset_t set, const void *elt)
 {
   gl_setelement_compar_fn compar = set->base.compar_fn;
-  gl_oset_node_t node;
 
-  for (node = set->root; node != NULL; )
+  for (gl_oset_node_t node = set->root; node != NULL; )
     {
       int cmp = (compar != NULL
                  ? compar (node->value, elt)
@@ -121,9 +120,7 @@ gl_tree_search_atleast (gl_oset_t set,
                         const void *threshold,
                         const void **eltp)
 {
-  gl_oset_node_t node;
-
-  for (node = set->root; node != NULL; )
+  for (gl_oset_node_t node = set->root; node != NULL; )
     {
       if (! threshold_fn (node->value, threshold))
         node = node->right;
@@ -154,9 +151,8 @@ static gl_oset_node_t
 gl_tree_search_node (gl_oset_t set, const void *elt)
 {
   gl_setelement_compar_fn compar = set->base.compar_fn;
-  gl_oset_node_t node;
 
-  for (node = set->root; node != NULL; )
+  for (gl_oset_node_t node = set->root; node != NULL; )
     {
       int cmp = (compar != NULL
                  ? compar (node->value, elt)
@@ -381,7 +377,6 @@ gl_tree_iterator_atleast (gl_oset_t set,
                           const void *threshold)
 {
   gl_oset_iterator_t result;
-  gl_oset_node_t node;
 
   result.vtable = set->base.vtable;
   result.set = set;
@@ -393,7 +388,7 @@ gl_tree_iterator_atleast (gl_oset_t set,
   result.count = 0;
 #endif
 
-  for (node = set->root; node != NULL; )
+  for (gl_oset_node_t node = set->root; node != NULL; )
     {
       if (! threshold_fn (node->value, threshold))
         node = node->right;

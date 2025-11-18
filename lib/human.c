@@ -362,9 +362,8 @@ human_readable (uintmax_t n, char *buf, int opts,
     {
       if (exponent < 0)
         {
-          uintmax_t power;
           exponent = 0;
-          for (power = 1; power < to_block_size; power *= base)
+          for (uintmax_t power = 1; power < to_block_size; power *= base)
             if (++exponent == exponent_max)
               break;
         }

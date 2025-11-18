@@ -283,9 +283,8 @@ parse_number (const char *nptr,
 
   /* Then, convert the digit sequence to a number.  */
   {
-    const char *dp;
     num = 0;
-    for (dp = digits_start; dp < digits_end; dp++)
+    for (const char *dp = digits_start; dp < digits_end; dp++)
       if (dp != radixchar_ptr)
         {
           int digit;
