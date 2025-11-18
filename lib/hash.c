@@ -49,6 +49,8 @@ struct hash_entry
   {
     void *data;
     struct hash_entry *next;
+    /* Invariant: If DATA is NULL, this entry is an unused bucket head,
+       and therefore NEXT is NULL as well.  */
   };
 
 struct hash_table
