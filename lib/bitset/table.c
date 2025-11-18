@@ -406,14 +406,15 @@ tbitset_equal_p (bitset dst, bitset src)
       tbitset_elt *selt = selts[j];
       tbitset_elt *delt = delts[j];
 
-      if (!selt && !delt)
-        continue;
-      if ((selt && !delt) || (!selt && delt))
-        return false;
+      if (selt || delt)
+        {
+          if ((selt && !delt) || (!selt && delt))
+            return false;
 
-      for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
-        if (TBITSET_WORDS (selt)[i] != TBITSET_WORDS (delt)[i])
-          return false;
+          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
+            if (TBITSET_WORDS (selt)[i] != TBITSET_WORDS (delt)[i])
+              return false;
+        }
     }
   return true;
 }
@@ -645,62 +646,62 @@ tbitset_list (bitset bset, bitset_bindex *list,
   for (; eindex < size; eindex++)
     {
       tbitset_elt *elt = elts[eindex];
-      if (!elt)
-        continue;
-
-      bitset_word *srcp = TBITSET_WORDS (elt);
-      bitset_windex windex = eindex * TBITSET_ELT_WORDS;
-      bitno = windex * BITSET_WORD_BITS;
-
-      /* Is there enough room to avoid checking in each iteration? */
-      if ((count + TBITSET_ELT_BITS) < num)
+      if (elt)
         {
-          /* The coast is clear, plant boot!  */
+          bitset_word *srcp = TBITSET_WORDS (elt);
+          bitset_windex windex = eindex * TBITSET_ELT_WORDS;
+          bitno = windex * BITSET_WORD_BITS;
+
+          /* Is there enough room to avoid checking in each iteration? */
+          if ((count + TBITSET_ELT_BITS) < num)
+            {
+              /* The coast is clear, plant boot!  */
 
 #if TBITSET_ELT_WORDS == 2
-          bitset_word word = srcp[0];
-          if (word)
-            BITSET_FOR_EACH_BIT (pos, word)
-              list[count++] = bitno + pos;
-          windex++;
-          bitno = windex * BITSET_WORD_BITS;
-
-          word = srcp[1];
-          if (word)
-            BITSET_FOR_EACH_BIT (pos, word)
-              list[count++] = bitno + pos;
-          windex++;
-          bitno = windex * BITSET_WORD_BITS;
-#else
-          for (int i = 0; i < TBITSET_ELT_WORDS; i++, windex++)
-            {
-              bitset_word word = srcp[i];
+              bitset_word word = srcp[0];
               if (word)
                 BITSET_FOR_EACH_BIT (pos, word)
                   list[count++] = bitno + pos;
-              bitno = windex * BITSET_WORD_BITS;
-            }
-#endif
-        }
-      else
-        {
-          /* Tread more carefully since we need to check
-             if array overflows.  */
-          for (int i = 0; i < TBITSET_ELT_WORDS; i++)
-            {
-              bitset_word word = srcp[i];
-              if (word)
-                BITSET_FOR_EACH_BIT (pos, word)
-                  {
-                    list[count++] = bitno + pos;
-                    if (count >= num)
-                      {
-                        *next = bitno + pos + 1;
-                        return count;
-                      }
-                  }
               windex++;
               bitno = windex * BITSET_WORD_BITS;
+
+              word = srcp[1];
+              if (word)
+                BITSET_FOR_EACH_BIT (pos, word)
+                  list[count++] = bitno + pos;
+              windex++;
+              bitno = windex * BITSET_WORD_BITS;
+#else
+              for (int i = 0; i < TBITSET_ELT_WORDS; i++, windex++)
+                {
+                  bitset_word word = srcp[i];
+                  if (word)
+                    BITSET_FOR_EACH_BIT (pos, word)
+                      list[count++] = bitno + pos;
+                  bitno = windex * BITSET_WORD_BITS;
+                }
+#endif
+            }
+          else
+            {
+              /* Tread more carefully since we need to check
+                 if array overflows.  */
+              for (int i = 0; i < TBITSET_ELT_WORDS; i++)
+                {
+                  bitset_word word = srcp[i];
+                  if (word)
+                    BITSET_FOR_EACH_BIT (pos, word)
+                      {
+                        list[count++] = bitno + pos;
+                        if (count >= num)
+                          {
+                            *next = bitno + pos + 1;
+                            return count;
+                          }
+                      }
+                  windex++;
+                  bitno = windex * BITSET_WORD_BITS;
+                }
             }
         }
     }
@@ -821,18 +822,18 @@ tbitset_subset_p (bitset dst, bitset src)
       tbitset_elt *selt = j < ssize ? selts[j] : NULL;
       tbitset_elt *delt = j < dsize ? delts[j] : NULL;
 
-      if (!selt && !delt)
-        continue;
+      if (selt || delt)
+        {
+          if (!selt)
+            selt = &tbitset_zero_elts[0];
+          if (!delt)
+            delt = &tbitset_zero_elts[0];
 
-      if (!selt)
-        selt = &tbitset_zero_elts[0];
-      if (!delt)
-        delt = &tbitset_zero_elts[0];
-
-      for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
-        if (TBITSET_WORDS (delt)[i]
-            != (TBITSET_WORDS (selt)[i] | TBITSET_WORDS (delt)[i]))
-          return false;
+          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
+            if (TBITSET_WORDS (delt)[i]
+                != (TBITSET_WORDS (selt)[i] | TBITSET_WORDS (delt)[i]))
+              return false;
+        }
     }
   return true;
 }
@@ -853,12 +854,12 @@ tbitset_disjoint_p (bitset dst, bitset src)
       tbitset_elt *selt = j < ssize ? selts[j] : NULL;
       tbitset_elt *delt = j < dsize ? delts[j] : NULL;
 
-      if (!selt || !delt)
-        continue;
-
-      for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
-        if ((TBITSET_WORDS (selt)[i] & TBITSET_WORDS (delt)[i]))
-          return false;
+      if (selt && delt)
+        {
+          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++)
+            if ((TBITSET_WORDS (selt)[i] & TBITSET_WORDS (delt)[i]))
+              return false;
+        }
     }
   return true;
 }
@@ -897,83 +898,84 @@ tbitset_op3_cmp (bitset dst, bitset src1, bitset src2, enum bitset_ops op)
               changed = true;
               tbitset_elt_remove (dst, j);
             }
-          continue;
         }
-
-      if (!selt1)
-        selt1 = &tbitset_zero_elts[0];
-      if (!selt2)
-        selt2 = &tbitset_zero_elts[0];
-      if (!delt)
-        delt = tbitset_elt_calloc ();
       else
-        delts[j] = NULL;
-
-      bitset_word *srcp1 = TBITSET_WORDS (selt1);
-      bitset_word *srcp2 = TBITSET_WORDS (selt2);
-      bitset_word *dstp = TBITSET_WORDS (delt);
-      switch (op)
         {
-        default:
-          abort ();
+          if (!selt1)
+            selt1 = &tbitset_zero_elts[0];
+          if (!selt2)
+            selt2 = &tbitset_zero_elts[0];
+          if (!delt)
+            delt = tbitset_elt_calloc ();
+          else
+            delts[j] = NULL;
 
-        case BITSET_OP_OR:
-          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
+          bitset_word *srcp1 = TBITSET_WORDS (selt1);
+          bitset_word *srcp2 = TBITSET_WORDS (selt2);
+          bitset_word *dstp = TBITSET_WORDS (delt);
+          switch (op)
             {
-              bitset_word tmp = *srcp1++ | *srcp2++;
+            default:
+              abort ();
 
-              if (*dstp != tmp)
+            case BITSET_OP_OR:
+              for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
                 {
-                  changed = true;
-                  *dstp = tmp;
+                  bitset_word tmp = *srcp1++ | *srcp2++;
+
+                  if (*dstp != tmp)
+                    {
+                      changed = true;
+                      *dstp = tmp;
+                    }
                 }
-            }
-          break;
+              break;
 
-        case BITSET_OP_AND:
-          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
-            {
-              bitset_word tmp = *srcp1++ & *srcp2++;
-
-              if (*dstp != tmp)
+            case BITSET_OP_AND:
+              for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
                 {
-                  changed = true;
-                  *dstp = tmp;
+                  bitset_word tmp = *srcp1++ & *srcp2++;
+
+                  if (*dstp != tmp)
+                    {
+                      changed = true;
+                      *dstp = tmp;
+                    }
                 }
-            }
-          break;
+              break;
 
-        case BITSET_OP_XOR:
-          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
-            {
-              bitset_word tmp = *srcp1++ ^ *srcp2++;
-
-              if (*dstp != tmp)
+            case BITSET_OP_XOR:
+              for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
                 {
-                  changed = true;
-                  *dstp = tmp;
+                  bitset_word tmp = *srcp1++ ^ *srcp2++;
+
+                  if (*dstp != tmp)
+                    {
+                      changed = true;
+                      *dstp = tmp;
+                    }
                 }
-            }
-          break;
+              break;
 
-        case BITSET_OP_ANDN:
-          for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
-            {
-              bitset_word tmp = *srcp1++ & ~(*srcp2++);
-
-              if (*dstp != tmp)
+            case BITSET_OP_ANDN:
+              for (unsigned i = 0; i < TBITSET_ELT_WORDS; i++, dstp++)
                 {
-                  changed = true;
-                  *dstp = tmp;
+                  bitset_word tmp = *srcp1++ & ~(*srcp2++);
+
+                  if (*dstp != tmp)
+                    {
+                      changed = true;
+                      *dstp = tmp;
+                    }
                 }
+              break;
             }
-          break;
+
+          if (!tbitset_elt_zero_p (delt))
+            tbitset_elt_add (dst, delt, j);
+          else
+            tbitset_elt_free (delt);
         }
-
-      if (!tbitset_elt_zero_p (delt))
-        tbitset_elt_add (dst, delt, j);
-      else
-        tbitset_elt_free (delt);
     }
 
   /* If we have elements of DST left over, free them all.  */

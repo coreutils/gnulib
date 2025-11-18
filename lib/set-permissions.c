@@ -99,9 +99,9 @@ set_acls_from_mode (const char *name, int desc, mode_t mode, bool *must_chmod)
                 errno = ENOMEM;
                 return -1;
               }
-            continue;
           }
-        break;
+        else
+          break;
       }
 
     if (count <= 0)

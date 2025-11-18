@@ -82,29 +82,29 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
         {
           int n;
 
-          if (!streq (username, *cp))
-            continue;
-
-          /* See if this group number is already on the list.  */
-          for (n = 0; n < count; ++n)
-            if (grouplist && grouplist[n] == grp->gr_gid)
-              break;
-
-          /* If it's a new group number, then try to add it to the list.  */
-          if (n == count)
+          if (streq (username, *cp))
             {
-              if (maxcount != 0)
+              /* See if this group number is already on the list.  */
+              for (n = 0; n < count; ++n)
+                if (grouplist && grouplist[n] == grp->gr_gid)
+                  break;
+
+              /* If it's a new group number, then try to add it to the list.  */
+              if (n == count)
                 {
-                  if (count >= maxcount)
-                    goto done;
-                  grouplist[count] = grp->gr_gid;
+                  if (maxcount != 0)
+                    {
+                      if (count >= maxcount)
+                        goto done;
+                      grouplist[count] = grp->gr_gid;
+                    }
+                  if (count == INT_MAX)
+                    {
+                      errno = EOVERFLOW;
+                      goto done;
+                    }
+                  count++;
                 }
-              if (count == INT_MAX)
-                {
-                  errno = EOVERFLOW;
-                  goto done;
-                }
-              count++;
             }
         }
     }

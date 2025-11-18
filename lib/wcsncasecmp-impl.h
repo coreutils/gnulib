@@ -22,15 +22,12 @@ wcsncasecmp (const wchar_t *s1, const wchar_t *s2, size_t n)
     {
       wchar_t wc1 = towlower (*s1++);
       wchar_t wc2 = towlower (*s2++);
-      if (wc1 != (wchar_t)'\0' && wc1 == wc2)
-        {
-          n--;
-          continue;
-        }
-      /* Note that wc1 and wc2 each have at most 31 bits.  */
-      return (int)wc1 - (int)wc2;
-             /* > 0 if wc1 > wc2, < 0 if wc1 < wc2,
-                = 0 if wc1 and wc2 are both '\0'.  */
+      if (wc1 == (wchar_t)'\0' || wc1 != wc2)
+        /* Note that wc1 and wc2 each have at most 31 bits.  */
+        return (int)wc1 - (int)wc2;
+               /* > 0 if wc1 > wc2, < 0 if wc1 < wc2,
+                  = 0 if wc1 and wc2 are both '\0'.  */
+      n--;
     }
   return 0;
 }

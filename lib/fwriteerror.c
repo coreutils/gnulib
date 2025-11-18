@@ -151,25 +151,24 @@ main ()
           FILE *stream = fopen (UNWRITABLE_FILE, "w");
 
           if (stream == NULL)
-            {
-              fprintf (stderr, "Test %u:%u: could not open file\n", i, j);
-              continue;
-            }
-
-          fwrite (dummy, 347, 1, stream);
-          fwrite (dummy, size - 347, 1, stream);
-          if (j)
-            fflush (stream);
-
-          if (fwriteerror (stream) == -1)
-            {
-              if (errno != ENOSPC)
-                fprintf (stderr, "Test %u:%u: fwriteerror ok, errno = %d\n",
-                         i, j, errno);
-            }
+            fprintf (stderr, "Test %u:%u: could not open file\n", i, j);
           else
-            fprintf (stderr, "Test %u:%u: fwriteerror found no error!\n",
-                     i, j);
+            {
+              fwrite (dummy, 347, 1, stream);
+              fwrite (dummy, size - 347, 1, stream);
+              if (j)
+                fflush (stream);
+
+              if (fwriteerror (stream) == -1)
+                {
+                  if (errno != ENOSPC)
+                    fprintf (stderr, "Test %u:%u: fwriteerror ok, errno = %d\n",
+                             i, j, errno);
+                }
+              else
+                fprintf (stderr, "Test %u:%u: fwriteerror found no error!\n",
+                         i, j);
+            }
         }
     }
 

@@ -319,12 +319,12 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
       {
         fd = rfds->fd_array[i];
         h = (HANDLE) _get_osfhandle (fd);
-        if (IsConsoleHandle (h)
-            && !GetNumberOfConsoleInputEvents (h, &nbuffer))
-          continue;
-
-        rbits.in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
-        anyfds_in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+        if (!IsConsoleHandle (h)
+            || GetNumberOfConsoleInputEvents (h, &nbuffer))
+          {
+            rbits.in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+            anyfds_in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+          }
       }
   else
     rfds = (fd_set *) alloca (sizeof (fd_set));
@@ -334,12 +334,12 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
       {
         fd = wfds->fd_array[i];
         h = (HANDLE) _get_osfhandle (fd);
-        if (IsConsoleHandle (h)
-            && GetNumberOfConsoleInputEvents (h, &nbuffer))
-          continue;
-
-        wbits.in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
-        anyfds_in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+        if (!IsConsoleHandle (h)
+            || !GetNumberOfConsoleInputEvents (h, &nbuffer))
+          {
+            wbits.in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+            anyfds_in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
+          }
       }
   else
     wfds = (fd_set *) alloca (sizeof (fd_set));
@@ -365,52 +365,52 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   /* Classify handles.  Create fd sets for sockets, poll the others. */
   for (int i = 0; i < nfds; i++)
     {
-      if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) == 0)
-        continue;
-
-      h = (HANDLE) _get_osfhandle (i);
-      if (!h)
+      if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
         {
-          errno = EBADF;
-          return -1;
-        }
-
-      if (IsSocketHandle (h))
-        {
-          int requested = FD_CLOSE;
-
-          /* See above; socket handles are mapped onto select, but we
-             need to map descriptors to handles.  */
-          if (rbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+          h = (HANDLE) _get_osfhandle (i);
+          if (!h)
             {
-              requested |= FD_READ | FD_ACCEPT;
-              FD_SET ((SOCKET) h, rfds);
-              FD_SET ((SOCKET) h, &handle_rfds);
-            }
-          if (wbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            {
-              requested |= FD_WRITE | FD_CONNECT;
-              FD_SET ((SOCKET) h, wfds);
-              FD_SET ((SOCKET) h, &handle_wfds);
-            }
-          if (xbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            {
-              requested |= FD_OOB;
-              FD_SET ((SOCKET) h, xfds);
-              FD_SET ((SOCKET) h, &handle_xfds);
+              errno = EBADF;
+              return -1;
             }
 
-          WSAEventSelect ((SOCKET) h, hEvent, requested);
-          nsock++;
-        }
-      else
-        {
-          handle_array[nhandles++] = h;
+          if (IsSocketHandle (h))
+            {
+              int requested = FD_CLOSE;
 
-          /* Poll now.  If we get an event, do not wait below.  */
-          if (wait_timeout != 0
-              && windows_poll_handle (h, i, &rbits, &wbits, &xbits))
-            wait_timeout = 0;
+              /* See above; socket handles are mapped onto select, but we
+                 need to map descriptors to handles.  */
+              if (rbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                {
+                  requested |= FD_READ | FD_ACCEPT;
+                  FD_SET ((SOCKET) h, rfds);
+                  FD_SET ((SOCKET) h, &handle_rfds);
+                }
+              if (wbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                {
+                  requested |= FD_WRITE | FD_CONNECT;
+                  FD_SET ((SOCKET) h, wfds);
+                  FD_SET ((SOCKET) h, &handle_wfds);
+                }
+              if (xbits.in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                {
+                  requested |= FD_OOB;
+                  FD_SET ((SOCKET) h, xfds);
+                  FD_SET ((SOCKET) h, &handle_xfds);
+                }
+
+              WSAEventSelect ((SOCKET) h, hEvent, requested);
+              nsock++;
+            }
+          else
+            {
+              handle_array[nhandles++] = h;
+
+              /* Poll now.  If we get an event, do not wait below.  */
+              if (wait_timeout != 0
+                  && windows_poll_handle (h, i, &rbits, &wbits, &xbits))
+                wait_timeout = 0;
+            }
         }
     }
 
@@ -480,19 +480,19 @@ restart:
       nhandles = 1;
       for (int i = 0; i < nfds; i++)
         {
-          if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) == 0)
-            continue;
-
-          h = (HANDLE) _get_osfhandle (i);
-          if (h == handle_array[nhandles])
+          if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
             {
-              /* Not a socket.  */
-              nhandles++;
-              windows_poll_handle (h, i, &rbits, &wbits, &xbits);
-              if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
-                  || wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
-                  || xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-                rc++;
+              h = (HANDLE) _get_osfhandle (i);
+              if (h == handle_array[nhandles])
+                {
+                  /* Not a socket.  */
+                  nhandles++;
+                  windows_poll_handle (h, i, &rbits, &wbits, &xbits);
+                  if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
+                      || wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
+                      || xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                    rc++;
+                }
             }
         }
 
@@ -526,32 +526,32 @@ restart:
   nhandles = 1;
   for (int i = 0; i < nfds; i++)
     {
-      if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) == 0)
-        continue;
-
-      h = (HANDLE) _get_osfhandle (i);
-      if (h != handle_array[nhandles])
+      if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
         {
-          /* Perform handle->descriptor mapping.  */
-          SOCKET s = (SOCKET) h;
-          WSAEventSelect (s, NULL, 0);
-          if (FD_ISSET (s, &handle_rfds))
-            FD_SET (i, rfds);
-          if (FD_ISSET (s, &handle_wfds))
-            FD_SET (i, wfds);
-          if (FD_ISSET (s, &handle_xfds))
-            FD_SET (i, xfds);
-        }
-      else
-        {
-          /* Not a socket.  */
-          nhandles++;
-          if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            FD_SET (i, rfds);
-          if (wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            FD_SET (i, wfds);
-          if (xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            FD_SET (i, xfds);
+          h = (HANDLE) _get_osfhandle (i);
+          if (h != handle_array[nhandles])
+            {
+              /* Perform handle->descriptor mapping.  */
+              SOCKET s = (SOCKET) h;
+              WSAEventSelect (s, NULL, 0);
+              if (FD_ISSET (s, &handle_rfds))
+                FD_SET (i, rfds);
+              if (FD_ISSET (s, &handle_wfds))
+                FD_SET (i, wfds);
+              if (FD_ISSET (s, &handle_xfds))
+                FD_SET (i, xfds);
+            }
+          else
+            {
+              /* Not a socket.  */
+              nhandles++;
+              if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                FD_SET (i, rfds);
+              if (wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                FD_SET (i, wfds);
+              if (xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                FD_SET (i, xfds);
+            }
         }
     }
 

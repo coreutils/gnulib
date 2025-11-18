@@ -495,61 +495,61 @@ read_file_system_list (bool need_fs_type)
                               &devmaj, &devmin,
                               &mntroot_s);
 
-            if (rc != 2 && rc != 3)  /* 3 if %n included in count.  */
-              continue;
+            if (rc == 2 || rc == 3)  /* 3 if %n included in count.  */
+              {
+                /* find end of MNTROOT.  */
+                char *mntroot = line + mntroot_s;
+                char *blank = terminate_at_blank (mntroot);
+                if (blank)
+                  {
+                    /* find end of TARGET.  */
+                    char *target = blank + 1;
+                    blank = terminate_at_blank (target);
+                    if (blank)
+                      {
+                        /* skip optional fields, terminated by " - "  */
+                        char *dash = strstr (blank + 1, " - ");
+                        if (dash)
+                          {
+                            /* advance past the " - " separator.  */
+                            char *fstype = dash + 3;
+                            blank = terminate_at_blank (fstype);
+                            if (blank)
+                              {
+                                /* find end of SOURCE.  */
+                                char *source = blank + 1;
+                                if (terminate_at_blank (source))
+                                  {
+                                    /* manipulate the sub-strings in place.  */
+                                    unescape_tab (source);
+                                    unescape_tab (target);
+                                    unescape_tab (mntroot);
+                                    unescape_tab (fstype);
 
-            /* find end of MNTROOT.  */
-            char *mntroot = line + mntroot_s;
-            char *blank = terminate_at_blank (mntroot);
-            if (! blank)
-              continue;
+                                    me = xmalloc (sizeof *me);
 
-            /* find end of TARGET.  */
-            char *target = blank + 1;
-            blank = terminate_at_blank (target);
-            if (! blank)
-              continue;
+                                    me->me_devname = xstrdup (source);
+                                    me->me_mountdir = xstrdup (target);
+                                    me->me_mntroot = xstrdup (mntroot);
+                                    me->me_type = xstrdup (fstype);
+                                    me->me_type_malloced = 1;
+                                    me->me_dev = makedev (devmaj, devmin);
+                                    /* we pass "false" for the "Bind" option as that's only
+                                       significant when the Fs_type is "none" which will not be
+                                       the case when parsing "/proc/self/mountinfo", and only
+                                       applies for static /etc/mtab files.  */
+                                    me->me_dummy = ME_DUMMY (me->me_devname, me->me_type, false);
+                                    me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
 
-            /* skip optional fields, terminated by " - "  */
-            char *dash = strstr (blank + 1, " - ");
-            if (! dash)
-              continue;
-
-            /* advance past the " - " separator.  */
-            char *fstype = dash + 3;
-            blank = terminate_at_blank (fstype);
-            if (! blank)
-              continue;
-
-            /* find end of SOURCE.  */
-            char *source = blank + 1;
-            if (! terminate_at_blank (source))
-              continue;
-
-            /* manipulate the sub-strings in place.  */
-            unescape_tab (source);
-            unescape_tab (target);
-            unescape_tab (mntroot);
-            unescape_tab (fstype);
-
-            me = xmalloc (sizeof *me);
-
-            me->me_devname = xstrdup (source);
-            me->me_mountdir = xstrdup (target);
-            me->me_mntroot = xstrdup (mntroot);
-            me->me_type = xstrdup (fstype);
-            me->me_type_malloced = 1;
-            me->me_dev = makedev (devmaj, devmin);
-            /* we pass "false" for the "Bind" option as that's only
-               significant when the Fs_type is "none" which will not be
-               the case when parsing "/proc/self/mountinfo", and only
-               applies for static /etc/mtab files.  */
-            me->me_dummy = ME_DUMMY (me->me_devname, me->me_type, false);
-            me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
-
-            /* Add to the linked list. */
-            *mtail = me;
-            mtail = &me->me_next;
+                                    /* Add to the linked list. */
+                                    *mtail = me;
+                                    mtail = &me->me_next;
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
           }
 
         free (line);
@@ -695,31 +695,31 @@ read_file_system_list (bool need_fs_type)
             char *name;
             struct stat statbuf;
 
-            if (streq (d->d_name, ".."))
-              continue;
-
-            if (streq (d->d_name, "."))
-              name = xstrdup ("/");
-            else
+            if (! streq (d->d_name, ".."))
               {
-                name = xmalloc (1 + strlen (d->d_name) + 1);
-                name[0] = '/';
-                strcpy (name + 1, d->d_name);
-              }
+                if (streq (d->d_name, "."))
+                  name = xstrdup ("/");
+                else
+                  {
+                    name = xmalloc (1 + strlen (d->d_name) + 1);
+                    name[0] = '/';
+                    strcpy (name + 1, d->d_name);
+                  }
 
-            if (lstat (name, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))
-              {
-                struct rootdir_entry *re = xmalloc (sizeof *re);
-                re->name = name;
-                re->dev = statbuf.st_dev;
-                re->ino = statbuf.st_ino;
+                if (lstat (name, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))
+                  {
+                    struct rootdir_entry *re = xmalloc (sizeof *re);
+                    re->name = name;
+                    re->dev = statbuf.st_dev;
+                    re->ino = statbuf.st_ino;
 
-                /* Add to the linked list.  */
-                *rootdir_tail = re;
-                rootdir_tail = &re->next;
+                    /* Add to the linked list.  */
+                    *rootdir_tail = re;
+                    rootdir_tail = &re->next;
+                  }
+                else
+                  free (name);
               }
-            else
-              free (name);
           }
         closedir (dirp);
       }

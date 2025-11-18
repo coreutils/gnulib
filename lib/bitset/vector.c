@@ -260,23 +260,23 @@ vbitset_list (bitset src, bitset_bindex *list,
   for (; windex < size; windex++, bitoff += BITSET_WORD_BITS)
     {
       bitset_word word = srcp[windex];
-      if (!word)
-        continue;
-
-      /* Is there enough room to avoid checking in each iteration? */
-      if ((count + BITSET_WORD_BITS) < num)
-        BITSET_FOR_EACH_BIT (pos, word)
-          list[count++] = bitoff + pos;
-      else
-        BITSET_FOR_EACH_BIT (pos, word)
-          {
-            list[count++] = bitoff + pos;
-            if (count >= num)
+      if (word)
+        {
+          /* Is there enough room to avoid checking in each iteration? */
+          if ((count + BITSET_WORD_BITS) < num)
+            BITSET_FOR_EACH_BIT (pos, word)
+              list[count++] = bitoff + pos;
+          else
+            BITSET_FOR_EACH_BIT (pos, word)
               {
-                *next = bitoff + pos + 1;
-                return count;
+                list[count++] = bitoff + pos;
+                if (count >= num)
+                  {
+                    *next = bitoff + pos + 1;
+                    return count;
+                  }
               }
-          }
+        }
     }
 
   *next = bitoff;

@@ -921,12 +921,13 @@ lbitset_disjoint_p (bitset dst, bitset src)
             }
           /* Since the elements are different, there is no
              intersection of these elements.  */
-          continue;
         }
-
-      for (unsigned j = 0; j < LBITSET_ELT_WORDS; j++)
-        if (selt->words[j] & delt->words[j])
-          return false;
+      else
+        {
+          for (unsigned j = 0; j < LBITSET_ELT_WORDS; j++)
+            if (selt->words[j] & delt->words[j])
+              return false;
+        }
     }
   return true;
 }

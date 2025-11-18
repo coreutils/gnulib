@@ -505,35 +505,36 @@ base64_decode_ctx (struct base64_decode_context *ctx,
         {
           ++in;
           --inlen;
-          continue;
         }
+      else
+        {
+          /* Restore OUT and OUTLEFT.  */
+          out -= outleft_save - outleft;
+          outleft = outleft_save;
 
-      /* Restore OUT and OUTLEFT.  */
-      out -= outleft_save - outleft;
-      outleft = outleft_save;
-
-      {
-        char const *in_end = in + inlen;
-        char const *non_nl;
-
-        if (ignore_newlines)
-          non_nl = get_4 (ctx, &in, in_end, &inlen);
-        else
-          non_nl = in;  /* Might have nl in this case. */
-
-        /* If the input is empty or consists solely of newlines (0 non-newlines),
-           then we're done.  Likewise if there are fewer than 4 bytes when not
-           flushing context and not treating newlines as garbage.  */
-        if (inlen == 0 || (inlen < 4 && !flush_ctx && ignore_newlines))
           {
-            inlen = 0;
-            break;
-          }
-        if (!decode_4 (non_nl, inlen, &out, &outleft))
-          break;
+            char const *in_end = in + inlen;
+            char const *non_nl;
 
-        inlen = in_end - in;
-      }
+            if (ignore_newlines)
+              non_nl = get_4 (ctx, &in, in_end, &inlen);
+            else
+              non_nl = in;  /* Might have nl in this case. */
+
+            /* If the input is empty or consists solely of newlines (0 non-newlines),
+               then we're done.  Likewise if there are fewer than 4 bytes when not
+               flushing context and not treating newlines as garbage.  */
+            if (inlen == 0 || (inlen < 4 && !flush_ctx && ignore_newlines))
+              {
+                inlen = 0;
+                break;
+              }
+            if (!decode_4 (non_nl, inlen, &out, &outleft))
+              break;
+
+            inlen = in_end - in;
+          }
+        }
     }
 
   *outlen -= outleft;

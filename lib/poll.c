@@ -417,26 +417,27 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   FD_ZERO (&efds);
   for (int i = 0; i < nfd; i++)
     {
-      if (pfd[i].fd < 0)
-        continue;
-      if (maxfd < pfd[i].fd)
+      if (pfd[i].fd >= 0)
         {
-          maxfd = pfd[i].fd;
-          if (FD_SETSIZE <= maxfd)
+          if (maxfd < pfd[i].fd)
             {
-              errno = EINVAL;
-              return -1;
+              maxfd = pfd[i].fd;
+              if (FD_SETSIZE <= maxfd)
+                {
+                  errno = EINVAL;
+                  return -1;
+                }
             }
+          if (pfd[i].events & (POLLIN | POLLRDNORM))
+            FD_SET (pfd[i].fd, &rfds);
+          /* see select(2): "the only exceptional condition detectable
+             is out-of-band data received on a socket", hence we push
+             POLLWRBAND events onto wfds instead of efds. */
+          if (pfd[i].events & (POLLOUT | POLLWRNORM | POLLWRBAND))
+            FD_SET (pfd[i].fd, &wfds);
+          if (pfd[i].events & (POLLPRI | POLLRDBAND))
+            FD_SET (pfd[i].fd, &efds);
         }
-      if (pfd[i].events & (POLLIN | POLLRDNORM))
-        FD_SET (pfd[i].fd, &rfds);
-      /* see select(2): "the only exceptional condition detectable
-         is out-of-band data received on a socket", hence we push
-         POLLWRBAND events onto wfds instead of efds. */
-      if (pfd[i].events & (POLLOUT | POLLWRNORM | POLLWRBAND))
-        FD_SET (pfd[i].fd, &wfds);
-      if (pfd[i].events & (POLLPRI | POLLRDBAND))
-        FD_SET (pfd[i].fd, &efds);
     }
 
   /* examine fd sets */
@@ -488,49 +489,48 @@ restart:
     {
       int sought = pfd[i].events;
       pfd[i].revents = 0;
-      if (pfd[i].fd < 0)
-        continue;
-      if (!(sought & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM | POLLWRBAND
-                      | POLLPRI | POLLRDBAND)))
-        continue;
-
-      h = (HANDLE) _get_osfhandle (pfd[i].fd);
-      assure (h != NULL);
-      if (IsSocketHandle (h))
+      if (pfd[i].fd >= 0
+          && (sought & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM | POLLWRBAND
+                        | POLLPRI | POLLRDBAND)))
         {
-          int requested = FD_CLOSE;
+          h = (HANDLE) _get_osfhandle (pfd[i].fd);
+          assure (h != NULL);
+          if (IsSocketHandle (h))
+            {
+              int requested = FD_CLOSE;
 
-          /* see above; socket handles are mapped onto select.  */
-          if (sought & (POLLIN | POLLRDNORM))
-            {
-              requested |= FD_READ | FD_ACCEPT;
-              FD_SET ((SOCKET) h, &rfds);
-            }
-          if (sought & (POLLOUT | POLLWRNORM | POLLWRBAND))
-            {
-              requested |= FD_WRITE | FD_CONNECT;
-              FD_SET ((SOCKET) h, &wfds);
-            }
-          if (sought & (POLLPRI | POLLRDBAND))
-            {
-              requested |= FD_OOB;
-              FD_SET ((SOCKET) h, &xfds);
-            }
+              /* see above; socket handles are mapped onto select.  */
+              if (sought & (POLLIN | POLLRDNORM))
+                {
+                  requested |= FD_READ | FD_ACCEPT;
+                  FD_SET ((SOCKET) h, &rfds);
+                }
+              if (sought & (POLLOUT | POLLWRNORM | POLLWRBAND))
+                {
+                  requested |= FD_WRITE | FD_CONNECT;
+                  FD_SET ((SOCKET) h, &wfds);
+                }
+              if (sought & (POLLPRI | POLLRDBAND))
+                {
+                  requested |= FD_OOB;
+                  FD_SET ((SOCKET) h, &xfds);
+                }
 
-          if (requested)
-            WSAEventSelect ((SOCKET) h, hEvent, requested);
-        }
-      else
-        {
-          /* Poll now.  If we get an event, do not poll again.  Also,
-             screen buffer handles are waitable, and they'll block until
-             a character is available.  windows_compute_revents eliminates
-             bits for the "wrong" direction. */
-          pfd[i].revents = windows_compute_revents (h, &sought);
-          if (sought)
-            handle_array[nhandles++] = h;
-          if (pfd[i].revents)
-            timeout = 0;
+              if (requested)
+                WSAEventSelect ((SOCKET) h, hEvent, requested);
+            }
+          else
+            {
+              /* Poll now.  If we get an event, do not poll again.  Also,
+                 screen buffer handles are waitable, and they'll block until
+                 a character is available.  windows_compute_revents eliminates
+                 bits for the "wrong" direction. */
+              pfd[i].revents = windows_compute_revents (h, &sought);
+              if (sought)
+                handle_array[nhandles++] = h;
+              if (pfd[i].revents)
+                timeout = 0;
+            }
         }
     }
 
@@ -579,42 +579,41 @@ restart:
     {
       int happened;
 
-      if (pfd[i].fd < 0)
-        continue;
-      if (!(pfd[i].events & (POLLIN | POLLRDNORM |
-                             POLLOUT | POLLWRNORM | POLLWRBAND)))
-        continue;
-
-      h = (HANDLE) _get_osfhandle (pfd[i].fd);
-      if (h != handle_array[nhandles])
+      if (pfd[i].fd >= 0
+          && (pfd[i].events & (POLLIN | POLLRDNORM |
+                               POLLOUT | POLLWRNORM | POLLWRBAND)))
         {
-          /* It's a socket.  */
-          WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
-          WSAEventSelect ((SOCKET) h, 0, 0);
+          h = (HANDLE) _get_osfhandle (pfd[i].fd);
+          if (h != handle_array[nhandles])
+            {
+              /* It's a socket.  */
+              WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
+              WSAEventSelect ((SOCKET) h, 0, 0);
 
-          /* If we're lucky, WSAEnumNetworkEvents already provided a way
-             to distinguish FD_READ and FD_ACCEPT; this saves a recv later.  */
-          if (FD_ISSET ((SOCKET) h, &rfds)
-              && !(ev.lNetworkEvents & (FD_READ | FD_ACCEPT)))
-            ev.lNetworkEvents |= FD_READ | FD_ACCEPT;
-          if (FD_ISSET ((SOCKET) h, &wfds))
-            ev.lNetworkEvents |= FD_WRITE | FD_CONNECT;
-          if (FD_ISSET ((SOCKET) h, &xfds))
-            ev.lNetworkEvents |= FD_OOB;
+              /* If we're lucky, WSAEnumNetworkEvents already provided a way
+                 to distinguish FD_READ and FD_ACCEPT; this saves a recv later.  */
+              if (FD_ISSET ((SOCKET) h, &rfds)
+                  && !(ev.lNetworkEvents & (FD_READ | FD_ACCEPT)))
+                ev.lNetworkEvents |= FD_READ | FD_ACCEPT;
+              if (FD_ISSET ((SOCKET) h, &wfds))
+                ev.lNetworkEvents |= FD_WRITE | FD_CONNECT;
+              if (FD_ISSET ((SOCKET) h, &xfds))
+                ev.lNetworkEvents |= FD_OOB;
 
-          happened = windows_compute_revents_socket ((SOCKET) h, pfd[i].events,
-                                                     ev.lNetworkEvents);
+              happened = windows_compute_revents_socket ((SOCKET) h, pfd[i].events,
+                                                         ev.lNetworkEvents);
+            }
+          else
+            {
+              /* Not a socket.  */
+              int sought = pfd[i].events;
+              happened = windows_compute_revents (h, &sought);
+              nhandles++;
+            }
+
+          if ((pfd[i].revents |= happened) != 0)
+            rc++;
         }
-      else
-        {
-          /* Not a socket.  */
-          int sought = pfd[i].events;
-          happened = windows_compute_revents (h, &sought);
-          nhandles++;
-        }
-
-       if ((pfd[i].revents |= happened) != 0)
-        rc++;
     }
 
   if (!rc && timeout == INFTIM)

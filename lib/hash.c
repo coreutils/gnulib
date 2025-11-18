@@ -740,31 +740,32 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
            state.  */
         data = bucket->data;
         bucket->next = NULL;
-        if (safe)
-          continue;
-        new_bucket = safe_hasher (dst, data);
-
-        if (new_bucket->data)
+        if (!safe)
           {
-            /* Allocate or recycle an entry, when moving from a bucket
-               header into a bucket overflow.  */
-            struct hash_entry *new_entry = allocate_entry (dst);
+            new_bucket = safe_hasher (dst, data);
 
-            if (new_entry == NULL)
-              return false;
+            if (new_bucket->data)
+              {
+                /* Allocate or recycle an entry, when moving from a bucket
+                   header into a bucket overflow.  */
+                struct hash_entry *new_entry = allocate_entry (dst);
 
-            new_entry->data = data;
-            new_entry->next = new_bucket->next;
-            new_bucket->next = new_entry;
+                if (new_entry == NULL)
+                  return false;
+
+                new_entry->data = data;
+                new_entry->next = new_bucket->next;
+                new_bucket->next = new_entry;
+              }
+            else
+              {
+                /* Move from one bucket header to another.  */
+                new_bucket->data = data;
+                dst->n_buckets_used++;
+              }
+            bucket->data = NULL;
+            src->n_buckets_used--;
           }
-        else
-          {
-            /* Move from one bucket header to another.  */
-            new_bucket->data = data;
-            dst->n_buckets_used++;
-          }
-        bucket->data = NULL;
-        src->n_buckets_used--;
       }
   return true;
 }

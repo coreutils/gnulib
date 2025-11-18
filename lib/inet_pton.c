@@ -199,9 +199,8 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
           if (val > 0xffff)
             return (0);
           saw_xdigit = 1;
-          continue;
         }
-      if (ch == ':')
+      else if (ch == ':')
         {
           curtok = src;
           if (!saw_xdigit)
@@ -209,28 +208,30 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
               if (colonp)
                 return (0);
               colonp = tp;
-              continue;
             }
           else if (*src == '\0')
             {
               return (0);
             }
-          if (tp + NS_INT16SZ > endp)
+          else if (tp + NS_INT16SZ > endp)
             return (0);
-          *tp++ = (unsigned char) (val >> 8) & 0xff;
-          *tp++ = (unsigned char) val & 0xff;
-          saw_xdigit = 0;
-          val = 0;
-          continue;
+          else
+            {
+              *tp++ = (unsigned char) (val >> 8) & 0xff;
+              *tp++ = (unsigned char) val & 0xff;
+              saw_xdigit = 0;
+              val = 0;
+            }
         }
-      if (ch == '.' && ((tp + NS_INADDRSZ) <= endp) &&
+      else if (ch == '.' && ((tp + NS_INADDRSZ) <= endp) &&
           inet_pton4 (curtok, tp) > 0)
         {
           tp += NS_INADDRSZ;
           saw_xdigit = 0;
           break;                /* '\0' was seen by inet_pton4(). */
         }
-      return (0);
+      else
+        return (0);
     }
   if (saw_xdigit)
     {
