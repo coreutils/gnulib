@@ -333,15 +333,7 @@ do_test_flags (void)
 static bool
 is_nofollow_error (int err)
 {
-#ifdef EFTYPE /* NetBSD openat+O_NOFOLLOW on symlink */
-  if (err == EFTYPE)
-    return true;
-#endif
-#ifdef EMLINK /* FreeBSD openat+O_NOFOLLOW on symlink */
-  if (err == EMLINK)
-    return true;
-#endif
-  return err == ELOOP;
+  return err == _GL_OPENAT_ESYMLINK;
 }
 
 static void

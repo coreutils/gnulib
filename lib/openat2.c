@@ -333,7 +333,7 @@ do_openat2 (int *fd, char const *filename,
           if (subfd < 0)
             {
               int openerr = negative_errno ();
-              if (! ((openerr == -ELOOP)
+              if (! ((openerr == -_GL_OPENAT_ESYMLINK)
                      | (!!(subflags & O_DIRECTORY) & (openerr == -ENOTDIR))))
                 return openerr;
 
@@ -363,7 +363,7 @@ do_openat2 (int *fd, char const *filename,
                 }
 
               if (maxlinks <= 0)
-                return -ELOOP;
+                return -_GL_OPENAT_ESYMLINK;
               maxlinks--;
 
               /* A symlink and the symlink loop count is not exhausted.
@@ -386,7 +386,7 @@ do_openat2 (int *fd, char const *filename,
                   if (r < 0)
                     return negative_errno ();
                   if (st.f_type == S_MAGIC_PROC)
-                    return -ELOOP;
+                    return -_GL_OPENAT_ESYMLINK;
                 }
 #endif
 
