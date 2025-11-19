@@ -20,6 +20,7 @@
 /* Specification.  */
 #include <wchar.h>
 
+#include <errno.h>
 #include <stdlib.h>
 
 #include "wcsdup-impl.h"

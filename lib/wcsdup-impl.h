@@ -23,7 +23,8 @@ wcsdup (const wchar_t *s)
   if (copy != NULL)
     return wmemcpy (copy, s, n);
   else
-    /* The glibc documentation does not say that errno should be set to ENOMEM
-       here.  */
-    return NULL;
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
 }
