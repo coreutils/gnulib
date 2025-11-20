@@ -49,16 +49,16 @@ check_PROGRAMS += \
   test-nstrftime-TH \
   test-nstrftime-IR \
   test-nstrftime-ET
-test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
-test_nstrftime_DE_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
-test_nstrftime_TH_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
-test_nstrftime_IR_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
-test_nstrftime_ET_LDADD = $(LDADD) $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
+test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBTHREAD)
+test_nstrftime_DE_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBTHREAD)
+test_nstrftime_TH_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBTHREAD)
+test_nstrftime_IR_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBTHREAD)
+test_nstrftime_ET_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBTHREAD)
 
 if OS_IS_NATIVE_WINDOWS
 TESTS += test-nstrftime-w32utf8.sh
 noinst_PROGRAMS += test-nstrftime-w32utf8
-test_nstrftime_w32utf8_LDADD = $(LDADD) test-nstrftime-windows-utf8.res $(SETLOCALE_LIB) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
+test_nstrftime_w32utf8_LDADD = $(LDADD) test-nstrftime-windows-utf8.res $(SETLOCALE_LIB) $(LIBTHREAD)
 test-nstrftime-windows-utf8.res : $(srcdir)/windows-utf8.rc
 	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-nstrftime-windows-utf8.res --output-format=coff
 MOSTLYCLEANFILES += test-nstrftime-windows-utf8.res

@@ -181,7 +181,9 @@ enum pad_style
 #if SUPPORT_NON_GREG_CALENDARS_IN_STRFTIME
 /* Support for non-Gregorian calendars.  */
 # include "localcharset.h"
-# include "localename.h"
+# if !(defined __APPLE__ && defined __MACH__)
+#  include "localename.h"
+# endif
 # include "calendars.h"
 # define CAL_ARGS(x,y) x, y,
 #else
@@ -1137,9 +1139,9 @@ my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #if SUPPORT_NON_GREG_CALENDARS_IN_STRFTIME
   /* Recognize whether to use a non-Gregorian calendar.  */
   const struct calendar *cal = NULL;
-  struct calendar_date caldate;
   if (strcmp (locale_charset (), "UTF-8") == 0)
     {
+# if !(defined __APPLE__ && defined __MACH__)
       const char *loc = gl_locale_name_unsafe (LC_TIME, "LC_TIME");
       if (strlen (loc) >= 5 && !(loc[5] >= 'A' && loc[5] <= 'Z'))
         {
@@ -1149,15 +1151,45 @@ my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             cal = &persian_calendar;
           else if (memcmp (loc, "am_ET", 5) == 0)
             cal = &ethiopian_calendar;
-          if (cal != NULL)
-            {
-              if (cal->from_gregorian (&caldate,
-                                       tp->tm_year + 1900,
-                                       tp->tm_mon,
-                                       tp->tm_mday) < 0)
-                cal = NULL;
-            }
         }
+# else /* defined __APPLE__ && defined __MACH__ */
+      /* Nearly equivalent code for macOS, that avoids the need to link with
+         CoreFoundation.
+         It's not entirely equivalent, because it tests only for the language
+         (Thai, Farsi, Amharic) instead of also for the territory (Thailand,
+         Iran, Ethiopia).  */
+      /* Get the translation of "Monday" in the LC_TIME locale, by calling
+         the underlying strftime function.  */
+      struct tm some_monday; /* 2024-01-01 12:00:00 */
+      memset (&some_monday, '\0', sizeof (struct tm));
+      some_monday.tm_year = 2024 - 1900;
+      some_monday.tm_mon = 1 - 1;
+      some_monday.tm_mday = 1;
+      some_monday.tm_wday = 1; /* Monday */
+      some_monday.tm_hour = 12;
+      some_monday.tm_min = 0;
+      some_monday.tm_sec = 0;
+      char weekday_buf[32];
+      if (strftime (weekday_buf, sizeof (weekday_buf), "%A", &some_monday) > 0)
+        {
+          /* Test for the Thai / Farsi / Amharic translation of "Monday".  */
+          if (streq (weekday_buf, "จันทร์") || streq (weekday_buf, "วันจันทร์"))
+            cal = &thai_calendar;
+          else if (streq (weekday_buf, "ﺩﻮﺸﻨﺒﻫ") || streq (weekday_buf, "دوشنبه"))
+            cal = &persian_calendar;
+          else if (streq (weekday_buf, "ሰኞ"))
+            cal = &ethiopian_calendar;
+        }
+# endif
+    }
+  struct calendar_date caldate;
+  if (cal != NULL)
+    {
+      if (cal->from_gregorian (&caldate,
+                               tp->tm_year + 1900,
+                               tp->tm_mon,
+                               tp->tm_mday) < 0)
+        cal = NULL;
     }
 #endif
   bool tzset_called = false;

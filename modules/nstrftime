@@ -22,7 +22,7 @@ extensions
 intprops
 libc-config
 localcharset
-localename-unsafe
+localename-unsafe [case "$host_os" in darwin*) false ;; *) true ;; esac]
 bool
 stdckdint-h
 stdint-h
@@ -38,7 +38,6 @@ Include:
 "strftime.h"
 
 Link:
-@INTL_MACOSX_LIBS@
 $(LIBTHREAD)
 
 License:
