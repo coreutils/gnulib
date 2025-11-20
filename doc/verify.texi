@@ -77,31 +77,44 @@ compiler may not be able to optimize @var{E} away and @code{assume
 Here are some example uses of these macros.
 
 @example
+@group
 #include <verify.h>
 
 #include <limits.h>
 #include <time.h>
+@end group
 
+@group
 /* Verify that time_t is an integer type.  */
 verify ((time_t) 1.5 == 1);
+@end group
 
+@group
 /* Verify that time_t is no smaller than int.  */
 verify (sizeof (int) <= sizeof (time_t));
+@end group
 
+@group
 /* Verify that time_t is signed.  */
 verify ((time_t) -1 < 0);
+@end group
 
+@group
 /* Verify that time_t uses two's complement representation.  */
 verify (~ (time_t) -1 == 0);
+@end group
 
+@group
 /* Return the maximum value of the integer type T,
    verifying that T is an unsigned integer type.
    The cast to (T) is outside the call to verify_expr
    so that the result is of type T
    even when T is narrower than unsigned int.  */
 #define MAX_UNSIGNED_VAL(t) \
-   ((T) verify_expr (0 < (T) -1, -1))
+   ((t) verify_expr (0 < (t) -1, -1))
+@end group
 
+@group
 /* Return T divided by CHAR_MAX + 1, where behavior is
    undefined if T < 0.  In the common case where CHAR_MAX
    is 127 the compiler can therefore implement the division
@@ -113,6 +126,5 @@ time_index (time_t t)
   assume (0 <= t);
   return t / (CHAR_MAX + 1);
 @}
-
-
+@end group
 @end example
