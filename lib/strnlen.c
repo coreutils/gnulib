@@ -27,7 +27,8 @@ strnlen (const char *s, size_t maxlen)
 {
   /* Do not use memchr, because on some platforms memchr has
      undefined behavior if MAXLEN exceeds the number of bytes in S.  */
-  for (size_t i = 0; i < maxlen && s[i]; i++)
+  size_t i;
+  for (i = 0; i < maxlen && s[i]; i++)
     continue;
   return i;
 }
