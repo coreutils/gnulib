@@ -372,7 +372,7 @@ gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
   _gc_hash_ctx *out;
   int err;
 
-  *outhandle = out = calloc (1, sizeof (*out));
+  out = calloc (1, sizeof (*out));
   if (!out)
     return GC_MALLOC_ERROR;
 
@@ -385,6 +385,7 @@ gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
       return GC_INVALID_HASH;
     }
 
+  *outhandle = out;
   return GC_OK;
 }
 

@@ -630,12 +630,13 @@ gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
   _gc_hash_ctx *in = handle;
   _gc_hash_ctx *out;
 
-  *outhandle = out = calloc (1, sizeof (*out));
+  out = calloc (1, sizeof (*out));
   if (!out)
     return GC_MALLOC_ERROR;
 
   memcpy (out, in, sizeof (*out));
 
+  *outhandle = out;
   return GC_OK;
 }
 
