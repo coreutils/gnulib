@@ -1188,8 +1188,10 @@ _GL_CXXALIASWARN1 (frexp, double, (double x, int *expptr));
 #elif defined GNULIB_POSIXCHECK
 # undef frexp
 /* Assume frexp is always declared.  */
-_GL_WARN_ON_USE (frexp, "frexp is unportable - "
-                 "use gnulib module frexp for portability");
+_GL_WARN_ON_USE_CXX (frexp,
+                     double, double, (double, int *),
+                     "frexp is unportable - "
+                     "use gnulib module frexp for portability");
 #endif
 
 /* Write x as
@@ -1467,8 +1469,10 @@ _GL_CXXALIASWARN1 (ldexp, double, (double x, int exp));
 #elif defined GNULIB_POSIXCHECK
 # undef ldexp
 /* Assume ldexp is always declared.  */
-_GL_WARN_ON_USE (ldexp, "ldexp is unportable - "
-                 "use gnulib module ldexp for portability");
+_GL_WARN_ON_USE_CXX (ldexp,
+                     double, double, (double, int),
+                     "ldexp is unportable - "
+                     "use gnulib module ldexp for portability");
 #endif
 
 /* Return x * 2^exp.  */
