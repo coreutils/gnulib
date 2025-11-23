@@ -410,8 +410,10 @@ _GL_CXXALIASWARN (memchr);
 # endif
 #elif defined GNULIB_POSIXCHECK
 /* Assume memchr is always declared.  */
-_GL_WARN_ON_USE (memchr, "memchr has platform-specific bugs - "
-                 "use gnulib module memchr for portability" );
+_GL_WARN_ON_USE_CXX (memchr,
+                     const void *, void *, (void const *, int, size_t),
+                     "memchr has platform-specific bugs - "
+                     "use gnulib module memchr for portability" );
 #endif
 
 /* Are S1 and S2, of size N, bytewise equal?  */
@@ -1091,11 +1093,13 @@ _GL_CXXALIASWARN (strstr);
    as a sequence of bytes, not of characters.  */
 # undef strstr
 /* Assume strstr is always declared.  */
-_GL_WARN_ON_USE (strstr, "strstr is quadratic on many systems, and cannot "
-                 "work correctly on character strings in most "
-                 "multibyte locales - "
-                 "use mbsstr if you care about internationalization, "
-                 "or use strstr if you care about speed");
+_GL_WARN_ON_USE_CXX (strstr,
+                     const char *, char *, (const char *, const char *),
+                     "strstr is quadratic on many systems, and cannot "
+                     "work correctly on character strings in most "
+                     "multibyte locales - "
+                     "use mbsstr if you care about internationalization, "
+                     "or use strstr if you care about speed");
 #endif
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
