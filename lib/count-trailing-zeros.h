@@ -64,7 +64,8 @@ extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
       {                                                                 \
         if (! x)                                                        \
           return CHAR_BIT * sizeof x;                                   \
-        for (int count = 0;                                             \
+        int count;                                                      \
+        for (count = 0;                                                 \
              (count < CHAR_BIT * sizeof x - 32                          \
               && ! (x & 0xffffffffU));                                  \
              count += 32)                                               \
