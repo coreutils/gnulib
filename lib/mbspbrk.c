@@ -90,5 +90,5 @@ mbspbrk (const char *string, const char *accept)
       return NULL;
     }
   else
-    return strpbrk (string, accept);
+    return (char *) strpbrk (string, accept);
 }

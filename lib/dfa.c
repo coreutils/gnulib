@@ -4050,7 +4050,7 @@ comsubs (char *left, char const *right)
   for (char *lcp = left; *lcp != '\0'; lcp++)
     {
       idx_t len = 0;
-      char *rcp = strchr (right, *lcp);
+      char const *rcp = strchr (right, *lcp);
       while (rcp != NULL)
         {
           idx_t i;

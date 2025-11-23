@@ -31,7 +31,7 @@ SIGNATURE_CHECK (memchr, void *, (void const *, int, size_t));
 static void *
 lib_memchr (void const *s, int c, size_t n)
 {
-  return memchr (s, c, n);
+  return (void *) memchr (s, c, n);
 }
 static void *(*volatile volatile_memchr) (void const *, int, size_t)
   = lib_memchr;

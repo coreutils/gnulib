@@ -65,5 +65,5 @@ mbschr (const char *string, int c)
       return NULL;
     }
   else
-    return strchr (string, c);
+    return (char *) strchr (string, c);
 }

@@ -27,7 +27,7 @@
 static wchar_t *
 lib_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
 {
-  return wmemchr (s, wc, n);
+  return (wchar_t *) wmemchr (s, wc, n);
 }
 static wchar_t *(*volatile volatile_wmemchr) (wchar_t const *, wchar_t, size_t)
   = lib_wmemchr;

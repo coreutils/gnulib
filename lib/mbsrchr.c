@@ -64,5 +64,5 @@ mbsrchr (const char *string, int c)
       return (char *) result;
     }
   else
-    return strrchr (string, c);
+    return (char *) strrchr (string, c);
 }

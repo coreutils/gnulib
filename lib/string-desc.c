@@ -110,9 +110,9 @@ _sd_index (idx_t s_nbytes, const char *s_data, char c)
 {
   if (s_nbytes > 0)
     {
-      void *found = memchr (s_data, (unsigned char) c, s_nbytes);
+      char const *found = memchr (s_data, (unsigned char) c, s_nbytes);
       if (found != NULL)
-        return (char *) found - s_data;
+        return found - s_data;
     }
   return -1;
 }

@@ -28,5 +28,5 @@ c_strstr (const char *haystack, const char *needle)
 {
   /* POSIX says that strstr() interprets the strings as byte sequences, not
      as character sequences in the current locale.  */
-  return strstr (haystack, needle);
+  return (char *) strstr (haystack, needle);
 }

@@ -1601,7 +1601,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 
   if (doc)
     {
-      char *vt = strchr (doc, '\v');
+      char const *vt = strchr (doc, '\v');
       inp_text = post ? (vt ? vt + 1 : NULL) : doc;
       inp_text_limit = (!post && vt) ? (vt - doc) : 0;
     }

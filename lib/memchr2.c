@@ -55,7 +55,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   c2 = (unsigned char) c2_in;
 
   if (c1 == c2)
-    return memchr (s, c1, n);
+    return (void *) memchr (s, c1, n);
 
   /* Handle the first few bytes by reading one byte at a time.
      Do this until VOID_PTR is aligned on a longword boundary.  */

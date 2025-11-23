@@ -26,7 +26,7 @@ static void *
 lib_bsearch (void const *key, void const *base, size_t nel, size_t width,
              int (*compar) (void const *, void const *))
 {
-  return bsearch (key, base, nel, width, compar);
+  return (void *) bsearch (key, base, nel, width, compar);
 }
 static void *(*volatile volatile_bsearch) (void const *, void const *, size_t,
                                            size_t,
