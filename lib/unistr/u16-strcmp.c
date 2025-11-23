@@ -38,21 +38,22 @@ u16_strcmp (const uint16_t *s1, const uint16_t *s2)
     {
       uint16_t c1 = *s1++;
       uint16_t c2 = *s2++;
-      if (c1 != 0 && c1 == c2)
-        continue;
-      if (c1 < 0xd800 || c1 >= 0xe000)
+      if (c1 == 0 || c1 != c2)
         {
-          if (!(c2 < 0xd800 || c2 >= 0xe000))
-            /* c2 is a surrogate, but c1 is not.  */
-            return -1;
+          if (c1 < 0xd800 || c1 >= 0xe000)
+            {
+              if (!(c2 < 0xd800 || c2 >= 0xe000))
+                /* c2 is a surrogate, but c1 is not.  */
+                return -1;
+            }
+          else
+            {
+              if (c2 < 0xd800 || c2 >= 0xe000)
+                /* c1 is a surrogate, but c2 is not.  */
+                return 1;
+            }
+          return (int)c1 - (int)c2;
+          /* > 0 if c1 > c2, < 0 if c1 < c2. */
         }
-      else
-        {
-          if (c2 < 0xd800 || c2 >= 0xe000)
-            /* c1 is a surrogate, but c2 is not.  */
-            return 1;
-        }
-      return (int)c1 - (int)c2;
-      /* > 0 if c1 > c2, < 0 if c1 < c2. */
     }
 }
