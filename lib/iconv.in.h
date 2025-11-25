@@ -58,7 +58,6 @@ _GL_CXXALIAS_SYS (iconv_open, iconv_t,
 # endif
 _GL_CXXALIASWARN (iconv_open);
 #elif defined GNULIB_POSIXCHECK
-# undef iconv_open
 # if HAVE_RAW_DECL_ICONV_OPEN
 _GL_WARN_ON_USE (iconv_open, "iconv_open is not working correctly everywhere - "
                  "use gnulib module iconv for portability");
@@ -107,7 +106,6 @@ _GL_CXXALIASWARN (iconv);
 #  define ICONV_CONST @ICONV_CONST@
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef iconv
 # if HAVE_RAW_DECL_ICONV
 _GL_WARN_ON_USE (iconv, "iconv is not working correctly everywhere - "
                  "use gnulib module iconv for portability");

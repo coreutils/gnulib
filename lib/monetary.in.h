@@ -105,7 +105,6 @@ _GL_CXXALIAS_SYS (strfmon_l, ssize_t,
 _GL_CXXALIASWARN (strfmon_l);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef strfmon_l
 # if HAVE_RAW_DECL_STRFMON_L
 _GL_WARN_ON_USE (strfmon_l, "strfmon_l is buggy on older glibc systems - "
                  "use gnulib module chown for portability");

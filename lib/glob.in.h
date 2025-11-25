@@ -129,7 +129,6 @@ _GL_CXXALIAS_SYS (glob, int, (const char *_Restrict_ __pattern, int __flags,
 _GL_CXXALIASWARN (glob);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef glob
 # if HAVE_RAW_DECL_GLOB
 _GL_WARN_ON_USE (glob,
                  "glob is unportable - "
@@ -149,7 +148,6 @@ _GL_CXXALIAS_SYS (globfree, void, (glob_t *__pglob));
 # endif
 _GL_CXXALIASWARN (globfree);
 #elif defined GNULIB_POSIXCHECK
-# undef globfree
 # if HAVE_RAW_DECL_GLOBFREE
 _GL_WARN_ON_USE (globfree,
                  "globfree is unportable - "
@@ -171,7 +169,6 @@ _GL_CXXALIAS_SYS (glob_pattern_p, int, (const char *__pattern, int __quote));
 # endif
 _GL_CXXALIASWARN (glob_pattern_p);
 #elif defined GNULIB_POSIXCHECK
-# undef glob_pattern_p
 # if HAVE_RAW_DECL_GLOB_PATTERN_P
 _GL_WARN_ON_USE (glob_pattern_p,
                  "glob_pattern_p is unportable - "

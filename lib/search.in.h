@@ -257,22 +257,18 @@ _GL_CXXALIASWARN (twalk);
 # define GNULIB_defined_twalk    (@REPLACE_TWALK@ || !@HAVE_TWALK@)
 
 #elif defined GNULIB_POSIXCHECK
-# undef tsearch
 # if HAVE_RAW_DECL_TSEARCH
 _GL_WARN_ON_USE (tsearch, "tsearch is unportable - "
                  "use gnulib module tsearch for portability");
 # endif
-# undef tfind
 # if HAVE_RAW_DECL_TFIND
 _GL_WARN_ON_USE (tfind, "tfind is unportable - "
                  "use gnulib module tsearch for portability");
 # endif
-# undef tdelete
 # if HAVE_RAW_DECL_TDELETE
 _GL_WARN_ON_USE (tdelete, "tdelete is unportable - "
                  "use gnulib module tsearch for portability");
 # endif
-# undef twalk
 # if HAVE_RAW_DECL_TWALK
 _GL_WARN_ON_USE (twalk, "twalk is unportable - "
                  "use gnulib module tsearch for portability");

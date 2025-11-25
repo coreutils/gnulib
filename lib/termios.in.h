@@ -83,7 +83,6 @@ _GL_FUNCDECL_SYS (tcgetsid, pid_t, (int fd), );
 _GL_CXXALIAS_SYS (tcgetsid, pid_t, (int fd));
 _GL_CXXALIASWARN (tcgetsid);
 #elif defined GNULIB_POSIXCHECK
-# undef tcgetsid
 # if HAVE_RAW_DECL_TCGETSID
 _GL_WARN_ON_USE (tcgetsid, "tcgetsid is not portable - "
                  "use gnulib module tcgetsid for portability");

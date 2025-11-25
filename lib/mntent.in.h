@@ -70,7 +70,6 @@ _GL_CXXALIAS_SYS (hasmntopt, char *,
 _GL_CXXALIASWARN (hasmntopt);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef hasmntopt
 # if HAVE_RAW_DECL_HASMNTOPT
 _GL_WARN_ON_USE (hasmntopt, "hasmntopt is unportable - "
                  "use gnulib module hasmntopt for portability");

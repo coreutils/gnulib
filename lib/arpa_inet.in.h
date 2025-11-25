@@ -159,7 +159,6 @@ _GL_CXXALIAS_SYS_CAST (inet_ntop, const char *,
 _GL_CXXALIASWARN (inet_ntop);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef inet_ntop
 # if HAVE_RAW_DECL_INET_NTOP
 _GL_WARN_ON_USE (inet_ntop, "inet_ntop is unportable - "
                  "use gnulib module inet_ntop for portability");
@@ -190,7 +189,6 @@ _GL_CXXALIAS_SYS (inet_pton, int,
 _GL_CXXALIASWARN (inet_pton);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef inet_pton
 # if HAVE_RAW_DECL_INET_PTON
 _GL_WARN_ON_USE (inet_pton, "inet_pton is unportable - "
                  "use gnulib module inet_pton for portability");

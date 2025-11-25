@@ -116,7 +116,6 @@ _GL_FUNCDECL_SYS (getrusage, int, (int who, struct rusage *usage_p),
 _GL_CXXALIAS_SYS (getrusage, int, (int who, struct rusage *usage_p));
 _GL_CXXALIASWARN (getrusage);
 #elif defined GNULIB_POSIXCHECK
-# undef getrusage
 # if HAVE_RAW_DECL_GETRUSAGE
 _GL_WARN_ON_USE (getrusage, "getrusage is unportable - "
                  "use gnulib module getrusage for portability");

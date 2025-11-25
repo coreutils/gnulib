@@ -74,7 +74,6 @@ _GL_CXXALIAS_SYS (login_tty, int, (int fd));
 _GL_CXXALIASWARN (login_tty);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef login_tty
 # if HAVE_RAW_DECL_LOGIN_TTY
 _GL_WARN_ON_USE (login_tty, "login_tty is unportable - "
                  "use gnulib module login_tty for portability");

@@ -91,7 +91,6 @@ _GL_CXXALIAS_SYS (utime, int, (const char *filename, const struct utimbuf *ts));
 _GL_CXXALIASWARN (utime);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef utime
 # if HAVE_RAW_DECL_UTIME
 _GL_WARN_ON_USE (utime,
                  "utime is unportable - "

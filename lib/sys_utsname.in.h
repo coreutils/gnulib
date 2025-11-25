@@ -99,7 +99,6 @@ struct utsname
 extern int uname (struct utsname *buf) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef uname
 # if HAVE_RAW_DECL_UNAME
 _GL_WARN_ON_USE (uname, "uname is unportable - "
                  "use gnulib module uname for portability");

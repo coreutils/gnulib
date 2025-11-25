@@ -73,7 +73,6 @@ extern "C" {
   extern clock_t times (struct tms *buffer) _GL_ARG_NONNULL ((1));
 #  endif
 # elif defined GNULIB_POSIXCHECK
-#  undef times
 #  if HAVE_RAW_DECL_TIMES
 _GL_WARN_ON_USE (times, "times is unportable - "
                  "use gnulib module times for portability");

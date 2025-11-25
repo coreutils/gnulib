@@ -178,7 +178,6 @@ _GL_CXXALIAS_SYS (thrd_create, int, (thrd_t *, thrd_start_t, void *));
 # endif
 _GL_CXXALIASWARN (thrd_create);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_create
 # if HAVE_RAW_DECL_THRD_CREATE
 _GL_WARN_ON_USE (thrd_create, "thrd_create is unportable - "
                  "use gnulib module thrd for portability");
@@ -200,7 +199,6 @@ _GL_CXXALIAS_SYS (thrd_current, thrd_t, (void));
 # endif
 _GL_CXXALIASWARN (thrd_current);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_current
 # if HAVE_RAW_DECL_THRD_CURRENT
 _GL_WARN_ON_USE (thrd_current, "thrd_current is unportable - "
                  "use gnulib module thrd for portability");
@@ -222,7 +220,6 @@ _GL_CXXALIAS_SYS (thrd_equal, int, (thrd_t, thrd_t));
 # endif
 _GL_CXXALIASWARN (thrd_equal);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_equal
 # if HAVE_RAW_DECL_THRD_EQUAL
 _GL_WARN_ON_USE (thrd_equal, "thrd_equal is unportable - "
                  "use gnulib module thrd for portability");
@@ -250,7 +247,6 @@ _GL_CXXALIAS_SYS (thrd_sleep, int,
 # endif
 _GL_CXXALIASWARN (thrd_sleep);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_sleep
 # if HAVE_RAW_DECL_THRD_SLEEP
 _GL_WARN_ON_USE (thrd_sleep, "thrd_sleep is unportable - "
                  "use gnulib module thrd for portability");
@@ -272,7 +268,6 @@ _GL_CXXALIAS_SYS (thrd_yield, void, (void));
 # endif
 _GL_CXXALIASWARN (thrd_yield);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_yield
 # if HAVE_RAW_DECL_THRD_YIELD
 _GL_WARN_ON_USE (thrd_yield, "thrd_yield is unportable - "
                  "use gnulib module thrd for portability");
@@ -294,7 +289,6 @@ _GL_CXXALIAS_SYS (thrd_detach, int, (thrd_t));
 # endif
 _GL_CXXALIASWARN (thrd_detach);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_detach
 # if HAVE_RAW_DECL_THRD_DETACH
 _GL_WARN_ON_USE (thrd_detach, "thrd_detach is unportable - "
                  "use gnulib module thrd for portability");
@@ -316,7 +310,6 @@ _GL_CXXALIAS_SYS (thrd_join, int, (thrd_t, int *));
 # endif
 _GL_CXXALIASWARN (thrd_join);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_join
 # if HAVE_RAW_DECL_THRD_JOIN
 _GL_WARN_ON_USE (thrd_join, "thrd_join is unportable - "
                  "use gnulib module thrd for portability");
@@ -339,7 +332,6 @@ _GL_CXXALIAS_SYS_CAST (thrd_exit, void, (int));
 # endif
 _GL_CXXALIASWARN (thrd_exit);
 #elif defined GNULIB_POSIXCHECK
-# undef thrd_exit
 # if HAVE_RAW_DECL_THRD_EXIT
 _GL_WARN_ON_USE (thrd_exit, "thrd_exit is unportable - "
                  "use gnulib module thrd for portability");
@@ -405,7 +397,6 @@ _GL_CXXALIAS_SYS (mtx_init, int, (mtx_t *, int));
 # endif
 _GL_CXXALIASWARN (mtx_init);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_init
 # if HAVE_RAW_DECL_MTX_INIT
 _GL_WARN_ON_USE (mtx_init, "mtx_init is unportable - "
                  "use gnulib module mtx for portability");
@@ -427,7 +418,7 @@ _GL_CXXALIAS_SYS (mtx_lock, int, (mtx_t *));
 # endif
 _GL_CXXALIASWARN (mtx_lock);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_lock
+# undef mtx_lock /* https://lists.gnu.org/r/bug-gnulib/2025-11/msg00251.html */
 # if HAVE_RAW_DECL_MTX_LOCK
 _GL_WARN_ON_USE (mtx_lock, "mtx_lock is unportable - "
                  "use gnulib module mtx for portability");
@@ -449,7 +440,6 @@ _GL_CXXALIAS_SYS (mtx_trylock, int, (mtx_t *));
 # endif
 _GL_CXXALIASWARN (mtx_trylock);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_trylock
 # if HAVE_RAW_DECL_MTX_TRYLOCK
 _GL_WARN_ON_USE (mtx_trylock, "mtx_trylock is unportable - "
                  "use gnulib module mtx for portability");
@@ -473,7 +463,6 @@ _GL_CXXALIAS_SYS (mtx_timedlock, int, (mtx_t *, const struct timespec *));
 # endif
 _GL_CXXALIASWARN (mtx_timedlock);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_timedlock
 # if HAVE_RAW_DECL_MTX_TIMEDLOCK
 _GL_WARN_ON_USE (mtx_timedlock, "mtx_timedlock is unportable - "
                  "use gnulib module mtx for portability");
@@ -495,7 +484,6 @@ _GL_CXXALIAS_SYS (mtx_unlock, int, (mtx_t *));
 # endif
 _GL_CXXALIASWARN (mtx_unlock);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_unlock
 # if HAVE_RAW_DECL_MTX_UNLOCK
 _GL_WARN_ON_USE (mtx_unlock, "mtx_unlock is unportable - "
                  "use gnulib module mtx for portability");
@@ -517,7 +505,6 @@ _GL_CXXALIAS_SYS (mtx_destroy, void, (mtx_t *));
 # endif
 _GL_CXXALIASWARN (mtx_destroy);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_destroy
 # if HAVE_RAW_DECL_MTX_DESTROY
 _GL_WARN_ON_USE (mtx_destroy, "mtx_destroy is unportable - "
                  "use gnulib module mtx for portability");
@@ -565,7 +552,6 @@ _GL_CXXALIAS_SYS_CAST (call_once, void, (once_flag *, void (*) (void)));
 # endif
 _GL_CXXALIASWARN (call_once);
 #elif defined GNULIB_POSIXCHECK
-# undef call_once
 # if HAVE_RAW_DECL_CALL_ONCE
 _GL_WARN_ON_USE (call_once, "call_once is unportable - "
                  "use gnulib module call_once for portability");
@@ -608,7 +594,6 @@ _GL_CXXALIAS_SYS (cnd_init, int, (cnd_t *));
 # endif
 _GL_CXXALIASWARN (cnd_init);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_init
 # if HAVE_RAW_DECL_CND_INIT
 _GL_WARN_ON_USE (cnd_init, "cnd_init is unportable - "
                  "use gnulib module cnd for portability");
@@ -630,7 +615,6 @@ _GL_CXXALIAS_SYS (cnd_wait, int, (cnd_t *, mtx_t *));
 # endif
 _GL_CXXALIASWARN (cnd_wait);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_wait
 # if HAVE_RAW_DECL_CND_WAIT
 _GL_WARN_ON_USE (cnd_wait, "cnd_wait is unportable - "
                  "use gnulib module cnd for portability");
@@ -658,7 +642,6 @@ _GL_CXXALIAS_SYS (cnd_timedwait, int,
 # endif
 _GL_CXXALIASWARN (cnd_timedwait);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_timedwait
 # if HAVE_RAW_DECL_CND_TIMEDWAIT
 _GL_WARN_ON_USE (cnd_timedwait, "cnd_timedwait is unportable - "
                  "use gnulib module cnd for portability");
@@ -680,7 +663,6 @@ _GL_CXXALIAS_SYS (cnd_signal, int, (cnd_t *));
 # endif
 _GL_CXXALIASWARN (cnd_signal);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_signal
 # if HAVE_RAW_DECL_CND_SIGNAL
 _GL_WARN_ON_USE (cnd_signal, "cnd_signal is unportable - "
                  "use gnulib module cnd for portability");
@@ -702,7 +684,6 @@ _GL_CXXALIAS_SYS (cnd_broadcast, int, (cnd_t *));
 # endif
 _GL_CXXALIASWARN (cnd_broadcast);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_broadcast
 # if HAVE_RAW_DECL_CND_BROADCAST
 _GL_WARN_ON_USE (cnd_broadcast, "cnd_broadcast is unportable - "
                  "use gnulib module cnd for portability");
@@ -724,7 +705,6 @@ _GL_CXXALIAS_SYS (cnd_destroy, void, (cnd_t *));
 # endif
 _GL_CXXALIASWARN (cnd_destroy);
 #elif defined GNULIB_POSIXCHECK
-# undef cnd_destroy
 # if HAVE_RAW_DECL_CND_DESTROY
 _GL_WARN_ON_USE (cnd_destroy, "cnd_destroy is unportable - "
                  "use gnulib module cnd for portability");
@@ -780,7 +760,6 @@ _GL_CXXALIAS_SYS (tss_create, int, (tss_t *, tss_dtor_t));
 # endif
 _GL_CXXALIASWARN (tss_create);
 #elif defined GNULIB_POSIXCHECK
-# undef tss_create
 # if HAVE_RAW_DECL_TSS_CREATE
 _GL_WARN_ON_USE (tss_create, "tss_create is unportable - "
                  "use gnulib module tss for portability");
@@ -802,7 +781,6 @@ _GL_CXXALIAS_SYS (tss_set, int, (tss_t, void *));
 # endif
 _GL_CXXALIASWARN (tss_set);
 #elif defined GNULIB_POSIXCHECK
-# undef tss_set
 # if HAVE_RAW_DECL_TSS_SET
 _GL_WARN_ON_USE (tss_set, "tss_set is unportable - "
                  "use gnulib module tss for portability");
@@ -824,7 +802,6 @@ _GL_CXXALIAS_SYS (tss_get, void *, (tss_t));
 # endif
 _GL_CXXALIASWARN (tss_get);
 #elif defined GNULIB_POSIXCHECK
-# undef tss_get
 # if HAVE_RAW_DECL_TSS_GET
 _GL_WARN_ON_USE (tss_get, "tss_get is unportable - "
                  "use gnulib module tss for portability");
@@ -846,7 +823,6 @@ _GL_CXXALIAS_SYS (tss_delete, void, (tss_t));
 # endif
 _GL_CXXALIASWARN (tss_delete);
 #elif defined GNULIB_POSIXCHECK
-# undef tss_delete
 # if HAVE_RAW_DECL_TSS_DELETE
 _GL_WARN_ON_USE (tss_delete, "tss_delete is unportable - "
                  "use gnulib module tss for portability");

@@ -56,7 +56,6 @@
 extern int flock (int fd, int operation);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef flock
 # if HAVE_RAW_DECL_FLOCK
 _GL_WARN_ON_USE (flock, "flock is unportable - "
                  "use gnulib module flock for portability");

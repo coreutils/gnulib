@@ -623,7 +623,6 @@ _GL_CXXALIAS_SYS (fesetexcept, int, (int exceptions));
 # endif
 _GL_CXXALIASWARN (fesetexcept);
 #elif defined GNULIB_POSIXCHECK
-# undef fesetexcept
 # if HAVE_RAW_DECL_FESETEXCEPT
 _GL_WARN_ON_USE (fesetexcept, "fesetexcept is unportable - "
                  "use gnulib module fenv-exceptions-tracking-c23 for portability");
@@ -656,7 +655,6 @@ _GL_CXXALIAS_SYS (feenableexcept, int, (int exceptions));
 # endif
 _GL_CXXALIASWARN (feenableexcept);
 #elif defined GNULIB_POSIXCHECK
-# undef feenableexcept
 # if HAVE_RAW_DECL_FEENABLEEXCEPT
 _GL_WARN_ON_USE (feenableexcept, "feenableexcept is unportable - "
                  "use gnulib module fenv-exceptions-trapping for portability");
@@ -686,7 +684,6 @@ _GL_CXXALIAS_SYS (fedisableexcept, int, (int exceptions));
 # endif
 _GL_CXXALIASWARN (fedisableexcept);
 #elif defined GNULIB_POSIXCHECK
-# undef fedisableexcept
 # if HAVE_RAW_DECL_FEDISABLEEXCEPT
 _GL_WARN_ON_USE (fedisableexcept, "fedisableexcept is unportable - "
                  "use gnulib module fenv-exceptions-trapping for portability");
@@ -717,7 +714,6 @@ _GL_CXXALIAS_SYS (fegetexcept, int, (void));
 # endif
 _GL_CXXALIASWARN (fegetexcept);
 #elif defined GNULIB_POSIXCHECK
-# undef fegetexcept
 # if HAVE_RAW_DECL_FEGETEXCEPT
 _GL_WARN_ON_USE (fegetexcept, "fegetexcept is unportable - "
                  "use gnulib module fenv-exceptions-trapping for portability");
@@ -864,7 +860,6 @@ _GL_CXXALIAS_SYS (fetestexceptflag, int,
 # endif
 _GL_CXXALIASWARN (fetestexceptflag);
 #elif defined GNULIB_POSIXCHECK
-# undef fetestexceptflag
 # if HAVE_RAW_DECL_FETESTEXCEPTFLAG
 _GL_WARN_ON_USE (fetestexceptflag, "fetestexceptflag is unportable - "
                  "use gnulib module fenv-exceptions-state-c23 for portability");

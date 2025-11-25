@@ -249,7 +249,6 @@ _GL_CXXALIAS_SYS (nl_langinfo, char *, (nl_item item));
 _GL_CXXALIASWARN (nl_langinfo);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef nl_langinfo
 # if HAVE_RAW_DECL_NL_LANGINFO
 _GL_WARN_ON_USE (nl_langinfo, "nl_langinfo is not portable - "
                  "use gnulib module nl_langinfo for portability");

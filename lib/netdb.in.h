@@ -277,25 +277,21 @@ _GL_CXXALIASWARN (getnameinfo);
 
 #elif defined GNULIB_POSIXCHECK
 
-# undef getaddrinfo
 # if HAVE_RAW_DECL_GETADDRINFO
 _GL_WARN_ON_USE (getaddrinfo, "getaddrinfo is unportable - "
                  "use gnulib module getaddrinfo for portability");
 # endif
 
-# undef freeaddrinfo
 # if HAVE_RAW_DECL_FREEADDRINFO
 _GL_WARN_ON_USE (freeaddrinfo, "freeaddrinfo is unportable - "
                  "use gnulib module getaddrinfo for portability");
 # endif
 
-# undef gai_strerror
 # if HAVE_RAW_DECL_GAI_STRERROR
 _GL_WARN_ON_USE (gai_strerror, "gai_strerror is unportable - "
                  "use gnulib module getaddrinfo for portability");
 # endif
 
-# undef getnameinfo
 # if HAVE_RAW_DECL_GETNAMEINFO
 _GL_WARN_ON_USE (getnameinfo, "getnameinfo is unportable - "
                  "use gnulib module getaddrinfo for portability");

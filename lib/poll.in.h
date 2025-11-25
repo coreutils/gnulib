@@ -118,7 +118,6 @@ _GL_CXXALIAS_SYS (poll, int, (struct pollfd *pfd, nfds_t nfd, int timeout));
 # endif
 _GL_CXXALIASWARN (poll);
 #elif defined GNULIB_POSIXCHECK
-# undef poll
 # if HAVE_RAW_DECL_POLL
 _GL_WARN_ON_USE (poll, "poll is unportable - "
                  "use gnulib module poll for portability");

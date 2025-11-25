@@ -124,7 +124,6 @@ _GL_FUNCDECL_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options), );
 _GL_CXXALIAS_SYS_CAST (waitpid, pid_t, (pid_t pid, int *statusp, int options));
 _GL_CXXALIASWARN (waitpid);
 #elif defined GNULIB_POSIXCHECK
-# undef waitpid
 # if HAVE_RAW_DECL_WAITPID
 _GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
                  "use gnulib module sys_wait for portability");

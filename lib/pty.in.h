@@ -88,7 +88,6 @@ _GL_CXXALIAS_SYS (forkpty, int,
 # endif
 _GL_CXXALIASWARN (forkpty);
 #elif defined GNULIB_POSIXCHECK
-# undef forkpty
 # if HAVE_RAW_DECL_FORKPTY
 _GL_WARN_ON_USE (forkpty, "forkpty is not declared consistently - "
                  "use gnulib module forkpty for portability");
@@ -122,7 +121,6 @@ _GL_CXXALIAS_SYS (openpty, int,
 # endif
 _GL_CXXALIASWARN (openpty);
 #elif defined GNULIB_POSIXCHECK
-# undef openpty
 # if HAVE_RAW_DECL_OPENPTY
 _GL_WARN_ON_USE (openpty, "openpty is not declared consistently - "
                  "use gnulib module openpty for portability");

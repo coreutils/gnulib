@@ -76,7 +76,6 @@ _GL_CXXALIASWARN (ioctl);
 #  define ioctl ioctl_used_without_requesting_gnulib_module_ioctl
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef ioctl
 # if HAVE_RAW_DECL_IOCTL
 _GL_WARN_ON_USE (ioctl, "ioctl does not portably work on sockets - "
                  "use gnulib module ioctl for portability");

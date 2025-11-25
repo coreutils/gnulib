@@ -184,7 +184,6 @@ _GL_FUNCDECL_SYS (memalign, void *,
 #  endif
 # endif
 # if defined GNULIB_POSIXCHECK
-#  undef memalign
 #  if HAVE_RAW_DECL_MEMALIGN
 _GL_WARN_ON_USE (memalign, "memalign is not portable - "
                  "use gnulib module memalign for portability");
