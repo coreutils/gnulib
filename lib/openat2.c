@@ -60,6 +60,10 @@
 # define E2BIG EINVAL
 #endif
 
+#ifndef ENOTCAPABLE /* A FreeBSD error number.  */
+# define ENOTCAPABLE 0
+#endif
+
 #ifndef PATH_MAX
 # define PATH_MAX IDX_MAX
 #endif
@@ -333,6 +337,8 @@ do_openat2 (int *fd, char const *filename,
           if (subfd < 0)
             {
               int openerr = negative_errno ();
+              if (O_RESOLVE_BENEATH && openerr == -ENOTCAPABLE)
+                return -EXDEV;
               if (! ((openerr == -_GL_OPENAT_ESYMLINK)
                      | (!!(subflags & O_DIRECTORY) & (openerr == -ENOTDIR))))
                 return openerr;
@@ -553,16 +559,21 @@ openat2 (int dfd, char const *filename,
       char resolve = how->resolve;
       mode_t mode = how->mode;
 
+      int fd;
+
       /* For speed use openat if it suffices, though it is unlikely a
          caller would use openat2 when openat's simpler API would do.  */
       if (O_RESOLVE_BENEATH ? !(resolve & ~RESOLVE_BENEATH) : !resolve)
         {
           if (resolve & RESOLVE_BENEATH)
             flags |= O_RESOLVE_BENEATH;
-          return openat (dfd, filename, flags, mode);
+          fd = openat (dfd, filename, flags, mode);
+          if (O_RESOLVE_BENEATH && fd < 0 && errno == ENOTCAPABLE)
+            errno = EXDEV;
+          return fd;
         }
 
-      int fd = dfd;
+      fd = dfd;
       char stackbuf[256];
       char *buf = stackbuf;
 

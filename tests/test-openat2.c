@@ -98,6 +98,7 @@ do_prepare_symlinks ()
         |- valid_link -> some_file
         |- subdir/
            |- some_file
+           |- aunt_link -> ../some_file
   */
 
   ASSERT (symlinkat ("subdir", dfd, "dirlink") == 0);
@@ -107,6 +108,7 @@ do_prepare_symlinks ()
   ASSERT (symlinkat ("some_file/invalid", dfd, "invalid_link") == 0);
   ASSERT (symlinkat ("some_file", dfd, "valid_link") == 0);
   ASSERT (mkdirat (dfd, "subdir", 0700) == 0);
+  ASSERT (symlinkat ("../some_file", dfd, "subdir/aunt_link") == 0);
   ASSERT (close (openat2 (dfd, "some_file",
                           (&(struct open_how) { .flags = O_CREAT,
                                                 .mode = 0600 }),
@@ -457,6 +459,16 @@ do_test_resolve (void)
   ASSERT ((errno == ENOENT) | is_nofollow_error (errno));
   ASSERT (fd == -1);
 
+  fd = openat2 (dfd,
+                "subdir/aunt_link",
+                (&(struct open_how)
+                 {
+                   .flags = O_RDONLY,
+                   .resolve = RESOLVE_BENEATH,
+                 }),
+                sizeof (struct open_how));
+  ASSERT (close (fd) == 0);
+
   {
     int subdfd = openat2 (dfd,
                           "subdir",
@@ -489,6 +501,20 @@ do_test_resolve (void)
                    }),
                   sizeof (struct open_how));
     ASSERT (close (fd) == 0);
+
+    /* Check that aunt_link cannot escape subdir.  */
+    fd = openat2 (subdfd,
+                  "aunt_link",
+                  (&(struct open_how)
+                   {
+                     .flags = O_RDONLY,
+                     .resolve = RESOLVE_BENEATH,
+                   }),
+                  sizeof (struct open_how));
+    ASSERT (errno == EXDEV);
+    ASSERT (fd == -1);
+
+    ASSERT (close (subdfd) == 0);
   }
 }
 
@@ -531,6 +557,7 @@ do_test_basic ()
   ASSERT (unlinkat (dfd, "escaping_link_2", 0) == 0);
   ASSERT (unlinkat (dfd, "invalid_link", 0) == 0);
   ASSERT (unlinkat (dfd, "some_file", 0) == 0);
+  ASSERT (unlinkat (dfd, "subdir/aunt_link", 0) == 0);
   ASSERT (unlinkat (dfd, "subdir/some_file", 0) == 0);
   ASSERT (unlinkat (dfd, "subdir", AT_REMOVEDIR) == 0);
   ASSERT (unlinkat (dfd, "valid_link", 0) == 0);
