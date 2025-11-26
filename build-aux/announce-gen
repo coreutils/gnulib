@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2025-11-25 01:53'; # UTC
+my $VERSION = '2025-11-26 21:27'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -244,7 +244,7 @@ sub print_news_deltas ($$$)
   # the first occurrence of $prev_version.
   my $in_items;
 
-  my $re_prefix = qr/(?:\* )?(?:Noteworthy c|Major c|C)(?i:hanges)/;
+  my $re_prefix = qr/(?:[#*]+ )?(?:Noteworthy c|Major c|C)(?i:hanges)/;
 
   my $found_news;
   open NEWS, '<', $news_file
