@@ -418,7 +418,6 @@ _GL_CXXALIAS_SYS (mtx_lock, int, (mtx_t *));
 # endif
 _GL_CXXALIASWARN (mtx_lock);
 #elif defined GNULIB_POSIXCHECK
-# undef mtx_lock /* https://lists.gnu.org/r/bug-gnulib/2025-11/msg00251.html */
 # if HAVE_RAW_DECL_MTX_LOCK
 _GL_WARN_ON_USE (mtx_lock, "mtx_lock is unportable - "
                  "use gnulib module mtx for portability");

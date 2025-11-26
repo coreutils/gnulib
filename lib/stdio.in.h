@@ -338,7 +338,7 @@ _GL_CXXALIAS_SYS (dprintf, int, (int fd, const char *restrict format, ...));
 _GL_CXXALIASWARN (dprintf);
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef dprintf /* https://lists.gnu.org/r/bug-gnulib/2025-11/msg00251.html */
+# undef dprintf /* https://lists.gnu.org/r/bug-gnulib/2025-11/msg00254.html */
 # if HAVE_RAW_DECL_DPRINTF
 _GL_WARN_ON_USE (dprintf, "dprintf is unportable - "
                  "use gnulib module dprintf for portability");
