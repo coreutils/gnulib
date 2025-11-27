@@ -58,11 +58,14 @@ main (int argc, char *argv[])
       ASSERT (c.len == 1);
       ASSERT (!c.err);
       ASSERT (mcel_cmp (c, c) == 0);
+      ASSERT (mcel_eq (c, c));
       ASSERT (mcel_tocmp (to_ascii, c, c) == 0);
       if (ch)
         {
           ASSERT (mcel_cmp (prev, c) < 0);
           ASSERT (mcel_cmp (c, prev) > 0);
+          ASSERT (! mcel_eq (prev, c));
+          ASSERT (! mcel_eq (c, prev));
           ASSERT (mcel_tocmp (to_ascii, prev, c) < 0);
           ASSERT (mcel_tocmp (to_ascii, c, prev) > 0);
         }
@@ -94,9 +97,12 @@ main (int argc, char *argv[])
       ASSERT (c.len == 2);
       ASSERT (!c.err);
       ASSERT (mcel_cmp (c, c) == 0);
+      ASSERT (mcel_eq (c, c));
       ASSERT (mcel_tocmp (to_ascii, c, c) == 0);
       ASSERT (mcel_cmp (prev, c) < 0);
       ASSERT (mcel_cmp (c, prev) > 0);
+      ASSERT (! mcel_eq (prev, c));
+      ASSERT (! mcel_eq (c, prev));
       ASSERT (mcel_tocmp (to_ascii, c, c) == 0);
       int cmp = to_ascii (c.ch) ? -1 : 1;
       ASSERT (sgn (mcel_tocmp (to_ascii, prev, c)) == cmp);
@@ -110,8 +116,11 @@ main (int argc, char *argv[])
       ASSERT (c.len == 1);
       ASSERT (c.err == err);
       ASSERT (mcel_cmp (c, c) == 0);
+      ASSERT (mcel_eq (c, c));
       ASSERT (mcel_cmp (prev, c) < 0);
       ASSERT (mcel_cmp (c, prev) > 0);
+      ASSERT (! mcel_eq (prev, c));
+      ASSERT (! mcel_eq (c, prev));
       ASSERT (mcel_tocmp (to_ascii, c, c) == 0);
       ASSERT (mcel_tocmp (to_ascii, prev, c) < 0);
       ASSERT (mcel_tocmp (to_ascii, c, prev) > 0);

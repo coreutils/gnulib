@@ -185,6 +185,13 @@ mcel_cmp (mcel_t c1, mcel_t c2)
   return ((c1.err - c2.err) * (1 << MCEL_ERR_SHIFT)) + (ch1 - ch2);
 }
 
+/* Return true if C1 and C2 are equal.  */
+MCEL_INLINE bool
+mcel_eq (mcel_t c1, mcel_t c2)
+{
+  return ! mcel_cmp (c1, c2);
+}
+
 /* Apply the uchar translator TO to C1 and C2 and compare the results,
    with encoding errors sorting after characters,
    Return <0, 0, >0 for <, =, >.  */
