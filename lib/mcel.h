@@ -73,9 +73,9 @@
 
    mcel_ch (CH, LEN) and mcel_err (ERR) construct mcel_t values.
 
-   mcel_cmp (G1, G2) compares two mcel_t values lexicographically by
-   character or by encoding byte value, with encoding bytes sorting
-   after characters.
+   mcel_cmp (G1, G2) and mcel_eq (G1, G2) compare two mcel_t values
+   lexicographically by character or by encoding byte value,
+   with encoding bytes sorting after characters.
 
    Calls like c32isalpha (G.ch) test G; they return false for encoding
    errors since calls like c32isalpha (0) return false.  Calls like
@@ -185,7 +185,7 @@ mcel_cmp (mcel_t c1, mcel_t c2)
   return ((c1.err - c2.err) * (1 << MCEL_ERR_SHIFT)) + (ch1 - ch2);
 }
 
-/* Return true if C1 and C2 are equal.  */
+/* Are C1 and C2 equal?  */
 MCEL_INLINE bool
 mcel_eq (mcel_t c1, mcel_t c2)
 {
