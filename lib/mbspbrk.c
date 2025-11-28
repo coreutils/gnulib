@@ -57,7 +57,7 @@ mbspbrk (const char *string, const char *accept)
             for (char const *aiter = accept; *aiter; aiter += a.len)
               {
                 a = mcel_scanz (aiter);
-                if (mcel_cmp (a, g) == 0)
+                if (mcel_eq (a, g))
                   return (char *) iter;
               }
         }

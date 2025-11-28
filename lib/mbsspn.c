@@ -93,7 +93,7 @@ mbsspn (const char *string, const char *reject)
                   if (!*aiter)
                     return i;
                   mcel_t a = mcel_scanz (aiter);
-                  if (mcel_cmp (a, g) == 0)
+                  if (mcel_eq (a, g))
                     break;
                   aiter += a.len;
                 }

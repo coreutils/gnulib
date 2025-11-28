@@ -61,7 +61,7 @@ mbscspn (const char *string, const char *accept)
             for (char const *aiter = accept; *aiter; aiter += a.len)
               {
                 a = mcel_scanz (aiter);
-                if (mcel_cmp (g, a) == 0)
+                if (mcel_eq (g, a))
                   return i;
               }
         }

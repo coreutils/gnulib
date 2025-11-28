@@ -31,7 +31,7 @@
 #if GNULIB_MCEL_PREFER
 # include "mcel.h"
 typedef mcel_t mbchar_t;
-static bool mb_equal (mcel_t a, mcel_t b) { return mcel_cmp (a, b) == 0; }
+static bool mb_equal (mcel_t a, mcel_t b) { return mcel_eq (a, b); }
 #else
 # include "mbuiter.h"
 #endif
@@ -168,7 +168,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
             break;
           }
         mcel_t g = mcel_scanz (phaystack);
-        if (mcel_cmp (needle_mbchars[j], g) == 0)
+        if (mcel_eq (needle_mbchars[j], g))
           {
             j++;
             /* Exit loop successfully if the entire needle has been found.  */
@@ -313,7 +313,7 @@ mbsstr (const char *haystack, const char *needle)
           outer_loop_count++;
           comparison_count++;
           hg = mcel_scanz (iter_haystack);
-          if (mcel_cmp (hg, ng) == 0)
+          if (mcel_eq (hg, ng))
             /* The first character matches.  */
             {
               char const *rhaystack = iter_haystack + hg.len;
@@ -329,7 +329,7 @@ mbsstr (const char *haystack, const char *needle)
                   rng = mcel_scanz (rneedle); rneedle += rng.len;
                   comparison_count++;
                 }
-              while (mcel_cmp (rhg, rng) == 0);
+              while (mcel_eq (rhg, rng));
             }
         }
 
