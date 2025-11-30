@@ -47,6 +47,8 @@ Using git
 * When you commit a contributor's patch, please
   - add a reasonable ChangeLog entry in the usual style (meaningful
     summary line and detailed change list),
+  - as the date of the ChangeLog entry, use the current date (cf.
+    https://www.gnu.org/prep/standards/html_node/Style-of-Change-Logs.html ).
   - if the contribution is so small that it does not require a
     copyright assignment (cf.
     https://www.gnu.org/prep/maintain/html_node/Legally-Significant.html )
