@@ -1,5 +1,5 @@
 Description:
-Multibye Characters, Encoding errors, and Lengths
+Multibyte Characters, Encoding errors, and Lengths
 
 Files:
 lib/mcel.c
