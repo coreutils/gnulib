@@ -337,8 +337,6 @@ do_openat2 (int *fd, char const *filename,
           if (subfd < 0)
             {
               int openerr = negative_errno ();
-              if (O_RESOLVE_BENEATH && openerr == -ENOTCAPABLE)
-                return -EXDEV;
               if (! ((openerr == -_GL_OPENAT_ESYMLINK)
                      | (!!(subflags & O_DIRECTORY) & (openerr == -ENOTDIR))))
                 return openerr;
@@ -561,16 +559,19 @@ openat2 (int dfd, char const *filename,
 
       int fd;
 
-      /* For speed use openat if it suffices, though it is unlikely a
-         caller would use openat2 when openat's simpler API would do.  */
+      /* For speed use a single openat if it suffices.  */
       if (O_RESOLVE_BENEATH ? !(resolve & ~RESOLVE_BENEATH) : !resolve)
         {
-          if (resolve & RESOLVE_BENEATH)
-            flags |= O_RESOLVE_BENEATH;
-          fd = openat (dfd, filename, flags, mode);
-          if (O_RESOLVE_BENEATH && fd < 0 && errno == ENOTCAPABLE)
-            errno = EXDEV;
-          return fd;
+          fd = openat (dfd, filename,
+                       flags | (resolve ? O_RESOLVE_BENEATH : 0), mode);
+
+          /* Return FD now unless openat failed with an errno that might
+             be an O_RESOLVE_BENEATH failure.  On platforms with
+             ENOTCAPABLE that is the errno; otherwise, this is macOS 15
+             where EACCES is the errno.  */
+          if (! (fd < 0 && resolve
+                 && errno == (ENOTCAPABLE ? ENOTCAPABLE : EACCES)))
+            return fd;
         }
 
       fd = dfd;
