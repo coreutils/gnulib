@@ -53,7 +53,7 @@ main ()
               putchar (to[h]);
             else
               printf ("\\x%02x", to[h]);
-          printf ("  ret = to + %d\n", ret - to);
+          printf ("  ret = to + %zd\n", ret - to);
         }
 
   return 0;
