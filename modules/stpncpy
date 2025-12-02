@@ -4,6 +4,7 @@ stpncpy() function: copy a size-bounded string, returning a pointer to its end.
 Files:
 lib/stpncpy.c
 m4/stpncpy.m4
+m4/mmap-anon.m4
 
 Depends-on:
 extensions
