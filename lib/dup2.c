@@ -114,8 +114,8 @@ klibc_dup2dirfd (int fd, int desired_fd)
   int dupfd;
 
   tempfd = open ("NUL", O_RDONLY);
-  if (tempfd == -1)
-    return -1;
+  if (tempfd < 0)
+    return tempfd;
 
   if (tempfd >= desired_fd)
     {
@@ -130,8 +130,8 @@ klibc_dup2dirfd (int fd, int desired_fd)
           close (desired_fd);
 
           dupfd = open (path, O_RDONLY);
-          if (dupfd == -1)
-            return -1;
+          if (dupfd < 0)
+            return dupfd;
 
           if (dupfd == desired_fd)
             return dupfd;
@@ -164,7 +164,7 @@ klibc_dup2 (int fd, int desired_fd)
   struct stat sbuf;
 
   dupfd = dup2 (fd, desired_fd);
-  if (dupfd == -1 && errno == ENOTSUP \
+  if (dupfd < 0 && errno == ENOTSUP \
       && !fstat (fd, &sbuf) && S_ISDIR (sbuf.st_mode))
     return klibc_dup2dirfd (fd, desired_fd);
 
@@ -197,10 +197,11 @@ rpl_dup2 (int fd, int desired_fd)
   result = dup2 (fd, desired_fd);
 
   /* Correct an errno value on FreeBSD 6.1 and Cygwin 1.5.x.  */
-  if (result == -1 && errno == EMFILE)
+  if (result < 0 && errno == EMFILE)
     errno = EBADF;
+
 #if REPLACE_FCHDIR
-  if (fd != desired_fd && result != -1)
+  if (! (result < 0 || fd == desired_fd))
     result = _gl_register_dup (fd, result);
 #endif
   return result;
