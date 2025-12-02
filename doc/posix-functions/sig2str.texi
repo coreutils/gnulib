@@ -16,4 +16,7 @@ glibc 2.42, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function does not map the argument 0 to @code{"EXIT"} on some platforms:
+FreeBSD 15.0.
 @end itemize
