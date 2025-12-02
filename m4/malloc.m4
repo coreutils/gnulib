@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 43
+# serial 43.1
 dnl Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -99,7 +99,7 @@ AC_DEFUN([gl_FUNC_MALLOC_PTRDIFF],
     [REPLACE_MALLOC_FOR_MALLOC_POSIX=1])
 ])
 
-# Test whether malloc, realloc, calloc refuse to create objects
+# Test whether malloc, calloc refuse to create objects
 # larger than what can be expressed in ptrdiff_t.
 # Set gl_cv_func_malloc_gnu.
 AC_DEFUN([gl_CHECK_MALLOC_PTRDIFF],
@@ -148,7 +148,7 @@ AC_DEFUN([gl_FUNC_MALLOC_POSIX],
   case "$gl_cv_func_malloc_posix" in
     *yes)
       AC_DEFINE([HAVE_MALLOC_POSIX], [1],
-        [Define if malloc, realloc, and calloc set errno on allocation failure.])
+        [Define if malloc and calloc set errno on allocation failure.])
       ;;
     *)
       REPLACE_MALLOC_FOR_MALLOC_POSIX=1
@@ -156,19 +156,20 @@ AC_DEFUN([gl_FUNC_MALLOC_POSIX],
   esac
 ])
 
-# Test whether malloc, realloc, calloc set errno to ENOMEM on failure.
+# Test whether malloc, calloc set errno to ENOMEM on failure.
 # Set gl_cv_func_malloc_posix to *yes or *no accordingly.
 AC_DEFUN([gl_CHECK_MALLOC_POSIX],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CACHE_CHECK([whether malloc, realloc, calloc set errno on failure],
+  AC_CACHE_CHECK([whether malloc, calloc set errno on failure],
     [gl_cv_func_malloc_posix],
     [
       dnl It is too dangerous to try to allocate a large amount of memory:
       dnl some systems go to their knees when you do that. So assume that
       dnl all Unix implementations of the function set errno on failure,
       dnl except on those platforms where we have seen 'test-malloc-gnu',
-      dnl 'test-realloc-posix', 'test-calloc-gnu' fail.
+      dnl 'test-realloc-posix', 'test-calloc-gnu' fail. For platforms
+      dnl where only 'test-realloc-posix', see realloc.m4.
       case "$host_os" in
         mingw* | windows*)
           dnl Old MSVCRT from 2001 did not set errno=ENOMEM when malloc failed.
