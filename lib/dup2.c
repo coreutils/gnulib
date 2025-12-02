@@ -117,7 +117,7 @@ klibc_dup2dirfd (int fd, int desired_fd)
   if (tempfd == -1)
     return -1;
 
-  if (tempfd == desired_fd)
+  if (tempfd >= desired_fd)
     {
       close (tempfd);
 
@@ -125,7 +125,29 @@ klibc_dup2dirfd (int fd, int desired_fd)
       if (__libc_Back_ioFHToPath (fd, path, sizeof (path)))
         return -1;
 
-      return open(path, O_RDONLY);
+      for (;;)
+        {
+          close (desired_fd);
+
+          dupfd = open (path, O_RDONLY);
+          if (dupfd == -1)
+            return -1;
+
+          if (dupfd == desired_fd)
+            return dupfd;
+
+          /* If lower FD was closed by other threads, fill again.  */
+          if (dupfd < desired_fd)
+            {
+              tempfd = dupfd;
+              break;
+            }
+
+          /* desired_fd was opened by other threads. Try again.  */
+          /* FIXME: Closing desired_fd opened by other threads may lead to
+             unexpected behavior.  */
+          close (dupfd);
+        }
     }
 
   dupfd = klibc_dup2dirfd (fd, desired_fd);
@@ -144,11 +166,7 @@ klibc_dup2 (int fd, int desired_fd)
   dupfd = dup2 (fd, desired_fd);
   if (dupfd == -1 && errno == ENOTSUP \
       && !fstat (fd, &sbuf) && S_ISDIR (sbuf.st_mode))
-    {
-      close (desired_fd);
-
-      return klibc_dup2dirfd (fd, desired_fd);
-    }
+    return klibc_dup2dirfd (fd, desired_fd);
 
   return dupfd;
 }

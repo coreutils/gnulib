@@ -30,6 +30,7 @@
 
 #ifdef __KLIBC__
 # include <emx/io.h>
+# include <InnoTekLIBC/backend.h>
 #endif
 
 #if defined _WIN32 && ! defined __CYGWIN__
@@ -538,6 +539,41 @@ rpl_fcntl_DUPFD_CLOEXEC (int fd, int target)
 #undef fcntl
 
 #ifdef __KLIBC__
+static int
+klibc_dupdirfd (int fd, int minfd)
+{
+  int tempfd;
+  int dupfd;
+
+  tempfd = open ("NUL", O_RDONLY);
+  if (tempfd == -1)
+    return -1;
+
+  if (tempfd >= minfd)
+    {
+      close (tempfd);
+
+      char path[_MAX_PATH];
+      if (__libc_Back_ioFHToPath (fd, path, sizeof (path)))
+        return -1;
+
+      dupfd = open (path, O_RDONLY);
+      if (dupfd == -1)
+        return -1;
+
+      if (dupfd >= minfd)
+        return dupfd;
+
+      /* Lower FD was closed by other threads. Fill again.  */
+      tempfd = dupfd;
+    }
+
+  dupfd = klibc_dupdirfd (fd, minfd);
+
+  close (tempfd);
+
+  return dupfd;
+}
 
 static int
 klibc_fcntl (int fd, int action, /* arg */...)
@@ -560,11 +596,7 @@ klibc_fcntl (int fd, int action, /* arg */...)
       switch (action)
         {
         case F_DUPFD:
-          /* Find available fd */
-          while (fcntl (arg, F_GETFL) != -1 || errno != EBADF)
-            arg++;
-
-          result = dup2 (fd, arg);
+          result = klibc_dupdirfd (fd, arg);
           break;
 
         case F_GETFD:
