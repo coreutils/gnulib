@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 On some platforms, when the function fails it does not set @code{errno}:
-mingw, MSVC 14.
+FreeBSD 15 (for a size > 0x7000000000000000), mingw, MSVC 14.
 
 @item
 On some platforms, when the function fails it might set @code{errno}
