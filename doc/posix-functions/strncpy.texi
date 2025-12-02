@@ -16,6 +16,14 @@ on some platforms:
 macOS 10.8.
 @end itemize
 
+Portability problems fixed by Gnulib module @code{strncpy}:
+@itemize
+@item
+This function looks are more bytes of the source string than allowed
+on some platforms:
+FreeBSD 15.0/x86_64.
+@end itemize
+
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
