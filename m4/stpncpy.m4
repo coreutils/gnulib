@@ -1,7 +1,6 @@
 # stpncpy.m4
-# serial 22
-dnl Copyright (C) 2002-2003, 2005-2007, 2009-2025 Free Software Foundation,
-dnl Inc.
+# serial 23
+dnl Copyright (C) 2002-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,6 +18,11 @@ AC_DEFUN([gl_FUNC_STPNCPY],
 
   AC_REQUIRE([gl_STRING_H_DEFAULTS])
 
+  dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+
   dnl Both glibc and AIX (4.3.3, 5.1) have an stpncpy() function
   dnl declared in <string.h>. Its side effects are the same as those
   dnl of strncpy():
@@ -28,6 +32,11 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl   in glibc:   dest + min(strlen(src),n)
   dnl   in AIX:     dest + max(0,n-1)
   dnl Only the glibc return value is useful in practice.
+  dnl
+  dnl Also detect bug in FreeBSD 15.0 on x86_64:
+  dnl stpncpy should not dereference more than n bytes, but always dereferences
+  dnl n+1 bytes if the first n bytes don't contain a NUL byte.
+  dnl Assume that stpncpy works on platforms that lack mprotect.
 
   AC_CHECK_DECLS_ONCE([stpncpy])
   gl_CHECK_FUNCS_ANDROID([stpncpy], [[#include <string.h>]])
@@ -44,6 +53,12 @@ extern
 "C"
 # endif
 char *stpncpy (char *dest, const char *src, size_t n);
+#endif
+#if HAVE_SYS_MMAN_H
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/mman.h>
 #endif
 int main ()
 {
@@ -68,12 +83,52 @@ int main ()
     if (stpncpy (dest, src, 7) != dest + 5)
       result |= 4;
   }
+  /* FreeBSD 15.0/x86_64 crashes here.  */
+  {
+    char *fence = NULL;
+#if HAVE_SYS_MMAN_H && HAVE_MPROTECT
+    {
+      long int pagesize = sysconf (_SC_PAGESIZE);
+      char *two_pages =
+        (char *) mmap (NULL, 2 * pagesize, PROT_READ | PROT_WRITE,
+                       MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      if (two_pages != (char *)(-1)
+          && mprotect (two_pages + pagesize, pagesize, PROT_NONE) == 0)
+        fence = two_pages + pagesize;
+    }
+#endif
+    if (fence)
+      {
+        char dest[8];
+
+        dest[0] = 'a';
+        dest[1] = 'b';
+        dest[2] = 'c';
+        dest[3] = 'd';
+        dest[4] = 'e';
+        dest[5] = 'f';
+        dest[6] = 'g';
+
+        *(fence - 3) = '7';
+        *(fence - 2) = '2';
+        *(fence - 1) = '9';
+
+        if (stpncpy (dest + 1, fence - 3, 3) != dest + 4)
+          result |= 8;
+        if (dest[0] != 'a')
+          result |= 16;
+        if (dest[1] != '7' || dest[2] != '2' || dest[3] != '9')
+          result |= 32;
+        if (dest[4] != 'e')
+          result |= 16;
+      }
+  }
   return result;
 }
 ]])],
         [gl_cv_func_stpncpy=yes],
         [gl_cv_func_stpncpy=no],
-        [dnl Guess yes on glibc systems and musl systems.
+        [dnl Guess yes on glibc systems and musl systems, no on FreeBSD.
          AC_EGREP_CPP([Thanks for using GNU], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
@@ -81,8 +136,9 @@ int main ()
 #endif
 ],         [gl_cv_func_stpncpy="guessing yes"],
            [case "$host_os" in
-              *-musl* | midipix*) gl_cv_func_stpncpy="guessing yes" ;;
-              *)                  gl_cv_func_stpncpy="$gl_cross_guess_normal" ;;
+              *-musl* | midipix*)    gl_cv_func_stpncpy="guessing yes" ;;
+              freebsd* | dragonfly*) gl_cv_func_stpncpy="guessing no" ;;
+              *)                     gl_cv_func_stpncpy="$gl_cross_guess_normal" ;;
             esac
            ])
         ])
