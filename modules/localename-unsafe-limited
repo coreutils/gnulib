@@ -13,6 +13,7 @@ m4/lcmessage.m4
 Depends-on:
 extensions
 locale-h
+strncpy
 getlocalename_l-unsafe-limited
 setlocale-null-unlocked
 

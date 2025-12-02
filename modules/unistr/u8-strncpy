@@ -6,6 +6,7 @@ lib/unistr/u8-strncpy.c
 
 Depends-on:
 unistr/base
+strncpy
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strncpy])

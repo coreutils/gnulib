@@ -18,6 +18,7 @@ extensions
 locale-h
 strdup
 lock
+strncpy
 getlocalename_l-unsafe
 setlocale-null-unlocked
 

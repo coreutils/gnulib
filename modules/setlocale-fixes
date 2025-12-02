@@ -6,6 +6,7 @@ lib/setlocale-fixes.h
 lib/setlocale-fixes.c
 
 Depends-on:
+strncpy
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])
