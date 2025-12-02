@@ -26,6 +26,7 @@ lock
 langinfo-h
 setlocale-null
 setlocale-null-unlocked
+strncpy
 thread-optim
 
 configure.ac:

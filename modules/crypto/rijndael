@@ -9,6 +9,7 @@ lib/rijndael-api-fst.h
 
 Depends-on:
 stdint-h
+strncpy
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
