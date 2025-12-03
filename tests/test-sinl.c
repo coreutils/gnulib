@@ -41,5 +41,16 @@ main ()
   y = sinl (x);
   ASSERT (y >= 0.5646424733L && y <= 0.5646424734L);
 
+  /* A small negative value.  */
+  x = -0.1L;
+  y = sinl (x);
+  ASSERT (y >= -0.09983341665L && y <= -0.09983341664L);
+
+  /* A very small negative value.  */
+  x = -0.000000000000000004L;
+  y = sinl (x);
+  ASSERT (y >= -0.000000000000000004000000000L
+          && y <= -0.000000000000000003999999999L);
+
   return test_exit_status;
 }
