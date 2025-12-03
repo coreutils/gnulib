@@ -1,8 +1,8 @@
 #!/bin/sh
-# Get modification time of a file or directory, or value of
-# $SOURCE_DATE_EPOCH, and pretty-print it, formatted like 1 January 2000.
+# Get modification time of a file or directory and pretty-print it,
+# formatted like 1 January 2000.
 
-scriptversion=2025-06-25.21; # UTC
+scriptversion=2025-12-02.21; # UTC
 
 # Copyright (C) 1995-2025 Free Software Foundation, Inc.
 # written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, June 1995
