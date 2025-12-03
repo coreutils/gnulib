@@ -125,17 +125,17 @@ kernel_sinl (long double x, long double y, int iy)
          polynomial of degree 17.  */
       if (x < 0.000000000000000006938893903907228377647697925567626953125L)     /* |x| < 2^-57 */
         if (!((int) x))
-          return x;             /* generate inexact */
+          return x * sign;             /* generate inexact */
 
       z = x * x;
-      return x + (x * (z * (SIN1 + z * (SIN2 + z * (SIN3 + z * (SIN4 +
-                                                                z * (SIN5 +
-                                                                     z *
-                                                                     (SIN6 +
-                                                                      z *
-                                                                      (SIN7 +
-                                                                       z *
-                                                                       SIN8)))))))));
+      return (x + x * (z * (SIN1 + z *
+                           (SIN2 + z *
+                           (SIN3 + z *
+                           (SIN4 + z *
+                           (SIN5 + z *
+                           (SIN6 + z *
+                           (SIN7 + z *
+                            SIN8))))))))) * sign;
     }
   else
     {
