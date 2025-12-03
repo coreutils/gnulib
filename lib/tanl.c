@@ -164,9 +164,9 @@ kernel_tanl (long double x, long double y, int iy)
       if ((int) x == 0)
         {                       /* generate inexact */
           if (iy == -1 && x == 0.0)
-            return 1.0L / fabs (x);
+            return 1.0L / fabs (x) * sign;
           else
-            return (iy == 1) ? x : -1.0L / x;
+            return (iy == 1 ? x : -1.0L / x) * sign;
         }
     }
   if (x >= 0.6743316650390625) /* |x| >= 0.6743316650390625 */
@@ -191,12 +191,10 @@ kernel_tanl (long double x, long double y, int iy)
     {
       v = (long double) iy;
       w = (v - 2.0 * (x - (w * w / (w + v) - r)));
-      if (sign < 0)
-        w = -w;
-      return w;
+      return w * sign;
     }
   if (iy == 1)
-    return w;
+    return w * sign;
   else
     {                           /* if allow error up to 2 ulp,
                                    simply return -1.0/(x+r) here */
@@ -206,7 +204,7 @@ kernel_tanl (long double x, long double y, int iy)
       z = -1.0 / w;
       u = (double) z;
       s = 1.0 + u * u1;
-      return u + z * (s + u * v);
+      return (u + z * (s + u * v)) * sign;
     }
 }
 
