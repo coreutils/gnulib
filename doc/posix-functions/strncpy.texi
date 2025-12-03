@@ -21,6 +21,7 @@ Portability problems fixed by Gnulib module @code{strncpy}:
 @item
 This function looks are more bytes of the source string than allowed
 on some platforms:
+@c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=291359
 FreeBSD 15.0/x86_64.
 @end itemize
 
