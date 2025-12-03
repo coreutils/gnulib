@@ -41,5 +41,16 @@ main ()
   y = tanl (x);
   ASSERT (y >= 0.6841368083L && y <= 0.6841368084L);
 
+  /* A small negative value.  */
+  x = -0.1L;
+  y = tanl (x);
+  ASSERT (y >= -0.10033467209L && y <= -0.10033467208L);
+
+  /* A very small negative value.  */
+  x = -0.000000000000000004L;
+  y = tanl (x);
+  ASSERT (y >= -0.000000000000000004000000001L
+          && y <= -0.000000000000000004000000000L);
+
   return test_exit_status;
 }
