@@ -30,6 +30,8 @@
 # include <sys/mount.h>
 #elif defined __FreeBSD__ || defined __DragonFly__ || defined __FreeBSD_kernel__
                                                      /* FreeBSD, GNU/kFreeBSD */
+# include <sys/types.h>
+# include <sys/param.h>
 # include <sys/mount.h>
 #elif defined __NetBSD__                                    /* NetBSD */
 # include <sys/statvfs.h>
