@@ -8,11 +8,12 @@ m4/sqrtf.m4
 Depends-on:
 math-h
 extensions
-sqrt            [test $HAVE_SQRTF = 0]
+sqrt            [test $HAVE_SQRTF = 0 || test $REPLACE_SQRTF = 1]
 
 configure.ac:
 gl_FUNC_SQRTF
-gl_CONDITIONAL([GL_COND_OBJ_SQRTF], [test $HAVE_SQRTF = 0])
+gl_CONDITIONAL([GL_COND_OBJ_SQRTF],
+               [test $HAVE_SQRTF = 0 || test $REPLACE_SQRTF = 1])
 gl_MATH_MODULE_INDICATOR([sqrtf])
 
 Makefile.am:

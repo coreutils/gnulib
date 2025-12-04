@@ -8,11 +8,12 @@ m4/atan2f.m4
 Depends-on:
 math-h
 extensions
-atan2           [test $HAVE_ATAN2F = 0]
+atan2           [test $HAVE_ATAN2F = 0 || test $REPLACE_ATAN2F = 1]
 
 configure.ac:
 gl_FUNC_ATAN2F
-gl_CONDITIONAL([GL_COND_OBJ_ATAN2F], [test $HAVE_ATAN2F = 0])
+gl_CONDITIONAL([GL_COND_OBJ_ATAN2F],
+               [test $HAVE_ATAN2F = 0 || test $REPLACE_ATAN2F = 1])
 gl_MATH_MODULE_INDICATOR([atan2f])
 
 Makefile.am:

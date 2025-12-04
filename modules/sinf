@@ -8,11 +8,12 @@ m4/sinf.m4
 Depends-on:
 math-h
 extensions
-sin             [test $HAVE_SINF = 0]
+sin             [test $HAVE_SINF = 0 || test $REPLACE_SINF = 1]
 
 configure.ac:
 gl_FUNC_SINF
-gl_CONDITIONAL([GL_COND_OBJ_SINF], [test $HAVE_SINF = 0])
+gl_CONDITIONAL([GL_COND_OBJ_SINF],
+               [test $HAVE_SINF = 0 || test $REPLACE_SINF = 1])
 gl_MATH_MODULE_INDICATOR([sinf])
 
 Makefile.am:
