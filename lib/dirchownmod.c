@@ -137,9 +137,9 @@ dirchownmod (int fd, char const *dir, mode_t mkdir_mode,
         result = close (fd);
       else
         {
-          int e = errno;
+          int saved_errno = errno;
           close (fd);
-          errno = e;
+          errno = saved_errno;
         }
     }
 

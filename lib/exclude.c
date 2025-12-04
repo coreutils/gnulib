@@ -666,9 +666,9 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
   if (!in)
     return -1;
   int rc = add_exclude_fp (call_addfn, ex, in, options, line_end, &add_func);
-  int e = errno;
+  int saved_errno = errno;
   if (fclose (in) < 0)
     return -1;
-  errno = e;
+  errno = saved_errno;
   return rc;
 }

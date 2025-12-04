@@ -39,9 +39,9 @@ fd_safer (int fd)
   if (STDIN_FILENO <= fd && fd <= STDERR_FILENO)
     {
       int f = dup_safer (fd);
-      int e = errno;
+      int saved_errno = errno;
       close (fd);
-      errno = e;
+      errno = saved_errno;
       fd = f;
     }
 

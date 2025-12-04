@@ -46,9 +46,9 @@ tmpfile_safer (void)
 
           if (f < 0)
             {
-              int e = errno;
+              int saved_errno = errno;
               fclose (fp);
-              errno = e;
+              errno = saved_errno;
               return NULL;
             }
 
@@ -57,9 +57,9 @@ tmpfile_safer (void)
           if (fclose (fp) != 0
               || ! (fp = fdopen (f, O_BINARY ? "wb+" : "w+")))
             {
-              int e = errno;
+              int saved_errno = errno;
               close (f);
-              errno = e;
+              errno = saved_errno;
               return NULL;
             }
         }

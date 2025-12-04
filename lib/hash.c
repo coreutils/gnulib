@@ -531,7 +531,7 @@ void
 hash_free (Hash_table *table)
 {
   struct hash_entry *next;
-  int err = errno;
+  int saved_errno = errno;
 
   /* Call the user data_freer function.  */
   if (table->data_freer && table->n_entries)
@@ -579,7 +579,7 @@ hash_free (Hash_table *table)
   free (table->bucket);
   free (table);
 
-  errno = err;
+  errno = saved_errno;
 }
 
 /* Insertion and deletion.  */
@@ -840,14 +840,14 @@ hash_rehash (Hash_table *table, size_t candidate)
      passes.  Two passes give worse cache performance and takes
      longer, but at this point, we're already out of memory, so slow
      and safe is better than failure.  */
-  int err = errno;
+  int saved_errno = errno;
   table->free_entry_list = new_table->free_entry_list;
   if (! (transfer_entries (table, new_table, true)
          && transfer_entries (table, new_table, false)))
     abort ();
   /* table->n_entries already holds its value.  */
   free (new_table->bucket);
-  errno = err;
+  errno = saved_errno;
   return false;
 }
 

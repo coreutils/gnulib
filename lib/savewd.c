@@ -172,9 +172,9 @@ savewd_chdir (struct savewd *wd, char const *dir, int options,
 
   if (0 <= fd && ! open_result)
     {
-      int e = errno;
+      int saved_errno = errno;
       close (fd);
-      errno = e;
+      errno = saved_errno;
     }
 
   return result;

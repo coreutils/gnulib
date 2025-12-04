@@ -1350,9 +1350,9 @@ fts_build (register FTS *sp, int type)
                   cur->fts_info = FTS_D;
                 else if (! enter_dir (sp, cur))
                   {
-                    int err = errno;
+                    int saved_errno = errno;
                     closedir_and_clear (cur->fts_dirp);
-                    __set_errno (err);
+                    __set_errno (saved_errno);
                     return NULL;
                   }
               }
@@ -1950,7 +1950,7 @@ internal_function
 fts_lfree (register FTSENT *head)
 {
         register FTSENT *p;
-        int err = errno;
+        int saved_errno = errno;
 
         /* Free a linked list of structures. */
         while ((p = head)) {
@@ -1960,7 +1960,7 @@ fts_lfree (register FTSENT *head)
                 free(p);
         }
 
-        __set_errno (err);
+        __set_errno (saved_errno);
 }
 
 /*

@@ -42,18 +42,18 @@ fopen_safer (char const *file, char const *mode)
 
           if (f < 0)
             {
-              int e = errno;
+              int saved_errno = errno;
               fclose (fp);
-              errno = e;
+              errno = saved_errno;
               return NULL;
             }
 
           if (fclose (fp) != 0
               || ! (fp = fdopen (f, mode)))
             {
-              int e = errno;
+              int saved_errno = errno;
               close (f);
-              errno = e;
+              errno = saved_errno;
               return NULL;
             }
         }

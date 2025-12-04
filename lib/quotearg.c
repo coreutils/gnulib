@@ -112,10 +112,10 @@ static struct quoting_options default_quoting_options;
 struct quoting_options *
 clone_quoting_options (struct quoting_options *o)
 {
-  int e = errno;
+  int saved_errno = errno;
   struct quoting_options *p = xmemdup (o ? o : &default_quoting_options,
                                        sizeof *o);
-  errno = e;
+  errno = saved_errno;
   return p;
 }
 
@@ -774,11 +774,11 @@ quotearg_buffer (char *buffer, size_t buffersize,
                  struct quoting_options const *o)
 {
   struct quoting_options const *p = o ? o : &default_quoting_options;
-  int e = errno;
+  int saved_errno = errno;
   size_t r = quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
                                        p->style, p->flags, p->quote_these_too,
                                        p->left_quote, p->right_quote);
-  errno = e;
+  errno = saved_errno;
   return r;
 }
 
@@ -800,7 +800,7 @@ quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
                     struct quoting_options const *o)
 {
   struct quoting_options const *p = o ? o : &default_quoting_options;
-  int e = errno;
+  int saved_errno = errno;
   /* Elide embedded null bytes if we can't return a size.  */
   int flags = p->flags | (size ? 0 : QA_ELIDE_NULL_BYTES);
   size_t bufsize = quotearg_buffer_restyled (NULL, 0, arg, argsize, p->style,
@@ -811,7 +811,7 @@ quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
   quotearg_buffer_restyled (buf, bufsize, arg, argsize, p->style, flags,
                             p->quote_these_too,
                             p->left_quote, p->right_quote);
-  errno = e;
+  errno = saved_errno;
   if (size)
     *size = bufsize - 1;
   return buf;
@@ -864,7 +864,7 @@ static char *
 quotearg_n_options (int n, char const *arg, size_t argsize,
                     struct quoting_options const *options)
 {
-  int e = errno;
+  int saved_errno = errno;
 
   struct slotvec *sv = slotvec;
 
@@ -908,7 +908,7 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
                                   options->right_quote);
       }
 
-    errno = e;
+    errno = saved_errno;
     return val;
   }
 }

@@ -122,12 +122,12 @@ SCANDIR (const char *dir,
   size_t vsize = 0;
   struct scandir_cancel_struct c;
   DIRENT_TYPE *d;
-  int save;
+  int saved_errno;
 
   if (dp == NULL)
     return -1;
 
-  save = errno;
+  saved_errno = errno;
   __set_errno (0);
 
   c.dp = dp;
@@ -183,7 +183,7 @@ SCANDIR (const char *dir,
 
   if (__builtin_expect (errno, 0) != 0)
     {
-      save = errno;
+      saved_errno = errno;
 
       while (c.cnt > 0)
         free (v[--c.cnt]);
@@ -204,7 +204,7 @@ SCANDIR (const char *dir,
 #endif
 
   (void) __closedir (dp);
-  __set_errno (save);
+  __set_errno (saved_errno);
 
   return c.cnt;
 }

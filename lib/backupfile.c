@@ -375,13 +375,13 @@ backupfile_internal (int dir_fd, char const *file,
       unsigned flags = backup_type == simple_backups ? 0 : RENAME_NOREPLACE;
       if (renameatu (dir_fd, file + offset, dir_fd, s + offset, flags) == 0)
         break;
-      int e = errno;
-      if (! (e == EEXIST && extended))
+      int saved_errno = errno;
+      if (! (saved_errno == EEXIST && extended))
         {
           if (dirp)
             closedir (dirp);
           free (s);
-          errno = e;
+          errno = saved_errno;
           return NULL;
         }
     }

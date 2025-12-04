@@ -38,9 +38,9 @@ pipe2_safer (int fd[2], int flags)
           fd[i] = fd_safer_flag (fd[i], flags);
           if (fd[i] < 0)
             {
-              int e = errno;
+              int saved_errno = errno;
               close (fd[1 - i]);
-              errno = e;
+              errno = saved_errno;
               return -1;
             }
         }

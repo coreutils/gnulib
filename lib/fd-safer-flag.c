@@ -42,9 +42,9 @@ fd_safer_flag (int fd, int flag)
   if (STDIN_FILENO <= fd && fd <= STDERR_FILENO)
     {
       int f = dup_safer_flag (fd, flag);
-      int e = errno;
+      int saved_errno = errno;
       close (fd);
-      errno = e;
+      errno = saved_errno;
       fd = f;
     }
 
