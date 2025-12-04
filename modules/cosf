@@ -8,11 +8,12 @@ m4/cosf.m4
 Depends-on:
 math-h
 extensions
-cos             [test $HAVE_COSF = 0]
+cos             [test $HAVE_COSF = 0 || test $REPLACE_COSF = 1]
 
 configure.ac:
 gl_FUNC_COSF
-gl_CONDITIONAL([GL_COND_OBJ_COSF], [test $HAVE_COSF = 0])
+gl_CONDITIONAL([GL_COND_OBJ_COSF],
+               [test $HAVE_COSF = 0 || test $REPLACE_COSF = 1])
 gl_MATH_MODULE_INDICATOR([cosf])
 
 Makefile.am:

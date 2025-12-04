@@ -8,11 +8,12 @@ m4/tanhf.m4
 Depends-on:
 math-h
 extensions
-tanh            [test $HAVE_TANHF = 0]
+tanh            [test $HAVE_TANHF = 0 || test $REPLACE_TANHF = 1]
 
 configure.ac:
 gl_FUNC_TANHF
-gl_CONDITIONAL([GL_COND_OBJ_TANHF], [test $HAVE_TANHF = 0])
+gl_CONDITIONAL([GL_COND_OBJ_TANHF],
+               [test $HAVE_TANHF = 0 || test $REPLACE_TANHF = 1])
 gl_MATH_MODULE_INDICATOR([tanhf])
 
 Makefile.am:
