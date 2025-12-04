@@ -2175,11 +2175,20 @@ _GL_WARN_ON_USE (sinf, "sinf is unportable - "
 #endif
 
 #if @GNULIB_SINL@
-# if !@HAVE_SINL@ || !@HAVE_DECL_SINL@
-#  undef sinl
+# if @REPLACE_SINL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sinl
+#   define sinl rpl_sinl
+#  endif
+_GL_FUNCDECL_RPL (sinl, long double, (long double x), );
+_GL_CXXALIAS_RPL (sinl, long double, (long double x));
+# else
+#  if !@HAVE_SINL@ || !@HAVE_DECL_SINL@
+#   undef sinl
 _GL_FUNCDECL_SYS (sinl, long double, (long double x), );
-# endif
+#  endif
 _GL_CXXALIAS_SYS (sinl, long double, (long double x));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sinl);
 # endif

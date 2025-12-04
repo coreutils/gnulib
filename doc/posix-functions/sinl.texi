@@ -15,6 +15,11 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, Solaris 9, Cygwin 1
 @item
 This function is only defined as a macro with arguments on some platforms:
 MSVC 14.
+@item
+This function returns a value that is larger that the argument,
+for some positive arguments,
+on some platforms:
+NetBSD 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

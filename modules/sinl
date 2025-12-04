@@ -11,15 +11,16 @@ m4/sinl.m4
 Depends-on:
 math-h
 extensions
-sin             [test $HAVE_SINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-float-h         [test $HAVE_SINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-isnanl          [test $HAVE_SINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-floor           [test $HAVE_SINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-floorl          [test $HAVE_SINL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+sin             [{ test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float-h         [{ test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isnanl          [{ test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+floor           [{ test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+floorl          [{ test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_SINL
-gl_CONDITIONAL([GL_COND_OBJ_SINL], [test $HAVE_SINL = 0])
+gl_CONDITIONAL([GL_COND_OBJ_SINL],
+               [test $HAVE_SINL = 0 || test $REPLACE_SINL = 1])
 AM_COND_IF([GL_COND_OBJ_SINL], [
   if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0; then
     AC_LIBOBJ([sincosl])
