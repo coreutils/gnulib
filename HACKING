@@ -166,6 +166,63 @@ There are two continuous integrations that regularly perform this testing:
   - and other platforms of your choice.
 
 
+Coding Style
+============
+
+For C source code:
+
+* Follow the portability guidelines
+  https://www.gnu.org/software/gnulib/manual/html_node/Portability-guidelines.html
+
+* Use mixed declarations and statements, as appropriate. (This is supported
+  since C99.)
+
+* Note: You can't put a label before a declaration, such as in
+    retry:
+      int foo = ...;
+  This is supported only in C23 or newer. Instead, add an empty statement:
+    retry: ;
+      int foo = ...;
+  Similarly, you can't put a declaration immediately after a case label, such
+  as in
+    case 1:
+      int foo = ...;
+      ...
+      break;
+  Again, this is supported only in C23 or newer. Instead, use a sub-block:
+    case 1:
+      {
+        int foo = ...;
+        ...
+      }
+      break;
+
+* In function definitions and blocks, the pre-C99 style "declare all variables
+  upfront" is discouraged.
+  Instead, the following style elements are encouraged (for local non-static
+  variables):
+    - Move the declaration of a variable to its initialization.
+    - Reduce the scope of variables:
+      . If a variable is only used in a sub-block, declare it in that sub-block.
+      . If a variable is only used in several sub-blocks and has a separate
+        initialization in each of the sub-blocks, declare it in each of these
+        sub-blocks. It's actually several independent variables.
+      . If a variable is only used in a small part of a function definition or
+        block (say, 1/3 of it or less), you may surround that part (including
+        the variable's initialization) with braces, so that it becomes clear
+        that the variable is not used in the rest of the function / block.
+    - Usually, try to declare and initialize variables right when they are
+      needed for the first time, not several computation steps before.
+  The rationale is:
+    - It follows the general principle "Put related things close together."
+    - A function with 3 blocks that each has 4 variables is easier to
+      understand than a function that has 12 variables, and where the
+      reader has to find out which variable is used where.
+    - Variables may represent state, and it is the state and the control flow
+      that contribute to the complexity of a function.
+  Only static variables are better kept declared upfront in a function or block.
+
+
 Warning Options
 ===============
 
