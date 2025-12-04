@@ -355,6 +355,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_SIGNBIT_USING_BUILTINS''@|$(REPLACE_SIGNBIT_USING_BUILTINS)|g' \
 	      -e 's|@''REPLACE_SINF''@|$(REPLACE_SINF)|g' \
 	      -e 's|@''REPLACE_SINHF''@|$(REPLACE_SINHF)|g' \
+	      -e 's|@''REPLACE_SINL''@|$(REPLACE_SINL)|g' \
 	      -e 's|@''REPLACE_SQRTF''@|$(REPLACE_SQRTF)|g' \
 	      -e 's|@''REPLACE_SQRTL''@|$(REPLACE_SQRTL)|g' \
 	      -e 's|@''REPLACE_TANF''@|$(REPLACE_TANF)|g' \

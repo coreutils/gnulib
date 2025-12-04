@@ -1,5 +1,5 @@
 # sinl.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2010-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,9 +60,65 @@ AC_DEFUN([gl_FUNC_SINL],
     dnl Also check whether it's declared.
     dnl Mac OS X 10.3 has sinl() in libc but doesn't declare it in <math.h>.
     AC_CHECK_DECL([sinl], , [HAVE_DECL_SINL=0], [[#include <math.h>]])
+    if test $REPLACE_SINL = 0; then
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+      AC_CACHE_CHECK([whether sinl works],
+        [gl_cv_func_sinl_works],
+        [
+          saved_LIBS="$LIBS"
+          LIBS="$LIBS $SINL_LIBM"
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+#undef sinl
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double sinl (long double);
+static long double dummy (long double x) { return 0; }
+int main (int argc, char *argv[])
+{
+  long double (* volatile my_sinl) (long double) = argc ? sinl : dummy;
+  int result = 0;
+  /* On NetBSD 10.0 the system's native sinl() is buggy:
+     it does not obey the inequality |sin(x)| <= |x|.  */
+  {
+    volatile long double x = 0.000000000000000004L;
+    if (my_sinl (x) > x)
+      result |= 1;
+  }
+  return result;
+}
+            ]])],
+            [gl_cv_func_sinl_works=yes],
+            [gl_cv_func_sinl_works=no],
+            [case "$host_os" in
+                                   # Guess yes on glibc systems.
+               *-gnu* | gnu*)      gl_cv_func_sinl_works="guessing yes" ;;
+                                   # Guess yes on musl systems.
+               *-musl* | midipix*) gl_cv_func_sinl_works="guessing yes" ;;
+                                   # Guess yes on native Windows.
+               mingw* | windows*)  gl_cv_func_sinl_works="guessing yes" ;;
+                                   # If we don't know, obey --enable-cross-guesses.
+               *)                  gl_cv_func_sinl_works="$gl_cross_guess_normal" ;;
+             esac
+            ])
+          LIBS="$saved_LIBS"
+        ])
+      case "$gl_cv_func_sinl_works" in
+        *yes) ;;
+        *) REPLACE_SINL=1 ;;
+      esac
+    fi
   else
     HAVE_DECL_SINL=0
     HAVE_SINL=0
+  fi
+  if test $HAVE_SINL = 0 || test $REPLACE_SINL = 1; then
     dnl Find libraries needed to link lib/sinl.c, lib/sincosl.c, lib/trigl.c.
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       AC_REQUIRE([gl_FUNC_SIN])
