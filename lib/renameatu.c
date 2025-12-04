@@ -30,7 +30,7 @@
 # include <sys/syscall.h>
 #endif
 
-#include "issymlink.h"
+#include "issymlinkat.h"
 
 static int
 errno_fail (int e)

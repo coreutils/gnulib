@@ -78,6 +78,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2025-12-04  issymlinkat     The include file is changed from "issymlink.h" to
+                            "issymlinkat.h".
+
 2025-11-01  nstrftime       The return type is now signed not size_t,
             c-nstrftime     the failure return value is now -1 not 0,
             fprintftime     and errno is no longer preserved on success.

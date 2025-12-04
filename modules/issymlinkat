@@ -2,7 +2,7 @@ Description:
 Test whether a file is a symbolic link.
 
 Files:
-lib/issymlink.h
+lib/issymlinkat.h
 lib/issymlinkat.c
 
 Depends-on:
@@ -18,7 +18,7 @@ Makefile.am:
 lib_SOURCES += issymlinkat.c
 
 Include:
-"issymlink.h"
+"issymlinkat.h"
 
 Link:
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise

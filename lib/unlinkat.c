@@ -30,7 +30,7 @@
 #include <stdlib.h>
 
 #include "filename.h"
-#include "issymlink.h"
+#include "issymlinkat.h"
 #include "openat.h"
 
 #if HAVE_UNLINKAT
