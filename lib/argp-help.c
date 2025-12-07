@@ -140,19 +140,18 @@ validate_uparams (const struct argp_state *state, struct uparams *upptr)
 
   for (up = uparam_names; up < uparam_names + nuparam_names; up++)
     {
-      if (up->is_bool
-          || up->uparams_offs == offsetof (struct uparams, rmargin))
-        continue;
-      if (*(int *)((char *)upptr + up->uparams_offs) >= upptr->rmargin)
-        {
-          __argp_failure (state, 0, 0,
-                          dgettext (state == NULL ? NULL
-                                    : state->root_argp->argp_domain,
-                                    "\
+      if (!(up->is_bool
+            || up->uparams_offs == offsetof (struct uparams, rmargin)))
+        if (*(int *)((char *)upptr + up->uparams_offs) >= upptr->rmargin)
+          {
+            __argp_failure (state, 0, 0,
+                            dgettext (state == NULL ? NULL
+                                      : state->root_argp->argp_domain,
+                                      "\
 ARGP_HELP_FMT: %s value is less than or equal to %s"),
-                          "rmargin", up->name);
-          return;
-        }
+                            "rmargin", up->name);
+            return;
+          }
     }
   uparams = *upptr;
   uparams.valid = 1;
