@@ -65,6 +65,21 @@
 # include <libintl.h>
 #endif
 
+/* We have special code for two types of system: non-Cygwin Windows, and
+   Linux where dladdr is in a separate library (uClibc and glibc < 2.34).
+   Need glibc >= 2, for getline().
+
+   Otherwise, use dladdr.
+*/
+#if defined __linux__ && (defined __UCLIBC__ || ((__GLIBC__ >= 2) && (__GLIBC_MINOR__ < 34)))
+# define _GL_USE_PROCFS 1
+#elif (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__
+# define _GL_USE_WIN32 1
+#elif _GL_DLADDR_IN_LIBC
+# define _GL_USE_DLADDR 1
+# include <dlfcn.h>
+#endif
+
 #if defined _WIN32 && !defined __CYGWIN__
 /* Don't assume that UNICODE is not defined.  */
 # undef GetModuleFileName
@@ -318,10 +333,9 @@ static char *shared_library_fullname;
 
 #if defined _WIN32 && !defined __CYGWIN__
 /* Native Windows only.
-   On Cygwin, it is better to use the Cygwin provided /proc interface, than
-   to use native Windows API and cygwin_conv_to_posix_path, because it
-   supports longer file names
-   (see <https://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
+   On Cygwin, it is better to use dladdr, than to use native Windows
+   API and cygwin_conv_to_posix_path, because it supports longer file
+   names (see <https://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
 
 /* Determine the full pathname of the shared library when it is loaded.
 
@@ -402,12 +416,10 @@ _DLL_InitTerm (unsigned long hModule, unsigned long ulFlag)
 static void
 find_shared_library_fullname ()
 {
-#if (defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)) || defined __CYGWIN__
+#if _GL_USE_PROCFS
   /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
      function.
-     Cygwin >= 1.5 has /proc/self/maps and the getline() function too.
-     But it is costly: ca. 0.3 ms on Linux, 3 ms on Cygwin 1.5, and 5 ms on
-     Cygwin 1.7.  */
+     But it is costly: ca. 0.3 ms.  */
   FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
@@ -449,6 +461,11 @@ find_shared_library_fullname ()
         }
       fclose (fp);
     }
+#elif _GL_USE_DLADDR
+  Dl_info info;
+  int ret = dladdr (find_shared_library_fullname, &info);
+  if (ret != 0 && info.dli_fname != NULL)
+    shared_library_fullname = strdup (info.dli_fname);
 #endif
 }
 
@@ -456,11 +473,12 @@ find_shared_library_fullname ()
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
-   Guaranteed to work only on Linux, EMX, Cygwin, and native Windows.  */
+   Guaranteed to work only on Linux, EMX, Cygwin, native Windows, and
+   systems with dladdr in libc.  */
 static char *
 get_shared_library_fullname ()
 {
-#if !(defined _WIN32 && !defined __CYGWIN__) && !defined __EMX__
+#if !_GL_USE_WIN32
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {

@@ -15,7 +15,7 @@ AC_DEFUN([gl_LIBDL],
   dnl dlopen, dlsym are
   dnl - in libc on glibc >= 2.34, musl libc, macOS, FreeBSD, NetBSD, OpenBSD,
   dnl   AIX, Solaris, Cygwin, Haiku,
-  dnl - in a separate libdl on glibc < 2.34, Android.
+  dnl - in a separate libdl on glibc < 2.34, Android, uClibc.
   AC_CACHE_CHECK([for library needed for dlopen and dlsym],
     [gl_cv_lib_dl],
     [AC_LINK_IFELSE(

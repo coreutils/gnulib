@@ -18,6 +18,10 @@ gl_RELOCATABLE_LIBRARY
 if test $RELOCATABLE = yes; then
   AC_LIBOBJ([relocatable])
 fi
+gl_LIBDL
+if test -z "$LIBDL"; then
+  AC_DEFINE([_GL_DLADDR_IN_LIBC], [1], [Define to 1 if dladdr is in libc.])
+fi
 
 Makefile.am:
 DEFS += -DNO_XMALLOC
