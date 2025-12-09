@@ -7,8 +7,8 @@ doc/relocatable.texi
 lib/relocatable.h
 lib/relocatable.c
 lib/relocatable.valgrind
-m4/libdl.m4
 m4/relocatable-lib.m4
+m4/libdl.m4
 m4/build-to-host.m4
 
 Depends-on:
@@ -19,10 +19,6 @@ configure.ac:
 gl_RELOCATABLE_LIBRARY
 if test $RELOCATABLE = yes; then
   AC_LIBOBJ([relocatable])
-fi
-gl_LIBDL
-if test -z "$LIBDL"; then
-  AC_DEFINE([_GL_DLADDR_IN_LIBC], [1], [Define to 1 if dladdr is in libc.])
 fi
 
 Makefile.am:

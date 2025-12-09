@@ -55,6 +55,10 @@
 # define strncmp strnicmp
 #endif
 
+#if HAVE_DLADDR_IN_LIBC
+# include <dlfcn.h>
+#endif
+
 #if DEPENDS_ON_LIBCHARSET
 # include <libcharset.h>
 #endif
@@ -63,21 +67,6 @@
 #endif
 #if DEPENDS_ON_LIBINTL && ENABLE_NLS
 # include <libintl.h>
-#endif
-
-/* We have special code for two types of system: non-Cygwin Windows, and
-   Linux where dladdr is in a separate library (uClibc and glibc < 2.34).
-   Need glibc >= 2, for getline().
-
-   Otherwise, use dladdr.
-*/
-#if defined __linux__ && (defined __UCLIBC__ || ((__GLIBC__ >= 2) && (__GLIBC_MINOR__ < 34)))
-# define _GL_USE_PROCFS 1
-#elif (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__
-# define _GL_USE_WIN32 1
-#elif _GL_DLADDR_IN_LIBC
-# define _GL_USE_DLADDR 1
-# include <dlfcn.h>
 #endif
 
 #if defined _WIN32 && !defined __CYGWIN__
@@ -116,9 +105,8 @@
 
 /* Whether to enable the more costly support for relocatable libraries.
    It allows libraries to be have been installed with a different original
-   prefix than the program.  But it is quite costly, especially on Cygwin
-   platforms, see below.  Therefore we enable it by default only on native
-   Windows platforms.  */
+   prefix than the program.  But it is quite costly, see below.  Therefore
+   we enable it by default only on native Windows platforms.  */
 #ifndef ENABLE_COSTLY_RELOCATABLE
 # if defined _WIN32 && !defined __CYGWIN__
 #  define ENABLE_COSTLY_RELOCATABLE 1
@@ -333,9 +321,10 @@ static char *shared_library_fullname;
 
 #if defined _WIN32 && !defined __CYGWIN__
 /* Native Windows only.
-   On Cygwin, it is better to use dladdr, than to use native Windows
-   API and cygwin_conv_to_posix_path, because it supports longer file
-   names (see <https://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
+   On Cygwin, it is better to use either dladdr() or the Cygwin provided /proc
+   interface, than to use native Windows API and cygwin_conv_to_posix_path,
+   because it supports longer file names
+   (see <https://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
 
 /* Determine the full pathname of the shared library when it is loaded.
 
@@ -416,7 +405,17 @@ _DLL_InitTerm (unsigned long hModule, unsigned long ulFlag)
 static void
 find_shared_library_fullname ()
 {
-#if _GL_USE_PROCFS
+#if HAVE_DLADDR_IN_LIBC
+  /* glibc >= 2.34, musl, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin, Minix */
+  /* We can use dladdr() without introducing extra link dependencies.  */
+  Dl_info info;
+  /* It is OK to use a 'static' function — that does not appear in the
+     dynamic symbol table of any ELF object — as argument of dladdr() here,
+     because we don't access the fields info.dli_sname and info.dli_saddr.  */
+  int ret = dladdr (find_shared_library_fullname, &info);
+  if (ret != 0 && info.dli_fname != NULL)
+    shared_library_fullname = strdup (info.dli_fname);
+#elif (defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)) || defined __CYGWIN__
   /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
      function.
      But it is costly: ca. 0.3 ms.  */
@@ -461,24 +460,22 @@ find_shared_library_fullname ()
         }
       fclose (fp);
     }
-#elif _GL_USE_DLADDR
-  Dl_info info;
-  int ret = dladdr (find_shared_library_fullname, &info);
-  if (ret != 0 && info.dli_fname != NULL)
-    shared_library_fullname = strdup (info.dli_fname);
 #endif
 }
+
+# define find_shared_library_fullname find_shared_library_fullname
 
 #endif /* Native Windows / EMX / Unix */
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
-   Guaranteed to work only on Linux, EMX, Cygwin, native Windows, and
-   systems with dladdr in libc.  */
+   Guaranteed to work only on
+     glibc >= 2.34, Linux, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin,
+     Minix, native Windows, EMX. */
 static char *
 get_shared_library_fullname ()
 {
-#if !_GL_USE_WIN32
+#if defined find_shared_library_fullname
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {

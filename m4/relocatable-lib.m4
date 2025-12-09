@@ -1,5 +1,5 @@
 # relocatable-lib.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2003, 2005-2007, 2009-2025 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,14 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
     AC_DEFINE([ENABLE_RELOCATABLE], [1],
       [Define to 1 if the package shall run at any location in the file
        system.])
+  fi
+  dnl Determine whether dladdr() exists in libc.
+  gl_LIBDL
+  if test -z "$LIBDL"; then
+    AC_CHECK_FUNC([dladdr],
+      [AC_DEFINE([HAVE_DLADDR_IN_LIBC], [1],
+         [Define to 1 if dladdr exists and is defined in libc.])
+      ])
   fi
 ])
 
