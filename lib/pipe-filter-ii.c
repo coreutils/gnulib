@@ -66,22 +66,17 @@ _beginthreadex (void *s, unsigned n, unsigned int WINAPI (*start) (void *),
   if (!h)
     return NULL;
 
-  if (DosCreateEventSem (NULL, &h->hevDone, 0, FALSE))
-    goto exit_free;
+  if (! DosCreateEventSem (NULL, &h->hevDone, 0, FALSE))
+    {
+      h->start = start;
+      h->arg = arg;
 
-  h->start = start;
-  h->arg = arg;
+      h->tid = _beginthread (start_wrapper, NULL, n, (void *) h);
+      if (h->tid != -1)
+        return h;
 
-  h->tid = _beginthread (start_wrapper, NULL, n, (void *) h);
-  if (h->tid == -1)
-    goto exit_close_event_sem;
-
-  return h;
-
- exit_close_event_sem:
-  DosCloseEventSem (h->hevDone);
-
- exit_free:
+      DosCloseEventSem (h->hevDone);
+    }
   free (h);
 
   return NULL;
@@ -123,7 +118,7 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
 
   psr = malloc (sizeof (*psr) * nCount);
   if (!psr)
-    goto exit_return;
+    return (DWORD) -1;
 
   for (DWORD i = 0; i < nCount; ++i)
     {
@@ -131,21 +126,16 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
       psr[i].ulUser  = WAIT_OBJECT_0 + i;
     }
 
-  if (DosCreateMuxWaitSem (NULL, &hmux, nCount, psr,
-                           bWaitAll ? DCMW_WAIT_ALL : DCMW_WAIT_ANY))
-    goto exit_free;
-
-  rc = DosWaitMuxWaitSem (hmux, ms, &ulUser);
-  DosCloseMuxWaitSem (hmux);
-
- exit_free:
+  if (! DosCreateMuxWaitSem (NULL, &hmux, nCount, psr,
+                             bWaitAll ? DCMW_WAIT_ALL : DCMW_WAIT_ANY))
+    {
+      rc = DosWaitMuxWaitSem (hmux, ms, &ulUser);
+      DosCloseMuxWaitSem (hmux);
+      free (psr);
+      return rc ? (DWORD) -1 : ulUser;
+    }
   free (psr);
-
- exit_return:
-  if (rc)
-    return (DWORD) -1;
-
-  return ulUser;
+  return (DWORD) -1;
 }
 #else
 # include <signal.h>
