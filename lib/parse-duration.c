@@ -369,7 +369,7 @@ static time_t
 parse_time (cch_t * pz)
 {
   cch_t * ps;
-  time_t  res = 0;
+  time_t  res;
 
   /*
    *  Scan for a hyphen

@@ -120,7 +120,6 @@ argz_create_sep (const char *string, int delim, char **argz, size_t *len)
         {
           free (*argz);
           *argz = NULL;
-          *len = 0;
         }
 
       *len = nlen;

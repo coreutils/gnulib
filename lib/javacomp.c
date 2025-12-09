@@ -391,7 +391,7 @@ get_compiler_version (const char *progname,
     return 0;
 
   /* Search the first digit in line.  */
-  char *version_start = line;
+  char *version_start;
   for (version_start = line; ; version_start++)
     {
       if (*version_start == '\0')

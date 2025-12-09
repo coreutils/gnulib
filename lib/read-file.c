@@ -51,7 +51,7 @@
 char *
 fread_file (FILE *stream, int flags, size_t *length)
 {
-  char *buf = NULL;
+  char *buf;
   size_t alloc = BUFSIZ;
 
   /* For a regular file, allocate a buffer that has exactly the right

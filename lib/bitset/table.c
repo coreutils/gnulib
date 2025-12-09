@@ -884,7 +884,7 @@ tbitset_op3_cmp (bitset dst, bitset src1, bitset src2, enum bitset_ops op)
   tbitset_elts *selts2 = TBITSET_ELTS (src2);
   tbitset_elts *delts = TBITSET_ELTS (dst);
 
-  bitset_windex j = 0;
+  bitset_windex j;
   for (j = 0; j < size; j++)
     {
       tbitset_elt *selt1 = j < ssize1 ? selts1[j] : NULL;

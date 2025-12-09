@@ -212,7 +212,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
 
   /* This is always zero for Posix hosts, but can be 2 for MS-Windows
      and MS-DOS X:/foo/bar file names.  */
-  idx_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
+  idx_t prefix_len;
 
   if (!IS_ABSOLUTE_FILE_NAME (name))
     {
@@ -239,6 +239,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
     }
   else
     {
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
       dest = mempcpy (rname, name, prefix_len);
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)

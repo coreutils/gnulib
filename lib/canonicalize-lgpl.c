@@ -220,7 +220,7 @@ realpath_stk (const char *name, char *resolved, struct realpath_bufs *bufs)
 
   /* This is always zero for Posix hosts, but can be 2 for MS-Windows
      and MS-DOS X:/foo/bar file names.  */
-  idx_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
+  idx_t prefix_len;
 
   if (!IS_ABSOLUTE_FILE_NAME (name))
     {
@@ -241,6 +241,7 @@ realpath_stk (const char *name, char *resolved, struct realpath_bufs *bufs)
     }
   else
     {
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
       dest = __mempcpy (rname, name, prefix_len);
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)

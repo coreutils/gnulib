@@ -191,7 +191,7 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
 {
   size_t len;
   char *XXXXXX;
-  int fd = -1;
+  int fd;
   int saved_errno = errno;
 
   /* A lower bound on the number of temporary files to attempt to

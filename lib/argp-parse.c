@@ -781,7 +781,7 @@ static error_t
 parser_parse_next (struct parser *parser, int *arg_ebadkey)
 {
   int opt;
-  error_t err = 0;
+  error_t err;
 
   if (parser->state.quoted && parser->state.next < parser->state.quoted)
     /* The next argument pointer has been moved to before the quoted
