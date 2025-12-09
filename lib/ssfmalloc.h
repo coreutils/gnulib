@@ -762,50 +762,43 @@ allocate_block_from_pool (size_t size, struct page_pool *pool)
         }
       ((struct dissected_page_header *) page)->tree_element = element;
       pool->freeable_page = 0;
-
-      uintptr_t block = pool->allocate_block_in_page (size, page);
-      if (block == 0)
-        /* If the size is too large for an empty page, this function should not
-           have been invoked.  */
+    }
+  else
+    {
+      /* Allocate a fresh page.  */
+      page = ALLOC_PAGES (PAGESIZE);
+      if (unlikely (page == 0))
+        {
+          /* Failed.  */
+          pool->last_page = 0;
+          return 0;
+        }
+      if ((page & (PAGESIZE - 1)) != 0)
+        /* ALLOC_PAGES's result is not aligned as expected.  */
         abort ();
-      add_update (page, pool);
-      pool->last_page = page;
-      return block;
-    }
 
-  /* Allocate a fresh page.  */
-  page = ALLOC_PAGES (PAGESIZE);
-  if (unlikely (page == 0))
-    {
-      /* Failed.  */
-      pool->last_page = 0;
-      return 0;
+      pool->init_page (page);
+      struct page_tree_element *element =
+        (struct page_tree_element *) malloc (sizeof (struct page_tree_element));
+      if (unlikely (element == NULL))
+        {
+          /* Could not allocate the tree element.  */
+          FREE_PAGES (page, PAGESIZE);
+          pool->last_page = 0;
+          return 0;
+        }
+      element->page = page;
+      element->free_space = ((struct dissected_page_header *) page)->free_space;
+      if (unlikely (gl_oset_nx_add (pool->managed_pages, element) < 0))
+        {
+          /* Could not allocate the tree node.  */
+          free (element);
+          FREE_PAGES (page, PAGESIZE);
+          pool->last_page = 0;
+          return 0;
+        }
+      ((struct dissected_page_header *) page)->tree_element = element;
     }
-  if ((page & (PAGESIZE - 1)) != 0)
-    /* ALLOC_PAGES's result is not aligned as expected.  */
-    abort ();
-
-  pool->init_page (page);
-  struct page_tree_element *element =
-    (struct page_tree_element *) malloc (sizeof (struct page_tree_element));
-  if (unlikely (element == NULL))
-    {
-      /* Could not allocate the tree element.  */
-      FREE_PAGES (page, PAGESIZE);
-      pool->last_page = 0;
-      return 0;
-    }
-  element->page = page;
-  element->free_space = ((struct dissected_page_header *) page)->free_space;
-  if (unlikely (gl_oset_nx_add (pool->managed_pages, element) < 0))
-    {
-      /* Could not allocate the tree node.  */
-      free (element);
-      FREE_PAGES (page, PAGESIZE);
-      pool->last_page = 0;
-      return 0;
-    }
-  ((struct dissected_page_header *) page)->tree_element = element;
 
   uintptr_t block = pool->allocate_block_in_page (size, page);
   if (block == 0)
