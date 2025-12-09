@@ -570,8 +570,6 @@ int
 rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
             struct timeval *timeout)
 {
-  int i;
-
   /* FreeBSD 8.2 has a bug: it does not always detect invalid fds.  */
   if (nfds < 0 || nfds > FD_SETSIZE)
     {
