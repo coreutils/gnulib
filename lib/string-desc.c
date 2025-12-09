@@ -268,18 +268,17 @@ int
 _sd_copy (rw_string_desc_t *resultp, idx_t s_nbytes, const char *s_data)
 {
   rw_string_desc_t result;
-  idx_t n = s_nbytes;
 
-  result._nbytes = n;
-  if (n == 0)
+  result._nbytes = s_nbytes;
+  if (s_nbytes == 0)
     result._data = NULL;
   else
     {
-      result._data = (char *) imalloc (n);
+      result._data = (char *) imalloc (s_nbytes);
       if (result._data == NULL)
         /* errno is set here.  */
         return -1;
-      memcpy (result._data, s_data, n);
+      memcpy (result._data, s_data, s_nbytes);
     }
 
   *resultp = result;
