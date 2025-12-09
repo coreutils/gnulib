@@ -65,10 +65,6 @@ realloc_groupbuf (gid_t *g, size_t num)
 int
 mgetgroups (char const *username, gid_t gid, gid_t **groups)
 {
-  int max_n_groups;
-  int ng;
-  gid_t *g;
-
 #if HAVE_GETGROUPLIST
   /* We prefer to use getgrouplist if available, because it has better
      performance characteristics.
@@ -81,26 +77,26 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
   if (username)
     {
       enum { N_GROUPS_INIT = 10 };
-      max_n_groups = N_GROUPS_INIT;
+      int max_n_groups = N_GROUPS_INIT;
 
-      g = realloc_groupbuf (NULL, max_n_groups);
+      gid_t *g = realloc_groupbuf (NULL, max_n_groups);
       if (g == NULL)
         return -1;
 
       while (1)
         {
-          gid_t *h;
           int last_n_groups = max_n_groups;
 
           /* getgrouplist updates max_n_groups to num required.  */
-          ng = getgrouplist (username, gid, g, &max_n_groups);
+          int ng = getgrouplist (username, gid, g, &max_n_groups);
 
           /* Some systems (like Darwin) have a bug where they
              never increase max_n_groups.  */
           if (ng < 0 && last_n_groups == max_n_groups)
             max_n_groups *= 2;
 
-          if ((h = realloc_groupbuf (g, max_n_groups)) == NULL)
+          gid_t *h = realloc_groupbuf (g, max_n_groups);
+          if (h == NULL)
             {
               free (g);
               return -1;
@@ -119,34 +115,38 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
   /* else no username, so fall through and use getgroups. */
 #endif
 
-  max_n_groups = (username
-                  ? getugroups (0, NULL, username, gid)
-                  : getgroups (0, NULL));
+  int max_n_groups = (username
+                      ? getugroups (0, NULL, username, gid)
+                      : getgroups (0, NULL));
 
   /* If we failed to count groups because there is no supplemental
      group support, then return an array containing just GID.
      Otherwise, we fail for the same reason.  */
   if (max_n_groups < 0)
     {
-      if (errno == ENOSYS && (g = realloc_groupbuf (NULL, 1)))
+      if (errno == ENOSYS)
         {
-          *groups = g;
-          *g = gid;
-          return gid != (gid_t) -1;
+          gid_t *g = realloc_groupbuf (NULL, 1);
+          if (g)
+            {
+              *groups = g;
+              *g = gid;
+              return gid != (gid_t) -1;
+            }
         }
       return -1;
     }
 
   if (max_n_groups == 0 || (!username && gid != (gid_t) -1))
     max_n_groups++;
-  g = realloc_groupbuf (NULL, max_n_groups);
+  gid_t *g = realloc_groupbuf (NULL, max_n_groups);
   if (g == NULL)
     return -1;
 
-  ng = (username
-        ? getugroups (max_n_groups, g, username, gid)
-        : getgroups (max_n_groups - (gid != (gid_t) -1),
-                                g + (gid != (gid_t) -1)));
+  int ng = (username
+            ? getugroups (max_n_groups, g, username, gid)
+            : getgroups (max_n_groups - (gid != (gid_t) -1),
+                                    g + (gid != (gid_t) -1)));
 
   if (ng < 0)
     {

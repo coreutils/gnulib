@@ -50,8 +50,6 @@ link_immediate (char const *file1, char const *file2)
          an identical symlink behaves like a hard link to a symlink,
          except for incorrect st_ino and st_nlink.  However, we must
          be careful of EXDEV.  */
-      struct stat st1;
-      struct stat st2;
       char *dir = mdir_name (file2);
       if (!dir)
         {
@@ -59,6 +57,8 @@ link_immediate (char const *file1, char const *file2)
           errno = ENOMEM;
           return -1;
         }
+      struct stat st1;
+      struct stat st2;
       if (lstat (file1, &st1) == 0 && stat (dir, &st2) == 0)
         {
           if (st1.st_dev == st2.st_dev)
@@ -92,7 +92,6 @@ link_follow (char const *file1, char const *file2)
 {
   char *name = (char *) file1;
   char *target;
-  int result;
   int i = __eloop_threshold ();
 
   /* Using realpath or canonicalize_file_name is too heavy-handed: we
@@ -138,7 +137,7 @@ link_follow (char const *file1, char const *file2)
         free (name);
       return -1;
     }
-  result = link (name, file2);
+  int result = link (name, file2);
   if (name != file1)
     free (name);
   return result;
@@ -210,7 +209,6 @@ linkat_follow (int fd1, char const *file1, int fd2, char const *file2)
 {
   char *name = (char *) file1;
   char *target;
-  int result;
   int i = __eloop_threshold ();
 
   /* There is no realpathat.  */
@@ -254,7 +252,7 @@ linkat_follow (int fd1, char const *file1, int fd2, char const *file2)
         free (name);
       return -1;
     }
-  result = linkat (fd1, name, fd2, file2, 0);
+  int result = linkat (fd1, name, fd2, file2, 0);
   if (name != file1)
     free (name);
   return result;

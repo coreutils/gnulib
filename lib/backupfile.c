@@ -211,7 +211,6 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
   enum numbered_backup_result result = BACKUP_IS_NEW;
   DIR *dirp = *dirpp;
   char *buf = *buffer;
-  idx_t versionlenmax = 1;
   idx_t baselen = filelen - base_offset;
 
   if (dirp)
@@ -233,6 +232,8 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
         return result;
       *dirpp = dirp;
     }
+
+  idx_t versionlenmax = 1;
 
   for (struct dirent *dp; (dp = readdir (dirp)) != NULL; )
     {

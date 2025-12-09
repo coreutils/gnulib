@@ -90,12 +90,6 @@ opendir (const char *dir_name)
 
 #else
 
-  char dir_name_mask[MAX_PATH + 1 + 1 + 1];
-  int status;
-  HANDLE current;
-  WIN32_FIND_DATA entry;
-  struct gl_directory *dirp;
-
   if (dir_name[0] == '\0')
     {
       errno = ENOENT;
@@ -105,6 +99,7 @@ opendir (const char *dir_name)
   /* Make the dir_name absolute, so that we continue reading the same
      directory if the current directory changed between this opendir()
      call and a subsequent rewinddir() call.  */
+  char dir_name_mask[MAX_PATH + 1 + 1 + 1];
   if (!GetFullPathName (dir_name, MAX_PATH, dir_name_mask, NULL))
     {
       errno = EINVAL;
@@ -124,8 +119,9 @@ opendir (const char *dir_name)
   }
 
   /* Start searching the directory.  */
-  status = -1;
-  current = FindFirstFile (dir_name_mask, &entry);
+  int status = -1;
+  WIN32_FIND_DATA entry;
+  HANDLE current = FindFirstFile (dir_name_mask, &entry);
   if (current == INVALID_HANDLE_VALUE)
     {
       switch (GetLastError ())
@@ -149,7 +145,7 @@ opendir (const char *dir_name)
     }
 
   /* Allocate the result.  */
-  dirp =
+  struct gl_directory *dirp =
     (struct gl_directory *)
     malloc (offsetof (struct gl_directory, dir_name_mask[0])
             + strlen (dir_name_mask) + 1);

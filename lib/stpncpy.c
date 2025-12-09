@@ -33,7 +33,6 @@
 char *
 (__stpncpy) (char *dest, const char *src, size_t n)
 {
-  char c;
   char *s = dest;
 
   if (n >= 4)
@@ -42,22 +41,30 @@ char *
 
       for (;;)
         {
-          c = *src++;
-          *dest++ = c;
-          if (c == '\0')
-            break;
-          c = *src++;
-          *dest++ = c;
-          if (c == '\0')
-            break;
-          c = *src++;
-          *dest++ = c;
-          if (c == '\0')
-            break;
-          c = *src++;
-          *dest++ = c;
-          if (c == '\0')
-            break;
+          {
+            char c = *src++;
+            *dest++ = c;
+            if (c == '\0')
+              break;
+          }
+          {
+            char c = *src++;
+            *dest++ = c;
+            if (c == '\0')
+              break;
+          }
+          {
+            char c = *src++;
+            *dest++ = c;
+            if (c == '\0')
+              break;
+          }
+          {
+            char c = *src++;
+            *dest++ = c;
+            if (c == '\0')
+              break;
+          }
           if (--n4 == 0)
             goto last_chars;
         }
@@ -72,7 +79,7 @@ char *
 
   for (;;)
     {
-      c = *src++;
+      char c = *src++;
       --n;
       *dest++ = c;
       if (c == '\0')

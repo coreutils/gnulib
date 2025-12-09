@@ -54,14 +54,13 @@ getlogin_r (char *name, size_t size)
 #undef getlogin_r
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Native Windows platform.  */
-  DWORD sz;
 
   /* When size > 0x7fff, the doc says that GetUserName will fail.
      Actually, on Windows XP SP3, it succeeds.  But let's be safe,
      for the sake of older Windows versions.  */
   if (size > 0x7fff)
     size = 0x7fff;
-  sz = size;
+  DWORD sz = size;
   if (!GetUserName (name, &sz))
     {
       if (GetLastError () == ERROR_INSUFFICIENT_BUFFER)
@@ -166,16 +165,13 @@ getlogin_r (char *name, size_t size)
   return ret;
 #else
   /* Platform with a getlogin() function.  */
-  char *n;
-  size_t nlen;
-
   errno = 0;
-  n = getlogin ();
+  char *n = getlogin ();
   if (!n)
     /* ENOENT is a reasonable errno value if getlogin returns NULL.  */
     return (errno != 0 ? errno : ENOENT);
 
-  nlen = strlen (n);
+  size_t nlen = strlen (n);
   if (size <= nlen)
     return ERANGE;
   memcpy (name, n, nlen + 1);

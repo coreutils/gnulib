@@ -27,9 +27,7 @@
 void *
 xmmalloca (size_t n)
 {
-  void *p;
-
-  p = mmalloca (n);
+  void *p = mmalloca (n);
   if (p == NULL)
     xalloc_die ();
   return p;

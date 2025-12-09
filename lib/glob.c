@@ -288,18 +288,6 @@ GLOB_ATTRIBUTE
 __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         glob_t *pglob)
 {
-  const char *filename;
-  char *dirname = NULL;
-  size_t dirlen;
-  int status;
-  size_t oldcount;
-  int meta;
-  int dirname_modified;
-  int malloc_dirname = 0;
-  glob_t dirs;
-  int retval = 0;
-  size_t alloca_used = 0;
-
   if (pattern == NULL || pglob == NULL || (flags & ~__GLOB_FLAGS) != 0)
     {
       __set_errno (EINVAL);
@@ -323,8 +311,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         pglob->gl_pathv = NULL;
       else
         {
-          size_t i;
-
           if (pglob->gl_offs >= ~((size_t) 0) / sizeof (char *))
             return GLOB_NOSPACE;
 
@@ -333,10 +319,12 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           if (pglob->gl_pathv == NULL)
             return GLOB_NOSPACE;
 
-          for (i = 0; i <= pglob->gl_offs; ++i)
+          for (size_t i = 0; i <= pglob->gl_offs; ++i)
             pglob->gl_pathv[i] = NULL;
         }
     }
+
+  size_t alloca_used = 0;
 
   if (flags & GLOB_BRACE)
     {
@@ -368,15 +356,9 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         {
           /* Allocate working buffer large enough for our work.  Note that
              we have at least an opening and closing brace.  */
-          size_t firstc;
-          char *alt_start;
-          const char *p;
-          const char *next;
-          const char *rest;
-          size_t rest_len;
-          char *onealt;
           size_t pattern_len = strlen (pattern) - 1;
           int alloca_onealt = glob_use_alloca (alloca_used, pattern_len);
+          char *onealt;
           if (alloca_onealt)
             onealt = alloca_account (pattern_len, alloca_used);
           else
@@ -387,11 +369,11 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             }
 
           /* We know the prefix for all sub-patterns.  */
-          alt_start = mempcpy (onealt, pattern, begin - pattern);
+          char *alt_start = mempcpy (onealt, pattern, begin - pattern);
 
           /* Find the first sub-pattern and at the same time find the
              rest after the closing brace.  */
-          next = next_brace_sub (begin + 1, flags);
+          const char *next = next_brace_sub (begin + 1, flags);
           if (next == NULL)
             {
               /* It is an invalid expression.  */
@@ -403,7 +385,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             }
 
           /* Now find the end of the whole brace expression.  */
-          rest = next;
+          const char *rest = next;
           while (*rest != '}')
             {
               rest = next_brace_sub (rest + 1, flags);
@@ -413,27 +395,25 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             }
           /* Please note that we now can be sure the brace expression
              is well-formed.  */
-          rest_len = strlen (++rest) + 1;
+          size_t rest_len = strlen (++rest) + 1;
 
           /* We have a brace expression.  BEGIN points to the opening {,
              NEXT points past the terminator of the first element, and END
              points past the final }.  We will accumulate result names from
              recursive runs for each brace alternative in the buffer using
              GLOB_APPEND.  */
-          firstc = pglob->gl_pathc;
+          size_t firstc = pglob->gl_pathc;
 
-          p = begin + 1;
+          const char *p = begin + 1;
           while (1)
             {
-              int result;
-
               /* Construct the new glob expression.  */
               mempcpy (mempcpy (alt_start, p, next - p), rest, rest_len);
 
-              result = __glob (onealt,
-                               ((flags & ~(GLOB_NOCHECK | GLOB_NOMAGIC))
-                                | GLOB_APPEND),
-                               errfunc, pglob);
+              int result = __glob (onealt,
+                                   ((flags & ~(GLOB_NOCHECK | GLOB_NOMAGIC))
+                                    | GLOB_APPEND),
+                                   errfunc, pglob);
 
               /* If we got an error, return it.  */
               if (result && result != GLOB_NOMATCH)
@@ -468,11 +448,11 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         }
     }
 
- no_brace:
-  oldcount = pglob->gl_pathc + pglob->gl_offs;
+ no_brace: ;
+  size_t oldcount = pglob->gl_pathc + pglob->gl_offs;
 
   /* Find the filename.  */
-  filename = strrchr (pattern, '/');
+  const char *filename = strrchr (pattern, '/');
 
 #if defined __MSDOS__ || defined WINDOWS32
   /* The case of "d:pattern".  Since ':' is not allowed in
@@ -483,7 +463,12 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
     filename = strchr (pattern, ':');
 #endif /* __MSDOS__ || WINDOWS32 */
 
-  dirname_modified = 0;
+  char *dirname = NULL;
+  size_t dirlen;
+  int malloc_dirname = 0;
+  int dirname_modified = 0;
+  glob_t dirs;
+  int retval = 0;
   if (filename == NULL)
     {
       /* This can mean two things: a simple name or "~name".  The latter
@@ -522,7 +507,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
     }
   else
     {
-      char *newp;
       dirlen = filename - pattern;
 #if defined __MSDOS__ || defined WINDOWS32
       if (*filename == ':'
@@ -543,6 +527,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         }
 #endif
 
+      char *newp;
       if (glob_use_alloca (alloca_used, dirlen + 1))
         newp = alloca_account (dirlen + 1, alloca_used);
       else
@@ -703,9 +688,9 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             }
           else
             {
-              char *newp;
               size_t home_len = strlen (home_dir);
               int use_alloca = glob_use_alloca (alloca_used, home_len + dirlen);
+              char *newp;
               if (use_alloca)
                 newp = alloca_account (home_len + dirlen, alloca_used);
               else
@@ -837,7 +822,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                 /* dirname contains end_name; we can't free it now.  */
                 char *prev_dirname =
                   (__glibc_unlikely (malloc_dirname) ? dirname : NULL);
-                char *d;
 
                 malloc_dirname = 0;
 
@@ -856,7 +840,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                       }
                     malloc_dirname = 1;
                   }
-                d = mempcpy (dirname, p->pw_dir, home_len);
+                char *d = mempcpy (dirname, p->pw_dir, home_len);
                 if (end_name != NULL)
                   d = mempcpy (d, end_name, rest_len);
                 *d = '\0';
@@ -903,7 +887,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
   if (filename == NULL)
     {
       size_t newcount = pglob->gl_pathc + pglob->gl_offs;
-      char **new_gl_pathv;
 
       if (newcount > SIZE_MAX / sizeof (char *) - 2)
         {
@@ -915,19 +898,18 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           goto out;
         }
 
-      new_gl_pathv = realloc (pglob->gl_pathv,
-                              (newcount + 2) * sizeof (char *));
+      char **new_gl_pathv = realloc (pglob->gl_pathv,
+                                     (newcount + 2) * sizeof (char *));
       if (new_gl_pathv == NULL)
         goto nospace;
       pglob->gl_pathv = new_gl_pathv;
 
       if (flags & GLOB_MARK && is_dir (dirname, flags, pglob))
         {
-          char *p;
           pglob->gl_pathv[newcount] = malloc (dirlen + 2);
           if (pglob->gl_pathv[newcount] == NULL)
             goto nospace;
-          p = mempcpy (pglob->gl_pathv[newcount], dirname, dirlen);
+          char *p = mempcpy (pglob->gl_pathv[newcount], dirname, dirlen);
           p[0] = '/';
           p[1] = '\0';
           if (__glibc_unlikely (malloc_dirname))
@@ -951,7 +933,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
       return 0;
     }
 
-  meta = __glob_pattern_type (dirname, !(flags & GLOB_NOESCAPE));
+  int meta = __glob_pattern_type (dirname, !(flags & GLOB_NOESCAPE));
   /* meta is 1 if correct glob pattern containing metacharacters.
      If meta has bit (1 << 2) set, it means there was an unterminated
      [ which we handle the same, using fnmatch.  Broken unterminated
@@ -962,8 +944,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
       /* The directory name contains metacharacters, so we
          have to glob for the directory, and then glob for
          the pattern in each directory found.  */
-      size_t i;
-
       if (!(flags & GLOB_NOESCAPE) && dirlen > 0 && dirname[dirlen - 1] == '\\')
         {
           /* "foo\\/bar".  Remove the final backslash from dirname
@@ -986,10 +966,11 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           dirs.gl_lstat = pglob->gl_lstat;
         }
 
-      status = __glob (dirname,
-                       ((flags & (GLOB_ERR | GLOB_NOESCAPE | GLOB_ALTDIRFUNC))
-                        | GLOB_NOSORT | GLOB_ONLYDIR),
-                       errfunc, &dirs);
+      int status =
+        __glob (dirname,
+                ((flags & (GLOB_ERR | GLOB_NOESCAPE | GLOB_ALTDIRFUNC))
+                 | GLOB_NOSORT | GLOB_ONLYDIR),
+                errfunc, &dirs);
       if (status != 0)
         {
           if ((flags & GLOB_NOCHECK) == 0 || status != GLOB_NOMATCH)
@@ -1003,11 +984,9 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
       /* We have successfully globbed the preceding directory name.
          For each name we found, call glob_in_dir on it and FILENAME,
          appending the results to PGLOB.  */
-      for (i = 0; i < dirs.gl_pathc; ++i)
+      for (size_t i = 0; i < dirs.gl_pathc; ++i)
         {
-          size_t old_pathc;
-
-          old_pathc = pglob->gl_pathc;
+          size_t old_pathc = pglob->gl_pathc;
           status = glob_in_dir (filename, dirs.gl_pathv[i],
                                 ((flags | GLOB_APPEND)
                                  & ~(GLOB_NOCHECK | GLOB_NOMAGIC)),
@@ -1050,8 +1029,6 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           if (flags & GLOB_NOCHECK)
             {
               size_t newcount = pglob->gl_pathc + pglob->gl_offs;
-              char **new_gl_pathv;
-
               if (newcount > SIZE_MAX / sizeof (char *) - 2)
                 {
                 nospace2:
@@ -1060,8 +1037,8 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                   goto out;
                 }
 
-              new_gl_pathv = realloc (pglob->gl_pathv,
-                                      (newcount + 2) * sizeof (char *));
+              char **new_gl_pathv = realloc (pglob->gl_pathv,
+                                             (newcount + 2) * sizeof (char *));
               if (new_gl_pathv == NULL)
                 goto nospace2;
               pglob->gl_pathv = new_gl_pathv;
@@ -1120,8 +1097,8 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         }
       if (dirname_modified)
         flags &= ~(GLOB_NOCHECK | GLOB_NOMAGIC);
-      status = glob_in_dir (filename, dirname, flags, errfunc, pglob,
-                            alloca_used);
+      int status = glob_in_dir (filename, dirname, flags, errfunc, pglob,
+                                alloca_used);
       if (status != 0)
         {
           if (status == GLOB_NOMATCH && flags != orig_flags
@@ -1154,9 +1131,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
   if (flags & GLOB_MARK)
     {
       /* Append slashes to directory names.  */
-      size_t i;
-
-      for (i = oldcount; i < pglob->gl_pathc + pglob->gl_offs; ++i)
+      for (size_t i = oldcount; i < pglob->gl_pathc + pglob->gl_offs; ++i)
         if (is_dir (pglob->gl_pathv[i], flags, pglob))
           {
             size_t len = strlen (pglob->gl_pathv[i]) + 2;

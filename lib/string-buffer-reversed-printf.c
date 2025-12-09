@@ -36,7 +36,6 @@ int
 sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
                va_list list)
 {
-  va_list list_copy;
 
   /* Make a bit of room, so that the probability that the first vsnzprintf()
      call succeeds is high.  */
@@ -52,6 +51,7 @@ sbr_prependvf (struct string_buffer_reversed *buffer, const char *formatstring,
       room = buffer->allocated - buffer->length;
     }
 
+  va_list list_copy;
   va_copy (list_copy, list);
 
   /* First vsnzprintf() call.  */
@@ -128,7 +128,6 @@ int
 sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
               ...)
 {
-  va_list args;
 
   /* Make a bit of room, so that the probability that the first vsnzprintf()
      call succeeds is high.  */
@@ -144,6 +143,7 @@ sbr_prependf (struct string_buffer_reversed *buffer, const char *formatstring,
       room = buffer->allocated - buffer->length;
     }
 
+  va_list args;
   va_start (args, formatstring);
 
   /* First vsnzprintf() call.  */

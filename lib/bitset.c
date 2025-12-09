@@ -367,12 +367,13 @@ bitset_count_ (bitset src)
 bool
 bitset_copy_ (bitset dst, bitset src)
 {
-  bitset_bindex i;
-  bitset_iterator iter;
-
   /* Convert bitset types.  We assume that the DST bitset
      is large enough to hold the SRC bitset.  */
+
   bitset_zero (dst);
+
+  bitset_bindex i;
+  bitset_iterator iter;
   BITSET_FOR_EACH (iter, src, i, 0)
     bitset_set (dst, i);
 

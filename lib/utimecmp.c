@@ -173,7 +173,6 @@ utimecmpat (int dfd, char const *dst_name,
       /* Information about the destination file system.  */
       static struct fs_res *new_dst_res;
       struct fs_res *dst_res = NULL;
-      struct fs_res tmp_dst_res;
 
       /* timestamp resolution in nanoseconds.  */
       int res;
@@ -216,7 +215,8 @@ utimecmpat (int dfd, char const *dst_name,
         }
       else
         {
-        low_memory:
+        low_memory: ;
+          struct fs_res tmp_dst_res;
           if (ht)
             {
               tmp_dst_res.dev = dst_stat->st_dev;
@@ -318,8 +318,6 @@ utimecmpat (int dfd, char const *dst_name,
 
           if (SYSCALL_RESOLUTION < res)
             {
-              struct stat dst_status;
-
               /* Ignore source timestamp information that must necessarily
                  be lost when filtered through utimens.  */
               src_ns -= src_ns % SYSCALL_RESOLUTION;
@@ -351,6 +349,8 @@ utimecmpat (int dfd, char const *dst_name,
 
               if (utimensat (dfd, dst_name, timespec, AT_SYMLINK_NOFOLLOW))
                 return -2;
+
+              struct stat dst_status;
 
               /* Read the modification time that was set.  */
               {

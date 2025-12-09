@@ -48,10 +48,7 @@
 Gc_rc
 gc_init (void)
 {
-  gcry_error_t err;
-
-  err = gcry_control (GCRYCTL_ANY_INITIALIZATION_P);
-  if (err == GPG_ERR_NO_ERROR)
+  if (gcry_control (GCRYCTL_ANY_INITIALIZATION_P) == GPG_ERR_NO_ERROR)
     {
       if (gcry_control (GCRYCTL_DISABLE_SECMEM, NULL, 0))
         return GC_INIT_ERROR;
@@ -59,8 +56,8 @@ gc_init (void)
       if (gcry_check_version (MIN_GCRYPT_VERSION) == NULL)
         return GC_INIT_ERROR;
 
-      err = gcry_control (GCRYCTL_INITIALIZATION_FINISHED, NULL, 0);
-      if (err != GPG_ERR_NO_ERROR)
+      if (gcry_control (GCRYCTL_INITIALIZATION_FINISHED, NULL, 0)
+          != GPG_ERR_NO_ERROR)
         return GC_INIT_ERROR;
     }
 
@@ -118,9 +115,7 @@ Gc_rc
 gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
                 gc_cipher_handle * outhandle)
 {
-  int gcryalg, gcrymode;
-  gcry_error_t err;
-
+  int gcryalg;
   switch (alg)
     {
     case GC_AES128:
@@ -166,6 +161,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       return GC_INVALID_CIPHER;
     }
 
+  int gcrymode;
   switch (mode)
     {
     case GC_ECB:
@@ -184,8 +180,8 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       return GC_INVALID_CIPHER;
     }
 
-  err = gcry_cipher_open ((gcry_cipher_hd_t *) outhandle,
-                          gcryalg, gcrymode, 0);
+  gcry_error_t err = gcry_cipher_open ((gcry_cipher_hd_t *) outhandle,
+                                       gcryalg, gcrymode, 0);
   if (gcry_err_code (err))
     return GC_INVALID_CIPHER;
 
@@ -195,9 +191,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 Gc_rc
 gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 {
-  gcry_error_t err;
-
-  err = gcry_cipher_setkey ((gcry_cipher_hd_t) handle, key, keylen);
+  gcry_error_t err = gcry_cipher_setkey ((gcry_cipher_hd_t) handle, key, keylen);
   if (gcry_err_code (err))
     return GC_INVALID_CIPHER;
 
@@ -207,9 +201,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 Gc_rc
 gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 {
-  gcry_error_t err;
-
-  err = gcry_cipher_setiv ((gcry_cipher_hd_t) handle, iv, ivlen);
+  gcry_error_t err = gcry_cipher_setiv ((gcry_cipher_hd_t) handle, iv, ivlen);
   if (gcry_err_code (err))
     return GC_INVALID_CIPHER;
 
@@ -267,18 +259,16 @@ typedef struct _gc_hash_ctx {
 Gc_rc
 gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 {
-  _gc_hash_ctx *ctx;
-  int gcryalg = 0, gcrymode = 0;
-  gcry_error_t err;
-  Gc_rc rc = GC_OK;
-
-  ctx = calloc (1, sizeof (*ctx));
+  _gc_hash_ctx *ctx = calloc (1, sizeof (*ctx));
   if (!ctx)
     return GC_MALLOC_ERROR;
 
   ctx->alg = hash;
   ctx->mode = mode;
 
+  Gc_rc rc = GC_OK;
+
+  int gcryalg = 0;
   switch (hash)
     {
 #if GNULIB_GC_MD2
@@ -336,6 +326,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
       rc = GC_INVALID_HASH;
     }
 
+  int gcrymode = 0;
   switch (mode)
     {
     case GC_NULL:
@@ -352,7 +343,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 
   if (rc == GC_OK && gcryalg != GCRY_MD_NONE)
     {
-      err = gcry_md_open (&ctx->gch, gcryalg, gcrymode);
+      gcry_error_t err = gcry_md_open (&ctx->gch, gcryalg, gcrymode);
       if (gcry_err_code (err))
         rc = GC_INVALID_HASH;
     }
@@ -369,16 +360,14 @@ Gc_rc
 gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
 {
   _gc_hash_ctx *in = handle;
-  _gc_hash_ctx *out;
-  int err;
+  _gc_hash_ctx *out = calloc (1, sizeof (*out));
 
-  out = calloc (1, sizeof (*out));
   if (!out)
     return GC_MALLOC_ERROR;
 
   memcpy (out, in, sizeof (*out));
 
-  err = gcry_md_copy (&out->gch, in->gch);
+  int err = gcry_md_copy (&out->gch, in->gch);
   if (err)
     {
       free (out);
@@ -478,8 +467,8 @@ const char *
 gc_hash_read (gc_hash_handle handle)
 {
   _gc_hash_ctx *ctx = handle;
-  const char *digest;
 
+  const char *digest;
 #if GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     {
@@ -617,19 +606,16 @@ Gc_rc
 gc_md4 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD4);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_MD4_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_MD4, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_MD4, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_MD4);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_MD4);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -649,19 +635,16 @@ Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_MD5_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_MD5, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_MD5, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_MD5);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_MD5);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -681,19 +664,16 @@ Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_SHA1_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_SHA1, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_SHA1, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_SHA1);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_SHA1);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -713,19 +693,16 @@ Gc_rc
 gc_sha256 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA256);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_SHA256_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_SHA256, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_SHA256, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_SHA256);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_SHA256);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -745,19 +722,16 @@ Gc_rc
 gc_sha512 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_SHA512_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_SHA512, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_SHA512, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_SHA512);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_SHA512);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -781,19 +755,16 @@ gc_sm3  (const void *in, size_t inlen, void *resbuf)
   return GC_OK;
 # else
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SM3);
-  gcry_md_hd_t hd;
-  gpg_error_t err;
-  unsigned char *p;
-
   assert (outlen == GC_SM3_DIGEST_SIZE);
 
-  err = gcry_md_open (&hd, GCRY_MD_SM3, 0);
+  gcry_md_hd_t hd;
+  gpg_error_t err = gcry_md_open (&hd, GCRY_MD_SM3, 0);
   if (err != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
   gcry_md_write (hd, in, inlen);
 
-  p = gcry_md_read (hd, GCRY_MD_SM3);
+  unsigned char *p = gcry_md_read (hd, GCRY_MD_SM3);
   if (p == NULL)
     {
       gcry_md_close (hd);
@@ -815,18 +786,13 @@ gc_hmac_md5 (const void *key, size_t keylen,
              const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
-  gcry_md_hd_t mdh;
-  unsigned char *hash;
-  gpg_error_t err;
-
   assert (hlen == GC_MD5_DIGEST_SIZE);
 
-  err = gcry_md_open (&mdh, GCRY_MD_MD5, GCRY_MD_FLAG_HMAC);
-  if (err != GPG_ERR_NO_ERROR)
+  gcry_md_hd_t mdh;
+  if (gcry_md_open (&mdh, GCRY_MD_MD5, GCRY_MD_FLAG_HMAC) != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
-  err = gcry_md_setkey (mdh, key, keylen);
-  if (err != GPG_ERR_NO_ERROR)
+  if (gcry_md_setkey (mdh, key, keylen) != GPG_ERR_NO_ERROR)
     {
       gcry_md_close (mdh);
       return GC_INVALID_HASH;
@@ -834,7 +800,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 
   gcry_md_write (mdh, in, inlen);
 
-  hash = gcry_md_read (mdh, GCRY_MD_MD5);
+  unsigned char *hash = gcry_md_read (mdh, GCRY_MD_MD5);
   if (hash == NULL)
     {
       gcry_md_close (mdh);
@@ -855,18 +821,13 @@ gc_hmac_sha1 (const void *key, size_t keylen,
               const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
-  gcry_md_hd_t mdh;
-  unsigned char *hash;
-  gpg_error_t err;
-
   assert (hlen == GC_SHA1_DIGEST_SIZE);
 
-  err = gcry_md_open (&mdh, GCRY_MD_SHA1, GCRY_MD_FLAG_HMAC);
-  if (err != GPG_ERR_NO_ERROR)
+  gcry_md_hd_t mdh;
+  if (gcry_md_open (&mdh, GCRY_MD_SHA1, GCRY_MD_FLAG_HMAC) != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
-  err = gcry_md_setkey (mdh, key, keylen);
-  if (err != GPG_ERR_NO_ERROR)
+  if (gcry_md_setkey (mdh, key, keylen) != GPG_ERR_NO_ERROR)
     {
       gcry_md_close (mdh);
       return GC_INVALID_HASH;
@@ -874,7 +835,7 @@ gc_hmac_sha1 (const void *key, size_t keylen,
 
   gcry_md_write (mdh, in, inlen);
 
-  hash = gcry_md_read (mdh, GCRY_MD_SHA1);
+  unsigned char *hash = gcry_md_read (mdh, GCRY_MD_SHA1);
   if (hash == NULL)
     {
       gcry_md_close (mdh);
@@ -895,18 +856,13 @@ gc_hmac_sha256 (const void *key, size_t keylen,
              const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA256);
-  gcry_md_hd_t mdh;
-  unsigned char *hash;
-  gpg_error_t err;
-
   assert (hlen == GC_SHA256_DIGEST_SIZE);
 
-  err = gcry_md_open (&mdh, GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC);
-  if (err != GPG_ERR_NO_ERROR)
+  gcry_md_hd_t mdh;
+  if (gcry_md_open (&mdh, GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC) != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
-  err = gcry_md_setkey (mdh, key, keylen);
-  if (err != GPG_ERR_NO_ERROR)
+  if (gcry_md_setkey (mdh, key, keylen) != GPG_ERR_NO_ERROR)
     {
       gcry_md_close (mdh);
       return GC_INVALID_HASH;
@@ -914,7 +870,7 @@ gc_hmac_sha256 (const void *key, size_t keylen,
 
   gcry_md_write (mdh, in, inlen);
 
-  hash = gcry_md_read (mdh, GCRY_MD_SHA256);
+  unsigned char *hash = gcry_md_read (mdh, GCRY_MD_SHA256);
   if (hash == NULL)
     {
       gcry_md_close (mdh);
@@ -935,18 +891,13 @@ gc_hmac_sha512 (const void *key, size_t keylen,
               const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
-  gcry_md_hd_t mdh;
-  unsigned char *hash;
-  gpg_error_t err;
-
   assert (hlen == GC_SHA512_DIGEST_SIZE);
 
-  err = gcry_md_open (&mdh, GCRY_MD_SHA512, GCRY_MD_FLAG_HMAC);
-  if (err != GPG_ERR_NO_ERROR)
+  gcry_md_hd_t mdh;
+  if (gcry_md_open (&mdh, GCRY_MD_SHA512, GCRY_MD_FLAG_HMAC) != GPG_ERR_NO_ERROR)
     return GC_INVALID_HASH;
 
-  err = gcry_md_setkey (mdh, key, keylen);
-  if (err != GPG_ERR_NO_ERROR)
+  if (gcry_md_setkey (mdh, key, keylen) != GPG_ERR_NO_ERROR)
     {
       gcry_md_close (mdh);
       return GC_INVALID_HASH;
@@ -954,7 +905,7 @@ gc_hmac_sha512 (const void *key, size_t keylen,
 
   gcry_md_write (mdh, in, inlen);
 
-  hash = gcry_md_read (mdh, GCRY_MD_SHA512);
+  unsigned char *hash = gcry_md_read (mdh, GCRY_MD_SHA512);
   if (hash == NULL)
     {
       gcry_md_close (mdh);

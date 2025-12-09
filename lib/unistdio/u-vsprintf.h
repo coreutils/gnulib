@@ -34,15 +34,13 @@ VSPRINTF (DCHAR_T *buf, const FCHAR_T *format, va_list args)
      Also note that glibc's iconv fails with E2BIG when we pass a length that
      is so large that buf + length wraps around, i.e.
      (uintptr_t) (buf + length) < (uintptr_t) buf.  */
-  size_t length;
-  DCHAR_T *result;
 
   /* Set length = min (SIZE_MAX, INT_MAX, - (uintptr_t) buf - 1).  */
-  length = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
+  size_t length = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
   if (length > (~ (uintptr_t) buf) / sizeof (DCHAR_T))
     length = (~ (uintptr_t) buf) / sizeof (DCHAR_T);
 
-  result = VASNPRINTF (buf, &length, format, args);
+  DCHAR_T *result = VASNPRINTF (buf, &length, format, args);
   if (result == NULL)
     return -1;
 

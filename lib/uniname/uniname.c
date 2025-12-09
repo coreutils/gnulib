@@ -65,9 +65,6 @@
 static const char *
 unicode_name_word (unsigned int index, unsigned int *lengthp)
 {
-  unsigned int i1;
-  unsigned int i2;
-
   assert (index < UNICODE_CHARNAME_NUM_WORDS);
 
   /* Binary search for i with
@@ -76,8 +73,8 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
        index < unicode_name_by_length[i+1].ind_offset
    */
 
-  i1 = 0;
-  i2 = SIZEOF (unicode_name_by_length) - 1;
+  unsigned int i1 = 0;
+  unsigned int i2 = SIZEOF (unicode_name_by_length) - 1;
   while (i2 - i1 > 1)
     {
       unsigned int i = (i1 + i2) >> 1;
@@ -238,22 +235,17 @@ unicode_character_name (ucs4_t c, char *buf)
   if (c >= 0xAC00 && c <= 0xD7A3)
     {
       /* Special case for Hangul syllables. Keeps the tables small.  */
-      char *ptr;
-      unsigned int tmp;
-      unsigned int index1;
-      unsigned int index2;
-      unsigned int index3;
-      const char *q;
 
       /* buf needs to have at least 16 + 7 + 1 bytes here.  */
       memcpy (buf, "HANGUL SYLLABLE ", 16);
-      ptr = buf + 16;
+      char *ptr = buf + 16;
 
-      tmp = c - 0xAC00;
-      index3 = tmp % 28; tmp = tmp / 28;
-      index2 = tmp % 21; tmp = tmp / 21;
-      index1 = tmp;
+      unsigned int tmp = c - 0xAC00;
+      unsigned int index3 = tmp % 28; tmp = tmp / 28;
+      unsigned int index2 = tmp % 21; tmp = tmp / 21;
+      unsigned int index1 = tmp;
 
+      const char *q;
       q = jamo_initial_short_name[index1];
       while (*q != '\0')
         *ptr++ = *q++;
@@ -271,11 +263,10 @@ unicode_character_name (ucs4_t c, char *buf)
     {
       /* Special case for CJK compatibility ideographs. Keeps the tables
          small.  */
-      char *ptr;
 
       /* buf needs to have at least 28 + 5 + 1 bytes here.  */
       memcpy (buf, "CJK COMPATIBILITY IDEOGRAPH-", 28);
-      ptr = buf + 28;
+      char *ptr = buf + 28;
 
       for (int i = (c < 0x10000 ? 12 : 16); i >= 0; i -= 4)
         {
@@ -423,11 +414,10 @@ unicode_name_character (const char *name)
               for (;;)
                 {
                   {
-                    int word;
                     const char *p2 = p1;
                     while (p2 < ptr && *p2 != ' ')
                       p2++;
-                    word = unicode_name_word_lookup (p1, p2 - p1);
+                    int word = unicode_name_word_lookup (p1, p2 - p1);
                     if (word < 0)
                       break;
                     if (wordptr == &words[UNICODE_CHARNAME_MAX_WORDS])
@@ -447,11 +437,7 @@ unicode_name_character (const char *name)
                            2) [AEIOUWY]
                            3) [BCDGHIJKLMNPST]
                        */
-                      const char *p2;
-                      const char *p3;
-                      const char *p4;
-
-                      p2 = p1;
+                      const char *p2 = p1;
                       while (p2 < ptr
                              && (*p2 == 'B' || *p2 == 'C' || *p2 == 'D'
                                  || *p2 == 'G' || *p2 == 'H' || *p2 == 'J'
@@ -459,13 +445,13 @@ unicode_name_character (const char *name)
                                  || *p2 == 'P' || *p2 == 'R' || *p2 == 'S'
                                  || *p2 == 'T'))
                         p2++;
-                      p3 = p2;
+                      const char *p3 = p2;
                       while (p3 < ptr
                              && (*p3 == 'A' || *p3 == 'E' || *p3 == 'I'
                                  || *p3 == 'O' || *p3 == 'U' || *p3 == 'W'
                                  || *p3 == 'Y'))
                         p3++;
-                      p4 = p3;
+                      const char *p4 = p3;
                       while (p4 < ptr
                              && (*p4 == 'B' || *p4 == 'C' || *p4 == 'D'
                                  || *p4 == 'G' || *p4 == 'H' || *p4 == 'I'

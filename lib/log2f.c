@@ -69,9 +69,7 @@ log2f (float x)
      Then log2(x) = e + log2(y) = e + log(y)/log(2).  */
   {
     int e;
-    float y;
-
-    y = frexpf (x, &e);
+    float y = frexpf (x, &e);
     if (y < SQRT_HALF)
       {
         y = 2.0f * y;

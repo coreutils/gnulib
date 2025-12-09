@@ -34,8 +34,6 @@ int
 sb_appendvf (struct string_buffer *buffer, const char *formatstring,
              va_list list)
 {
-  va_list list_copy;
-
   /* Make a bit of room, so that the probability that the first vsnzprintf()
      call succeeds is high.  */
   size_t room = buffer->allocated - buffer->length;
@@ -50,6 +48,7 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
       room = buffer->allocated - buffer->length;
     }
 
+  va_list list_copy;
   va_copy (list_copy, list);
 
   /* First vsnzprintf() call.  */
@@ -121,8 +120,6 @@ sb_appendvf (struct string_buffer *buffer, const char *formatstring,
 int
 sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
 {
-  va_list args;
-
   /* Make a bit of room, so that the probability that the first vsnzprintf()
      call succeeds is high.  */
   size_t room = buffer->allocated - buffer->length;
@@ -137,6 +134,7 @@ sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
       room = buffer->allocated - buffer->length;
     }
 
+  va_list args;
   va_start (args, formatstring);
 
   /* First vsnzprintf() call.  */

@@ -58,20 +58,15 @@ hypotl (long double x, long double y)
         /* Now 0 <= b <= a.  */
 
         {
-          int e;
-          long double an;
-          long double bn;
-
           /* Write a = an * 2^e, b = bn * 2^e with 0 <= bn <= an < 1.  */
-          an = frexpl (a, &e);
-          bn = ldexpl (b, - e);
+          int e;
+          long double an = frexpl (a, &e);
+          long double bn = ldexpl (b, - e);
 
           {
-            long double cn;
-
             /* Through the normalization, no unneeded overflow or underflow
                will occur here.  */
-            cn = sqrtl (an * an + bn * bn);
+            long double cn = sqrtl (an * an + bn * bn);
             return ldexpl (cn, e);
           }
         }

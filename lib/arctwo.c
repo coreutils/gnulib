@@ -80,7 +80,6 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
          inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
     {
-      size_t j;
       uint16_t word0 = 0, word1 = 0, word2 = 0, word3 = 0;
 
       word0 = (word0 << 8) | to_uchar (inbuf[1]);
@@ -94,7 +93,7 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
 
       for (size_t i = 0; i < 16; i++)
         {
-          j = i * 4;
+          size_t j = i * 4;
           /* For some reason I cannot combine those steps. */
           word0 += (word1 & ~word3) + (word2 & word3) + context->S[j];
           word0 = rotl16 (word0, 1);
@@ -135,7 +134,6 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
          inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
     {
-      size_t j;
       uint16_t word0 = 0, word1 = 0, word2 = 0, word3 = 0;
 
       word0 = (word0 << 8) | to_uchar (inbuf[1]);
@@ -149,7 +147,7 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
 
       for (size_t i = 16; i > 0; i--)
         {
-          j = (i - 1) * 4;
+          size_t j = (i - 1) * 4;
 
           word3 = rotr16 (word3, 5);
           word3 -= (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
@@ -167,8 +165,8 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
             {
               word3 = word3 - context->S[word2 & 63];
               word2 = word2 - context->S[word1 & 63];
-          word1 = word1 - context->S[word0 & 63];
-          word0 = word0 - context->S[word3 & 63];
+              word1 = word1 - context->S[word0 & 63];
+              word0 = word0 - context->S[word3 & 63];
             }
         }
 
@@ -187,12 +185,10 @@ void
 arctwo_setkey_ekb (arctwo_context *context,
                    size_t keylen, const char *key, size_t effective_keylen)
 {
-  uint8_t *S, x;
-
   if (keylen < 40 / 8 || effective_keylen > 1024)
     return;
 
-  S = (uint8_t *) context->S;
+  uint8_t *S = (uint8_t *) context->S;
 
   for (size_t i = 0; i < keylen; i++)
     S[i] = (uint8_t) key[i];
@@ -209,7 +205,7 @@ arctwo_setkey_ekb (arctwo_context *context,
     {
       size_t len = (effective_keylen + 7) >> 3;
       size_t i = 128 - len;
-      x = arctwo_sbox[S[i] & (255 >> (7 & -effective_keylen))];
+      uint8_t x = arctwo_sbox[S[i] & (255 >> (7 & -effective_keylen))];
       S[i] = x;
 
       while (i--)

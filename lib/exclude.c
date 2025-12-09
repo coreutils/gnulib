@@ -524,10 +524,10 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
       patopts->options = options;
       if (options & EXCLUDE_REGEX)
         {
-          int rc;
           int cflags = (REG_NOSUB | REG_EXTENDED
                         | (options & FNM_CASEFOLD ? REG_ICASE : 0));
 
+          int rc;
           if (! (options & FNM_LEADING_DIR))
             rc = regcomp (&patopts->v.re, pattern, cflags);
           else

@@ -26,13 +26,12 @@ int
 VSNPRINTF (DCHAR_T *buf, size_t size, const FCHAR_T *format, va_list args)
 {
   size_t length;
-  DCHAR_T *result;
 
   if (size == 0)
     buf = NULL;
   else
     length = size;
-  result = VASNPRINTF (buf, &length, format, args);
+  DCHAR_T *result = VASNPRINTF (buf, &length, format, args);
   if (result == NULL)
     return -1;
 

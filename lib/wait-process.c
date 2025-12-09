@@ -66,12 +66,10 @@ klibc_waitpid (pid_t pid, int *statusp, int options)
 
   if (waitpid_pfn == NULL)
     {
-      void *libcx_handle;
-
       /* Try to use waitpid() of LIBCx first if available because it can
          process the return value of spawn-family of kLIBC as well as spawn2()
          of LIBCx.  */
-      libcx_handle = dlopen ("libcx0", RTLD_LAZY);
+      void *libcx_handle = dlopen ("libcx0", RTLD_LAZY);
       if (libcx_handle != NULL)
         waitpid_pfn = dlsym (libcx_handle, "_waitpid");
       /* If not available, falls back to waitpid() of kLIBC.  */
@@ -239,6 +237,9 @@ wait_subprocess (pid_t child, const char *progname,
                  bool slave_process, bool exit_on_error,
                  int *termsigp)
 {
+  if (termsigp != NULL)
+    *termsigp = 0;
+
 #if HAVE_WAITID && defined WNOWAIT && 0
   /* Commented out because waitid() without WEXITED and with WNOWAIT doesn't
      work: On Solaris 7, it returns -1 and sets errno = ECHILD, and on
@@ -249,10 +250,8 @@ wait_subprocess (pid_t child, const char *progname,
      meanwhile another process acquires the same PID as child, and then - still
      before unregister_slave_subprocess() - this process gets a fatal signal,
      it would kill the other totally unrelated process.  */
-  siginfo_t info;
 
-  if (termsigp != NULL)
-    *termsigp = 0;
+  siginfo_t info;
   for (;;)
     {
       if (waitid (P_PID, child, &info, WEXITED | (slave_process ? WNOWAIT : 0))
@@ -332,11 +331,8 @@ wait_subprocess (pid_t child, const char *progname,
     }
 #else
   /* waitpid() is just as portable as wait() nowadays.  */
-  int status;
 
-  if (termsigp != NULL)
-    *termsigp = 0;
-  status = 0;
+  int status = 0;
   for (;;)
     {
       int result = waitpid (child, &status, 0);

@@ -119,13 +119,11 @@ get_default_impl (void)
 void *
 pagealign_alloc (size_t size)
 {
-  void *ret;
-  pagealign_impl_t impl;
-
-  impl = pagealign_impl;
+  pagealign_impl_t impl = pagealign_impl;
   if (impl == PA_IMPL_DEFAULT)
     impl = get_default_impl ();
 
+  void *ret;
   switch (impl)
     {
     case PA_IMPL_MALLOC:
@@ -216,9 +214,7 @@ pagealign_alloc (size_t size)
 void *
 pagealign_xalloc (size_t size)
 {
-  void *ret;
-
-  ret = pagealign_alloc (size);
+  void *ret = pagealign_alloc (size);
   if (ret == NULL)
     xalloc_die ();
   return ret;
@@ -228,9 +224,7 @@ pagealign_xalloc (size_t size)
 void
 pagealign_free (void *aligned_ptr)
 {
-  pagealign_impl_t impl;
-
-  impl = pagealign_impl;
+  pagealign_impl_t impl = pagealign_impl;
   if (impl == PA_IMPL_DEFAULT)
     impl = get_default_impl ();
 

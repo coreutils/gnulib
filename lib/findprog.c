@@ -47,15 +47,12 @@ find_in_path (const char *progname)
   return progname;
 #else
   /* Unix */
-  char *path;
-  char *cp;
-
   if (strchr (progname, '/') != NULL)
     /* If progname contains a slash, it is either absolute or relative to
        the current directory.  PATH is not used.  */
     return progname;
 
-  path = getenv ("PATH");
+  char *path = getenv ("PATH");
   if (path == NULL || *path == '\0')
     /* If PATH is not set, the default search path is implementation
        dependent.  */
@@ -70,17 +67,14 @@ find_in_path (const char *progname)
     /* Out of memory.  */
     return progname;
 # endif
-  for (char *path_rest = path; ; path_rest = cp + 1)
+  for (char *path_rest = path; ; )
     {
-      const char *dir;
-      bool last;
-      char *progpathname;
-
       /* Extract next directory in PATH.  */
-      dir = path_rest;
+      const char *dir = path_rest;
+      char *cp;
       for (cp = path_rest; *cp != '\0' && *cp != ':'; cp++)
         ;
-      last = (*cp == '\0');
+      bool last = (*cp == '\0');
       *cp = '\0';
 
       /* Empty PATH components designate the current directory.  */
@@ -88,6 +82,7 @@ find_in_path (const char *progname)
         dir = ".";
 
       /* Concatenate dir and progname.  */
+      char *progpathname;
 # if !IN_FINDPROG_LGPL
       progpathname = xconcatenated_filename (dir, progname, NULL);
 # else
@@ -145,6 +140,8 @@ find_in_path (const char *progname)
 
       if (last)
         break;
+
+      path_rest = cp + 1;
     }
 
   /* Not found in PATH.  An error will be signalled at the first call.  */

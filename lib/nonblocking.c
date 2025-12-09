@@ -135,9 +135,7 @@ set_nonblocking_flag (int desc, bool value)
 int
 get_nonblocking_flag (int desc)
 {
-  int fcntl_flags;
-
-  fcntl_flags = fcntl (desc, F_GETFL, 0);
+  int fcntl_flags = fcntl (desc, F_GETFL, 0);
   if (fcntl_flags < 0)
     return -1;
   return (fcntl_flags & O_NONBLOCK) != 0;
@@ -146,9 +144,7 @@ get_nonblocking_flag (int desc)
 int
 set_nonblocking_flag (int desc, bool value)
 {
-  int fcntl_flags;
-
-  fcntl_flags = fcntl (desc, F_GETFL, 0);
+  int fcntl_flags = fcntl (desc, F_GETFL, 0);
   if (fcntl_flags < 0)
     return -1;
   if (((fcntl_flags & O_NONBLOCK) != 0) == value)

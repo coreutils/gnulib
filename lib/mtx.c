@@ -207,26 +207,32 @@ mtx_init (mtx_t *mutex, int type)
   if ((type & mtx_recursive) != 0)
     {
       pthread_mutexattr_t attributes;
-      int err;
-
-      err = pthread_mutexattr_init (&attributes);
-      if (err != 0)
-        return thrd_error;
-      err = pthread_mutexattr_settype (&attributes, PTHREAD_MUTEX_RECURSIVE);
-      if (err != 0)
-        {
-          pthread_mutexattr_destroy (&attributes);
+      {
+        int err = pthread_mutexattr_init (&attributes);
+        if (err != 0)
           return thrd_error;
-        }
-      err = pthread_mutex_init (mutex, &attributes);
-      if (err != 0)
-        {
-          pthread_mutexattr_destroy (&attributes);
+      }
+      {
+        int err = pthread_mutexattr_settype (&attributes, PTHREAD_MUTEX_RECURSIVE);
+        if (err != 0)
+          {
+            pthread_mutexattr_destroy (&attributes);
+            return thrd_error;
+          }
+      }
+      {
+        int err = pthread_mutex_init (mutex, &attributes);
+        if (err != 0)
+          {
+            pthread_mutexattr_destroy (&attributes);
+            return thrd_error;
+          }
+      }
+      {
+        int err = pthread_mutexattr_destroy (&attributes);
+        if (err != 0)
           return thrd_error;
-        }
-      err = pthread_mutexattr_destroy (&attributes);
-      if (err != 0)
-        return thrd_error;
+      }
     }
   else
     {

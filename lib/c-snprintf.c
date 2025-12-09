@@ -30,10 +30,10 @@ int
 c_snprintf (char *str, size_t size, const char *format, ...)
 {
   va_list args;
-  ptrdiff_t ret;
-
   va_start (args, format);
-  ret = c_vsnzprintf (str, size, format, args);
+
+  ptrdiff_t ret = c_vsnzprintf (str, size, format, args);
+
   va_end (args);
 
 #if PTRDIFF_MAX > INT_MAX

@@ -57,9 +57,8 @@ argp_fmtstream_t
 __argp_make_fmtstream (FILE *stream,
                        size_t lmargin, size_t rmargin, ssize_t wmargin)
 {
-  argp_fmtstream_t fs;
-
-  fs = (struct argp_fmtstream *) malloc (sizeof (struct argp_fmtstream));
+  argp_fmtstream_t fs =
+    (struct argp_fmtstream *) malloc (sizeof (struct argp_fmtstream));
   if (fs != NULL)
     {
       fs->stream = stream;
@@ -120,8 +119,7 @@ weak_alias (__argp_fmtstream_free, argp_fmtstream_free)
 void
 __argp_fmtstream_update (argp_fmtstream_t fs)
 {
-  char *buf, *nl;
-  size_t len;
+  char *buf;
 
   /* Scan the buffer for newlines.  */
   buf = fs->buf + fs->point_offs;
@@ -159,8 +157,8 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
           fs->point_col = pad;
         }
 
-      len = fs->p - buf;
-      nl = memchr (buf, '\n', len);
+      size_t len = fs->p - buf;
+      char *nl = memchr (buf, '\n', len);
 
       if (fs->point_col < 0)
         fs->point_col = 0;
@@ -351,11 +349,10 @@ __argp_fmtstream_ensure (struct argp_fmtstream *fs, size_t amount)
 {
   if ((size_t) (fs->end - fs->p) < amount)
     {
-      ssize_t wrote;
-
       /* Flush FS's buffer.  */
       __argp_fmtstream_update (fs);
 
+      ssize_t wrote;
 #ifdef _LIBC
       __fxprintf (fs->stream, "%.*s", (int) (fs->p - fs->buf), fs->buf);
       wrote = fs->p - fs->buf;
@@ -406,11 +403,10 @@ __argp_fmtstream_printf (struct argp_fmtstream *fs, const char *fmt, ...)
 
   do
     {
-      va_list args;
-
       if (! __argp_fmtstream_ensure (fs, size_guess))
         return -1;
 
+      va_list args;
       va_start (args, fmt);
       avail = fs->end - fs->p;
       out = __vsnprintf (fs->p, avail, fmt, args);

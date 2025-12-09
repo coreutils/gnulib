@@ -1387,45 +1387,50 @@ gl_locale_name_canonicalize (char *name)
   /* Step 2: Convert using langtag_table and script_table.  */
   if (strlen (name) == 7 && name[2] == '-')
     {
-      unsigned int i1, i2;
-      i1 = 0;
-      i2 = sizeof (langtag_table) / sizeof (langtag_entry);
-      while (i2 - i1 > 1)
-        {
-          /* At this point we know that if name occurs in langtag_table,
-             its index must be >= i1 and < i2.  */
-          unsigned int i = (i1 + i2) >> 1;
-          const langtag_entry *p = &langtag_table[i];
-          if (strcmp (name, p->langtag) < 0)
-            i2 = i;
-          else
-            i1 = i;
-        }
-      if (streq (name, langtag_table[i1].langtag))
-        {
-          strcpy (name, langtag_table[i1].unixy);
-          return;
-        }
+      {
+        unsigned int i1, i2;
+        i1 = 0;
+        i2 = sizeof (langtag_table) / sizeof (langtag_entry);
+        while (i2 - i1 > 1)
+          {
+            /* At this point we know that if name occurs in langtag_table,
+               its index must be >= i1 and < i2.  */
+            unsigned int i = (i1 + i2) >> 1;
+            const langtag_entry *p = &langtag_table[i];
+            if (strcmp (name, p->langtag) < 0)
+              i2 = i;
+            else
+              i1 = i;
+          }
+        if (streq (name, langtag_table[i1].langtag))
+          {
+            strcpy (name, langtag_table[i1].unixy);
+            return;
+          }
+      }
 
-      i1 = 0;
-      i2 = sizeof (script_table) / sizeof (script_entry);
-      while (i2 - i1 > 1)
-        {
-          /* At this point we know that if (name + 3) occurs in script_table,
-             its index must be >= i1 and < i2.  */
-          unsigned int i = (i1 + i2) >> 1;
-          const script_entry *p = &script_table[i];
-          if (strcmp (name + 3, p->script) < 0)
-            i2 = i;
-          else
-            i1 = i;
-        }
-      if (streq (name + 3, script_table[i1].script))
-        {
-          name[2] = '@';
-          strcpy (name + 3, script_table[i1].unixy);
-          return;
-        }
+      {
+        unsigned int i1, i2;
+        i1 = 0;
+        i2 = sizeof (script_table) / sizeof (script_entry);
+        while (i2 - i1 > 1)
+          {
+            /* At this point we know that if (name + 3) occurs in script_table,
+               its index must be >= i1 and < i2.  */
+            unsigned int i = (i1 + i2) >> 1;
+            const script_entry *p = &script_table[i];
+            if (strcmp (name + 3, p->script) < 0)
+              i2 = i;
+            else
+              i1 = i;
+          }
+        if (streq (name + 3, script_table[i1].script))
+          {
+            name[2] = '@';
+            strcpy (name + 3, script_table[i1].unixy);
+            return;
+          }
+      }
     }
 
   /* Step 3: Convert new-style dash to Unix underscore. */
@@ -1508,11 +1513,9 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
   #define N(name)           (is_utf8 ? name ".UTF-8" : name)
   #define NM(name,modifier) (is_utf8 ? name ".UTF-8" modifier : name modifier)
   {
-    int primary, sub;
-
     /* Split into language and territory part.  */
-    primary = PRIMARYLANGID (langid);
-    sub = SUBLANGID (langid);
+    int primary = PRIMARYLANGID (langid);
+    int sub = SUBLANGID (langid);
 
     /* Dispatch on language.
        See also https://www.unicode.org/unicode/onlinedat/languages.html .
@@ -2529,10 +2532,8 @@ static
 const char *
 gl_locale_name_from_win32_LCID (LCID lcid)
 {
-  LANGID langid;
-
   /* Strip off the sorting rules, keep only the language part.  */
-  langid = LANGIDFROMLCID (lcid);
+  LANGID langid = LANGIDFROMLCID (lcid);
 
   return gl_locale_name_from_win32_LANGID (langid);
 }
@@ -2549,11 +2550,11 @@ static BOOL CALLBACK
 enum_locales_fn (LPSTR locale_num_str)
 {
   char *endp;
-  char locval[2 * LOCALE_NAME_MAX_LENGTH + 1 + 1];
   LCID try_lcid = strtoul (locale_num_str, &endp, 16);
 
+  char locval[2 * LOCALE_NAME_MAX_LENGTH + 1 + 1];
   if (GetLocaleInfo (try_lcid, LOCALE_SENGLANGUAGE,
-                    locval, LOCALE_NAME_MAX_LENGTH))
+                     locval, LOCALE_NAME_MAX_LENGTH))
     {
       strcat (locval, "_");
       if (GetLocaleInfo (try_lcid, LOCALE_SENGCOUNTRY,
@@ -2846,19 +2847,21 @@ gl_locale_name_default (void)
 const char *
 gl_locale_name_unsafe (int category, const char *categoryname)
 {
-  const char *retval;
-
   if (category == LC_ALL)
     /* Invalid argument.  */
     abort ();
 
-  retval = gl_locale_name_thread_unsafe (category, categoryname);
-  if (retval != NULL)
-    return retval;
+  {
+    const char *retval = gl_locale_name_thread_unsafe (category, categoryname);
+    if (retval != NULL)
+      return retval;
+  }
 
-  retval = gl_locale_name_posix_unsafe (category, categoryname);
-  if (retval != NULL)
-    return retval;
+  {
+    const char *retval = gl_locale_name_posix_unsafe (category, categoryname);
+    if (retval != NULL)
+      return retval;
+  }
 
   return gl_locale_name_default ();
 }

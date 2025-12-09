@@ -258,22 +258,14 @@ tparm (const char *str, ...)
   static int termcap;
   static char OOPS[] = "OOPS";
   static char buf[MAX_LINE];
-  const char *sp;
-  char *dp;
-  const char *fmt;
-  char scan_for;
-  int scan_depth;
-  int if_depth;
-  char fmt_buf[MAX_LINE];
-  char sbuf[MAX_LINE];
 
   va_start (tparm_args, str);
 
-  sp = str;
-  dp = buf;
-  scan_for = 0;
-  scan_depth = 0;
-  if_depth = 0;
+  const char *sp = str;
+  char *dp = buf;
+  char scan_for = 0;
+  int scan_depth = 0;
+  int if_depth = 0;
   argcnt = 0;
   pos = 0;
   termcap = 1;
@@ -314,7 +306,8 @@ tparm (const char *str, ...)
               sp++;
               break;
             }
-          fmt = NULL;
+          char fmt_buf[MAX_LINE];
+          const char *fmt = NULL;
           switch (*sp)
             {
             case '%':
@@ -471,60 +464,62 @@ tparm (const char *str, ...)
             case 'x': case 'X': case 'o': case 'c':
             case '0': case '1': case '4': case '5':
             case '6': case '7': case '8': case '9':
-              if (fmt == NULL)
-                {
-                  char *fmtp;
-                  if (termcap)
-                    return OOPS;
-                  if (*sp == ':')
-                    sp++;
-                  fmtp = fmt_buf;
-                  *fmtp++ = '%';
-                  while (*sp != 's' && *sp != 'x' && *sp != 'X' && *sp != 'd'
-                         && *sp != 'o' && *sp != 'c' && *sp != 'u')
-                    {
-                      if (*sp == '\0')
-                        return OOPS;
-                      *fmtp++ = *sp++;
-                    }
-                  *fmtp++ = *sp;
-                  *fmtp = '\0';
-                  fmt = fmt_buf;
-                }
               {
-                char conv_char = fmt[strlen (fmt) - 1];
-                if (conv_char == 's')
+                char sbuf[MAX_LINE];
+                if (fmt == NULL)
                   {
-                    char *s;
-                    if (popstring (&s))
-                      return OOPS;
-                    sprintf (sbuf, fmt, s);
-                  }
-                else
-                  {
-                    int i;
                     if (termcap)
+                      return OOPS;
+                    if (*sp == ':')
+                      sp++;
+                    char *fmtp = fmt_buf;
+                    *fmtp++ = '%';
+                    while (*sp != 's' && *sp != 'x' && *sp != 'X' && *sp != 'd'
+                           && *sp != 'o' && *sp != 'c' && *sp != 'u')
                       {
-                        if (getarg (termcap++ - 1, INTEGER, &i))
+                        if (*sp == '\0')
                           return OOPS;
+                        *fmtp++ = *sp++;
                       }
-                    else
-                      if (popnum (&i))
+                    *fmtp++ = *sp;
+                    *fmtp = '\0';
+                    fmt = fmt_buf;
+                  }
+                {
+                  char conv_char = fmt[strlen (fmt) - 1];
+                  if (conv_char == 's')
+                    {
+                      char *s;
+                      if (popstring (&s))
                         return OOPS;
-                    if (i == 0 && conv_char == 'c')
-                      strcpy (sbuf, "\000");
-                    else
-                      sprintf (sbuf, fmt, i);
+                      sprintf (sbuf, fmt, s);
+                    }
+                  else
+                    {
+                      int i;
+                      if (termcap)
+                        {
+                          if (getarg (termcap++ - 1, INTEGER, &i))
+                            return OOPS;
+                        }
+                      else
+                        if (popnum (&i))
+                          return OOPS;
+                      if (i == 0 && conv_char == 'c')
+                        strcpy (sbuf, "\000");
+                      else
+                        sprintf (sbuf, fmt, i);
+                    }
+                }
+                sp++;
+                fmt = sbuf;
+                while (*fmt != '\0')
+                  {
+                    if (*fmt == '$')
+                      *dp++ = '\\';
+                    *dp++ = *fmt++;
                   }
               }
-              sp++;
-              fmt = sbuf;
-              while (*fmt != '\0')
-                {
-                  if (*fmt == '$')
-                    *dp++ = '\\';
-                  *dp++ = *fmt++;
-                }
               break;
             case 'r':
               {

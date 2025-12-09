@@ -30,11 +30,9 @@
 int
 rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 {
-  void *buf;
   va_list args;
-
   va_start (args, request);
-  buf = va_arg (args, void *);
+  void *buf = va_arg (args, void *);
   va_end (args);
 
   /* Cast 'request' so that when the system's ioctl function takes a 64-bit
@@ -75,11 +73,9 @@ primary_ioctl (int fd, int request, void *arg)
 int
 ioctl (int fd, int request, ... /* {void *,char *} arg */)
 {
-  void *arg;
   va_list args;
-
   va_start (args, request);
-  arg = va_arg (args, void *);
+  void *arg = va_arg (args, void *);
   va_end (args);
 
 # if WINDOWS_SOCKETS

@@ -24,16 +24,7 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
 
   /* The result being accumulated.  */
   UNIT *result;
-  size_t length;
   size_t allocated;
-  /* The buffer for sorting.  */
-  #define SORTBUF_PREALLOCATED 64
-  struct ucs4_with_ccc sortbuf_preallocated[2 * SORTBUF_PREALLOCATED];
-  struct ucs4_with_ccc *sortbuf; /* array of size 2 * sortbuf_allocated */
-  size_t sortbuf_allocated;
-  size_t sortbuf_count;
-
-  /* Initialize the accumulator.  */
   if (resultbuf == NULL)
     {
       result = NULL;
@@ -44,12 +35,15 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
       result = resultbuf;
       allocated = *lengthp;
     }
-  length = 0;
+  size_t length = 0;
 
-  /* Initialize the buffer for sorting.  */
-  sortbuf = sortbuf_preallocated;
-  sortbuf_allocated = SORTBUF_PREALLOCATED;
-  sortbuf_count = 0;
+  /* The buffer for sorting.  */
+  #define SORTBUF_PREALLOCATED 64
+  struct ucs4_with_ccc sortbuf_preallocated[2 * SORTBUF_PREALLOCATED];
+  struct ucs4_with_ccc *sortbuf = /* array of size 2 * sortbuf_allocated */
+    sortbuf_preallocated;
+  size_t sortbuf_allocated = SORTBUF_PREALLOCATED;
+  size_t sortbuf_count = 0;
 
   {
     const UNIT *s_end = s + n;
@@ -59,7 +53,6 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
         int count;
         ucs4_t decomposed[UC_DECOMPOSITION_MAX_LENGTH];
         int decomposed_count;
-        int i;
 
         if (s < s_end)
           {
@@ -114,7 +107,7 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
             decomposed_count = 0;
           }
 
-        i = 0;
+        int i = 0;
         for (;;)
           {
             ucs4_t uc;
@@ -293,12 +286,10 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
             /* Append (uc, ccc) to sortbuf.  */
             if (sortbuf_count == sortbuf_allocated)
               {
-                struct ucs4_with_ccc *new_sortbuf;
-
                 sortbuf_allocated = 2 * sortbuf_allocated;
                 if (sortbuf_allocated < sortbuf_count) /* integer overflow? */
                   abort ();
-                new_sortbuf =
+                struct ucs4_with_ccc *new_sortbuf =
                   (struct ucs4_with_ccc *) malloc (2 * sortbuf_allocated * sizeof (struct ucs4_with_ccc));
                 if (new_sortbuf == NULL)
                   {
@@ -342,9 +333,7 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
   else if (result != resultbuf && length < allocated)
     {
       /* Shrink the allocated memory if possible.  */
-      UNIT *memory;
-
-      memory = (UNIT *) realloc (result, length * sizeof (UNIT));
+      UNIT *memory = (UNIT *) realloc (result, length * sizeof (UNIT));
       if (memory != NULL)
         result = memory;
     }

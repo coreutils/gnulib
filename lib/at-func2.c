@@ -41,14 +41,6 @@ at_func2 (int fd1, char const *file1,
           int fd2, char const *file2,
           int (*func) (char const *file1, char const *file2))
 {
-  struct saved_cwd saved_cwd;
-  int saved_errno;
-  int err;
-  char *file1_alt;
-  char *file2_alt;
-  struct stat st1;
-  struct stat st2;
-
   /* There are 16 possible scenarios, based on whether an fd is
      AT_FDCWD or real, and whether a file is absolute or relative:
 
@@ -125,6 +117,8 @@ at_func2 (int fd1, char const *file1,
 
   if (fd1 == AT_FDCWD) /* Cases 3, 7.  */
     {
+      struct stat st1;
+      struct stat st2;
       if (stat (".", &st1) == -1 || fstat (fd2, &st2) == -1)
         return -1;
       if (!S_ISDIR (st2.st_mode))
@@ -137,6 +131,8 @@ at_func2 (int fd1, char const *file1,
     }
   else if (fd2 == AT_FDCWD) /* Cases 12, 13.  */
     {
+      struct stat st1;
+      struct stat st2;
       if (stat (".", &st2) == -1 || fstat (fd1, &st1) == -1)
         return -1;
       if (!S_ISDIR (st1.st_mode))
@@ -149,6 +145,8 @@ at_func2 (int fd1, char const *file1,
     }
   else if (fd1 != fd2) /* Case 15b.  */
     {
+      struct stat st1;
+      struct stat st2;
       if (fstat (fd1, &st1) == -1 || fstat (fd2, &st2) == -1)
         return -1;
       if (!S_ISDIR (st1.st_mode) || !S_ISDIR (st2.st_mode))
@@ -165,6 +163,7 @@ at_func2 (int fd1, char const *file1,
     }
   else /* Case 15a.  */
     {
+      struct stat st1;
       if (fstat (fd1, &st1) == -1)
         return -1;
       if (!S_ISDIR (st1.st_mode))
@@ -172,6 +171,7 @@ at_func2 (int fd1, char const *file1,
           errno = ENOTDIR;
           return -1;
         }
+      struct stat st2;
       if (stat (".", &st2) == 0 && psame_inode (&st1, &st2))
         return func (file1, file2); /* Reduced to case 5.  */
     }
@@ -186,6 +186,7 @@ at_func2 (int fd1, char const *file1,
   /* Cases 3, 7, 12, 13, 15a, 15b remain.  With all reductions in
      place, it is time to start changing directories.  */
 
+  struct saved_cwd saved_cwd;
   if (save_cwd (&saved_cwd) != 0)
     openat_save_fail (errno);
 
@@ -193,7 +194,7 @@ at_func2 (int fd1, char const *file1,
     {
       if (fchdir (fd1) != 0)
         {
-          saved_errno = errno;
+          int saved_errno = errno;
           free_cwd (&saved_cwd);
           errno = saved_errno;
           return -1;
@@ -204,8 +205,8 @@ at_func2 (int fd1, char const *file1,
   /* Cases 3, 7, 12, 13, 15a remain.  Convert one relative name to
      absolute, if necessary.  */
 
-  file1_alt = (char *) file1;
-  file2_alt = (char *) file2;
+  char *file1_alt = (char *) file1;
+  char *file2_alt = (char *) file2;
 
   if (fd1 == AT_FDCWD && !IS_ABSOLUTE_FILE_NAME (file1)) /* Case 7.  */
     {
@@ -215,7 +216,7 @@ at_func2 (int fd1, char const *file1,
       char *cwd = getcwd (NULL, 0);
       if (!cwd)
         {
-          saved_errno = errno;
+          int saved_errno = errno;
           free_cwd (&saved_cwd);
           errno = saved_errno;
           return -1;
@@ -223,7 +224,7 @@ at_func2 (int fd1, char const *file1,
       file1_alt = mfile_name_concat (cwd, file1, NULL);
       if (!file1_alt)
         {
-          saved_errno = errno;
+          int saved_errno = errno;
           free (cwd);
           free_cwd (&saved_cwd);
           errno = saved_errno;
@@ -236,7 +237,7 @@ at_func2 (int fd1, char const *file1,
       char *cwd = getcwd (NULL, 0);
       if (!cwd)
         {
-          saved_errno = errno;
+          int saved_errno = errno;
           free_cwd (&saved_cwd);
           errno = saved_errno;
           return -1;
@@ -244,7 +245,7 @@ at_func2 (int fd1, char const *file1,
       file2_alt = mfile_name_concat (cwd, file2, NULL);
       if (!file2_alt)
         {
-          saved_errno = errno;
+          int saved_errno = errno;
           free (cwd);
           free_cwd (&saved_cwd);
           errno = saved_errno;
@@ -256,7 +257,7 @@ at_func2 (int fd1, char const *file1,
   /* Cases 3, 12, 15a remain.  Change to the correct directory.  */
   if (fchdir (fd1 == AT_FDCWD ? fd2 : fd1) != 0)
     {
-      saved_errno = errno;
+      int saved_errno = errno;
       free_cwd (&saved_cwd);
       if (file1 != file1_alt)
         free (file1_alt);
@@ -268,8 +269,8 @@ at_func2 (int fd1, char const *file1,
 
   /* Finally safe to perform the user's function, then clean up.  */
 
-  err = func (file1_alt, file2_alt);
-  saved_errno = (err < 0 ? errno : 0);
+  int err = func (file1_alt, file2_alt);
+  int saved_errno = (err < 0 ? errno : 0);
 
   if (file1 != file1_alt)
     free (file1_alt);

@@ -90,11 +90,10 @@ ulc_grapheme_breaks (const char *s, size_t n, char *p)
 
           if (offsets != NULL)
             {
-              uint8_t *t;
               size_t m;
-
-              t = u8_conv_from_encoding (encoding, iconveh_question_mark,
-                                         s, n, offsets, NULL, &m);
+              uint8_t *t =
+                u8_conv_from_encoding (encoding, iconveh_question_mark,
+                                       s, n, offsets, NULL, &m);
               if (t != NULL)
                 {
                   char *q = (char *) (m > 0 ? malloc (m) : NULL);

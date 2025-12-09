@@ -32,9 +32,8 @@ off64_t
 xprintf (char const *restrict format, ...)
 {
   va_list args;
-  off64_t retval;
   va_start (args, format);
-  retval = xvprintf (format, args);
+  off64_t retval = xvprintf (format, args);
   va_end (args);
 
   return retval;
@@ -54,9 +53,8 @@ off64_t
 xfprintf (FILE *restrict stream, char const *restrict format, ...)
 {
   va_list args;
-  off64_t retval;
   va_start (args, format);
-  retval = xvfprintf (stream, format, args);
+  off64_t retval = xvfprintf (stream, format, args);
   va_end (args);
 
   return retval;

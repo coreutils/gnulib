@@ -59,19 +59,17 @@ file_size (HANDLE h, DWORD * lower, DWORD * upper)
 static BOOL
 do_lock (HANDLE h, int non_blocking, int exclusive)
 {
-  BOOL res;
-  DWORD size_lower, size_upper;
-  OVERLAPPED ovlp;
-  int flags = 0;
-
   /* We're going to lock the whole file, so get the file size. */
-  res = file_size (h, &size_lower, &size_upper);
+  DWORD size_lower, size_upper;
+  BOOL res = file_size (h, &size_lower, &size_upper);
   if (!res)
     return 0;
 
   /* Start offset is 0, and also zero the remaining members of this struct. */
+  OVERLAPPED ovlp;
   memset (&ovlp, 0, sizeof ovlp);
 
+  int flags = 0;
   if (non_blocking)
     flags |= LOCKFILE_FAIL_IMMEDIATELY;
   if (exclusive)
@@ -84,10 +82,8 @@ do_lock (HANDLE h, int non_blocking, int exclusive)
 static BOOL
 do_unlock (HANDLE h)
 {
-  int res;
   DWORD size_lower, size_upper;
-
-  res = file_size (h, &size_lower, &size_upper);
+  int res = file_size (h, &size_lower, &size_upper);
   if (!res)
     return 0;
 
@@ -99,18 +95,16 @@ int
 flock (int fd, int operation)
 {
   HANDLE h = (HANDLE) _get_osfhandle (fd);
-  DWORD res;
-  int non_blocking;
-
   if (h == INVALID_HANDLE_VALUE)
     {
       errno = EBADF;
       return -1;
     }
 
-  non_blocking = operation & LOCK_NB;
+  int non_blocking = operation & LOCK_NB;
   operation &= ~LOCK_NB;
 
+  DWORD res;
   switch (operation)
     {
     case LOCK_SH:
@@ -179,15 +173,14 @@ flock (int fd, int operation)
 int
 flock (int fd, int operation)
 {
-  int cmd, r;
-  struct flock fl;
-
+  int cmd;
   if (operation & LOCK_NB)
     cmd = F_SETLK;
   else
     cmd = F_SETLKW;
   operation &= ~LOCK_NB;
 
+  struct flock fl;
   memset (&fl, 0, sizeof fl);
   fl.l_whence = SEEK_SET;
   /* l_start & l_len are 0, which as a special case means "whole file". */
@@ -208,7 +201,7 @@ flock (int fd, int operation)
       return -1;
     }
 
-  r = fcntl (fd, cmd, &fl);
+  int r = fcntl (fd, cmd, &fl);
   if (r == -1 && errno == EACCES)
     errno = EAGAIN;
 

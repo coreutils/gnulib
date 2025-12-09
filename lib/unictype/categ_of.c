@@ -68,10 +68,10 @@ uc_general_category_t
 uc_general_category (ucs4_t uc)
 {
   int bit = lookup_withtable (uc);
-  uc_general_category_t result;
 
   if (bit >= 0)
     {
+      uc_general_category_t result;
       result.bitmask = 1 << bit;
       result.generic = 1;
       result.lookup.lookup_fn = &uc_is_general_category_withtable;

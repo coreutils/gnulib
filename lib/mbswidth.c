@@ -58,9 +58,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
 {
   const char *p = string;
   const char *plimit = p + nbytes;
-  int width;
-
-  width = 0;
+  int width = 0;
   if (MB_CUR_MAX > 1)
     {
       while (p < plimit)
@@ -98,10 +96,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                 for (;;)
                   {
                     char32_t wc;
-                    size_t bytes;
-                    int w;
-
-                    bytes = mbrtoc32 (&wc, p, plimit - p, &mbstate);
+                    size_t bytes = mbrtoc32 (&wc, p, plimit - p, &mbstate);
 
                     if (bytes == (size_t) -1)
                       /* An invalid multibyte sequence was encountered.  */
@@ -137,7 +132,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                       bytes = 0;
                     #endif
 
-                    w = c32width (wc);
+                    int w = c32width (wc);
                     if (w >= 0)
                       /* A printable multibyte character.  */
                       {

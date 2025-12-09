@@ -66,13 +66,8 @@ ssize_t
 getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
             int delim1, int delim2, FILE *stream)
 {
-  size_t nbytes_avail;          /* Allocated but unused bytes in *LINEPTR.  */
-  char *read_pos;               /* Where we're reading into *LINEPTR. */
-  ssize_t bytes_stored = -1;
   char *ptr = *lineptr;
   size_t size = *linesize;
-  bool found_delimiter;
-
   if (!ptr)
     {
       size = nmax < MIN_CHUNK ? nmax : MIN_CHUNK;
@@ -81,11 +76,14 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
         return -1;
     }
 
+  ssize_t bytes_stored = -1;
+
   if (size < offset)
     goto done;
 
-  nbytes_avail = size - offset;
-  read_pos = ptr + offset;
+  size_t nbytes_avail =          /* Allocated but unused bytes in *LINEPTR.  */
+    size - offset;
+  char *read_pos = ptr + offset; /* Where we're reading into *LINEPTR. */
 
   if (nbytes_avail == 0 && nmax <= size)
     goto done;
@@ -98,7 +96,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 
   flockfile (stream);
 
-  found_delimiter = false;
+  bool found_delimiter = false;
   do
     {
       /* Here always ptr + size == read_pos + nbytes_avail.

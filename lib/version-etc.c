@@ -232,7 +232,6 @@ version_etc (FILE *stream,
              const char *version, /* const char *author1, ...*/ ...)
 {
   va_list authors;
-
   va_start (authors, version);
   version_etc_va (stream, command_name, package, version, authors);
   va_end (authors);

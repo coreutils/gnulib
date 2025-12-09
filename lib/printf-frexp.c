@@ -66,10 +66,11 @@
 DOUBLE
 FUNC (DOUBLE x, int *expptr)
 {
-  int exponent;
   DECL_ROUNDING
 
   BEGIN_ROUNDING ();
+
+  int exponent;
 
 #ifdef USE_FREXP_LDEXP
   /* frexp and ldexp are usually faster than the loop below.  */

@@ -26,10 +26,9 @@ int
 c_asprintf (char **resultp, const char *format, ...)
 {
   va_list args;
-  int result;
-
   va_start (args, format);
-  result = c_vasprintf (resultp, format, args);
+  int result = c_vasprintf (resultp, format, args);
   va_end (args);
+
   return result;
 }

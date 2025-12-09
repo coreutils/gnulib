@@ -33,7 +33,6 @@
 int
 execle (const char *program, const char *arg0, ...)
 {
-  va_list args;
 
   /* The callee is not expecting a NULL argv[0].  */
   if (arg0 == NULL)
@@ -44,14 +43,17 @@ execle (const char *program, const char *arg0, ...)
 
   /* Count the number of arguments (including arg0 and the trailing NULL).  */
   size_t count = 1;
-  va_start (args, arg0);
-  for (;;)
-    {
-      count++;
-      if (va_arg (args, const char *) == NULL)
-        break;
-    }
-  va_end (args);
+  {
+    va_list args;
+    va_start (args, arg0);
+    for (;;)
+      {
+        count++;
+        if (va_arg (args, const char *) == NULL)
+          break;
+      }
+    va_end (args);
+  }
 
   /* Allocate the argument vector.  */
   const char **argv = (const char **) malloca (count * sizeof (const char *));
@@ -62,6 +64,7 @@ execle (const char *program, const char *arg0, ...)
     }
 
   /* Copy the arguments into the argument vector.  */
+  va_list args;
   {
     size_t i = 0;
     argv[i++] = arg0;

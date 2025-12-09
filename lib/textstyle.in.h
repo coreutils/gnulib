@@ -153,11 +153,10 @@ static inline ptrdiff_t
 ostream_printf (ostream_t stream, const char *format, ...)
 {
   va_list args;
-  char *temp_string;
-  ptrdiff_t ret;
 
   va_start (args, format);
-  ret = vasprintf (&temp_string, format, args);
+  char *temp_string;
+  ptrdiff_t ret = vasprintf (&temp_string, format, args);
   va_end (args);
   if (ret >= 0)
     {

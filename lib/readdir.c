@@ -37,9 +37,6 @@ readdir (DIR *dirp)
 #if HAVE_DIRENT_H                       /* equivalent to HAVE_READDIR */
   return readdir (dirp->real_dirp);
 #else
-  char type;
-  struct dirent *result;
-
   /* There is no need to add code to produce entries for "." and "..".
      According to the POSIX:2008 section "4.12 Pathname Resolution"
      <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html>
@@ -77,6 +74,7 @@ readdir (DIR *dirp)
 
   dirp->status = 0;
 
+  char type;
   if (dirp->entry.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
     type = DT_DIR;
   else if (dirp->entry.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)
@@ -99,7 +97,7 @@ readdir (DIR *dirp)
     type = DT_UNKNOWN;
 
   /* Reuse the memory of dirp->entry for the result.  */
-  result =
+  struct dirent *result =
     (struct dirent *)
     ((char *) dirp->entry.cFileName - offsetof (struct dirent, d_name[0]));
   result->d_type = type;

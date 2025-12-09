@@ -139,11 +139,9 @@ set_this_relocation_prefix (const char *orig_prefix_arg,
       && strcmp (orig_prefix_arg, curr_prefix_arg) != 0)
     {
       /* Duplicate the argument strings.  */
-      char *memory;
-
       orig_prefix_len = strlen (orig_prefix_arg);
       curr_prefix_len = strlen (curr_prefix_arg);
-      memory = (char *) xmalloc (orig_prefix_len + 1 + curr_prefix_len + 1);
+      char *memory = (char *) xmalloc (orig_prefix_len + 1 + curr_prefix_len + 1);
 #ifdef NO_XMALLOC
       if (memory != NULL)
 #endif
@@ -200,9 +198,6 @@ compute_curr_prefix (const char *orig_installprefix,
                      const char *orig_installdir,
                      const char *curr_pathname)
 {
-  char *curr_installdir;
-  const char *rel_installdir;
-
   if (curr_pathname == NULL)
     return NULL;
 
@@ -213,9 +208,10 @@ compute_curr_prefix (const char *orig_installprefix,
       != 0)
     /* Shouldn't happen - nothing should be installed outside $(prefix).  */
     return NULL;
-  rel_installdir = orig_installdir + strlen (orig_installprefix);
+  const char *rel_installdir = orig_installdir + strlen (orig_installprefix);
 
   /* Determine the current installation directory.  */
+  char *curr_installdir;
   {
     const char *p_base = curr_pathname + FILE_SYSTEM_PREFIX_LEN (curr_pathname);
     const char *p = curr_pathname + strlen (curr_pathname);
@@ -419,33 +415,30 @@ find_shared_library_fullname ()
   /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
      function.
      But it is costly: ca. 0.3 ms.  */
-  FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
-  fp = fopen ("/proc/self/maps", "r");
+  FILE *fp = fopen ("/proc/self/maps", "r");
   if (fp)
     {
       unsigned long address = (unsigned long) &find_shared_library_fullname;
       for (;;)
         {
           unsigned long start, end;
-          int c;
 
           if (fscanf (fp, "%lx-%lx", &start, &end) != 2)
             break;
           if (address >= start && address <= end - 1)
             {
               /* Found it.  Now see if this line contains a filename.  */
+              int c;
               while (c = getc (fp), c != EOF && c != '\n' && c != '/')
                 continue;
               if (c == '/')
                 {
-                  size_t size;
-                  int len;
-
                   ungetc (c, fp);
-                  shared_library_fullname = NULL; size = 0;
-                  len = getline (&shared_library_fullname, &size, fp);
+                  shared_library_fullname = NULL;
+                  size_t size = 0;
+                  int len = getline (&shared_library_fullname, &size, fp);
                   if (len >= 0)
                     {
                       /* Success: filled shared_library_fullname.  */
@@ -455,6 +448,7 @@ find_shared_library_fullname ()
                 }
               break;
             }
+          int c;
           while (c = getc (fp), c != EOF && c != '\n')
             continue;
         }
@@ -511,9 +505,7 @@ relocate (const char *pathname)
          orig_prefix.  */
       const char *orig_installprefix = INSTALLPREFIX;
       const char *orig_installdir = INSTALLDIR;
-      char *curr_prefix_better;
-
-      curr_prefix_better =
+      char *curr_prefix_better =
         compute_curr_prefix (orig_installprefix, orig_installdir,
                              get_shared_library_fullname ());
 

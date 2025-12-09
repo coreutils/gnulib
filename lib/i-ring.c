@@ -54,10 +54,9 @@ i_ring_push (I_ring *ir, int val)
 int
 i_ring_pop (I_ring *ir)
 {
-  int top_val;
   if (i_ring_empty (ir))
     abort ();
-  top_val = ir->ir_data[ir->ir_front];
+  int top_val = ir->ir_data[ir->ir_front];
   ir->ir_data[ir->ir_front] = ir->ir_default_val;
   if (ir->ir_front == ir->ir_back)
     ir->ir_empty = true;

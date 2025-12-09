@@ -44,12 +44,9 @@ int
 ulc_vfprintf (FILE *fp, const char *format, va_list args)
 {
   char buf[2000];
-  char *output;
-  size_t len;
   size_t lenbuf = sizeof (buf);
-
-  output = ulc_vasnprintf (buf, &lenbuf, format, args);
-  len = lenbuf;
+  char *output = ulc_vasnprintf (buf, &lenbuf, format, args);
+  size_t len = lenbuf;
 
   if (!output)
     {

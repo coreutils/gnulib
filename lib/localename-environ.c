@@ -27,32 +27,36 @@
 const char *
 gl_locale_name_environ (_GL_UNUSED int category, const char *categoryname)
 {
-  const char *retval;
-
   /* Setting of LC_ALL overrides all other.  */
-  retval = getenv ("LC_ALL");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
+  {
+    const char *retval = getenv ("LC_ALL");
+    if (retval != NULL && retval[0] != '\0')
+      return retval;
+  }
   /* Next comes the name of the desired category.  */
-  retval = getenv (categoryname);
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
+  {
+    const char *retval = getenv (categoryname);
+    if (retval != NULL && retval[0] != '\0')
+      return retval;
+  }
   /* Last possibility is the LANG environment variable.  */
-  retval = getenv ("LANG");
-  if (retval != NULL && retval[0] != '\0')
-    {
+  {
+    const char *retval = getenv ("LANG");
+    if (retval != NULL && retval[0] != '\0')
+      {
 #if HAVE_CFPREFERENCESCOPYAPPVALUE
-      /* Mac OS X 10.2 or newer.
-         Ignore invalid LANG value set by the Terminal application.  */
-      if (!streq (retval, "UTF-8"))
+        /* Mac OS X 10.2 or newer.
+           Ignore invalid LANG value set by the Terminal application.  */
+        if (!streq (retval, "UTF-8"))
 #endif
 #if defined __CYGWIN__
-      /* Cygwin.
-         Ignore dummy LANG value set by ~/.profile.  */
-       if (!streq (retval, "C.UTF-8"))
+        /* Cygwin.
+           Ignore dummy LANG value set by ~/.profile.  */
+         if (!streq (retval, "C.UTF-8"))
 #endif
-        return retval;
-    }
+          return retval;
+      }
+  }
 
   return NULL;
 }

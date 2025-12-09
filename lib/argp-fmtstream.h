@@ -242,10 +242,9 @@ __argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch)
 ARGP_FS_EI size_t
 __argp_fmtstream_set_lmargin (argp_fmtstream_t __fs, size_t __lmargin)
 {
-  size_t __old;
   if ((size_t) (__fs->p - __fs->buf) > __fs->point_offs)
     __argp_fmtstream_update (__fs);
-  __old = __fs->lmargin;
+  size_t __old = __fs->lmargin;
   __fs->lmargin = __lmargin;
   return __old;
 }
@@ -254,10 +253,9 @@ __argp_fmtstream_set_lmargin (argp_fmtstream_t __fs, size_t __lmargin)
 ARGP_FS_EI size_t
 __argp_fmtstream_set_rmargin (argp_fmtstream_t __fs, size_t __rmargin)
 {
-  size_t __old;
   if ((size_t) (__fs->p - __fs->buf) > __fs->point_offs)
     __argp_fmtstream_update (__fs);
-  __old = __fs->rmargin;
+  size_t __old = __fs->rmargin;
   __fs->rmargin = __rmargin;
   return __old;
 }
@@ -266,10 +264,9 @@ __argp_fmtstream_set_rmargin (argp_fmtstream_t __fs, size_t __rmargin)
 ARGP_FS_EI size_t
 __argp_fmtstream_set_wmargin (argp_fmtstream_t __fs, size_t __wmargin)
 {
-  size_t __old;
   if ((size_t) (__fs->p - __fs->buf) > __fs->point_offs)
     __argp_fmtstream_update (__fs);
-  __old = __fs->wmargin;
+  size_t __old = __fs->wmargin;
   __fs->wmargin = __wmargin;
   return __old;
 }

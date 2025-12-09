@@ -42,11 +42,10 @@ strncasecmp_l (const char *s1, const char *s2, size_t n, locale_t locale)
 # else
   /* Implementation for the global locale.  */
   {
-    int ret;
 #  if HAVE_WORKING_USELOCALE
     locale_t saved_locale = uselocale (LC_GLOBAL_LOCALE);
 #  endif
-    ret = strncasecmp (s1, s2, n);
+    int ret = strncasecmp (s1, s2, n);
 #  if HAVE_WORKING_USELOCALE
     uselocale (saved_locale);
 #  endif
@@ -56,31 +55,25 @@ strncasecmp_l (const char *s1, const char *s2, size_t n, locale_t locale)
 
 #else
 
-  unsigned char c1, c2;
-
   if (s1 == s2 || n == 0)
     return 0;
 
-  do
+  for (;; s1++, s2++)
     {
-      c1 = tolower_l ((unsigned char) *s1, locale);
-      c2 = tolower_l ((unsigned char) *s2, locale);
+      unsigned char c1 = tolower_l ((unsigned char) *s1, locale);
+      unsigned char c2 = tolower_l ((unsigned char) *s2, locale);
 
-      if (--n == 0 || c1 == '\0')
-        break;
-
-      ++s1;
-      ++s2;
+      if (--n == 0 || c1 == '\0' || c1 != c2)
+        {
+          if (UCHAR_MAX <= INT_MAX)
+            return c1 - c2;
+          else
+            /* On machines where 'char' and 'int' are types of the same size,
+               the difference of two 'unsigned char' values - including the
+               sign bit - doesn't fit in an 'int'.  */
+            return _GL_CMP (c1, c2);
+        }
     }
-  while (c1 == c2);
-
-  if (UCHAR_MAX <= INT_MAX)
-    return c1 - c2;
-  else
-    /* On machines where 'char' and 'int' are types of the same size, the
-       difference of two 'unsigned char' values - including the sign bit -
-       doesn't fit in an 'int'.  */
-    return _GL_CMP (c1, c2);
 
 #endif
 }

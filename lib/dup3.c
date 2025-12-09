@@ -90,9 +90,8 @@ dup3 (int oldfd, int newfd, int flags)
 
   if (flags & O_CLOEXEC)
     {
-      int result;
       close (newfd);
-      result = fcntl (oldfd, F_DUPFD_CLOEXEC, newfd);
+      int result = fcntl (oldfd, F_DUPFD_CLOEXEC, newfd);
       if (newfd < result)
         {
           close (result);

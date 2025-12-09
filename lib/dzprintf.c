@@ -33,14 +33,13 @@ off64_t
 dzprintf (int fd, const char *format, ...)
 {
   va_list args;
-  char buf[2000];
-  char *output;
-  size_t len;
-  size_t lenbuf = sizeof (buf);
-
   va_start (args, format);
-  output = vasnprintf (buf, &lenbuf, format, args);
-  len = lenbuf;
+
+  char buf[2000];
+  size_t lenbuf = sizeof (buf);
+  char *output = vasnprintf (buf, &lenbuf, format, args);
+  size_t len = lenbuf;
+
   va_end (args);
 
   if (!output)

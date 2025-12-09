@@ -55,27 +55,23 @@ execute_and_read_line (const char *progname,
                        void *private_data)
 {
   struct locals *l = (struct locals *) private_data;
-  pid_t child;
-  int fd[1];
-  FILE *fp;
-  char *line;
-  size_t linesize;
-  size_t linelen;
 
   /* Open a pipe to the JVM.  */
-  child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
-                          DEV_NULL, false, true, false, fd);
+  int fd[1];
+  pid_t child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
+                                DEV_NULL, false, true, false, fd);
 
   if (child == -1)
     return false;
 
   /* Retrieve its result.  */
-  fp = fdopen (fd[0], "r");
+  FILE *fp = fdopen (fd[0], "r");
   if (fp == NULL)
     error (EXIT_FAILURE, errno, _("fdopen() failed"));
 
-  line = NULL; linesize = 0;
-  linelen = getline (&line, &linesize, fp);
+  char *line = NULL;
+  size_t linesize = 0;
+  size_t linelen = getline (&line, &linesize, fp);
   if (linelen == (size_t)(-1))
     {
       error (0, 0, _("%s subprocess I/O error"), progname);
@@ -84,15 +80,13 @@ execute_and_read_line (const char *progname,
     }
   else
     {
-      int exitstatus;
-
       if (linelen > 0 && line[linelen - 1] == '\n')
         line[linelen - 1] = '\0';
 
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus =
+      int exitstatus =
         wait_subprocess (child, progname, true, false, true, false, NULL);
       if (exitstatus == 0)
         {
@@ -110,11 +104,13 @@ javaexec_version (void)
   const char *class_name = "javaversion";
   char *malloc_pkgdatadir;
   const char *pkgdatadir = relocate2 (PKGDATADIR, &malloc_pkgdatadir);
-  const char *args[1];
-  struct locals locals;
 
+  const char *args[1];
   args[0] = NULL;
+
+  struct locals locals;
   locals.line = NULL;
+
   execute_java_class (class_name, &pkgdatadir, 1, true, NULL, args,
                       false, false, execute_and_read_line, &locals);
 

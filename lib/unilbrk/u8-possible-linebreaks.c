@@ -457,7 +457,6 @@ read_file (FILE *stream)
   char *buf = NULL;
   int alloc = 0;
   int size = 0;
-  int count;
 
   while (! feof (stream))
     {
@@ -473,7 +472,7 @@ read_file (FILE *stream)
               exit (1);
             }
         }
-      count = fread (buf + size, 1, BUFSIZE, stream);
+      int count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
         {
           if (ferror (stream))

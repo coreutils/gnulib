@@ -49,51 +49,51 @@
 int
 rpl_rename (char const *src, char const *dst)
 {
-  int error;
   size_t src_len = strlen (src);
   size_t dst_len = strlen (dst);
-  char *src_base = last_component (src);
-  char *dst_base = last_component (dst);
-  bool src_slash;
-  bool dst_slash;
-  bool dst_exists;
-  struct stat src_st;
-  struct stat dst_st;
 
-  /* Filter out dot as last component.  */
   if (!src_len || !dst_len)
     {
       errno = ENOENT;
       return -1;
     }
-  if (*src_base == '.')
-    {
-      size_t len = base_len (src_base);
-      if (len == 1 || (len == 2 && src_base[1] == '.'))
-        {
-          errno = EINVAL;
-          return -1;
-        }
-    }
-  if (*dst_base == '.')
-    {
-      size_t len = base_len (dst_base);
-      if (len == 1 || (len == 2 && dst_base[1] == '.'))
-        {
-          errno = EINVAL;
-          return -1;
-        }
-    }
+
+  /* Filter out dot as last component.  */
+  {
+    char *src_base = last_component (src);
+    char *dst_base = last_component (dst);
+    if (*src_base == '.')
+      {
+        size_t len = base_len (src_base);
+        if (len == 1 || (len == 2 && src_base[1] == '.'))
+          {
+            errno = EINVAL;
+            return -1;
+          }
+      }
+    if (*dst_base == '.')
+      {
+        size_t len = base_len (dst_base);
+        if (len == 1 || (len == 2 && dst_base[1] == '.'))
+          {
+            errno = EINVAL;
+            return -1;
+          }
+      }
+  }
 
   /* Presence of a trailing slash requires directory semantics.  If
      the source does not exist, or if the destination cannot be turned
      into a directory, give up now.  Otherwise, strip trailing slashes
      before calling rename.  There are no symlinks on mingw, so stat
      works instead of lstat.  */
-  src_slash = ISSLASH (src[src_len - 1]);
-  dst_slash = ISSLASH (dst[dst_len - 1]);
+  bool src_slash = ISSLASH (src[src_len - 1]);
+  bool dst_slash = ISSLASH (dst[dst_len - 1]);
+  struct stat src_st;
   if (stat (src, &src_st))
     return -1;
+  bool dst_exists;
+  struct stat dst_st;
   if (stat (dst, &dst_st))
     {
       if (errno != ENOENT || (!S_ISDIR (src_st.st_mode) && dst_slash))
@@ -123,10 +123,10 @@ rpl_rename (char const *src, char const *dst)
   if (dst_exists && S_ISDIR (dst_st.st_mode))
     {
       char *cwd = getcwd (NULL, 0);
-      char *src_temp;
-      char *dst_temp;
       if (!cwd || chdir (cwd))
         return -1;
+      char *src_temp;
+      char *dst_temp;
       if (IS_ABSOLUTE_FILE_NAME (src))
         {
           dst_temp = chdir (dst) ? NULL : getcwd (NULL, 0);
@@ -153,7 +153,7 @@ rpl_rename (char const *src, char const *dst)
       if (strncmp (src_temp, dst_temp, src_len) == 0
           && (ISSLASH (dst_temp[src_len]) || dst_temp[src_len] == '\0'))
         {
-          error = dst_temp[src_len];
+          int error = dst_temp[src_len];
           free (src_temp);
           free (dst_temp);
           if (error)
@@ -182,7 +182,7 @@ rpl_rename (char const *src, char const *dst)
 
   /* Retry with MOVEFILE_REPLACE_EXISTING if the move failed
      due to the destination already existing.  */
-  error = GetLastError ();
+  int error = GetLastError ();
   if (error == ERROR_FILE_EXISTS || error == ERROR_ALREADY_EXISTS)
     {
       if (MoveFileEx (src, dst, MOVEFILE_REPLACE_EXISTING))
@@ -284,15 +284,6 @@ rpl_rename (char const *src, char const *dst)
 {
   size_t src_len = strlen (src);
   size_t dst_len = strlen (dst);
-  char *src_temp = (char *) src;
-  char *dst_temp = (char *) dst;
-  bool src_slash;
-  bool dst_slash;
-  _GL_UNUSED bool dst_exists;
-  int ret_val = -1;
-  int rename_errno = ENOTDIR;
-  struct stat src_st;
-  struct stat dst_st;
 
   if (!src_len || !dst_len)
     return rename (src, dst); /* Let strace see the ENOENT failure.  */
@@ -322,8 +313,8 @@ rpl_rename (char const *src, char const *dst)
   }
 # endif /* RENAME_DEST_EXISTS_BUG */
 
-  src_slash = src[src_len - 1] == '/';
-  dst_slash = dst[dst_len - 1] == '/';
+  bool src_slash = src[src_len - 1] == '/';
+  bool dst_slash = dst[dst_len - 1] == '/';
 
 # if !RENAME_HARD_LINK_BUG && !RENAME_DEST_EXISTS_BUG
   /* If there are no trailing slashes, then trust the native
@@ -337,8 +328,11 @@ rpl_rename (char const *src, char const *dst)
      the source does not exist, or if the destination cannot be turned
      into a directory, give up now.  Otherwise, strip trailing slashes
      before calling rename.  */
+  struct stat src_st;
   if (lstat (src, &src_st))
     return -1;
+  struct stat dst_st;
+  _GL_UNUSED bool dst_exists;
   if (lstat (dst, &dst_st))
     {
       if (errno != ENOENT || (!S_ISDIR (src_st.st_mode) && dst_slash))
@@ -358,6 +352,11 @@ rpl_rename (char const *src, char const *dst)
 # endif /* RENAME_HARD_LINK_BUG */
       dst_exists = true;
     }
+
+  char *src_temp = (char *) src;
+  char *dst_temp = (char *) dst;
+  int ret_val = -1;
+  int rename_errno = ENOTDIR;
 
 # if (RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG        \
       || RENAME_HARD_LINK_BUG)

@@ -30,10 +30,8 @@ int
 sprintf (char *str, const char *format, ...)
 {
   va_list args;
-  ptrdiff_t ret;
-
   va_start (args, format);
-  ret = vszprintf (str, format, args);
+  ptrdiff_t ret = vszprintf (str, format, args);
   va_end (args);
 
 #if PTRDIFF_MAX > INT_MAX

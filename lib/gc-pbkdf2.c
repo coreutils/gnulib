@@ -33,14 +33,6 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
                unsigned int c,
                char *DK, size_t dkLen)
 {
-  char U[GC_MAX_DIGEST_SIZE];
-  char T[GC_MAX_DIGEST_SIZE];
-  unsigned int l;
-  unsigned int r;
-  int rc;
-  char *tmp;
-  size_t tmplen = Slen + 4;
-
   if (c == 0)
     return GC_PKCS5_INVALID_ITERATION_COUNT;
 
@@ -50,15 +42,19 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
   if (dkLen > 4294967295U)
     return GC_PKCS5_DERIVED_KEY_TOO_LONG;
 
-  l = ((dkLen - 1) / hLen) + 1;
-  r = dkLen - (l - 1) * hLen;
+  unsigned int l = ((dkLen - 1) / hLen) + 1;
+  unsigned int r = dkLen - (l - 1) * hLen;
 
-  tmp = malloc (tmplen);
+  size_t tmplen = Slen + 4;
+  char *tmp = malloc (tmplen);
   if (tmp == NULL)
     return GC_MALLOC_ERROR;
 
   memcpy (tmp, S, Slen);
 
+  char U[GC_MAX_DIGEST_SIZE];
+  char T[GC_MAX_DIGEST_SIZE];
+  int rc;
   for (unsigned int i = 1; i <= l; i++)
     {
       memset (T, 0, hLen);

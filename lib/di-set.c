@@ -155,7 +155,6 @@ static struct hash_table *
 map_device (struct di_set *dis, dev_t dev)
 {
   /* Find space for the probe, reusing the cache if available.  */
-  struct di_ent *ent;
   struct di_ent *probe = dis->probe;
   if (probe)
     {
@@ -172,7 +171,7 @@ map_device (struct di_set *dis, dev_t dev)
 
   /* Probe for the device.  */
   probe->dev = dev;
-  ent = hash_insert (dis->dev_map, probe);
+  struct di_ent *ent = hash_insert (dis->dev_map, probe);
   if (! ent)
     return NULL;
 
@@ -221,15 +220,13 @@ map_inode_number (struct di_set *dis, ino_t ino)
 int
 di_set_insert (struct di_set *dis, dev_t dev, ino_t ino)
 {
-  hashint i;
-
   /* Map the device number to a set of inodes.  */
   struct hash_table *ino_set = map_device (dis, dev);
   if (! ino_set)
     return -1;
 
   /* Map the inode number to a small representative I.  */
-  i = map_inode_number (dis, ino);
+  hashint i = map_inode_number (dis, ino);
   if (i == INO_MAP_INSERT_FAILURE)
     return -1;
 
@@ -243,15 +240,13 @@ di_set_insert (struct di_set *dis, dev_t dev, ino_t ino)
 int
 di_set_lookup (struct di_set *dis, dev_t dev, ino_t ino)
 {
-  hashint i;
-
   /* Map the device number to a set of inodes.  */
   struct hash_table *ino_set = map_device (dis, dev);
   if (! ino_set)
     return -1;
 
   /* Map the inode number to a small representative I.  */
-  i = map_inode_number (dis, ino);
+  hashint i = map_inode_number (dis, ino);
   if (i == INO_MAP_INSERT_FAILURE)
     return -1;
 

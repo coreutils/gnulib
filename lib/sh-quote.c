@@ -73,11 +73,7 @@ shell_quote_argv (const char * const *argv)
 {
   if (*argv != NULL)
     {
-      size_t length;
-      char *command;
-      char *p;
-
-      length = 0;
+      size_t length = 0;
       for (const char * const *argp = argv; ; )
         {
           length += shell_quote_length (*argp) + 1;
@@ -86,18 +82,20 @@ shell_quote_argv (const char * const *argv)
             break;
         }
 
-      command = XNMALLOC (length, char);
+      char *command = XNMALLOC (length, char);
 
-      p = command;
-      for (const char * const *argp = argv; ; )
-        {
-          p = shell_quote_copy (p, *argp);
-          argp++;
-          if (*argp == NULL)
-            break;
-          *p++ = ' ';
-        }
-      *p = '\0';
+      {
+        char *p = command;
+        for (const char * const *argp = argv; ; )
+          {
+            p = shell_quote_copy (p, *argp);
+            argp++;
+            if (*argp == NULL)
+              break;
+            *p++ = ' ';
+          }
+        *p = '\0';
+      }
 
       return command;
     }

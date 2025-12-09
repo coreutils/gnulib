@@ -211,10 +211,10 @@ int
 sigpending (sigset_t *set)
 {
   sigset_t pending = 0;
-
   for (int sig = 0; sig < NSIG; sig++)
     if (pending_array[sig])
       pending |= 1U << sig;
+
   *set = pending;
   return 0;
 }
@@ -234,9 +234,6 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
   if (set != NULL)
     {
       sigset_t new_blocked_set;
-      sigset_t to_unblock;
-      sigset_t to_block;
-
       switch (operation)
         {
         case SIG_BLOCK:
@@ -253,8 +250,9 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
           errno = EINVAL;
           return -1;
         }
-      to_unblock = blocked_set & ~new_blocked_set;
-      to_block = new_blocked_set & ~blocked_set;
+
+      sigset_t to_unblock = blocked_set & ~new_blocked_set;
+      sigset_t to_block = new_blocked_set & ~blocked_set;
 
       if (to_block != 0)
         for (int sig = 0; sig < NSIG; sig++)

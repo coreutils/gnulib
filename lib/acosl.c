@@ -134,7 +134,7 @@ static const long double
 long double
 acosl (long double x)
 {
-  long double t, p, q;
+  long double t;
 
   if (x < 0.0L)
     {
@@ -151,34 +151,34 @@ acosl (long double x)
       return (x - x) / (x - x); /* asin(|x|>1) is NaN */
     }
 
-  else if (x < 0.5L) /* |x| < 0.5 */
+  if (x < 0.5L) /* |x| < 0.5 */
     {
       if (x < 0.000000000000000006938893903907228377647697925567626953125L) /* |x| < 2**-57 */
         /* acos(0)=+-pi/2 with inexact */
         return x * pio2_hi + x * pio2_lo;
 
       t = x * x;
-      p = (((((((((pS9 * t
-                   + pS8) * t
-                  + pS7) * t
-                 + pS6) * t
-                + pS5) * t
-               + pS4) * t
-              + pS3) * t
-             + pS2) * t
-            + pS1) * t
-           + pS0) * t;
+      long double p = (((((((((pS9 * t
+                               + pS8) * t
+                              + pS7) * t
+                             + pS6) * t
+                            + pS5) * t
+                           + pS4) * t
+                          + pS3) * t
+                         + pS2) * t
+                        + pS1) * t
+                       + pS0) * t;
 
-      q = (((((((( t
-                  + qS8) * t
-                 + qS7) * t
-                + qS6) * t
-               + qS5) * t
-              + qS4) * t
-             + qS3) * t
-            + qS2) * t
-           + qS1) * t
-        + qS0;
+      long double q = (((((((( t
+                              + qS8) * t
+                             + qS7) * t
+                            + qS6) * t
+                           + qS5) * t
+                          + qS4) * t
+                         + qS3) * t
+                        + qS2) * t
+                       + qS1) * t
+                    + qS0;
 
       return pio2_hi - (x + x * (p / q) - pio2_lo);
     }
@@ -186,29 +186,29 @@ acosl (long double x)
   else if (x < 0.625) /* 0.625 */
     {
       t = x - 0.5625;
-      p = ((((((((((rS10 * t
-                    + rS9) * t
-                   + rS8) * t
-                  + rS7) * t
-                 + rS6) * t
-                + rS5) * t
-               + rS4) * t
-              + rS3) * t
-             + rS2) * t
-            + rS1) * t
-           + rS0) * t;
+      long double p = ((((((((((rS10 * t
+                                + rS9) * t
+                               + rS8) * t
+                              + rS7) * t
+                             + rS6) * t
+                            + rS5) * t
+                           + rS4) * t
+                          + rS3) * t
+                         + rS2) * t
+                        + rS1) * t
+                       + rS0) * t;
 
-      q = ((((((((( t
-                    + sS9) * t
-                  + sS8) * t
-                 + sS7) * t
-                + sS6) * t
-               + sS5) * t
-              + sS4) * t
-             + sS3) * t
-            + sS2) * t
-           + sS1) * t
-        + sS0;
+      long double q = ((((((((( t
+                                + sS9) * t
+                              + sS8) * t
+                             + sS7) * t
+                            + sS6) * t
+                           + sS5) * t
+                          + sS4) * t
+                         + sS3) * t
+                        + sS2) * t
+                       + sS1) * t
+                    + sS0;
 
       return (pio2_hi - asinr5625) - (p / q - pio2_lo);
     }

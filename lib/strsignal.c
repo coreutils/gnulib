@@ -94,12 +94,12 @@ static char *getbuffer (void);
 char *
 strsignal (int signum)
 {
-  const char *desc;
   __libc_once_define (static, once);
 
   /* If we have not yet initialized the buffer do it now.  */
   __libc_once (once, init);
 
+  const char *desc;
   if (
 #ifdef SIGRTMIN
       (signum >= SIGRTMIN && signum <= SIGRTMAX) ||

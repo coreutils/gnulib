@@ -23,10 +23,9 @@ wctomb (char *s, wchar_t wc)
   else
     {
       mbstate_t state;
-      size_t result;
-
       mbszero (&state);
-      result = wcrtomb (s, wc, &state);
+
+      size_t result = wcrtomb (s, wc, &state);
       if (result == (size_t)-1)
         return -1;
       return result;

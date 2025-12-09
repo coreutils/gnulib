@@ -43,8 +43,6 @@
 char *
 __strtok_r (char *s, const char *delim, char **save_ptr)
 {
-  char *token;
-
   if (s == NULL)
     s = *save_ptr;
 
@@ -57,7 +55,7 @@ __strtok_r (char *s, const char *delim, char **save_ptr)
     }
 
   /* Find the end of the token.  */
-  token = s;
+  char *token = s;
   s = strpbrk (token, delim);
   if (s == NULL)
     /* This token finishes the string.  */

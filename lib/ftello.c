@@ -124,13 +124,11 @@ ftello (FILE *fp)
      gets confused by this.  */
   if (fp_->_flag & _IOWRT)
     {
-      off_t pos;
-
       /* Call ftello nevertheless, for the side effects that it does on fp.  */
       ftello (fp);
 
       /* Compute the file position ourselves.  */
-      pos = lseek (fileno (fp), (off_t) 0, SEEK_CUR);
+      off_t pos = lseek (fileno (fp), (off_t) 0, SEEK_CUR);
       if (pos >= 0)
         {
           if ((fp_->_flag & _IONBF) == 0 && fp_->_base != NULL)

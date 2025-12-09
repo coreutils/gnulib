@@ -79,7 +79,6 @@ open_supersede (const char *filename, int flags, mode_t mode,
                 bool supersede_if_exists, bool supersede_if_does_not_exist,
                 struct supersede_final_action *action)
 {
-  int fd;
   /* Extra flags for existing devices.  */
   int extra_flags =
     #if defined __sun || (defined _WIN32 && !defined __CYGWIN__)
@@ -101,6 +100,7 @@ open_supersede (const char *filename, int flags, mode_t mode,
     filename = "NUL";
 #endif
 
+  int fd;
   if (supersede_if_exists)
     {
       if (supersede_if_does_not_exist)
@@ -293,9 +293,9 @@ after_close_actions (int ret, const struct supersede_final_action *action)
              file.  */
           {
             struct timespec ts[2];
-
             ts[0] = get_stat_atime (&dest_statbuf);
             ts[1] = get_stat_mtime (&temp_statbuf);
+
             ignore_value (utimens (action->final_rename_temp, ts));
           }
 

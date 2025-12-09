@@ -96,14 +96,13 @@ putenv (char *string)
       /* _putenv ("NAME=") unsets NAME, so invoke _putenv ("NAME= ")
          to allocate the environ vector and then replace the new
          entry with "NAME=".  */
-      int putenv_result;
       char *name_x = malloc (name_end - string + sizeof "= ");
       if (!name_x)
         return -1;
       memcpy (name_x, string, name_end - string + 1);
       name_x[name_end - string + 1] = ' ';
       name_x[name_end - string + 2] = 0;
-      putenv_result = _putenv (name_x);
+      int putenv_result = _putenv (name_x);
       for (char **ep = environ; *ep; ep++)
         if (streq (*ep, name_x))
           {

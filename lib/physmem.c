@@ -138,14 +138,13 @@ physmem_total (void)
 
 #if defined _WIN32
   { /* this works on windows */
-    PFN_MS_EX pfnex;
     HMODULE h = GetModuleHandle ("kernel32.dll");
-
     if (!h)
       return 0.0;
 
     /*  Use GlobalMemoryStatusEx if available.  */
-    if ((pfnex = (PFN_MS_EX) GetProcAddress (h, "GlobalMemoryStatusEx")))
+    PFN_MS_EX pfnex = (PFN_MS_EX) GetProcAddress (h, "GlobalMemoryStatusEx");
+    if (pfnex)
       {
         lMEMORYSTATUSEX lms_ex;
         lms_ex.dwLength = sizeof lms_ex;
@@ -292,14 +291,14 @@ physmem_claimable (double aggressivity)
 
 #if defined _WIN32
   { /* this works on windows */
-    PFN_MS_EX pfnex;
     HMODULE h = GetModuleHandle ("kernel32.dll");
 
     if (!h)
       return 0.0;
 
     /*  Use GlobalMemoryStatusEx if available.  */
-    if ((pfnex = (PFN_MS_EX) GetProcAddress (h, "GlobalMemoryStatusEx")))
+    PFN_MS_EX pfnex = (PFN_MS_EX) GetProcAddress (h, "GlobalMemoryStatusEx");
+    if (pfnex)
       {
         lMEMORYSTATUSEX lms_ex;
         lms_ex.dwLength = sizeof lms_ex;

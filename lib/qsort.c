@@ -98,13 +98,13 @@ void
 _quicksort (void *const pbase, size_t total_elems, size_t size,
 	    __compar_d_fn_t cmp, void *arg)
 {
-  char *base_ptr = (char *) pbase;
-
-  const size_t max_thresh = MAX_THRESH * size;
-
   if (total_elems == 0)
     /* Avoid lossage with unsigned arithmetic below.  */
     return;
+
+  char *base_ptr = (char *) pbase;
+
+  const size_t max_thresh = MAX_THRESH * size;
 
   if (total_elems > MAX_THRESH)
     {
@@ -214,7 +214,7 @@ _quicksort (void *const pbase, size_t total_elems, size_t size,
   {
     char *const end_ptr = &base_ptr[size * (total_elems - 1)];
     char *tmp_ptr = base_ptr;
-    char *thresh = min(end_ptr, base_ptr + max_thresh);
+    char *thresh = min (end_ptr, base_ptr + max_thresh);
 
     /* Find smallest element in first threshold and place it at the
        array's beginning.  This is the smallest array element,
@@ -239,9 +239,7 @@ _quicksort (void *const pbase, size_t total_elems, size_t size,
 	tmp_ptr += size;
         if (tmp_ptr != run_ptr)
           {
-            char *trav;
-
-	    trav = run_ptr + size;
+            char *trav = run_ptr + size;
 	    while (--trav >= run_ptr)
               {
                 char c = *trav;

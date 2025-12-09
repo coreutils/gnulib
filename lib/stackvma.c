@@ -155,19 +155,15 @@ struct rofile
 static int
 rof_open (struct rofile *rof, const char *filename)
 {
-  int fd;
-  uintptr_t pagesize;
-  size_t size;
-
-  fd = open (filename, O_RDONLY);
+  int fd = open (filename, O_RDONLY);
   if (fd < 0)
     return -1;
   rof->position = 0;
   rof->eof_seen = 0;
   /* Try the static buffer first.  */
-  pagesize = 0;
+  uintptr_t pagesize = 0;
   rof->buffer = rof->stack_allocated_buffer;
-  size = sizeof (rof->stack_allocated_buffer);
+  size_t size = sizeof (rof->stack_allocated_buffer);
   rof->auxmap = NULL;
   rof->auxmap_start = 0;
   rof->auxmap_end = 0;
@@ -364,16 +360,18 @@ vma_iterate_proc (struct callback_locals *locals)
 
       for (;;)
         {
-          uintptr_t start, end;
-          int c;
-
           /* Parse one line.  First start and end.  */
+          uintptr_t start, end;
           if (!(rof_scanf_lx (&rof, &start) >= 0
                 && rof_getchar (&rof) == '-'
                 && rof_scanf_lx (&rof, &end) >= 0))
             break;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
+
+          {
+            int c;
+            while (c = rof_getchar (&rof), c != -1 && c != '\n')
+              ;
+          }
 
           if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
             {
@@ -420,23 +418,28 @@ vma_iterate_proc (struct callback_locals *locals)
 
       for (;;)
         {
-          uintptr_t start, end;
-          int c;
-
           /* Parse one line.  First start.  */
+          uintptr_t start;
           if (!(rof_getchar (&rof) == '0'
                 && rof_getchar (&rof) == 'x'
                 && rof_scanf_lx (&rof, &start) >= 0))
             break;
-          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-            rof_getchar (&rof);
+          {
+            int c;
+            while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+              rof_getchar (&rof);
+          }
           /* Then end.  */
+          uintptr_t end;
           if (!(rof_getchar (&rof) == '0'
                 && rof_getchar (&rof) == 'x'
                 && rof_scanf_lx (&rof, &end) >= 0))
             break;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
+          {
+            int c;
+            while (c = rof_getchar (&rof), c != -1 && c != '\n')
+              ;
+          }
 
           if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
             {
@@ -474,17 +477,7 @@ vma_iterate_bsd (struct callback_locals *locals)
 {
   /* Documentation: https://www.freebsd.org/cgi/man.cgi?sysctl(3)  */
   int info_path[] = { CTL_KERN, KERN_PROC, KERN_PROC_VMMAP, getpid () };
-  size_t len;
-  size_t pagesize;
-  size_t memneed;
-  void *auxmap;
-  unsigned long auxmap_start;
-  unsigned long auxmap_end;
-  char *mem;
-  char *p;
-  char *p_end;
-
-  len = 0;
+  size_t len = 0;
   if (sysctl (info_path, 4, NULL, &len, NULL, 0) < 0)
     return -1;
   /* Allow for small variations over time.  In a multithreaded program
@@ -495,46 +488,48 @@ vma_iterate_bsd (struct callback_locals *locals)
      We also cannot use malloc here, because a malloc() call may call mmap()
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
-  pagesize = getpagesize ();
-  memneed = len;
+  size_t pagesize = getpagesize ();
+  size_t memneed = len;
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     return -1;
-  auxmap_start = (unsigned long) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  mem = (char *) auxmap;
+  unsigned long auxmap_start = (unsigned long) auxmap;
+  unsigned long auxmap_end = auxmap_start + memneed;
+  char *mem = (char *) auxmap;
   if (sysctl (info_path, 4, mem, &len, NULL, 0) < 0)
     {
       munmap (auxmap, memneed);
       return -1;
     }
-  p = mem;
-  p_end = mem + len;
-  while (p < p_end)
-    {
-      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
-      unsigned long start = kve->kve_start;
-      unsigned long end = kve->kve_end;
-      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-        {
-          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start < auxmap_start)
-            if (callback (locals, start, auxmap_start))
+  {
+    char *p = mem;
+    char *p_end = mem + len;
+    while (p < p_end)
+      {
+        struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+        unsigned long start = kve->kve_start;
+        unsigned long end = kve->kve_end;
+        if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+          {
+            /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+               = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+            if (start < auxmap_start)
+              if (callback (locals, start, auxmap_start))
+                break;
+            if (auxmap_end - 1 < end - 1)
+              if (callback (locals, auxmap_end, end))
+                break;
+          }
+        else
+          {
+            if (callback (locals, start, end))
               break;
-          if (auxmap_end - 1 < end - 1)
-            if (callback (locals, auxmap_end, end))
-              break;
-        }
-      else
-        {
-          if (callback (locals, start, end))
-            break;
-        }
-      p += kve->kve_structsize;
-    }
+          }
+        p += kve->kve_structsize;
+      }
+  }
   munmap (auxmap, memneed);
   return 0;
 }
@@ -750,15 +745,12 @@ mapped_range_start (uintptr_t addr)
     }
   for (;;)
     {
-      uintptr_t halfstepsize1;
-      uintptr_t halfstepsize2;
-
       if (stepsize == 1)
         return addr;
 
       /* Here we know that less than stepsize pages exist starting at addr.  */
-      halfstepsize1 = (stepsize + 1) / 2;
-      halfstepsize2 = stepsize / 2;
+      uintptr_t halfstepsize1 = (stepsize + 1) / 2;
+      uintptr_t halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
       if (mincore ((MINCORE_ADDR_T) (addr - halfstepsize1 * pagesize),
@@ -786,12 +778,10 @@ mapped_range_end (uintptr_t addr)
   addr += pagesize;
   for (;;)
     {
-      uintptr_t max_remaining;
-
       if (addr == 0) /* wrapped around? */
         return addr;
 
-      max_remaining = (- addr) / pagesize;
+      uintptr_t max_remaining = (- addr) / pagesize;
       if (stepsize > max_remaining)
         stepsize = max_remaining;
       if (mincore ((MINCORE_ADDR_T) addr, stepsize * pagesize, vec) < 0)
@@ -802,15 +792,12 @@ mapped_range_end (uintptr_t addr)
     }
   for (;;)
     {
-      uintptr_t halfstepsize1;
-      uintptr_t halfstepsize2;
-
       if (stepsize == 1)
         return addr;
 
       /* Here we know that less than stepsize pages exist starting at addr.  */
-      halfstepsize1 = (stepsize + 1) / 2;
-      halfstepsize2 = stepsize / 2;
+      uintptr_t halfstepsize1 = (stepsize + 1) / 2;
+      uintptr_t halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
       if (mincore ((MINCORE_ADDR_T) addr, halfstepsize1 * pagesize, vec) < 0)
@@ -828,9 +815,6 @@ mapped_range_end (uintptr_t addr)
 static int
 is_unmapped (uintptr_t addr1, uintptr_t addr2)
 {
-  uintptr_t count;
-  uintptr_t stepsize;
-
   /* Round addr1 down.  */
   addr1 = (addr1 / pagesize) * pagesize;
   /* Round addr2 up and turn it into an exclusive bound.  */
@@ -846,20 +830,19 @@ is_unmapped (uintptr_t addr1, uintptr_t addr2)
      average, therefore we have good chances of hitting a mapped area if we
      traverse only every second, or only fourth page, etc.  This doesn't
      decrease the worst-case runtime, only the average runtime.  */
-  count = (addr2 - addr1) / pagesize;
+  uintptr_t count = (addr2 - addr1) / pagesize;
   /* We have to test is_mapped (addr1 + i * pagesize) for 0 <= i < count.  */
+  uintptr_t stepsize;
   for (stepsize = 1; stepsize < count; )
     stepsize = 2 * stepsize;
   for (;;)
     {
-      uintptr_t addr_stepsize;
-      uintptr_t i;
-      uintptr_t addr;
-
       stepsize = stepsize / 2;
       if (stepsize == 0)
         break;
-      addr_stepsize = stepsize * pagesize;
+      uintptr_t addr_stepsize = stepsize * pagesize;
+      uintptr_t i;
+      uintptr_t addr;
       for (i = stepsize, addr = addr1 + addr_stepsize;
            i < count;
            i += 2 * stepsize, addr += 2 * addr_stepsize)
@@ -1272,16 +1255,12 @@ is_mapped (uintptr_t addr)
 static uintptr_t
 mapped_range_start (uintptr_t addr)
 {
-  uintptr_t stepsize;
-  uintptr_t known_unmapped_page;
-
   /* Look at smaller addresses, in larger and larger steps, to minimize the
      number of mquery() calls.  */
-  stepsize = pagesize;
+  uintptr_t known_unmapped_page;
+  uintptr_t stepsize = pagesize;
   for (;;)
     {
-      uintptr_t hole;
-
       if (addr == 0)
         abort ();
 
@@ -1291,8 +1270,8 @@ mapped_range_start (uintptr_t addr)
           break;
         }
 
-      hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
-                                     0, 0, -1, 0);
+      uintptr_t hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
+                                           0, 0, -1, 0);
       if (!(hole == (uintptr_t) (void *) -1 || hole >= addr))
         {
           /* Some part of [addr - stepsize, addr - 1] is unmapped.  */
@@ -1315,11 +1294,9 @@ mapped_range_start (uintptr_t addr)
   /* Still 0 < addr - known_unmapped_page <= stepsize.  */
   while (stepsize > pagesize)
     {
-      uintptr_t hole;
-
       stepsize = stepsize / 2;
-      hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
-                                     0, 0, -1, 0);
+      uintptr_t hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
+                                           0, 0, -1, 0);
       if (!(hole == (uintptr_t) (void *) -1 || hole >= addr))
         /* Some part of [addr - stepsize, addr - 1] is unmapped.  */
         known_unmapped_page = hole;
@@ -1338,12 +1315,10 @@ mapped_range_start (uintptr_t addr)
 static uintptr_t
 mapped_range_end (uintptr_t addr)
 {
-  uintptr_t end;
-
   if (addr == 0)
     abort ();
 
-  end = (uintptr_t) mquery ((void *) addr, pagesize, 0, 0, -1, 0);
+  uintptr_t end = (uintptr_t) mquery ((void *) addr, pagesize, 0, 0, -1, 0);
   if (end == (uintptr_t) (void *) -1)
     end = 0; /* wrap around */
   return end;
@@ -1625,16 +1600,12 @@ vma_iterate (struct callback_locals *locals)
      only the virtual memory areas that are connected to a file, not the
      anonymous ones.  But at least since AIX 7.1, it is well usable.  */
 
-  char fnamebuf[6+10+4+1];
-  char *fname;
-  int fd;
-  size_t memneed;
-
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+4+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - (4+1);
+  char *fname = fnamebuf + sizeof (fnamebuf) - (4+1);
   memcpy (fname, "/map", 4+1);
   {
     unsigned int value = getpid ();
@@ -1645,7 +1616,7 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY | O_CLOEXEC);
+  int fd = open (fname, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
 
@@ -1656,7 +1627,7 @@ vma_iterate (struct callback_locals *locals)
      We read the entire contents, but look only at the prmap_t entries and
      ignore the tail part.  */
 
-  for (memneed = 2 * pagesize; ; memneed = 2 * memneed)
+  for (size_t memneed = 2 * pagesize; ; memneed = 2 * memneed)
     {
       /* Allocate memneed bytes of memory.
          We cannot use alloca here, because not much stack space is guaranteed.
@@ -1665,25 +1636,21 @@ vma_iterate (struct callback_locals *locals)
          So use mmap(), and ignore the resulting VMA if it occurs among the
          resulting VMAs.  (Normally it doesn't, because it was allocated after
          the open() call.)  */
-      void *auxmap;
-      unsigned long auxmap_start;
-      unsigned long auxmap_end;
-      ssize_t nbytes;
-
-      auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                              MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                    MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
       if (auxmap == (void *) -1)
         {
           close (fd);
           return -1;
         }
-      auxmap_start = (unsigned long) auxmap;
-      auxmap_end = auxmap_start + memneed;
+      unsigned long auxmap_start = (unsigned long) auxmap;
+      unsigned long auxmap_end = auxmap_start + memneed;
 
       /* Read the contents of /proc/<pid>/map in a single system call.
          This guarantees a consistent result (no duplicated or omitted
          entries).  */
-     retry:
+     retry: ;
+      ssize_t nbytes;
       do
         nbytes = read (fd, auxmap, memneed);
       while (nbytes < 0 && errno == EINTR);
@@ -1718,7 +1685,7 @@ vma_iterate (struct callback_locals *locals)
             }
 
           /* We now have the entire contents of /proc/<pid>/map in memory.  */
-          prmap_t* maps = (prmap_t *) auxmap;
+          prmap_t *maps = (prmap_t *) auxmap;
 
           /* The entries are not sorted by address.  Therefore
              1. Extract the relevant information into an array.
@@ -1735,46 +1702,41 @@ vma_iterate (struct callback_locals *locals)
           vma_t *vmas = (vma_t *) auxmap;
 
           vma_t *vp = vmas;
-          {
-            prmap_t* mp;
-            for (mp = maps;;)
-              {
-                unsigned long start, end;
-
-                start = (unsigned long) mp->pr_vaddr;
-                end = start + mp->pr_size;
-                if (start == 0 && end == 0 && mp->pr_mflags == 0)
-                  break;
-                /* Discard empty VMAs and kernel VMAs.  */
-                if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
-                  {
-                    if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-                      {
-                        /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                           = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-                        if (start < auxmap_start)
-                          {
-                            vp->start = start;
-                            vp->end = auxmap_start;
-                            vp++;
-                          }
-                        if (auxmap_end - 1 < end - 1)
-                          {
-                            vp->start = auxmap_end;
-                            vp->end = end;
-                            vp++;
-                          }
-                      }
-                    else
-                      {
-                        vp->start = start;
-                        vp->end = end;
-                        vp++;
-                      }
-                  }
-                mp++;
-              }
-          }
+          for (prmap_t *mp = maps;;)
+            {
+              unsigned long start = (unsigned long) mp->pr_vaddr;
+              unsigned long end = start + mp->pr_size;
+              if (start == 0 && end == 0 && mp->pr_mflags == 0)
+                break;
+              /* Discard empty VMAs and kernel VMAs.  */
+              if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
+                {
+                  if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+                    {
+                      /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                         = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+                      if (start < auxmap_start)
+                        {
+                          vp->start = start;
+                          vp->end = auxmap_start;
+                          vp++;
+                        }
+                      if (auxmap_end - 1 < end - 1)
+                        {
+                          vp->start = auxmap_end;
+                          vp->end = end;
+                          vp++;
+                        }
+                    }
+                  else
+                    {
+                      vp->start = start;
+                      vp->end = end;
+                      vp++;
+                    }
+                }
+              mp++;
+            }
 
           size_t nvmas = vp - vmas;
           /* Sort the array in ascending order.
@@ -1782,32 +1744,25 @@ vma_iterate (struct callback_locals *locals)
              Insertion-sort is OK in this case, despite its worst-case running
              time of O(N²), since the number of VMAs will rarely be larger than
              1000.  */
-          {
-            size_t i;
-            for (i = 1; i < nvmas; i++)
-              {
-                /* Invariant: Here vmas[0..i-1] is sorted.  */
-                size_t j;
-                for (j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
-                  {
-                    vma_t tmp = vmas[j - 1];
-                    vmas[j - 1] = vmas[j];
-                    vmas[j] = tmp;
-                  }
-                /* Invariant: Here vmas[0..i] is sorted.  */
-              }
-          }
+          for (size_t i = 1; i < nvmas; i++)
+            {
+              /* Invariant: Here vmas[0..i-1] is sorted.  */
+              for (size_t j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
+                {
+                  vma_t tmp = vmas[j - 1];
+                  vmas[j - 1] = vmas[j];
+                  vmas[j] = tmp;
+                }
+              /* Invariant: Here vmas[0..i] is sorted.  */
+            }
 
           /* Invoke the callback.  */
-          {
-            size_t i;
-            for (i = 0; i < nvmas; i++)
-              {
-                vma_t *vpi = &vmas[i];
-                if (callback (locals, vpi->start, vpi->end))
-                  break;
-              }
-          }
+          for (size_t i = 0; i < nvmas; i++)
+            {
+              vma_t *vpi = &vmas[i];
+              if (callback (locals, vpi->start, vpi->end))
+                break;
+            }
 
           munmap (auxmap, memneed);
           break;
@@ -1956,22 +1911,12 @@ vma_iterate (struct callback_locals *locals)
 # if defined PIOCNMAP && defined PIOCMAP
   /* We must use the older /proc interface.  */
 
-  char fnamebuf[6+10+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
-  void *auxmap;
-  uintptr_t auxmap_start;
-  uintptr_t auxmap_end;
-  prmap_t* maps;
-  prmap_t* mp;
-
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1;
+  char *fname = fnamebuf + sizeof (fnamebuf) - 1;
   *fname = '\0';
   {
     unsigned int value = getpid ();
@@ -1982,37 +1927,36 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  int fd = open (fname, O_RDONLY);
   if (fd < 0)
     return -1;
 
+  int nmaps;
   if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
     goto fail2;
 
-  memneed = (nmaps + 10) * sizeof (prmap_t);
+  size_t memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
      We cannot use alloca here, because not much stack space is guaranteed.
      We also cannot use malloc here, because a malloc() call may call mmap()
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
-  auxmap_start = (uintptr_t) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
+  uintptr_t auxmap_start = (uintptr_t) auxmap;
+  uintptr_t auxmap_end = auxmap_start + memneed;
+  prmap_t *maps = (prmap_t *) auxmap;
 
   if (ioctl (fd, PIOCMAP, maps) < 0)
     goto fail1;
 
-  for (mp = maps;;)
+  for (prmap_t *mp = maps;;)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) mp->pr_vaddr;
-      end = start + mp->pr_size;
+      uintptr_t start = (uintptr_t) mp->pr_vaddr;
+      uintptr_t end = start + mp->pr_size;
       if (start == 0 && end == 0)
         break;
       mp++;
@@ -2051,23 +1995,12 @@ vma_iterate (struct callback_locals *locals)
      prmap_t.  These are different in 32-bit and 64-bit processes,
      but here we are fortunately accessing only the current process.  */
 
-  char fnamebuf[6+10+4+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
-  void *auxmap;
-  uintptr_t auxmap_start;
-  uintptr_t auxmap_end;
-  prmap_t* maps;
-  prmap_t* maps_end;
-  prmap_t* mp;
-
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+4+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1 - 4;
+  char *fname = fnamebuf + sizeof (fnamebuf) - 1 - 4;
   memcpy (fname, "/map", 4 + 1);
   {
     unsigned int value = getpid ();
@@ -2078,10 +2011,11 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  int fd = open (fname, O_RDONLY);
   if (fd < 0)
     return -1;
 
+  int nmaps;
   {
     struct stat statbuf;
     if (fstat (fd, &statbuf) < 0)
@@ -2089,22 +2023,23 @@ vma_iterate (struct callback_locals *locals)
     nmaps = statbuf.st_size / sizeof (prmap_t);
   }
 
-  memneed = (nmaps + 10) * sizeof (prmap_t);
+  size_t memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
      We cannot use alloca here, because not much stack space is guaranteed.
      We also cannot use malloc here, because a malloc() call may call mmap()
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     goto fail2;
-  auxmap_start = (uintptr_t) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
+  uintptr_t auxmap_start = (uintptr_t) auxmap;
+  uintptr_t auxmap_end = auxmap_start + memneed;
+  prmap_t *maps = (prmap_t *) auxmap;
 
   /* Read up to memneed bytes from fd into maps.  */
+  prmap_t *maps_end;
   {
     size_t remaining = memneed;
     size_t total_read = 0;
@@ -2132,7 +2067,7 @@ vma_iterate (struct callback_locals *locals)
     maps_end = maps + nmaps;
   }
 
-  for (mp = maps; mp < maps_end; mp++)
+  for (prmap_t *mp = maps; mp < maps_end; mp++)
     {
       uintptr_t start, end;
 
@@ -2371,16 +2306,12 @@ callback (struct callback_locals *locals, uintptr_t start, uintptr_t end)
 static int
 vma_iterate (struct callback_locals *locals)
 {
+  ssize_t cookie = 0;
   area_info info;
-  ssize_t cookie;
-
-  cookie = 0;
   while (get_next_area_info (0, &cookie, &info) == B_OK)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) info.address;
-      end = start + info.size;
+      uintptr_t start = (uintptr_t) info.address;
+      uintptr_t end = start + info.size;
 
       if (callback (locals, start, end))
         break;

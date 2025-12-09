@@ -35,8 +35,6 @@ int
 rpl_setsockopt (int fd, int level, int optname, const void *optval, socklen_t optlen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r;
-
   if (sock == INVALID_SOCKET)
     {
       errno = EBADF;
@@ -44,6 +42,8 @@ rpl_setsockopt (int fd, int level, int optname, const void *optval, socklen_t op
     }
   else
     {
+      int r;
+
       if (level == SOL_SOCKET
           && (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO))
         {

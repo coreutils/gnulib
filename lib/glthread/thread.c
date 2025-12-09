@@ -208,9 +208,7 @@ gl_thread_t
 gl_thread_create (void *(*func) (void *arg), void *arg)
 {
   gl_thread_t thread;
-  int ret;
-
-  ret = glthread_create (&thread, func, arg);
+  int ret = glthread_create (&thread, func, arg);
   if (ret != 0)
     abort ();
   return thread;

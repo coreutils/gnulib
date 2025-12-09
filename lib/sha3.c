@@ -84,10 +84,10 @@ void *
 sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
 {
   char *r = resbuf;
-  int i;
   size_t words = ctx->digestlen / sizeof *ctx->state;
   size_t bytes = ctx->digestlen % sizeof *ctx->state;
 
+  int i;
   for (i = 0; i < words; ++i, r += sizeof *ctx->state)
     set_uint64 (r, SWAP (ctx->state[i]));
   if (bytes)
@@ -173,10 +173,6 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
   const u64 *words = buffer;
   size_t nwords = len / sizeof *words;
   const u64 *endp = words + nwords;
-  u64 c[5];
-  u64 d[5];
-  u64 t1;
-  u64 t2;
 
   while (words < endp)
     {
@@ -184,6 +180,11 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
         ctx->state[i] = u64xor (ctx->state[i], SWAP (*words));
       for (int i = 0; i < 24; ++i)
         {
+          u64 c[5];
+          u64 d[5];
+          u64 t1;
+          u64 t2;
+
           /* Theta step 1.  */
           c[0] = u64xor (u64xor (u64xor (u64xor (a[0], a[5]), a[10]),
                                  a[15]), a[20]);

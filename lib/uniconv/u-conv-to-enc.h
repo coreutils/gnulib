@@ -31,9 +31,6 @@ FUNC (const char *tocode,
 {
 #if HAVE_UTF_NAME
   size_t *scaled_offsets;
-  char *result;
-  size_t length;
-
   if (offsets != NULL && srclen > 0)
     {
       scaled_offsets =
@@ -47,8 +44,8 @@ FUNC (const char *tocode,
   else
     scaled_offsets = NULL;
 
-  result = resultbuf;
-  length = *lengthp;
+  char *result = resultbuf;
+  size_t length = *lengthp;
   if (mem_iconveha ((const char *) src, srclen * sizeof (UNIT),
                     UTF_NAME, tocode,
                     handler == iconveh_question_mark, handler,
@@ -83,16 +80,12 @@ FUNC (const char *tocode,
 #else
   uint8_t tmpbuf[4096];
   size_t tmpbufsize = SIZEOF (tmpbuf);
-  uint8_t *utf8_src;
-  size_t utf8_srclen;
-  size_t *scaled_offsets;
-  char *result;
-
-  utf8_src = U_TO_U8 (src, srclen, tmpbuf, &tmpbufsize);
+  uint8_t *utf8_src = U_TO_U8 (src, srclen, tmpbuf, &tmpbufsize);
   if (utf8_src == NULL)
     return NULL;
-  utf8_srclen = tmpbufsize;
+  size_t utf8_srclen = tmpbufsize;
 
+  size_t *scaled_offsets;
   if (offsets != NULL && utf8_srclen > 0)
     {
       scaled_offsets = (size_t *) malloc (utf8_srclen * sizeof (size_t));
@@ -107,8 +100,8 @@ FUNC (const char *tocode,
   else
     scaled_offsets = NULL;
 
-  result = u8_conv_to_encoding (tocode, handler, utf8_src, utf8_srclen,
-                                scaled_offsets, resultbuf, lengthp);
+  char *result = u8_conv_to_encoding (tocode, handler, utf8_src, utf8_srclen,
+                                      scaled_offsets, resultbuf, lengthp);
   if (result == NULL)
     {
       int saved_errno = errno;
@@ -123,20 +116,14 @@ FUNC (const char *tocode,
       for (size_t iunit = 0; iunit < srclen; iunit++)
         offsets[iunit] = (size_t)(-1);
 
-      size_t iunit;     /* offset into src */
-      size_t i8;        /* offset into utf8_src */
-
-      iunit = 0;
-      i8 = 0;
+      size_t iunit = 0;         /* offset into src */
+      size_t i8 = 0;            /* offset into utf8_src */
       while (iunit < srclen && i8 < utf8_srclen)
         {
-          int countunit;
-          int count8;
-
           offsets[iunit] = scaled_offsets[i8];
 
-          countunit = U_MBLEN (src + iunit, srclen - iunit);
-          count8 = u8_mblen (utf8_src + i8, utf8_srclen - i8);
+          int countunit = U_MBLEN (src + iunit, srclen - iunit);
+          int count8 = u8_mblen (utf8_src + i8, utf8_srclen - i8);
           if (countunit < 0 || count8 < 0)
             abort ();
           iunit += countunit;

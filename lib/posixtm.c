@@ -91,12 +91,11 @@ year (struct tm *tm, const int *digit_pair, idx_t n, unsigned int syntax_bits)
 static bool
 posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 {
-  const char *dot = NULL;
-  int pair[6];
 
   idx_t s_len = strlen (s);
-  idx_t len = s_len;
 
+  const char *dot = NULL;
+  idx_t len = s_len;
   if (syntax_bits & PDS_SECONDS)
     {
       dot = strchr (s, '.');
@@ -116,6 +115,8 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
       return false;
 
   len /= 2;
+
+  int pair[6];
   for (idx_t i = 0; i < len; i++)
     pair[i] = 10 * (s[2*i] - '0') + s[2*i + 1] - '0';
 
@@ -159,11 +160,11 @@ bool
 posixtime (time_t *p, const char *s, unsigned int syntax_bits)
 {
   struct tm tm0;
-  bool leapsec = false;
 
   if (! posix_time_parse (&tm0, s, syntax_bits))
     return false;
 
+  bool leapsec = false;
   while (true)
     {
       struct tm tm1;

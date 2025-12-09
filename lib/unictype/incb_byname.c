@@ -35,13 +35,10 @@
 int
 uc_indic_conjunct_break_byname (const char *indic_conjunct_break_name)
 {
-  size_t len;
-
-  len = strlen (indic_conjunct_break_name);
+  size_t len = strlen (indic_conjunct_break_name);
   if (len <= MAX_WORD_LENGTH)
     {
       char buf[MAX_WORD_LENGTH + 1];
-      const struct named_indic_conjunct_break *found;
 
       /* Copy indic_conjunct_break_name into buf, converting '_' and '-'
          to ' '.  */
@@ -63,7 +60,8 @@ uc_indic_conjunct_break_byname (const char *indic_conjunct_break_name)
       /* Here q == buf + len.  */
 
       /* Do a hash table lookup, with case-insensitive comparison.  */
-      found = uc_indic_conjunct_break_lookup (buf, len);
+      const struct named_indic_conjunct_break *found =
+        uc_indic_conjunct_break_lookup (buf, len);
       if (found != NULL)
         return found->indic_conjunct_break;
     }

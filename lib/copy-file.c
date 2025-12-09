@@ -48,31 +48,28 @@ copy_file_internal (const char *src_filename, const char *dest_filename,
                     bool preserve)
 {
   int err = 0;
-  int src_fd;
-  struct stat statbuf;
-  int mode;
-  int dest_fd;
 
-  src_fd = open (src_filename, O_RDONLY | O_BINARY | O_CLOEXEC);
+  int src_fd = open (src_filename, O_RDONLY | O_BINARY | O_CLOEXEC);
   if (src_fd < 0)
     return GL_COPY_ERR_OPEN_READ;
+  struct stat statbuf;
   if (fstat (src_fd, &statbuf) < 0)
     {
       err = GL_COPY_ERR_OPEN_READ;
       goto error_src;
     }
 
-  mode = statbuf.st_mode & 07777;
+  int mode = statbuf.st_mode & 07777;
   off_t inbytes = S_ISREG (statbuf.st_mode) ? statbuf.st_size : -1;
   bool empty_regular_file = inbytes == 0;
 
-  dest_fd = open (dest_filename,
-                  O_WRONLY | O_CREAT | O_TRUNC | O_BINARY | O_CLOEXEC,
-                  /* If preserve is true, we must assume that the file may
-                     have confidential contents.  Therefore open it with mode
-                     0600 and assign the permissions at the end.
-                     If preserve is false, open it with mode 0666 & ~umask.  */
-                  preserve ? 0600 : 0666);
+  int dest_fd = open (dest_filename,
+                      O_WRONLY | O_CREAT | O_TRUNC | O_BINARY | O_CLOEXEC,
+                      /* If preserve is true, we must assume that the file may
+                         have confidential contents.  Therefore open it with
+                         mode 0600 and assign the permissions at the end.
+                         If preserve is false, open it with mode 0666 & ~umask.  */
+                      preserve ? 0600 : 0666);
   if (dest_fd < 0)
     {
       err = GL_COPY_ERR_OPEN_BACKUP_WRITE;
@@ -102,7 +99,10 @@ copy_file_internal (const char *src_filename, const char *dest_filename,
       int bufsize = IO_SIZE;
       char *buf = malloc (bufsize);
       if (!buf)
-        buf = smallbuf, bufsize = sizeof smallbuf;
+        {
+          buf = smallbuf;
+          bufsize = sizeof smallbuf;
+        }
 
       while (true)
         {
@@ -142,9 +142,9 @@ copy_file_internal (const char *src_filename, const char *dest_filename,
       /* Preserve the access and modification times.  */
       {
         struct timespec ts[2];
-
         ts[0] = get_stat_atime (&statbuf);
         ts[1] = get_stat_mtime (&statbuf);
+
         utimens (dest_filename, ts);
       }
 

@@ -62,13 +62,10 @@ ensure_dirs_slot (size_t fd)
     free (dirs[fd].name);
   else
     {
-      size_t new_allocated;
-      dir_info_t *new_dirs;
-
-      new_allocated = 2 * dirs_allocated + 1;
+      size_t new_allocated = 2 * dirs_allocated + 1;
       if (new_allocated <= fd)
         new_allocated = fd + 1;
-      new_dirs =
+      dir_info_t *new_dirs =
         (dirs != NULL
          ? (dir_info_t *) realloc (dirs, new_allocated * sizeof *dirs)
          : (dir_info_t *) malloc (new_allocated * sizeof *dirs));
@@ -87,18 +84,15 @@ ensure_dirs_slot (size_t fd)
 static char *
 get_name (char const *dir)
 {
-  char *cwd;
-  char *result;
-
   if (IS_ABSOLUTE_FILE_NAME (dir))
     return strdup (dir);
 
   /* We often encounter "."; treat it as a special case.  */
-  cwd = getcwd (NULL, 0);
+  char *cwd = getcwd (NULL, 0);
   if (!cwd || (dir[0] == '.' && dir[1] == '\0'))
     return cwd;
 
-  result = mfile_name_concat (cwd, dir, NULL);
+  char *result = mfile_name_concat (cwd, dir, NULL);
   free (cwd);
   return result;
 }
@@ -126,9 +120,9 @@ _gl_unregister_fd (int fd)
 int
 _gl_register_fd (int fd, const char *filename)
 {
-  struct stat statbuf;
-
   assure (0 <= fd);
+
+  struct stat statbuf;
   if (REPLACE_OPEN_DIRECTORY
       || (fstat (fd, &statbuf) == 0 && S_ISDIR (statbuf.st_mode)))
     {

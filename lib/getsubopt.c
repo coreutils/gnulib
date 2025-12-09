@@ -41,23 +41,20 @@
 int
 getsubopt (char **optionp, char *const *tokens, char **valuep)
 {
-  char *endp, *vstart;
-  int cnt;
-
   if (**optionp == '\0')
     return -1;
 
   /* Find end of next token.  */
-  endp = __strchrnul (*optionp, ',');
+  char *endp = __strchrnul (*optionp, ',');
 
   /* Find start of value.  */
-  vstart = memchr (*optionp, '=', endp - *optionp);
+  char *vstart = memchr (*optionp, '=', endp - *optionp);
   if (vstart == NULL)
     vstart = endp;
 
   /* Try to match the characters between *OPTIONP and VSTART against
      one of the TOKENS.  */
-  for (cnt = 0; tokens[cnt] != NULL; ++cnt)
+  for (int cnt = 0; tokens[cnt] != NULL; ++cnt)
     if (strncmp (*optionp, tokens[cnt], vstart - *optionp) == 0
         && tokens[cnt][vstart - *optionp] == '\0')
       {

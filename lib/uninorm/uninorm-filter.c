@@ -100,9 +100,7 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
       /* Invariant: decomposed[0..curr-1] is fully decomposed, i.e.
          all elements are atomic.  */
       ucs4_t curr_decomposed[UC_DECOMPOSITION_MAX_LENGTH];
-      int curr_decomposed_count;
-
-      curr_decomposed_count =
+      int curr_decomposed_count =
         filter->decomposer (decomposed[curr], curr_decomposed);
       if (curr_decomposed_count >= 0)
         {
@@ -230,12 +228,10 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
         /* Append (uc, ccc) to sortbuf.  */
         if (sortbuf_count == filter->sortbuf_allocated)
           {
-            struct ucs4_with_ccc *new_sortbuf;
-
             filter->sortbuf_allocated = 2 * filter->sortbuf_allocated;
             if (filter->sortbuf_allocated < sortbuf_count) /* integer overflow? */
               abort ();
-            new_sortbuf =
+            struct ucs4_with_ccc *new_sortbuf =
               (struct ucs4_with_ccc *)
               malloc (2 * filter->sortbuf_allocated * sizeof (struct ucs4_with_ccc));
             if (new_sortbuf == NULL)

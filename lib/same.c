@@ -90,13 +90,12 @@ same_nameat (int source_dfd, char const *source,
 
   if (compare_dirs)
     {
-      struct stat source_dir_stats;
-      struct stat dest_dir_stats;
 
       /* Compare the parent directories (via the device and inode numbers).  */
       char *source_dirname = dir_name (source);
-      int flags = AT_SYMLINK_NOFOLLOW;
-      if (fstatat (source_dfd, source_dirname, &source_dir_stats, flags) != 0)
+      struct stat source_dir_stats;
+      if (fstatat (source_dfd, source_dirname, &source_dir_stats,
+                   AT_SYMLINK_NOFOLLOW) != 0)
         {
           /* Shouldn't happen.  */
           error (1, errno, "%s", source_dirname);
@@ -104,6 +103,7 @@ same_nameat (int source_dfd, char const *source,
       free (source_dirname);
 
       char *dest_dirname = dir_name (dest);
+      struct stat dest_dir_stats;
 
 #if CHECK_TRUNCATION
       int destdir_errno = 0;
@@ -132,7 +132,8 @@ same_nameat (int source_dfd, char const *source,
           error (1, destdir_errno, "%s", dest_dirname);
         }
 #else
-      if (fstatat (dest_dfd, dest_dirname, &dest_dir_stats, flags) != 0)
+      if (fstatat (dest_dfd, dest_dirname, &dest_dir_stats,
+                   AT_SYMLINK_NOFOLLOW) != 0)
         {
           /* Shouldn't happen.  */
           error (1, errno, "%s", dest_dirname);

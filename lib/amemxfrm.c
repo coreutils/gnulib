@@ -29,12 +29,7 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
 {
   /* Result accumulator.  */
   char *result;
-  size_t length;
   size_t allocated;
-
-  char orig_sentinel;
-
-  /* Initial memory allocation.  */
   if (resultbuf != NULL && *lengthp > 0)
     {
       result = resultbuf;
@@ -47,10 +42,10 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
       if (result == NULL)
         goto out_of_memory_2;
     }
-  length = 0;
+  size_t length = 0;
 
   /* Add sentinel.byte.  */
-  orig_sentinel = s[n];
+  char orig_sentinel = s[n];
   s[n] = '\0';
 
   /* Iterate through S, transforming each NUL terminated segment.
@@ -60,16 +55,13 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
     const char *p_end = s + n + 1;
     const char *p;
 
-    p = s;
-    for (;;)
+    for (p = s;;)
       {
         /* Search next NUL byte.  */
         size_t l = strlen (p);
 
         for (;;)
           {
-            size_t k;
-
             /* A call to strxfrm costs about 20 times more than a call to
                strdup of the result.  Therefore it is worth to try to avoid
                calling strxfrm more than once on a given string, by making
@@ -79,14 +71,13 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
             if (3 * l >= allocated - length)
               {
                 /* Grow the result buffer.  */
-                size_t new_allocated;
-                char *new_result;
-
-                new_allocated = length + 3 * l + 1;
+                size_t new_allocated = length + 3 * l + 1;
                 if (new_allocated < 2 * allocated)
                   new_allocated = 2 * allocated;
                 if (new_allocated < 64)
                   new_allocated = 64;
+
+                char *new_result;
                 if (result == resultbuf)
                   new_result = (char *) malloc (new_allocated);
                 else
@@ -99,20 +90,19 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
               }
 
             errno = 0;
-            k = strxfrm (result + length, p, allocated - length);
+            size_t k = strxfrm (result + length, p, allocated - length);
             if (errno != 0)
               goto fail;
             if (k >= allocated - length)
               {
                 /* Grow the result buffer.  */
-                size_t new_allocated;
-                char *new_result;
-
-                new_allocated = length + k + 1;
+                size_t new_allocated = length + k + 1;
                 if (new_allocated < 2 * allocated)
                   new_allocated = 2 * allocated;
                 if (new_allocated < 64)
                   new_allocated = 64;
+
+                char *new_result;
                 if (result == resultbuf)
                   new_result = (char *) malloc (new_allocated);
                 else

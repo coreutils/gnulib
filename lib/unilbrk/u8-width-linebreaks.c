@@ -39,17 +39,12 @@ u8_width_linebreaks_internal (const uint8_t *s, size_t n,
                               const char *o, const char *encoding, int cr,
                               char *p)
 {
-  const uint8_t *s_end;
-  char *last_p;
-  int last_column;
-  int piece_width;
-
   u8_possible_linebreaks_loop (s, n, encoding, cr, p);
 
-  s_end = s + n;
-  last_p = NULL;
-  last_column = start_column;
-  piece_width = 0;
+  const uint8_t *s_end = s + n;
+  char *last_p = NULL;
+  int last_column = start_column;
+  int piece_width = 0;
   while (s < s_end)
     {
       ucs4_t uc;
@@ -82,8 +77,6 @@ u8_width_linebreaks_internal (const uint8_t *s, size_t n,
       else
         {
           /* uc is not a line break character.  */
-          int w;
-
           if (*p == UC_BREAK_POSSIBLE)
             {
               /* Start a new piece.  */
@@ -96,7 +89,7 @@ u8_width_linebreaks_internal (const uint8_t *s, size_t n,
 
           *p = UC_BREAK_PROHIBITED;
 
-          w = uc_width (uc, encoding);
+          int w = uc_width (uc, encoding);
           if (w >= 0) /* ignore control characters in the string */
             piece_width += w;
         }
@@ -163,7 +156,6 @@ read_file (FILE *stream)
   char *buf = NULL;
   int alloc = 0;
   int size = 0;
-  int count;
 
   while (! feof (stream))
     {
@@ -179,7 +171,7 @@ read_file (FILE *stream)
               exit (1);
             }
         }
-      count = fread (buf + size, 1, BUFSIZE, stream);
+      int count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
         {
           if (ferror (stream))

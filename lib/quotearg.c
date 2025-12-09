@@ -158,10 +158,9 @@ set_char_quoting (struct quoting_options *o, char c, int i)
 int
 set_quoting_flags (struct quoting_options *o, int i)
 {
-  int r;
   if (!o)
     o = &default_quoting_options;
-  r = o->flags;
+  int r = o->flags;
   o->flags = i;
   return r;
 }
@@ -256,12 +255,13 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           char const *left_quote,
                           char const *right_quote)
 {
+  bool unibyte_locale = MB_CUR_MAX == 1;
+
   size_t len = 0;
   size_t orig_buffersize = 0;
   char const *quote_string = NULL;
   size_t quote_string_len = 0;
   bool backslash_escapes = false;
-  bool unibyte_locale = MB_CUR_MAX == 1;
   bool elide_outer_quotes = (flags & QA_ELIDE_OUTER_QUOTES) != 0;
   bool encountered_single_quote = false;
   bool all_c_and_shell_quote_compat = true;
@@ -358,8 +358,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             right_quote = gettext_quote (N_("'"), quoting_style);
           }
         if (!elide_outer_quotes)
-          for (quote_string = left_quote; *quote_string; quote_string++)
-            STORE (*quote_string);
+          for (char const *lq = left_quote; *lq; lq++)
+            STORE (*lq);
         backslash_escapes = true;
         quote_string = right_quote;
         quote_string_len = strlen (quote_string);
@@ -394,8 +394,6 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
   for (size_t i = 0;  ! (argsize == SIZE_MAX ? arg[i] == '\0' : i == argsize);  i++)
     {
-      unsigned char c;
-      unsigned char esc;
       bool is_right_quote = false;
       bool escaping = false;
       bool c_and_shell_quote_compat = false;
@@ -416,7 +414,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           is_right_quote = true;
         }
 
-      c = arg[i];
+      unsigned char c = arg[i];
       switch (c)
         {
         case '\0':
@@ -477,39 +475,43 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             }
           break;
 
-        case '\a': esc = 'a'; goto c_escape;
-        case '\b': esc = 'b'; goto c_escape;
-        case '\f': esc = 'f'; goto c_escape;
-        case '\n': esc = 'n'; goto c_and_shell_escape;
-        case '\r': esc = 'r'; goto c_and_shell_escape;
-        case '\t': esc = 't'; goto c_and_shell_escape;
-        case '\v': esc = 'v'; goto c_escape;
-        case '\\': esc = c;
-          /* Never need to escape '\' in shell case.  */
-          if (quoting_style == shell_always_quoting_style)
-            {
-              if (elide_outer_quotes)
-                goto force_outer_quoting_style;
+        {
+          unsigned char esc;
+
+          case '\a': esc = 'a'; goto c_escape;
+          case '\b': esc = 'b'; goto c_escape;
+          case '\f': esc = 'f'; goto c_escape;
+          case '\n': esc = 'n'; goto c_and_shell_escape;
+          case '\r': esc = 'r'; goto c_and_shell_escape;
+          case '\t': esc = 't'; goto c_and_shell_escape;
+          case '\v': esc = 'v'; goto c_escape;
+          case '\\': esc = c;
+            /* Never need to escape '\' in shell case.  */
+            if (quoting_style == shell_always_quoting_style)
+              {
+                if (elide_outer_quotes)
+                  goto force_outer_quoting_style;
+                goto store_c;
+              }
+
+            /* No need to escape the escape if we are trying to elide
+               outer quotes and nothing else is problematic.  */
+            if (backslash_escapes && elide_outer_quotes && quote_string_len)
               goto store_c;
-            }
 
-          /* No need to escape the escape if we are trying to elide
-             outer quotes and nothing else is problematic.  */
-          if (backslash_escapes && elide_outer_quotes && quote_string_len)
-            goto store_c;
-
-        c_and_shell_escape:
-          if (quoting_style == shell_always_quoting_style
-              && elide_outer_quotes)
-            goto force_outer_quoting_style;
-          /* fall through */
-        c_escape:
-          if (backslash_escapes)
-            {
-              c = esc;
-              goto store_escape;
-            }
-          break;
+          c_and_shell_escape:
+            if (quoting_style == shell_always_quoting_style
+                && elide_outer_quotes)
+              goto force_outer_quoting_style;
+            /* fall through */
+          c_escape:
+            if (backslash_escapes)
+              {
+                c = esc;
+                goto store_escape;
+              }
+            break;
+        }
 
         case '{': case '}': /* sometimes special if isolated */
           if (! (argsize == SIZE_MAX ? arg[1] == '\0' : argsize == 1))

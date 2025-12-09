@@ -81,18 +81,17 @@ static char *
 group_number (char *number, size_t numberlen,
               char const *grouping, char const *thousands_sep)
 {
-  register char *d;
-  size_t grouplen = SIZE_MAX;
   size_t thousands_seplen = strlen (thousands_sep);
-  size_t i = numberlen;
 
   /* The maximum possible value for NUMBERLEN is the number of digits
      in the square of the largest uintmax_t, so double the size needed.  */
   char buf[2 * INT_STRLEN_BOUND (uintmax_t) + 1];
 
   memcpy (buf, number, numberlen);
-  d = number + numberlen;
+  register char *d = number + numberlen;
 
+  size_t grouplen = SIZE_MAX;
+  size_t i = numberlen;
   for (;;)
     {
       unsigned char g = *grouping;
@@ -158,19 +157,6 @@ human_readable (uintmax_t n, char *buf, int opts,
   int inexact_style =
     opts & (human_round_to_nearest | human_floor | human_ceiling);
   unsigned int base = opts & human_base_1024 ? 1024 : 1000;
-  uintmax_t amt;
-  int tenths;
-  int exponent = -1;
-  int exponent_max = sizeof power_letter - 1;
-  char *p;
-  char *psuffix;
-  char const *integerlim;
-
-  /* 0 means adjusted N == AMT.TENTHS;
-     1 means AMT.TENTHS < adjusted N < AMT.TENTHS + 0.05;
-     2 means adjusted N == AMT.TENTHS + 0.05;
-     3 means AMT.TENTHS + 0.05 < adjusted N < AMT.TENTHS + 0.1.  */
-  int rounding;
 
   char const *decimal_point = ".";
   size_t decimal_pointlen = 1;
@@ -188,12 +174,20 @@ human_readable (uintmax_t n, char *buf, int opts,
     thousands_sep = l->thousands_sep;
 
   /* Leave room for a trailing space and following suffix.  */
-  psuffix = buf + LONGEST_HUMAN_READABLE - 1 - HUMAN_READABLE_SUFFIX_LENGTH_MAX;
-  p = psuffix;
+  char *psuffix =
+    buf + LONGEST_HUMAN_READABLE - 1 - HUMAN_READABLE_SUFFIX_LENGTH_MAX;
+  char *p = psuffix;
 
   /* Adjust AMT out of FROM_BLOCK_SIZE units and into TO_BLOCK_SIZE
      units.  If this can be done exactly with integer arithmetic, do
      not use floating point operations.  */
+  uintmax_t amt;
+  int tenths;
+  /* 0 means adjusted N == AMT.TENTHS;
+     1 means AMT.TENTHS < adjusted N < AMT.TENTHS + 0.05;
+     2 means adjusted N == AMT.TENTHS + 0.05;
+     3 means AMT.TENTHS + 0.05 < adjusted N < AMT.TENTHS + 0.1.  */
+  int rounding;
   if (to_block_size <= from_block_size)
     {
       if (from_block_size % to_block_size == 0)
@@ -218,6 +212,10 @@ human_readable (uintmax_t n, char *buf, int opts,
       rounding = r2 < divisor ? 0 < r2 : 2 + (divisor < r2);
       goto use_integer_arithmetic;
     }
+
+  int exponent = -1;
+  int exponent_max = sizeof power_letter - 1;
+  char const *integerlim;
 
   {
     /* Either the result cannot be computed easily using uintmax_t,
@@ -412,7 +410,6 @@ default_block_size (void)
 static strtol_error
 humblock (char const *spec, uintmax_t *block_size, int *options)
 {
-  int i;
   int opts = 0;
 
   if (! spec
@@ -427,7 +424,8 @@ humblock (char const *spec, uintmax_t *block_size, int *options)
           spec++;
         }
 
-      if (0 <= (i = ARGMATCH (spec, block_size_args, block_size_opts)))
+      int i = ARGMATCH (spec, block_size_args, block_size_opts);
+      if (0 <= i)
         {
           opts |= block_size_opts[i];
           *block_size = 1;

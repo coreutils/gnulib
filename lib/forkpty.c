@@ -43,12 +43,13 @@ int
 forkpty (int *amaster, char *name,
          const struct termios *termp, const struct winsize *winp)
 {
-  int master, slave, pid;
+  int master, slave;
 
   if (openpty (&master, &slave, name, termp, winp) == -1)
     return -1;
 
-  switch (pid = fork ())
+  int pid = fork ();
+  switch (pid)
     {
     case -1:
       close (master);

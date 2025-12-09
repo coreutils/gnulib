@@ -27,10 +27,8 @@ int
 SNPRINTF (DCHAR_T *buf, size_t size, const FCHAR_T *format, ...)
 {
   va_list args;
-  int result;
-
   va_start (args, format);
-  result = VSNPRINTF (buf, size, format, args);
+  int result = VSNPRINTF (buf, size, format, args);
   va_end (args);
   return result;
 }

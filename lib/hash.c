@@ -277,17 +277,18 @@ void *
 hash_get_next (const Hash_table *table, const void *entry)
 {
   struct hash_entry const *bucket = safe_hasher (table, entry);
-  struct hash_entry const *cursor;
 
   /* Find next entry in the same bucket.  */
-  cursor = bucket;
-  do
-    {
-      if (cursor->data == entry && cursor->next)
-        return cursor->next->data;
-      cursor = cursor->next;
-    }
-  while (cursor != NULL);
+  {
+    struct hash_entry const *cursor = bucket;
+    do
+      {
+        if (cursor->data == entry && cursor->next)
+          return cursor->next->data;
+        cursor = cursor->next;
+      }
+    while (cursor != NULL);
+  }
 
   /* Find first entry in any subsequent bucket.  */
   while (++bucket < table->bucket_limit)
@@ -386,7 +387,6 @@ static bool
 check_tuning (Hash_table *table)
 {
   const Hash_tuning *tuning = table->tuning;
-  float epsilon;
   if (tuning == &default_tuning)
     return true;
 
@@ -395,7 +395,7 @@ check_tuning (Hash_table *table)
      fail to grow or shrink as they should.  The smallest allocation
      is 11 (due to next_prime's algorithm), so an epsilon of 0.1
      should be good enough.  */
-  epsilon = 0.1f;
+  float epsilon = 0.1f;
 
   if (epsilon < tuning->growth_threshold
       && tuning->growth_threshold < 1 - epsilon
@@ -439,14 +439,12 @@ hash_initialize (size_t candidate, const Hash_tuning *tuning,
                  Hash_hasher hasher, Hash_comparator comparator,
                  Hash_data_freer data_freer)
 {
-  Hash_table *table;
-
   if (hasher == NULL)
     hasher = raw_hasher;
   if (comparator == NULL)
     comparator = raw_comparator;
 
-  table = malloc (sizeof *table);
+  Hash_table *table = malloc (sizeof *table);
   if (table == NULL)
     return NULL;
 
@@ -499,20 +497,20 @@ hash_clear (Hash_table *table)
     {
       if (bucket->data)
         {
-          struct hash_entry *next;
-
           /* Free the bucket overflow.  */
-          for (struct hash_entry *cursor = bucket->next; cursor; cursor = next)
+          for (struct hash_entry *cursor = bucket->next; cursor; )
             {
               if (table->data_freer)
                 table->data_freer (cursor->data);
               cursor->data = NULL;
 
-              next = cursor->next;
+              struct hash_entry *next = cursor->next;
               /* Relinking is done one entry at a time, as it is to be expected
                  that overflows are either rare or short.  */
               cursor->next = table->free_entry_list;
               table->free_entry_list = cursor;
+
+              cursor = next;
             }
 
           /* Free the bucket head.  */
@@ -530,7 +528,6 @@ hash_clear (Hash_table *table)
 void
 hash_free (Hash_table *table)
 {
-  struct hash_entry *next;
   int saved_errno = errno;
 
   /* Call the user data_freer function.  */
@@ -559,18 +556,20 @@ hash_free (Hash_table *table)
        bucket < table->bucket_limit;
        bucket++)
     {
-      for (struct hash_entry *cursor = bucket->next; cursor; cursor = next)
+      for (struct hash_entry *cursor = bucket->next; cursor; )
         {
-          next = cursor->next;
+          struct hash_entry *next = cursor->next;
           free (cursor);
+          cursor = next;
         }
     }
 
   /* Also reclaim the internal list of previously freed entries.  */
-  for (struct hash_entry *cursor = table->free_entry_list; cursor; cursor = next)
+  for (struct hash_entry *cursor = table->free_entry_list; cursor; )
     {
-      next = cursor->next;
+      struct hash_entry *next = cursor->next;
       free (cursor);
+      cursor = next;
     }
 
 #endif
@@ -698,8 +697,6 @@ find_entry (Hash_table *table, const void *entry,
 static bool
 transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
 {
-  struct hash_entry *next;
-
   for (struct hash_entry *bucket = src->bucket; bucket < src->bucket_limit; bucket++)
     if (bucket->data)
       {
@@ -712,12 +709,12 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
            bucket head, but moving overflow entries first may create
            free entries that can be recycled by the time we finally
            get to the bucket head.  */
-        for (struct hash_entry *cursor = bucket->next; cursor; cursor = next)
+        for (struct hash_entry *cursor = bucket->next; cursor; )
           {
             data = cursor->data;
             new_bucket = safe_hasher (dst, data);
 
-            next = cursor->next;
+            struct hash_entry *next = cursor->next;
 
             if (new_bucket->data)
               {
@@ -734,6 +731,8 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
                 dst->n_buckets_used++;
                 free_entry (dst, cursor);
               }
+
+            cursor = next;
           }
         /* Now move the bucket head.  Be sure that if we fail due to
            allocation failure that the src table is in a consistent
@@ -773,15 +772,15 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
 bool
 hash_rehash (Hash_table *table, size_t candidate)
 {
-  Hash_table storage;
-  Hash_table *new_table;
   size_t new_size = compute_bucket_size (candidate, table->tuning);
 
   if (!new_size)
     return false;
   if (new_size == table->n_buckets)
     return true;
-  new_table = &storage;
+
+  Hash_table storage;
+  Hash_table *new_table = &storage;
   new_table->bucket = calloc (new_size, sizeof *new_table->bucket);
   if (new_table->bucket == NULL)
     return false;
@@ -855,8 +854,6 @@ int
 hash_insert_if_absent (Hash_table *table, void const *entry,
                        void const **matched_ent)
 {
-  void *data;
-  struct hash_entry *bucket;
 
   /* The caller cannot insert a NULL entry, since hash_lookup returns NULL
      to indicate "not found", and find_entry uses "bucket->data == NULL"
@@ -865,7 +862,9 @@ hash_insert_if_absent (Hash_table *table, void const *entry,
     abort ();
 
   /* If there's a matching entry already in the table, return that.  */
-  if ((data = find_entry (table, entry, &bucket, false)) != NULL)
+  struct hash_entry *bucket;
+  void *data = find_entry (table, entry, &bucket, false);
+  if (data != NULL)
     {
       if (matched_ent)
         *matched_ent = data;
@@ -949,10 +948,8 @@ hash_insert (Hash_table *table, void const *entry)
 void *
 hash_remove (Hash_table *table, const void *entry)
 {
-  void *data;
   struct hash_entry *bucket;
-
-  data = find_entry (table, entry, &bucket, true);
+  void *data = find_entry (table, entry, &bucket, true);
   if (!data)
     return NULL;
 
@@ -1013,9 +1010,9 @@ hash_remove (Hash_table *table, const void *entry)
 void
 hash_print (const Hash_table *table)
 {
-  struct hash_entry *bucket = (struct hash_entry *) table->bucket;
-
-  for ( ; bucket < table->bucket_limit; bucket++)
+  for (struct hash_entry *bucket = (struct hash_entry *) table->bucket;
+       bucket < table->bucket_limit;
+       bucket++)
     {
       if (bucket)
         printf ("%lu:\n", (unsigned long int) (bucket - table->bucket));

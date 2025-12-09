@@ -58,9 +58,8 @@ rpl_sleep (unsigned int seconds)
   const unsigned int limit = 24 * 24 * 60 * 60;
   while (limit < seconds)
     {
-      unsigned int result;
       seconds -= limit;
-      result = sleep (limit);
+      unsigned int result = sleep (limit);
       if (result)
         return seconds + result;
     }

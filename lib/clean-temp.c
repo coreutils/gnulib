@@ -150,13 +150,9 @@ create_temp_dir (const char *prefix, const char *parentdir,
 
   if (mt) gl_lock_lock (dir_cleanup_list_lock);
 
-  struct tempdir * volatile *tmpdirp = NULL;
-  struct tempdir *tmpdir;
-  char *xtemplate;
-  char *tmpdirname;
-
   /* See whether it can take the slot of an earlier temporary directory
      already cleaned up.  */
+  struct tempdir * volatile *tmpdirp = NULL;
   for (size_t i = 0; i < dir_cleanup_list.tempdir_count; i++)
     if (dir_cleanup_list.tempdir_list[i] == NULL)
       {
@@ -214,7 +210,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
     }
 
   /* Initialize a 'struct tempdir'.  */
-  tmpdir = XMALLOC (struct tempdir);
+  struct tempdir *tmpdir = XMALLOC (struct tempdir);
   tmpdir->dirname = NULL;
   tmpdir->cleanup_verbose = cleanup_verbose;
   tmpdir->subdirs =
@@ -227,7 +223,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
                           NULL, false);
 
   /* Create the temporary directory.  */
-  xtemplate = (char *) xmalloca (PATH_MAX);
+  char *xtemplate = (char *) xmalloca (PATH_MAX);
   if (path_search (xtemplate, PATH_MAX, parentdir, prefix, parentdir == NULL))
     {
       error (0, errno,
@@ -235,7 +231,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
       goto quit;
     }
   block_fatal_signals ();
-  tmpdirname = mkdtemp (xtemplate);
+  char *tmpdirname = mkdtemp (xtemplate);
   int saved_errno = errno;
   if (tmpdirname != NULL)
     {
@@ -297,9 +293,8 @@ unregister_temp_file (struct temp_dir *dir,
   if (mt) gl_lock_lock (dir_cleanup_list_lock);
 
   gl_list_t list = tmpdir->files;
-  gl_list_node_t node;
 
-  node = gl_list_search (list, absolute_file_name);
+  gl_list_node_t node = gl_list_search (list, absolute_file_name);
   if (node != NULL)
     {
       char *old_string = (char *) gl_list_node_value (list, node);
@@ -344,9 +339,8 @@ unregister_temp_subdir (struct temp_dir *dir,
   if (mt) gl_lock_lock (dir_cleanup_list_lock);
 
   gl_list_t list = tmpdir->subdirs;
-  gl_list_node_t node;
 
-  node = gl_list_search (list, absolute_dir_name);
+  gl_list_node_t node = gl_list_search (list, absolute_dir_name);
   if (node != NULL)
     {
       char *old_string = (char *) gl_list_node_value (list, node);
@@ -379,9 +373,7 @@ int
 cleanup_temp_file (struct temp_dir *dir,
                    const char *absolute_file_name)
 {
-  int err;
-
-  err = clean_temp_unlink (absolute_file_name, dir->cleanup_verbose);
+  int err = clean_temp_unlink (absolute_file_name, dir->cleanup_verbose);
   unregister_temp_file (dir, absolute_file_name);
 
   return err;
@@ -393,9 +385,7 @@ int
 cleanup_temp_subdir (struct temp_dir *dir,
                      const char *absolute_dir_name)
 {
-  int err;
-
-  err = do_rmdir (absolute_dir_name, dir->cleanup_verbose);
+  int err = do_rmdir (absolute_dir_name, dir->cleanup_verbose);
   unregister_temp_subdir (dir, absolute_dir_name);
 
   return err;
@@ -409,38 +399,42 @@ cleanup_temp_dir_contents (struct temp_dir *dir)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
   int err = 0;
-  gl_list_t list;
-  gl_list_iterator_t iter;
-  const void *element;
-  gl_list_node_t node;
 
   /* First cleanup the files in the subdirectories.  */
-  list = tmpdir->files;
-  iter = gl_list_iterator (list);
-  while (gl_list_iterator_next (&iter, &element, &node))
-    {
-      char *file = (char *) element;
+  {
+    gl_list_t list = tmpdir->files;
+    gl_list_iterator_t iter = gl_list_iterator (list);
+    const void *element;
+    gl_list_node_t node;
+    while (gl_list_iterator_next (&iter, &element, &node))
+      {
+        char *file = (char *) element;
 
-      err |= clean_temp_unlink (file, dir->cleanup_verbose);
-      gl_list_remove_node (list, node);
-      /* Now only we can free file.  */
-      free (file);
-    }
-  gl_list_iterator_free (&iter);
+        err |= clean_temp_unlink (file, dir->cleanup_verbose);
+        gl_list_remove_node (list, node);
+        /* Now only we can free file.  */
+        free (file);
+      }
+    gl_list_iterator_free (&iter);
+  }
 
   /* Then cleanup the subdirectories.  */
-  list = tmpdir->subdirs;
-  iter = gl_list_iterator (list);
-  while (gl_list_iterator_next (&iter, &element, &node))
-    {
-      char *subdir = (char *) element;
+  {
+    gl_list_t list = tmpdir->subdirs;
+    gl_list_iterator_t iter = gl_list_iterator (list);
+    const void *element;
+    gl_list_node_t node;
+    while (gl_list_iterator_next (&iter, &element, &node))
+      {
+        char *subdir = (char *) element;
 
-      err |= do_rmdir (subdir, dir->cleanup_verbose);
-      gl_list_remove_node (list, node);
-      /* Now only we can free subdir.  */
-      free (subdir);
-    }
-  gl_list_iterator_free (&iter);
+        err |= do_rmdir (subdir, dir->cleanup_verbose);
+        gl_list_remove_node (list, node);
+        /* Now only we can free subdir.  */
+        free (subdir);
+      }
+    gl_list_iterator_free (&iter);
+  }
 
   return err;
 }
@@ -553,10 +547,8 @@ register_fd (int fd)
 int
 open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
 {
-  int fd;
-  int saved_errno;
-
   block_fatal_signals ();
+  int fd;
   /* Note: 'open' here is actually open() or open_safer().  */
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
@@ -566,7 +558,7 @@ open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
   else
 #endif
     fd = open (file_name, flags, mode);
-  saved_errno = errno;
+  int saved_errno = errno;
   if (fd >= 0)
     register_fd (fd);
   unblock_fatal_signals ();
@@ -582,10 +574,9 @@ open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
 FILE *
 fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 {
+  block_fatal_signals ();
   FILE *fp;
   int saved_errno;
-
-  block_fatal_signals ();
   /* Note: 'fopen' here is actually fopen() or fopen_safer().  */
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
@@ -687,9 +678,6 @@ close_temp (int fd)
 
   clean_temp_init_asyncsafe_close ();
 
-  int result = 0;
-  int saved_errno = 0;
-
   bool mt = gl_multithreaded ();
 
   if (mt) gl_lock_lock (descriptors_lock);
@@ -700,40 +688,44 @@ close_temp (int fd)
     abort ();
 
   /* Search through the list, and clean it up on the fly.  */
+  int result = 0;
+  int saved_errno = 0;
   bool found = false;
-  gl_list_iterator_t iter = gl_list_iterator (list);
-  const void *elt;
-  gl_list_node_t node;
-  if (gl_list_iterator_next (&iter, &elt, &node))
-    for (;;)
-      {
-        struct closeable_fd *element = (struct closeable_fd *) elt;
+  {
+    gl_list_iterator_t iter = gl_list_iterator (list);
+    const void *elt;
+    gl_list_node_t node;
+    if (gl_list_iterator_next (&iter, &elt, &node))
+      for (;;)
+        {
+          struct closeable_fd *element = (struct closeable_fd *) elt;
 
-        /* Close the file descriptor, avoiding races with the signal
-           handler.  */
-        if (element->fd == fd)
-          {
-            found = true;
-            result = clean_temp_asyncsafe_close (element);
-            saved_errno = errno;
-          }
+          /* Close the file descriptor, avoiding races with the signal
+             handler.  */
+          if (element->fd == fd)
+            {
+              found = true;
+              result = clean_temp_asyncsafe_close (element);
+              saved_errno = errno;
+            }
 
-        bool free_this_node = element->done;
-        struct closeable_fd *element_to_free = element;
-        gl_list_node_t node_to_free = node;
+          bool free_this_node = element->done;
+          struct closeable_fd *element_to_free = element;
+          gl_list_node_t node_to_free = node;
 
-        bool have_next = gl_list_iterator_next (&iter, &elt, &node);
+          bool have_next = gl_list_iterator_next (&iter, &elt, &node);
 
-        if (free_this_node)
-          {
-            free (element_to_free);
-            gl_list_remove_node (list, node_to_free);
-          }
+          if (free_this_node)
+            {
+              free (element_to_free);
+              gl_list_remove_node (list, node_to_free);
+            }
 
-        if (!have_next)
-          break;
-      }
-  gl_list_iterator_free (&iter);
+          if (!have_next)
+            break;
+        }
+    gl_list_iterator_free (&iter);
+  }
   if (!found)
     /* descriptors should already contain fd.  */
     abort ();
@@ -749,9 +741,6 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
 {
   int fd = fileno (fp);
 
-  int result = 0;
-  int saved_errno = 0;
-
   bool mt = gl_multithreaded ();
 
   if (mt) gl_lock_lock (descriptors_lock);
@@ -762,40 +751,44 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
     abort ();
 
   /* Search through the list, and clean it up on the fly.  */
+  int result = 0;
+  int saved_errno = 0;
   bool found = false;
-  gl_list_iterator_t iter = gl_list_iterator (list);
-  const void *elt;
-  gl_list_node_t node;
-  if (gl_list_iterator_next (&iter, &elt, &node))
-    for (;;)
-      {
-        struct closeable_fd *element = (struct closeable_fd *) elt;
+  {
+    gl_list_iterator_t iter = gl_list_iterator (list);
+    const void *elt;
+    gl_list_node_t node;
+    if (gl_list_iterator_next (&iter, &elt, &node))
+      for (;;)
+        {
+          struct closeable_fd *element = (struct closeable_fd *) elt;
 
-        /* Close the file descriptor and the stream, avoiding races with the
-           signal handler.  */
-        if (element->fd == fd)
-          {
-            found = true;
-            result = asyncsafe_fclose_variant (element, fp, fclose_variant);
-            saved_errno = errno;
-          }
+          /* Close the file descriptor and the stream, avoiding races with the
+             signal handler.  */
+          if (element->fd == fd)
+            {
+              found = true;
+              result = asyncsafe_fclose_variant (element, fp, fclose_variant);
+              saved_errno = errno;
+            }
 
-        bool free_this_node = element->done;
-        struct closeable_fd *element_to_free = element;
-        gl_list_node_t node_to_free = node;
+          bool free_this_node = element->done;
+          struct closeable_fd *element_to_free = element;
+          gl_list_node_t node_to_free = node;
 
-        bool have_next = gl_list_iterator_next (&iter, &elt, &node);
+          bool have_next = gl_list_iterator_next (&iter, &elt, &node);
 
-        if (free_this_node)
-          {
-            free (element_to_free);
-            gl_list_remove_node (list, node_to_free);
-          }
+          if (free_this_node)
+            {
+              free (element_to_free);
+              gl_list_remove_node (list, node_to_free);
+            }
 
-        if (!have_next)
-          break;
-      }
-  gl_list_iterator_free (&iter);
+          if (!have_next)
+            break;
+        }
+    gl_list_iterator_free (&iter);
+  }
   if (!found)
     /* descriptors should have contained fd.  */
     abort ();

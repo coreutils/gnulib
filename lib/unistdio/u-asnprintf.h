@@ -27,10 +27,8 @@ DCHAR_T *
 ASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, ...)
 {
   va_list args;
-  DCHAR_T *result;
-
   va_start (args, format);
-  result = VASNPRINTF (resultbuf, lengthp, format, args);
+  DCHAR_T *result = VASNPRINTF (resultbuf, lengthp, format, args);
   va_end (args);
   return result;
 }

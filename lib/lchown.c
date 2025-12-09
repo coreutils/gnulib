@@ -92,12 +92,12 @@ lchown (_GL_UNUSED char const *file, _GL_UNUSED uid_t owner,
 int
 rpl_lchown (const char *file, uid_t owner, gid_t group)
 {
-  struct stat st;
   gid_t no_gid = -1;
   uid_t no_uid = -1;
   bool gid_noop = group == no_gid;
   bool uid_noop = owner == no_uid;
   bool change_time_check = CHOWN_CHANGE_TIME_BUG && !(gid_noop & uid_noop);
+  struct stat st;
 
   if (change_time_check
       || (CHOWN_TRAILING_SLASH_BUG

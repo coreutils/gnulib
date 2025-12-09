@@ -84,11 +84,9 @@ get_current_thread_handle (void)
 glwthread_thread_t
 glwthread_thread_self (void)
 {
-  glwthread_thread_t thread;
-
   if (self_key == (DWORD)-1)
     init_self_key ();
-  thread = TlsGetValue (self_key);
+  glwthread_thread_t thread = TlsGetValue (self_key);
   if (thread == NULL)
     {
       /* This happens only in threads that have not been created through
@@ -169,9 +167,7 @@ glwthread_thread_create (glwthread_thread_t *threadp, unsigned int attr,
 
   {
     unsigned int thread_id;
-    HANDLE thread_handle;
-
-    thread_handle = (HANDLE)
+    HANDLE thread_handle = (HANDLE)
       _beginthreadex (NULL, 100000, wrapper_func, thread, 0, &thread_id);
       /* calls CreateThread with the same arguments */
     if (thread_handle == NULL)

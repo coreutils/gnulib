@@ -34,12 +34,9 @@
 ptrdiff_t
 c_vsnzprintf (char *str, size_t size, const char *format, va_list args)
 {
-  char *output;
-  size_t len;
   size_t lenbuf = size;
-
-  output = c_vasnprintf (str, &lenbuf, format, args);
-  len = lenbuf;
+  char *output = c_vasnprintf (str, &lenbuf, format, args);
+  size_t len = lenbuf;
 
   if (!output)
     return -1;

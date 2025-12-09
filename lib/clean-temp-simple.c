@@ -165,10 +165,8 @@ cleanup_action (_GL_UNUSED int sig)
 
     if (fds != NULL)
       {
-        gl_list_iterator_t iter;
+        gl_list_iterator_t iter = gl_list_iterator (fds);
         const void *element;
-
-        iter = gl_list_iterator (fds);
         while (gl_list_iterator_next (&iter, &element, NULL))
           {
             clean_temp_asyncsafe_close ((struct closeable_fd *) element);
@@ -182,10 +180,8 @@ cleanup_action (_GL_UNUSED int sig)
 
     if (files != NULL)
       {
-        gl_list_iterator_t iter;
+        gl_list_iterator_t iter = gl_list_iterator (files);
         const void *element;
-
-        iter = gl_list_iterator (files);
         while (gl_list_iterator_next (&iter, &element, NULL))
           {
             const char *file = (const char *) element;
@@ -201,26 +197,28 @@ cleanup_action (_GL_UNUSED int sig)
 
       if (dir != NULL)
         {
-          gl_list_iterator_t iter;
-          const void *element;
-
-          /* First cleanup the files in the subdirectories.  */
-          iter = gl_list_iterator (dir->files);
-          while (gl_list_iterator_next (&iter, &element, NULL))
-            {
-              const char *file = (const char *) element;
-              unlink (file);
-            }
-          gl_list_iterator_free (&iter);
-
-          /* Then cleanup the subdirectories.  */
-          iter = gl_list_iterator (dir->subdirs);
-          while (gl_list_iterator_next (&iter, &element, NULL))
-            {
-              const char *subdir = (const char *) element;
-              rmdir (subdir);
-            }
-          gl_list_iterator_free (&iter);
+          {
+            /* First cleanup the files in the subdirectories.  */
+            gl_list_iterator_t iter = gl_list_iterator (dir->files);
+            const void *element;
+            while (gl_list_iterator_next (&iter, &element, NULL))
+              {
+                const char *file = (const char *) element;
+                unlink (file);
+              }
+            gl_list_iterator_free (&iter);
+          }
+          {
+            /* Then cleanup the subdirectories.  */
+            gl_list_iterator_t iter = gl_list_iterator (dir->subdirs);
+            const void *element;
+            while (gl_list_iterator_next (&iter, &element, NULL))
+              {
+                const char *subdir = (const char *) element;
+                rmdir (subdir);
+              }
+            gl_list_iterator_free (&iter);
+          }
 
           /* Then cleanup the temporary directory itself.  */
           rmdir (dir->dirname);
@@ -363,9 +361,7 @@ unregister_temporary_file (const char *absolute_file_name)
 int
 cleanup_temporary_file (const char *absolute_file_name, bool cleanup_verbose)
 {
-  int err;
-
-  err = clean_temp_unlink (absolute_file_name, cleanup_verbose);
+  int err = clean_temp_unlink (absolute_file_name, cleanup_verbose);
   unregister_temporary_file (absolute_file_name);
 
   return err;

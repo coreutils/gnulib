@@ -31,10 +31,8 @@
 static unsigned long int
 parse_omp_threads (char const* threads)
 {
-  unsigned long int ret = 0;
-
   if (threads == NULL)
-    return ret;
+    return 0;
 
   /* The OpenMP spec says that the value assigned to the environment variables
      "may have leading and trailing white space".  */
@@ -56,7 +54,7 @@ parse_omp_threads (char const* threads)
         return value;
     }
 
-  return ret;
+  return 0;
 }
 
 #endif

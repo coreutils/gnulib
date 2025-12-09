@@ -34,9 +34,7 @@
 const uint8_t *
 u8_next (ucs4_t *puc, const uint8_t *s)
 {
-  int count;
-
-  count = u8_strmbtouc (puc, s);
+  int count = u8_strmbtouc (puc, s);
   if (count > 0)
     return s + count;
   else

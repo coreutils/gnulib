@@ -84,14 +84,13 @@ md4_finish_ctx (struct md4_ctx *ctx, void *resbuf)
 {
   /* Take yet unprocessed bytes into account.  */
   uint32_t bytes = ctx->buflen;
-  size_t pad;
 
   /* Now count remaining bytes.  */
   ctx->total[0] += bytes;
   if (ctx->total[0] < bytes)
     ++ctx->total[1];
 
-  pad = bytes >= 56 ? 64 + 56 - bytes : 56 - bytes;
+  size_t pad = bytes >= 56 ? 64 + 56 - bytes : 56 - bytes;
   memcpy (&((char*)ctx->buffer)[bytes], fillbuf, pad);
 
   /* Put the 64-bit file length in *bits* at the end of the buffer.  */
@@ -213,7 +212,6 @@ md4_process_block (const void *buffer, size_t len, struct md4_ctx *ctx)
   const uint32_t *words = buffer;
   size_t nwords = len / sizeof (uint32_t);
   const uint32_t *endp = words + nwords;
-  uint32_t x[16];
   uint32_t A = ctx->A;
   uint32_t B = ctx->B;
   uint32_t C = ctx->C;
@@ -230,6 +228,7 @@ md4_process_block (const void *buffer, size_t len, struct md4_ctx *ctx)
      the loop.  */
   while (words < endp)
     {
+      uint32_t x[16];
       for (int t = 0; t < 16; t++)
         {
           x[t] = SWAP (*words);

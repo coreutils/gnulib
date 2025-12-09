@@ -35,13 +35,10 @@
 int
 uc_combining_class_byname (const char *ccc_name)
 {
-  size_t len;
-
-  len = strlen (ccc_name);
+  size_t len = strlen (ccc_name);
   if (len <= MAX_WORD_LENGTH)
     {
       char buf[MAX_WORD_LENGTH + 1];
-      const struct named_combining_class *found;
 
       /* Copy ccc_name into buf, converting '_' and '-' to ' '.  */
       {
@@ -62,7 +59,8 @@ uc_combining_class_byname (const char *ccc_name)
       /* Here q == buf + len.  */
 
       /* Do a hash table lookup, with case-insensitive comparison.  */
-      found = uc_combining_class_lookup (buf, len);
+      const struct named_combining_class *found =
+        uc_combining_class_lookup (buf, len);
       if (found != NULL)
         return found->combining_class;
     }

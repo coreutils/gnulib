@@ -34,9 +34,7 @@
 const uint32_t *
 u32_next (ucs4_t *puc, const uint32_t *s)
 {
-  int count;
-
-  count = u32_strmbtouc (puc, s);
+  int count = u32_strmbtouc (puc, s);
   if (count > 0)
     return s + count;
   else

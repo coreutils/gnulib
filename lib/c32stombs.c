@@ -31,7 +31,7 @@ size_t
 c32stombs (char *dest, const char32_t *src, size_t len)
 {
   mbstate_t state;
-
   mbszero (&state);
+
   return c32srtombs (dest, &src, len, &state);
 }

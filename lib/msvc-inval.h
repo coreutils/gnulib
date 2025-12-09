@@ -179,9 +179,9 @@ extern struct gl_msvc_inval_per_thread *gl_msvc_inval_current (void);
 #   define TRY_MSVC_INVAL \
       do                                                                       \
         {                                                                      \
-          struct gl_msvc_inval_per_thread *msvc_inval_current;                 \
           gl_msvc_inval_ensure_handler ();                                     \
-          msvc_inval_current = gl_msvc_inval_current ();                       \
+          struct gl_msvc_inval_per_thread *msvc_inval_current =                \
+            gl_msvc_inval_current ();                                          \
           /* First, initialize gl_msvc_inval_restart.  */                      \
           if (setjmp (msvc_inval_current->restart) == 0)                       \
             {                                                                  \

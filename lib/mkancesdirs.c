@@ -97,16 +97,13 @@ mkancesdirs (char *file, struct savewd *wd,
            affect the algorithm.  */
         if (! (sep - component == 1 && component[0] == '.'))
           {
-            int make_dir_errno = 0;
-            int savewd_chdir_options = 0;
-            int chdir_result;
-
             /* Temporarily modify FILE to isolate this file name
                component.  */
             *sep = '\0';
 
             /* Invoke MAKE_DIR on this component, except don't bother
                with ".." since it must exist if its "parent" does.  */
+            int make_dir_errno = 0;
             if (sep - component == 2
                 && component[0] == '.' && component[1] == '.')
               made_dir = false;
@@ -115,10 +112,11 @@ mkancesdirs (char *file, struct savewd *wd,
             else
               made_dir = true;
 
+            int savewd_chdir_options = 0;
             if (made_dir)
               savewd_chdir_options |= SAVEWD_CHDIR_NOFOLLOW;
 
-            chdir_result =
+            int chdir_result =
               savewd_chdir (wd, component, savewd_chdir_options, NULL);
 
             /* Undo the temporary modification to FILE, unless there

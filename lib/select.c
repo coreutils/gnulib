@@ -114,13 +114,12 @@ static BOOL IsConsoleHandle (HANDLE h)
 static BOOL
 IsSocketHandle (HANDLE h)
 {
-  WSANETWORKEVENTS ev;
-
   if (IsConsoleHandle (h))
     return FALSE;
 
   /* Under Wine, it seems that getsockopt returns 0 for pipes too.
      WSAEnumNetworkEvents instead distinguishes the two correctly.  */
+  WSANETWORKEVENTS ev;
   ev.lNetworkEvents = 0xDEADBEEF;
   WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
   return ev.lNetworkEvents != 0xDEADBEEF;
@@ -135,17 +134,12 @@ windows_poll_handle (HANDLE h, int fd,
                      struct bitset *wbits,
                      struct bitset *xbits)
 {
-  BOOL read, write, except;
-  int ret;
-  INPUT_RECORD *irbuffer;
-  DWORD avail, nbuffer;
-  BOOL bRet;
-  IO_STATUS_BLOCK iosb;
-  FILE_PIPE_LOCAL_INFORMATION fpli;
   static PNtQueryInformationFile NtQueryInformationFile;
   static BOOL once_only;
 
-  read = write = except = FALSE;
+  BOOL read = FALSE;
+  BOOL write = FALSE;
+  BOOL except = FALSE;
   switch (GetFileType (h))
     {
     case FILE_TYPE_DISK:
@@ -162,6 +156,7 @@ windows_poll_handle (HANDLE h, int fd,
           once_only = TRUE;
         }
 
+      DWORD avail;
       if (PeekNamedPipe (h, NULL, 0, NULL, &avail, NULL) != 0)
         {
           if (avail)
@@ -169,7 +164,6 @@ windows_poll_handle (HANDLE h, int fd,
         }
       else if (GetLastError () == ERROR_BROKEN_PIPE)
         ;
-
       else
         {
           /* It was the write-end of the pipe.  Check if it is writable.
@@ -180,7 +174,9 @@ windows_poll_handle (HANDLE h, int fd,
              (I think this should not happen since Windows XP SP2; WINE seems
              fine too).  Otherwise, ensure that enough space is available for
              atomic writes.  */
+          IO_STATUS_BLOCK iosb;
           memset (&iosb, 0, sizeof (iosb));
+          FILE_PIPE_LOCAL_INFORMATION fpli;
           memset (&fpli, 0, sizeof (fpli));
 
           if (!NtQueryInformationFile
@@ -198,8 +194,7 @@ windows_poll_handle (HANDLE h, int fd,
       if (!(rbits->in[fd / CHAR_BIT] & (1 << (fd & (CHAR_BIT - 1)))))
         break;
 
-      ret = WaitForSingleObject (h, 0);
-      if (ret == WAIT_OBJECT_0)
+      if (WaitForSingleObject (h, 0) == WAIT_OBJECT_0)
         {
           if (!IsConsoleHandle (h))
             {
@@ -207,9 +202,8 @@ windows_poll_handle (HANDLE h, int fd,
               break;
             }
 
-          nbuffer = avail = 0;
-          bRet = GetNumberOfConsoleInputEvents (h, &nbuffer);
-
+          DWORD nbuffer = 0;
+          BOOL bRet = GetNumberOfConsoleInputEvents (h, &nbuffer);
           /* Screen buffers handles are filtered earlier.  */
           assert (bRet);
           if (nbuffer == 0)
@@ -218,9 +212,10 @@ windows_poll_handle (HANDLE h, int fd,
               break;
             }
 
-          irbuffer = (INPUT_RECORD *) alloca (nbuffer * sizeof (INPUT_RECORD));
-          bRet = PeekConsoleInput (h, irbuffer, nbuffer, &avail);
-          if (!bRet || avail == 0)
+          INPUT_RECORD *irbuffer =
+            (INPUT_RECORD *) alloca (nbuffer * sizeof (INPUT_RECORD));
+          DWORD avail = 0;
+          if (! PeekConsoleInput (h, irbuffer, nbuffer, &avail) || avail == 0)
             {
               except = TRUE;
               break;
@@ -233,15 +228,16 @@ windows_poll_handle (HANDLE h, int fd,
       break;
 
     default:
-      ret = WaitForSingleObject (h, 0);
-      write = TRUE;
-      if (ret == WAIT_OBJECT_0)
-        read = TRUE;
-
+      {
+        int ret = WaitForSingleObject (h, 0);
+        write = TRUE;
+        if (ret == WAIT_OBJECT_0)
+          read = TRUE;
+      }
       break;
     }
 
-  ret = 0;
+  int ret = 0;
   if (read && (rbits->in[fd / CHAR_BIT] & (1 << (fd & (CHAR_BIT - 1)))))
     {
       rbits->out[fd / CHAR_BIT] |= (1 << (fd & (CHAR_BIT - 1)));
@@ -270,14 +266,6 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
 {
   static struct timeval tv0;
   static HANDLE hEvent;
-  HANDLE h, handle_array[FD_SETSIZE + 2];
-  fd_set handle_rfds, handle_wfds, handle_xfds;
-  struct bitset rbits, wbits, xbits;
-  unsigned char anyfds_in[FD_SETSIZE / CHAR_BIT];
-  DWORD ret, wait_timeout, nhandles, nsock, nbuffer;
-  MSG msg;
-  int fd, rc;
-  clock_t tend;
 
   if (nfds < 0 || nfds > FD_SETSIZE)
     {
@@ -285,6 +273,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
       return -1;
     }
 
+  DWORD wait_timeout;
   if (!timeout)
     wait_timeout = INFINITE;
   else
@@ -302,23 +291,24 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   if (!hEvent)
     hEvent = CreateEvent (NULL, FALSE, FALSE, NULL);
 
-  handle_array[0] = hEvent;
-  nhandles = 1;
-  nsock = 0;
-
   /* Copy descriptors to bitsets.  At the same time, eliminate
      bits in the "wrong" direction for console input buffers
      and screen buffers, because screen buffers are waitable
      and they will block until a character is available.  */
+  struct bitset rbits;
   memset (&rbits, 0, sizeof (rbits));
+  struct bitset wbits;
   memset (&wbits, 0, sizeof (wbits));
+  struct bitset xbits;
   memset (&xbits, 0, sizeof (xbits));
+  unsigned char anyfds_in[FD_SETSIZE / CHAR_BIT];
   memset (anyfds_in, 0, sizeof (anyfds_in));
   if (rfds)
     for (int i = 0; i < rfds->fd_count; i++)
       {
-        fd = rfds->fd_array[i];
-        h = (HANDLE) _get_osfhandle (fd);
+        int fd = rfds->fd_array[i];
+        HANDLE h = (HANDLE) _get_osfhandle (fd);
+        DWORD nbuffer;
         if (!IsConsoleHandle (h)
             || GetNumberOfConsoleInputEvents (h, &nbuffer))
           {
@@ -332,8 +322,9 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   if (wfds)
     for (int i = 0; i < wfds->fd_count; i++)
       {
-        fd = wfds->fd_array[i];
-        h = (HANDLE) _get_osfhandle (fd);
+        int fd = wfds->fd_array[i];
+        HANDLE h = (HANDLE) _get_osfhandle (fd);
+        DWORD nbuffer;
         if (!IsConsoleHandle (h)
             || !GetNumberOfConsoleInputEvents (h, &nbuffer))
           {
@@ -347,7 +338,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   if (xfds)
     for (int i = 0; i < xfds->fd_count; i++)
       {
-        fd = xfds->fd_array[i];
+        int fd = xfds->fd_array[i];
         xbits.in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
         anyfds_in[fd / CHAR_BIT] |= 1 << (fd & (CHAR_BIT - 1));
       }
@@ -358,16 +349,24 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   FD_ZERO (rfds);
   FD_ZERO (wfds);
   FD_ZERO (xfds);
+  fd_set handle_rfds;
   FD_ZERO (&handle_rfds);
+  fd_set handle_wfds;
   FD_ZERO (&handle_wfds);
+  fd_set handle_xfds;
   FD_ZERO (&handle_xfds);
+
+  HANDLE handle_array[FD_SETSIZE + 2];
+  handle_array[0] = hEvent;
+  DWORD nhandles = 1;
+  DWORD nsock = 0;
 
   /* Classify handles.  Create fd sets for sockets, poll the others. */
   for (int i = 0; i < nfds; i++)
     {
       if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
         {
-          h = (HANDLE) _get_osfhandle (i);
+          HANDLE h = (HANDLE) _get_osfhandle (i);
           if (!h)
             {
               errno = EBADF;
@@ -418,10 +417,12 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   handle_array[nhandles] = NULL;
 
   /* When will the waiting period expire?  */
+  clock_t tend;
   if (wait_timeout != INFINITE)
     tend = clock () + wait_timeout;
 
-restart:
+restart: ;
+  int rc;
   if (wait_timeout == 0 || nsock == 0)
     rc = 0;
   else
@@ -453,14 +454,14 @@ restart:
 
   for (;;)
     {
-      ret = MsgWaitForMultipleObjects (nhandles, handle_array, FALSE,
-                                       wait_timeout, QS_ALLINPUT);
+      DWORD ret = MsgWaitForMultipleObjects (nhandles, handle_array, FALSE,
+                                             wait_timeout, QS_ALLINPUT);
 
       if (ret == WAIT_OBJECT_0 + nhandles)
         {
           /* new input of some other kind */
-          BOOL bRet;
-          while ((bRet = PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) != 0)
+          MSG msg;
+          while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE) != 0)
             {
               TranslateMessage (&msg);
               DispatchMessage (&msg);
@@ -482,7 +483,7 @@ restart:
         {
           if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
             {
-              h = (HANDLE) _get_osfhandle (i);
+              HANDLE h = (HANDLE) _get_osfhandle (i);
               if (h == handle_array[nhandles])
                 {
                   /* Not a socket.  */
@@ -528,7 +529,7 @@ restart:
     {
       if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) != 0)
         {
-          h = (HANDLE) _get_osfhandle (i);
+          HANDLE h = (HANDLE) _get_osfhandle (i);
           if (h != handle_array[nhandles])
             {
               /* Perform handle->descriptor mapping.  */

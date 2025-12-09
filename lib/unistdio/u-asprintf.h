@@ -27,10 +27,8 @@ int
 ASPRINTF (DCHAR_T **resultp, const FCHAR_T *format, ...)
 {
   va_list args;
-  int result;
-
   va_start (args, format);
-  result = VASPRINTF (resultp, format, args);
+  int result = VASPRINTF (resultp, format, args);
   va_end (args);
   return result;
 }

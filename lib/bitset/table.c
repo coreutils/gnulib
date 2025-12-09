@@ -658,19 +658,22 @@ tbitset_list (bitset bset, bitset_bindex *list,
               /* The coast is clear, plant boot!  */
 
 #if TBITSET_ELT_WORDS == 2
-              bitset_word word = srcp[0];
-              if (word)
-                BITSET_FOR_EACH_BIT (pos, word)
-                  list[count++] = bitno + pos;
-              windex++;
-              bitno = windex * BITSET_WORD_BITS;
-
-              word = srcp[1];
-              if (word)
-                BITSET_FOR_EACH_BIT (pos, word)
-                  list[count++] = bitno + pos;
-              windex++;
-              bitno = windex * BITSET_WORD_BITS;
+              {
+                bitset_word word = srcp[0];
+                if (word)
+                  BITSET_FOR_EACH_BIT (pos, word)
+                    list[count++] = bitno + pos;
+                windex++;
+                bitno = windex * BITSET_WORD_BITS;
+              }
+              {
+                bitset_word word = srcp[1];
+                if (word)
+                  BITSET_FOR_EACH_BIT (pos, word)
+                    list[count++] = bitno + pos;
+                windex++;
+                bitno = windex * BITSET_WORD_BITS;
+              }
 #else
               for (int i = 0; i < TBITSET_ELT_WORDS; i++, windex++)
                 {

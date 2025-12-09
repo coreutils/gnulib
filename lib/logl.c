@@ -199,10 +199,6 @@ static const long double
 long double
 logl (long double x)
 {
-  long double z, y, w;
-  long double t;
-  int k, e;
-
   /* Check for IEEE special cases.  */
 
   /* log(NaN) = NaN. */
@@ -227,6 +223,7 @@ logl (long double x)
     }
 
   /* Extract exponent and reduce domain to 0.703125 <= u < 1.40625  */
+  int e;
   x = frexpl (x, &e);
   if (x < 0.703125L)
     {
@@ -235,6 +232,9 @@ logl (long double x)
     }
 
   /* On this interval the table is not used due to cancellation error.  */
+  long double z;
+  int k;
+  long double t;
   if ((x <= 1.0078125L) && (x >= 0.9921875L))
     {
       z = x - 1.0L;
@@ -249,20 +249,20 @@ logl (long double x)
     }
 
   /* Series expansion of log(1+z).  */
-  w = z * z;
-  y = ((((((((((((l15 * z
-                  + l14) * z
-                 + l13) * z
-                + l12) * z
-               + l11) * z
-              + l10) * z
-             + l9) * z
-            + l8) * z
-           + l7) * z
-          + l6) * z
-         + l5) * z
-        + l4) * z
-       + l3) * z * w;
+  long double w = z * z;
+  long double y = ((((((((((((l15 * z
+                              + l14) * z
+                             + l13) * z
+                            + l12) * z
+                           + l11) * z
+                          + l10) * z
+                         + l9) * z
+                        + l8) * z
+                       + l7) * z
+                      + l6) * z
+                     + l5) * z
+                    + l4) * z
+                   + l3) * z * w;
   y -= 0.5 * w;
   y += e * ln2b;  /* Base 2 exponent offset times ln(2).  */
   y += z;

@@ -133,10 +133,6 @@ make_node_op_equals (mode_t new_mode, mode_t mentioned)
 struct mode_change *
 mode_compile (char const *mode_string)
 {
-  /* The array of mode-change directives to be returned.  */
-  struct mode_change *mc;
-  size_t used = 0;
-
   if ('0' <= *mode_string && *mode_string < '8')
     {
       char const *p;
@@ -163,6 +159,9 @@ mode_compile (char const *mode_string)
       return make_node_op_equals (mode, mentioned);
     }
 
+  /* The array of mode-change directives to be returned.  */
+  struct mode_change *mc;
+
   /* Allocate enough space to hold the result.  */
   {
     size_t needed = 1;
@@ -173,6 +172,7 @@ mode_compile (char const *mode_string)
 
   /* One loop iteration for each
      '[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+'.  */
+  size_t used = 0;
   char const *p;
   for (p = mode_string; ; p++)
     {
@@ -208,7 +208,6 @@ mode_compile (char const *mode_string)
           mode_t value;
           mode_t mentioned = 0;
           char flag = MODE_COPY_EXISTING;
-          struct mode_change *change;
 
           switch (*p)
             {
@@ -285,6 +284,7 @@ mode_compile (char const *mode_string)
             no_more_values:;
             }
 
+          struct mode_change *change;
           change = &mc[used++];
           change->op = op;
           change->flag = flag;

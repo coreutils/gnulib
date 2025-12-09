@@ -47,23 +47,24 @@ mbscspn (const char *string, const char *accept)
   if (MB_CUR_MAX > 1)
     {
 #if GNULIB_MCEL_PREFER
-      mcel_t a, g;
       size_t i;
-      for (i = 0; string[i]; i += g.len)
+      for (i = 0; string[i]; )
         {
-          g = mcel_scanz (string + i);
+          mcel_t g = mcel_scanz (string + i);
           if (g.len == 1)
             {
               if (mbschr (accept, string[i]))
                 return i;
             }
           else
-            for (char const *aiter = accept; *aiter; aiter += a.len)
+            for (char const *aiter = accept; *aiter; )
               {
-                a = mcel_scanz (aiter);
+                mcel_t a = mcel_scanz (aiter);
                 if (mcel_eq (g, a))
                   return i;
+                aiter += a.len;
               }
+          i += g.len;
         }
       return i;
 #else

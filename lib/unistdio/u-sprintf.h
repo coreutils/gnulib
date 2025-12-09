@@ -27,10 +27,8 @@ int
 SPRINTF (DCHAR_T *buf, const FCHAR_T *format, ...)
 {
   va_list args;
-  int result;
-
   va_start (args, format);
-  result = VSPRINTF (buf, format, args);
+  int result = VSPRINTF (buf, format, args);
   va_end (args);
   return result;
 }

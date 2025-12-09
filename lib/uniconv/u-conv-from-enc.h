@@ -50,16 +50,14 @@ FUNC (const char *fromcode,
   *lengthp = length / sizeof (UNIT);
   return (UNIT *) result;
 #else
-  uint8_t *utf8_string;
   size_t utf8_length;
-  UNIT *result;
-
-  utf8_string =
+  uint8_t *utf8_string =
     u8_conv_from_encoding (fromcode, handler, src, srclen, offsets,
                            NULL, &utf8_length);
   if (utf8_string == NULL)
     return NULL;
-  result = U8_TO_U (utf8_string, utf8_length, resultbuf, lengthp);
+
+  UNIT *result = U8_TO_U (utf8_string, utf8_length, resultbuf, lengthp);
   if (result == NULL)
     {
       int saved_errno = errno;
@@ -71,9 +69,9 @@ FUNC (const char *fromcode,
     {
       size_t length = *lengthp;
       size_t *offsets_end = offsets + srclen;
-      size_t off8 = 0;  /* offset into utf8_string */
-      size_t offunit = 0;       /* offset into result */
 
+      size_t off8 = 0;          /* offset into utf8_string */
+      size_t offunit = 0;       /* offset into result */
       for (size_t *o = offsets; o < offsets_end; o++)
         if (*o != (size_t)(-1))
           {

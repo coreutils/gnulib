@@ -80,11 +80,10 @@ ptrdiff_t
 argmatch (const char *arg, const char *const *arglist,
           const void *vallist, size_t valsize)
 {
-  size_t arglen;                /* Length of ARG.  */
+  size_t arglen = strlen (arg); /* Length of ARG.  */
+
   ptrdiff_t matchind = -1;      /* Index of first nonexact match.  */
   bool ambiguous = false;       /* If true, multiple nonexact match(es).  */
-
-  arglen = strlen (arg);
 
   /* Test all elements for either exact match or abbreviated matches.  */
   for (size_t i = 0; arglist[i]; i++)
@@ -187,7 +186,6 @@ __xargmatch_internal (const char *context,
                       bool allow_abbreviation)
 {
   ptrdiff_t res;
-
   if (allow_abbreviation)
     res = argmatch (arg, arglist, vallist, valsize);
   else
@@ -262,18 +260,20 @@ static const enum backup_type backup_vals[] =
 int
 main (int argc, const char *const *argv)
 {
-  const char *cp;
-  enum backup_type backup_type = no_backups;
-
   if (argc > 2)
     {
       fprintf (stderr, "Usage: %s [VERSION_CONTROL]\n", getprogname ());
       exit (1);
     }
 
-  if ((cp = getenv ("VERSION_CONTROL")))
-    backup_type = XARGMATCH ("$VERSION_CONTROL", cp,
-                             backup_args, backup_vals);
+  enum backup_type backup_type = no_backups;
+
+  {
+    const char *cp;
+    if ((cp = getenv ("VERSION_CONTROL")))
+      backup_type = XARGMATCH ("$VERSION_CONTROL", cp,
+                               backup_args, backup_vals);
+  }
 
   if (argc == 2)
     backup_type = XARGMATCH (getprogname (), argv[1],

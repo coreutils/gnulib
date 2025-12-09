@@ -42,10 +42,8 @@ RESULT_TYPE
 OBSTACK_PRINTF (struct obstack *obs, const char *format, ...)
 {
   va_list args;
-  RESULT_TYPE result;
-
   va_start (args, format);
-  result = OBSTACK_VPRINTF (obs, format, args);
+  RESULT_TYPE result = OBSTACK_VPRINTF (obs, format, args);
   va_end (args);
   return result;
 }
@@ -67,14 +65,13 @@ OBSTACK_VPRINTF (struct obstack *obs, const char *format, va_list args)
   char buf[CUTOFF];
   char *base = obstack_next_free (obs);
   size_t len = obstack_room (obs);
-  char *str;
 
   if (len < CUTOFF)
     {
       base = buf;
       len = CUTOFF;
     }
-  str = vasnprintf (base, &len, format, args);
+  char *str = vasnprintf (base, &len, format, args);
   if (!str)
     {
       if (errno == ENOMEM)

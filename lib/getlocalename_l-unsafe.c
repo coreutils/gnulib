@@ -130,10 +130,6 @@ locale_t
 newlocale (int category_mask, const char *name, locale_t base)
 #undef newlocale
 {
-  struct locale_categories_names names;
-  struct locale_hash_node *node;
-  locale_t result;
-
   /* Make sure name has indefinite extent.  */
   if (((LC_CTYPE_MASK | LC_NUMERIC_MASK | LC_TIME_MASK | LC_COLLATE_MASK
         | LC_MONETARY_MASK | LC_MESSAGES_MASK)
@@ -141,6 +137,7 @@ newlocale (int category_mask, const char *name, locale_t base)
     name = struniq (name);
 
   /* Determine the category names of the result.  */
+  struct locale_categories_names names;
   if (((LC_CTYPE_MASK | LC_NUMERIC_MASK | LC_TIME_MASK | LC_COLLATE_MASK
         | LC_MONETARY_MASK | LC_MESSAGES_MASK)
        & ~category_mask) == 0)
@@ -158,8 +155,8 @@ newlocale (int category_mask, const char *name, locale_t base)
           for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
-              int mask;
 
+              int mask;
               switch (category)
                 {
                 case LC_CTYPE:
@@ -192,8 +189,8 @@ newlocale (int category_mask, const char *name, locale_t base)
           for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
-              int mask;
 
+              int mask;
               switch (category)
                 {
                 case LC_CTYPE:
@@ -227,10 +224,10 @@ newlocale (int category_mask, const char *name, locale_t base)
         {
           /* Look up the names of base in the hash table.  Like multiple calls
              of get_locale_t_name, but locking only once.  */
-          struct locale_hash_node *p;
 
           /* Lock while looking up the hash node.  */
           gl_rwlock_rdlock (locale_lock);
+          struct locale_hash_node *p;
           for (p = locale_hash_table[locale_hash_function (base) % LOCALE_HASH_TABLE_SIZE];
                p != NULL;
                p = p->next)
@@ -240,8 +237,8 @@ newlocale (int category_mask, const char *name, locale_t base)
           for (int i = 0; i < 6; i++)
             {
               int category = i + LCMIN;
-              int mask;
 
+              int mask;
               switch (category)
                 {
                 case LC_CTYPE:
@@ -275,12 +272,13 @@ newlocale (int category_mask, const char *name, locale_t base)
         }
     }
 
-  node = (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
+  struct locale_hash_node *node =
+    (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
   if (node == NULL)
     /* errno is set to ENOMEM.  */
     return NULL;
 
-  result = newlocale (category_mask, name, base);
+  locale_t result = newlocale (category_mask, name, base);
   if (result == NULL)
     {
       free (node);
@@ -295,10 +293,10 @@ newlocale (int category_mask, const char *name, locale_t base)
   {
     size_t hashcode = locale_hash_function (result);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
-    struct locale_hash_node *p;
 
     /* Lock while inserting the new node.  */
     gl_rwlock_wrlock (locale_lock);
+    struct locale_hash_node *p;
     for (p = locale_hash_table[slot]; p != NULL; p = p->next)
       if (p->locale == result)
         {
@@ -327,19 +325,17 @@ locale_t
 duplocale (locale_t locale)
 #undef duplocale
 {
-  struct locale_hash_node *node;
-  locale_t result;
-
   if (locale == NULL)
     /* Invalid argument.  */
     abort ();
 
-  node = (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
+  struct locale_hash_node *node =
+    (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
   if (node == NULL)
     /* errno is set to ENOMEM.  */
     return NULL;
 
-  result = duplocale (locale);
+  locale_t result = duplocale (locale);
   if (result == NULL)
     {
       free (node);
@@ -362,11 +358,10 @@ duplocale (locale_t locale)
     }
   else
     {
-      struct locale_hash_node *p;
-
       /* Lock once, for the lookup and the insertion.  */
       gl_rwlock_wrlock (locale_lock);
 
+      struct locale_hash_node *p;
       for (p = locale_hash_table[locale_hash_function (locale) % LOCALE_HASH_TABLE_SIZE];
            p != NULL;
            p = p->next)
@@ -388,8 +383,8 @@ duplocale (locale_t locale)
   {
     size_t hashcode = locale_hash_function (result);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
-    struct locale_hash_node *p;
 
+    struct locale_hash_node *p;
     for (p = locale_hash_table[slot]; p != NULL; p = p->next)
       if (p->locale == result)
         {
@@ -425,9 +420,8 @@ freelocale (locale_t locale)
   {
     size_t hashcode = locale_hash_function (locale);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
-    struct locale_hash_node *found;
 
-    found = NULL;
+    struct locale_hash_node *found = NULL;
     /* Lock while removing the hash node.  */
     gl_rwlock_wrlock (locale_lock);
     for (struct locale_hash_node **p = &locale_hash_table[slot]; *p != NULL; p = &(*p)->next)
@@ -478,7 +472,6 @@ getlocalename_l_unsafe (int category, locale_t locale)
 #elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __APPLE__ && defined __MACH__)
       /* FreeBSD >= 9.1, Mac OS X */
       int mask;
-
       switch (category)
         {
         case LC_CTYPE:

@@ -121,7 +121,6 @@ execute (const char *progname,
          bool slave_process, bool exit_on_error,
          int *termsigp)
 {
-  int saved_errno;
   char *prog_path_to_free = NULL;
 
   if (directory != NULL)
@@ -169,6 +168,8 @@ execute (const char *progname,
             }
         }
     }
+
+  int saved_errno;
 
 #if (defined _WIN32 && !defined __CYGWIN__) && EXECUTE_IMPL_AVOID_POSIX_SPAWN
 

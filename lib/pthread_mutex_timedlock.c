@@ -40,16 +40,16 @@ pthread_mutex_timedlock (pthread_mutex_t *mutex, const struct timespec *abstime)
      Therefore start the loop with a pthread_mutex_trylock call.  */
   for (;;)
     {
-      int err;
+      {
+        int err = pthread_mutex_trylock (mutex);
+        if (err != EBUSY)
+          return err;
+      }
+
       struct timeval currtime;
-      unsigned long remaining;
-
-      err = pthread_mutex_trylock (mutex);
-      if (err != EBUSY)
-        return err;
-
       gettimeofday (&currtime, NULL);
 
+      unsigned long remaining;
       if (currtime.tv_sec > abstime->tv_sec)
         remaining = 0;
       else

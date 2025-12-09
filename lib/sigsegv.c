@@ -1049,12 +1049,9 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
           if (stack_top)
             {
               /* Determine stack bounds.  */
-              int saved_errno;
+              int saved_errno = errno;
               struct vma_struct vma;
-              int ret;
-
-              saved_errno = errno;
-              ret = sigsegv_get_vma (stack_top, &vma);
+              int ret = sigsegv_get_vma (stack_top, &vma);
               errno = saved_errno;
               if (ret >= 0)
                 {
@@ -1086,9 +1083,8 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
                   /* Heuristic BC: If the stack size has reached its maximal size,
                      and old_sp is near the low end, we consider it a stack
                      overflow.  */
-                  struct rlimit rl;
-
                   saved_errno = errno;
+                  struct rlimit rl;
                   ret = getrlimit (RLIMIT_STACK, &rl);
                   errno = saved_errno;
                   if (ret >= 0)
@@ -1192,12 +1188,9 @@ sigsegv_handler (int sig)
       if (stack_top)
         {
           /* Determine stack bounds.  */
-          int saved_errno;
+          int saved_errno = errno;
           struct vma_struct vma;
-          int ret;
-
-          saved_errno = errno;
-          ret = sigsegv_get_vma (stack_top, &vma);
+          int ret = sigsegv_get_vma (stack_top, &vma);
           errno = saved_errno;
           if (ret >= 0)
             {
@@ -1205,9 +1198,8 @@ sigsegv_handler (int sig)
               /* Heuristic BC: If the stack size has reached its maximal size,
                  and old_sp is near the low end, we consider it a stack
                  overflow.  */
-              struct rlimit rl;
-
               saved_errno = errno;
+              struct rlimit rl;
               ret = getrlimit (RLIMIT_STACK, &rl);
               errno = saved_errno;
               if (ret >= 0)

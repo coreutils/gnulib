@@ -42,19 +42,16 @@ u8_strconv_to_encoding (const uint8_t *string,
                         const char *tocode,
                         enum iconv_ilseq_handler handler)
 {
-  char *result;
-  size_t length;
-
   if (STRCASEEQ (tocode, "UTF-8", 'U','T','F','-','8',0,0,0,0))
     {
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
-      length = u8_strlen (string) + 1;
+      size_t length = u8_strlen (string) + 1;
       if (u8_check (string, length))
         {
           errno = EILSEQ;
           return NULL;
         }
-      result = (char *) malloc (length);
+      char *result = (char *) malloc (length);
       if (result == NULL)
         {
           errno = ENOMEM;
@@ -65,8 +62,8 @@ u8_strconv_to_encoding (const uint8_t *string,
     }
   else
     {
-      result = NULL;
-      length = 0;
+      char *result = NULL;
+      size_t length = 0;
       if (mem_iconveha ((const char *) string, u8_strlen (string) + 1,
                         "UTF-8", tocode,
                         handler == iconveh_question_mark, handler,

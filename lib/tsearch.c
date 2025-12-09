@@ -153,10 +153,10 @@ check_tree_recurse (node p, int d_sofar, int d_total)
 static void
 check_tree (node root)
 {
-  int cnt = 0;
   if (root == NULL)
     return;
   root->red = 0;
+  int cnt = 0;
   for (node p = root->left; p; p = p->left)
     cnt += !p->red;
   check_tree_recurse (root, 0, cnt);
@@ -182,9 +182,8 @@ maybe_split_for_insert (node *rootp, node *parentp, node *gparentp,
                         int p_r, int gp_r, int mode)
 {
   node root = *rootp;
-  node *rp, *lp;
-  rp = &(*rootp)->right;
-  lp = &(*rootp)->left;
+  node *rp = &(*rootp)->right;
+  node *lp = &(*rootp)->left;
 
   /* See if we have to split this node (both successors red).  */
   if (mode == 1
@@ -263,11 +262,7 @@ maybe_split_for_insert (node *rootp, node *parentp, node *gparentp,
 void *
 __tsearch (const void *key, void **vrootp, __compar_fn_t compar)
 {
-  node q;
-  node *parentp = NULL, *gparentp = NULL;
   node *rootp = (node *) vrootp;
-  node *nextp;
-  int r = 0, p_r = 0, gp_r = 0; /* No they might not, Mr Compiler.  */
 
   if (rootp == NULL)
     return NULL;
@@ -278,7 +273,11 @@ __tsearch (const void *key, void **vrootp, __compar_fn_t compar)
 
   CHECK_TREE (*rootp);
 
-  nextp = rootp;
+  node *parentp = NULL;
+  node *gparentp = NULL;
+  int r = 0, p_r = 0, gp_r = 0; /* No they might not, Mr Compiler.  */
+
+  node *nextp = rootp;
   while (*nextp != NULL)
     {
       node root = *rootp;
@@ -303,7 +302,7 @@ __tsearch (const void *key, void **vrootp, __compar_fn_t compar)
       p_r = r;
     }
 
-  q = (struct node_t *) malloc (sizeof (struct node_t));
+  node q = (struct node_t *) malloc (sizeof (struct node_t));
   if (q != NULL)
     {
       *nextp = q;                       /* link new node to old */
@@ -340,9 +339,7 @@ __tfind (const void *key, void *const *vrootp, __compar_fn_t compar)
   while (*rootp != NULL)
     {
       node root = *rootp;
-      int r;
-
-      r = (*compar) (key, root->key);
+      int r = (*compar) (key, root->key);
       if (r == 0)
         return root;
 
@@ -361,53 +358,55 @@ weak_alias (__tfind, tfind)
 void *
 __tdelete (const void *key, void **vrootp, __compar_fn_t compar)
 {
-  node p, q, r, retval;
-  int cmp;
   node *rootp = (node *) vrootp;
-  node root, unchained;
+
+  if (rootp == NULL)
+    return NULL;
+
+  node p = *rootp;
+  if (p == NULL)
+    return NULL;
+
+  CHECK_TREE (p);
+
   /* Stack of nodes so we remember the parents without recursion.  It's
      _very_ unlikely that there are paths longer than 40 nodes.  The tree
      would need to have around 250.000 nodes.  */
   int stacksize = 100;
   int sp = 0;
   node *nodestack[100];
+  {
+    int cmp;
+    while ((cmp = (*compar) (key, (*rootp)->key)) != 0)
+      {
+        if (sp == stacksize)
+          abort ();
 
-  if (rootp == NULL)
-    return NULL;
-  p = *rootp;
-  if (p == NULL)
-    return NULL;
-
-  CHECK_TREE (p);
-
-  while ((cmp = (*compar) (key, (*rootp)->key)) != 0)
-    {
-      if (sp == stacksize)
-        abort ();
-
-      nodestack[sp++] = rootp;
-      p = *rootp;
-      rootp = ((cmp < 0)
-               ? &(*rootp)->left
-               : &(*rootp)->right);
-      if (*rootp == NULL)
-        return NULL;
-    }
+        nodestack[sp++] = rootp;
+        p = *rootp;
+        rootp = ((cmp < 0)
+                 ? &(*rootp)->left
+                 : &(*rootp)->right);
+        if (*rootp == NULL)
+          return NULL;
+      }
+  }
 
   /* This is bogus if the node to be deleted is the root... this routine
      really should return an integer with 0 for success, -1 for failure
      and errno = ESRCH or something.  */
-  retval = p;
+  node retval = p;
 
   /* We don't unchain the node we want to delete. Instead, we overwrite
      it with its successor and unchain the successor.  If there is no
      successor, we really unchain the node to be deleted.  */
 
-  root = *rootp;
+  node root = *rootp;
 
-  r = root->right;
-  q = root->left;
+  node r = root->right;
+  node q = root->left;
 
+  node unchained;
   if (q == NULL || r == NULL)
     unchained = root;
   else

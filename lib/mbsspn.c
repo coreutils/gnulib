@@ -46,11 +46,12 @@ mbsspn (const char *string, const char *reject)
       if (MB_CUR_MAX > 1)
         {
 #if GNULIB_MCEL_PREFER
-          for (mcel_t g; *iter; iter += g.len)
+          for (; *iter; )
             {
-              g = mcel_scanz (iter);
+              mcel_t g = mcel_scanz (iter);
               if (! (g.len == 1 && (unsigned char) *iter == uc))
                 break;
+              iter += g.len;
             }
 #else
           mbuif_state_t state;

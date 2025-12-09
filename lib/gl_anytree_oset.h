@@ -173,7 +173,6 @@ gl_tree_search_node (gl_oset_t set, const void *elt)
 static int
 gl_tree_nx_add (gl_oset_t set, const void *elt)
 {
-  gl_setelement_compar_fn compar;
   gl_oset_node_t node = set->root;
 
   if (node == NULL)
@@ -183,7 +182,7 @@ gl_tree_nx_add (gl_oset_t set, const void *elt)
       return true;
     }
 
-  compar = set->base.compar_fn;
+  gl_setelement_compar_fn compar = set->base.compar_fn;
 
   for (;;)
     {
@@ -255,12 +254,11 @@ gl_tree_update (gl_oset_t set, const void *elt,
                   && (next_node == NULL || next_node->value > elt)))
             {
               /* old_node needs to move in the tree.  */
-              gl_oset_node_t node;
 
               /* Remove the node from the tree.  Don't free it.  */
               gl_tree_remove_node_no_free (set, old_node);
 
-              node = set->root;
+              gl_oset_node_t node = set->root;
 
               for (;;)
                 {
@@ -350,16 +348,17 @@ static gl_oset_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_oset_t set)
 {
   gl_oset_iterator_t result;
-  gl_oset_node_t node;
 
   result.vtable = set->base.vtable;
   result.set = set;
-  /* Start node is the leftmost node.  */
-  node = set->root;
-  if (node != NULL)
-    while (node->left != NULL)
-      node = node->left;
-  result.p = node;
+  {
+    /* Start node is the leftmost node.  */
+    gl_oset_node_t node = set->root;
+    if (node != NULL)
+      while (node->left != NULL)
+        node = node->left;
+    result.p = node;
+  }
   /* End point is past the rightmost node.  */
   result.q = NULL;
 #if defined GCC_LINT || defined lint

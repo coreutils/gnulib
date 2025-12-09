@@ -33,20 +33,18 @@
 static char *
 xstrcat (size_t argcount, va_list args)
 {
-  char *result;
-  va_list ap;
-  size_t totalsize;
-  char *p;
-
   /* Determine the total size.  */
-  totalsize = 0;
-  va_copy (ap, args);
-  for (size_t i = argcount; i > 0; i--)
-    {
-      const char *next = va_arg (ap, const char *);
-      totalsize = xsum (totalsize, strlen (next));
-    }
-  va_end (ap);
+  size_t totalsize = 0;
+  {
+    va_list ap;
+    va_copy (ap, args);
+    for (size_t i = argcount; i > 0; i--)
+      {
+        const char *next = va_arg (ap, const char *);
+        totalsize = xsum (totalsize, strlen (next));
+      }
+    va_end (ap);
+  }
 
   /* Test for overflow in the summing pass above or in (totalsize + 1)
      below.  */
@@ -54,16 +52,18 @@ xstrcat (size_t argcount, va_list args)
     xalloc_die ();
 
   /* Allocate and fill the result string.  */
-  result = XNMALLOC (totalsize + 1, char);
-  p = result;
-  for (size_t i = argcount; i > 0; i--)
-    {
-      const char *next = va_arg (args, const char *);
-      size_t len = strlen (next);
-      memcpy (p, next, len);
-      p += len;
-    }
-  *p = '\0';
+  char *result = XNMALLOC (totalsize + 1, char);
+  {
+    char *p = result;
+    for (size_t i = argcount; i > 0; i--)
+      {
+        const char *next = va_arg (args, const char *);
+        size_t len = strlen (next);
+        memcpy (p, next, len);
+        p += len;
+      }
+    *p = '\0';
+  }
 
   return result;
 }
@@ -71,7 +71,6 @@ xstrcat (size_t argcount, va_list args)
 char *
 xvasprintf (const char *format, va_list args)
 {
-  char *result;
 
   /* Recognize the special case format = "%s...%s".  It is a frequently used
      idiom for string concatenation and needs to be fast.  We don't want to
@@ -94,6 +93,7 @@ xvasprintf (const char *format, va_list args)
       }
   }
 
+  char *result;
   if (vaszprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)

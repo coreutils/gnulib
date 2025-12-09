@@ -83,9 +83,6 @@ static struct sigaction volatile action_array[NSIG] /* = 0 */;
 static void
 sigaction_handler (int sig)
 {
-  handler_t handler;
-  sigset_t mask;
-  sigset_t oldmask;
   int saved_errno = errno;
   if (sig < 0 || NSIG <= sig || !action_array[sig].sa_handler)
     {
@@ -103,16 +100,17 @@ sigaction_handler (int sig)
      asynchronous instance of the same signal occurring before we
      reinstall the handler will trigger the default handler; oh
      well.  */
-  handler = action_array[sig].sa_handler;
+  handler_t handler = action_array[sig].sa_handler;
   if ((action_array[sig].sa_flags & SA_RESETHAND) == 0)
     signal (sig, sigaction_handler);
   else
     action_array[sig].sa_handler = NULL;
 
   /* Block appropriate signals.  */
-  mask = action_array[sig].sa_mask;
+  sigset_t mask = action_array[sig].sa_mask;
   if ((action_array[sig].sa_flags & SA_NODEFER) == 0)
     sigaddset (&mask, sig);
+  sigset_t oldmask;
   sigprocmask (SIG_BLOCK, &mask, &oldmask);
 
   /* Invoke the user's handler, then restore prior mask.  */
@@ -131,10 +129,6 @@ int
 sigaction (int sig, const struct sigaction *restrict act,
            struct sigaction *restrict oact)
 {
-  sigset_t mask;
-  sigset_t oldmask;
-  int saved_errno;
-
   if (sig < 0 || NSIG <= sig || sig == SIGKILL || sig == SIGSTOP
       || (act && act->sa_handler == SIG_ERR))
     {
@@ -157,7 +151,9 @@ sigaction (int sig, const struct sigaction *restrict act,
      replacement does not try to use sigaction() from its handler.  */
   if (!act && !oact)
     return 0;
+  sigset_t mask;
   sigfillset (&mask);
+  sigset_t oldmask;
   sigprocmask (SIG_BLOCK, &mask, &oldmask);
   if (oact)
     {
@@ -197,8 +193,10 @@ sigaction (int sig, const struct sigaction *restrict act,
   return 0;
 
  failure:
-  saved_errno = errno;
-  sigprocmask (SIG_SETMASK, &oldmask, NULL);
-  errno = saved_errno;
-  return -1;
+  {
+    int saved_errno = errno;
+    sigprocmask (SIG_SETMASK, &oldmask, NULL);
+    errno = saved_errno;
+    return -1;
+  }
 }

@@ -31,19 +31,17 @@
 ptrdiff_t
 szprintf (char *str, const char *format, ...)
 {
-  char *output;
-  size_t len;
-  size_t lenbuf;
   va_list args;
+  va_start (args, format);
 
   /* Set lenbuf = min (SIZE_MAX, - (uintptr_t) str - 1).  */
-  lenbuf = SIZE_MAX;
+  size_t lenbuf = SIZE_MAX;
   if (lenbuf >= ~ (uintptr_t) str)
     lenbuf = ~ (uintptr_t) str;
 
-  va_start (args, format);
-  output = vasnprintf (str, &lenbuf, format, args);
-  len = lenbuf;
+  char *output = vasnprintf (str, &lenbuf, format, args);
+  size_t len = lenbuf;
+
   va_end (args);
 
   if (!output)

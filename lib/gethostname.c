@@ -89,12 +89,10 @@ gethostname (char *name, size_t len)
 int
 rpl_gethostname (char *name, size_t len)
 {
-  int r;
-
   if (len > INT_MAX)
     len = INT_MAX;
   gl_sockets_startup (SOCKETS_1_1);
-  r = gethostname (name, (int) len);
+  int r = gethostname (name, (int) len);
   if (r < 0)
     set_winsock_errno ();
 

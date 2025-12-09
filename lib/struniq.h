@@ -80,13 +80,11 @@ struniq (const char *string)
 {
   size_t hashcode = string_hash (string);
   size_t slot = hashcode % STRUNIQ_HASH_TABLE_SIZE;
-  size_t size;
-  struct struniq_hash_node *new_node;
   for (struct struniq_hash_node *p = struniq_hash_table[slot]; p != NULL; p = p->next)
     if (streq (p->contents, string))
       return p->contents;
-  size = strlen (string) + 1;
-  new_node =
+  size_t size = strlen (string) + 1;
+  struct struniq_hash_node *new_node =
     (struct struniq_hash_node *)
     malloc (FLEXSIZEOF (struct struniq_hash_node, contents, size));
   if (new_node == NULL)

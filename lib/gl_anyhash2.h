@@ -31,12 +31,11 @@ hash_resize (CONTAINER_T container, size_t estimate)
   if (new_size > container->table_size)
     {
       gl_hash_entry_t *old_table = container->table;
-      /* Allocate the new table.  */
-      gl_hash_entry_t *new_table;
 
+      /* Allocate the new table.  */
       if (size_overflow_p (xtimes (new_size, sizeof (gl_hash_entry_t))))
         goto fail;
-      new_table =
+      gl_hash_entry_t *new_table =
         (gl_hash_entry_t *) calloc (new_size, sizeof (gl_hash_entry_t));
       if (new_table == NULL)
         goto fail;

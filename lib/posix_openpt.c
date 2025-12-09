@@ -63,12 +63,10 @@ posix_openpt (int flags)
 
   /* On OpenBSD, master and slave of a pseudo-terminal are allocated together,
      by opening /dev/ptm and applying the PTMGET ioctl to it.  */
-  int fd;
-  struct ptmget data;
-
-  fd = open (PATH_PTMDEV, O_RDWR);
+  int fd = open (PATH_PTMDEV, O_RDWR);
   if (fd >= 0)
     {
+      struct ptmget data;
       if (ioctl (fd, PTMGET, &data) >= 0)
         {
           master = data.cfd;

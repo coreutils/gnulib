@@ -222,11 +222,11 @@ _sd_fwrite (FILE *fp, idx_t s_nbytes, const char *s_data)
 int
 sd_new (rw_string_desc_t *resultp, idx_t n)
 {
-  rw_string_desc_t result;
-
   if (!(n >= 0))
     /* Invalid argument.  */
     abort ();
+
+  rw_string_desc_t result;
 
   result._nbytes = n;
   if (n == 0)

@@ -88,14 +88,11 @@ hash_destroy (hash_table *htab)
 static size_t
 compute_hashval (const void *key, size_t keylen)
 {
-  size_t cnt;
-  size_t hval;
-
   /* Compute the hash value for the given string.  The algorithm
      is taken from [Aho,Sethi,Ullman], fixed according to
      https://haible.de/bruno/hashfunc.html.  */
-  cnt = 0;
-  hval = keylen;
+  size_t cnt = 0;
+  size_t hval = keylen;
   while (cnt < keylen)
     {
       hval = (hval << 9) | (hval >> (sizeof (size_t) * CHAR_BIT - 9));
@@ -117,14 +114,12 @@ lookup (const hash_table *htab,
         const void *key, size_t keylen,
         size_t hval)
 {
-  size_t hash;
-  size_t idx;
   hash_entry *table = htab->table;
 
   /* First hash function: simply take the modul but prevent zero.  */
-  hash = 1 + hval % htab->size;
+  size_t hash = 1 + hval % htab->size;
 
-  idx = hash;
+  size_t idx = hash;
 
   if (table[idx].used)
     {

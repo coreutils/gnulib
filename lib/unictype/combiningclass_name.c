@@ -118,7 +118,6 @@ uc_combining_class_name (int ccc)
   if (ccc >= 0)
     {
       int index;
-
       if (ccc < 10)
         index = u_combining_class_index_part1[ccc];
       else if (ccc >= 200 && ccc < 241)

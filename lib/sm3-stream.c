@@ -45,15 +45,15 @@
 int
 sm3_stream (FILE *stream, void *resblock)
 {
-  struct sm3_ctx ctx;
-  size_t sum;
-
   char *buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
     return 1;
 
   /* Initialize the computation context.  */
+  struct sm3_ctx ctx;
   sm3_init_ctx (&ctx);
+
+  size_t sum;
 
   /* Iterate over full file contents.  */
   while (1)
@@ -61,13 +61,12 @@ sm3_stream (FILE *stream, void *resblock)
       /* We read the file in blocks of BLOCKSIZE bytes.  One call of the
          computation function processes the whole buffer so that with the
          next round of the loop another block can be read.  */
-      size_t n;
       sum = 0;
 
       /* Read block.  Take care for partial reads.  */
       while (1)
         {
-          n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
+          size_t n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
           sum += n;
 

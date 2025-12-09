@@ -100,15 +100,14 @@ undup_safer_noinherit (int tempfd, int origfd)
 const char **
 prepare_spawn (const char * const *argv, char **mem_to_free)
 {
-  size_t argc;
-  const char **new_argv;
-
   /* Count number of arguments.  */
+  size_t argc;
   for (argc = 0; argv[argc] != NULL; argc++)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
+  const char **new_argv =
+    (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
   if (new_argv == NULL)
     return NULL;
 
@@ -175,11 +174,6 @@ spawnpvech (int mode,
   static int libcx_spawn2_loaded = 0;
 #endif
 
-  int saved_stdin = STDIN_FILENO;
-  int saved_stdout = STDOUT_FILENO;
-  int saved_stderr = STDERR_FILENO;
-  int ret = -1;
-
 #if HAVE_LIBCX_SPAWN2_H
   if (libcx_spawn2_loaded == -1)
     {
@@ -202,15 +196,19 @@ spawnpvech (int mode,
 
   /* Save standard file handles.  */
   /* 0 means no changes. This is a behavior of spawn2().  */
+  int saved_stdin = STDIN_FILENO;
   if (new_stdin != 0)
     saved_stdin = dup_safer_noinherit (STDIN_FILENO);
 
+  int saved_stdout = STDOUT_FILENO;
   if (!(new_stdout == 0 || new_stdout == 1))
     saved_stdout = dup_safer_noinherit (STDOUT_FILENO);
 
+  int saved_stderr = STDERR_FILENO;
   if (!(new_stderr == 0 || new_stderr == 2))
     saved_stderr = dup_safer_noinherit (STDERR_FILENO);
 
+  int ret = -1;
   if ((saved_stdin == STDIN_FILENO || dup2 (new_stdin, STDIN_FILENO) >= 0)
       && (saved_stdout == STDOUT_FILENO
           || dup2 (new_stdout, STDOUT_FILENO) >= 0)

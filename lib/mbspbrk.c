@@ -44,22 +44,23 @@ mbspbrk (const char *string, const char *accept)
     {
       char const *iter = string;
 #if GNULIB_MCEL_PREFER
-      mcel_t a, g;
-      for (; *iter; iter += g.len)
+      for (; *iter; )
         {
-          g = mcel_scanz (iter);
+          mcel_t g = mcel_scanz (iter);
           if (g.len == 1)
             {
               if (mbschr (accept, *iter))
                 return (char *) iter;
             }
           else
-            for (char const *aiter = accept; *aiter; aiter += a.len)
+            for (char const *aiter = accept; *aiter; )
               {
-                a = mcel_scanz (aiter);
+                mcel_t a = mcel_scanz (aiter);
                 if (mcel_eq (a, g))
                   return (char *) iter;
+                aiter += a.len;
               }
+          iter += g.len;
         }
 #else
       mbuif_state_t state;

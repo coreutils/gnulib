@@ -52,11 +52,9 @@ getdomainname (char *name, size_t len)
   return getdomainname (name, (int) len);
 #elif HAVE_SYSINFO && HAVE_SYS_SYSTEMINFO_H && defined SI_SRPC_DOMAIN
                                        /* Solaris */
-  int ret;
-
   /* The third argument is a 'long', but the return value must fit in an
      'int', therefore it's better to avoid arguments > INT_MAX.  */
-  ret = sysinfo (SI_SRPC_DOMAIN, name, len > INT_MAX ? INT_MAX : len);
+  int ret = sysinfo (SI_SRPC_DOMAIN, name, len > INT_MAX ? INT_MAX : len);
   if (ret < 0)
     /* errno is set here.  */
     return -1;

@@ -34,9 +34,7 @@
 const uint16_t *
 u16_next (ucs4_t *puc, const uint16_t *s)
 {
-  int count;
-
-  count = u16_strmbtouc (puc, s);
+  int count = u16_strmbtouc (puc, s);
   if (count > 0)
     return s + count;
   else

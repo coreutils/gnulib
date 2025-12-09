@@ -102,16 +102,7 @@ parse_with_separator (char const *spec, char const *separator,
                       uid_t *uid, gid_t *gid,
                       char **username, char **groupname)
 {
-  const char *error_msg;
-  struct passwd *pwd;
-  struct group *grp;
-  char *u;
-  char const *g;
-  char *gname = NULL;
-  uid_t unum = *uid;
-  gid_t gnum = gid ? *gid : -1;
-
-  error_msg = NULL;
+  const char *error_msg = NULL;
   if (username)
     *username = NULL;
   if (groupname)
@@ -121,7 +112,7 @@ parse_with_separator (char const *spec, char const *separator,
      group specifiers or to NULL.  If U is not NULL, it is a newly
      allocated string.  */
 
-  u = NULL;
+  char *u = NULL;
   if (separator == NULL)
     {
       if (*spec)
@@ -137,9 +128,9 @@ parse_with_separator (char const *spec, char const *separator,
         }
     }
 
-  g = (separator == NULL || *(separator + 1) == '\0'
-       ? NULL
-       : separator + 1);
+  char const *g = (separator == NULL || *(separator + 1) == '\0'
+                   ? NULL
+                   : separator + 1);
 
 #ifdef __DJGPP__
   /* Pretend that we are the user U whose group is G.  This makes
@@ -150,10 +141,14 @@ parse_with_separator (char const *spec, char const *separator,
     setenv ("GROUP", g, 1);
 #endif
 
+  char *gname = NULL;
+  uid_t unum = *uid;
+  gid_t gnum = gid ? *gid : -1;
+
   if (u != NULL)
     {
       /* If it starts with "+", skip the look-up.  */
-      pwd = (*u == '+' ? NULL : getpwnam (u));
+      struct passwd *pwd = (*u == '+' ? NULL : getpwnam (u));
       if (pwd == NULL)
         {
           username = NULL;
@@ -183,7 +178,7 @@ parse_with_separator (char const *spec, char const *separator,
                  so get the login group.  */
               char buf[INT_BUFSIZE_BOUND (uintmax_t)];
               gnum = pwd->pw_gid;
-              grp = getgrgid (gnum);
+              struct group *grp = getgrgid (gnum);
               gname = xstrdup (grp ? grp->gr_name : umaxtostr (gnum, buf));
               endgrent ();
             }
@@ -195,7 +190,7 @@ parse_with_separator (char const *spec, char const *separator,
     {
       /* Explicit group.  */
       /* If it starts with "+", skip the look-up.  */
-      grp = (*g == '+' ? NULL : getgrnam (g));
+      struct group *grp = (*g == '+' ? NULL : getgrnam (g));
       if (grp == NULL)
         {
           groupname = NULL;
@@ -303,15 +298,16 @@ main (int argc, char **argv)
 {
   for (int i = 1; i < argc; i++)
     {
-      const char *e;
-      char *username, *groupname;
+      char *tmp = strdup (argv[i]);
+
       uid_t uid;
       gid_t gid;
-      char *tmp;
+      char *username;
+      char *groupname;
+      const char *e = parse_user_spec (tmp, &uid, &gid, &username, &groupname);
 
-      tmp = strdup (argv[i]);
-      e = parse_user_spec (tmp, &uid, &gid, &username, &groupname);
       free (tmp);
+
       printf ("%s: %lu %lu %s %s %s\n",
               argv[i],
               (unsigned long int) uid,

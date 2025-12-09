@@ -31,24 +31,19 @@ FUNC (const UNIT *s, size_t n,
       const char *iso639_language,
       bool *resultp)
 {
-  UNIT normsbuf[2048 / sizeof (UNIT)];
-  UNIT *norms;
-  size_t norms_length;
-  UNIT mappedbuf[2048 / sizeof (UNIT)];
-  UNIT *mapped;
-  size_t mapped_length;
-
   /* Apply canonical decomposition to S.  */
-  norms_length = sizeof (normsbuf) / sizeof (UNIT);
-  norms = U_NORMALIZE (UNINORM_NFD, s, n, normsbuf, &norms_length);
+  UNIT normsbuf[2048 / sizeof (UNIT)];
+  size_t norms_length = sizeof (normsbuf) / sizeof (UNIT);
+  UNIT *norms = U_NORMALIZE (UNINORM_NFD, s, n, normsbuf, &norms_length);
   if (norms == NULL)
     /* errno is set here.  */
     return -1;
 
   /* Apply mapping.  */
-  mapped_length = sizeof (mappedbuf) / sizeof (UNIT);
-  mapped = mapping (norms, norms_length, iso639_language, NULL,
-                    mappedbuf, &mapped_length);
+  UNIT mappedbuf[2048 / sizeof (UNIT)];
+  size_t mapped_length = sizeof (mappedbuf) / sizeof (UNIT);
+  UNIT *mapped = mapping (norms, norms_length, iso639_language, NULL,
+                          mappedbuf, &mapped_length);
   if (mapped == NULL)
     {
       if (norms != normsbuf)

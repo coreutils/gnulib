@@ -65,8 +65,6 @@ areadlink_with_size (char const *file, size_t size)
 
   while (1)
     {
-      ssize_t r;
-      size_t link_length;
       char stackbuf[stackbuf_size];
       char *buf = stackbuf;
       char *buffer = NULL;
@@ -81,15 +79,14 @@ areadlink_with_size (char const *file, size_t size)
             }
         }
 
-      r = readlink (file, buf, buf_size);
-      link_length = r;
-
+      ssize_t r = readlink (file, buf, buf_size);
       if (r < 0)
         {
           free (buffer);
           return NULL;
         }
 
+      size_t link_length = r;
       if (link_length < buf_size)
         {
           buf[link_length] = 0;

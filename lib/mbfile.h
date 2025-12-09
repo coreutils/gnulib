@@ -86,9 +86,6 @@ struct mbfile_multi {
 MBFILE_INLINE void
 mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
 {
-  unsigned int new_bufcount;
-  size_t bytes;
-
   /* Return character pushed back, if there is one.  */
   if (mbf->pushback_count > 0)
     {
@@ -102,7 +99,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   if (mbf->eof_seen)
     goto eof;
 
-  new_bufcount = mbf->bufcount;
+  unsigned int new_bufcount = mbf->bufcount;
 
   /* If mbf->state is not in an initial state, some more 32-bit wide character
      may be hiding in the state.  We need to call mbrtoc32 again.  */
@@ -146,6 +143,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   /* Use mbrtoc32 on an increasing number of bytes.  Read only as many bytes
      from mbf->fp as needed.  This is needed to give reasonable interactive
      behaviour when mbf->fp is connected to an interactive tty.  */
+  size_t bytes;
   for (;;)
     {
       /* Feed the bytes one by one into mbrtoc32.  */

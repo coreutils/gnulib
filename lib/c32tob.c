@@ -42,9 +42,9 @@ c32tob (wint_t wc)
   if (wc != WEOF)
     {
       mbstate_t state;
-      char buf[8];
-
       mbszero (&state);
+
+      char buf[8];
       if (c32rtomb (buf, wc, &state) == 1)
         return (unsigned char) buf[0];
     }

@@ -61,11 +61,11 @@ static int stack_dir;           /* 1 or -1 once known.  */
 static int
 find_stack_direction (int *addr, int depth)
 {
-  int dir, dummy = 0;
+  int dummy = 0;
   if (! addr)
     addr = &dummy;
   *addr = addr < &dummy ? 1 : addr == &dummy ? 0 : -1;
-  dir = depth ? find_stack_direction (addr, depth - 1) : 0;
+  int dir = depth ? find_stack_direction (addr, depth - 1) : 0;
   return dir + dummy;
 }
 
@@ -140,14 +140,11 @@ alloca (size_t size)
   /* Allocate combined header + user data storage.  */
 
   {
-    /* Address of header.  */
-    register header *new;
-
     size_t combined_size = sizeof (header) + size;
     if (combined_size < sizeof (header))
       memory_full ();
 
-    new = malloc (combined_size);
+    register header *new = malloc (combined_size);
 
     if (! new)
       memory_full ();

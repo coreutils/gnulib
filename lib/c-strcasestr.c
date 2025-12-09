@@ -40,25 +40,28 @@
 char *
 c_strcasestr (const char *haystack_start, const char *needle_start)
 {
-  const char *haystack = haystack_start;
   const char *needle = needle_start;
-  size_t needle_len; /* Length of NEEDLE.  */
-  size_t haystack_len; /* Known minimum length of HAYSTACK.  */
-  bool ok = true; /* True if NEEDLE is prefix of HAYSTACK.  */
 
   /* Determine length of NEEDLE, and in the process, make sure
      HAYSTACK is at least as long (no point processing all of a long
      NEEDLE if HAYSTACK is too short).  */
-  while (*haystack && *needle)
-    ok &= (c_tolower ((unsigned char) *haystack++)
-           == c_tolower ((unsigned char) *needle++));
-  if (*needle)
-    return NULL;
-  if (ok)
-    return (char *) haystack_start;
-  needle_len = needle - needle_start;
-  haystack = haystack_start + 1;
-  haystack_len = needle_len - 1;
+  {
+    const char *haystack = haystack_start;
+    bool ok = true; /* True if NEEDLE is prefix of HAYSTACK.  */
+    while (*haystack && *needle)
+      ok &= (c_tolower ((unsigned char) *haystack++)
+             == c_tolower ((unsigned char) *needle++));
+    if (*needle)
+      return NULL;
+    if (ok)
+      return (char *) haystack_start;
+  }
+
+  size_t needle_len = /* Length of NEEDLE.  */
+    needle - needle_start;
+  const char *haystack = haystack_start + 1;
+  size_t haystack_len = /* Known minimum length of HAYSTACK.  */
+    needle_len - 1;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See

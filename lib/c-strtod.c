@@ -180,8 +180,9 @@ C_STRTOD (char const *nptr, char **endptr)
             end = p + 1;
             if (p[1] == 'x' || p[1] == 'X')
               {
-                size_t num_hex_digits = 0;
                 p += 2;
+
+                size_t num_hex_digits = 0;
                 /* Parse a non-empty sequence of hexadecimal digits optionally
                    containing the decimal point character '.'.  */
                 while (*p != '\0')
@@ -295,11 +296,10 @@ C_STRTOD (char const *nptr, char **endptr)
           /* Create a modified floating-point number, in which the character '.'
              is replaced with the locale-dependent decimal_point.  */
           size_t len = end - start;
+
+          char stackbuf[1000];
           char *buf;
           char *buf_malloced = NULL;
-          char stackbuf[1000];
-          char *end_in_buf;
-
           if (len < sizeof (stackbuf))
             buf = stackbuf;
           else
@@ -323,6 +323,7 @@ C_STRTOD (char const *nptr, char **endptr)
             buf[decimal_point_p - start] = decimal_point;
           buf[len] = '\0';
 
+          char *end_in_buf;
           r = STRTOD (buf, &end_in_buf);
           if (endptr != NULL)
             *endptr = (char *) (start + (end_in_buf - buf));

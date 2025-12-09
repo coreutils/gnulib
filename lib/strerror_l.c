@@ -114,8 +114,8 @@ safe_copy (char *buf, size_t buflen, const char *msg)
 int
 strerror_l_r (int errnum, char *buf, size_t buflen, locale_t locale)
 {
-  int ret;
   int saved_errno = errno;
+  int ret;
 
 #if GNULIB_defined_locale_t
 

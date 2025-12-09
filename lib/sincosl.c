@@ -109,10 +109,7 @@ static const long double sincosl_table[];
 long double
 kernel_sinl (long double x, long double y, int iy)
 {
-  long double h, l, z, sin_l, cos_l_m1;
-  int index, sign;
-
-  sign = 1;
+  int sign = 1;
   if (x < 0)
     {
       x = -x;
@@ -127,7 +124,7 @@ kernel_sinl (long double x, long double y, int iy)
         if (!((int) x))
           return x * sign;             /* generate inexact */
 
-      z = x * x;
+      long double z = x * x;
       return (x + x * (z * (SIN1 + z *
                            (SIN2 + z *
                            (SIN3 + z *
@@ -147,19 +144,20 @@ kernel_sinl (long double x, long double y, int iy)
          sinl(k+l) = sinl(k)cosl(l) + cosl(k)sinl(l).
          Furthermore write k = 0.1484375 + h.  */
       x -= 0.1484375L;
-      index = (int) (x * 128L + 0.5L);
-      h = index / 128.0L;
+      int index = (int) (x * 128L + 0.5L);
+      long double h = index / 128.0L;
+      long double l;
       if (iy)
         l = y - (h - x);
       else
         l = x - h;
 
-      z = l * l;
-      sin_l =
+      long double z = l * l;
+      long double sin_l =
         l * (ONE +
              z * (SSIN1 +
                   z * (SSIN2 + z * (SSIN3 + z * (SSIN4 + z * SSIN5)))));
-      cos_l_m1 =
+      long double cos_l_m1 =
         z * (SCOS1 + z * (SCOS2 + z * (SCOS3 + z * (SCOS4 + z * SCOS5))));
 
       index *= 4;
@@ -178,9 +176,6 @@ kernel_sinl (long double x, long double y, int iy)
 long double
 kernel_cosl (long double x, long double y)
 {
-  long double h, l, z, sin_l, cos_l_m1;
-  int index;
-
   if (x < 0)
     x = -x;
 
@@ -191,7 +186,7 @@ kernel_cosl (long double x, long double y)
       if (x < 0.000000000000000006938893903907228377647697925567626953125L)     /* |x| < 2^-57 */
         if (!((int) x))
           return ONE;           /* generate inexact */
-      z = x * x;
+      long double z = x * x;
       return ONE + (z * (COS1 + z * (COS2 + z * (COS3 + z * (COS4 +
                                                              z * (COS5 +
                                                                   z * (COS6 +
@@ -210,15 +205,15 @@ kernel_cosl (long double x, long double y)
          cosl(k+l) = cosl(k)cosl(l) - sinl(k)sinl(l).
          Furthermore write k = 0.1484375 + h.  */
       x -= 0.1484375L;
-      index = (int) (x * 128L + 0.5L);
-      h = index / 128.0L;
-      l = y - (h - x);
-      z = l * l;
-      sin_l =
+      int index = (int) (x * 128L + 0.5L);
+      long double h = index / 128.0L;
+      long double l = y - (h - x);
+      long double z = l * l;
+      long double sin_l =
         l * (ONE +
              z * (SSIN1 +
                   z * (SSIN2 + z * (SSIN3 + z * (SSIN4 + z * SSIN5)))));
-      cos_l_m1 =
+      long double cos_l_m1 =
         z * (SCOS1 + z * (SCOS2 + z * (SCOS3 + z * (SCOS4 + z * SCOS5))));
 
       index *= 4;

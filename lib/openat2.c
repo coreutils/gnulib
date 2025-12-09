@@ -174,8 +174,6 @@ do_openat2 (int *fd, char const *filename,
             int flags, char resolve, mode_t mode,
             char **buf, idx_t bufsize)
 {
-  int dfd = *fd;
-
   /* RESOLVED_CACHED cannot be implemented properly in user space,
      so pretend nothing is cached.  */
   if (resolve & RESOLVE_CACHED)
@@ -211,6 +209,8 @@ do_openat2 (int *fd, char const *filename,
   dev_t ddev = UNKNOWN_DEV;
 
   long int maxlinks = resolve & RESOLVE_NO_SYMLINKS ? 0 : __eloop_threshold ();
+
+  int dfd = *fd;
 
   /* Iterates through file name components, possibly expanded by
      symlink contents.  */
@@ -498,18 +498,20 @@ int
 openat2 (int dfd, char const *filename,
          struct open_how const *how, size_t howsize)
 {
-  int r;
-
 #ifdef SYS_openat2
-  r = syscall (SYS_openat2, dfd, filename, how, howsize);
-  if (! (r < 0 && errno == ENOSYS))
-    return r;
+  {
+    int r = syscall (SYS_openat2, dfd, filename, how, howsize);
+    if (! (r < 0 && errno == ENOSYS))
+      return r;
+  }
 
   /* Keep going, to support the dubious practice of compiling for an
      older kernel.  The openat2 syscall was introduced in Linux 5.6.
      Linux 5.4 LTS is EOLed at the end of 2025, so perhaps after that
      we can simply return the syscall result instead of continuing.  */
 #endif
+
+  int r;
 
   /* Check for invalid arguments.  Once the size test has succeeded,
      *HOW's members are safe to access, so use & and | as there is
@@ -557,13 +559,11 @@ openat2 (int dfd, char const *filename,
       char resolve = how->resolve;
       mode_t mode = how->mode;
 
-      int fd;
-
       /* For speed use a single openat if it suffices.  */
       if (O_RESOLVE_BENEATH ? !(resolve & ~RESOLVE_BENEATH) : !resolve)
         {
-          fd = openat (dfd, filename,
-                       flags | (resolve ? O_RESOLVE_BENEATH : 0), mode);
+          int fd = openat (dfd, filename,
+                           flags | (resolve ? O_RESOLVE_BENEATH : 0), mode);
 
           /* Return FD now unless openat failed with an errno that might
              be an O_RESOLVE_BENEATH failure.  On platforms with
@@ -574,7 +574,7 @@ openat2 (int dfd, char const *filename,
             return fd;
         }
 
-      fd = dfd;
+      int fd = dfd;
       char stackbuf[256];
       char *buf = stackbuf;
 

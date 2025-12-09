@@ -49,27 +49,23 @@
 int
 sendfd (int sock, int fd)
 {
+  /* send at least one char */
   char byte = 0;
   struct iovec iov;
-  struct msghdr msg;
-# if defined CMSG_FIRSTHDR
-  struct cmsghdr *cmsg;
-  char buf[CMSG_SPACE (sizeof fd)];
-# endif
-
-  /* send at least one char */
-  memset (&msg, 0, sizeof msg);
   iov.iov_base = &byte;
   iov.iov_len = 1;
+  struct msghdr msg;
+  memset (&msg, 0, sizeof msg);
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
 # if defined CMSG_FIRSTHDR
+  char buf[CMSG_SPACE (sizeof fd)];
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
-  cmsg = CMSG_FIRSTHDR (&msg);
+  struct cmsghdr *cmsg = CMSG_FIRSTHDR (&msg);
   cmsg->cmsg_level = SOL_SOCKET;
   cmsg->cmsg_type = SCM_RIGHTS;
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
@@ -107,36 +103,31 @@ sendfd (_GL_UNUSED int sock, _GL_UNUSED int fd)
 int
 recvfd (int sock, int flags)
 {
-  char byte = 0;
-  struct iovec iov;
-  struct msghdr msg;
-  int fd = -1;
-  ssize_t len;
-# if defined CMSG_FIRSTHDR
-  struct cmsghdr *cmsg;
-  char buf[CMSG_SPACE (sizeof fd)];
-  int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
-# endif
-
   if ((flags & ~O_CLOEXEC) != 0)
     {
       errno = EINVAL;
       return -1;
     }
 
-  /* send at least one char */
-  memset (&msg, 0, sizeof msg);
+  int fd = -1;
+
+  /* receive at least one char */
+  char byte = 0;
+  struct iovec iov;
   iov.iov_base = &byte;
   iov.iov_len = 1;
+  struct msghdr msg;
+  memset (&msg, 0, sizeof msg);
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
 # if defined CMSG_FIRSTHDR
+  char buf[CMSG_SPACE (sizeof fd)];
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
-  cmsg = CMSG_FIRSTHDR (&msg);
+  struct cmsghdr *cmsg = CMSG_FIRSTHDR (&msg);
   cmsg->cmsg_level = SOL_SOCKET;
   cmsg->cmsg_type = SCM_RIGHTS;
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
@@ -144,7 +135,7 @@ recvfd (int sock, int flags)
   memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
   msg.msg_controllen = CMSG_SPACE (sizeof fd);
 
-  len = recvmsg (sock, &msg, flags_recvmsg);
+  ssize_t len = recvmsg (sock, &msg, flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0);
   if (len < 0)
     return -1;
   if (len == 0)

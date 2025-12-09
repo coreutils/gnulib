@@ -182,17 +182,13 @@ gl_array_search_atleast (gl_oset_t set,
 static int
 grow (gl_oset_t set)
 {
-  size_t new_allocated;
-  size_t memory_size;
-  const void **memory;
-
-  new_allocated = xtimes (set->allocated, 2);
+  size_t new_allocated = xtimes (set->allocated, 2);
   new_allocated = xsum (new_allocated, 1);
-  memory_size = xtimes (new_allocated, sizeof (const void *));
+  size_t memory_size = xtimes (new_allocated, sizeof (const void *));
   if (size_overflow_p (memory_size))
     /* Overflow, would lead to out of memory.  */
     return -1;
-  memory = (const void **) realloc (set->elements, memory_size);
+  const void **memory = (const void **) realloc (set->elements, memory_size);
   if (memory == NULL)
     /* Out of memory.  */
     return -1;
@@ -208,12 +204,10 @@ static int
 gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
 {
   size_t count = set->count;
-  const void **elements;
-
   if (count == set->allocated)
     if (grow (set) < 0)
       return -1;
-  elements = set->elements;
+  const void **elements = set->elements;
   for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
@@ -227,9 +221,7 @@ static void
 gl_array_remove_at (gl_oset_t set, size_t position)
 {
   size_t count = set->count;
-  const void **elements;
-
-  elements = set->elements;
+  const void **elements = set->elements;
   if (set->base.dispose_fn != NULL)
     set->base.dispose_fn (elements[position]);
   for (size_t i = position + 1; i < count; i++)

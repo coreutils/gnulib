@@ -54,11 +54,9 @@ static size_t
 quoted_arg_length (const char *string)
 {
   bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
-  size_t length;
-  unsigned int backslashes;
 
-  length = 0;
-  backslashes = 0;
+  size_t length = 0;
+  unsigned int backslashes = 0;
   if (quote_around)
     length++;
   for (const char *s = string; *s != '\0'; s++)
@@ -86,11 +84,9 @@ static char *
 quoted_arg_string (const char *string, char *mem)
 {
   bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
-  char *p;
-  unsigned int backslashes;
 
-  p = mem;
-  backslashes = 0;
+  char *p = mem;
+  unsigned int backslashes = 0;
   if (quote_around)
     *p++ = '"';
   for (const char *s = string; *s != '\0'; s++)
@@ -119,15 +115,14 @@ quoted_arg_string (const char *string, char *mem)
 const char **
 prepare_spawn (const char * const *argv, char **mem_to_free)
 {
-  size_t argc;
-  const char **new_argv;
-
   /* Count number of arguments.  */
+  size_t argc;
   for (argc = 0; argv[argc] != NULL; argc++)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
+  const char **new_argv =
+    (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
 
   /* Add an element upfront that can be used when argv[0] turns out to be a
      script, not a program.
@@ -142,14 +137,15 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
   for (size_t i = 0; i < argc; i++)
     {
       const char *string = argv[i];
-      size_t length;
 
+      size_t length;
       if (string[0] == '\0')
         length = strlen ("\"\"");
       else if (strpbrk (string, SHELL_SPECIAL_CHARS) != NULL)
         length = quoted_arg_length (string);
       else
         length = strlen (string);
+
       needed_size += length + 1;
     }
 
@@ -200,17 +196,18 @@ char *
 compose_command (const char * const *argv)
 {
   /* Just concatenate the argv[] strings, separated by spaces.  */
-  char *command;
 
   /* Determine the size of the needed block of memory.  */
   size_t total_size = 0;
-  const char *p;
-  for (const char * const *ap = argv; (p = *ap) != NULL; ap++)
-    total_size += strlen (p) + 1;
+  {
+    const char *p;
+    for (const char * const *ap = argv; (p = *ap) != NULL; ap++)
+      total_size += strlen (p) + 1;
+  }
   size_t command_size = (total_size > 0 ? total_size : 1);
 
   /* Allocate the block of memory.  */
-  command = (char *) malloc (command_size);
+  char *command = (char *) malloc (command_size);
   if (command == NULL)
     {
       errno = ENOMEM;
@@ -221,6 +218,7 @@ compose_command (const char * const *argv)
   if (total_size > 0)
     {
       char *cp = command;
+      const char *p;
       for (const char * const *ap = argv; (p = *ap) != NULL; ap++)
         {
           size_t size = strlen (p) + 1;
@@ -248,12 +246,14 @@ compose_envblock (const char * const *envp, const char *new_PATH)
     /* Guess the size of the needed block of memory.
        The guess will be exact if other threads don't make modifications.  */
     size_t total_size = 0;
-    const char *p;
     if (new_PATH != NULL)
       total_size += strlen (new_PATH) + 1;
-    for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
-      if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
-        total_size += strlen (p) + 1;
+    {
+      const char *p;
+      for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
+        if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
+          total_size += strlen (p) + 1;
+    }
     size_t envblock_size = total_size;
 
     /* Allocate the block of memory.  */
@@ -270,36 +270,39 @@ compose_envblock (const char * const *envp, const char *new_PATH)
         memcpy (envblock + envblock_used, new_PATH, size);
         envblock_used += size;
       }
-    for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
-      if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
-        {
-          size_t size = strlen (p) + 1;
-          if (envblock_used + size > envblock_size)
-            {
-              /* Other threads did modifications.  Need more memory.  */
-              envblock_size += envblock_size / 2;
-              if (envblock_used + size > envblock_size)
-                envblock_size = envblock_used + size;
+    {
+      const char *p;
+      for (const char * const *ep = envp; (p = *ep) != NULL; ep++)
+        if (!(new_PATH != NULL && strncmp (p, "PATH=", 5) == 0))
+          {
+            size_t size = strlen (p) + 1;
+            if (envblock_used + size > envblock_size)
+              {
+                /* Other threads did modifications.  Need more memory.  */
+                envblock_size += envblock_size / 2;
+                if (envblock_used + size > envblock_size)
+                  envblock_size = envblock_used + size;
 
-              char *new_envblock =
-                (char *) realloc (envblock, envblock_size + 1);
-              if (new_envblock == NULL)
-                {
-                  free (envblock);
-                  errno = ENOMEM;
-                  return NULL;
-                }
+                char *new_envblock =
+                  (char *) realloc (envblock, envblock_size + 1);
+                if (new_envblock == NULL)
+                  {
+                    free (envblock);
+                    errno = ENOMEM;
+                    return NULL;
+                  }
               envblock = new_envblock;
             }
-          memcpy (envblock + envblock_used, p, size);
-          envblock_used += size;
-          if (envblock[envblock_used - 1] != '\0')
-            {
-              /* Other threads did modifications.  Restart.  */
-              free (envblock);
-              goto retry;
-            }
-        }
+            memcpy (envblock + envblock_used, p, size);
+            envblock_used += size;
+            if (envblock[envblock_used - 1] != '\0')
+              {
+                /* Other threads did modifications.  Restart.  */
+                free (envblock);
+                goto retry;
+              }
+          }
+    }
     envblock[envblock_used] = '\0';
     return envblock;
   }

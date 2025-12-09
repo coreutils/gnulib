@@ -132,11 +132,8 @@ static const long double
 long double
 asinl (long double x)
 {
-  long double y, t, p, q;
-  int sign;
-
-  sign = 1;
-  y = x;
+  int sign = 1;
+  long double y = x;
   if (x < 0.0L)
     {
       sign = -1;
@@ -151,34 +148,36 @@ asinl (long double x)
 
       return (x - x) / (x - x); /* asin(|x|>1) is NaN */
     }
-  else if (y < 0.5L) /* |x| < 0.5 */
+
+  long double t;
+  if (y < 0.5L) /* |x| < 0.5 */
     {
       if (y < 0.000000000000000006938893903907228377647697925567626953125L) /* |x| < 2**-57 */
         if (huge + y > one)
           return y;             /* return x with inexact if x!=0 */
 
       t = x * x;
-      p = (((((((((pS9 * t
-                   + pS8) * t
-                  + pS7) * t
-                 + pS6) * t
-                + pS5) * t
-               + pS4) * t
-              + pS3) * t
-             + pS2) * t
-            + pS1) * t
-           + pS0) * t;
+      long double p = (((((((((pS9 * t
+                               + pS8) * t
+                              + pS7) * t
+                             + pS6) * t
+                            + pS5) * t
+                           + pS4) * t
+                          + pS3) * t
+                         + pS2) * t
+                        + pS1) * t
+                       + pS0) * t;
 
-      q = (((((((( t
-                  + qS8) * t
-                 + qS7) * t
-                + qS6) * t
-               + qS5) * t
-              + qS4) * t
-             + qS3) * t
-            + qS2) * t
-           + qS1) * t
-        + qS0;
+      long double q = (((((((( t
+                              + qS8) * t
+                             + qS7) * t
+                            + qS6) * t
+                           + qS5) * t
+                          + qS4) * t
+                         + qS3) * t
+                        + qS2) * t
+                       + qS1) * t
+                    + qS0;
 
       return x + x * (p / q);
     }
@@ -186,29 +185,29 @@ asinl (long double x)
   else if (y < 0.625) /* 0.625 */
     {
       t = y - 0.5625;
-      p = ((((((((((rS10 * t
-                    + rS9) * t
-                   + rS8) * t
-                  + rS7) * t
-                 + rS6) * t
-                + rS5) * t
-               + rS4) * t
-              + rS3) * t
-             + rS2) * t
-            + rS1) * t
-           + rS0) * t;
+      long double p = ((((((((((rS10 * t
+                                + rS9) * t
+                               + rS8) * t
+                              + rS7) * t
+                             + rS6) * t
+                            + rS5) * t
+                           + rS4) * t
+                          + rS3) * t
+                         + rS2) * t
+                        + rS1) * t
+                       + rS0) * t;
 
-      q = ((((((((( t
-                    + sS9) * t
-                  + sS8) * t
-                 + sS7) * t
-                + sS6) * t
-               + sS5) * t
-              + sS4) * t
-             + sS3) * t
-            + sS2) * t
-           + sS1) * t
-        + sS0;
+      long double q = ((((((((( t
+                                + sS9) * t
+                              + sS8) * t
+                             + sS7) * t
+                            + sS6) * t
+                           + sS5) * t
+                          + sS4) * t
+                         + sS3) * t
+                        + sS2) * t
+                       + sS1) * t
+                    + sS0;
       t = asinr5625 + p / q;
     }
   else

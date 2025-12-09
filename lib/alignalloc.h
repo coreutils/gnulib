@@ -97,9 +97,9 @@ alignalloc (idx_t alignment, idx_t size)
 # if ALIGNALLOC_VIA_ALIGNED_ALLOC
   return aligned_alloc (alignment, size);
 # else
-  void *ptr = NULL;
   if (alignment < sizeof (void *))
     alignment = sizeof (void *);
+  void *ptr = NULL;
   /* Work around posix_memalign glitch by treating a 0 size as if it were 1,
      so that returning NULL is equivalent to failing.  */
   errno = posix_memalign (&ptr, alignment, size ? size : 1);

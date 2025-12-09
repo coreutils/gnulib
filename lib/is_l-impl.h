@@ -38,11 +38,10 @@ FUNC (int c, locale_t locale)
 #else
   /* Implementation for the global locale.  */
   {
-    int ret;
 # if HAVE_WORKING_USELOCALE
     locale_t saved_locale = uselocale (LC_GLOBAL_LOCALE);
 # endif
-    ret = GLOBAL_FUNC (c);
+    int ret = GLOBAL_FUNC (c);
 # if HAVE_WORKING_USELOCALE
     uselocale (saved_locale);
 # endif

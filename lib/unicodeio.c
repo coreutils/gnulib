@@ -74,9 +74,6 @@ unicode_to_mb (unsigned int code,
   static iconv_t utf8_to_local;
 #endif
 
-  char inbuf[6];
-  int count;
-
   if (!initialized)
     {
       const char *charset = locale_charset ();
@@ -106,7 +103,8 @@ unicode_to_mb (unsigned int code,
     }
 
   /* Convert the character to UTF-8.  */
-  count = u8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
+  char inbuf[6];
+  int count = u8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
   if (count < 0)
     return failure (code, _("character out of range"), callback_arg);
 
@@ -114,21 +112,15 @@ unicode_to_mb (unsigned int code,
   if (!is_utf8)
     {
       char outbuf[25];
-      const char *inptr;
-      size_t inbytesleft;
-      char *outptr;
-      size_t outbytesleft;
-      size_t res;
-
-      inptr = inbuf;
-      inbytesleft = count;
-      outptr = outbuf;
-      outbytesleft = sizeof (outbuf);
+      const char *inptr = inbuf;
+      size_t inbytesleft = count;
+      char *outptr = outbuf;
+      size_t outbytesleft = sizeof (outbuf);
 
       /* Convert the character from UTF-8 to the locale's charset.  */
-      res = iconv (utf8_to_local,
-                   (ICONV_CONST char **)&inptr, &inbytesleft,
-                   &outptr, &outbytesleft);
+      size_t res = iconv (utf8_to_local,
+                          (ICONV_CONST char **)&inptr, &inbytesleft,
+                          &outptr, &outbytesleft);
       /* Analyze what iconv() actually did and distinguish replacements
          that are OK (no need to invoke the FAILURE callback), such as
            - replacing GREEK SMALL LETTER MU with MICRO SIGN, or

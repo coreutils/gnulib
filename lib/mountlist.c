@@ -367,9 +367,7 @@ fsp_to_string (const struct statfs *fsp)
 static char *
 fstype_to_string (int t)
 {
-  struct vfs_ent *e;
-
-  e = getvfsbytype (t);
+  struct vfs_ent *e = getvfsbytype (t);
   if (!e || !e->vfsent_name)
     return "none";
   else
@@ -398,10 +396,9 @@ dev_from_mount_options (char const *mount_options)
       char const *optval = devopt + sizeof dev_pattern - 1;
       if (c_isxdigit (*optval))
         {
-          char *optvalend;
-          unsigned long int dev;
           errno = 0;
-          dev = strtoul (optval, &optvalend, 16);
+          char *optvalend;
+          unsigned long int dev = strtoul (optval, &optvalend, 16);
           if (optval != optvalend
               && (*optvalend == '\0' || *optvalend == ',')
               && ! (dev == ULONG_MAX && errno == ERANGE)
@@ -469,15 +466,13 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, Cygwin, Android,
                                    also (obsolete) 4.3BSD, SunOS */
   {
-    FILE *fp;
-
 # if defined __linux__ || defined __ANDROID__
     /* Try parsing mountinfo first, as that make device IDs available.
        Note we could use libmount routines to simplify this parsing a little
        (and that code is in previous versions of this function), however
        libmount depends on libselinux which pulls in many dependencies.  */
     char const *mountinfo = "/proc/self/mountinfo";
-    fp = fopen (mountinfo, "re");
+    FILE *fp = fopen (mountinfo, "re");
     if (fp != NULL)
       {
         char *line = NULL;
@@ -568,14 +563,14 @@ read_file_system_list (bool need_fs_type)
     else /* fallback to /proc/self/mounts (/etc/mtab).  */
 # endif /* __linux__ || __ANDROID__ */
       {
-        struct mntent *mnt;
         char const *table = MOUNTED;
 
-        fp = setmntent (table, "r");
-        if (fp == NULL)
+        FILE *mfp = setmntent (table, "r");
+        if (mfp == NULL)
           return NULL;
 
-        while ((mnt = getmntent (fp)))
+        struct mntent *mnt;
+        while ((mnt = getmntent (mfp)))
           {
             bool bind = hasmntopt (mnt, "bind");
 
@@ -594,7 +589,7 @@ read_file_system_list (bool need_fs_type)
             mtail = &me->me_next;
           }
 
-        if (endmntent (fp) == 0)
+        if (endmntent (mfp) == 0)
           goto free_then_fail;
       }
   }
@@ -603,9 +598,7 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTINFO       /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
   {
     struct statfs *fsp;
-    int entries;
-
-    entries = getmntinfo (&fsp, MNT_NOWAIT);
+    int entries = getmntinfo (&fsp, MNT_NOWAIT);
     if (entries < 0)
       return NULL;
     for (; entries-- > 0; fsp++)
@@ -632,9 +625,7 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTINFO2      /* NetBSD, Minix */
   {
     struct statvfs *fsp;
-    int entries;
-
-    entries = getmntinfo (&fsp, MNT_NOWAIT);
+    int entries = getmntinfo (&fsp, MNT_NOWAIT);
     if (entries < 0)
       return NULL;
     for (; entries-- > 0; fsp++)
@@ -668,7 +659,6 @@ read_file_system_list (bool need_fs_type)
        We therefore get the list of subdirectories of /, and the list
        of all file systems, and match the two lists.  */
 
-    DIR *dirp;
     struct rootdir_entry
       {
         char *name;
@@ -676,16 +666,11 @@ read_file_system_list (bool need_fs_type)
         ino_t ino;
         struct rootdir_entry *next;
       };
-    struct rootdir_entry *rootdir_list;
-    struct rootdir_entry **rootdir_tail;
-    int32 pos;
-    dev_t dev;
-    fs_info fi;
 
     /* All volumes are mounted in the rootfs, directly under /. */
-    rootdir_list = NULL;
-    rootdir_tail = &rootdir_list;
-    dirp = opendir ("/");
+    struct rootdir_entry *rootdir_list = NULL;
+    struct rootdir_entry **rootdir_tail = &rootdir_list;
+    DIR *dirp = opendir ("/");
     if (dirp)
       {
         struct dirent *d;
@@ -725,29 +710,33 @@ read_file_system_list (bool need_fs_type)
       }
     *rootdir_tail = NULL;
 
-    for (pos = 0; (dev = next_dev (&pos)) >= 0; )
-      if (fs_stat_dev (dev, &fi) >= 0)
-        {
-          /* Note: fi.dev == dev. */
-          for (struct rootdir_entry *re = rootdir_list; re; re = re->next)
-            if (re->dev == fi.dev && re->ino == fi.root)
-              break;
+    dev_t dev;
+    for (int32 pos = 0; (dev = next_dev (&pos)) >= 0; )
+      {
+        fs_info fi;
+        if (fs_stat_dev (dev, &fi) >= 0)
+          {
+            /* Note: fi.dev == dev. */
+            for (struct rootdir_entry *re = rootdir_list; re; re = re->next)
+              if (re->dev == fi.dev && re->ino == fi.root)
+                break;
 
-          me = xmalloc (sizeof *me);
-          me->me_devname = xstrdup (fi.device_name[0] != '\0'
-                                    ? fi.device_name : fi.fsh_name);
-          me->me_mountdir = xstrdup (re != NULL ? re->name : fi.fsh_name);
-          me->me_mntroot = NULL;
-          me->me_type = xstrdup (fi.fsh_name);
-          me->me_type_malloced = 1;
-          me->me_dev = fi.dev;
-          me->me_dummy = 0;
-          me->me_remote = (fi.flags & B_FS_IS_SHARED) != 0;
+            me = xmalloc (sizeof *me);
+            me->me_devname = xstrdup (fi.device_name[0] != '\0'
+                                      ? fi.device_name : fi.fsh_name);
+            me->me_mountdir = xstrdup (re != NULL ? re->name : fi.fsh_name);
+            me->me_mntroot = NULL;
+            me->me_type = xstrdup (fi.fsh_name);
+            me->me_type_malloced = 1;
+            me->me_dev = fi.dev;
+            me->me_dummy = 0;
+            me->me_remote = (fi.flags & B_FS_IS_SHARED) != 0;
 
-          /* Add to the linked list. */
-          *mtail = me;
-          mtail = &me->me_next;
-        }
+            /* Add to the linked list. */
+            *mtail = me;
+            mtail = &me->me_next;
+          }
+      }
     *mtail = NULL;
 
     while (rootdir_list != NULL)
@@ -762,17 +751,15 @@ read_file_system_list (bool need_fs_type)
 
 #if defined MOUNTED_GETFSSTAT   /* (obsolete) Apple Darwin 1.3 */
   {
-    int numsys;
-    size_t bufsize;
-    struct statfs *stats;
 
-    numsys = getfsstat (NULL, 0L, MNT_NOWAIT);
+    int numsys = getfsstat (NULL, 0L, MNT_NOWAIT);
     if (numsys < 0)
       return NULL;
+
+    struct statfs *stats;
     if (SIZE_MAX / sizeof *stats <= numsys)
       xalloc_die ();
-
-    bufsize = (1 + numsys) * sizeof *stats;
+    size_t bufsize = (1 + numsys) * sizeof *stats;
     stats = xmalloc (bufsize);
     numsys = getfsstat (stats, bufsize, MNT_NOWAIT);
 
@@ -805,14 +792,13 @@ read_file_system_list (bool need_fs_type)
 
 #if defined MOUNTED_FREAD_FSTYP /* (obsolete) SVR3 */
   {
-    struct mnttab mnt;
     char *table = "/etc/mnttab";
-    FILE *fp;
 
-    fp = fopen (table, "re");
+    FILE *fp = fopen (table, "re");
     if (fp == NULL)
       return NULL;
 
+    struct mnttab mnt;
     while (fread (&mnt, sizeof mnt, 1, fp) > 0)
       {
         me = xmalloc (sizeof *me);
@@ -858,20 +844,19 @@ read_file_system_list (bool need_fs_type)
 
 #ifdef MOUNTED_GETEXTMNTENT     /* Solaris >= 8 */
   {
-    struct extmnttab mnt;
     const char *table = MNTTAB;
-    FILE *fp;
-    int ret;
 
     /* No locking is needed, because the contents of /etc/mnttab is generated
        by the kernel.  */
 
     errno = 0;
-    fp = fopen (table, "re");
+    FILE *fp = fopen (table, "re");
+    int ret;
     if (fp == NULL)
       ret = errno;
     else
       {
+        struct extmnttab mnt;
         while ((ret = getextmntent (fp, &mnt, 1)) == 0)
           {
             me = xmalloc (sizeof *me);
@@ -905,10 +890,7 @@ read_file_system_list (bool need_fs_type)
 
 #ifdef MOUNTED_GETMNTENT2       /* Solaris < 8, also (obsolete) SVR4 */
   {
-    struct mnttab mnt;
     const char *table = MNTTAB;
-    FILE *fp;
-    int ret;
     int lockfd = -1;
 
 # if defined F_RDLCK && defined F_SETLKW
@@ -941,11 +923,13 @@ read_file_system_list (bool need_fs_type)
 # endif
 
     errno = 0;
-    fp = fopen (table, "re");
+    FILE *fp = fopen (table, "re");
+    int ret;
     if (fp == NULL)
       ret = errno;
     else
       {
+        struct mnttab mnt;
         while ((ret = getmntent (fp, &mnt)) == 0)
           {
             me = xmalloc (sizeof *me);
@@ -980,34 +964,24 @@ read_file_system_list (bool need_fs_type)
 
 #ifdef MOUNTED_VMOUNT           /* AIX */
   {
-    int bufsize;
-    void *entries;
-    char *thisent;
-    struct vmount *vmp;
-    int n_entries;
-    int i;
-
     /* Ask how many bytes to allocate for the mounted file system info.  */
-    entries = &bufsize;
-    if (mntctl (MCTL_QUERY, sizeof bufsize, entries) != 0)
+    int bufsize;
+    if (mntctl (MCTL_QUERY, sizeof bufsize, &bufsize) != 0)
       return NULL;
-    entries = xmalloc (bufsize);
+    void *entries = xmalloc (bufsize);
 
     /* Get the list of mounted file systems.  */
-    n_entries = mntctl (MCTL_QUERY, bufsize, entries);
+    int n_entries = mntctl (MCTL_QUERY, bufsize, entries);
     if (n_entries < 0)
       {
         free (entries);
         return NULL;
       }
 
-    for (i = 0, thisent = entries;
-         i < n_entries;
-         i++, thisent += vmp->vmt_length)
+    char *thisent = entries;
+    for (int i = 0; i < n_entries; i++)
       {
-        char *options, *ignore;
-
-        vmp = (struct vmount *) thisent;
+        struct vmount *vmp = (struct vmount *) thisent;
         me = xmalloc (sizeof *me);
         if (vmp->vmt_flags & MNT_REMOTE)
           {
@@ -1032,8 +1006,8 @@ read_file_system_list (bool need_fs_type)
         me->me_mntroot = NULL;
         me->me_type = xstrdup (fstype_to_string (vmp->vmt_gfstype));
         me->me_type_malloced = 1;
-        options = thisent + vmp->vmt_data[VMT_ARGS].vmt_off;
-        ignore = strstr (options, "ignore");
+        char *options = thisent + vmp->vmt_data[VMT_ARGS].vmt_off;
+        char *ignore = strstr (options, "ignore");
         me->me_dummy = (ignore
                         && (ignore == options || ignore[-1] == ',')
                         && (ignore[sizeof "ignore" - 1] == ','
@@ -1043,6 +1017,8 @@ read_file_system_list (bool need_fs_type)
         /* Add to the linked list. */
         *mtail = me;
         mtail = &me->me_next;
+
+        thisent += vmp->vmt_length;
       }
     free (entries);
   }
@@ -1051,25 +1027,23 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_INTERIX_STATVFS  /* Interix */
   {
     DIR *dirp = opendir ("/dev/fs");
-    char node[9 + NAME_MAX];
-
     if (!dirp)
       goto free_then_fail;
 
     while (1)
       {
-        struct statvfs dev;
-        struct dirent entry;
-        struct dirent *result;
-
         /* FIXME: readdir_r is planned to be withdrawn from POSIX and
            marked obsolescent in glibc.  Use readdir instead.  */
+        struct dirent entry;
+        struct dirent *result;
         if (readdir_r (dirp, &entry, &result) || result == NULL)
           break;
 
+        char node[9 + NAME_MAX];
         strcpy (node, "/dev/fs/");
         strcat (node, entry.d_name);
 
+        struct statvfs dev;
         if (statvfs (node, &dev) == 0)
           {
             me = xmalloc (sizeof *me);
@@ -1109,11 +1083,12 @@ read_file_system_list (bool need_fs_type)
         if (value & (1U << i))
           {
             char mountdir[4];
-            char fs_name[MAX_PATH + 1];
             mountdir[0] = 'A' + i;
             mountdir[1] = ':';
             mountdir[2] = '\\';
             mountdir[3] = '\0';
+
+            char fs_name[MAX_PATH + 1];
             /* Test whether the drive actually exists, and
                get the name of the file system.  See:
                <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationa>.  */
@@ -1136,10 +1111,10 @@ read_file_system_list (bool need_fs_type)
                      For testing of SUBST:   <https://ss64.com/nt/subst.html>
                      For testing of NET USE: <https://ss64.com/nt/net-use.html>  */
                   wchar_t drive[3];
-                  wchar_t mapping[MAX_PATH + 1];
                   drive[0] = L'A' + i;
                   drive[1] = L':';
                   drive[2] = L'\0';
+                  wchar_t mapping[MAX_PATH + 1];
                   DWORD mapping_len = QueryDosDeviceW (drive, mapping, sizeof (mapping) / sizeof (mapping[0]));
                   if (mapping_len > 4 && wcsncmp (mapping, L"\\??\\", 4) == 0)
                     {

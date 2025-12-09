@@ -55,15 +55,13 @@
 int
 uname (struct utsname *buf)
 {
-  OSVERSIONINFO version;
-  OSVERSIONINFOEX versionex;
-  BOOL have_versionex; /* indicates whether versionex is filled */
-  const char *super_version;
-
   /* Preparation: Fill version and, if possible, also versionex.
      But try to call GetVersionEx only once in the common case.  */
+  OSVERSIONINFO version;
+  OSVERSIONINFOEX versionex;
   versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
-  have_versionex = GetVersionEx ((OSVERSIONINFO *) &versionex);
+  BOOL have_versionex = /* indicates whether versionex is filled */
+    GetVersionEx ((OSVERSIONINFO *) &versionex);
   if (have_versionex)
     {
       /* We know that OSVERSIONINFO is a subset of OSVERSIONINFOEX.  */
@@ -81,6 +79,7 @@ uname (struct utsname *buf)
     strcpy (buf->nodename, "localhost");
 
   /* Determine major-major Windows version.  */
+  const char *super_version;
   if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
       /* Windows NT or newer.  */
@@ -162,15 +161,15 @@ uname (struct utsname *buf)
           VERSION2 (6, 1, "Windows 7", "Windows Server 2008 R2"),
           VERSION2 (-1, -1, "Windows", "Windows Server")
         };
-      const char *base;
-      const struct windows_version *v = versions;
 
       /* Find a version that matches ours.  The last element is a
          wildcard that always ends the loop.  */
+      const struct windows_version *v = versions;
       while ((v->major != version.dwMajorVersion && v->major != -1)
              || (v->minor != version.dwMinorVersion && v->minor != -1))
         v++;
 
+      const char *base;
       if (have_versionex && versionex.wProductType != VER_NT_WORKSTATION)
         base = v->name + v->server_offset;
       else

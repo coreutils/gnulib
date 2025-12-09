@@ -43,10 +43,8 @@ ends_with_incb_consonant_extended_linker_extended (const UNIT *s,
 
   while (s > s_start)
     {
-      const UNIT *prev_s;
       ucs4_t uc;
-
-      prev_s = U_PREV (&uc, s, s_start);
+      const UNIT *prev_s = U_PREV (&uc, s, s_start);
       if (prev_s == NULL)
         /* Ill-formed UTF-8 encoding. */
         break;
@@ -73,10 +71,8 @@ ends_with_emoji_modifier_sequence (const UNIT *s, const UNIT *s_start)
 {
   while (s > s_start)
     {
-      const UNIT *prev_s;
       ucs4_t uc;
-
-      prev_s = U_PREV (&uc, s, s_start);
+      const UNIT *prev_s = U_PREV (&uc, s, s_start);
       if (prev_s == NULL)
         /* Ill-formed UTF-8 encoding. */
         break;
@@ -102,10 +98,8 @@ ends_with_ri_count (const UNIT *s, const UNIT *s_start)
 
   while (s > s_start)
     {
-      const UNIT *prev_s;
       ucs4_t uc;
-
-      prev_s = U_PREV (&uc, s, s_start);
+      const UNIT *prev_s = U_PREV (&uc, s, s_start);
       if (prev_s == NULL)
         /* Ill-formed UTF-8 encoding. */
         break;
@@ -143,10 +137,8 @@ FUNC (const UNIT *s, const UNIT *s_start)
 
   do
     {
-      const UNIT *prev_s;
       ucs4_t uc;
-
-      prev_s = U_PREV (&uc, s, s_start);
+      const UNIT *prev_s = U_PREV (&uc, s, s_start);
       if (prev_s == NULL)
         {
           /* Ill-formed UTF-8 encoding. */

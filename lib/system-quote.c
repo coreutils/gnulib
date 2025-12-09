@@ -262,11 +262,7 @@ system_quote_argv (enum system_command_interpreter interpreter,
 {
   if (*argv != NULL)
     {
-      size_t length;
-      char *command;
-      char *p;
-
-      length = 0;
+      size_t length = 0;
       for (char * const *argp = argv; ; )
         {
           length += system_quote_length (interpreter, *argp) + 1;
@@ -275,18 +271,20 @@ system_quote_argv (enum system_command_interpreter interpreter,
             break;
         }
 
-      command = XNMALLOC (length, char);
+      char *command = XNMALLOC (length, char);
 
-      p = command;
-      for (char * const *argp = argv; ; )
-        {
-          p = system_quote_copy (p, interpreter, *argp);
-          argp++;
-          if (*argp == NULL)
-            break;
-          *p++ = ' ';
-        }
-      *p = '\0';
+      {
+        char *p = command;
+        for (char * const *argp = argv; ; )
+          {
+            p = system_quote_copy (p, interpreter, *argp);
+            argp++;
+            if (*argp == NULL)
+              break;
+            *p++ = ' ';
+          }
+        *p = '\0';
+      }
 
       return command;
     }

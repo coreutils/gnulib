@@ -66,11 +66,10 @@ ulc_wordbreaks (const char *s, size_t n, char *p)
 
           if (offsets != NULL)
             {
-              uint8_t *t;
               size_t m;
-
-              t = u8_conv_from_encoding (encoding, iconveh_question_mark,
-                                         s, n, offsets, NULL, &m);
+              uint8_t *t =
+                u8_conv_from_encoding (encoding, iconveh_question_mark,
+                                       s, n, offsets, NULL, &m);
               if (t != NULL)
                 {
                   char *q = (char *) (m > 0 ? malloc (m) : NULL);
@@ -128,7 +127,6 @@ read_file (FILE *stream)
   char *buf = NULL;
   int alloc = 0;
   int size = 0;
-  int count;
 
   while (! feof (stream))
     {
@@ -144,7 +142,7 @@ read_file (FILE *stream)
               exit (1);
             }
         }
-      count = fread (buf + size, 1, BUFSIZE, stream);
+      int count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
         {
           if (ferror (stream))

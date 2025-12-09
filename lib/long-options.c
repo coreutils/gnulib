@@ -50,34 +50,34 @@ parse_long_options (int argc,
                     void (*usage_func) (int),
                     /* const char *author1, ...*/ ...)
 {
-  int c;
-  int saved_opterr;
-
-  saved_opterr = opterr;
+  int saved_opterr = opterr;
 
   /* Don't print an error message for unrecognized options.  */
   opterr = 0;
 
-  if (argc == 2
-      && (c = getopt_long (argc, argv, "+", long_options, NULL)) != -1)
+  if (argc == 2)
     {
-      switch (c)
+      int c = getopt_long (argc, argv, "+", long_options, NULL);
+      if (c != -1)
         {
-        case 'h':
-          (*usage_func) (EXIT_SUCCESS);
-          break;
+          switch (c)
+            {
+            case 'h':
+              (*usage_func) (EXIT_SUCCESS);
+              break;
 
-        case 'v':
-          {
-            va_list authors;
-            va_start (authors, usage_func);
-            version_etc_va (stdout, command_name, package, version, authors);
-            exit (EXIT_SUCCESS);
-          }
+            case 'v':
+              {
+                va_list authors;
+                va_start (authors, usage_func);
+                version_etc_va (stdout, command_name, package, version, authors);
+                exit (EXIT_SUCCESS);
+              }
 
-        default:
-          /* Don't process any other long-named options.  */
-          break;
+            default:
+              /* Don't process any other long-named options.  */
+              break;
+            }
         }
     }
 
@@ -104,7 +104,6 @@ parse_gnu_standard_options_only (int argc,
                                  void (*usage_func) (int),
                                  /* const char *author1, ...*/ ...)
 {
-  int c;
   int saved_opterr = opterr;
 
   /* Print an error message for unrecognized options.  */
@@ -112,7 +111,8 @@ parse_gnu_standard_options_only (int argc,
 
   const char *optstring = scan_all ? "" : "+";
 
-  if ((c = getopt_long (argc, argv, optstring, long_options, NULL)) != -1)
+  int c = getopt_long (argc, argv, optstring, long_options, NULL);
+  if (c != -1)
     {
       switch (c)
         {

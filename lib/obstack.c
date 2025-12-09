@@ -194,9 +194,7 @@ void
 _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
 {
   struct _obstack_chunk *old_chunk = h->chunk;
-  struct _obstack_chunk *new_chunk;
   size_t obj_size = h->next_free - h->object_base;
-  char *object_base;
 
   /* Compute size for new chunk.  */
   _OBSTACK_CHUNK_SIZE_T s, new_size;
@@ -212,7 +210,8 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
     new_size = h->chunk_size;
 
   /* Allocate and initialize the new chunk.  */
-  new_chunk = v ? NULL : call_chunkfun (h, new_size);
+  struct _obstack_chunk *new_chunk =
+    v ? NULL : call_chunkfun (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
   h->chunk = new_chunk;
@@ -223,7 +222,7 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_INDEX_T length)
                  h->alignment_mask);
 
   /* Compute an aligned object_base in the new chunk */
-  object_base =
+  char *object_base =
     __PTR_ALIGN ((char *) new_chunk, new_chunk->contents, h->alignment_mask);
 
   /* Move the existing object to the new chunk.  */
@@ -259,16 +258,14 @@ int _obstack_allocated_p (struct obstack *h, void *obj) __attribute_pure__;
 int
 _obstack_allocated_p (struct obstack *h, void *obj)
 {
-  struct _obstack_chunk *lp;    /* below addr of any objects in this chunk */
-  struct _obstack_chunk *plp;   /* point to previous chunk if any */
-
-  lp = (h)->chunk;
+  struct _obstack_chunk *lp = /* below addr of any objects in this chunk */
+    h->chunk;
   /* We use >= rather than > since the object cannot be exactly at
      the beginning of the chunk but might be an empty object exactly
      at the end of an adjacent chunk.  */
   while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
     {
-      plp = lp->prev;
+      struct _obstack_chunk *plp = lp->prev; /* point to previous chunk */
       lp = plp;
     }
   return lp != NULL;
@@ -280,16 +277,14 @@ _obstack_allocated_p (struct obstack *h, void *obj)
 void
 __obstack_free (struct obstack *h, void *obj)
 {
-  struct _obstack_chunk *lp;    /* below addr of any objects in this chunk */
-  struct _obstack_chunk *plp;   /* point to previous chunk if any */
-
-  lp = h->chunk;
+  struct _obstack_chunk *lp = /* below addr of any objects in this chunk */
+    h->chunk;
   /* We use >= because there cannot be an object at the beginning of a chunk.
      But there can be an empty object at that address
      at the end of another chunk.  */
   while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
     {
-      plp = lp->prev;
+      struct _obstack_chunk *plp = lp->prev; /* point to previous chunk */
       call_freefun (h, lp);
       lp = plp;
       /* If we switch chunks, we can't tell whether the new current

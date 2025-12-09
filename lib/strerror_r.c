@@ -103,10 +103,8 @@ static int
 local_snprintf (char *buf, size_t buflen, const char *format, ...)
 {
   va_list args;
-  int result;
-
   va_start (args, format);
-  result = _vsnprintf (buf, buflen, format, args);
+  int result = _vsnprintf (buf, buflen, format, args);
   va_end (args);
   if (buflen > 0 && (result < 0 || result >= buflen))
     buf[buflen - 1] = '\0';
@@ -222,9 +220,8 @@ strerror_r (int errnum, char *buf, size_t buflen)
     if (!ret && strlen (buf) == buflen - 1)
       {
         char stackbuf[STACKBUF_LEN];
-        size_t len;
         strerror_r (errnum, stackbuf, sizeof stackbuf);
-        len = strlen (stackbuf);
+        size_t len = strlen (stackbuf);
         /* STACKBUF_LEN should have been large enough.  */
         if (len + 1 == sizeof stackbuf)
           abort ();

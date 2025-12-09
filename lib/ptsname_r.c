@@ -69,9 +69,9 @@ ptsname_r (int fd, char *buf, size_t buflen)
 {
 #if HAVE_ESSENTIALLY_WORKING_PTSNAME_R
 # if defined __NetBSD__ || defined __sun
-  char tmpbuf[32];
   if (buf == NULL)
     return EINVAL;
+  char tmpbuf[32];
   if (buflen >= sizeof (tmpbuf))
     /* ERANGE should not happen in this case.  */
     return ptsname_r (fd, buf, buflen);
@@ -97,17 +97,15 @@ ptsname_r (int fd, char *buf, size_t buflen)
     return errno;
 # endif
 #elif defined __DragonFly__
-  int saved_errno = errno;
-  char tmpbuf[5 + 4 + 10 + 1];
-  int ret;
-  int n;
   if (buf == NULL)
     {
       errno = EINVAL;
       return errno;
     }
+  int saved_errno = errno;
+  char tmpbuf[5 + 4 + 10 + 1];
   /* The result of fdevname_r is typically of the form ptm/N.  */
-  ret = fdevname_r (fd, tmpbuf + 5, sizeof (tmpbuf) - 5);
+  int ret = fdevname_r (fd, tmpbuf + 5, sizeof (tmpbuf) - 5);
   if (ret < 0 || strncmp (tmpbuf + 5, "ptm/", 4) != 0)
     {
       errno = ENOTTY;
@@ -115,7 +113,7 @@ ptsname_r (int fd, char *buf, size_t buflen)
     }
   /* Turn it into /dev/pts/N.  */
   memcpy (tmpbuf, "/dev/pts/", 5 + 4);
-  n = strlen (tmpbuf);
+  int n = strlen (tmpbuf);
   if (n >= buflen)
     {
       errno = ERANGE;
@@ -127,14 +125,14 @@ ptsname_r (int fd, char *buf, size_t buflen)
   errno = saved_errno;
   return 0;
 #else
-  int saved_errno = errno;
-  struct stat st;
-
   if (buf == NULL)
     {
       errno = EINVAL;
       return errno;
     }
+
+  int saved_errno = errno;
+  struct stat st;
 
 # if defined __sun /* Solaris */
   if (fstat (fd, &st) < 0)
@@ -185,17 +183,15 @@ ptsname_r (int fd, char *buf, size_t buflen)
       return errno;
     }
   {
-    int ret;
     int dev;
-    char tmpbuf[9 + 10 + 1];
-    int n;
-    ret = ioctl (fd, ISPTM, &dev);
+    int ret = ioctl (fd, ISPTM, &dev);
     if (ret < 0)
       {
         errno = ENOTTY;
         return errno;
       }
-    n = sprintf (tmpbuf, "/dev/pts/%u", minor (dev));
+    char tmpbuf[9 + 10 + 1];
+    int n = sprintf (tmpbuf, "/dev/pts/%u", minor (dev));
     if (n >= buflen)
       {
         errno = ERANGE;

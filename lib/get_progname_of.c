@@ -86,19 +86,16 @@ get_progname_of (pid_t pid)
   /* Read the symlink /proc/<pid>/exe.  */
   {
     char filename[6 + 10 + 4 + 1];
-    char linkbuf[1024 + 1];
-    ssize_t linklen;
-
     sprintf (filename, "/proc/%u/exe", (unsigned int) pid);
-    linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
+
+    char linkbuf[1024 + 1];
+    ssize_t linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
     if (linklen > 0)
       {
-        char *slash;
-
         /* NUL-terminate the link.  */
         linkbuf[linklen] = '\0';
         /* Find the portion after the last slash.  */
-        slash = strrchr (linkbuf, '/');
+        char *slash = strrchr (linkbuf, '/');
         return strdup (slash != NULL ? slash + 1 : linkbuf);
       }
   }
@@ -108,10 +105,8 @@ get_progname_of (pid_t pid)
      read the contents of /proc/<pid>/cmdline into memory.  */
   {
     char filename[6 + 10 + 8 + 1];
-    int fd;
-
     sprintf (filename, "/proc/%u/cmdline", (unsigned int) pid);
-    fd = open (filename, O_RDONLY | O_CLOEXEC);
+    int fd = open (filename, O_RDONLY | O_CLOEXEC);
     if (fd >= 0)
       {
         char buf[4096 + 1];
@@ -119,14 +114,12 @@ get_progname_of (pid_t pid)
         close (fd);
         if (nread >= 0)
           {
-            char *slash;
-
             /* NUL-terminate the buffer (just in case it does not have the
                expected format).  */
             buf[nread] = '\0';
             /* The program name and each argument is followed by a NUL byte.  */
             /* Find the portion after the last slash.  */
-            slash = strrchr (buf, '/');
+            char *slash = strrchr (buf, '/');
             return strdup (slash != NULL ? slash + 1 : buf);
           }
       }
@@ -139,19 +132,16 @@ get_progname_of (pid_t pid)
 
   /* Read the symlink /proc/<pid>/file.  */
   char filename[6 + 10 + 5 + 1];
-  char linkbuf[1024 + 1];
-  ssize_t linklen;
-
   sprintf (filename, "/proc/%u/file", (unsigned int) pid);
-  linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
+
+  char linkbuf[1024 + 1];
+  ssize_t linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
   if (linklen > 0)
     {
-      char *slash;
-
       /* NUL-terminate the link.  */
       linkbuf[linklen] = '\0';
       /* Find the portion after the last slash.  */
-      slash = strrchr (linkbuf, '/');
+      char *slash = strrchr (linkbuf, '/');
       return strdup (slash != NULL ? slash + 1 : linkbuf);
     }
 
@@ -161,10 +151,8 @@ get_progname_of (pid_t pid)
 
   /* Read the contents of /proc/<pid>/psinfo into memory.  */
   char filename[6 + 10 + 7 + 1];
-  int fd;
-
   sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
+  int fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       char buf[4096 + 1];
@@ -172,15 +160,12 @@ get_progname_of (pid_t pid)
       close (fd);
       if (nread >= 0)
         {
-          char *p;
-          int count;
-
           /* NUL-terminate the buffer.  */
           buf[nread] = '\0';
 
           /* Search for the 4th space-separated field.  */
-          p = strchr (buf, ' ');
-          for (count = 1; p != NULL && count < 3; count++)
+          char *p = strchr (buf, ' ');
+          for (int count = 1; p != NULL && count < 3; count++)
             p = strchr (p + 1, ' ');
           if (p != NULL)
             {
@@ -203,19 +188,16 @@ get_progname_of (pid_t pid)
      When it succeeds, it doesn't truncate.  */
   {
     char filename[6 + 10 + 11 + 1];
-    char linkbuf[1024 + 1];
-    ssize_t linklen;
-
     sprintf (filename, "/proc/%u/path/a.out", (unsigned int) pid);
-    linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
+
+    char linkbuf[1024 + 1];
+    ssize_t linklen = readlink (filename, linkbuf, sizeof (linkbuf) - 1);
     if (linklen > 0)
       {
-        char *slash;
-
         /* NUL-terminate the link.  */
         linkbuf[linklen] = '\0';
         /* Find the portion after the last slash.  */
-        slash = strrchr (linkbuf, '/');
+        char *slash = strrchr (linkbuf, '/');
         return strdup (slash != NULL ? slash + 1 : linkbuf);
       }
   }
@@ -226,10 +208,8 @@ get_progname_of (pid_t pid)
      memory.  But it contains a lot of information that we don't need.  */
   {
     char filename[6 + 10 + 7 + 1];
-    int fd;
-
     sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-    fd = open (filename, O_RDONLY | O_CLOEXEC);
+    int fd = open (filename, O_RDONLY | O_CLOEXEC);
     if (fd >= 0)
       {
         /* The contents is a 'struct psinfo'.  But since 'struct psinfo'
@@ -263,9 +243,7 @@ get_progname_of (pid_t pid)
   int info_path[] =
     { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid, sizeof (struct kinfo_proc), 1 };
   struct kinfo_proc info;
-  size_t len;
-
-  len = sizeof (info);
+  size_t len = sizeof (info);
   if (sysctl (info_path, 6, &info, &len, NULL, 0) >= 0 && len == sizeof (info))
     return strdup (info.p_comm);
 

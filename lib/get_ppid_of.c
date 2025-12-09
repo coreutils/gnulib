@@ -77,10 +77,8 @@ get_ppid_of (pid_t pid)
 
   /* Read the contents of /proc/<pid>/status into memory.  */
   char filename[6 + 10 + 7 + 1];
-  int fd;
-
   sprintf (filename, "/proc/%u/status", (unsigned int) pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
+  int fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       char buf[4096 + 1];
@@ -117,10 +115,8 @@ get_ppid_of (pid_t pid)
 
   /* Read the contents of /proc/<pid>/status into memory.  */
   char filename[6 + 10 + 7 + 1];
-  int fd;
-
   sprintf (filename, "/proc/%u/status", (unsigned int) pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
+  int fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       char buf[4096 + 1];
@@ -128,13 +124,11 @@ get_ppid_of (pid_t pid)
       close (fd);
       if (nread >= 0)
         {
-          char *p;
-
           /* NUL-terminate the buffer.  */
           buf[nread] = '\0';
 
           /* Search for the third space-separated field.  */
-          p = strchr (buf, ' ');
+          char *p = strchr (buf, ' ');
           if (p != NULL)
             {
               p = strchr (p + 1, ' ');
@@ -154,10 +148,8 @@ get_ppid_of (pid_t pid)
 
   /* Read the contents of /proc/<pid>/psinfo into memory.  */
   char filename[6 + 10 + 7 + 1];
-  int fd;
-
   sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
+  int fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       char buf[4096 + 1];
@@ -165,15 +157,12 @@ get_ppid_of (pid_t pid)
       close (fd);
       if (nread >= 0)
         {
-          char *p;
-          int count;
-
           /* NUL-terminate the buffer.  */
           buf[nread] = '\0';
 
           /* Search for the 16th space-separated field.  */
-          p = strchr (buf, ' ');
-          for (count = 1; p != NULL && count < 15; count++)
+          char *p = strchr (buf, ' ');
+          for (int count = 1; p != NULL && count < 15; count++)
             p = strchr (p + 1, ' ');
           if (p != NULL)
             {
@@ -192,10 +181,8 @@ get_ppid_of (pid_t pid)
      Alternatively, we could read the contents of /proc/<pid>/status into
      memory.  But it contains a lot of information that we don't need.  */
   char filename[6 + 10 + 7 + 1];
-  int fd;
-
   sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-  fd = open (filename, O_RDONLY | O_CLOEXEC);
+  int fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       /* The contents is a 'struct psinfo'.  But since 'struct psinfo'
@@ -222,9 +209,7 @@ get_ppid_of (pid_t pid)
   int info_path[] =
     { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid, sizeof (struct kinfo_proc), 1 };
   struct kinfo_proc info;
-  size_t len;
-
-  len = sizeof (info);
+  size_t len = sizeof (info);
   if (sysctl (info_path, 6, &info, &len, NULL, 0) >= 0 && len == sizeof (info))
     return info.p_ppid;
 

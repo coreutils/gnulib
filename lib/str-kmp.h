@@ -119,14 +119,10 @@ knuth_morris_pratt (const UNIT *haystack,
 
   /* Search, using the table to accelerate the processing.  */
   {
-    size_t j;
-    const UNIT *rhaystack;
-    const UNIT *phaystack;
-
     *resultp = NULL;
-    j = 0;
-    rhaystack = haystack;
-    phaystack = haystack;
+    size_t j = 0;
+    const UNIT *rhaystack = haystack;
+    const UNIT *phaystack = haystack;
     /* Invariant: phaystack = rhaystack + j.  */
     while (*phaystack != 0)
       if (CANON_ELEMENT (needle[j]) == CANON_ELEMENT (*phaystack))

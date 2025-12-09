@@ -80,9 +80,7 @@ cbrtl (long double x)
 {
   if (isfinite (x) && x != 0.0L)
     {
-      int e, rem, sign;
-      long double z;
-
+      int sign;
       if (x > 0)
         sign = 1;
       else
@@ -91,8 +89,9 @@ cbrtl (long double x)
           x = -x;
         }
 
-      z = x;
+      long double z = x;
       /* extract power of 2, leaving mantissa between 0.5 and 1  */
+      int e;
       x = frexpl (x, &e);
 
       /* Approximate cube root of number between .5 and 1,
@@ -104,6 +103,7 @@ cbrtl (long double x)
            + 1.3304961236013647092521e0L) * x + 3.7568280825958912391243e-1L;
 
       /* exponent divided by 3 */
+      int rem;
       if (e >= 0)
         {
           rem = e;

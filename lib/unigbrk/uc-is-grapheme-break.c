@@ -118,15 +118,13 @@ static const unsigned long int gb_table[18] =
 bool
 uc_is_grapheme_break (ucs4_t a, ucs4_t b)
 {
-  int a_gcp, b_gcp;
-
   if ((a | b) < 0x300)
     {
       /* GB3 is the only relevant rule for this case. */
       return a != '\r' || b != '\n';
     }
 
-  a_gcp = uc_graphemeclusterbreak_property (a);
-  b_gcp = uc_graphemeclusterbreak_property (b);
+  int a_gcp = uc_graphemeclusterbreak_property (a);
+  int b_gcp = uc_graphemeclusterbreak_property (b);
   return (gb_table[a_gcp] >> b_gcp) & 1;
 }

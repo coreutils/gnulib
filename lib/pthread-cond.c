@@ -134,10 +134,9 @@ pthread_cond_timedwait (_GL_UNUSED pthread_cond_t *cond,
   for (;;)
     {
       struct timeval currtime;
-      unsigned long remaining;
-
       gettimeofday (&currtime, NULL);
 
+      unsigned long remaining;
       if (currtime.tv_sec > abstime->tv_sec)
         remaining = 0;
       else

@@ -148,10 +148,7 @@ static const long double
 static long double
 kernel_tanl (long double x, long double y, int iy)
 {
-  long double z, r, v, w, s, u, u1;
-  int invert = 0, sign;
-
-  sign = 1;
+  int sign = 1;
   if (x < 0)
     {
       x = -x;
@@ -169,24 +166,27 @@ kernel_tanl (long double x, long double y, int iy)
             return (iy == 1 ? x : -1.0L / x) * sign;
         }
     }
+
+  int invert = 0;
   if (x >= 0.6743316650390625) /* |x| >= 0.6743316650390625 */
     {
       invert = 1;
 
-      z = pio4hi - x;
-      w = pio4lo - y;
+      long double z = pio4hi - x;
+      long double w = pio4lo - y;
       x = z + w;
       y = 0.0;
     }
-  z = x * x;
-  r = T0 + z * (T1 + z * (T2 + z * (T3 + z * T4)));
-  v = U0 + z * (U1 + z * (U2 + z * (U3 + z * (U4 + z))));
+
+  long double z = x * x;
+  long double r = T0 + z * (T1 + z * (T2 + z * (T3 + z * T4)));
+  long double v = U0 + z * (U1 + z * (U2 + z * (U3 + z * (U4 + z))));
   r = r / v;
 
-  s = z * x;
+  long double s = z * x;
   r = y + z * (s * r + y);
   r += TH * s;
-  w = x + r;
+  long double w = x + r;
   if (invert)
     {
       v = (long double) iy;
@@ -199,10 +199,10 @@ kernel_tanl (long double x, long double y, int iy)
     {                           /* if allow error up to 2 ulp,
                                    simply return -1.0/(x+r) here */
       /*  compute -1.0/(x+r) accurately */
-      u1 = (double) w;
+      long double u1 = (double) w;
       v = r - (u1 - x);
       z = -1.0 / w;
-      u = (double) z;
+      long double u = (double) z;
       s = 1.0 + u * u1;
       return (u + z * (s + u * v)) * sign;
     }
@@ -211,9 +211,6 @@ kernel_tanl (long double x, long double y, int iy)
 long double
 tanl (long double x)
 {
-  long double y[2], z = 0.0L;
-  int n;
-
   /* tanl(NaN) is NaN */
   if (isnanl (x))
     return x;
@@ -221,7 +218,10 @@ tanl (long double x)
   /* |x| ~< pi/4 */
   if (x >= -0.7853981633974483096156608458198757210492 &&
       x <= 0.7853981633974483096156608458198757210492)
-    return kernel_tanl (x, z, 1);
+    {
+      long double z = 0.0L;
+      return kernel_tanl (x, z, 1);
+    }
 
   /* tanl(Inf) is NaN, tanl(0) is 0 */
   else if (x + x == x)
@@ -230,7 +230,8 @@ tanl (long double x)
   /* argument reduction needed */
   else
     {
-      n = ieee754_rem_pio2l (x, y);
+      long double y[2];
+      int n = ieee754_rem_pio2l (x, y);
       /* 1 -- n even, -1 -- n odd */
       return kernel_tanl (y[0], y[1], 1 - ((n & 1) << 1));
     }

@@ -27,27 +27,20 @@ int
 FUNC (const UNIT *s, size_t n, const char *iso639_language,
       bool *resultp)
 {
-  UNIT normsbuf[2048 / sizeof (UNIT)];
-  UNIT *norms;
-  size_t norms_length;
-  UNIT mappedbuf[2048 / sizeof (UNIT)];
-  UNIT *mapped_toupper;
-  UNIT *mapped_tolower;
-  UNIT *mapped_totitle;
-  size_t mapped_length;
-
   /* Apply canonical decomposition to S.  */
-  norms_length = sizeof (normsbuf) / sizeof (UNIT);
-  norms = U_NORMALIZE (UNINORM_NFD, s, n, normsbuf, &norms_length);
+  UNIT normsbuf[2048 / sizeof (UNIT)];
+  size_t norms_length = sizeof (normsbuf) / sizeof (UNIT);
+  UNIT *norms = U_NORMALIZE (UNINORM_NFD, s, n, normsbuf, &norms_length);
   if (norms == NULL)
     /* errno is set here.  */
     return -1;
 
-  mapped_length = sizeof (mappedbuf) / sizeof (UNIT);
+  UNIT mappedbuf[2048 / sizeof (UNIT)];
+  size_t mapped_length = sizeof (mappedbuf) / sizeof (UNIT);
 
   /* Apply toupper mapping.  */
-  mapped_toupper = U_TOUPPER (norms, norms_length, iso639_language, NULL,
-                              mappedbuf, &mapped_length);
+  UNIT *mapped_toupper = U_TOUPPER (norms, norms_length, iso639_language, NULL,
+                                    mappedbuf, &mapped_length);
   if (mapped_toupper == NULL)
     goto fail;
 
@@ -61,8 +54,8 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
     }
 
   /* Apply tolower mapping.  */
-  mapped_tolower = U_TOLOWER (norms, norms_length, iso639_language, NULL,
-                              mapped_toupper, &mapped_length);
+  UNIT *mapped_tolower = U_TOLOWER (norms, norms_length, iso639_language, NULL,
+                                    mapped_toupper, &mapped_length);
   if (mapped_tolower == NULL)
     {
       if (mapped_toupper != mappedbuf)
@@ -87,8 +80,8 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
     }
 
   /* Apply totitle mapping.  */
-  mapped_totitle = U_TOTITLE (norms, norms_length, iso639_language, NULL,
-                              mapped_tolower, &mapped_length);
+  UNIT *mapped_totitle = U_TOTITLE (norms, norms_length, iso639_language, NULL,
+                                    mapped_tolower, &mapped_length);
   if (mapped_totitle == NULL)
     {
       if (mapped_tolower != mappedbuf)

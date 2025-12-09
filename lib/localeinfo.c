@@ -46,9 +46,9 @@ static_assert (MB_LEN_MAX <= SCHAR_MAX);
 static bool
 is_using_utf8 (void)
 {
+  mbstate_t state; mbszero (&state);
   char32_t wc;
-  mbstate_t mbs; mbszero (&mbs);
-  return mbrtoc32 (&wc, "\xc4\x80", 2, &mbs) == 2 && wc == 0x100;
+  return mbrtoc32 (&wc, "\xc4\x80", 2, &state) == 2 && wc == 0x100;
 }
 
 /* Return true if the locale is compatible enough with the C locale so
@@ -103,9 +103,9 @@ init_localeinfo (struct localeinfo *localeinfo)
     {
       char c = i;
       unsigned char uc = i;
-      mbstate_t s; mbszero (&s);
+      mbstate_t state; mbszero (&state);
       char32_t wc;
-      size_t len = mbrtoc32 (&wc, &c, 1, &s);
+      size_t len = mbrtoc32 (&wc, &c, 1, &state);
       localeinfo->sbclen[uc] = len <= 1 ? 1 : - (int) - len;
       localeinfo->sbctowc[uc] = len <= 1 ? wc : WEOF;
     }

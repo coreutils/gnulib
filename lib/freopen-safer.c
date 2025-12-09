@@ -68,7 +68,6 @@ freopen_safer (char const *name, char const *mode, FILE *f)
   bool protect_in = false;
   bool protect_out = false;
   bool protect_err = false;
-  int saved_errno;
 
   switch (fileno (f))
     {
@@ -96,7 +95,7 @@ freopen_safer (char const *name, char const *mode, FILE *f)
     f = NULL;
   else
     f = freopen (name, mode, f);
-  saved_errno = errno;
+  int saved_errno = errno;
   if (protect_err)
     close (STDERR_FILENO);
   if (protect_out)

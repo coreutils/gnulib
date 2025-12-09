@@ -24,31 +24,33 @@
 RETURN_TYPE
 FUNC (const UNIT *haystack_start, const UNIT *needle_start)
 {
-  const UNIT *haystack = haystack_start;
   const UNIT *needle = needle_start;
-  size_t needle_len; /* Length of NEEDLE.  */
-  size_t haystack_len; /* Known minimum length of HAYSTACK.  */
-  bool ok = true; /* True if NEEDLE is prefix of HAYSTACK.  */
 
   /* Determine length of NEEDLE, and in the process, make sure
      HAYSTACK is at least as long (no point processing all of a long
      NEEDLE if HAYSTACK is too short).  */
-  while (*haystack && *needle)
-    ok &= *haystack++ == *needle++;
-  if (*needle)
-    return NULL;
-  if (ok)
-    return (RETURN_TYPE) haystack_start;
+  {
+    const UNIT *haystack = haystack_start;
+    bool ok = true; /* True if NEEDLE is prefix of HAYSTACK.  */
+    while (*haystack && *needle)
+      ok &= *haystack++ == *needle++;
+    if (*needle)
+      return NULL;
+    if (ok)
+      return (RETURN_TYPE) haystack_start;
+  }
 
   /* Reduce the size of haystack using STRCHR, since it has a smaller
      linear coefficient than the Two-Way algorithm.  */
-  needle_len = needle - needle_start;
-  haystack = STRCHR (haystack_start + 1, *needle_start);
+  size_t needle_len = /* Length of NEEDLE.  */
+    needle - needle_start;
+  const UNIT *haystack = STRCHR (haystack_start + 1, *needle_start);
   if (!haystack || __builtin_expect (needle_len == 1, 0))
     return (RETURN_TYPE) haystack;
   needle -= needle_len;
-  haystack_len = (haystack > haystack_start + needle_len ? 1
-                  : needle_len + haystack_start - haystack);
+  size_t haystack_len = /* Known minimum length of HAYSTACK.  */
+    (haystack > haystack_start + needle_len ? 1
+     : needle_len + haystack_start - haystack);
 
   /* Perform the search.  */
   return two_way_short_needle (haystack, haystack_len,

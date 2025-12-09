@@ -68,14 +68,13 @@ is_git_present (void)
       /* Test for presence of git:
          "git --version 2>/dev/null"  */
       const char *argv[3];
-      pid_t child;
-      int fd[1];
-
       argv[0] = "git";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                              DEV_NULL, true, true, false, fd);
+
+      int fd[1];
+      pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                    DEV_NULL, true, true, false, fd);
       if (child == -1)
         git_present = false;
       else
@@ -140,15 +139,14 @@ git_vc_controlled (const char *filename)
   /* Run "git ls-files FILENAME" and return true if the exit code is 0
      and the output is non-empty.  */
   const char *argv[4];
-  pid_t child;
-  int fd[1];
-
   argv[0] = "git";
   argv[1] = "ls-files";
   argv[2] = filename;
   argv[3] = NULL;
-  child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                          DEV_NULL, true, true, false, fd);
+
+  int fd[1];
+  pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                DEV_NULL, true, true, false, fd);
   if (child == -1)
     return false;
 
@@ -183,8 +181,6 @@ git_unmodified (const char *filename)
      and return true if the exit code is 0.
      The '--' option is for the case that the specified file was removed.  */
   const char *argv[7];
-  int exitstatus;
-
   argv[0] = "git";
   argv[1] = "diff";
   argv[2] = "--quiet";
@@ -192,9 +188,10 @@ git_unmodified (const char *filename)
   argv[4] = "HEAD";
   argv[5] = filename;
   argv[6] = NULL;
-  exitstatus = execute ("git", "git", argv, NULL, NULL,
-                        false, false, true, true,
-                        true, false, NULL);
+
+  int exitstatus = execute ("git", "git", argv, NULL, NULL,
+                            false, false, true, true,
+                            true, false, NULL);
   return (exitstatus == 0);
 }
 
@@ -210,9 +207,6 @@ git_mtime (struct timespec *mtime, const char *filename)
      of the change), as the number of seconds since the Epoch.
      The '--' option is for the case that the specified file was removed.  */
   const char *argv[7];
-  pid_t child;
-  int fd[1];
-
   argv[0] = "git";
   argv[1] = "log";
   argv[2] = "-1";
@@ -220,23 +214,21 @@ git_mtime (struct timespec *mtime, const char *filename)
   argv[4] = "--";
   argv[5] = filename;
   argv[6] = NULL;
-  child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                          DEV_NULL, true, true, false, fd);
+
+  int fd[1];
+  pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                DEV_NULL, true, true, false, fd);
   if (child == -1)
     return -1;
 
   /* Retrieve its result.  */
-  FILE *fp;
-  char *line;
-  size_t linesize;
-  size_t linelen;
-
-  fp = fdopen (fd[0], "r");
+  FILE *fp = fdopen (fd[0], "r");
   if (fp == NULL)
     error (EXIT_FAILURE, errno, _("fdopen() failed"));
 
-  line = NULL; linesize = 0;
-  linelen = getline (&line, &linesize, fp);
+  char *line = NULL;
+  size_t linesize = 0;
+  size_t linelen = getline (&line, &linesize, fp);
   if (linelen == (size_t)(-1))
     {
       error (0, 0, _("%s subprocess I/O error"), "git");
@@ -245,15 +237,13 @@ git_mtime (struct timespec *mtime, const char *filename)
     }
   else
     {
-      int exitstatus;
-
       if (linelen > 0 && line[linelen - 1] == '\n')
         line[linelen - 1] = '\0';
 
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus =
+      int exitstatus =
         wait_subprocess (child, "git", true, false, true, false, NULL);
       if (exitstatus == 0)
         {
@@ -321,15 +311,14 @@ abs_git_checkout (void)
   /* Run "git rev-parse --show-toplevel 2>/dev/null" and return its output,
      without the trailing newline.  */
   const char *argv[4];
-  pid_t child;
-  int fd[1];
-
   argv[0] = "git";
   argv[1] = "rev-parse";
   argv[2] = "--show-toplevel";
   argv[3] = NULL;
-  child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                          DEV_NULL, true, true, false, fd);
+
+  int fd[1];
+  pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                DEV_NULL, true, true, false, fd);
 
   if (child == -1)
     return NULL;
@@ -350,8 +339,6 @@ abs_git_checkout (void)
     }
   else
     {
-      int exitstatus;
-
       if (linelen > 0 && line[linelen - 1] == '\n')
         line[linelen - 1] = '\0';
 
@@ -362,7 +349,7 @@ abs_git_checkout (void)
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus =
+      int exitstatus =
         wait_subprocess (child, "git", true, true, true, false, NULL);
       if (exitstatus == 0)
         {
@@ -636,12 +623,10 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                             }
                         if (i > i0)
                           {
-                            pid_t child;
-                            int fd[1];
-
                             argv[i] = NULL;
-                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                    DEV_NULL, true, true, false, fd);
+                            int fd[1];
+                            pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                          DEV_NULL, true, true, false, fd);
                             if (child == -1)
                               break;
 
@@ -761,12 +746,10 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                             }
                         if (i > i0)
                           {
-                            pid_t child;
-                            int fd[1];
-
                             argv[i] = NULL;
-                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                    DEV_NULL, true, true, false, fd);
+                            int fd[1];
+                            pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                          DEV_NULL, true, true, false, fd);
                             if (child == -1)
                               break;
 
@@ -854,12 +837,10 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                             }
                         if (i > i0)
                           {
-                            pid_t child;
-                            int fd[1];
-
                             argv[i] = NULL;
-                            child = create_pipe_in ("git", "git", argv, NULL, NULL,
-                                                    DEV_NULL, true, true, false, fd);
+                            int fd[1];
+                            pid_t child = create_pipe_in ("git", "git", argv, NULL, NULL,
+                                                          DEV_NULL, true, true, false, fd);
                             if (child == -1)
                               break;
 

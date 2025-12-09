@@ -73,9 +73,9 @@ isapipe (int fd)
 {
   nlink_t pipe_link_count_max = PIPE_LINK_COUNT_MAX;
   bool check_for_fifo = (HAVE_FIFO_PIPES == 1);
+
   struct stat st;
   int fstat_result = fstat (fd, &st);
-
   if (fstat_result != 0)
     return fstat_result;
 

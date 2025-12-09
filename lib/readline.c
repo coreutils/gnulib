@@ -36,15 +36,14 @@
 char *
 readline (const char *prompt)
 {
-  char *out = NULL;
-  size_t size = 0;
-
   if (prompt)
     {
       fputs (prompt, stdout);
       fflush (stdout);
     }
 
+  char *out = NULL;
+  size_t size = 0;
   if (getline (&out, &size, stdin) < 0)
     {
       free (out);

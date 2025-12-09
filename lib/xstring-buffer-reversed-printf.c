@@ -43,10 +43,8 @@ sbr_xprependf (struct string_buffer_reversed *buffer,
                const char *formatstring, ...)
 {
   va_list args;
-  int ret;
-
   va_start (args, formatstring);
-  ret = sbr_xprependvf (buffer, formatstring, args);
+  int ret = sbr_xprependvf (buffer, formatstring, args);
   va_end (args);
   return ret;
 }

@@ -59,15 +59,12 @@ argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
 
   if (nlen > 1)
     {
-      const char *rp;
-      char *wp;
-
       *argz = (char *) realloc (*argz, *argz_len + nlen);
       if (*argz == NULL)
         return ENOMEM;
 
-      wp = *argz + *argz_len;
-      rp = string;
+      char *wp = *argz + *argz_len;
+      const char *rp = string;
       do
         if (*rp == delim)
           {
@@ -95,15 +92,12 @@ argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
   if (nlen > 1)
     {
-      const char *rp;
-      char *wp;
-
       *argz = (char *) malloc (nlen);
       if (*argz == NULL)
         return ENOMEM;
 
-      rp = string;
-      wp = *argz;
+      const char *rp = string;
+      char *wp = *argz;
       do
         if (*rp == delim)
           {
@@ -250,8 +244,6 @@ error_t
 argz_create (char *const argv[], char **argz, size_t *len)
 {
   size_t tlen = 0;
-  char *const *ap;
-  char *p;
 
   for (int argc = 0; argv[argc] != NULL; ++argc)
     tlen += strlen (argv[argc]) + 1;
@@ -264,6 +256,8 @@ argz_create (char *const argv[], char **argz, size_t *len)
       if (*argz == NULL)
         return ENOMEM;
 
+      char *p;
+      char *const *ap;
       for (p = *argz, ap = argv; *ap; ++ap, ++p)
         p = stpcpy (p, *ap);
     }
@@ -325,7 +319,6 @@ argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
 
   if (str && *str)
     {
-      char *arg = 0;
       char *src = *argz;
       size_t src_len = *argz_len;
       char *dst = 0;
@@ -333,58 +326,62 @@ argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
       int delayed_copy = 1;     /* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
-        {
-          char *match = strstr (arg, str);
-          if (match)
-            {
-              char *from = match + str_len;
-              size_t to_len = match - arg;
-              char *to = strndup (arg, to_len);
+      {
+        char *arg = 0;
 
-              while (to && from)
-                {
-                  str_append (&to, &to_len, with, with_len);
-                  if (to)
-                    {
-                      match = strstr (from, str);
-                      if (match)
-                        {
-                          str_append (&to, &to_len, from, match - from);
-                          from = match + str_len;
-                        }
-                      else
-                        {
-                          str_append (&to, &to_len, from, strlen (from));
-                          from = 0;
-                        }
-                    }
-                }
+        while (!err && (arg = argz_next (src, src_len, arg)))
+          {
+            char *match = strstr (arg, str);
+            if (match)
+              {
+                char *from = match + str_len;
+                size_t to_len = match - arg;
+                char *to = strndup (arg, to_len);
 
-              if (to)
-                {
-                  if (delayed_copy)
-                    /* We avoided copying SRC to DST until we found a match;
-                       now that we've done so, copy everything from the start
-                       of SRC.  */
-                    {
-                      if (arg > src)
-                        err = argz_append (&dst, &dst_len, src, (arg - src));
-                      delayed_copy = 0;
-                    }
-                  if (! err)
-                    err = argz_add (&dst, &dst_len, to);
-                  free (to);
-                }
-              else
-                err = ENOMEM;
+                while (to && from)
+                  {
+                    str_append (&to, &to_len, with, with_len);
+                    if (to)
+                      {
+                        match = strstr (from, str);
+                        if (match)
+                          {
+                            str_append (&to, &to_len, from, match - from);
+                            from = match + str_len;
+                          }
+                        else
+                          {
+                            str_append (&to, &to_len, from, strlen (from));
+                            from = 0;
+                          }
+                      }
+                  }
 
-              if (replace_count)
-                (*replace_count)++;
-            }
-          else if (! delayed_copy)
-            err = argz_add (&dst, &dst_len, arg);
-        }
+                if (to)
+                  {
+                    if (delayed_copy)
+                      /* We avoided copying SRC to DST until we found a match;
+                         now that we've done so, copy everything from the start
+                         of SRC.  */
+                      {
+                        if (arg > src)
+                          err = argz_append (&dst, &dst_len, src, (arg - src));
+                        delayed_copy = 0;
+                      }
+                    if (! err)
+                      err = argz_add (&dst, &dst_len, to);
+                    free (to);
+                  }
+                else
+                  err = ENOMEM;
+
+                if (replace_count)
+                  (*replace_count)++;
+              }
+            else if (! delayed_copy)
+              err = argz_add (&dst, &dst_len, arg);
+          }
+      }
 
       if (! err)
         {

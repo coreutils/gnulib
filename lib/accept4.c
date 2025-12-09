@@ -38,8 +38,6 @@
 int
 accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 {
-  int fd;
-
 #if HAVE_DECL_ACCEPT4
 # undef accept4
   /* Try the system call first, if it exists.  (We may be running with a glibc
@@ -67,7 +65,7 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
       return -1;
     }
 
-  fd = accept (sockfd, addr, addrlen);
+  int fd = accept (sockfd, addr, addrlen);
   if (fd < 0)
     return -1;
 
@@ -78,9 +76,8 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
     {
       HANDLE curr_process = GetCurrentProcess ();
       HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
-      HANDLE new_handle;
-      int nfd;
 
+      HANDLE new_handle;
       if (!DuplicateHandle (curr_process,           /* SourceProcessHandle */
                             old_handle,             /* SourceHandle */
                             curr_process,           /* TargetProcessHandle */
@@ -97,8 +94,8 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
       /* Closing fd before allocating the new fd ensures that the new fd will
          have the minimum possible value.  */
       close (fd);
-      nfd = _open_osfhandle ((intptr_t) new_handle,
-                             O_NOINHERIT | (flags & (O_TEXT | O_BINARY)));
+      int nfd = _open_osfhandle ((intptr_t) new_handle,
+                                 O_NOINHERIT | (flags & (O_TEXT | O_BINARY)));
       if (nfd < 0)
         {
           CloseHandle (new_handle);

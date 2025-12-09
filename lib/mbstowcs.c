@@ -27,7 +27,6 @@ size_t
 mbstowcs (wchar_t *dest, const char *src, size_t len)
 {
   mbstate_t state;
-
   mbszero (&state);
   return mbsrtowcs (dest, &src, len, &state);
 }

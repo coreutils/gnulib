@@ -137,10 +137,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                     {
                       /* Found already a node with the same value.  Turn it
                          into an ordered set, and add new_node to it.  */
-                      gl_oset_t nodes;
-                      struct gl_multiple_nodes *multi_entry;
-
-                      nodes =
+                      gl_oset_t nodes =
                         gl_oset_nx_create_empty (OSET_TREE_FLAVOR,
                                                  compare_by_position, NULL);
                       if (nodes == NULL)
@@ -151,7 +148,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                       if (gl_oset_nx_add (nodes, new_node) < 0)
                         goto fail;
 
-                      multi_entry =
+                      struct gl_multiple_nodes *multi_entry =
                        (struct gl_multiple_nodes *) malloc (sizeof (struct gl_multiple_nodes));
                       if (multi_entry == NULL)
                         goto fail;

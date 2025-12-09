@@ -71,19 +71,21 @@ gl_locale_name_posix (int category, const char *categoryname)
 const char *
 gl_locale_name (int category, const char *categoryname)
 {
-  const char *retval;
-
   if (category == LC_ALL)
     /* Invalid argument.  */
     abort ();
 
-  retval = gl_locale_name_thread (category, categoryname);
-  if (retval != NULL)
-    return retval;
+  {
+    const char *retval = gl_locale_name_thread (category, categoryname);
+    if (retval != NULL)
+      return retval;
+  }
 
-  retval = gl_locale_name_posix (category, categoryname);
-  if (retval != NULL)
-    return retval;
+  {
+    const char *retval = gl_locale_name_posix (category, categoryname);
+    if (retval != NULL)
+      return retval;
+  }
 
   return gl_locale_name_default ();
 }

@@ -155,13 +155,12 @@ static time_t
 parse_scaled_value (time_t base, cch_t ** ppz, cch_t * endp, int scale)
 {
   cch_t * pz = *ppz;
-  time_t val;
 
   if (base == BAD_TIME)
     return base;
 
   errno = 0;
-  val = str_const_to_ul (pz, &pz, 10);
+  time_t val = str_const_to_ul (pz, &pz, 10);
   if (errno != 0)
     return BAD_TIME;
   while (isspace ((unsigned char)*pz))
@@ -181,9 +180,7 @@ parse_scaled_value (time_t base, cch_t ** ppz, cch_t * endp, int scale)
 static time_t
 parse_year_month_day (cch_t * pz, cch_t * ps)
 {
-  time_t res = 0;
-
-  res = parse_scaled_value (0, &pz, ps, SEC_PER_YEAR);
+  time_t res = parse_scaled_value (0, &pz, ps, SEC_PER_YEAR);
 
   pz++; /* over the first '-' */
   ps = strchr (pz, '-');
@@ -203,20 +200,18 @@ parse_year_month_day (cch_t * pz, cch_t * ps)
 static time_t
 parse_yearmonthday (cch_t * in_pz)
 {
-  time_t res = 0;
-  char   buf[8];
-  cch_t * pz;
-
   if (strlen (in_pz) != 8)
     {
       errno = EINVAL;
       return BAD_TIME;
     }
 
+  char buf[8];
+
   memcpy (buf, in_pz, 4);
   buf[4] = NUL;
-  pz = buf;
-  res = parse_scaled_value (0, &pz, buf + 4, SEC_PER_YEAR);
+  cch_t *pz = buf;
+  time_t res = parse_scaled_value (0, &pz, buf + 4, SEC_PER_YEAR);
 
   memcpy (buf, in_pz + 4, 2);
   buf[2] = NUL;
@@ -234,33 +229,39 @@ static time_t
 parse_YMWD (cch_t * pz)
 {
   time_t res = 0;
-  cch_t * ps = strchr (pz, 'Y');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (0, &pz, ps, SEC_PER_YEAR);
-      pz++;
-    }
 
-  ps = strchr (pz, 'M');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (res, &pz, ps, SEC_PER_MONTH);
-      pz++;
-    }
-
-  ps = strchr (pz, 'W');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (res, &pz, ps, SEC_PER_WEEK);
-      pz++;
-    }
-
-  ps = strchr (pz, 'D');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (res, &pz, ps, SEC_PER_DAY);
-      pz++;
-    }
+  {
+    cch_t *ps = strchr (pz, 'Y');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (0, &pz, ps, SEC_PER_YEAR);
+        pz++;
+      }
+  }
+  {
+    cch_t *ps = strchr (pz, 'M');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (res, &pz, ps, SEC_PER_MONTH);
+        pz++;
+      }
+  }
+  {
+    cch_t *ps = strchr (pz, 'W');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (res, &pz, ps, SEC_PER_WEEK);
+        pz++;
+      }
+  }
+  {
+    cch_t *ps = strchr (pz, 'D');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (res, &pz, ps, SEC_PER_DAY);
+        pz++;
+      }
+  }
 
   while (isspace ((unsigned char)*pz))
     pz++;
@@ -278,9 +279,7 @@ parse_YMWD (cch_t * pz)
 static time_t
 parse_hour_minute_second (cch_t * pz, cch_t * ps)
 {
-  time_t res = 0;
-
-  res = parse_scaled_value (0, &pz, ps, SEC_PER_HR);
+  time_t res = parse_scaled_value (0, &pz, ps, SEC_PER_HR);
 
   pz++;
   ps = strchr (pz, ':');
@@ -301,29 +300,27 @@ parse_hour_minute_second (cch_t * pz, cch_t * ps)
 static time_t
 parse_hourminutesecond (cch_t * in_pz)
 {
-  time_t res = 0;
-  char   buf[4];
-  cch_t * pz;
-
   if (strlen (in_pz) != 6)
     {
       errno = EINVAL;
       return BAD_TIME;
     }
 
+  char buf[4];
+
   memcpy (buf, in_pz, 2);
   buf[2] = NUL;
-  pz = buf;
-  res = parse_scaled_value (0, &pz, buf + 2, SEC_PER_HR);
+  cch_t *pz = buf;
+  time_t res = parse_scaled_value (0, &pz, buf + 2, SEC_PER_HR);
 
   memcpy (buf, in_pz + 2, 2);
   buf[2] = NUL;
-  pz =   buf;
+  pz = buf;
   res = parse_scaled_value (res, &pz, buf + 2, SEC_PER_MIN);
 
   memcpy (buf, in_pz + 4, 2);
   buf[2] = NUL;
-  pz =   buf;
+  pz = buf;
   return parse_scaled_value (res, &pz, buf + 2, 1);
 }
 
@@ -332,26 +329,31 @@ static time_t
 parse_HMS (cch_t * pz)
 {
   time_t res = 0;
-  cch_t * ps = strchr (pz, 'H');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (0, &pz, ps, SEC_PER_HR);
-      pz++;
-    }
 
-  ps = strchr (pz, 'M');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (res, &pz, ps, SEC_PER_MIN);
-      pz++;
-    }
-
-  ps = strchr (pz, 'S');
-  if (ps != NULL)
-    {
-      res = parse_scaled_value (res, &pz, ps, 1);
-      pz++;
-    }
+  {
+    cch_t *ps = strchr (pz, 'H');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (0, &pz, ps, SEC_PER_HR);
+        pz++;
+      }
+  }
+  {
+    cch_t *ps = strchr (pz, 'M');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (res, &pz, ps, SEC_PER_MIN);
+        pz++;
+      }
+  }
+  {
+    cch_t *ps = strchr (pz, 'S');
+    if (ps != NULL)
+      {
+        res = parse_scaled_value (res, &pz, ps, 1);
+        pz++;
+      }
+  }
 
   while (isspace ((unsigned char)*pz))
     pz++;
@@ -368,13 +370,12 @@ parse_HMS (cch_t * pz)
 static time_t
 parse_time (cch_t * pz)
 {
-  cch_t * ps;
   time_t  res;
 
   /*
    *  Scan for a hyphen
    */
-  ps = strchr (pz, ':');
+  cch_t *ps = strchr (pz, ':');
   if (ps != NULL)
     {
       res = parse_hour_minute_second (pz, ps);
@@ -422,11 +423,7 @@ trim (char * pz)
 static time_t
 parse_period (cch_t * in_pz)
 {
-  char * pT;
-  char * ps;
-  char * pz   = strdup (in_pz);
-  void * fptr = pz;
-  time_t res  = 0;
+  char *pz = strdup (in_pz);
 
   if (pz == NULL)
     {
@@ -434,7 +431,9 @@ parse_period (cch_t * in_pz)
       return BAD_TIME;
     }
 
-  pT = strchr (pz, 'T');
+  void * fptr = pz;
+
+  char *pT = strchr (pz, 'T');
   if (pT != NULL)
     {
       *(pT++) = NUL;
@@ -442,10 +441,12 @@ parse_period (cch_t * in_pz)
       pT = trim (pT);
     }
 
+  time_t res;
+
   /*
    *  Scan for a hyphen
    */
-  ps = strchr (pz, '-');
+  char *ps = strchr (pz, '-');
   if (ps != NULL)
     {
       res = parse_year_month_day (pz, ps);
@@ -482,10 +483,8 @@ parse_non_iso8601 (cch_t * pz)
   time_t res = 0;
 
   do  {
-    time_t val;
-
     errno = 0;
-    val = str_const_to_l (pz, &pz, 10);
+    time_t val = str_const_to_l (pz, &pz, 10);
     if (errno != 0)
       goto bad_time;
 

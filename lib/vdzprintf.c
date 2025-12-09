@@ -33,12 +33,9 @@ off64_t
 vdzprintf (int fd, const char *format, va_list args)
 {
   char buf[2000];
-  char *output;
-  size_t len;
   size_t lenbuf = sizeof (buf);
-
-  output = vasnprintf (buf, &lenbuf, format, args);
-  len = lenbuf;
+  char *output = vasnprintf (buf, &lenbuf, format, args);
+  size_t len = lenbuf;
 
   if (!output)
     return -1;

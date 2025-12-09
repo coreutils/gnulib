@@ -97,9 +97,9 @@ make_dir_parents (char *dir,
 
   if (mkdir_errno == 0)
     {
-      ptrdiff_t prefix_len = 0;
       int savewd_chdir_options = (HAVE_FCHMOD ? SAVEWD_CHDIR_SKIP_READABLE : 0);
 
+      ptrdiff_t prefix_len = 0;
       if (make_ancestor)
         {
           prefix_len = mkancesdirs (dir, wd, make_ancestor, options);

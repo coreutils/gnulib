@@ -63,12 +63,8 @@ int
 openpty (int *amaster, int *aslave, char *name,
          struct termios const *termp, struct winsize const *winp)
 {
-  int master;
-  char *slave_name;
-  int slave;
-
   /* This call uses the 'posix_openpt' module.  */
-  master = posix_openpt (O_RDWR | O_NOCTTY);
+  int master = posix_openpt (O_RDWR | O_NOCTTY);
   if (master < 0)
     return -1;
 
@@ -82,11 +78,11 @@ openpty (int *amaster, int *aslave, char *name,
   if (unlockpt (master))
     goto fail;
 
-  slave_name = ptsname (master);
+  char *slave_name = ptsname (master);
   if (slave_name == NULL)
     goto fail;
 
-  slave = open (slave_name, O_RDWR | O_NOCTTY);
+  int slave = open (slave_name, O_RDWR | O_NOCTTY);
   if (slave == -1)
     goto fail;
 

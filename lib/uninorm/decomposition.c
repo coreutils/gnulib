@@ -39,19 +39,15 @@ uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition)
          "Hangul Syllable Decomposition",  See also the clarification at
          <https://www.unicode.org/versions/Unicode5.1.0/>, section
          "Clarification of Hangul Jamo Handling".  */
-      unsigned int t;
-
       uc -= 0xAC00;
-      t = uc % 28;
+      unsigned int t = uc % 28;
 
       *decomp_tag = UC_DECOMP_CANONICAL;
       if (t == 0)
         {
-          unsigned int v, l;
-
           uc = uc / 28;
-          v = uc % 21;
-          l = uc / 21;
+          unsigned int v = uc % 21;
+          unsigned int l = uc / 21;
 
           decomposition[0] = 0x1100 + l;
           decomposition[1] = 0x1161 + v;
@@ -64,11 +60,9 @@ uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition)
           decomposition[1] = 0x11A7 + t;
           return 2;
 #else
-          unsigned int v, l;
-
           uc = uc / 28;
-          v = uc % 21;
-          l = uc / 21;
+          unsigned int v = uc % 21;
+          unsigned int l = uc / 21;
 
           decomposition[0] = 0x1100 + l;
           decomposition[1] = 0x1161 + v;
@@ -82,15 +76,11 @@ uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition)
       unsigned short entry = decomp_index (uc);
       if (entry != (unsigned short)(-1))
         {
-          const unsigned char *p;
-          unsigned int element;
-          unsigned int length;
-
-          p = &gl_uninorm_decomp_chars_table[3 * (entry & 0x7FFF)];
-          element = (p[0] << 16) | (p[1] << 8) | p[2];
+          const unsigned char *p = &gl_uninorm_decomp_chars_table[3 * (entry & 0x7FFF)];
+          unsigned int element = (p[0] << 16) | (p[1] << 8) | p[2];
           /* The first element has 5 bits for the decomposition type.  */
           *decomp_tag = (element >> 18) & 0x1f;
-          length = 1;
+          unsigned int length = 1;
           for (;;)
             {
               /* Every element has an 18 bits wide Unicode code point.  */

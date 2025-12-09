@@ -38,24 +38,20 @@
 static int
 do_pt_chown (void)
 {
-  char *pty;
-  struct stat st;
-  struct group *p;
-  gid_t gid;
-
   /* Check that PTY_FILENO is a valid master pseudo terminal.  */
-  pty = ptsname (PTY_FILENO);
+  char *pty = ptsname (PTY_FILENO);
   if (pty == NULL)
     return errno == EBADF ? FAIL_EBADF : FAIL_EINVAL;
 
   /* Check that the returned slave pseudo terminal is a
      character device.  */
+  struct stat st;
   if (stat (pty, &st) < 0 || !S_ISCHR (st.st_mode))
     return FAIL_EINVAL;
 
   /* Get the group ID of the special 'tty' group.  */
-  p = getgrnam (TTY_GROUP);
-  gid = p ? p->gr_gid : getgid ();
+  struct group *p = getgrnam (TTY_GROUP);
+  gid_t gid = p ? p->gr_gid : getgid ();
 
   /* Set the owner to the real user ID, and the group to that special
      group ID.  */

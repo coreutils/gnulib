@@ -178,17 +178,13 @@ gl_array_search_atleast (gl_omap_t map,
 static int
 grow (gl_omap_t map)
 {
-  size_t new_allocated;
-  size_t memory_size;
-  struct pair *memory;
-
-  new_allocated = xtimes (map->allocated, 2);
+  size_t new_allocated = xtimes (map->allocated, 2);
   new_allocated = xsum (new_allocated, 1);
-  memory_size = xtimes (new_allocated, sizeof (struct pair));
+  size_t memory_size = xtimes (new_allocated, sizeof (struct pair));
   if (size_overflow_p (memory_size))
     /* Overflow, would lead to out of memory.  */
     return -1;
-  memory = (struct pair *) realloc (map->pairs, memory_size);
+  struct pair *memory = (struct pair *) realloc (map->pairs, memory_size);
   if (memory == NULL)
     /* Out of memory.  */
     return -1;
@@ -205,12 +201,10 @@ gl_array_nx_add_at (gl_omap_t map, size_t position,
                     const void *key, const void *value)
 {
   size_t count = map->count;
-  struct pair *pairs;
-
   if (count == map->allocated)
     if (grow (map) < 0)
       return -1;
-  pairs = map->pairs;
+  struct pair *pairs = map->pairs;
   for (size_t i = count; i > position; i--)
     pairs[i] = pairs[i - 1];
   pairs[position].key = key;
@@ -265,9 +259,7 @@ static void
 gl_array_remove_at (gl_omap_t map, size_t position)
 {
   size_t count = map->count;
-  struct pair *pairs;
-
-  pairs = map->pairs;
+  struct pair *pairs = map->pairs;
   if (map->base.kdispose_fn != NULL)
     map->base.kdispose_fn (pairs[position].key);
   for (size_t i = position + 1; i < count; i++)

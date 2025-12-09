@@ -32,7 +32,6 @@ size_t
 dir_len (char const *file)
 {
   size_t prefix_length = FILE_SYSTEM_PREFIX_LEN (file);
-  size_t length;
 
   /* Advance prefix_length beyond important leading slashes.  */
   prefix_length += (prefix_length != 0
@@ -45,8 +44,10 @@ dir_len (char const *file)
                        : 0));
 
   /* Strip the basename and any redundant slashes before it.  */
+  size_t length;
   for (length = last_component (file) - file;
-       prefix_length < length; length--)
+       prefix_length < length;
+       length--)
     if (! ISSLASH (file[length - 1]))
       break;
   return length;

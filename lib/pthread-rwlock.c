@@ -57,18 +57,20 @@ int
 pthread_rwlockattr_init (pthread_rwlockattr_t *attr)
 # undef pthread_rwlockattr_init
 {
-  int err;
-
-  err = pthread_rwlockattr_init (attr);
-  if (err != 0)
-    return err;
-  err = pthread_rwlockattr_setkind_np (attr,
-                                       PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
-  if (err != 0)
-    {
-      pthread_rwlockattr_destroy (attr);
+  {
+    int err = pthread_rwlockattr_init (attr);
+    if (err != 0)
       return err;
-    }
+  }
+  {
+    int err = pthread_rwlockattr_setkind_np (attr,
+                                             PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
+    if (err != 0)
+      {
+        pthread_rwlockattr_destroy (attr);
+        return err;
+      }
+  }
   return 0;
 }
 
@@ -144,17 +146,21 @@ int
 pthread_rwlock_init (pthread_rwlock_t *lock,
                      _GL_UNUSED const pthread_rwlockattr_t *attr)
 {
-  int err;
-
-  err = pthread_mutex_init (&lock->lock, NULL);
-  if (err != 0)
-    return err;
-  err = pthread_cond_init (&lock->waiting_readers, NULL);
-  if (err != 0)
-    return err;
-  err = pthread_cond_init (&lock->waiting_writers, NULL);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_init (&lock->lock, NULL);
+    if (err != 0)
+      return err;
+  }
+  {
+    int err = pthread_cond_init (&lock->waiting_readers, NULL);
+    if (err != 0)
+      return err;
+  }
+  {
+    int err = pthread_cond_init (&lock->waiting_writers, NULL);
+    if (err != 0)
+      return err;
+  }
   lock->waiting_writers_count = 0;
   lock->runcount = 0;
   return 0;
@@ -163,11 +169,11 @@ pthread_rwlock_init (pthread_rwlock_t *lock,
 int
 pthread_rwlock_rdlock (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether only readers are currently running, and whether the runcount
      field will not overflow, and whether no writer is waiting.  The latter
      condition is because POSIX recommends that "write locks shall take
@@ -176,7 +182,7 @@ pthread_rwlock_rdlock (pthread_rwlock_t *lock)
     {
       /* This thread has to wait for a while.  Enqueue it among the
          waiting_readers.  */
-      err = pthread_cond_wait (&lock->waiting_readers, &lock->lock);
+      int err = pthread_cond_wait (&lock->waiting_readers, &lock->lock);
       if (err != 0)
         {
           pthread_mutex_unlock (&lock->lock);
@@ -190,18 +196,18 @@ pthread_rwlock_rdlock (pthread_rwlock_t *lock)
 int
 pthread_rwlock_wrlock (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether no readers or writers are currently running.  */
   while (!(lock->runcount == 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
          waiting_writers.  */
       lock->waiting_writers_count++;
-      err = pthread_cond_wait (&lock->waiting_writers, &lock->lock);
+      int err = pthread_cond_wait (&lock->waiting_writers, &lock->lock);
       if (err != 0)
         {
           lock->waiting_writers_count--;
@@ -217,11 +223,11 @@ pthread_rwlock_wrlock (pthread_rwlock_t *lock)
 int
 pthread_rwlock_tryrdlock (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether only readers are currently running, and whether the runcount
      field will not overflow, and whether no writer is waiting.  The latter
      condition is because POSIX recommends that "write locks shall take
@@ -239,11 +245,11 @@ pthread_rwlock_tryrdlock (pthread_rwlock_t *lock)
 int
 pthread_rwlock_trywrlock (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether no readers or writers are currently running.  */
   if (!(lock->runcount == 0))
     {
@@ -259,11 +265,11 @@ int
 pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
                             const struct timespec *abstime)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether only readers are currently running, and whether the runcount
      field will not overflow, and whether no writer is waiting.  The latter
      condition is because POSIX recommends that "write locks shall take
@@ -272,8 +278,8 @@ pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
     {
       /* This thread has to wait for a while.  Enqueue it among the
          waiting_readers.  */
-      err = pthread_cond_timedwait (&lock->waiting_readers, &lock->lock,
-                                    abstime);
+      int err = pthread_cond_timedwait (&lock->waiting_readers, &lock->lock,
+                                        abstime);
       if (err != 0)
         {
           pthread_mutex_unlock (&lock->lock);
@@ -288,19 +294,19 @@ int
 pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
                             const struct timespec *abstime)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   /* Test whether no readers or writers are currently running.  */
   while (!(lock->runcount == 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
          waiting_writers.  */
       lock->waiting_writers_count++;
-      err = pthread_cond_timedwait (&lock->waiting_writers, &lock->lock,
-                                    abstime);
+      int err = pthread_cond_timedwait (&lock->waiting_writers, &lock->lock,
+                                        abstime);
       if (err != 0)
         {
           lock->waiting_writers_count--;
@@ -316,11 +322,11 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
 int
 pthread_rwlock_unlock (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_lock (&lock->lock);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_lock (&lock->lock);
+    if (err != 0)
+      return err;
+  }
   if (lock->runcount < 0)
     {
       /* Drop a writer lock.  */
@@ -348,7 +354,7 @@ pthread_rwlock_unlock (pthread_rwlock_t *lock)
       if (lock->waiting_writers_count > 0)
         {
           /* Wake up one of the waiting writers.  */
-          err = pthread_cond_signal (&lock->waiting_writers);
+          int err = pthread_cond_signal (&lock->waiting_writers);
           if (err != 0)
             {
               pthread_mutex_unlock (&lock->lock);
@@ -358,7 +364,7 @@ pthread_rwlock_unlock (pthread_rwlock_t *lock)
       else
         {
           /* Wake up all waiting readers.  */
-          err = pthread_cond_broadcast (&lock->waiting_readers);
+          int err = pthread_cond_broadcast (&lock->waiting_readers);
           if (err != 0)
             {
               pthread_mutex_unlock (&lock->lock);
@@ -372,17 +378,21 @@ pthread_rwlock_unlock (pthread_rwlock_t *lock)
 int
 pthread_rwlock_destroy (pthread_rwlock_t *lock)
 {
-  int err;
-
-  err = pthread_mutex_destroy (&lock->lock);
-  if (err != 0)
-    return err;
-  err = pthread_cond_destroy (&lock->waiting_readers);
-  if (err != 0)
-    return err;
-  err = pthread_cond_destroy (&lock->waiting_writers);
-  if (err != 0)
-    return err;
+  {
+    int err = pthread_mutex_destroy (&lock->lock);
+    if (err != 0)
+      return err;
+  }
+  {
+    int err = pthread_cond_destroy (&lock->waiting_readers);
+    if (err != 0)
+      return err;
+  }
+  {
+    int err = pthread_cond_destroy (&lock->waiting_writers);
+    if (err != 0)
+      return err;
+  }
   return 0;
 }
 
@@ -397,28 +407,31 @@ int
 pthread_rwlock_init (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr)
 #   undef pthread_rwlock_init
 {
-  int err;
-
   if (attr != NULL)
-    err = pthread_rwlock_init (lock, attr);
+    return pthread_rwlock_init (lock, attr);
   else
     {
       pthread_rwlockattr_t replacement_attr;
-
-      err = pthread_rwlockattr_init (&replacement_attr);
-      if (err != 0)
-        return err;
-      err = pthread_rwlockattr_setkind_np (&replacement_attr,
-                                           PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
-      if (err != 0)
-        {
-          pthread_rwlockattr_destroy (&replacement_attr);
+      {
+        int err = pthread_rwlockattr_init (&replacement_attr);
+        if (err != 0)
           return err;
-        }
-      err = pthread_rwlock_init (lock, &replacement_attr);
-      pthread_rwlockattr_destroy (&replacement_attr);
+      }
+      {
+        int err = pthread_rwlockattr_setkind_np (&replacement_attr,
+                                                 PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
+        if (err != 0)
+          {
+            pthread_rwlockattr_destroy (&replacement_attr);
+            return err;
+          }
+      }
+      {
+        int err = pthread_rwlock_init (lock, &replacement_attr);
+        pthread_rwlockattr_destroy (&replacement_attr);
+        return err;
+      }
     }
-  return err;
 }
 
 #  endif
@@ -432,16 +445,16 @@ pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
   /* Poll the lock's state in regular intervals.  Ugh.  */
   for (;;)
     {
-      int err;
+      {
+        int err = pthread_rwlock_tryrdlock (lock);
+        if (err != EBUSY)
+          return err;
+      }
+
       struct timeval currtime;
-      unsigned long remaining;
-
-      err = pthread_rwlock_tryrdlock (lock);
-      if (err != EBUSY)
-        return err;
-
       gettimeofday (&currtime, NULL);
 
+      unsigned long remaining;
       if (currtime.tv_sec > abstime->tv_sec)
         remaining = 0;
       else
@@ -489,16 +502,16 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
   /* Poll the lock's state in regular intervals.  Ugh.  */
   for (;;)
     {
-      int err;
+      {
+        int err = pthread_rwlock_trywrlock (lock);
+        if (err != EBUSY)
+          return err;
+      }
+
       struct timeval currtime;
-      unsigned long remaining;
-
-      err = pthread_rwlock_trywrlock (lock);
-      if (err != EBUSY)
-        return err;
-
       gettimeofday (&currtime, NULL);
 
+      unsigned long remaining;
       if (currtime.tv_sec > abstime->tv_sec)
         remaining = 0;
       else

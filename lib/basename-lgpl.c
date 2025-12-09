@@ -29,11 +29,10 @@ char *
 last_component (char const *name)
 {
   char const *base = name + FILE_SYSTEM_PREFIX_LEN (name);
-  bool last_was_slash = false;
-
   while (ISSLASH (*base))
     base++;
 
+  bool last_was_slash = false;
   for (char const *p = base; *p; p++)
     {
       if (ISSLASH (*p))
@@ -52,8 +51,6 @@ size_t
 base_len (char const *name)
 {
   size_t len;
-  size_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
-
   for (len = strlen (name);  1 < len && ISSLASH (name[len - 1]);  len--)
     continue;
 
@@ -61,6 +58,7 @@ base_len (char const *name)
       && ISSLASH (name[0]) && ISSLASH (name[1]) && ! name[2])
     return 2;
 
+  size_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
   if (FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE && prefix_len
       && len == prefix_len && ISSLASH (name[prefix_len]))
     return prefix_len + 1;

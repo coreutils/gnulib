@@ -37,10 +37,11 @@
    You can use this multi-byte code:
 
       char *p = ..., *lim = ...;
-      for (mcel_t g; p < lim; p += g.len)
+      for (; p < lim; )
         {
-          g = mcel_scan (p, lim);
+          mcel_t g = mcel_scan (p, lim);
           process (g);
+          p += g.len;
         }
 
    You can select from G using G.ch, G.err, and G.len.
@@ -59,10 +60,11 @@
    You can use this multi-byte code:
 
       char *p = ...;
-      for (mcel_t g; *p; p += g.len)
+      for (; *p; )
         {
-          g = mcel_scanz (p);
+          mcel_t g = mcel_scanz (p);
           process (g);
+          p += g.len;
         }
 
    mcel_scant (P, TERMINATOR) is like mcel_scanz (P) except the

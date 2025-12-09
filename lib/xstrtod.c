@@ -44,14 +44,12 @@ bool
 XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
          DOUBLE (*convert) (char const *, char **))
 {
-  DOUBLE val;
-  char *terminator;
-  bool ok = true;
-
   errno = 0;
-  val = convert (str, &terminator);
+  char *terminator;
+  DOUBLE val = convert (str, &terminator);
 
   /* Having a non-zero terminator is an error only when PTR is NULL. */
+  bool ok = true;
   if (terminator == str || (ptr == NULL && *terminator != '\0'))
     ok = false;
   else

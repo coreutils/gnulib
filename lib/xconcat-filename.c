@@ -31,9 +31,7 @@ char *
 xconcatenated_filename (const char *directory, const char *filename,
                         const char *suffix)
 {
-  char *result;
-
-  result = concatenated_filename (directory, filename, suffix);
+  char *result = concatenated_filename (directory, filename, suffix);
   if (result == NULL)
     xalloc_die ();
 

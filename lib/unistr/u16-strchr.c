@@ -35,8 +35,6 @@
 uint16_t *
 u16_strchr (const uint16_t *s, ucs4_t uc)
 {
-  uint16_t c[2];
-
   if (uc < 0x10000)
     {
       uint16_t c0 = uc;
@@ -51,25 +49,29 @@ u16_strchr (const uint16_t *s, ucs4_t uc)
       return (uint16_t *) s;
     }
   else
-    switch (u16_uctomb_aux (c, uc, 2))
-      {
-      case 2:
-        if (*s == 0)
-          goto notfound;
-        {
-          uint16_t c0 = c[0];
-          uint16_t c1 = c[1];
+    {
+      uint16_t c[2];
 
-          for (;; s++)
-            {
-              if (s[1] == 0)
-                goto notfound;
-              if (*s == c0 && s[1] == c1)
-                break;
-            }
-          return (uint16_t *) s;
+      switch (u16_uctomb_aux (c, uc, 2))
+        {
+        case 2:
+          if (*s == 0)
+            goto notfound;
+          {
+            uint16_t c0 = c[0];
+            uint16_t c1 = c[1];
+
+            for (;; s++)
+              {
+                if (s[1] == 0)
+                  goto notfound;
+                if (*s == c0 && s[1] == c1)
+                  break;
+              }
+            return (uint16_t *) s;
+          }
         }
-      }
+    }
 notfound:
   return NULL;
 }

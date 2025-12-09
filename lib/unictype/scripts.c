@@ -52,9 +52,8 @@ uc_script (ucs4_t uc)
 const uc_script_t *
 uc_script_byname (const char *script_name)
 {
-  const struct named_script *found;
-
-  found = uc_script_lookup (script_name, strlen (script_name));
+  const struct named_script *found =
+    uc_script_lookup (script_name, strlen (script_name));
   if (found != NULL)
     return &scripts[found->index];
   else

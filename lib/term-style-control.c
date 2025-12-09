@@ -119,10 +119,6 @@ static _GL_ASYNC_SAFE void
 sprintf_integer (char *str, int x)
 {
   unsigned int y;
-  char buf[20];
-  char *p;
-  size_t n;
-
   if (x < 0)
     {
       *str++ = '-';
@@ -131,14 +127,15 @@ sprintf_integer (char *str, int x)
   else
     y = x;
 
-  p = buf + sizeof (buf);
+  char buf[20];
+  char *p = buf + sizeof (buf);
   do
     {
       *--p = '0' + (y % 10);
       y = y / 10;
     }
   while (y > 0);
-  n = buf + sizeof (buf) - p;
+  size_t n = buf + sizeof (buf) - p;
   memcpy (str, p, n);
   str[n] = '\0';
 }

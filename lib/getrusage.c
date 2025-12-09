@@ -91,9 +91,6 @@ getrusage (int who, struct rusage *usage_p)
                 clock_t user_ticks;
                 clock_t system_ticks;
 
-                uint64_t user_usec;
-                uint64_t system_usec;
-
                 if (who == RUSAGE_CHILDREN)
                   {
                     user_ticks   = time.tms_cutime;
@@ -105,10 +102,10 @@ getrusage (int who, struct rusage *usage_p)
                     system_ticks = time.tms_stime;
                   }
 
-                user_usec =
+                uint64_t user_usec =
                   (((uint64_t) user_ticks * (uint64_t) 1000000U)
                    + clocks_per_second / 2) / clocks_per_second;
-                system_usec =
+                uint64_t system_usec =
                   (((uint64_t) system_ticks * (uint64_t) 1000000U)
                    + clocks_per_second / 2) / clocks_per_second;
 

@@ -305,9 +305,7 @@ file_is_remote (const char *file)
 int
 main (int argc, char *argv[])
 {
-  int i;
-
-  for (i = 1; i < argc; i++)
+  for (int i = 1; i < argc; i++)
     {
       const char *file = argv[i];
       int ret = file_is_remote (file);

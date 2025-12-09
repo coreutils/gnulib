@@ -671,10 +671,6 @@ static char *
 setlocale_unixlike (int category, const char *locale)
 {
   int is_utf8 = (GetACP () == 65001);
-  char *result;
-  char llCC_buf[64];
-  char ll_buf[64];
-  char CC_buf[64];
 
   /* The native Windows implementation of setlocale understands the special
      locale name "C", but not "POSIX".  Therefore map "POSIX" to "C".  */
@@ -691,13 +687,14 @@ setlocale_unixlike (int category, const char *locale)
     locale = "English_United States.65001";
 
   /* First, try setlocale with the original argument unchanged.  */
-  result = setlocale_mtsafe (category, locale);
+  char *result = setlocale_mtsafe (category, locale);
   if (result != NULL)
     return result;
 
   /* Otherwise, assume the argument is in the form
        language[_territory][.codeset][@modifier]
      and try to map it using the tables.  */
+  char llCC_buf[64];
   if (strlen (locale) < sizeof (llCC_buf))
     {
       /* Second try: Remove the codeset part.  */
@@ -772,9 +769,11 @@ setlocale_unixlike (int category, const char *locale)
             if (territory_end == NULL)
               territory_end = territory_start + strlen (territory_start);
 
+            char ll_buf[64];
             memcpy (ll_buf, llCC_buf, underscore - llCC_buf);
             strcpy (ll_buf + (underscore - llCC_buf), territory_end);
 
+            char CC_buf[64];
             memcpy (CC_buf, territory_start, territory_end - territory_start);
             CC_buf[territory_end - territory_start] = '\0';
 
@@ -1122,9 +1121,6 @@ static int
 langcmp (const char *locale1, const char *locale2)
 {
   size_t locale1_len;
-  size_t locale2_len;
-  int cmp;
-
   {
     const char *locale1_end = strchr (locale1, '_');
     if (locale1_end != NULL)
@@ -1132,6 +1128,7 @@ langcmp (const char *locale1, const char *locale2)
     else
       locale1_len = strlen (locale1);
   }
+  size_t locale2_len;
   {
     const char *locale2_end = strchr (locale2, '_');
     if (locale2_end != NULL)
@@ -1140,6 +1137,7 @@ langcmp (const char *locale1, const char *locale2)
       locale2_len = strlen (locale2);
   }
 
+  int cmp;
   if (locale1_len < locale2_len)
     {
       cmp = memcmp (locale1, locale2, locale1_len);
@@ -1443,12 +1441,9 @@ setlocale_improved (int category, const char *locale)
               LC_MONETARY,
               LC_MESSAGES
             };
-          char *saved_locale;
-          const char *base_name;
-          unsigned int i;
 
           /* Back up the old locale, in case one of the steps fails.  */
-          saved_locale = setlocale (LC_ALL, NULL);
+          char *saved_locale = setlocale (LC_ALL, NULL);
           if (saved_locale == NULL)
             return NULL;
           saved_locale = strdup (saved_locale);
@@ -1458,11 +1453,12 @@ setlocale_improved (int category, const char *locale)
           /* Set LC_CTYPE category.  Set all other categories (except possibly
              LC_MESSAGES) to the same value in the same call; this is likely to
              save calls.  */
-          base_name =
+          const char *base_name =
             gl_locale_name_environ (LC_CTYPE, category_to_name (LC_CTYPE));
           if (base_name == NULL)
             base_name = gl_locale_name_default ();
 
+          unsigned int i;
           if (setlocale_unixlike (LC_ALL, base_name) != NULL)
             {
               /* LC_CTYPE category already set.  */
@@ -1490,9 +1486,8 @@ setlocale_improved (int category, const char *locale)
           for (; i < sizeof (categories) / sizeof (categories[0]); i++)
             {
               int cat = categories[i];
-              const char *name;
-
-              name = gl_locale_name_environ (cat, category_to_name (cat));
+              const char *name =
+                gl_locale_name_environ (cat, category_to_name (cat));
               if (name == NULL)
                 name = gl_locale_name_default ();
 

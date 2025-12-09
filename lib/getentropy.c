@@ -29,22 +29,24 @@
 int
 getentropy (void *buffer, size_t length)
 {
-  char *buf = buffer;
 
   if (length <= 256)
-    for (;;)
-      {
-        ssize_t bytes;
-        if (length == 0)
-          return 0;
-        while ((bytes = getrandom (buf, length, 0)) < 0)
-          if (errno != EINTR)
-            return -1;
-        if (bytes == 0)
-          break;
-        buf += bytes;
-        length -= bytes;
-      }
+    {
+      char *buf = buffer;
+      for (;;)
+        {
+          if (length == 0)
+            return 0;
+          ssize_t bytes;
+          while ((bytes = getrandom (buf, length, 0)) < 0)
+            if (errno != EINTR)
+              return -1;
+          if (bytes == 0)
+            break;
+          buf += bytes;
+          length -= bytes;
+        }
+    }
 
   errno = EIO;
   return -1;

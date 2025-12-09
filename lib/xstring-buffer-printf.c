@@ -42,10 +42,8 @@ int
 sb_xappendf (struct string_buffer *buffer, const char *formatstring, ...)
 {
   va_list args;
-  int ret;
-
   va_start (args, formatstring);
-  ret = sb_xappendvf (buffer, formatstring, args);
+  int ret = sb_xappendvf (buffer, formatstring, args);
   va_end (args);
   return ret;
 }

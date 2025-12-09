@@ -97,17 +97,13 @@ gl_array_search (gl_set_t set, const void *elt)
 static int
 grow (gl_set_t set)
 {
-  size_t new_allocated;
-  size_t memory_size;
-  const void **memory;
-
-  new_allocated = xtimes (set->allocated, 2);
+  size_t new_allocated = xtimes (set->allocated, 2);
   new_allocated = xsum (new_allocated, 1);
-  memory_size = xtimes (new_allocated, sizeof (const void *));
+  size_t memory_size = xtimes (new_allocated, sizeof (const void *));
   if (size_overflow_p (memory_size))
     /* Overflow, would lead to out of memory.  */
     return -1;
-  memory = (const void **) realloc (set->elements, memory_size);
+  const void **memory = (const void **) realloc (set->elements, memory_size);
   if (memory == NULL)
     /* Out of memory.  */
     return -1;

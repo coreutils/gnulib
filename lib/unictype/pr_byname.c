@@ -146,27 +146,29 @@ uc_property_t
 uc_property_byname (const char *property_name)
 {
   char buf[MAX_WORD_LENGTH + 1];
-  const char *cp;
   char *bp;
-  unsigned int count;
-  const struct named_property *found;
 
-  for (cp = property_name, bp = buf, count = MAX_WORD_LENGTH + 1; ; cp++, bp++)
-    {
-      unsigned char c = (unsigned char) *cp;
-      if (c >= 0x80)
-        goto invalid;
-      if (c >= 'A' && c <= 'Z')
-        c += 'a' - 'A';
-      else if (c == ' ' || c == '-')
-        c = '_';
-      *bp = c;
-      if (c == '\0')
-        break;
-      if (--count == 0)
-        goto invalid;
-    }
-  found = uc_property_lookup (buf, bp - buf);
+  {
+    const char *cp;
+    unsigned int count;
+    for (cp = property_name, bp = buf, count = MAX_WORD_LENGTH + 1; ; cp++, bp++)
+      {
+        unsigned char c = (unsigned char) *cp;
+        if (c >= 0x80)
+          goto invalid;
+        if (c >= 'A' && c <= 'Z')
+          c += 'a' - 'A';
+        else if (c == ' ' || c == '-')
+          c = '_';
+        *bp = c;
+        if (c == '\0')
+          break;
+        if (--count == 0)
+          goto invalid;
+      }
+  }
+
+  const struct named_property *found = uc_property_lookup (buf, bp - buf);
   if (found != NULL)
     /* Use a 'switch' statement here, because a table would introduce load-time
        relocations.  */

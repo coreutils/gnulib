@@ -114,14 +114,13 @@ static int
 use_win32_p (void)
 {
   static int done = 0;
-  HMODULE h;
 
   if (done)
     return getaddrinfo_ptr ? 1 : 0;
 
   done = 1;
 
-  h = GetModuleHandle ("ws2_32.dll");
+  HMODULE h = GetModuleHandle ("ws2_32.dll");
 
   if (h)
     {
@@ -221,11 +220,6 @@ getaddrinfo (const char *restrict nodename,
              struct addrinfo **restrict res)
 #undef getaddrinfo
 {
-  struct addrinfo *tmp;
-  int port = 0;
-  struct hostent *he;
-  void *storage;
-  size_t size;
 # if HAVE_IPV6
   struct v6_pair {
     struct addrinfo addrinfo;
@@ -281,6 +275,7 @@ getaddrinfo (const char *restrict nodename,
 # endif
     }
 
+  int port = 0;
   if (servname)
     {
       struct servent *se = NULL;
@@ -306,10 +301,11 @@ getaddrinfo (const char *restrict nodename,
     }
 
   /* FIXME: Use gethostbyname_r if available. */
-  he = gethostbyname (nodename);
+  struct hostent *he = gethostbyname (nodename);
   if (!he || he->h_addr_list[0] == NULL)
     return EAI_NONAME;
 
+  size_t size;
   switch (he->h_addrtype)
     {
 # if HAVE_IPV6
@@ -328,10 +324,11 @@ getaddrinfo (const char *restrict nodename,
       return EAI_NODATA;
     }
 
-  storage = calloc (1, size);
+  void *storage = calloc (1, size);
   if (!storage)
     return EAI_MEMORY;
 
+  struct addrinfo *tmp;
   switch (he->h_addrtype)
     {
 # if HAVE_IPV6
@@ -446,9 +443,7 @@ freeaddrinfo (struct addrinfo *ai)
 
   while (ai)
     {
-      struct addrinfo *cur;
-
-      cur = ai;
+      struct addrinfo *cur = ai;
       ai = ai->ai_next;
 
       free (cur->ai_canonname);

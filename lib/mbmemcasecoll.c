@@ -44,20 +44,16 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
                   char *outbuf, size_t outbufsize)
 {
   char *outbuf_orig = outbuf;
-  size_t remaining;
-
-  remaining = inbufsize;
+  size_t remaining = inbufsize;
   while (remaining > 0)
     {
       mbstate_t state;
-
       mbszero (&state);
+
       for (;;)
         {
           char32_t wc1;
-          size_t n1;
-
-          n1 = mbrtoc32 (&wc1, inbuf, remaining, &state);
+          size_t n1 = mbrtoc32 (&wc1, inbuf, remaining, &state);
 
           if (n1 == (size_t)(-1))
             {
@@ -80,8 +76,6 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
             }
           else
             {
-              wint_t wc2;
-
               if (n1 == 0) /* NUL character? */
                 n1 = 1;
               #if !GNULIB_MBRTOC32_REGULAR
@@ -89,14 +83,13 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
                 n1 = 0;
               #endif
 
-              wc2 = c32tolower (wc1);
+              wint_t wc2 = c32tolower (wc1);
               if (wc2 != wc1)
                 {
                   mbstate_t state2;
-                  size_t n2;
-
                   mbszero (&state2);
-                  n2 = c32rtomb (outbuf, wc2, &state2);
+
+                  size_t n2 = c32rtomb (outbuf, wc2, &state2);
                   if (n2 != (size_t)(-1))
                     {
                       /* Store the translated multibyte character.  */
@@ -148,8 +141,6 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
   size_t t1len;
   char *t2;
   size_t t2len;
-  char *memory;
-  int cmp;
 
   if (MB_CUR_MAX > 1)
     {
@@ -165,7 +156,7 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
       t2len = s2len;
     }
   /* Allocate memory for t1 and t2.  */
-  memory = (char *) malloca (t1len + 1 + t2len + 1);
+  char *memory = (char *) malloca (t1len + 1 + t2len + 1);
   if (memory == NULL)
     {
       errno = ENOMEM;
@@ -187,6 +178,7 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
     }
 
   /* Compare the two case-folded strings.  */
+  int cmp;
   if (hard_LC_COLLATE)
     cmp = memcoll (t1, t1len, t2, t2len);
   else

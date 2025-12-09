@@ -1995,18 +1995,20 @@ closure (struct dfa *dfa)
           addtok (dfa, PLUS);
         if (dfa->lex.minrep == 0)
           addtok (dfa, QMARK);
-        int i;
-        for (i = 1; i < dfa->lex.minrep; i++)
-          {
-            copytoks (dfa, tindex, ntokens);
-            addtok (dfa, CAT);
-          }
-        for (; i < dfa->lex.maxrep; i++)
-          {
-            copytoks (dfa, tindex, ntokens);
-            addtok (dfa, QMARK);
-            addtok (dfa, CAT);
-          }
+        {
+          int i;
+          for (i = 1; i < dfa->lex.minrep; i++)
+            {
+              copytoks (dfa, tindex, ntokens);
+              addtok (dfa, CAT);
+            }
+          for (; i < dfa->lex.maxrep; i++)
+            {
+              copytoks (dfa, tindex, ntokens);
+              addtok (dfa, QMARK);
+              addtok (dfa, CAT);
+            }
+        }
         dfa->parse.tok = lex (dfa);
       }
     else if (dfa->parse.tok == REPMN)
@@ -4192,12 +4194,11 @@ dfamust (struct dfa const *d)
 
         case OR:
           {
-            char **new;
             must *rmp = mp;
             assume_nonnull (rmp);
             must *lmp = mp = mp->prev;
             assume_nonnull (lmp);
-            idx_t j, ln, rn, n;
+            idx_t ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
             if (streq (lmp->is, rmp->is))
@@ -4212,23 +4213,28 @@ dfamust (struct dfa const *d)
                 lmp->endline = false;
               }
             /* Left side--easy */
-            idx_t i = 0;
-            while (lmp->left[i] != '\0' && lmp->left[i] == rmp->left[i])
-              ++i;
-            lmp->left[i] = '\0';
+            {
+              idx_t i = 0;
+              while (lmp->left[i] != '\0' && lmp->left[i] == rmp->left[i])
+                ++i;
+              lmp->left[i] = '\0';
+            }
             /* Right side */
             ln = strlen (lmp->right);
             rn = strlen (rmp->right);
             n = ln;
             if (n > rn)
               n = rn;
-            for (i = 0; i < n; ++i)
-              if (lmp->right[ln - i - 1] != rmp->right[rn - i - 1])
-                break;
-            for (j = 0; j < i; ++j)
-              lmp->right[j] = lmp->right[(ln - i) + j];
-            lmp->right[j] = '\0';
-            new = inboth (lmp->in, rmp->in);
+            {
+              idx_t i, j;
+              for (i = 0; i < n; ++i)
+                if (lmp->right[ln - i - 1] != rmp->right[rn - i - 1])
+                  break;
+              for (j = 0; j < i; ++j)
+                lmp->right[j] = lmp->right[(ln - i) + j];
+              lmp->right[j] = '\0';
+            }
+            char **new = inboth (lmp->in, rmp->in);
             freelist (lmp->in);
             free (lmp->in);
             lmp->in = new;

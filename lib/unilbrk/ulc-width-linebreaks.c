@@ -68,11 +68,10 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
 
           if (offsets != NULL)
             {
-              uint8_t *t;
               size_t m;
-
-              t = u8_conv_from_encoding (encoding, iconveh_question_mark,
-                                         s, n, offsets, NULL, &m);
+              uint8_t *t =
+                u8_conv_from_encoding (encoding, iconveh_question_mark,
+                                       s, n, offsets, NULL, &m);
               if (t != NULL)
                 {
                   char *memory =
@@ -82,7 +81,6 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
                     {
                       char *q = (char *) memory;
                       char *o8 = (o != NULL ? (char *) (q + m) : NULL);
-                      int res_column;
 
                       /* Translate the overrides to the UTF-8 string.  */
                       if (o != NULL)
@@ -94,7 +92,7 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
                         }
 
                       /* Determine the line breaks of the UTF-8 string.  */
-                      res_column =
+                      int res_column =
                         u8_width_linebreaks_internal (t, m, width, start_column, at_end_columns, o8, encoding, cr, q);
 
                       /* Translate the result back to the original string.  */
@@ -194,7 +192,6 @@ read_file (FILE *stream)
   char *buf = NULL;
   int alloc = 0;
   int size = 0;
-  int count;
 
   while (! feof (stream))
     {
@@ -210,7 +207,7 @@ read_file (FILE *stream)
               exit (1);
             }
         }
-      count = fread (buf + size, 1, BUFSIZE, stream);
+      int count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
         {
           if (ferror (stream))

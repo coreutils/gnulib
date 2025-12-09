@@ -35,10 +35,7 @@ FUNC (const UNIT *s, size_t n,
 {
   /* The result being accumulated.  */
   UNIT *result;
-  size_t length;
   size_t allocated;
-
-  /* Initialize the accumulator.  */
   if (nf != NULL || resultbuf == NULL)
     {
       result = NULL;
@@ -49,7 +46,7 @@ FUNC (const UNIT *s, size_t n,
       result = resultbuf;
       allocated = *lengthp;
     }
-  length = 0;
+  size_t length = 0;
 
   {
     const UNIT *s_end = s + n;
@@ -97,10 +94,10 @@ FUNC (const UNIT *s, size_t n,
                   {
                     /* Does the context apply?  */
                     int context = rule->context;
-                    bool applies;
-
                     if (context < 0)
                       context = - context;
+
+                    bool applies;
                     switch (context)
                       {
                       case SCC_ALWAYS:
@@ -373,9 +370,8 @@ FUNC (const UNIT *s, size_t n,
   if (nf != NULL)
     {
       /* Finally, normalize the result.  */
-      UNIT *normalized_result;
-
-      normalized_result = U_NORMALIZE (nf, result, length, resultbuf, lengthp);
+      UNIT *normalized_result =
+        U_NORMALIZE (nf, result, length, resultbuf, lengthp);
       if (normalized_result == NULL)
         goto fail;
 
@@ -399,9 +395,7 @@ FUNC (const UNIT *s, size_t n,
   else if (result != resultbuf && length < allocated)
     {
       /* Shrink the allocated memory if possible.  */
-      UNIT *memory;
-
-      memory = (UNIT *) realloc (result, length * sizeof (UNIT));
+      UNIT *memory = (UNIT *) realloc (result, length * sizeof (UNIT));
       if (memory != NULL)
         result = memory;
     }

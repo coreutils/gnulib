@@ -47,13 +47,12 @@
 int
 rpl_unlinkat (int fd, char const *name, int flag)
 {
-  size_t len;
-  int result = 0;
   /* rmdir behavior has no problems with trailing slash.  */
   if (flag & AT_REMOVEDIR)
     return unlinkat (fd, name, flag);
 
-  len = strlen (name);
+  size_t len = strlen (name);
+  int result = 0;
   if (len && ISSLASH (name[len - 1]))
     {
       /* See the lengthy comment in unlink.c why we disobey the POSIX

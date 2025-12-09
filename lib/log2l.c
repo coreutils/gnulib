@@ -69,9 +69,7 @@ log2l (long double x)
      Then log2(x) = e + log2(y) = e + log(y)/log(2).  */
   {
     int e;
-    long double y;
-
-    y = frexpl (x, &e);
+    long double y = frexpl (x, &e);
     if (y < SQRT_HALF)
       {
         y = 2.0L * y;

@@ -45,14 +45,12 @@ sethostname (const char *name, size_t len)
 
 # ifdef __minix /* Minix */
   {
-    FILE *hostf;
-    int r = 0;
-
     /* glibc returns EFAULT, EINVAL, and EPERM on error.  None of
        these are appropriate for us to set, even if they may match the
        situation, during failed open/write/close operations, so we
        leave errno alone and rely on what the system sets up. */
-    hostf = fopen ("/etc/hostname.file", "we");
+    FILE *hostf = fopen ("/etc/hostname.file", "we");
+    int r = 0;
     if (hostf == NULL)
       r = -1;
     else
@@ -116,10 +114,6 @@ sethostname (const char *name, size_t len)
 int
 sethostname (const char *name, size_t len)
 {
-  char name_asciz[HOST_NAME_MAX + 1];
-  char old_name[HOST_NAME_MAX + 1];
-  DWORD old_name_len;
-
   /* Ensure the string isn't too long.  glibc does allow setting an
      empty hostname so no point in enforcing a lower bound. */
   if (len > HOST_NAME_MAX)
@@ -129,11 +123,13 @@ sethostname (const char *name, size_t len)
     }
 
   /* Prepare a NUL-terminated copy of name.  */
+  char name_asciz[HOST_NAME_MAX + 1];
   memcpy (name_asciz, name, len);
   name_asciz[len] = '\0';
 
   /* Save the old NetBIOS name.  */
-  old_name_len = sizeof (old_name) - 1;
+  char old_name[HOST_NAME_MAX + 1];
+  DWORD old_name_len = sizeof (old_name) - 1;
   if (! GetComputerNameEx (ComputerNamePhysicalNetBIOS,
                            old_name, &old_name_len))
     old_name_len = 0;

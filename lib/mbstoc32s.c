@@ -31,7 +31,6 @@ size_t
 mbstoc32s (char32_t *dest, const char *src, size_t len)
 {
   mbstate_t state;
-
   mbszero (&state);
   return mbsrtoc32s (dest, &src, len, &state);
 }

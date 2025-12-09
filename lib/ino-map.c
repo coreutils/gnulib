@@ -116,8 +116,6 @@ ino_map_free (struct ino_map *map)
 size_t
 ino_map_insert (struct ino_map *im, ino_t ino)
 {
-  struct ino_map_ent *ent;
-
   /* Find space for the probe, reusing the cache if available.  */
   struct ino_map_ent *probe = im->probe;
   if (probe)
@@ -134,7 +132,7 @@ ino_map_insert (struct ino_map *im, ino_t ino)
     }
 
   probe->ino = ino;
-  ent = hash_insert (im->map, probe);
+  struct ino_map_ent *ent = hash_insert (im->map, probe);
   if (! ent)
     return INO_MAP_INSERT_FAILURE;
 

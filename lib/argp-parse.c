@@ -225,12 +225,11 @@ group_parse (struct group *group, struct argp_state *state, int key, char *arg)
 {
   if (group->parser)
     {
-      error_t err;
       state->hook = group->hook;
       state->input = group->input;
       state->child_inputs = group->child_inputs;
       state->arg_num = group->args_processed;
-      err = (*group->parser)(key, arg, state);
+      error_t err = (*group->parser)(key, arg, state);
       group->hook = state->hook;
       return err;
     }
@@ -458,16 +457,7 @@ static error_t
 parser_init (struct parser *parser, const struct argp *argp,
              int argc, char **argv, int flags, void *input)
 {
-  error_t err = 0;
-  struct group *group;
   struct parser_sizes szs;
-  struct _getopt_data opt_data = _GETOPT_DATA_INITIALIZER;
-  char *storage;
-  size_t glen, gsum;
-  size_t clen, csum;
-  size_t llen, lsum;
-  size_t slen, ssum;
-
   szs.short_len = (flags & ARGP_NO_ARGS) ? 0 : 1;
   szs.long_len = 0;
   szs.num_groups = 0;
@@ -477,31 +467,34 @@ parser_init (struct parser *parser, const struct argp *argp,
     calc_sizes (argp, &szs);
 
   /* Lengths of the various bits of storage used by PARSER.  */
-  glen = (szs.num_groups + 1) * sizeof (struct group);
-  clen = szs.num_child_inputs * sizeof (void *);
-  llen = (szs.long_len + 1) * sizeof (struct option);
-  slen = szs.short_len + 1;
+  size_t glen = (szs.num_groups + 1) * sizeof (struct group);
+  size_t clen = szs.num_child_inputs * sizeof (void *);
+  size_t llen = (szs.long_len + 1) * sizeof (struct option);
+  size_t slen = szs.short_len + 1;
 
   /* Sums of previous lengths, properly aligned.  There's no need to
      align gsum, since struct group is aligned at least as strictly as
      void * (since it contains a void * member).  And there's no need
      to align lsum, since struct option is aligned at least as
      strictly as char.  */
-  gsum = glen;
-  csum = alignto (gsum + clen, alignof (struct option));
-  lsum = csum + llen;
-  ssum = lsum + slen;
+  size_t gsum = glen;
+  size_t csum = alignto (gsum + clen, alignof (struct option));
+  size_t lsum = csum + llen;
+  size_t ssum = lsum + slen;
 
   parser->storage = malloc (ssum);
   if (! parser->storage)
     return ENOMEM;
 
-  storage = parser->storage;
+  char *storage = parser->storage;
   parser->groups = parser->storage;
   parser->child_inputs = (void **) (storage + gsum);
   parser->long_opts = (struct option *) (storage + csum);
   parser->short_opts = storage + lsum;
-  parser->opt_data = opt_data;
+  {
+    struct _getopt_data opt_data = _GETOPT_DATA_INITIALIZER;
+    parser->opt_data = opt_data;
+  }
 
   memset (parser->child_inputs, 0, clen);
   parser_convert (parser, argp, flags);
@@ -522,28 +515,32 @@ parser_init (struct parser *parser, const struct argp *argp,
      values to child parsers.  */
   if (parser->groups < parser->egroup)
     parser->groups->input = input;
-  for (group = parser->groups;
-       group < parser->egroup && (!err || err == EBADKEY);
-       group++)
-    {
-      if (group->parent)
-        /* If a child parser, get the initial input value from the parent. */
-        group->input = group->parent->child_inputs[group->parent_index];
+  {
+    error_t err = 0;
 
-      if (!group->parser
-          && group->argp->children && group->argp->children->argp)
-        /* For the special case where no parsing function is supplied for an
-           argp, propagate its input to its first child, if any (this just
-           makes very simple wrapper argps more convenient).  */
-        group->child_inputs[0] = group->input;
+    for (struct group *group = parser->groups;
+         group < parser->egroup && (!err || err == EBADKEY);
+         group++)
+      {
+        if (group->parent)
+          /* If a child parser, get the initial input value from the parent. */
+          group->input = group->parent->child_inputs[group->parent_index];
 
-      err = group_parse (group, &parser->state, ARGP_KEY_INIT, NULL);
-    }
-  if (err == EBADKEY)
-    err = 0;                    /* Some parser didn't understand.  */
+        if (!group->parser
+            && group->argp->children && group->argp->children->argp)
+          /* For the special case where no parsing function is supplied for an
+             argp, propagate its input to its first child, if any (this just
+             makes very simple wrapper argps more convenient).  */
+          group->child_inputs[0] = group->input;
 
-  if (err)
-    return err;
+        err = group_parse (group, &parser->state, ARGP_KEY_INIT, NULL);
+      }
+    if (err == EBADKEY)
+      err = 0;                    /* Some parser didn't understand.  */
+
+    if (err)
+      return err;
+  }
 
   if (parser->state.flags & ARGP_NO_ERRS)
     {
@@ -570,8 +567,6 @@ static error_t
 parser_finalize (struct parser *parser,
                  error_t err, int arg_ebadkey, int *end_index)
 {
-  struct group *group;
-
   if (err == EBADKEY && arg_ebadkey)
     /* Suppress errors generated by unparsed arguments.  */
     err = 0;
@@ -582,12 +577,12 @@ parser_finalize (struct parser *parser,
         /* We successfully parsed all arguments!  Call all the parsers again,
            just a few more times... */
         {
-          for (group = parser->groups;
+          for (struct group *group = parser->groups;
                group < parser->egroup && (!err || err==EBADKEY);
                group++)
             if (group->args_processed == 0)
               err = group_parse (group, &parser->state, ARGP_KEY_NO_ARGS, NULL);
-          for (group = parser->egroup - 1;
+          for (struct group *group = parser->egroup - 1;
                group >= parser->groups && (!err || err==EBADKEY);
                group--)
             err = group_parse (group, &parser->state, ARGP_KEY_END, NULL);
@@ -628,7 +623,7 @@ parser_finalize (struct parser *parser,
                            ARGP_HELP_STD_ERR);
 
       /* Since we didn't exit, give each parser an error indication.  */
-      for (group = parser->groups; group < parser->egroup; group++)
+      for (struct group *group = parser->groups; group < parser->egroup; group++)
         group_parse (group, &parser->state, ARGP_KEY_ERROR, NULL);
     }
   else
@@ -637,7 +632,7 @@ parser_finalize (struct parser *parser,
       /* We pass over the groups in reverse order so that child groups are
          given a chance to do there processing before passing back a value to
          the parent.  */
-      for (group = parser->egroup - 1
+      for (struct group *group = parser->egroup - 1
            ; group >= parser->groups && (!err || err == EBADKEY)
            ; group--)
         err = group_parse (group, &parser->state, ARGP_KEY_SUCCESS, NULL);
@@ -646,7 +641,7 @@ parser_finalize (struct parser *parser,
     }
 
   /* Call parsers once more, to do any final cleanup.  Errors are ignored.  */
-  for (group = parser->egroup - 1; group >= parser->groups; group--)
+  for (struct group *group = parser->egroup - 1; group >= parser->groups; group--)
     group_parse (group, &parser->state, ARGP_KEY_FINI, NULL);
 
   if (err == EBADKEY)
@@ -780,9 +775,6 @@ parser_parse_opt (struct parser *parser, int opt, char *val)
 static error_t
 parser_parse_next (struct parser *parser, int *arg_ebadkey)
 {
-  int opt;
-  error_t err;
-
   if (parser->state.quoted && parser->state.next < parser->state.quoted)
     /* The next argument pointer has been moved to before the quoted
        region, so pretend we never saw the quoting "--", and give getopt
@@ -790,6 +782,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
        process it again.  */
     parser->state.quoted = 0;
 
+  int opt;
   if (parser->try_getopt && !parser->state.quoted)
     /* Give getopt a chance to parse this.  */
     {
@@ -851,6 +844,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
         }
     }
 
+  error_t err;
   if (opt == KEY_ARG)
     /* A non-option argument; try each parser in turn.  */
     err = parser_parse_arg (parser, parser->opt_data.optarg);
@@ -872,13 +866,6 @@ error_t
 __argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags,
               int *end_index, void *input)
 {
-  error_t err;
-  struct parser parser;
-
-  /* If true, then err == EBADKEY is a result of a non-option argument failing
-     to be parsed (which in some cases isn't actually an error).  */
-  int arg_ebadkey = 0;
-
 #ifndef _LIBC
   if (!(flags & ARGP_PARSE_ARGV0))
     {
@@ -917,11 +904,16 @@ __argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags,
     }
 
   /* Construct a parser for these arguments.  */
-  err = parser_init (&parser, argp, argc, argv, flags, input);
+  struct parser parser;
+  error_t err = parser_init (&parser, argp, argc, argv, flags, input);
 
   if (! err)
     /* Parse! */
     {
+      /* If true, then err == EBADKEY is a result of a non-option argument
+         failing to be parsed (which in some cases isn't actually an error).  */
+      int arg_ebadkey = 0;
+
       while (! err)
         err = parser_parse_next (&parser, &arg_ebadkey);
       err = parser_finalize (&parser, err, arg_ebadkey, end_index);
@@ -940,10 +932,11 @@ __argp_input (const struct argp *argp, const struct argp_state *state)
 {
   if (state)
     {
-      struct group *group;
       struct parser *parser = state->pstate;
 
-      for (group = parser->groups; group < parser->egroup; group++)
+      for (struct group *group = parser->groups;
+           group < parser->egroup;
+           group++)
         if (group->argp == argp)
           return group->input;
     }

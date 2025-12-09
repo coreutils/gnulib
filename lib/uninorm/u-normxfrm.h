@@ -27,24 +27,18 @@ char *
 FUNC (const UNIT *s, size_t n, uninorm_t nf,
       char *resultbuf, size_t *lengthp)
 {
-  UNIT normsbuf[2048 / sizeof (UNIT)];
-  UNIT *norms;
-  size_t norms_length;
-  char convsbuf[2048];
-  char *convs;
-  size_t convs_length;
-  char *result;
-
   /* Normalize the Unicode string.  */
-  norms_length = sizeof (normsbuf) / sizeof (UNIT);
-  norms = U_NORMALIZE (nf, s, n, normsbuf, &norms_length);
+  UNIT normsbuf[2048 / sizeof (UNIT)];
+  size_t norms_length = sizeof (normsbuf) / sizeof (UNIT);
+  UNIT *norms = U_NORMALIZE (nf, s, n, normsbuf, &norms_length);
   if (norms == NULL)
     /* errno is set here.  */
     return NULL;
 
   /* Convert it to locale encoding.  */
-  convs_length = sizeof (convsbuf) - 1;
-  convs = U_CONV_TO_ENCODING (locale_charset (),
+  char convsbuf[2048];
+  size_t convs_length = sizeof (convsbuf) - 1;
+  char *convs = U_CONV_TO_ENCODING (locale_charset (),
                               iconveh_error,
                               norms, norms_length,
                               NULL,
@@ -77,7 +71,7 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
     }
 
   /* Apply locale dependent transformations for comparison.  */
-  result = amemxfrm (convs, convs_length, resultbuf, lengthp);
+  char *result = amemxfrm (convs, convs_length, resultbuf, lengthp);
   if (result == NULL)
     {
       if (convs != convsbuf)

@@ -39,14 +39,12 @@ u8_width (const uint8_t *s, size_t n, const char *encoding)
   while (s < s_end)
     {
       ucs4_t uc;
-      int w;
-
       s += u8_mbtouc_unsafe (&uc, s, s_end - s);
 
       if (uc == 0)
         break; /* end of string reached */
 
-      w = uc_width (uc, encoding);
+      int w = uc_width (uc, encoding);
       if (w >= 0) /* ignore control characters in the string */
         width += w;
     }

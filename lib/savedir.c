@@ -104,24 +104,22 @@ static comparison_function const comparison_function_table[] =
 char *
 streamsavedir (DIR *dirp, enum savedir_option option)
 {
+  if (dirp == NULL)
+    return NULL;
+
+  comparison_function cmp = comparison_function_table[option];
+
   char *name_space = NULL;
   idx_t allocated = 0;
   direntry_t *entries = NULL;
   idx_t entries_allocated = 0;
   idx_t entries_used = 0;
   idx_t used = 0;
-  comparison_function cmp = comparison_function_table[option];
-
-  if (dirp == NULL)
-    return NULL;
 
   for (;;)
     {
-      struct dirent const *dp;
-      char const *entry;
-
       errno = 0;
-      dp = readdir (dirp);
+      struct dirent const *dp = readdir (dirp);
       if (! dp)
         {
           /* Some readdir()s do not absorb ENOENT (dir deleted but open).
@@ -135,7 +133,7 @@ streamsavedir (DIR *dirp, enum savedir_option option)
 
       /* Skip "", ".", and "..".  "" is returned by at least one buggy
          implementation: Solaris 2.4 readdir on NFS file systems.  */
-      entry = dp->d_name;
+      char const *entry = dp->d_name;
       if (entry[entry[0] != '.' ? 0 : entry[1] != '.' ? 1 : 2] != '\0')
         {
           idx_t entry_size = _D_EXACT_NAMLEN (dp) + 1;
@@ -169,10 +167,12 @@ streamsavedir (DIR *dirp, enum savedir_option option)
       if (entries_used)
         qsort_r (entries, entries_used, sizeof *entries, cmp, name_space);
       char *sorted_name_space = ximalloc (used + 1);
-      char *p = sorted_name_space;
-      for (idx_t i = 0; i < entries_used; i++)
-        p = stpcpy (p, name_space + entries[i].name) + 1;
-      *p = '\0';
+      {
+        char *p = sorted_name_space;
+        for (idx_t i = 0; i < entries_used; i++)
+          p = stpcpy (p, name_space + entries[i].name) + 1;
+        *p = '\0';
+      }
       free (name_space);
       name_space = sorted_name_space;
     }

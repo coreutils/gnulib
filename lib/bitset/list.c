@@ -227,11 +227,11 @@ lbitset_prune (bitset bset, lbitset_elt *elt)
       bset->b.csize = 0;
     }
 
-  lbitset_elt *next;
-  for (; elt; elt = next)
+  for (; elt;)
     {
-      next = elt->next;
+      lbitset_elt *next = elt->next;
       lbitset_elt_free (elt);
+      elt = next;
     }
 }
 
@@ -378,12 +378,12 @@ lbitset_elt_find (bitset bset, bitset_windex windex,
 static inline void
 lbitset_weed (bitset bset)
 {
-  lbitset_elt *next;
-  for (lbitset_elt *elt = LBITSET_HEAD (bset); elt; elt = next)
+  for (lbitset_elt *elt = LBITSET_HEAD (bset); elt;)
     {
-      next = elt->next;
+      lbitset_elt *next = elt->next;
       if (lbitset_elt_zero_p (elt))
         lbitset_elt_unlink (bset, elt);
+      elt = next;
     }
 }
 
@@ -724,19 +724,22 @@ lbitset_list (bitset bset, bitset_bindex *list,
           /* The coast is clear, plant boot!  */
 
 #if LBITSET_ELT_WORDS == 2
-          bitset_word word = srcp[0];
-          if (word)
-            BITSET_FOR_EACH_BIT (pos, word)
-              list[count++] = bitno + pos;
-          windex++;
-          bitno = windex * BITSET_WORD_BITS;
-
-          word = srcp[1];
-          if (word)
-            BITSET_FOR_EACH_BIT (pos, word)
-              list[count++] = bitno + pos;
-          windex++;
-          bitno = windex * BITSET_WORD_BITS;
+          {
+            bitset_word word = srcp[0];
+            if (word)
+              BITSET_FOR_EACH_BIT (pos, word)
+                list[count++] = bitno + pos;
+            windex++;
+            bitno = windex * BITSET_WORD_BITS;
+          }
+          {
+            bitset_word word = srcp[1];
+            if (word)
+              BITSET_FOR_EACH_BIT (pos, word)
+                list[count++] = bitno + pos;
+            windex++;
+            bitno = windex * BITSET_WORD_BITS;
+          }
 #else
           for (int i = 0; i < LBITSET_ELT_WORDS; i++)
             {

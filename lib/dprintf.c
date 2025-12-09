@@ -31,10 +31,8 @@ int
 dprintf (int fd, const char *format, ...)
 {
   va_list args;
-  off64_t ret;
-
   va_start (args, format);
-  ret = vdzprintf (fd, format, args);
+  off64_t ret = vdzprintf (fd, format, args);
   va_end (args);
 
   if (TYPE_MAXIMUM (off64_t) > INT_MAX && ret > INT_MAX)

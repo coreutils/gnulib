@@ -335,12 +335,13 @@ static bool
 decode_8 (char const *restrict in, idx_t inlen,
           char *restrict *outp, idx_t *outleft)
 {
-  char *out = *outp;
   if (inlen < 8)
     return false;
 
   if (!isbase32 (in[0]) || !isbase32 (in[1]))
     return false;
+
+  char *out = *outp;
 
   if (*outleft)
     {
@@ -464,7 +465,6 @@ base32_decode_ctx (struct base32_decode_context *ctx,
                    const char *restrict in, idx_t inlen,
                    char *restrict out, idx_t *outlen)
 {
-  idx_t outleft = *outlen;
   bool ignore_newlines = ctx != NULL;
   bool flush_ctx = false;
   unsigned int ctx_i = 0;
@@ -475,6 +475,7 @@ base32_decode_ctx (struct base32_decode_context *ctx,
       flush_ctx = inlen == 0;
     }
 
+  idx_t outleft = *outlen;
 
   while (true)
     {
@@ -512,8 +513,8 @@ base32_decode_ctx (struct base32_decode_context *ctx,
 
           {
             char const *in_end = in + inlen;
-            char const *non_nl;
 
+            char const *non_nl;
             if (ignore_newlines)
               non_nl = get_8 (ctx, &in, in_end, &inlen);
             else

@@ -84,11 +84,6 @@ int
 uniconv_register_autodetect (const char *name,
                              const char * const *try_in_order)
 {
-  size_t namelen;
-  size_t listlen;
-  size_t memneed;
-  size_t i;
-
   /* The TRY_IN_ORDER list must not be empty.  */
   if (try_in_order[0] == NULL)
     {
@@ -98,11 +93,15 @@ uniconv_register_autodetect (const char *name,
 
   /* We must deep-copy NAME and TRY_IN_ORDER, because they may be allocated
      with dynamic extent.  */
-  namelen = strlen (name) + 1;
-  memneed = sizeof (struct autodetect_alias) + namelen + sizeof (char *);
-  for (i = 0; try_in_order[i] != NULL; i++)
-    memneed += sizeof (char *) + strlen (try_in_order[i]) + 1;
-  listlen = i;
+  size_t namelen = strlen (name) + 1;
+  size_t memneed = sizeof (struct autodetect_alias) + namelen + sizeof (char *);
+  size_t listlen;
+  {
+    size_t i;
+    for (i = 0; try_in_order[i] != NULL; i++)
+      memneed += sizeof (char *) + strlen (try_in_order[i]) + 1;
+    listlen = i;
+  }
 
   void *memory = malloc (memneed);
   if (memory != NULL)
@@ -116,14 +115,17 @@ uniconv_register_autodetect (const char *name,
       char *new_name = memcpy (memory, name, namelen);
       memory = new_name + namelen;
 
-      for (i = 0; i < listlen; i++)
-        {
-          size_t len = strlen (try_in_order[i]) + 1;
-          char *copy = memcpy (memory, try_in_order[i], len);
-          new_try_in_order[i] = copy;
-          memory = copy + len;
-        }
-      new_try_in_order[i] = NULL;
+      {
+        size_t i;
+        for (i = 0; i < listlen; i++)
+          {
+            size_t len = strlen (try_in_order[i]) + 1;
+            char *copy = memcpy (memory, try_in_order[i], len);
+            new_try_in_order[i] = copy;
+            memory = copy + len;
+          }
+        new_try_in_order[i] = NULL;
+      }
 
       /* Now insert the new alias.  */
       new_alias->name = new_name;
@@ -162,12 +164,10 @@ mem_iconveha_notranslit (const char *src, size_t srclen,
            alias = alias->next)
         if (streq (from_codeset, alias->name))
           {
-            const char * const *encodings;
-
             if (handler != iconveh_error)
               {
                 /* First try all encodings without any forgiving.  */
-                encodings = alias->encodings_to_try;
+                const char * const *encodings = alias->encodings_to_try;
                 do
                   {
                     retval = mem_iconveha_notranslit (src, srclen,
@@ -181,7 +181,7 @@ mem_iconveha_notranslit (const char *src, size_t srclen,
                 while (*encodings != NULL);
               }
 
-            encodings = alias->encodings_to_try;
+            const char * const *encodings = alias->encodings_to_try;
             do
               {
                 retval = mem_iconveha_notranslit (src, srclen,
@@ -227,7 +227,6 @@ mem_iconveha (const char *src, size_t srclen,
     || defined ICONV_SET_TRANSLITERATE
   if (transliterate)
     {
-      int retval;
       size_t len = strlen (to_codeset);
       char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
       if (to_codeset_suffixed == NULL)
@@ -238,9 +237,9 @@ mem_iconveha (const char *src, size_t srclen,
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
-      retval = mem_iconveha_notranslit (src, srclen,
-                                        from_codeset, to_codeset_suffixed,
-                                        handler, offsets, resultp, lengthp);
+      int retval = mem_iconveha_notranslit (src, srclen,
+                                            from_codeset, to_codeset_suffixed,
+                                            handler, offsets, resultp, lengthp);
 
       freea (to_codeset_suffixed);
 
@@ -272,12 +271,10 @@ str_iconveha_notranslit (const char *src,
            alias = alias->next)
         if (streq (from_codeset, alias->name))
           {
-            const char * const *encodings;
-
             if (handler != iconveh_error)
               {
                 /* First try all encodings without any forgiving.  */
-                encodings = alias->encodings_to_try;
+                const char * const *encodings = alias->encodings_to_try;
                 do
                   {
                     result = str_iconveha_notranslit (src,
@@ -290,7 +287,7 @@ str_iconveha_notranslit (const char *src,
                 while (*encodings != NULL);
               }
 
-            encodings = alias->encodings_to_try;
+            const char * const *encodings = alias->encodings_to_try;
             do
               {
                 result = str_iconveha_notranslit (src,
@@ -335,7 +332,6 @@ str_iconveha (const char *src,
     || defined ICONV_SET_TRANSLITERATE
   if (transliterate)
     {
-      char *result;
       size_t len = strlen (to_codeset);
       char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
       if (to_codeset_suffixed == NULL)
@@ -346,8 +342,9 @@ str_iconveha (const char *src,
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
-      result = str_iconveha_notranslit (src, from_codeset, to_codeset_suffixed,
-                                        handler);
+      char *result =
+        str_iconveha_notranslit (src, from_codeset, to_codeset_suffixed,
+                                 handler);
 
       freea (to_codeset_suffixed);
 

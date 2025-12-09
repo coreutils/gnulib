@@ -35,13 +35,11 @@
 int
 rpl_socket (int domain, int type, int protocol)
 {
-  SOCKET fh;
-
   gl_sockets_startup (SOCKETS_1_1);
 
   /* We have to use WSASocket() to create non-overlapped IO sockets.
      Overlapped IO sockets cannot be used with read/write.  */
-  fh = WSASocket (domain, type, protocol, NULL, 0, 0);
+  SOCKET fh = WSASocket (domain, type, protocol, NULL, 0, 0);
 
   if (fh == INVALID_SOCKET)
     {

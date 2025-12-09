@@ -27,29 +27,23 @@ int
 FUNC (const SRC_UNIT *s1, size_t n1, const SRC_UNIT *s2, size_t n2,
       const char *iso639_language, uninorm_t nf, int *resultp)
 {
-  UNIT buf1[2048 / sizeof (UNIT)];
-  UNIT buf2[2048 / sizeof (UNIT)];
-  UNIT *norms1;
-  size_t norms1_length;
-  UNIT *norms2;
-  size_t norms2_length;
-  int cmp;
-
   /* Optimization: There is no need to do canonical composition of each string.
      Decomposition is enough.  */
   if (nf != NULL)
     nf = uninorm_decomposing_form (nf);
 
   /* Case-fold and normalize S1.  */
-  norms1_length = sizeof (buf1) / sizeof (UNIT);
-  norms1 = U_CASEFOLD (s1, n1, iso639_language, nf, buf1, &norms1_length);
+  UNIT buf1[2048 / sizeof (UNIT)];
+  size_t norms1_length = sizeof (buf1) / sizeof (UNIT);
+  UNIT *norms1 = U_CASEFOLD (s1, n1, iso639_language, nf, buf1, &norms1_length);
   if (norms1 == NULL)
     /* errno is set here.  */
     return -1;
 
   /* Case-fold and normalize S2.  */
-  norms2_length = sizeof (buf2) / sizeof (UNIT);
-  norms2 = U_CASEFOLD (s2, n2, iso639_language, nf, buf2, &norms2_length);
+  UNIT buf2[2048 / sizeof (UNIT)];
+  size_t norms2_length = sizeof (buf2) / sizeof (UNIT);
+  UNIT *norms2 = U_CASEFOLD (s2, n2, iso639_language, nf, buf2, &norms2_length);
   if (norms2 == NULL)
     {
       if (norms1 != buf1)
@@ -62,7 +56,7 @@ FUNC (const SRC_UNIT *s1, size_t n1, const SRC_UNIT *s2, size_t n2,
     }
 
   /* Compare the normalized strings.  */
-  cmp = U_CMP2 (norms1, norms1_length, norms2, norms2_length);
+  int cmp = U_CMP2 (norms1, norms1_length, norms2, norms2_length);
   if (cmp > 0)
     cmp = 1;
   else if (cmp < 0)

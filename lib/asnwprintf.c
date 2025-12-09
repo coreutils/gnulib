@@ -25,10 +25,8 @@ wchar_t *
 asnwprintf (wchar_t *resultbuf, size_t *lengthp, const wchar_t *format, ...)
 {
   va_list args;
-  wchar_t *result;
-
   va_start (args, format);
-  result = vasnwprintf (resultbuf, lengthp, format, args);
+  wchar_t *result = vasnwprintf (resultbuf, lengthp, format, args);
   va_end (args);
   return result;
 }

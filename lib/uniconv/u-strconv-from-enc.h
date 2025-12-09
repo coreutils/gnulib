@@ -19,10 +19,8 @@ FUNC (const char *string,
       const char *fromcode,
       enum iconv_ilseq_handler handler)
 {
-  UNIT *result;
   size_t length;
-
-  result =
+  UNIT *result =
     U_CONV_FROM_ENCODING (fromcode, handler,
                           string, strlen (string) + 1, NULL,
                           NULL, &length);

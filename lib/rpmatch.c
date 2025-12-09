@@ -44,8 +44,6 @@ static const char *
 localized_pattern (const char *english_pattern, nl_item nl_index,
                    bool posixly_correct)
 {
-  const char *translated_pattern;
-
   /* We prefer to get the patterns from a PO file.  It would be possible to
      always use nl_langinfo (YESEXPR) instead of _("^[yY]"), and
      nl_langinfo (NOEXPR) instead of _("^[nN]"), if we could assume that the
@@ -61,14 +59,14 @@ localized_pattern (const char *english_pattern, nl_item nl_index,
   /* If the user wants strict POSIX compliance, use nl_langinfo.  */
   if (posixly_correct)
     {
-      translated_pattern = nl_langinfo (nl_index);
+      const char *translated_pattern = nl_langinfo (nl_index);
       /* Check against a broken system return value.  */
       if (translated_pattern != NULL && translated_pattern[0] != '\0')
         return translated_pattern;
    }
 
   /* Look in the gnulib message catalog.  */
-  translated_pattern = _(english_pattern);
+  const char *translated_pattern = _(english_pattern);
   if (translated_pattern == english_pattern)
     {
       /* The gnulib message catalog provides no translation.
@@ -92,8 +90,6 @@ try (const char *response, const char *pattern, char **lastp, regex_t *re)
 {
   if (*lastp == NULL || !streq (pattern, *lastp))
     {
-      char *safe_pattern;
-
       /* The pattern has changed.  */
       if (*lastp != NULL)
         {
@@ -104,7 +100,7 @@ try (const char *response, const char *pattern, char **lastp, regex_t *re)
         }
       /* Put the PATTERN into safe memory before calling regcomp.
          (regcomp may call nl_langinfo, overwriting PATTERN's storage.  */
-      safe_pattern = strdup (pattern);
+      char *safe_pattern = strdup (pattern);
       if (safe_pattern == NULL)
         return -1;
       /* Compile the pattern and cache it for future runs.  */
@@ -137,34 +133,37 @@ rpmatch (const char *response)
   bool posixly_correct = (getenv ("POSIXLY_CORRECT") != NULL);
 # endif
 
-  const char *yesexpr, *noexpr;
-  int result;
+  {
+    /* TRANSLATORS: A regular expression testing for an affirmative answer
+       (english: "yes").  Testing the first character may be sufficient.
+       Take care to consider upper and lower case.
+       To enquire the regular expression that your system uses for this
+       purpose, you can use the command
+         locale -k LC_MESSAGES | grep '^yesexpr='  */
+    const char *yesexpr = localized_pattern (N_("^[yY]"), YESEXPR,
+                                             posixly_correct);
+    int result = try (response, yesexpr, &last_yesexpr, &cached_yesre);
+    if (result < 0)
+      return -1;
+    if (result)
+      return 1;
+  }
 
-  /* TRANSLATORS: A regular expression testing for an affirmative answer
-     (english: "yes").  Testing the first character may be sufficient.
-     Take care to consider upper and lower case.
-     To enquire the regular expression that your system uses for this
-     purpose, you can use the command
-       locale -k LC_MESSAGES | grep '^yesexpr='  */
-  yesexpr = localized_pattern (N_("^[yY]"), YESEXPR, posixly_correct);
-  result = try (response, yesexpr, &last_yesexpr, &cached_yesre);
-  if (result < 0)
-    return -1;
-  if (result)
-    return 1;
-
-  /* TRANSLATORS: A regular expression testing for a negative answer
-     (english: "no").  Testing the first character may be sufficient.
-     Take care to consider upper and lower case.
-     To enquire the regular expression that your system uses for this
-     purpose, you can use the command
-       locale -k LC_MESSAGES | grep '^noexpr='  */
-  noexpr = localized_pattern (N_("^[nN]"), NOEXPR, posixly_correct);
-  result = try (response, noexpr, &last_noexpr, &cached_nore);
-  if (result < 0)
-    return -1;
-  if (result)
-    return 0;
+  {
+    /* TRANSLATORS: A regular expression testing for a negative answer
+       (english: "no").  Testing the first character may be sufficient.
+       Take care to consider upper and lower case.
+       To enquire the regular expression that your system uses for this
+       purpose, you can use the command
+         locale -k LC_MESSAGES | grep '^noexpr='  */
+    const char *noexpr = localized_pattern (N_("^[nN]"), NOEXPR,
+                                            posixly_correct);
+    int result = try (response, noexpr, &last_noexpr, &cached_nore);
+    if (result < 0)
+      return -1;
+    if (result)
+      return 0;
+  }
 
   return -1;
 #else

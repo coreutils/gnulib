@@ -18,22 +18,24 @@
 int
 FUNC (const UNIT *s, size_t n)
 {
-  int count = 0;
-  for (; n > 0; s++, n--)
-    {
-      UNIT c = *s;
-      if (c == (UNIT)'\0')
-        break;
+  {
+    int count = 0;
+    for (; n > 0; s++, n--)
       {
-        int width = CHARACTER_WIDTH (c);
-        if (width < 0)
-          goto found_nonprinting;
-        if (width > INT_MAX - count)
-          goto overflow;
-        count += width;
+        UNIT c = *s;
+        if (c == (UNIT)'\0')
+          break;
+        {
+          int width = CHARACTER_WIDTH (c);
+          if (width < 0)
+            goto found_nonprinting;
+          if (width > INT_MAX - count)
+            goto overflow;
+          count += width;
+        }
       }
-    }
-  return count;
+    return count;
+  }
 
   /* The total width has become > INT_MAX.
      Continue searching for a non-printing wide character.  */

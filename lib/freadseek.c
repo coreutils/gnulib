@@ -73,15 +73,12 @@ freadptrinc (FILE *fp, size_t increment)
 int
 freadseek (FILE *fp, size_t offset)
 {
-  size_t total_buffered;
-  int fd;
-
   if (offset == 0)
     return 0;
 
   /* Seek over the already read and buffered input as quickly as possible,
      without doing any system calls.  */
-  total_buffered = freadahead (fp);
+  size_t total_buffered = freadahead (fp);
   /* This loop is usually executed at most twice: once for ungetc buffer (if
      present) and once for the main buffer.  */
   while (total_buffered > 0)
@@ -111,7 +108,7 @@ freadseek (FILE *fp, size_t offset)
     }
 
   /* Test whether the stream is seekable or not.  */
-  fd = fileno (fp);
+  int fd = fileno (fp);
   if (fd >= 0 && lseek (fd, 0, SEEK_CUR) >= 0)
     {
       /* FP refers to a regular file.  fseek is most efficient in this case.  */
@@ -121,10 +118,9 @@ freadseek (FILE *fp, size_t offset)
     {
       /* FP is a non-seekable stream, possibly not even referring to a file
          descriptor.  Read OFFSET bytes explicitly and discard them.  */
-      char buf[4096];
-
       do
         {
+          char buf[4096];
           size_t count = (sizeof (buf) < offset ? sizeof (buf) : offset);
           if (fread (buf, 1, count, fp) < count)
             goto eof;

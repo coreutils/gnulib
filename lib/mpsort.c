@@ -44,14 +44,12 @@ mpsort_into_tmp (void const **restrict base, size_t n,
   size_t alim = n1;
   size_t b = n1;
   size_t blim = n;
-  void const *ba;
-  void const *bb;
 
   mpsort_with_tmp (base + n1, n2, tmp, cmp);
   mpsort_with_tmp (base, n1, tmp, cmp);
 
-  ba = base[a];
-  bb = base[b];
+  void const *ba = base[a];
+  void const *bb = base[b];
 
   for (;;)
     if (cmp (ba, bb) <= 0)
@@ -108,8 +106,6 @@ mpsort_with_tmp (void const **restrict base, size_t n,
       size_t tlim = n1;
       size_t b = n1;
       size_t blim = n;
-      void const *bb;
-      void const *tt;
 
       mpsort_with_tmp (base + n1, n2, tmp, cmp);
 
@@ -118,8 +114,8 @@ mpsort_with_tmp (void const **restrict base, size_t n,
       else
         mpsort_into_tmp (base, n1, tmp, cmp);
 
-      tt = tmp[t];
-      bb = base[b];
+      void const *tt = tmp[t];
+      void const *bb = base[b];
 
       for (size_t i = 0; ; )
         if (cmp (tt, bb) <= 0)

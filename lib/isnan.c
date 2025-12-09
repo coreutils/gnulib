@@ -105,10 +105,8 @@ FUNC (DOUBLE x)
      The NaN bit pattern is:
        - exponent = 0x7FFF, mantissa >= 0x8000000000000001.  */
   memory_double m;
-  unsigned int exponent;
-
   m.value = x;
-  exponent = (m.word[EXPBIT0_WORD] >> EXPBIT0_BIT) & EXP_MASK;
+  unsigned int exponent = (m.word[EXPBIT0_WORD] >> EXPBIT0_BIT) & EXP_MASK;
 #  ifdef WORDS_BIGENDIAN
   /* Big endian: EXPBIT0_WORD = 0, EXPBIT0_BIT = 16.  */
   if (exponent == 0)
@@ -138,9 +136,9 @@ FUNC (DOUBLE x)
      Visual C/C++ compiler also fails when constant-folding 1.0 / 0.0 even
      when constant-folding is not required.  */
   static DOUBLE zero = L_(0.0);
-  memory_double nan;
   DOUBLE plus_inf = L_(1.0) / zero;
   DOUBLE minus_inf = -L_(1.0) / zero;
+  memory_double nan;
   nan.value = zero / zero;
 #  else
   static memory_double nan = { L_(0.0) / L_(0.0) };
@@ -149,10 +147,10 @@ FUNC (DOUBLE x)
 #  endif
   {
     memory_double m;
+    m.value = x;
 
     /* A NaN can be recognized through its exponent.  But exclude +Infinity and
        -Infinity, which have the same exponent.  */
-    m.value = x;
     if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
          & (EXP_MASK << EXPBIT0_BIT))
         == 0)
@@ -171,12 +169,13 @@ FUNC (DOUBLE x)
 # if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
       /* Detect any special bit patterns that pass ==; see comment above.  */
       memory_double m1;
-      memory_double m2;
-
       memset (&m1.value, 0, SIZE);
-      memset (&m2.value, 0, SIZE);
       m1.value = x;
+
+      memory_double m2;
+      memset (&m2.value, 0, SIZE);
       m2.value = x + (x ? 0.0L : -0.0L);
+
       if (!memeq (&m1.value, &m2.value, SIZE))
         return 1;
 # endif

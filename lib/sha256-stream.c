@@ -67,7 +67,6 @@ shaxxx_stream (FILE *stream, char const *alg, void *resblock,
       /* We read the file in blocks of BLOCKSIZE bytes.  One call of the
          computation function processes the whole buffer so that with the
          next round of the loop another block can be read.  */
-      size_t n;
       sum = 0;
 
       /* Read block.  Take care for partial reads.  */
@@ -81,7 +80,7 @@ shaxxx_stream (FILE *stream, char const *alg, void *resblock,
           if (feof (stream))
             goto process_partial_block;
 
-          n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
+          size_t n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
           sum += n;
 

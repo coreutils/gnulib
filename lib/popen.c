@@ -61,10 +61,8 @@ rpl_popen (const char *filename, const char *mode)
      temporarily marking them cloexec around the real popen call, but
      we would also have to override pclose, and the bookkeeping seems
      extreme given that cygwin 1.7 no longer has the bug.  */
-  FILE *result;
   int cloexec0 = fcntl (STDIN_FILENO, F_GETFD);
   int cloexec1 = fcntl (STDOUT_FILENO, F_GETFD);
-  int saved_errno;
 
   /* If either stdin or stdout was closed (that is, fcntl failed),
      then we open a dummy close-on-exec fd to occupy that slot.  That
@@ -89,14 +87,16 @@ rpl_popen (const char *filename, const char *mode)
                     fcntl (STDOUT_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
         abort ();
     }
-  result = popen (filename, mode);
+  FILE *result = popen (filename, mode);
   /* Now, close any dummy fd's created in the parent.  */
-  saved_errno = errno;
-  if (cloexec0 < 0)
-    close (STDIN_FILENO);
-  if (cloexec1 < 0)
-    close (STDOUT_FILENO);
-  errno = saved_errno;
+  {
+    int saved_errno = errno;
+    if (cloexec0 < 0)
+      close (STDIN_FILENO);
+    if (cloexec1 < 0)
+      close (STDOUT_FILENO);
+    errno = saved_errno;
+  }
   return result;
 }
 

@@ -126,12 +126,11 @@ static const void * _GL_ATTRIBUTE_PURE
 gl_carray_node_value (gl_list_t list, gl_list_node_t node)
 {
   uintptr_t index = NODE_TO_INDEX (node);
-  size_t i;
 
   if (!(index < list->count))
     /* Invalid argument.  */
     abort ();
-  i = list->offset + index;
+  size_t i = list->offset + index;
   if (i >= list->allocated)
     i -= list->allocated;
   return list->elements[i];
@@ -142,12 +141,11 @@ gl_carray_node_nx_set_value (gl_list_t list, gl_list_node_t node,
                              const void *elt)
 {
   uintptr_t index = NODE_TO_INDEX (node);
-  size_t i;
 
   if (!(index < list->count))
     /* Invalid argument.  */
     abort ();
-  i = list->offset + index;
+  size_t i = list->offset + index;
   if (i >= list->allocated)
     i -= list->allocated;
   list->elements[i] = elt;
@@ -203,12 +201,11 @@ static const void * _GL_ATTRIBUTE_PURE
 gl_carray_get_at (gl_list_t list, size_t position)
 {
   size_t count = list->count;
-  size_t i;
 
   if (!(position < count))
     /* Invalid argument.  */
     abort ();
-  i = list->offset + position;
+  size_t i = list->offset + position;
   if (i >= list->allocated)
     i -= list->allocated;
   return list->elements[i];
@@ -218,12 +215,11 @@ static gl_list_node_t
 gl_carray_nx_set_at (gl_list_t list, size_t position, const void *elt)
 {
   size_t count = list->count;
-  size_t i;
 
   if (!(position < count))
     /* Invalid argument.  */
     abort ();
-  i = list->offset + position;
+  size_t i = list->offset + position;
   if (i >= list->allocated)
     i -= list->allocated;
   list->elements[i] = elt;
@@ -244,9 +240,8 @@ gl_carray_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
     {
       gl_listelement_equals_fn equals = list->base.equals_fn;
       size_t allocated = list->allocated;
-      size_t i_end;
 
-      i_end = list->offset + end_index;
+      size_t i_end = list->offset + end_index;
       if (i_end >= allocated)
         i_end -= allocated;
 
@@ -305,16 +300,13 @@ gl_carray_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 static int
 grow (gl_list_t list)
 {
-  size_t new_allocated;
-  size_t memory_size;
-  const void **memory;
-
-  new_allocated = xtimes (list->allocated, 2);
+  size_t new_allocated = xtimes (list->allocated, 2);
   new_allocated = xsum (new_allocated, 1);
-  memory_size = xtimes (new_allocated, sizeof (const void *));
+  size_t memory_size = xtimes (new_allocated, sizeof (const void *));
   if (size_overflow_p (memory_size))
     /* Overflow, would lead to out of memory.  */
     return -1;
+  const void **memory;
   if (list->offset > 0 && list->count > 0)
     {
       memory = (const void **) malloc (memory_size);
@@ -367,12 +359,11 @@ static gl_list_node_t
 gl_carray_nx_add_last (gl_list_t list, const void *elt)
 {
   size_t count = list->count;
-  size_t i;
 
   if (count == list->allocated)
     if (grow (list) < 0)
       return NULL;
-  i = list->offset + count;
+  size_t i = list->offset + count;
   if (i >= list->allocated)
     i -= list->allocated;
   list->elements[i] = elt;
@@ -384,7 +375,6 @@ static gl_list_node_t
 gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
 {
   size_t count = list->count;
-  const void **elements;
 
   if (!(position <= count))
     /* Invalid argument.  */
@@ -392,15 +382,13 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
   if (count == list->allocated)
     if (grow (list) < 0)
       return NULL;
-  elements = list->elements;
+  const void **elements = list->elements;
   if (position <= (count / 2))
     {
       /* Shift at most count/2 elements to the left.  */
-      size_t i2;
-
       list->offset = (list->offset == 0 ? list->allocated : list->offset) - 1;
 
-      i2 = list->offset + position;
+      size_t i2 = list->offset + position;
       if (i2 >= list->allocated)
         {
           /* Here we must have list->offset > 0, hence list->allocated > 0.  */
@@ -422,10 +410,8 @@ gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
   else
     {
       /* Shift at most (count+1)/2 elements to the right.  */
-      size_t i1, i3;
-
-      i1 = list->offset + position;
-      i3 = list->offset + count;
+      size_t i1 = list->offset + position;
+      size_t i3 = list->offset + count;
       if (i1 >= list->allocated)
         {
           i1 -= list->allocated;
@@ -483,20 +469,17 @@ static bool
 gl_carray_remove_at (gl_list_t list, size_t position)
 {
   size_t count = list->count;
-  const void **elements;
 
   if (!(position < count))
     /* Invalid argument.  */
     abort ();
   /* Here we know count > 0.  */
-  elements = list->elements;
+  const void **elements = list->elements;
   if (position <= ((count - 1) / 2))
     {
       /* Shift at most (count-1)/2 elements to the right.  */
-      size_t i0, i2;
-
-      i0 = list->offset;
-      i2 = list->offset + position;
+      size_t i0 = list->offset;
+      size_t i2 = list->offset + position;
       if (i2 >= list->allocated)
         {
           /* Here we must have list->offset > 0, hence list->allocated > 0.  */
@@ -524,10 +507,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
   else
     {
       /* Shift at most count/2 elements to the left.  */
-      size_t i1, i3;
-
-      i1 = list->offset + position;
-      i3 = list->offset + count - 1;
+      size_t i1 = list->offset + position;
+      size_t i3 = list->offset + count - 1;
       if (i1 >= list->allocated)
         {
           i1 -= list->allocated;
@@ -647,11 +628,11 @@ gl_carray_iterator (gl_list_t list)
 static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_carray_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
 {
-  gl_list_iterator_t result;
-
   if (!(start_index <= end_index && end_index <= list->count))
     /* Invalid arguments.  */
     abort ();
+
+  gl_list_iterator_t result;
   result.vtable = list->base.vtable;
   result.list = list;
   result.count = list->count;
@@ -720,14 +701,12 @@ gl_carray_sortedlist_indexof_from_to (gl_list_t list,
       do
         {
           size_t mid = low + (high - low) / 2; /* low <= mid < high */
-          size_t i_mid;
-          int cmp;
 
-          i_mid = list->offset + mid;
+          size_t i_mid = list->offset + mid;
           if (i_mid >= list->allocated)
             i_mid -= list->allocated;
 
-          cmp = compar (list->elements[i_mid], elt);
+          int cmp = compar (list->elements[i_mid], elt);
 
           if (cmp < 0)
             low = mid + 1;
@@ -745,14 +724,12 @@ gl_carray_sortedlist_indexof_from_to (gl_list_t list,
               while (low < high)
                 {
                   size_t mid2 = low + (high - low) / 2; /* low <= mid2 < high */
-                  size_t i_mid2;
-                  int cmp2;
 
-                  i_mid2 = list->offset + mid2;
+                  size_t i_mid2 = list->offset + mid2;
                   if (i_mid2 >= list->allocated)
                     i_mid2 -= list->allocated;
 
-                  cmp2 = compar (list->elements[i_mid2], elt);
+                  int cmp2 = compar (list->elements[i_mid2], elt);
 
                   if (cmp2 < 0)
                     low = mid2 + 1;
@@ -816,14 +793,12 @@ gl_carray_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
   while (low < high)
     {
       size_t mid = low + (high - low) / 2; /* low <= mid < high */
-      size_t i_mid;
-      int cmp;
 
-      i_mid = list->offset + mid;
+      size_t i_mid = list->offset + mid;
       if (i_mid >= list->allocated)
         i_mid -= list->allocated;
 
-      cmp = compar (list->elements[i_mid], elt);
+      int cmp = compar (list->elements[i_mid], elt);
 
       if (cmp < 0)
         low = mid + 1;

@@ -437,18 +437,9 @@ create_pipe (const char *progname,
 #else
 
   /* Unix API.  */
-  char **child_environ;
-  char **malloced_environ;
-  sigset_t blocked_signals;
-  posix_spawn_file_actions_t actions;
-  bool actions_allocated;
-  posix_spawnattr_t attrs;
-  bool attrs_allocated;
-  int err;
-  pid_t child;
 
-  child_environ = environ;
-  malloced_environ = NULL;
+  char **child_environ = environ;
+  char **malloced_environ = NULL;
 # if defined _WIN32 || defined __CYGWIN__
   if (dll_dirs != NULL && dll_dirs[0] != NULL)
     {
@@ -459,13 +450,20 @@ create_pipe (const char *progname,
     }
 # endif
 
+  sigset_t blocked_signals;
   if (slave_process)
     {
       sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
       block_fatal_signals ();
     }
-  actions_allocated = false;
-  attrs_allocated = false;
+
+  posix_spawn_file_actions_t actions;
+  bool actions_allocated = false;
+  posix_spawnattr_t attrs;
+  bool attrs_allocated = false;
+
+  int err;
+  pid_t child;
   if ((err = posix_spawn_file_actions_init (&actions)) != 0
       || (actions_allocated = true,
           (pipe_stdin

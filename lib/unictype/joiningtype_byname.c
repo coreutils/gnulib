@@ -35,13 +35,10 @@
 int
 uc_joining_type_byname (const char *joining_type_name)
 {
-  size_t len;
-
-  len = strlen (joining_type_name);
+  size_t len = strlen (joining_type_name);
   if (len <= MAX_WORD_LENGTH)
     {
       char buf[MAX_WORD_LENGTH + 1];
-      const struct named_joining_type *found;
 
       /* Copy joining_type_name into buf, converting '_' and '-' to ' '.  */
       {
@@ -62,7 +59,8 @@ uc_joining_type_byname (const char *joining_type_name)
       /* Here q == buf + len.  */
 
       /* Do a hash table lookup, with case-insensitive comparison.  */
-      found = uc_joining_type_lookup (buf, len);
+      const struct named_joining_type *found =
+        uc_joining_type_lookup (buf, len);
       if (found != NULL)
         return found->joining_type;
     }

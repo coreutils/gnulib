@@ -44,11 +44,6 @@ iconv_t
 rpl_iconv_open (const char *tocode, const char *fromcode)
 #undef iconv_open
 {
-  char fromcode_upper[32];
-  char tocode_upper[32];
-  char *fromcode_upper_end;
-  char *tocode_upper_end;
-
 #if REPLACE_ICONV_UTF
   /* Special handling of conversion between UTF-8 and UTF-{16,32}{BE,LE}.
      We do not need to handle conversion between arbitrary encodings and
@@ -113,6 +108,8 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
   /* Convert the encodings to upper case, because
        1. in the arguments of iconv_open() on AIX and HP-UX, the case matters,
        2. it makes searching in the table faster.  */
+  char fromcode_upper[32];
+  char *fromcode_upper_end;
   {
     const char *p = fromcode;
     char *q = fromcode_upper;
@@ -129,6 +126,8 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
     fromcode_upper_end = q;
   }
 
+  char tocode_upper[32];
+  char *tocode_upper_end;
   {
     const char *p = tocode;
     char *q = tocode_upper;

@@ -25,10 +25,9 @@ ptrdiff_t
 c_aszprintf (char **resultp, const char *format, ...)
 {
   va_list args;
-  ptrdiff_t result;
-
   va_start (args, format);
-  result = c_vaszprintf (resultp, format, args);
+  ptrdiff_t result = c_vaszprintf (resultp, format, args);
   va_end (args);
+
   return result;
 }

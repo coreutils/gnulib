@@ -53,27 +53,23 @@ FUNC (const UNIT *s, size_t n,
       /* X -> nf(toCasefold(NFD(X))) or
          X -> nf(toCasefold(nfd(toCasefold(NFD(X)))))  */
       int repeat = (uninorm_is_compat_decomposing (nf) ? 2 : 1);
-      UNIT tmpbuf1[2048 / sizeof (UNIT)];
-      UNIT tmpbuf2[2048 / sizeof (UNIT)];
-      UNIT *tmp1;
-      size_t tmp1_length;
-      UNIT *tmp2;
-      size_t tmp2_length;
 
-      tmp1_length = sizeof (tmpbuf1) / sizeof (UNIT);
-      tmp1 = U_NORMALIZE (UNINORM_NFD, s, n, tmpbuf1, &tmp1_length);
+      UNIT tmpbuf1[2048 / sizeof (UNIT)];
+      size_t tmp1_length = sizeof (tmpbuf1) / sizeof (UNIT);
+      UNIT *tmp1 = U_NORMALIZE (UNINORM_NFD, s, n, tmpbuf1, &tmp1_length);
       if (tmp1 == NULL)
         /* errno is set here.  */
         return NULL;
 
       do
         {
-          tmp2_length = sizeof (tmpbuf2) / sizeof (UNIT);
-          tmp2 = U_CASEMAP (tmp1, tmp1_length,
-                            prefix_context, suffix_context, iso639_language,
-                            uc_tocasefold, offsetof (struct special_casing_rule, casefold[0]),
-                            NULL,
-                            tmpbuf2, &tmp2_length);
+          UNIT tmpbuf2[2048 / sizeof (UNIT)];
+          size_t tmp2_length = sizeof (tmpbuf2) / sizeof (UNIT);
+          UNIT *tmp2 = U_CASEMAP (tmp1, tmp1_length,
+                                  prefix_context, suffix_context, iso639_language,
+                                  uc_tocasefold, offsetof (struct special_casing_rule, casefold[0]),
+                                  NULL,
+                                  tmpbuf2, &tmp2_length);
           if (tmp2 == NULL)
             {
               int saved_errno = errno;

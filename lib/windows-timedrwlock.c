@@ -54,13 +54,10 @@ glwthread_waitqueue_init (glwthread_waitqueue_t *wq)
 static struct glwthread_waitqueue_element *
 glwthread_waitqueue_add (glwthread_waitqueue_t *wq)
 {
-  struct glwthread_waitqueue_element *elt;
-  HANDLE event;
-
   /* Allocate the memory for the waitqueue element on the heap, not on the
      thread's stack.  If the thread exits unexpectedly, we prefer to leak
      some memory rather than to access unavailable memory and crash.  */
-  elt =
+  struct glwthread_waitqueue_element *elt =
     (struct glwthread_waitqueue_element *)
     malloc (sizeof (struct glwthread_waitqueue_element));
   if (elt == NULL)
@@ -69,7 +66,7 @@ glwthread_waitqueue_add (glwthread_waitqueue_t *wq)
 
   /* Whether the created event is a manual-reset one or an auto-reset one,
      does not matter, since we will wait on it only once.  */
-  event = CreateEvent (NULL, TRUE, FALSE, NULL);
+  HANDLE event = CreateEvent (NULL, TRUE, FALSE, NULL);
   if (event == INVALID_HANDLE_VALUE)
     {
       /* No way to allocate an event.  */
@@ -115,12 +112,10 @@ glwthread_waitqueue_notify_first (glwthread_waitqueue_t *wq)
     {
       struct glwthread_waitqueue_element *elt =
         (struct glwthread_waitqueue_element *) wq->wq_list.wql_next;
-      struct glwthread_waitqueue_link *prev;
-      struct glwthread_waitqueue_link *next;
 
       /* Remove elt from the circular list.  */
-      prev = &wq->wq_list; /* = elt->link.wql_prev; */
-      next = elt->link.wql_next;
+      struct glwthread_waitqueue_link *prev = &wq->wq_list; /* = elt->link.wql_prev; */
+      struct glwthread_waitqueue_link *next = elt->link.wql_next;
       prev->wql_next = next;
       next->wql_prev = prev;
       elt->link.wql_next = NULL;
@@ -141,12 +136,10 @@ glwthread_waitqueue_notify_all (glwthread_waitqueue_t *wq)
     {
       struct glwthread_waitqueue_element *elt =
         (struct glwthread_waitqueue_element *) l;
-      struct glwthread_waitqueue_link *prev;
-      struct glwthread_waitqueue_link *next;
 
       /* Remove elt from the circular list.  */
-      prev = &wq->wq_list; /* = elt->link.wql_prev; */
-      next = elt->link.wql_next;
+      struct glwthread_waitqueue_link *prev = &wq->wq_list; /* = elt->link.wql_prev; */
+      struct glwthread_waitqueue_link *next = elt->link.wql_next;
       prev->wql_next = next;
       next->wql_prev = prev;
       elt->link.wql_next = NULL;
@@ -207,10 +200,9 @@ glwthread_timedrwlock_rdlock (glwthread_timedrwlock_t *lock)
       if (elt != NULL)
         {
           HANDLE event = elt->event;
-          DWORD result;
           LeaveCriticalSection (&lock->lock);
           /* Wait until another thread signals this event.  */
-          result = WaitForSingleObject (event, INFINITE);
+          DWORD result = WaitForSingleObject (event, INFINITE);
           if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
             abort ();
           CloseHandle (event);
@@ -267,10 +259,9 @@ glwthread_timedrwlock_wrlock (glwthread_timedrwlock_t *lock)
       if (elt != NULL)
         {
           HANDLE event = elt->event;
-          DWORD result;
           LeaveCriticalSection (&lock->lock);
           /* Wait until another thread signals this event.  */
-          result = WaitForSingleObject (event, INFINITE);
+          DWORD result = WaitForSingleObject (event, INFINITE);
           if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
             abort ();
           CloseHandle (event);
@@ -400,17 +391,15 @@ glwthread_timedrwlock_timedrdlock (glwthread_timedrwlock_t *lock,
       if (elt != NULL)
         {
           HANDLE event = elt->event;
-          struct timeval currtime;
-          DWORD timeout;
-          DWORD result;
-          int retval;
 
           LeaveCriticalSection (&lock->lock);
 
+          struct timeval currtime;
           gettimeofday (&currtime, NULL);
 
           /* Wait until another thread signals this event or until the
              abstime passes.  */
+          DWORD timeout;
           if (currtime.tv_sec > abstime->tv_sec)
             timeout = 0;
           else
@@ -442,7 +431,7 @@ glwthread_timedrwlock_timedrdlock (glwthread_timedrwlock_t *lock,
             {
               /* WaitForSingleObject
                  <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
-              result = WaitForSingleObject (event, timeout);
+              DWORD result = WaitForSingleObject (event, timeout);
               if (result == WAIT_FAILED)
                 abort ();
               if (result != WAIT_TIMEOUT)
@@ -459,6 +448,7 @@ glwthread_timedrwlock_timedrdlock (glwthread_timedrwlock_t *lock,
             }
           EnterCriticalSection (&lock->lock);
           /* Remove ourselves from the waiting_readers.  */
+          int retval;
           if (glwthread_waitqueue_remove (&lock->waiting_readers, elt))
             retval = ETIMEDOUT;
           else
@@ -520,17 +510,15 @@ glwthread_timedrwlock_timedwrlock (glwthread_timedrwlock_t *lock,
       if (elt != NULL)
         {
           HANDLE event = elt->event;
-          struct timeval currtime;
-          DWORD timeout;
-          DWORD result;
-          int retval;
 
           LeaveCriticalSection (&lock->lock);
 
+          struct timeval currtime;
           gettimeofday (&currtime, NULL);
 
           /* Wait until another thread signals this event or until the
              abstime passes.  */
+          DWORD timeout;
           if (currtime.tv_sec > abstime->tv_sec)
             timeout = 0;
           else
@@ -562,7 +550,7 @@ glwthread_timedrwlock_timedwrlock (glwthread_timedrwlock_t *lock,
             {
               /* WaitForSingleObject
                  <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
-              result = WaitForSingleObject (event, timeout);
+              DWORD result = WaitForSingleObject (event, timeout);
               if (result == WAIT_FAILED)
                 abort ();
               if (result != WAIT_TIMEOUT)
@@ -579,6 +567,7 @@ glwthread_timedrwlock_timedwrlock (glwthread_timedrwlock_t *lock,
             }
           EnterCriticalSection (&lock->lock);
           /* Remove ourselves from the waiting_writers.  */
+          int retval;
           if (glwthread_waitqueue_remove (&lock->waiting_writers, elt))
             retval = ETIMEDOUT;
           else

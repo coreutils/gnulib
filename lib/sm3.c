@@ -294,8 +294,8 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
        if (++j) \
          dbg_printf("%2d %08x %08x %08x %08x %08x %08x %08x %08x\n", \
                     j-1, A, B, C, D, E, F, G, H); \
-       ss1 = rol(rol(A,12) + E + T,7); \
-       ss2 = ss1 ^ rol(A,12); \
+       uint32_t ss1 = rol(rol(A,12) + E + T,7); \
+       uint32_t ss2 = ss1 ^ rol(A,12); \
        D += FF##i(A,B,C) + ss2 + (W1 ^ W2); \
        H += GG##i(E,F,G) + ss1 + W1; \
        B = rol(B,9); \
@@ -308,9 +308,6 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
 
   while (words < endp)
     {
-      uint32_t tw;
-      uint32_t ss1, ss2;
-
       for (int j = 0; j < 16; j++)
         {
           x[j] = SWAP (*words);
@@ -323,6 +320,8 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
                   "      F        G        H\n"
                   "   %08x %08x %08x %08x %08x %08x %08x %08x\n",
                   a, b, c, d, e, f, g, h);
+
+      uint32_t tw;
 
       R1( a, b, c, d, e, f, g, h, T( 0), W1( 0), W1( 4) );
       R1( d, a, b, c, h, e, f, g, T( 1), W1( 1), W1( 5) );

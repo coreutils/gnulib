@@ -79,15 +79,13 @@ ctype_codeset (void)
   /* This function is only used on platforms which don't have uselocale().
      Therefore we don't need to look at the per-thread locale first, here.  */
   static char result[2 + 10 + 1];
-  char buf[2 + 10 + 1];
-  char locale[SETLOCALE_NULL_MAX];
-  char *codeset;
-  size_t codesetlen;
 
+  char locale[SETLOCALE_NULL_MAX];
   if (setlocale_null_r (LC_CTYPE, locale, sizeof (locale)))
     locale[0] = '\0';
 
-  codeset = buf;
+  char buf[2 + 10 + 1];
+  char *codeset = buf;
   codeset[0] = '\0';
 
   if (locale[0])
@@ -105,7 +103,7 @@ ctype_codeset (void)
             codeset = codeset_start;
           else
             {
-              codesetlen = modifier - codeset_start;
+              size_t codesetlen = modifier - codeset_start;
               if (codesetlen < sizeof buf)
                 {
                   codeset = memcpy (buf, codeset_start, codesetlen);
@@ -121,7 +119,7 @@ ctype_codeset (void)
      GetACP, which returns the locale's codepage as a number (although
      this doesn't change according to what the 'setlocale' call specified).
      Either way, prepend "CP" to make it a valid codeset name.  */
-  codesetlen = strlen (codeset);
+  size_t codesetlen = strlen (codeset);
   if (0 < codesetlen && codesetlen < sizeof buf - 2)
     memmove (buf + 2, codeset, codesetlen + 1);
   else
@@ -209,10 +207,9 @@ static char *
 nl_langinfo_with_lock (nl_item item)
 {
   CRITICAL_SECTION *lock = gl_get_nl_langinfo_lock ();
-  char *ret;
 
   EnterCriticalSection (lock);
-  ret = nl_langinfo_unlocked (item);
+  char *ret = nl_langinfo_unlocked (item);
   LeaveCriticalSection (lock);
 
   return ret;
@@ -248,11 +245,10 @@ nl_langinfo_with_lock (nl_item item)
   if (pthread_in_use())
     {
       pthread_mutex_t *lock = gl_get_nl_langinfo_lock ();
-      char *ret;
 
       if (pthread_mutex_lock (lock))
         abort ();
-      ret = nl_langinfo_unlocked (item);
+      char *ret = nl_langinfo_unlocked (item);
       if (pthread_mutex_unlock (lock))
         abort ();
 
@@ -270,11 +266,10 @@ static char *
 nl_langinfo_with_lock (nl_item item)
 {
   mtx_t *lock = gl_get_nl_langinfo_lock ();
-  char *ret;
 
   if (mtx_lock (lock) != thrd_success)
     abort ();
-  ret = nl_langinfo_unlocked (item);
+  char *ret = nl_langinfo_unlocked (item);
   if (mtx_unlock (lock) != thrd_success)
     abort ();
 

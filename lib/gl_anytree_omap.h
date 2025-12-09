@@ -119,7 +119,6 @@ static int
 gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
                    const void **oldvaluep)
 {
-  gl_mapkey_compar_fn compar;
   gl_omap_node_t node = map->root;
 
   if (node == NULL)
@@ -129,7 +128,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
       return 1;
     }
 
-  compar = map->base.compar_fn;
+  gl_mapkey_compar_fn compar = map->base.compar_fn;
 
   for (;;)
     {
@@ -245,16 +244,17 @@ static gl_omap_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_omap_t map)
 {
   gl_omap_iterator_t result;
-  gl_omap_node_t node;
 
   result.vtable = map->base.vtable;
   result.map = map;
-  /* Start node is the leftmost node.  */
-  node = map->root;
-  if (node != NULL)
-    while (node->left != NULL)
-      node = node->left;
-  result.p = node;
+  {
+    /* Start node is the leftmost node.  */
+    gl_omap_node_t node = map->root;
+    if (node != NULL)
+      while (node->left != NULL)
+        node = node->left;
+    result.p = node;
+  }
   /* End point is past the rightmost node.  */
   result.q = NULL;
 #if defined GCC_LINT || defined lint

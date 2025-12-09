@@ -27,10 +27,8 @@ off64_t
 zprintf (const char *format, ...)
 {
   va_list args;
-  off64_t ret;
-
   va_start (args, format);
-  ret = vfzprintf (stdout, format, args);
+  off64_t ret = vfzprintf (stdout, format, args);
   va_end (args);
 
   return ret;

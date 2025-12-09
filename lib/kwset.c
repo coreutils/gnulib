@@ -345,8 +345,6 @@ static void
 treefails (struct tree const *tree, struct trie const *fail,
            struct trie *recourse, bool reverse)
 {
-  struct tree *cur;
-
   if (!tree)
     return;
 
@@ -357,7 +355,7 @@ treefails (struct tree const *tree, struct trie const *fail,
      node that has a descendant on the current label.  */
   while (fail)
     {
-      cur = fail->links;
+      struct tree *cur = fail->links;
       while (cur && tree->label != cur->label)
         if (tree->label < cur->label)
           cur = cur->llink;
@@ -425,29 +423,29 @@ kwsprep (kwset_t kwset)
   char const *trans = kwset->trans;
   unsigned char deltabuf[NCHAR];
   unsigned char *delta = trans ? deltabuf : kwset->delta;
-  struct trie *curr, *last;
 
   /* Use Boyer-Moore if just one pattern, Aho-Corasick otherwise.  */
   bool reverse = kwset->words == 1;
 
   if (reverse)
     {
-      kwset_t new_kwset;
-
       /* Enqueue the immediate descendants in the level order queue.  */
-      for (curr = last = kwset->trie; curr; curr = curr->next)
-        enqueue (curr->links, &last);
+      {
+        struct trie *last;
+        for (struct trie *curr = last = kwset->trie; curr; curr = curr->next)
+          enqueue (curr->links, &last);
+      }
 
       /* Looking for just one string.  Extract it from the trie.  */
       kwset->target = obstack_alloc (&kwset->obstack, kwset->mind);
-      curr = kwset->trie;
+      struct trie *curr = kwset->trie;
       for (idx_t i = 0; i < kwset->mind; i++)
         {
           kwset->target[i] = curr->links->label;
           curr = curr->next;
         }
 
-      new_kwset = kwsalloc (kwset->trans);
+      kwset_t new_kwset = kwsalloc (kwset->trans);
       new_kwset->kwsexec = bmexec;
       kwsincr (new_kwset, kwset->target, kwset->mind);
       obstack_free (&kwset->obstack, nullptr);
@@ -462,47 +460,50 @@ kwsprep (kwset_t kwset)
 
   /* Traverse the nodes of the trie in level order, simultaneously
      computing the delta table, failure function, and shift function.  */
-  for (curr = last = kwset->trie; curr; curr = curr->next)
-    {
-      /* Enqueue the immediate descendants in the level order queue.  */
-      enqueue (curr->links, &last);
+  {
+    struct trie *last;
+    for (struct trie *curr = last = kwset->trie; curr; curr = curr->next)
+      {
+        /* Enqueue the immediate descendants in the level order queue.  */
+        enqueue (curr->links, &last);
 
-      /* Update the delta table for the descendants of this node.  */
-      treedelta (curr->links, curr->depth, delta);
+        /* Update the delta table for the descendants of this node.  */
+        treedelta (curr->links, curr->depth, delta);
 
-      /* Compute the failure function for the descendants of this node.  */
-      treefails (curr->links, curr->fail, kwset->trie, reverse);
+        /* Compute the failure function for the descendants of this node.  */
+        treefails (curr->links, curr->fail, kwset->trie, reverse);
 
-      if (reverse)
-        {
-          curr->shift = kwset->mind;
-          curr->maxshift = kwset->mind;
+        if (reverse)
+          {
+            curr->shift = kwset->mind;
+            curr->maxshift = kwset->mind;
 
-          /* Update the shifts at each node in the current node's chain
-             of fails back to the root.  */
-          for (struct trie *fail = curr->fail; fail; fail = fail->fail)
-            {
-              /* If the current node has some outgoing edge that the fail
-                 doesn't, then the shift at the fail should be no larger
-                 than the difference of their depths.  */
-              if (!hasevery (fail->links, curr->links))
-                if (curr->depth - fail->depth < fail->shift)
-                  fail->shift = curr->depth - fail->depth;
+            /* Update the shifts at each node in the current node's chain
+               of fails back to the root.  */
+            for (struct trie *fail = curr->fail; fail; fail = fail->fail)
+              {
+                /* If the current node has some outgoing edge that the fail
+                   doesn't, then the shift at the fail should be no larger
+                   than the difference of their depths.  */
+                if (!hasevery (fail->links, curr->links))
+                  if (curr->depth - fail->depth < fail->shift)
+                    fail->shift = curr->depth - fail->depth;
 
-              /* If the current node is accepting then the shift at the
-                 fail and its descendants should be no larger than the
-                 difference of their depths.  */
-              if (curr->accepting && fail->maxshift > curr->depth - fail->depth)
-                fail->maxshift = curr->depth - fail->depth;
-            }
-        }
-    }
+                /* If the current node is accepting then the shift at the
+                   fail and its descendants should be no larger than the
+                   difference of their depths.  */
+                if (curr->accepting && fail->maxshift > curr->depth - fail->depth)
+                  fail->maxshift = curr->depth - fail->depth;
+              }
+          }
+      }
+  }
 
   if (reverse)
     {
       /* Traverse the trie in level order again, fixing up all nodes whose
          shift exceeds their inherited maxshift.  */
-      for (curr = kwset->trie->next; curr; curr = curr->next)
+      for (struct trie *curr = kwset->trie->next; curr; curr = curr->next)
         {
           if (curr->maxshift > curr->parent->maxshift)
             curr->maxshift = curr->parent->maxshift;
@@ -513,48 +514,52 @@ kwsprep (kwset_t kwset)
 
   /* Create a vector, indexed by character code, of the outgoing links
      from the root node.  Accumulate GC1 and GC1HELP.  */
-  struct trie *nextbuf[NCHAR];
-  struct trie **next = trans ? nextbuf : kwset->next;
-  memset (next, 0, sizeof nextbuf);
-  treenext (kwset->trie->links, next);
-  int gc1 = -2;
-  int gc1help = -1;
-  for (int i = 0; i < NCHAR; i++)
-    {
-      int ti = i;
-      if (trans)
-        {
-          ti = U(trans[i]);
-          kwset->next[i] = next[ti];
-        }
-      if (kwset->next[i])
-        {
-          if (gc1 < -1)
-            {
-              gc1 = ti;
+  {
+    struct trie *nextbuf[NCHAR];
+    struct trie **next = trans ? nextbuf : kwset->next;
+    memset (next, 0, sizeof nextbuf);
+    treenext (kwset->trie->links, next);
+    int gc1 = -2;
+    int gc1help = -1;
+    for (int i = 0; i < NCHAR; i++)
+      {
+        int ti = i;
+        if (trans)
+          {
+            ti = U(trans[i]);
+            kwset->next[i] = next[ti];
+          }
+        if (kwset->next[i])
+          {
+            if (gc1 < -1)
+              {
+                gc1 = ti;
+                gc1help = i;
+              }
+            else if (gc1 == ti)
+              gc1help = gc1help == ti ? i : -1;
+            else if (i == ti && gc1 == gc1help)
               gc1help = i;
-            }
-          else if (gc1 == ti)
-            gc1help = gc1help == ti ? i : -1;
-          else if (i == ti && gc1 == gc1help)
-            gc1help = i;
-          else
-            gc1 = -1;
-        }
-    }
-  kwset->gc1 = gc1;
-  kwset->gc1help = gc1help;
+            else
+              gc1 = -1;
+          }
+      }
+    kwset->gc1 = gc1;
+    kwset->gc1help = gc1help;
+  }
 
   if (reverse)
     {
       /* Looking for just one string.  Extract it from the trie.  */
       kwset->target = obstack_alloc (&kwset->obstack, kwset->mind);
-      curr = kwset->trie;
-      for (idx_t i = kwset->mind; 0 < i; i--)
-        {
-          kwset->target[i - 1] = curr->links->label;
-          curr = curr->next;
-        }
+      {
+        struct trie *curr = kwset->trie;
+        for (idx_t i = kwset->mind; 0 < i; i--)
+          {
+            kwset->target[i - 1] = curr->links->label;
+            curr = curr->next;
+          }
+      }
 
       if (kwset->mind > 1)
         {
@@ -563,12 +568,14 @@ kwsprep (kwset_t kwset)
           kwset->shift
             = obstack_alloc (&kwset->obstack,
                              sizeof *kwset->shift * (kwset->mind - 1));
-          curr = kwset->trie->next;
-          for (idx_t i = 0; i < kwset->mind - 1; i++)
-            {
-              kwset->shift[i] = curr->shift;
-              curr = curr->next;
-            }
+          {
+            struct trie *curr = kwset->trie->next;
+            for (idx_t i = 0; i < kwset->mind - 1; i++)
+              {
+                kwset->shift[i] = curr->shift;
+                curr = curr->next;
+              }
+          }
 
           /* The penultimate byte.  */
           kwset->gc2 = tr (trans, kwset->target[kwset->mind - 2]);
@@ -669,25 +676,23 @@ static inline ptrdiff_t _GL_ATTRIBUTE_PURE
 bmexec_trans (kwset_t kwset, char const *text, idx_t size)
 {
   assume (0 <= size);
-  unsigned char const *d1;
-  char const *ep, *sp, *tp;
-  int d;
-  idx_t len = kwset->mind;
-  char const *trans = kwset->trans;
 
+  idx_t len = kwset->mind;
   if (len == 0)
     return 0;
   if (len > size)
     return -1;
   if (len == 1)
     {
-      tp = memchr_kwset (text, size, kwset);
+      char const *tp = memchr_kwset (text, size, kwset);
       return tp ? tp - text : -1;
     }
 
-  d1 = kwset->delta;
-  sp = kwset->target + len;
-  tp = text + len;
+  char const *trans = kwset->trans;
+
+  unsigned char const *d1 = kwset->delta;
+  char const *sp = kwset->target + len;
+  char const *tp = text + len;
   char gc1 = kwset->gc1;
   char gc2 = kwset->gc2;
 
@@ -695,9 +700,10 @@ bmexec_trans (kwset_t kwset, char const *text, idx_t size)
   idx_t len12;
   if (!ckd_mul (&len12, len, 12) && len12 < size)
     /* 11 is not a bug, the initial offset happens only once.  */
-    for (ep = text + size - 11 * len; tp <= ep; )
+    for (char const *ep = text + size - 11 * len; tp <= ep; )
       {
         char const *tp0 = tp;
+        int d;
         d = d1[U(tp[-1])], tp += d;
         d = d1[U(tp[-1])], tp += d;
         if (d != 0)
@@ -736,8 +742,8 @@ bmexec_trans (kwset_t kwset, char const *text, idx_t size)
 
   /* Now only a few characters are left to search.  Carefully avoid
      ever producing an out-of-bounds pointer.  */
-  ep = text + size;
-  d = d1[U(tp[-1])];
+  char const *ep = text + size;
+  int d = d1[U(tp[-1])];
   while (d <= ep - tp)
     {
       d = d1[U((tp += d)[-1])];
@@ -773,18 +779,14 @@ static inline ptrdiff_t
 acexec_trans (kwset_t kwset, char const *text, idx_t len,
               struct kwsmatch *kwsmatch, bool longest)
 {
-  struct trie const *trie, *accept;
-  char const *tp, *left, *lim;
-  struct tree const *tree;
-  char const *trans;
-
   /* Initialize register copies and look for easy ways out.  */
   if (len < kwset->mind)
     return -1;
-  trans = kwset->trans;
-  trie = kwset->trie;
-  lim = text + len;
-  tp = text;
+
+  char const *trans = kwset->trans;
+  struct trie const *trie = kwset->trie;
+  char const *lim = text + len;
+  char const *tp = text;
 
   if (!trie->accepting)
     {
@@ -816,6 +818,7 @@ acexec_trans (kwset_t kwset, char const *text, idx_t len,
                 return -1;
               c = tr (trans, *tp++);
 
+              struct tree const *tree;
               for (tree = trie->links; c != tree->label; )
                 {
                   tree = c < tree->label ? tree->llink : tree->rlink;
@@ -846,21 +849,20 @@ acexec_trans (kwset_t kwset, char const *text, idx_t len,
         }
     }
 
- match:
-  accept = trie;
+ match: ;
+  struct trie const *accept = trie;
   while (accept->accepting < 0)
     accept = accept->fail;
-  left = tp - accept->depth;
+  char const *left = tp - accept->depth;
 
   /* Try left-most longest match.  */
   if (longest)
     {
       while (tp < lim)
         {
-          struct trie const *accept1;
-          char const *left1;
           unsigned char c = tr (trans, *tp++);
 
+          struct tree const *tree;
           do
             {
               tree = trie->links;
@@ -874,10 +876,10 @@ acexec_trans (kwset_t kwset, char const *text, idx_t len,
           trie = tree->trie;
           if (trie->accepting)
             {
-              accept1 = trie;
+              struct trie const *accept1 = trie;
               while (accept1->accepting < 0)
                 accept1 = accept1->fail;
-              left1 = tp - accept1->depth;
+              char const *left1 = tp - accept1->depth;
               if (left1 <= left)
                 {
                   left = left1;

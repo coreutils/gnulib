@@ -38,13 +38,13 @@ arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
 
   for (; length > 0; length--)
     {
-      char t;
-
       i++;
       j += sbox[i];
-      t = sbox[i];
-      sbox[i] = sbox[j];
-      sbox[j] = t;
+      {
+        char t = sbox[i];
+        sbox[i] = sbox[j];
+        sbox[j] = t;
+      }
       *outbuf++ = (*inbuf++
                    ^ sbox[(0U + sbox[i] + sbox[j]) % ARCFOUR_SBOX_SIZE]);
     }
@@ -65,11 +65,12 @@ arcfour_setkey (arcfour_context * context, const char *key, size_t keylen)
   size_t i, j, k;
   for (i = j = k = 0; i < ARCFOUR_SBOX_SIZE; i++)
     {
-      char t;
       j = (j + sbox[i] + key[k]) % ARCFOUR_SBOX_SIZE;
-      t = sbox[i];
-      sbox[i] = sbox[j];
-      sbox[j] = t;
+      {
+        char t = sbox[i];
+        sbox[i] = sbox[j];
+        sbox[j] = t;
+      }
       if (++k == keylen)
         k = 0;
     }

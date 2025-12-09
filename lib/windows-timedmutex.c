@@ -171,13 +171,11 @@ glwthread_timedmutex_timedlock (glwthread_timedmutex_t *mutex,
 
       {
         struct timeval currtime;
-        DWORD timeout;
-        DWORD result;
-
         gettimeofday (&currtime, NULL);
 
         /* Wait until another thread signals the event or until the
            abstime passes.  */
+        DWORD timeout;
         if (currtime.tv_sec > abstime->tv_sec)
           timeout = 0;
         else
@@ -210,7 +208,7 @@ glwthread_timedmutex_timedlock (glwthread_timedmutex_t *mutex,
 
         /* WaitForSingleObject
            <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
-        result = WaitForSingleObject (mutex->event, timeout);
+        DWORD result = WaitForSingleObject (mutex->event, timeout);
         if (result == WAIT_FAILED)
           abort ();
         if (result == WAIT_TIMEOUT)

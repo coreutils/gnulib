@@ -81,15 +81,15 @@ readtoken (FILE *stream,
            size_t n_delim,
            token_buffer *tokenbuffer)
 {
-  int c;
   word isdelim[(UCHAR_MAX + bits_per_word) / bits_per_word];
-
   memset (isdelim, 0, sizeof isdelim);
   for (idx_t i = 0; i < n_delim; i++)
     {
       unsigned char ch = delim[i];
       set_nth_bit (ch, isdelim);
     }
+
+  int c;
 
   /* skip over any leading delimiters */
   for (c = getc (stream); c >= 0 && get_nth_bit (c, isdelim); c = getc (stream))
@@ -142,25 +142,22 @@ readtokens (FILE *stream,
             char ***tokens_out,
             size_t **token_lengths)
 {
-  token_buffer tb, *token = &tb;
-  char **tokens;
-  size_t *lengths;
-  idx_t sz, n_tokens;
 
   if (projected_n_tokens == 0)
     projected_n_tokens = 64;
   else
     projected_n_tokens++;       /* add one for trailing NULL pointer */
 
-  sz = projected_n_tokens;
-  tokens = xnmalloc (sz, sizeof *tokens);
-  lengths = xnmalloc (sz, sizeof *lengths);
+  idx_t sz = projected_n_tokens;
+  char **tokens = xnmalloc (sz, sizeof *tokens);
+  size_t *lengths = xnmalloc (sz, sizeof *lengths);
 
-  n_tokens = 0;
+  token_buffer tb;
+  token_buffer *token = &tb;
   init_tokenbuffer (token);
+  idx_t n_tokens = 0;
   for (;;)
     {
-      char *tmp;
       size_t token_length = readtoken (stream, delim, n_delim, token);
       if (n_tokens >= sz)
         {
@@ -175,7 +172,7 @@ readtokens (FILE *stream,
           lengths[n_tokens] = 0;
           break;
         }
-      tmp = xnmalloc (token_length + 1, sizeof *tmp);
+      char *tmp = xnmalloc (token_length + 1, sizeof *tmp);
       lengths[n_tokens] = token_length;
       tokens[n_tokens] = memcpy (tmp, token->buffer, token_length + 1);
       n_tokens++;

@@ -28,12 +28,10 @@
 void
 record_file (Hash_table *ht, char const *file, struct stat const *stats)
 {
-  struct F_triple *ent;
-
   if (ht == NULL)
     return;
 
-  ent = xmalloc (sizeof *ent);
+  struct F_triple *ent = xmalloc (sizeof *ent);
   ent->name = xstrdup (file);
   ent->st_ino = stats->st_ino;
   ent->st_dev = stats->st_dev;
@@ -61,11 +59,11 @@ bool
 seen_file (Hash_table const *ht, char const *file,
            struct stat const *stats)
 {
-  struct F_triple new_ent;
 
   if (ht == NULL)
     return false;
 
+  struct F_triple new_ent;
   new_ent.name = (char *) file;
   new_ent.st_ino = stats->st_ino;
   new_ent.st_dev = stats->st_dev;

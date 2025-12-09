@@ -59,9 +59,7 @@ log2 (double x)
      Then log2(x) = e + log2(y) = e + log(y)/log(2).  */
   {
     int e;
-    double y;
-
-    y = frexp (x, &e);
+    double y = frexp (x, &e);
     if (y < SQRT_HALF)
       {
         y = 2.0 * y;

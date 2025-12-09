@@ -834,7 +834,6 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
   size_t a_len = a.nlimbs;
   const mp_limb_t *b_ptr = b.limbs;
   size_t b_len = b.nlimbs;
-  mp_limb_t *roomptr;
   mp_limb_t *tmp_roomptr = NULL;
   mp_limb_t *q_ptr;
   size_t q_len;
@@ -844,7 +843,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
   /* Allocate room for a_len+2 digits.
      (Need a_len+1 digits for the real division and 1 more digit for the
      final rounding of q.)  */
-  roomptr = (mp_limb_t *) malloc ((a_len + 2) * sizeof (mp_limb_t));
+  mp_limb_t *roomptr = (mp_limb_t *) malloc ((a_len + 2) * sizeof (mp_limb_t));
   if (roomptr == NULL)
     return NOMEM_PTR;
 
@@ -1267,17 +1266,15 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
 static void *
 decode_long_double (long double x, int *ep, mpn_t *mp)
 {
-  mpn_t m;
-  int exp;
-  long double y;
-
   /* Allocate memory for result.  */
+  mpn_t m;
   m.nlimbs = (LDBL_MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
   m.limbs = (mp_limb_t *) malloc (m.nlimbs * sizeof (mp_limb_t));
   if (m.limbs == NULL)
     return NULL;
   /* Split into exponential part and mantissa.  */
-  y = safe_frexpl (x, &exp);
+  int exp;
+  long double y = safe_frexpl (x, &exp);
   if (!(y >= 0.0L && y < 1.0L))
     abort ();
   /* x = 2^exp * y = 2^(exp - LDBL_MANT_BIT) * (y * 2^LDBL_MANT_BIT), and the
@@ -1354,17 +1351,15 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
 static void *
 decode_double (double x, int *ep, mpn_t *mp)
 {
-  mpn_t m;
-  int exp;
-  double y;
-
   /* Allocate memory for result.  */
+  mpn_t m;
   m.nlimbs = (DBL_MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
   m.limbs = (mp_limb_t *) malloc (m.nlimbs * sizeof (mp_limb_t));
   if (m.limbs == NULL)
     return NULL;
   /* Split into exponential part and mantissa.  */
-  y = frexp (x, &exp);
+  int exp;
+  double y = frexp (x, &exp);
   if (!(y >= 0.0 && y < 1.0))
     abort ();
   /* x = 2^exp * y = 2^(exp - DBL_MANT_BIT) * (y * 2^DBL_MANT_BIT), and the
@@ -1437,24 +1432,11 @@ decode_double (double x, int *ep, mpn_t *mp)
 static char *
 scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 {
-  int s;
-  size_t extra_zeroes;
-  unsigned int abs_n;
-  unsigned int abs_s;
-  mp_limb_t *pow5_ptr;
-  size_t pow5_len;
-  unsigned int s_limbs;
-  unsigned int s_bits;
-  mpn_t pow5;
-  mpn_t z;
-  void *z_memory;
-  char *digits;
-
   /* x = 2^e * m, hence
      y = round (2^e * 10^n * m) = round (2^(e+n) * 5^n * m)
        = round (2^s * 5^n * m).  */
-  s = e + n;
-  extra_zeroes = 0;
+  int s = e + n;
+  size_t extra_zeroes = 0;
   /* Factor out a common power of 10 if possible.  */
   if (s > 0 && n > 0)
     {
@@ -1467,11 +1449,12 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
      z = round (2^s * 5^n * m).  */
   /* Compute 5^|n|, possibly shifted by |s| bits if n and s have the same
      sign.  2.322 is slightly larger than log(5)/log(2).  */
-  abs_n = (n >= 0 ? n : -n);
-  abs_s = (s >= 0 ? s : -s);
-  pow5_ptr = (mp_limb_t *) malloc (((int)(abs_n * (2.322f / GMP_LIMB_BITS)) + 1
-                                    + abs_s / GMP_LIMB_BITS + 1)
-                                   * sizeof (mp_limb_t));
+  unsigned int abs_n = (n >= 0 ? n : -n);
+  unsigned int abs_s = (s >= 0 ? s : -s);
+  mp_limb_t *pow5_ptr =
+    (mp_limb_t *) malloc (((int)(abs_n * (2.322f / GMP_LIMB_BITS)) + 1
+                           + abs_s / GMP_LIMB_BITS + 1)
+                          * sizeof (mp_limb_t));
   if (pow5_ptr == NULL)
     {
       free (memory);
@@ -1479,7 +1462,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
     }
   /* Initialize with 1.  */
   pow5_ptr[0] = 1;
-  pow5_len = 1;
+  size_t pow5_len = 1;
   /* Multiply with 5^|n|.  */
   if (abs_n > 0)
     {
@@ -1503,8 +1486,11 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
             pow5_ptr[pow5_len++] = (mp_limb_t) carry;
         }
     }
-  s_limbs = abs_s / GMP_LIMB_BITS;
-  s_bits = abs_s % GMP_LIMB_BITS;
+  unsigned int s_limbs = abs_s / GMP_LIMB_BITS;
+  unsigned int s_bits = abs_s % GMP_LIMB_BITS;
+  mpn_t pow5;
+  mpn_t z;
+  void *z_memory;
   if (n >= 0 ? s >= 0 : s <= 0)
     {
       /* Multiply with 2^|s|.  */
@@ -1632,7 +1618,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 
   if (z_memory == NOMEM_PTR)
     return NULL;
-  digits = convert_to_decimal (z, extra_zeroes);
+  char *digits = convert_to_decimal (z, extra_zeroes);
   free (z_memory);
   return digits;
 }
@@ -1687,13 +1673,9 @@ scale10_round_decimal_double (double x, int n)
 static int
 floorlog10l (long double x)
 {
-  int exp;
-  long double y;
-  double z;
-  double l;
-
   /* Split into exponential part and mantissa.  */
-  y = safe_frexpl (x, &exp);
+  int exp;
+  long double y = safe_frexpl (x, &exp);
   if (!(y >= 0.0L && y < 1.0L))
     abort ();
   if (y == 0.0L)
@@ -1734,8 +1716,8 @@ floorlog10l (long double x)
   if (!(y >= 0.5L && y < 1.0L))
     abort ();
   /* Compute an approximation for l = log2(x) = exp + log2(y).  */
-  l = exp;
-  z = y;
+  double l = exp;
+  double z = y;
   if (z < 0.70710678118654752444)
     {
       z *= 1.4142135623730950488;
@@ -1778,13 +1760,9 @@ floorlog10l (long double x)
 static int
 floorlog10 (double x)
 {
-  int exp;
-  double y;
-  double z;
-  double l;
-
   /* Split into exponential part and mantissa.  */
-  y = frexp (x, &exp);
+  int exp;
+  double y = frexp (x, &exp);
   if (!(y >= 0.0 && y < 1.0))
     abort ();
   if (y == 0.0)
@@ -1825,8 +1803,8 @@ floorlog10 (double x)
   if (!(y >= 0.5 && y < 1.0))
     abort ();
   /* Compute an approximation for l = log2(x) = exp + log2(y).  */
-  l = exp;
-  z = y;
+  double l = exp;
+  double z = y;
   if (z < 0.70710678118654752444)
     {
       z *= 1.4142135623730950488;
@@ -2489,21 +2467,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     goto fail_1_with_EINVAL;
 
   {
-    size_t buf_neededlength;
-    TCHAR_T *buf;
-    TCHAR_T *buf_malloced;
-    const FCHAR_T *cp;
-    size_t di;
-    DIRECTIVE *dp;
-    /* Output string accumulator.  */
-    DCHAR_T *result;
-    size_t allocated;
-    size_t length;
-
     /* Allocate a small buffer that will hold a directive passed to
        sprintf or snprintf.  */
-    buf_neededlength =
+    size_t buf_neededlength =
       xsum4 (7, d.max_width_length, d.max_precision_length, 6);
+    TCHAR_T *buf;
+    TCHAR_T *buf_malloced;
 #if HAVE_ALLOCA
     if (buf_neededlength < 4000 / sizeof (TCHAR_T))
       {
@@ -2522,9 +2491,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
         buf_malloced = buf;
       }
 
-    result = resultbuf;
-    allocated = (resultbuf != NULL ? *lengthp : 0);
-    length = 0;
+    /* Output string accumulator.  */
+    DCHAR_T *result = resultbuf;
+    size_t allocated = (resultbuf != NULL ? *lengthp : 0);
+    size_t length = 0;
+
     /* Invariants:
        result is either == resultbuf or malloc-allocated.
        If result == NULL, resultbuf is == NULL as well.
@@ -2535,15 +2506,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #define ENSURE_ALLOCATION_ELSE(needed, oom_statement) \
     if ((needed) > allocated)                                                \
       {                                                                      \
-        size_t memory_size;                                                  \
-        DCHAR_T *memory;                                                     \
-                                                                             \
         allocated = (allocated > 0 ? xtimes (allocated, 2) : 12);            \
         if ((needed) > allocated)                                            \
           allocated = (needed);                                              \
-        memory_size = xtimes (allocated, sizeof (DCHAR_T));                  \
+        size_t memory_size = xtimes (allocated, sizeof (DCHAR_T));           \
         if (size_overflow_p (memory_size))                                   \
           oom_statement                                                      \
+        DCHAR_T *memory;                                                     \
         if (result == resultbuf)                                             \
           memory = (DCHAR_T *) malloc (memory_size);                         \
         else                                                                 \
@@ -2557,6 +2526,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #define ENSURE_ALLOCATION(needed) \
   ENSURE_ALLOCATION_ELSE((needed), goto out_of_memory; )
 
+    const FCHAR_T *cp;
+    size_t di;
+    DIRECTIVE *dp;
     for (cp = format, di = 0, dp = &d.dir[0]; ; cp = dp->dir_end, di++, dp++)
       {
         if (cp != dp->dir_start)
@@ -2657,22 +2629,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
-                int has_width;
-                size_t width;
-                int has_precision;
-                size_t precision;
 
-                has_width = 0;
-                width = 0;
+                int has_width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -2695,17 +2661,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     has_width = 1;
                   }
 
-                has_precision = 0;
-                precision = 0;
+                int has_precision = 0;
+                size_t precision = 0;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -3050,22 +3014,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    than INT_MAX characters, whence snprintf or sprintf would
                    fail to process it.  */
                 int flags = dp->flags;
-                int has_width;
-                size_t width;
-                int has_precision;
-                size_t precision;
 
-                has_width = 0;
-                width = 0;
+                int has_width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -3088,17 +3046,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     has_width = 1;
                   }
 
-                has_precision = 0;
-                precision = 6;
+                int has_precision = 0;
+                size_t precision = 6;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -3120,18 +3076,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 {
                   const char *arg = a.arg[dp->arg_index].a.a_string;
-                  size_t bytes;
-# if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
-                  size_t characters;
-# endif
-# if !DCHAR_IS_TCHAR
-                  /* This code assumes that TCHAR_T is 'char'.  */
-                  static_assert (sizeof (TCHAR_T) == 1);
-                  DCHAR_T *tmpdst;
-                  size_t tmpdst_len;
-# endif
-                  size_t w;
 
+                  size_t bytes;
                   if (has_precision)
                     {
                       /* Use only at most PRECISION bytes, from the left.  */
@@ -3145,6 +3091,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
 
 # if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                  size_t characters;
                   if (has_width)
                     characters = mbsnlen (arg, bytes);
                   else
@@ -3156,6 +3103,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
 
 # if !DCHAR_IS_TCHAR
+                  /* This code assumes that TCHAR_T is 'char'.  */
+                  static_assert (sizeof (TCHAR_T) == 1);
+                  DCHAR_T *tmpdst;
+                  size_t tmpdst_len;
                   /* Convert from TCHAR_T[] to DCHAR_T[].  */
                   tmpdst =
                     DCHAR_CONV_FROM_ENCODING (locale_charset (),
@@ -3167,6 +3118,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     goto fail_with_errno;
 # endif
 
+                  size_t w;
                   if (has_width)
                     {
 # if ENABLE_UNISTDIO
@@ -3236,18 +3188,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    convert back the result from a char[] to a wchar_t[].
                    Instead, just copy the argument wchar_t[] to the result.  */
                 int flags = dp->flags;
-                size_t width;
 
-                width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -3276,20 +3225,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                   if (dp->conversion == 's')
                     {
-                      int has_precision;
-                      size_t precision;
-
-                      has_precision = 0;
-                      precision = 6;
+                      int has_precision = 0;
+                      size_t precision = 6;
                       if (dp->precision_start != dp->precision_end)
                         {
                           if (dp->precision_arg_index != ARG_NONE)
                             {
-                              int arg;
-
                               if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                                 abort ();
-                              arg = a.arg[dp->precision_arg_index].a.a_int;
+                              int arg = a.arg[dp->precision_arg_index].a.a_int;
                               /* "A negative precision is taken as if the precision
                                   were omitted."  */
                               if (arg >= 0)
@@ -3315,9 +3259,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         {
                           /* Use only at most PRECISION wide characters, from
                              the left.  */
-                          const wchar_t *ls_arg_end;
-
-                          ls_arg_end = ls_arg;
+                          const wchar_t *ls_arg_end = ls_arg;
                           characters = 0;
                           for (; precision > 0; precision--)
                             {
@@ -3389,22 +3331,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    such bugs, we implement the entire processing of the 's'
                    directive ourselves.  */
                 int flags = dp->flags;
-                int has_width;
-                size_t width;
-                int has_precision;
-                size_t precision;
 
-                has_width = 0;
-                width = 0;
+                int has_width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -3427,17 +3363,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     has_width = 1;
                   }
 
-                has_precision = 0;
-                precision = 6;
+                int has_precision = 0;
+                size_t precision = 6;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -3630,13 +3564,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                       while (precision > 0)
                         {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
-
                           if (*arg_end == 0)
                             /* Found the terminating null wide character.  */
                             break;
-                          count = local_wcrtomb (cbuf, *arg_end, &state);
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count = local_wcrtomb (cbuf, *arg_end, &state);
                           if (count < 0)
                             /* Cannot convert.  */
                             goto fail_with_EILSEQ;
@@ -3669,13 +3601,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                       for (;;)
                         {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
-
                           if (*arg_end == 0)
                             /* Found the terminating null wide character.  */
                             break;
-                          count = local_wcrtomb (cbuf, *arg_end, &state);
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count = local_wcrtomb (cbuf, *arg_end, &state);
                           if (count < 0)
                             /* Cannot convert.  */
                             goto fail_with_EILSEQ;
@@ -3702,10 +3632,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
 #  if !DCHAR_IS_TCHAR
                   {
-                    TCHAR_T *tmpsrc;
-
                     /* Convert the string into a piece of temporary memory.  */
-                    tmpsrc = (TCHAR_T *) malloc (bytes * sizeof (TCHAR_T));
+                    TCHAR_T *tmpsrc = (TCHAR_T *) malloc (bytes * sizeof (TCHAR_T));
                     if (tmpsrc == NULL)
                       goto out_of_memory;
                     {
@@ -3716,12 +3644,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                       for (size_t remaining = bytes; remaining > 0; )
                         {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
-
                           if (*arg == 0)
                             abort ();
-                          count = local_wcrtomb (cbuf, *arg, &state);
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count = local_wcrtomb (cbuf, *arg, &state);
                           if (count <= 0)
                             /* Inconsistency.  */
                             abort ();
@@ -3795,12 +3721,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       ENSURE_ALLOCATION (xsum (length, bytes));
                       for (size_t remaining = bytes; remaining > 0; )
                         {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
-
                           if (*arg == 0)
                             abort ();
-                          count = local_wcrtomb (cbuf, *arg, &state);
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count = local_wcrtomb (cbuf, *arg, &state);
                           if (count <= 0)
                             /* Inconsistency.  */
                             abort ();
@@ -3820,12 +3744,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #   endif
                       while (arg < arg_end)
                         {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
-
                           if (*arg == 0)
                             abort ();
-                          count = local_wcrtomb (cbuf, *arg, &state);
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count = local_wcrtomb (cbuf, *arg, &state);
                           if (count <= 0)
                             /* Cannot convert.  */
                             goto fail_with_EILSEQ;
@@ -3862,20 +3784,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    a correct behaviour for the null wint_t argument and/or the
                    fallback that avoids EILSEQ.  */
                 int flags = dp->flags;
-                int has_width;
-                size_t width;
 
-                has_width = 0;
-                width = 0;
+                int has_width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -3918,14 +3836,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
                     {
                       /* Count the number of bytes.  */
-                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                      int count;
 # if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       mbszero (&state);
 # endif
 
-                      count = local_wcrtomb (cbuf, arg, &state);
+                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                      int count = local_wcrtomb (cbuf, arg, &state);
                       if (count < 0)
                         /* Cannot convert.  */
                         goto fail_with_EILSEQ;
@@ -3953,14 +3870,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     /* Convert the string into a piece of temporary memory.  */
                     if (bytes > 0)
                       {
-                        char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                        int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                         mbstate_t state;
                         mbszero (&state);
 #  endif
 
-                        count = local_wcrtomb (cbuf, arg, &state);
+                        char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                        int count = local_wcrtomb (cbuf, arg, &state);
                         if (count <= 0)
                           /* Inconsistency.  */
                           abort ();
@@ -4020,13 +3936,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       ENSURE_ALLOCATION (xsum (length, bytes));
                       if (bytes > 0)
                         {
-                          int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           mbstate_t state;
                           mbszero (&state);
 #  endif
 
-                          count = local_wcrtomb (result + length, arg, &state);
+                          int count = local_wcrtomb (result + length, arg, &state);
                           if (count <= 0)
                             /* Inconsistency.  */
                             abort ();
@@ -4035,14 +3950,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
                   else
                     {
-                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                      int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       mbszero (&state);
 #  endif
 
-                      count = local_wcrtomb (cbuf, arg, &state);
+                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                      int count = local_wcrtomb (cbuf, arg, &state);
                       if (count < 0)
                         /* Cannot convert.  */
                         goto fail_with_EILSEQ;
@@ -4075,18 +3989,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 /* Implement the 'c' directive ourselves, in order to avoid
                    EILSEQ in the "C" locale.  */
                 int flags = dp->flags;
-                size_t width;
 
-                width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -4112,9 +4023,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 {
                   char arg = (char) a.arg[dp->arg_index].a.a_char;
                   mbstate_t state;
-                  wchar_t wc;
-
                   mbszero (&state);
+
+                  wchar_t wc;
                   int count = mbrtowc (&wc, &arg, 1, &state);
                   if (count < 0)
                     /* Invalid or incomplete multibyte character.  */
@@ -4155,30 +4066,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
-                int has_width;
-                size_t width;
-                int has_precision;
-                size_t precision;
-                size_t tmp_length;
-                size_t count;
-                DCHAR_T tmpbuf[700];
-                DCHAR_T *tmp;
-                DCHAR_T *tmp_end;
-                DCHAR_T *tmp_start;
-                DCHAR_T *pad_ptr;
-                DCHAR_T *p;
 
-                has_width = 0;
-                width = 0;
+                int has_width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -4201,17 +4098,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     has_width = 1;
                   }
 
-                has_precision = 0;
-                precision = 1;
+                int has_precision = 0;
+                size_t precision = 1;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -4232,6 +4127,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
 
                 /* Allocate a temporary buffer of sufficient size.  */
+                size_t tmp_length;
                 switch (type)
                   {
                   default:
@@ -4298,6 +4194,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 if (tmp_length < width)
                   tmp_length = width;
 
+                DCHAR_T tmpbuf[700];
+                DCHAR_T *tmp;
                 if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
                   tmp = tmpbuf;
                 else
@@ -4313,7 +4211,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto out_of_memory;
                   }
 
-                tmp_end = tmp + tmp_length;
+                DCHAR_T *tmp_end = tmp + tmp_length;
 
                 unsigned long long arg;
                 switch (type)
@@ -4362,7 +4260,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
                 int need_prefix = ((flags & FLAG_ALT) && arg != 0);
 
-                p = tmp_end;
+                DCHAR_T *p = tmp_end;
                 /* "The result of converting a zero value with a precision
                    of zero is no characters."  */
                 if (!(has_precision && precision == 0 && arg == 0))
@@ -4382,7 +4280,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       *--p = '0';
                   }
 
-                pad_ptr = p;
+                DCHAR_T *pad_ptr = p;
 
                 if (need_prefix)
                   {
@@ -4395,12 +4293,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
                     *--p = '0';
                   }
-                tmp_start = p;
+                DCHAR_T *tmp_start = p;
 
                 /* The generated string now extends from tmp_start to tmp_end,
                    with the zero padding insertion point being at pad_ptr,
                    tmp_start <= pad_ptr <= tmp_end.  */
-                count = tmp_end - tmp_start;
+                size_t count = tmp_end - tmp_start;
 
                 if (count < width)
                   {
@@ -4476,26 +4374,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
-                size_t width;
-                int has_precision;
-                size_t precision;
-                size_t tmp_length;
-                size_t count;
-                DCHAR_T tmpbuf[700];
-                DCHAR_T *tmp;
-                DCHAR_T *pad_ptr;
-                DCHAR_T *p;
 
-                width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -4517,17 +4404,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto overflow;
                   }
 
-                has_precision = 0;
-                precision = 0;
+                int has_precision = 0;
+                size_t precision = 0;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -4548,6 +4433,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
 
                 /* Allocate a temporary buffer of sufficient size.  */
+                size_t tmp_length;
                 if (type == TYPE_LONGDOUBLE)
                   tmp_length =
                     (unsigned int) ((LDBL_DIG + 1)
@@ -4570,6 +4456,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 
+                DCHAR_T tmpbuf[700];
+                DCHAR_T *tmp;
                 if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
                   tmp = tmpbuf;
                 else
@@ -4585,8 +4473,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto out_of_memory;
                   }
 
-                pad_ptr = NULL;
-                p = tmp;
+                DCHAR_T *pad_ptr = NULL;
+                DCHAR_T *p = tmp;
                 if (type == TYPE_LONGDOUBLE)
                   {
 # if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
@@ -4605,11 +4493,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
                     else
                       {
-                        int sign = 0;
                         DECL_LONG_DOUBLE_ROUNDING
 
                         BEGIN_LONG_DOUBLE_ROUNDING ();
 
+                        int sign = 0;
                         if (signbit (arg)) /* arg < 0.0L or negative zero */
                           {
                             sign = -1;
@@ -4638,7 +4526,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           {
                             int exponent;
                             long double mantissa;
-
                             if (arg > 0.0L)
                               mantissa = printf_frexpl (arg, &exponent);
                             else
@@ -4677,9 +4564,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             *p++ = dp->conversion - 'A' + 'X';
                             pad_ptr = p;
                             {
-                              int digit;
-
-                              digit = (int) mantissa;
+                              int digit = (int) mantissa;
                               mantissa -= digit;
                               *p++ = '0' + digit;
                               if ((flags & FLAG_ALT)
@@ -4758,7 +4643,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     else
                       {
                         int sign = 0;
-
                         if (signbit (arg)) /* arg < 0.0 or negative zero */
                           {
                             sign = -1;
@@ -4787,7 +4671,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           {
                             int exponent;
                             double mantissa;
-
                             if (arg > 0.0)
                               mantissa = printf_frexp (arg, &exponent);
                             else
@@ -4826,9 +4709,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             *p++ = dp->conversion - 'A' + 'X';
                             pad_ptr = p;
                             {
-                              int digit;
-
-                              digit = (int) mantissa;
+                              int digit = (int) mantissa;
                               mantissa -= digit;
                               *p++ = '0' + digit;
                               if ((flags & FLAG_ALT)
@@ -4889,7 +4770,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 /* The generated string now extends from tmp to p, with the
                    zero padding insertion point being at pad_ptr.  */
-                count = p - tmp;
+                size_t count = p - tmp;
 
                 if (count < width)
                   {
@@ -4980,26 +4861,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 arg_type type = a.arg[dp->arg_index].type;
 # endif
                 int flags = dp->flags;
-                size_t width;
-                size_t count;
-                int has_precision;
-                size_t precision;
-                size_t tmp_length;
-                DCHAR_T tmpbuf[700];
-                DCHAR_T *tmp;
-                DCHAR_T *pad_ptr;
-                DCHAR_T *p;
 
-                width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -5021,17 +4891,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto overflow;
                   }
 
-                has_precision = 0;
-                precision = 0;
+                int has_precision = 0;
+                size_t precision = 0;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -5060,6 +4928,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     precision = 6;
 
                 /* Allocate a temporary buffer of sufficient size.  */
+                size_t tmp_length;
 # if NEED_PRINTF_DOUBLE && NEED_PRINTF_LONG_DOUBLE
                 tmp_length = (type == TYPE_LONGDOUBLE ? LDBL_DIG + 1 : DBL_DIG + 1);
 # elif NEED_PRINTF_INFINITE_DOUBLE && NEED_PRINTF_LONG_DOUBLE
@@ -5124,6 +4993,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 
+                DCHAR_T tmpbuf[700];
+                DCHAR_T *tmp;
                 if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
                   tmp = tmpbuf;
                 else
@@ -5139,8 +5010,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       goto out_of_memory;
                   }
 
-                pad_ptr = NULL;
-                p = tmp;
+                DCHAR_T *pad_ptr = NULL;
+                DCHAR_T *p = tmp;
 
 # if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
 #  if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
@@ -5162,11 +5033,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
                     else
                       {
-                        int sign = 0;
                         DECL_LONG_DOUBLE_ROUNDING
 
                         BEGIN_LONG_DOUBLE_ROUNDING ();
 
+                        int sign = 0;
                         if (signbit (arg)) /* arg < 0.0L or negative zero */
                           {
                             sign = -1;
@@ -5198,17 +5069,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                             if (dp->conversion == 'f' || dp->conversion == 'F')
                               {
-                                char *digits;
-                                size_t ndigits;
-
-                                digits =
+                                char *digits =
                                   scale10_round_decimal_long_double (arg, precision);
                                 if (digits == NULL)
                                   {
                                     END_LONG_DOUBLE_ROUNDING ();
                                     goto out_of_memory;
                                   }
-                                ndigits = strlen (digits);
+                                size_t ndigits = strlen (digits);
 
                                 if (ndigits > precision)
                                   {
@@ -5324,12 +5192,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 else
                                   {
                                     /* arg > 0.0L.  */
-                                    int adjusted;
+                                    exponent = floorlog10l (arg);
+                                    int adjusted = 0;
                                     char *digits;
                                     size_t ndigits;
-
-                                    exponent = floorlog10l (arg);
-                                    adjusted = 0;
                                     for (;;)
                                       {
                                         digits =
@@ -5457,14 +5323,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 else
                                   {
                                     /* arg > 0.0L.  */
-                                    int exponent;
-                                    int adjusted;
+                                    int exponent = floorlog10l (arg);
+                                    int adjusted = 0;
                                     char *digits;
                                     size_t ndigits;
-                                    size_t nzeroes;
-
-                                    exponent = floorlog10l (arg);
-                                    adjusted = 0;
                                     for (;;)
                                       {
                                         digits =
@@ -5524,7 +5386,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                                     /* Determine the number of trailing zeroes
                                        that have to be dropped.  */
-                                    nzeroes = 0;
+                                    size_t nzeroes = 0;
                                     if ((flags & FLAG_ALT) == 0)
                                       while (nzeroes < ndigits
                                              && digits[nzeroes] == '0')
@@ -5775,7 +5637,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     else
                       {
                         int sign = 0;
-
                         if (signbit (arg)) /* arg < 0.0 or negative zero */
                           {
                             sign = -1;
@@ -5807,14 +5668,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                             if (dp->conversion == 'f' || dp->conversion == 'F')
                               {
-                                char *digits;
-                                size_t ndigits;
-
-                                digits =
+                                char *digits =
                                   scale10_round_decimal_double (arg, precision);
                                 if (digits == NULL)
                                   goto out_of_memory;
-                                ndigits = strlen (digits);
+                                size_t ndigits = strlen (digits);
 
                                 if (ndigits > precision)
                                   {
@@ -5930,12 +5788,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 else
                                   {
                                     /* arg > 0.0.  */
-                                    int adjusted;
+                                    exponent = floorlog10 (arg);
+                                    int adjusted = 0;
                                     char *digits;
                                     size_t ndigits;
-
-                                    exponent = floorlog10 (arg);
-                                    adjusted = 0;
                                     for (;;)
                                       {
                                         digits =
@@ -6075,14 +5931,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 else
                                   {
                                     /* arg > 0.0.  */
-                                    int exponent;
-                                    int adjusted;
+                                    int exponent = floorlog10 (arg);
+                                    int adjusted = 0;
                                     char *digits;
                                     size_t ndigits;
-                                    size_t nzeroes;
-
-                                    exponent = floorlog10 (arg);
-                                    adjusted = 0;
                                     for (;;)
                                       {
                                         digits =
@@ -6138,7 +5990,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                                     /* Determine the number of trailing zeroes
                                        that have to be dropped.  */
-                                    nzeroes = 0;
+                                    size_t nzeroes = 0;
                                     if ((flags & FLAG_ALT) == 0)
                                       while (nzeroes < ndigits
                                              && digits[nzeroes] == '0')
@@ -6374,7 +6226,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 /* The generated string now extends from tmp to p, with the
                    zero padding insertion point being at pad_ptr.  */
-                count = p - tmp;
+                size_t count = p - tmp;
 
                 if (count < width)
                   {
@@ -6438,16 +6290,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
-#if (WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                int has_width;
-#endif
-#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                size_t width;
-#endif
-#if !USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                int has_precision;
-                size_t precision;
-#endif
 #if NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 int prec_ourselves;
 #else
@@ -6476,19 +6318,17 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
 #if (WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                has_width = 0;
+                int has_width = 0;
 #endif
 #if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                width = 0;
+                size_t width = 0;
                 if (dp->width_start != dp->width_end)
                   {
                     if (dp->width_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        int arg = a.arg[dp->width_arg_index].a.a_int;
                         width = arg;
                         if (arg < 0)
                           {
@@ -6516,17 +6356,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
 #if !USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT
-                has_precision = 0;
-                precision = 6;
+                int has_precision = 0;
+                size_t precision = 6;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
                       {
-                        int arg;
-
                         if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
                           abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        int arg = a.arg[dp->precision_arg_index].a.a_int;
                         /* "A negative precision is taken as if the precision
                             were omitted."  */
                         if (arg >= 0)
@@ -6695,11 +6533,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                            quick check anyway.  */
                         if (dp->width_arg_index != ARG_NONE)
                           {
-                            int arg;
-
                             if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
                               abort ();
-                            arg = a.arg[dp->width_arg_index].a.a_int;
+                            int arg = a.arg[dp->width_arg_index].a.a_int;
                             width = arg;
                             if (arg < 0)
                               {
@@ -7624,16 +7460,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                        )
                       {
                         /* The result string is not guaranteed to be ASCII.  */
-                        const TCHAR_T *tmpsrc;
-                        DCHAR_T *tmpdst;
-                        size_t tmpdst_len;
                         /* This code assumes that TCHAR_T is 'char'.  */
                         static_assert (sizeof (TCHAR_T) == 1);
+                        const TCHAR_T *tmpsrc;
 # if USE_SNPRINTF
                         tmpsrc = (TCHAR_T *) (result + length);
 # else
                         tmpsrc = tmp;
 # endif
+                        DCHAR_T *tmpdst;
+                        size_t tmpdst_len;
 # if WIDE_CHAR_VERSION
                         /* Convert tmpsrc[0..count-1] to a freshly allocated
                            wide character array.  */
@@ -7711,8 +7547,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
                           {
                             const TCHAR_T *tmpsrc;
-                            DCHAR_T *tmpdst;
-
 # if USE_SNPRINTF
                             if (result == resultbuf)
                               {
@@ -7732,7 +7566,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             tmpsrc = tmp;
                             ENSURE_ALLOCATION (xsum (length, count));
 # endif
-                            tmpdst = result + length;
+                            DCHAR_T *tmpdst = result + length;
                             /* Copy backwards, because of overlapping.  */
                             tmpsrc += count;
                             tmpdst += count;
@@ -7944,9 +7778,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     if (result != resultbuf && length + 1 < allocated)
       {
         /* Shrink the allocated memory if possible.  */
-        DCHAR_T *memory;
-
-        memory = (DCHAR_T *) realloc (result, (length + 1) * sizeof (DCHAR_T));
+        DCHAR_T *memory =
+          (DCHAR_T *) realloc (result, (length + 1) * sizeof (DCHAR_T));
         if (memory != NULL)
           result = memory;
       }

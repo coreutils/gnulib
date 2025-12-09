@@ -246,14 +246,11 @@ weak_alias (__srandom, srand)
 char *
 __initstate (unsigned int seed, char *arg_state, size_t n)
 {
-  int32_t *ostate;
-  int ret;
-
   __libc_lock_lock (lock);
 
-  ostate = &unsafe_state.state[-1];
+  int32_t *ostate = &unsafe_state.state[-1];
 
-  ret = __initstate_r (seed, arg_state, n, &unsafe_state);
+  int ret = __initstate_r (seed, arg_state, n, &unsafe_state);
 
   __libc_lock_unlock (lock);
 
@@ -273,11 +270,9 @@ weak_alias (__initstate, initstate)
 char *
 __setstate (char *arg_state)
 {
-  int32_t *ostate;
-
   __libc_lock_lock (lock);
 
-  ostate = &unsafe_state.state[-1];
+  int32_t *ostate = &unsafe_state.state[-1];
 
   if (__setstate_r (arg_state, &unsafe_state) < 0)
     ostate = NULL;
@@ -303,10 +298,9 @@ weak_alias (__setstate, setstate)
 long int
 __random (void)
 {
-  int32_t retval;
-
   __libc_lock_lock (lock);
 
+  int32_t retval;
   (void) __random_r (&unsafe_state, &retval);
 
   __libc_lock_unlock (lock);

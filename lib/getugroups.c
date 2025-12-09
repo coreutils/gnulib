@@ -71,20 +71,17 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
   setgrent ();
   while (1)
     {
-      struct group *grp;
-
       errno = 0;
-      grp = getgrent ();
+      struct group *grp = getgrent ();
       if (grp == NULL)
         break;
 
       for (char **cp = grp->gr_mem; *cp; ++cp)
         {
-          int n;
-
           if (streq (username, *cp))
             {
               /* See if this group number is already on the list.  */
+              int n;
               for (n = 0; n < count; ++n)
                 if (grouplist && grouplist[n] == grp->gr_gid)
                   break;

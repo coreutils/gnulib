@@ -27,8 +27,6 @@
 wchar_t *
 wgetcwd (wchar_t *buf, size_t size)
 {
-  wchar_t *result;
-
   /* Uses _wgetcwd.
      Documentation:
      <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getcwd-wgetcwd>
@@ -60,7 +58,7 @@ wgetcwd (wchar_t *buf, size_t size)
           errno = ENOMEM;
           return NULL;
         }
-      result = _wgetcwd (buf, size + 2);
+      wchar_t *result = _wgetcwd (buf, size + 2);
       if (!result)
         {
           free (buf);
@@ -88,7 +86,7 @@ wgetcwd (wchar_t *buf, size_t size)
     wchar_t *ptr = _wgetcwd (tmp, size);
     if (ptr)
       {
-        result = _wcsdup (ptr);
+        wchar_t *result = _wcsdup (ptr);
         if (!result)
           errno = ENOMEM;
         return result;
@@ -98,6 +96,7 @@ wgetcwd (wchar_t *buf, size_t size)
   }
 
   /* My what a large directory name we have.  */
+  wchar_t *result;
   do
     {
       size <<= 1;

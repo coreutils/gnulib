@@ -184,14 +184,11 @@ static const long double
 long double
 atanl (long double x)
 {
-  int k, sign;
-  long double t, u, p, q;
-
   /* Check for zero or NaN.  */
   if (isnanl (x) || x == 0.0)
     return x + x;
 
-  sign = x < 0.0;
+  int sign = x < 0.0;
 
   if (x + x == x)
     {
@@ -203,8 +200,10 @@ atanl (long double x)
     }
 
   if (sign)
-      x = -x;
+    x = -x;
 
+  int k;
+  long double t;
   if (x >= 10.25)
     {
       k = 83;
@@ -216,15 +215,15 @@ atanl (long double x)
          Roundoff to integer is asymmetrical to avoid cancellation when t < 0
          (cf. fdlibm). */
       k = 8.0 * x + 0.25;
-      u = 0.125 * k;
+      long double u = 0.125 * k;
       /* Small arctan argument.  */
       t = (x - u) / (1.0 + x * u);
     }
 
   /* Arctan of small argument t.  */
-  u = t * t;
-  p =     ((((p4 * u) + p3) * u + p2) * u + p1) * u + p0;
-  q = ((((u + q4) * u + q3) * u + q2) * u + q1) * u + q0;
+  long double u = t * t;
+  long double p =     ((((p4 * u) + p3) * u + p2) * u + p1) * u + p0;
+  long double q = ((((u + q4) * u + q3) * u + q2) * u + q1) * u + q0;
   u = t * u * p / q  +  t;
 
   /* arctan x = arctan u  +  arctan t */

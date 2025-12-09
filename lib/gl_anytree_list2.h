@@ -582,16 +582,17 @@ static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_list_t list)
 {
   gl_list_iterator_t result;
-  gl_list_node_t node;
 
   result.vtable = list->base.vtable;
   result.list = list;
-  /* Start node is the leftmost node.  */
-  node = list->root;
-  if (node != NULL)
-    while (node->left != NULL)
-      node = node->left;
-  result.p = node;
+  {
+    /* Start node is the leftmost node.  */
+    gl_list_node_t node = list->root;
+    if (node != NULL)
+      while (node->left != NULL)
+        node = node->left;
+    result.p = node;
+  }
   /* End point is past the rightmost node.  */
   result.q = NULL;
 #if defined GCC_LINT || defined lint
@@ -844,13 +845,13 @@ gl_tree_sortedlist_indexof_from_to (gl_list_t list,
                                     size_t low, size_t high,
                                     const void *elt)
 {
-  gl_list_node_t node;
-  size_t position;
-
   if (!(low <= high
         && high <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
+
+  gl_list_node_t node;
+  size_t position;
 
   for (node = list->root, position = 0; node != NULL; )
     {

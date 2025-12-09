@@ -94,17 +94,13 @@ find_in_given_path (const char *progname, const char *path,
           {
             /* Try the various suffixes and see whether one of the files
                with such a suffix is actually executable.  */
-            int failure_errno;
-
             const char *directory_as_prefix =
               (directory != NULL && IS_RELATIVE_FILE_NAME (progname)
                ? directory
                : "");
 
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
-            const char *progbasename;
-
-            progbasename = progname;
+            const char *progbasename = progname;
             for (const char *p = progname; *p != '\0'; p++)
               if (ISSLASH (*p))
                 progbasename = p + 1;
@@ -113,7 +109,7 @@ find_in_given_path (const char *progname, const char *path,
             #endif
 
             /* Try all platform-dependent suffixes.  */
-            failure_errno = ENOENT;
+            int failure_errno = ENOENT;
             for (size_t i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
               {
                 const char *suffix = suffixes[i];
@@ -214,26 +210,19 @@ find_in_given_path (const char *progname, const char *path,
     if (path_copy == NULL)
       return NULL; /* errno is set here */
 
-    int failure_errno;
-    char *cp;
-
     #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
     bool progname_has_dot = (strchr (progname, '.') != NULL);
     #endif
 
-    failure_errno = ENOENT;
-    for (char *path_rest = path_copy; ; path_rest = cp + 1)
+    int failure_errno = ENOENT;
+    for (char *path_rest = path_copy; ; )
       {
-        const char *dir;
-        bool last;
-        char *dir_as_prefix_to_free;
-        const char *dir_as_prefix;
-
         /* Extract next directory in PATH.  */
-        dir = path_rest;
+        const char *dir = path_rest;
+        char *cp;
         for (cp = path_rest; *cp != '\0' && *cp != PATH_SEPARATOR; cp++)
           ;
-        last = (*cp == '\0');
+        bool last = (*cp == '\0');
         *cp = '\0';
 
         /* Empty PATH components designate the current directory.  */
@@ -241,6 +230,8 @@ find_in_given_path (const char *progname, const char *path,
           dir = ".";
 
         /* Concatenate directory and dir.  */
+        char *dir_as_prefix_to_free;
+        const char *dir_as_prefix;
         if (directory != NULL && IS_RELATIVE_FILE_NAME (dir))
           {
             dir_as_prefix_to_free =
@@ -375,6 +366,8 @@ find_in_given_path (const char *progname, const char *path,
 
         if (last)
           break;
+
+        path_rest = cp + 1;
       }
 
    failed:

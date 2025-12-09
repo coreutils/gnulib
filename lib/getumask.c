@@ -67,10 +67,10 @@ getumask (void)
   {
     /* In Linux >= 4.7, the umask can be retrieved from an "Umask:" line in the
        /proc/self/status file.  */
-    char buf[4096];
     int fd = open ("/proc/self/status", O_RDONLY);
     if (fd >= 0)
       {
+        char buf[4096];
         ssize_t n = read (fd, buf, sizeof (buf));
         if (n > 0)
           {

@@ -879,7 +879,8 @@ __spawni (pid_t *pid, const char *file,
      Linux/ppc64, Linux/ppc64le, and Solaris/SPARC, it causes a SIGBUS or
      SIGSEGV when done in the child process after vfork() and when $PATH is long
      (ca. 4 KB or so).  */
-  char *path, *name;
+  char *path;
+  char *name;
   if (use_path)
     {
       /* We have to search for FILE on the path.  */

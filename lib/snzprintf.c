@@ -31,14 +31,13 @@
 ptrdiff_t
 snzprintf (char *str, size_t size, const char *format, ...)
 {
-  char *output;
-  size_t len;
-  size_t lenbuf = size;
   va_list args;
-
   va_start (args, format);
-  output = vasnprintf (str, &lenbuf, format, args);
-  len = lenbuf;
+
+  size_t lenbuf = size;
+  char *output = vasnprintf (str, &lenbuf, format, args);
+  size_t len = lenbuf;
+
   va_end (args);
 
   if (!output)

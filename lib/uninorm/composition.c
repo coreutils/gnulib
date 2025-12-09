@@ -69,8 +69,6 @@ uc_composition (ucs4_t uc1, ucs4_t uc2)
             }
 #else
           char codes[6];
-          const struct composition_rule *rule;
-
           codes[0] = (uc1 >> 16) & 0xff;
           codes[1] = (uc1 >> 8) & 0xff;
           codes[2] = uc1 & 0xff;
@@ -78,7 +76,7 @@ uc_composition (ucs4_t uc1, ucs4_t uc2)
           codes[4] = (uc2 >> 8) & 0xff;
           codes[5] = uc2 & 0xff;
 
-          rule = gl_uninorm_compose_lookup (codes, 6);
+          const struct composition_rule *rule = gl_uninorm_compose_lookup (codes, 6);
           if (rule != NULL)
             return rule->combined;
 #endif

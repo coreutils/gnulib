@@ -92,10 +92,7 @@ int
 path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
              bool try_tmpdir)
 {
-  const char *d;
-  size_t dlen, plen;
-  bool add_slash;
-
+  size_t plen;
   if (!pfx || !pfx[0])
     {
       pfx = "file";
@@ -110,7 +107,7 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
 
   if (try_tmpdir)
     {
-      d = __libc_secure_getenv ("TMPDIR");
+      const char *d = __libc_secure_getenv ("TMPDIR");
       if (d != NULL && direxists (d))
         dir = d;
       else if (dir != NULL && direxists (dir))
@@ -122,13 +119,12 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
     {
 #if defined _WIN32 && ! defined __CYGWIN__
       char dirbuf[PATH_MAX];
-      DWORD retval;
 
       /* Find Windows temporary file directory.
          We try this before P_tmpdir because Windows defines P_tmpdir to "\\"
          and will therefore try to put all temporary files in the root
          directory (unless $TMPDIR is set).  */
-      retval = GetTempPath (PATH_MAX, dirbuf);
+      DWORD retval = GetTempPath (PATH_MAX, dirbuf);
       if (retval > 0 && retval < PATH_MAX && direxists (dirbuf))
         dir = dirbuf;
       else
@@ -144,7 +140,9 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
         }
     }
 
-  dlen = strlen (dir);
+  size_t dlen = strlen (dir);
+
+  bool add_slash;
 #ifdef __VMS
   add_slash = 0;
 #else

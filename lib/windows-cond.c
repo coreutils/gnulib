@@ -54,13 +54,10 @@ glwthread_waitqueue_init (glwthread_waitqueue_t *wq)
 static struct glwthread_waitqueue_element *
 glwthread_waitqueue_add (glwthread_waitqueue_t *wq)
 {
-  struct glwthread_waitqueue_element *elt;
-  HANDLE event;
-
   /* Allocate the memory for the waitqueue element on the heap, not on the
      thread's stack.  If the thread exits unexpectedly, we prefer to leak
      some memory rather than to access unavailable memory and crash.  */
-  elt =
+  struct glwthread_waitqueue_element *elt =
     (struct glwthread_waitqueue_element *)
     malloc (sizeof (struct glwthread_waitqueue_element));
   if (elt == NULL)
@@ -69,7 +66,7 @@ glwthread_waitqueue_add (glwthread_waitqueue_t *wq)
 
   /* Whether the created event is a manual-reset one or an auto-reset one,
      does not matter, since we will wait on it only once.  */
-  event = CreateEvent (NULL, TRUE, FALSE, NULL);
+  HANDLE event = CreateEvent (NULL, TRUE, FALSE, NULL);
   if (event == INVALID_HANDLE_VALUE)
     {
       /* No way to allocate an event.  */
@@ -113,12 +110,10 @@ glwthread_waitqueue_notify_first (glwthread_waitqueue_t *wq)
     {
       struct glwthread_waitqueue_element *elt =
         (struct glwthread_waitqueue_element *) wq->wq_list.wql_next;
-      struct glwthread_waitqueue_link *prev;
-      struct glwthread_waitqueue_link *next;
 
       /* Remove elt from the circular list.  */
-      prev = &wq->wq_list; /* = elt->link.wql_prev; */
-      next = elt->link.wql_next;
+      struct glwthread_waitqueue_link *prev = &wq->wq_list; /* = elt->link.wql_prev; */
+      struct glwthread_waitqueue_link *next = elt->link.wql_next;
       prev->wql_next = next;
       next->wql_prev = prev;
       elt->link.wql_next = NULL;
@@ -138,12 +133,10 @@ glwthread_waitqueue_notify_all (glwthread_waitqueue_t *wq)
     {
       struct glwthread_waitqueue_element *elt =
         (struct glwthread_waitqueue_element *) l;
-      struct glwthread_waitqueue_link *prev;
-      struct glwthread_waitqueue_link *next;
 
       /* Remove elt from the circular list.  */
-      prev = &wq->wq_list; /* = elt->link.wql_prev; */
-      next = elt->link.wql_next;
+      struct glwthread_waitqueue_link *prev = &wq->wq_list; /* = elt->link.wql_prev; */
+      struct glwthread_waitqueue_link *next = elt->link.wql_next;
       prev->wql_next = next;
       next->wql_prev = prev;
       elt->link.wql_next = NULL;
@@ -204,11 +197,9 @@ glwthread_cond_wait (glwthread_cond_t *cond,
     else
       {
         HANDLE event = elt->event;
-        int err;
-        DWORD result;
 
         /* Now release the mutex and let any other thread take it.  */
-        err = mutex_unlock (mutex);
+        int err = mutex_unlock (mutex);
         if (err != 0)
           {
             EnterCriticalSection (&cond->lock);
@@ -227,7 +218,7 @@ glwthread_cond_wait (glwthread_cond_t *cond,
            This is fulfilled here, because the thread signalling is done
            through SetEvent, not PulseEvent.  */
         /* Wait until another thread signals this event.  */
-        result = WaitForSingleObject (event, INFINITE);
+        DWORD result = WaitForSingleObject (event, INFINITE);
         if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
           abort ();
         CloseHandle (event);
@@ -263,7 +254,6 @@ glwthread_cond_timedwait (glwthread_cond_t *cond,
 
   {
     struct timeval currtime;
-
     gettimeofday (&currtime, NULL);
     if (currtime.tv_sec > abstime->tv_sec
         || (currtime.tv_sec == abstime->tv_sec
@@ -283,21 +273,20 @@ glwthread_cond_timedwait (glwthread_cond_t *cond,
       else
         {
           HANDLE event = elt->event;
-          int err;
-          DWORD timeout;
-          DWORD result;
 
           /* Now release the mutex and let any other thread take it.  */
-          err = mutex_unlock (mutex);
-          if (err != 0)
-            {
-              EnterCriticalSection (&cond->lock);
-              glwthread_waitqueue_remove (&cond->waiters, elt);
-              LeaveCriticalSection (&cond->lock);
-              CloseHandle (event);
-              free (elt);
-              return err;
-            }
+          {
+            int err = mutex_unlock (mutex);
+            if (err != 0)
+              {
+                EnterCriticalSection (&cond->lock);
+                glwthread_waitqueue_remove (&cond->waiters, elt);
+                LeaveCriticalSection (&cond->lock);
+                CloseHandle (event);
+                free (elt);
+                return err;
+              }
+          }
           /* POSIX says:
               "If another thread is able to acquire the mutex after the
                about-to-block thread has released it, then a subsequent call to
@@ -309,6 +298,7 @@ glwthread_cond_timedwait (glwthread_cond_t *cond,
           /* Wait until another thread signals this event or until the abstime
              passes.  */
           gettimeofday (&currtime, NULL);
+          DWORD timeout;
           if (currtime.tv_sec > abstime->tv_sec)
             timeout = 0;
           else
@@ -336,7 +326,7 @@ glwthread_cond_timedwait (glwthread_cond_t *cond,
                     }
                 }
             }
-          result = WaitForSingleObject (event, timeout);
+          DWORD result = WaitForSingleObject (event, timeout);
           if (result == WAIT_FAILED)
             abort ();
           if (result == WAIT_TIMEOUT)
@@ -369,7 +359,7 @@ glwthread_cond_timedwait (glwthread_cond_t *cond,
           free (elt);
           /* Take the mutex again.  It does not matter whether this is done
              before or after the bookkeeping for WAIT_TIMEOUT.  */
-          err = mutex_lock (mutex);
+          int err = mutex_lock (mutex);
           return (err ? err :
                   result == WAIT_OBJECT_0 ? 0 :
                   result == WAIT_TIMEOUT ? ETIMEDOUT :

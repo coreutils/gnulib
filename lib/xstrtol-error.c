@@ -50,11 +50,7 @@ xstrtol_error (enum strtol_error err,
                char const *arg,
                int exit_status)
 {
-  char const *hyphens = "--";
   char const *msgid;
-  char const *option;
-  char option_buffer[2];
-
   switch (err)
     {
     case LONGINT_OK: default:
@@ -74,6 +70,9 @@ xstrtol_error (enum strtol_error err,
       break;
     }
 
+  char const *hyphens = "--";
+  char option_buffer[2];
+  char const *option;
   if (opt_idx < 0)
     {
       hyphens -= opt_idx;

@@ -183,7 +183,6 @@ get_rusage_as_via_setrlimit (void)
     for (;;)
       {
         /* Here we know that the address space size is >= low_bound.  */
-        struct rlimit try_limit;
         uintptr_t try_next = 2 * low_bound + pagesize;
 
         if (try_next < low_bound)
@@ -204,6 +203,7 @@ get_rusage_as_via_setrlimit (void)
             goto done1;
           }
 
+        struct rlimit try_limit;
         try_limit.rlim_max = orig_limit.rlim_max;
         try_limit.rlim_cur = try_next;
         if (setrlimit (RLIMIT_AS, &try_limit) == 0)
@@ -246,11 +246,11 @@ get_rusage_as_via_setrlimit (void)
        >= low_bound and < high_bound.  */
     while (high_bound - low_bound > pagesize)
       {
-        struct rlimit try_limit;
         uintptr_t try_next =
           low_bound + (((high_bound - low_bound) / 2) / pagesize) * pagesize;
 
         /* Here low_bound <= try_next < high_bound.  */
+        struct rlimit try_limit;
         try_limit.rlim_max = orig_limit.rlim_max;
         try_limit.rlim_cur = try_next;
         if (setrlimit (RLIMIT_AS, &try_limit) == 0)
@@ -354,9 +354,7 @@ get_rusage_as (void)
 #elif HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT && !defined __HAIKU__
   /* Prefer get_rusage_as_via_setrlimit() if it succeeds,
      because the caller may want to use the result with setrlimit().  */
-  uintptr_t result;
-
-  result = get_rusage_as_via_setrlimit ();
+  uintptr_t result = get_rusage_as_via_setrlimit ();
   if (result == 0)
     result = get_rusage_as_via_iterator ();
   return result;

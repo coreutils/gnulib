@@ -128,9 +128,8 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
     {
       /* Here we still have MANT_BIT-0*31 bits to extract from x.  */
       enum { chunk_bits = MIN (31, MANT_BIT - 0 * 31) }; /* > 0, <= 31 */
-      mp_limb_t d;
       x *= (mp_limb_t) 1 << chunk_bits;
-      d = (int) x; /* 0 <= d < 2^chunk_bits.  */
+      mp_limb_t d = (int) x; /* 0 <= d < 2^chunk_bits.  */
       x -= d;
       if (!(x >= L_(0.0) && x < L_(1.0)))
         abort ();
@@ -166,9 +165,8 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
     {
       /* Here we still have MANT_BIT-1*31 bits to extract from x.  */
       enum { chunk_bits = MIN (31, MAX (MANT_BIT - 1 * 31, 0)) }; /* > 0, <= 31 */
-      mp_limb_t d;
       x *= (mp_limb_t) 1 << chunk_bits;
-      d = (int) x; /* 0 <= d < 2^chunk_bits.  */
+      mp_limb_t d = (int) x; /* 0 <= d < 2^chunk_bits.  */
       x -= d;
       if (!(x >= L_(0.0) && x < L_(1.0)))
         abort ();
@@ -204,9 +202,8 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
     {
       /* Here we still have MANT_BIT-2*31 bits to extract from x.  */
       enum { chunk_bits = MIN (31, MAX (MANT_BIT - 2 * 31, 0)) }; /* > 0, <= 31 */
-      mp_limb_t d;
       x *= (mp_limb_t) 1 << chunk_bits;
-      d = (int) x; /* 0 <= d < 2^chunk_bits.  */
+      mp_limb_t d = (int) x; /* 0 <= d < 2^chunk_bits.  */
       x -= d;
       if (!(x >= L_(0.0) && x < L_(1.0)))
         abort ();
@@ -242,9 +239,8 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
     {
       /* Here we still have MANT_BIT-3*31 bits to extract from x.  */
       enum { chunk_bits = MIN (31, MAX (MANT_BIT - 3 * 31, 0)) }; /* > 0, <= 31 */
-      mp_limb_t d;
       x *= (mp_limb_t) 1 << chunk_bits;
-      d = (int) x; /* 0 <= d < 2^chunk_bits.  */
+      mp_limb_t d = (int) x; /* 0 <= d < 2^chunk_bits.  */
       x -= d;
       if (!(x >= L_(0.0) && x < L_(1.0)))
         abort ();
@@ -283,9 +279,8 @@ decode (DOUBLE x, mp_limb_t limbs[NLIMBS1])
       for (size_t k = 4; k < chunk_count; k++)
         {
           size_t chunk_bits = MIN (31, MANT_BIT - k * 31); /* > 0, <= 31 */
-          mp_limb_t d;
           x *= (mp_limb_t) 1 << chunk_bits;
-          d = (int) x; /* 0 <= d < 2^chunk_bits.  */
+          mp_limb_t d = (int) x; /* 0 <= d < 2^chunk_bits.  */
           x -= d;
           if (!(x >= L_(0.0) && x < L_(1.0)))
             abort ();

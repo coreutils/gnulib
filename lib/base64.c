@@ -372,12 +372,13 @@ static bool
 decode_4 (char const *restrict in, idx_t inlen,
           char *restrict *outp, idx_t *outleft)
 {
-  char *out = *outp;
   if (inlen < 2)
     return false;
 
   if (!isbase64 (in[0]) || !isbase64 (in[1]))
     return false;
+
+  char *out = *outp;
 
   if (*outleft)
     {
@@ -466,7 +467,6 @@ base64_decode_ctx (struct base64_decode_context *ctx,
                    const char *restrict in, idx_t inlen,
                    char *restrict out, idx_t *outlen)
 {
-  idx_t outleft = *outlen;
   bool ignore_newlines = ctx != NULL;
   bool flush_ctx = false;
   unsigned int ctx_i = 0;
@@ -477,6 +477,7 @@ base64_decode_ctx (struct base64_decode_context *ctx,
       flush_ctx = inlen == 0;
     }
 
+  idx_t outleft = *outlen;
 
   while (true)
     {
@@ -514,8 +515,8 @@ base64_decode_ctx (struct base64_decode_context *ctx,
 
           {
             char const *in_end = in + inlen;
-            char const *non_nl;
 
+            char const *non_nl;
             if (ignore_newlines)
               non_nl = get_4 (ctx, &in, in_end, &inlen);
             else

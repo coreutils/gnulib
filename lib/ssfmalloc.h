@@ -683,19 +683,19 @@ static struct page_pool medium_block_pages =
 static inline uintptr_t
 allocate_block_from_pool (size_t size, struct page_pool *pool)
 {
-  uintptr_t page;
-
   /* Try in the last used page first.  */
-  page = pool->last_page;
-  if (likely (page != 0))
-    {
-      uintptr_t block = pool->allocate_block_in_page (size, page);
-      if (likely (block != 0))
-        {
-          add_update (page, pool);
-          return block;
-        }
-    }
+  {
+    uintptr_t page = pool->last_page;
+    if (likely (page != 0))
+      {
+        uintptr_t block = pool->allocate_block_in_page (size, page);
+        if (likely (block != 0))
+          {
+            add_update (page, pool);
+            return block;
+          }
+      }
+  }
 
   /* Ensure that the pool and its managed_pages is initialized.  */
   if (unlikely (pool->managed_pages == NULL))
@@ -721,7 +721,7 @@ allocate_block_from_pool (size_t size, struct page_pool *pool)
     while (gl_oset_iterator_next (&iter, &elt))
       {
         struct page_tree_element *element = (struct page_tree_element *) elt;
-        page = element->page;
+        uintptr_t page = element->page;
         /* No need to try the last used page again.  */
         if (likely (page != pool->last_page))
           {
@@ -737,6 +737,8 @@ allocate_block_from_pool (size_t size, struct page_pool *pool)
       }
     gl_oset_iterator_free (&iter);
   }
+
+  uintptr_t page;
 
   /* If we have a freeable page ready for reuse, use it.  */
   if (pool->freeable_page != 0)

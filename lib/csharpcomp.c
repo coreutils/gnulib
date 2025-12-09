@@ -100,15 +100,13 @@ compile_csharp_using_mono (const char * const *sources,
          and (to exclude an unrelated 'mcs' program on QNX 6)
          "mcs --version 2>/dev/null | grep Mono >/dev/null"  */
       const char *argv[3];
-      pid_t child;
-      int fd[1];
-      int exitstatus;
-
       argv[0] = "mcs";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
-                              DEV_NULL, true, true, false, fd);
+
+      int fd[1];
+      pid_t child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
+                                    DEV_NULL, true, true, false, fd);
       mcs_present = false;
       if (child != -1)
         {
@@ -133,7 +131,7 @@ compile_csharp_using_mono (const char * const *sources,
 
           /* Remove zombie process from process list, and retrieve exit
              status.  */
-          exitstatus =
+          int exitstatus =
             wait_subprocess (child, "mcs", false, true, true, false, NULL);
           if (exitstatus != 0)
             mcs_present = false;
@@ -143,70 +141,60 @@ compile_csharp_using_mono (const char * const *sources,
 
   if (mcs_present)
     {
-      unsigned int argc;
-      const char **argv;
-      const char **argp;
-      pid_t child;
-      int fd[1];
-      FILE *fp;
-      char *line[2];
-      size_t linesize[2];
-      size_t linelen[2];
-      unsigned int l;
-      int exitstatus;
-
-      argc =
+      unsigned int argc =
         1 + (output_is_library ? 1 : 0) + 1 + libdirs_count + libraries_count
         + (debug ? 1 : 0) + sources_count;
-      argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
-
-      argp = argv;
-      *argp++ = "mcs";
-      if (output_is_library)
-        *argp++ = "-target:library";
+      const char **argv =
+        (const char **) xmalloca ((argc + 1) * sizeof (const char *));
       {
-        char *option = (char *) xmalloca (5 + strlen (output_file) + 1);
-        memcpy (option, "-out:", 5);
-        strcpy (option + 5, output_file);
-        *argp++ = option;
-      }
-      for (unsigned int i = 0; i < libdirs_count; i++)
+        const char **argp = argv;
+        *argp++ = "mcs";
+        if (output_is_library)
+          *argp++ = "-target:library";
         {
-          char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
-          memcpy (option, "-lib:", 5);
-          strcpy (option + 5, libdirs[i]);
+          char *option = (char *) xmalloca (5 + strlen (output_file) + 1);
+          memcpy (option, "-out:", 5);
+          strcpy (option + 5, output_file);
           *argp++ = option;
         }
-      for (unsigned int i = 0; i < libraries_count; i++)
-        {
-          char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
-          memcpy (option, "-reference:", 11);
-          memcpy (option + 11, libraries[i], strlen (libraries[i]));
-          strcpy (option + 11 + strlen (libraries[i]), ".dll");
-          *argp++ = option;
-        }
-      if (debug)
-        *argp++ = "-debug";
-      for (unsigned int i = 0; i < sources_count; i++)
-        {
-          const char *source_file = sources[i];
-          if (strlen (source_file) >= 10
-              && memeq (source_file + strlen (source_file) - 10,
-                        ".resources", 10))
-            {
-              char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
+        for (unsigned int i = 0; i < libdirs_count; i++)
+          {
+            char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
+            memcpy (option, "-lib:", 5);
+            strcpy (option + 5, libdirs[i]);
+            *argp++ = option;
+          }
+        for (unsigned int i = 0; i < libraries_count; i++)
+          {
+            char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
+            memcpy (option, "-reference:", 11);
+            memcpy (option + 11, libraries[i], strlen (libraries[i]));
+            strcpy (option + 11 + strlen (libraries[i]), ".dll");
+            *argp++ = option;
+          }
+        if (debug)
+          *argp++ = "-debug";
+        for (unsigned int i = 0; i < sources_count; i++)
+          {
+            const char *source_file = sources[i];
+            if (strlen (source_file) >= 10
+                && memeq (source_file + strlen (source_file) - 10,
+                          ".resources", 10))
+              {
+                char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
 
-              memcpy (option, "-resource:", 10);
-              strcpy (option + 10, source_file);
-              *argp++ = option;
-            }
-          else
-            *argp++ = source_file;
-        }
-      *argp = NULL;
-      /* Ensure argv length was correctly calculated.  */
-      if (argp - argv != argc)
-        abort ();
+                memcpy (option, "-resource:", 10);
+                strcpy (option + 10, source_file);
+                *argp++ = option;
+              }
+            else
+              *argp++ = source_file;
+          }
+        *argp = NULL;
+        /* Ensure argv length was correctly calculated.  */
+        if (argp - argv != argc)
+          abort ();
+      }
 
       if (verbose)
         {
@@ -215,17 +203,21 @@ compile_csharp_using_mono (const char * const *sources,
           free (command);
         }
 
-      child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
-                              NULL, false, true, true, fd);
+      int fd[1];
+      pid_t child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
+                                    NULL, false, true, true, fd);
 
       /* Read the subprocess output, copying it to stderr.  Drop the last
          line if it starts with "Compilation succeeded".  */
-      fp = fdopen (fd[0], "r");
+      FILE *fp = fdopen (fd[0], "r");
       if (fp == NULL)
         error (EXIT_FAILURE, errno, _("fdopen() failed"));
+      char *line[2];
+      size_t linesize[2];
       line[0] = NULL; linesize[0] = 0;
       line[1] = NULL; linesize[1] = 0;
-      l = 0;
+      unsigned int l = 0;
+      size_t linelen[2];
       for (;;)
         {
           linelen[l] = getline (&line[l], &linesize[l], fp);
@@ -247,7 +239,7 @@ compile_csharp_using_mono (const char * const *sources,
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus =
+      int exitstatus =
         wait_subprocess (child, "mcs", false, false, true, true, NULL);
 
       for (unsigned int i = 1 + (output_is_library ? 1 : 0);
@@ -285,28 +277,26 @@ compile_csharp_using_dotnet (const char * const *sources,
       /* Test for presence of dotnet:
          dotnet --list-runtimes >/dev/null 2>/dev/null
          && test -n "`dotnet --list-sdks 2>/dev/null`"  */
-      int exitstatus;
+      int exitstatus1;
       {
         const char *argv[3];
-
         argv[0] = "dotnet";
         argv[1] = "--list-runtimes";
         argv[2] = NULL;
-        exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
-                              false, false, true, true,
-                              true, false, NULL);
+        exitstatus1 = execute ("dotnet", "dotnet", argv, NULL, NULL,
+                               false, false, true, true,
+                               true, false, NULL);
       }
-      if (exitstatus == 0)
+      if (exitstatus1 == 0)
         {
           const char *argv[3];
-          pid_t child;
-          int fd[1];
-
           argv[0] = "dotnet";
           argv[1] = "--list-sdks";
           argv[2] = NULL;
-          child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
-                                  DEV_NULL, true, true, false, fd);
+
+          int fd[1];
+          pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
+                                        DEV_NULL, true, true, false, fd);
           if (child != -1)
             {
               /* Read the subprocess output, and test whether it is
@@ -327,7 +317,7 @@ compile_csharp_using_dotnet (const char * const *sources,
 
               /* Remove zombie process from process list, and retrieve exit
                  status.  */
-              exitstatus =
+              int exitstatus =
                 wait_subprocess (child, "dotnet", false, true, true, false,
                                  NULL);
               dotnet_present = (exitstatus == 0 && count > 0);
@@ -344,11 +334,9 @@ compile_csharp_using_dotnet (const char * const *sources,
     {
       bool err = false;
 
-      char *dotnet_runtime_dir;
-      char *dotnet_sdk_dir;
-
       /* Invoke 'dotnet --list-runtimes' and extract the .NET runtime dir
          from its output.  */
+      char *dotnet_runtime_dir;
       {
         dotnet_runtime_dir = NULL;
 
@@ -441,6 +429,7 @@ compile_csharp_using_dotnet (const char * const *sources,
 
       /* Invoke 'dotnet --list-sdks' and extract the .NET SDK dir
          from its output.  */
+      char *dotnet_sdk_dir;
       {
         dotnet_sdk_dir = NULL;
 
@@ -529,21 +518,9 @@ compile_csharp_using_dotnet (const char * const *sources,
       if (err)
         return 1;
 
-      struct dirent **dlls;
-      int num_dlls;
-      char *roslyn_dir;
-      char *roslyn_bin_dir;
-      char *csc;
-      char *csc_converted;
-      char **malloced;
-      char **mallocedp;
-      unsigned int argc;
-      const char **argv;
-      const char **argp;
-      int exitstatus;
-
       /* Get a list of all *.dll files in dotnet_runtime_dir.  */
-      num_dlls = scandir (dotnet_runtime_dir, &dlls, name_is_dll, alphasort);
+      struct dirent **dlls;
+      int num_dlls = scandir (dotnet_runtime_dir, &dlls, name_is_dll, alphasort);
       if (num_dlls < 0 && errno == ENOMEM)
         xalloc_die ();
       if (num_dlls <= 0)
@@ -553,100 +530,102 @@ compile_csharp_using_dotnet (const char * const *sources,
         }
 
       /* Construct the file name of the 'csc' compiler.  */
-      roslyn_dir = xconcatenated_filename (dotnet_sdk_dir, "Roslyn", NULL);
-      roslyn_bin_dir = xconcatenated_filename (roslyn_dir, "bincore", NULL);
-      csc = xconcatenated_filename (roslyn_bin_dir, "csc.dll", NULL);
-      csc_converted = cygpath_w (csc);
+      char *roslyn_dir = xconcatenated_filename (dotnet_sdk_dir, "Roslyn", NULL);
+      char *roslyn_bin_dir = xconcatenated_filename (roslyn_dir, "bincore", NULL);
+      char *csc = xconcatenated_filename (roslyn_bin_dir, "csc.dll", NULL);
+      char *csc_converted = cygpath_w (csc);
 
       /* Here, we assume that 'csc' is a native Windows program, therefore
          we need to use cygpath_w.  */
-      malloced =
+      char **malloced =
         (char **)
         xmalloca ((1 + libdirs_count + sources_count * 2 + 1) * sizeof (char *));
-      mallocedp = malloced;
+      char **mallocedp = malloced;
 
-      argc =
+      unsigned int argc =
         3 + 1 + 1 + libdirs_count + libraries_count
         + (optimize ? 1 : 0) + (debug ? 1 : 0) + sources_count + 1 + num_dlls;
-      argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
-
-      argp = argv;
-      *argp++ = "dotnet";
-      *argp++ = csc_converted;
-      *argp++ = "-nologo";
-      *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+      const char **argv =
+        (const char **) xmalloca ((argc + 1) * sizeof (const char *));
       {
-        char *output_file_converted = cygpath_w (output_file);
-        *mallocedp++ = output_file_converted;
-        char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
-        memcpy (option, "-out:", 5);
-        strcpy (option + 5, output_file_converted);
-        *argp++ = option;
-      }
-      for (unsigned int i = 0; i < libdirs_count; i++)
+        const char **argp = argv;
+        *argp++ = "dotnet";
+        *argp++ = csc_converted;
+        *argp++ = "-nologo";
+        *argp++ = (output_is_library ? "-target:library" : "-target:exe");
         {
-          const char *libdir = libdirs[i];
-          char *libdir_converted = cygpath_w (libdir);
-          *mallocedp++ = libdir_converted;
-          char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
+          char *output_file_converted = cygpath_w (output_file);
+          *mallocedp++ = output_file_converted;
+          char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
+          memcpy (option, "-out:", 5);
+          strcpy (option + 5, output_file_converted);
+          *argp++ = option;
+        }
+        for (unsigned int i = 0; i < libdirs_count; i++)
+          {
+            const char *libdir = libdirs[i];
+            char *libdir_converted = cygpath_w (libdir);
+            *mallocedp++ = libdir_converted;
+            char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
+            memcpy (option, "-lib:", 5);
+            strcpy (option + 5, libdir_converted);
+            *argp++ = option;
+          }
+        for (unsigned int i = 0; i < libraries_count; i++)
+          {
+            char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
+            memcpy (option, "-reference:", 11);
+            memcpy (option + 11, libraries[i], strlen (libraries[i]));
+            strcpy (option + 11 + strlen (libraries[i]), ".dll");
+            *argp++ = option;
+          }
+        if (optimize)
+          *argp++ = "-optimize+";
+        if (debug)
+          *argp++ = "-debug+";
+        for (unsigned int i = 0; i < sources_count; i++)
+          {
+            const char *source_file = sources[i];
+            char *source_file_converted = cygpath_w (source_file);
+            *mallocedp++ = source_file_converted;
+            if (strlen (source_file_converted) >= 10
+                && memeq ((source_file_converted
+                           + strlen (source_file_converted) - 10),
+                          ".resources", 10))
+              {
+                char *option =
+                  (char *) xmalloc (10 + strlen (source_file_converted) + 1);
+                memcpy (option, "-resource:", 10);
+                strcpy (option + 10, source_file_converted);
+                *mallocedp++ = option;
+                *argp++ = option;
+              }
+            else
+              *argp++ = source_file_converted;
+          }
+        /* Add -lib and -reference options, so that the compiler finds
+           Object, Console, String, etc.  */
+        {
+          char *dotnet_runtime_dir_converted = cygpath_w (dotnet_runtime_dir);
+          *mallocedp++ = dotnet_runtime_dir_converted;
+          char *option =
+            (char *) xmalloca (5 + strlen (dotnet_runtime_dir_converted) + 1);
           memcpy (option, "-lib:", 5);
-          strcpy (option + 5, libdir_converted);
+          strcpy (option + 5, dotnet_runtime_dir_converted);
           *argp++ = option;
         }
-      for (unsigned int i = 0; i < libraries_count; i++)
-        {
-          char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
-          memcpy (option, "-reference:", 11);
-          memcpy (option + 11, libraries[i], strlen (libraries[i]));
-          strcpy (option + 11 + strlen (libraries[i]), ".dll");
-          *argp++ = option;
-        }
-      if (optimize)
-        *argp++ = "-optimize+";
-      if (debug)
-        *argp++ = "-debug+";
-      for (unsigned int i = 0; i < sources_count; i++)
-        {
-          const char *source_file = sources[i];
-          char *source_file_converted = cygpath_w (source_file);
-          *mallocedp++ = source_file_converted;
-          if (strlen (source_file_converted) >= 10
-              && memeq ((source_file_converted
-                         + strlen (source_file_converted) - 10),
-                        ".resources", 10))
-            {
-              char *option =
-                (char *) xmalloc (10 + strlen (source_file_converted) + 1);
-              memcpy (option, "-resource:", 10);
-              strcpy (option + 10, source_file_converted);
-              *mallocedp++ = option;
-              *argp++ = option;
-            }
-          else
-            *argp++ = source_file_converted;
-        }
-      /* Add -lib and -reference options, so that the compiler finds
-         Object, Console, String, etc.  */
-      {
-        char *dotnet_runtime_dir_converted = cygpath_w (dotnet_runtime_dir);
-        *mallocedp++ = dotnet_runtime_dir_converted;
-        char *option =
-          (char *) xmalloca (5 + strlen (dotnet_runtime_dir_converted) + 1);
-        memcpy (option, "-lib:", 5);
-        strcpy (option + 5, dotnet_runtime_dir_converted);
-        *argp++ = option;
+        for (unsigned int i = 0; i < num_dlls; i++)
+          {
+            char *option = (char *) xmalloca (11 + strlen (dlls[i]->d_name) + 1);
+            memcpy (option, "-reference:", 11);
+            strcpy (option + 11, dlls[i]->d_name);
+            *argp++ = option;
+          }
+        *argp = NULL;
+        /* Ensure argv length was correctly calculated.  */
+        if (argp - argv != argc)
+          abort ();
       }
-      for (unsigned int i = 0; i < num_dlls; i++)
-        {
-          char *option = (char *) xmalloca (11 + strlen (dlls[i]->d_name) + 1);
-          memcpy (option, "-reference:", 11);
-          strcpy (option + 11, dlls[i]->d_name);
-          *argp++ = option;
-        }
-      *argp = NULL;
-      /* Ensure argv length was correctly calculated.  */
-      if (argp - argv != argc)
-        abort ();
 
       if (verbose)
         {
@@ -655,9 +634,9 @@ compile_csharp_using_dotnet (const char * const *sources,
           free (command);
         }
 
-      exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
-                            false, false, false, false,
-                            true, true, NULL);
+      int exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
+                                false, false, false, false,
+                                true, true, NULL);
 
       for (unsigned int i = 4; i < 5 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
@@ -688,15 +667,13 @@ compile_csharp_using_dotnet (const char * const *sources,
              "csc -help 2>/dev/null | grep -i analyzer >/dev/null \
               && ! { csc -help 2>/dev/null | grep -i chicken > /dev/null; }"  */
           const char *argv[3];
-          pid_t child;
-          int fd[1];
-          int exitstatus;
-
           argv[0] = "csc";
           argv[1] = "-help";
           argv[2] = NULL;
-          child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
-                                  DEV_NULL, true, true, false, fd);
+
+          int fd[1];
+          pid_t child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
+                                        DEV_NULL, true, true, false, fd);
           if (child != -1)
             {
               /* Read the subprocess output, and test whether it contains the
@@ -731,7 +708,7 @@ compile_csharp_using_dotnet (const char * const *sources,
 
               /* Remove zombie process from process list, and retrieve exit
                  status.  */
-              exitstatus =
+              int exitstatus =
                 wait_subprocess (child, "csc", false, true, true, false, NULL);
               csc_present = (exitstatus == 0 && seen_analyzer && !seen_chicken);
             }
@@ -742,83 +719,78 @@ compile_csharp_using_dotnet (const char * const *sources,
 
       if (csc_present)
         {
-          char **malloced;
-          char **mallocedp;
-          unsigned int argc;
-          const char **argv;
-          const char **argp;
-          int exitstatus;
-
           /* Here, we assume that 'csc' is a native Windows program, therefore
              we need to use cygpath_w.  */
-          malloced =
+          char **malloced =
             (char **)
             xmalloca ((1 + libdirs_count + sources_count * 2) * sizeof (char *));
-          mallocedp = malloced;
+          char **mallocedp = malloced;
 
-          argc =
+          unsigned int argc =
             2 + 1 + 1 + libdirs_count + libraries_count
             + (optimize ? 1 : 0) + (debug ? 1 : 0) + sources_count;
-          argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
-
-          argp = argv;
-          *argp++ = "csc";
-          *argp++ = "-nologo";
-          *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+          const char **argv =
+            (const char **) xmalloca ((argc + 1) * sizeof (const char *));
           {
-            char *output_file_converted = cygpath_w (output_file);
-            *mallocedp++ = output_file_converted;
-            char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
-            memcpy (option, "-out:", 5);
-            strcpy (option + 5, output_file_converted);
-            *argp++ = option;
+            const char **argp = argv;
+            *argp++ = "csc";
+            *argp++ = "-nologo";
+            *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+            {
+              char *output_file_converted = cygpath_w (output_file);
+              *mallocedp++ = output_file_converted;
+              char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
+              memcpy (option, "-out:", 5);
+               strcpy (option + 5, output_file_converted);
+              *argp++ = option;
+            }
+            for (unsigned int i = 0; i < libdirs_count; i++)
+              {
+                const char *libdir = libdirs[i];
+                char *libdir_converted = cygpath_w (libdir);
+                *mallocedp++ = libdir_converted;
+                char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
+                memcpy (option, "-lib:", 5);
+                strcpy (option + 5, libdir_converted);
+                *argp++ = option;
+              }
+            for (unsigned int i = 0; i < libraries_count; i++)
+              {
+                char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
+                memcpy (option, "-reference:", 11);
+                memcpy (option + 11, libraries[i], strlen (libraries[i]));
+                strcpy (option + 11 + strlen (libraries[i]), ".dll");
+                *argp++ = option;
+              }
+            if (optimize)
+              *argp++ = "-optimize+";
+            if (debug)
+              *argp++ = "-debug+";
+            for (unsigned int i = 0; i < sources_count; i++)
+              {
+                const char *source_file = sources[i];
+                char *source_file_converted = cygpath_w (source_file);
+                *mallocedp++ = source_file_converted;
+                if (strlen (source_file_converted) >= 10
+                    && memeq ((source_file_converted
+                               + strlen (source_file_converted) - 10),
+                              ".resources", 10))
+                  {
+                    char *option =
+                      (char *) xmalloc (10 + strlen (source_file_converted) + 1);
+                    memcpy (option, "-resource:", 10);
+                    strcpy (option + 10, source_file_converted);
+                    *mallocedp++ = option;
+                    *argp++ = option;
+                  }
+                else
+                  *argp++ = source_file_converted;
+              }
+            *argp = NULL;
+            /* Ensure argv length was correctly calculated.  */
+            if (argp - argv != argc)
+              abort ();
           }
-          for (unsigned int i = 0; i < libdirs_count; i++)
-            {
-              const char *libdir = libdirs[i];
-              char *libdir_converted = cygpath_w (libdir);
-              *mallocedp++ = libdir_converted;
-              char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
-              memcpy (option, "-lib:", 5);
-              strcpy (option + 5, libdir_converted);
-              *argp++ = option;
-            }
-          for (unsigned int i = 0; i < libraries_count; i++)
-            {
-              char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
-              memcpy (option, "-reference:", 11);
-              memcpy (option + 11, libraries[i], strlen (libraries[i]));
-              strcpy (option + 11 + strlen (libraries[i]), ".dll");
-              *argp++ = option;
-            }
-          if (optimize)
-            *argp++ = "-optimize+";
-          if (debug)
-            *argp++ = "-debug+";
-          for (unsigned int i = 0; i < sources_count; i++)
-            {
-              const char *source_file = sources[i];
-              char *source_file_converted = cygpath_w (source_file);
-              *mallocedp++ = source_file_converted;
-              if (strlen (source_file_converted) >= 10
-                  && memeq ((source_file_converted
-                             + strlen (source_file_converted) - 10),
-                            ".resources", 10))
-                {
-                  char *option =
-                    (char *) xmalloc (10 + strlen (source_file_converted) + 1);
-                  memcpy (option, "-resource:", 10);
-                  strcpy (option + 10, source_file_converted);
-                  *mallocedp++ = option;
-                  *argp++ = option;
-                }
-              else
-                *argp++ = source_file_converted;
-            }
-          *argp = NULL;
-          /* Ensure argv length was correctly calculated.  */
-          if (argp - argv != argc)
-            abort ();
 
           if (verbose)
             {
@@ -827,9 +799,9 @@ compile_csharp_using_dotnet (const char * const *sources,
               free (command);
             }
 
-          exitstatus = execute ("csc", "csc", argv, NULL, NULL,
-                                false, false, false, false,
-                                true, true, NULL);
+          int exitstatus = execute ("csc", "csc", argv, NULL, NULL,
+                                    false, false, false, false,
+                                    true, true, NULL);
 
           for (unsigned int i = 3; i < 4 + libdirs_count + libraries_count; i++)
             freea ((char *) argv[i]);
@@ -865,15 +837,13 @@ compile_csharp_using_sscli (const char * const *sources,
          "csc -help >/dev/null 2>/dev/null \
           && ! { csc -help 2>/dev/null | grep -i chicken > /dev/null; }"  */
       const char *argv[3];
-      pid_t child;
-      int fd[1];
-      int exitstatus;
-
       argv[0] = "csc";
       argv[1] = "-help";
       argv[2] = NULL;
-      child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
-                              DEV_NULL, true, true, false, fd);
+
+      int fd[1];
+      pid_t child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
+                                    DEV_NULL, true, true, false, fd);
       csc_present = false;
       if (child != -1)
         {
@@ -902,7 +872,7 @@ compile_csharp_using_sscli (const char * const *sources,
 
           /* Remove zombie process from process list, and retrieve exit
              status.  */
-          exitstatus =
+          int exitstatus =
             wait_subprocess (child, "csc", false, true, true, false, NULL);
           if (exitstatus != 0)
             csc_present = false;
@@ -912,83 +882,78 @@ compile_csharp_using_sscli (const char * const *sources,
 
   if (csc_present)
     {
-      char **malloced;
-      char **mallocedp;
-      unsigned int argc;
-      const char **argv;
-      const char **argp;
-      int exitstatus;
-
       /* Here, we assume that 'csc' is a native Windows program, therefore
          we need to use cygpath_w.  */
-      malloced =
+      char **malloced =
         (char **)
         xmalloca ((1 + libdirs_count + sources_count * 2) * sizeof (char *));
-      mallocedp = malloced;
+      char **mallocedp = malloced;
 
-      argc =
+      unsigned int argc =
         2 + 1 + 1 + libdirs_count + libraries_count
         + (optimize ? 1 : 0) + (debug ? 1 : 0) + sources_count;
-      argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
-
-      argp = argv;
-      *argp++ = "csc";
-      *argp++ = "-nologo";
-      *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+      const char **argv =
+        (const char **) xmalloca ((argc + 1) * sizeof (const char *));
       {
-        char *output_file_converted = cygpath_w (output_file);
-        *mallocedp++ = output_file_converted;
-        char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
-        memcpy (option, "-out:", 5);
-        strcpy (option + 5, output_file_converted);
-        *argp++ = option;
+        const char **argp = argv;
+        *argp++ = "csc";
+        *argp++ = "-nologo";
+        *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+        {
+          char *output_file_converted = cygpath_w (output_file);
+          *mallocedp++ = output_file_converted;
+          char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
+          memcpy (option, "-out:", 5);
+          strcpy (option + 5, output_file_converted);
+          *argp++ = option;
+        }
+        for (unsigned int i = 0; i < libdirs_count; i++)
+          {
+            const char *libdir = libdirs[i];
+            char *libdir_converted = cygpath_w (libdir);
+            *mallocedp++ = libdir_converted;
+            char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
+            memcpy (option, "-lib:", 5);
+            strcpy (option + 5, libdir_converted);
+            *argp++ = option;
+          }
+        for (unsigned int i = 0; i < libraries_count; i++)
+          {
+            char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
+            memcpy (option, "-reference:", 11);
+            memcpy (option + 11, libraries[i], strlen (libraries[i]));
+            strcpy (option + 11 + strlen (libraries[i]), ".dll");
+            *argp++ = option;
+          }
+        if (optimize)
+          *argp++ = "-optimize+";
+        if (debug)
+          *argp++ = "-debug+";
+        for (unsigned int i = 0; i < sources_count; i++)
+          {
+            const char *source_file = sources[i];
+            char *source_file_converted = cygpath_w (source_file);
+            *mallocedp++ = source_file_converted;
+            if (strlen (source_file_converted) >= 10
+                && memeq ((source_file_converted
+                           + strlen (source_file_converted) - 10),
+                          ".resources", 10))
+              {
+                char *option =
+                  (char *) xmalloc (10 + strlen (source_file_converted) + 1);
+                memcpy (option, "-resource:", 10);
+                strcpy (option + 10, source_file_converted);
+                *mallocedp++ = option;
+                *argp++ = option;
+              }
+            else
+              *argp++ = source_file_converted;
+          }
+        *argp = NULL;
+        /* Ensure argv length was correctly calculated.  */
+        if (argp - argv != argc)
+          abort ();
       }
-      for (unsigned int i = 0; i < libdirs_count; i++)
-        {
-          const char *libdir = libdirs[i];
-          char *libdir_converted = cygpath_w (libdir);
-          *mallocedp++ = libdir_converted;
-          char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
-          memcpy (option, "-lib:", 5);
-          strcpy (option + 5, libdir_converted);
-          *argp++ = option;
-        }
-      for (unsigned int i = 0; i < libraries_count; i++)
-        {
-          char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
-          memcpy (option, "-reference:", 11);
-          memcpy (option + 11, libraries[i], strlen (libraries[i]));
-          strcpy (option + 11 + strlen (libraries[i]), ".dll");
-          *argp++ = option;
-        }
-      if (optimize)
-        *argp++ = "-optimize+";
-      if (debug)
-        *argp++ = "-debug+";
-      for (unsigned int i = 0; i < sources_count; i++)
-        {
-          const char *source_file = sources[i];
-          char *source_file_converted = cygpath_w (source_file);
-          *mallocedp++ = source_file_converted;
-          if (strlen (source_file_converted) >= 10
-              && memeq ((source_file_converted
-                         + strlen (source_file_converted) - 10),
-                        ".resources", 10))
-            {
-              char *option =
-                (char *) xmalloc (10 + strlen (source_file_converted) + 1);
-              memcpy (option, "-resource:", 10);
-              strcpy (option + 10, source_file_converted);
-              *mallocedp++ = option;
-              *argp++ = option;
-            }
-          else
-            *argp++ = source_file_converted;
-        }
-      *argp = NULL;
-      /* Ensure argv length was correctly calculated.  */
-      if (argp - argv != argc)
-        abort ();
 
       if (verbose)
         {
@@ -997,9 +962,9 @@ compile_csharp_using_sscli (const char * const *sources,
           free (command);
         }
 
-      exitstatus = execute ("csc", "csc", argv, NULL, NULL,
-                            false, false, false, false,
-                            true, true, NULL);
+      int exitstatus = execute ("csc", "csc", argv, NULL, NULL,
+                                false, false, false, false,
+                                true, true, NULL);
 
       for (unsigned int i = 3; i < 4 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
@@ -1028,6 +993,7 @@ compile_csharp_class (const char * const *sources,
   bool output_is_library =
     (strlen (output_file) >= 4
      && memeq (output_file + strlen (output_file) - 4, ".dll", 4));
+
   int result;
 
   /* First try the C# implementation specified through --enable-csharp.  */

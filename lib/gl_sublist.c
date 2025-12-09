@@ -351,13 +351,11 @@ gl_sublist_sortedlist_search_from_to (gl_list_t list,
                                       size_t low, size_t high,
                                       const void *elt)
 {
-  size_t index;
-
   if (!(low <= high && high <= list->end - list->start))
     /* Invalid arguments.  */
     abort ();
 
-  index =
+  size_t index =
     gl_sortedlist_indexof_from_to (list->whole, compar,
                                    list->start + low, list->start + high, elt);
   if (index != (size_t)(-1))
@@ -385,15 +383,13 @@ gl_sublist_sortedlist_indexof_from_to (gl_list_t list,
                                        size_t low, size_t high,
                                        const void *elt)
 {
-  size_t index;
-
   if (!(low <= high && high <= list->end - list->start))
     /* Invalid arguments.  */
     abort ();
 
-  index = gl_sortedlist_indexof_from_to (list->whole, compar,
-                                         list->start + low, list->start + high,
-                                         elt);
+  size_t index =
+    gl_sortedlist_indexof_from_to (list->whole, compar,
+                                   list->start + low, list->start + high, elt);
   if (index != (size_t)(-1))
     index -= list->start;
   return index;

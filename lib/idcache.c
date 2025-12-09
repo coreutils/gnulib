@@ -103,8 +103,6 @@ getuser (uid_t uid)
 uid_t *
 getuidbyname (const char *user)
 {
-  struct passwd *pwent;
-
   for (struct userid *tail = user_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *user && streq (tail->name, user))
@@ -115,7 +113,7 @@ getuidbyname (const char *user)
     if (*tail->name == *user && streq (tail->name, user))
       return NULL;
 
-  pwent = getpwnam (user);
+  struct passwd *pwent = getpwnam (user);
 #ifdef __DJGPP__
   /* We need to pretend to be the user USER, to make
      pwd functions know about an arbitrary user name.  */
@@ -184,8 +182,6 @@ getgroup (gid_t gid)
 gid_t *
 getgidbyname (const char *group)
 {
-  struct group *grent;
-
   for (struct userid *tail = group_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *group && streq (tail->name, group))
@@ -196,7 +192,7 @@ getgidbyname (const char *group)
     if (*tail->name == *group && streq (tail->name, group))
       return NULL;
 
-  grent = getgrnam (group);
+  struct group *grent = getgrnam (group);
 #ifdef __DJGPP__
   /* We need to pretend to belong to group GROUP, to make
      grp functions know about an arbitrary group name.  */

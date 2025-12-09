@@ -112,11 +112,11 @@ initialize (void)
 struct timespec
 _gl_convert_FILETIME_to_timespec (const FILETIME *ft)
 {
-  struct timespec result;
   /* FILETIME: <https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-filetime> */
   unsigned long long since_1601 =
     ((unsigned long long) ft->dwHighDateTime << 32)
     | (unsigned long long) ft->dwLowDateTime;
+  struct timespec result;
   if (since_1601 == 0)
     {
       result.tv_sec = 0;

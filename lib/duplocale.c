@@ -69,16 +69,16 @@ duplocale (locale_t locale)
 #endif
         };
       char base_name[SETLOCALE_NULL_MAX];
-      int err;
-      locale_t base_copy;
 
-      err = setlocale_null_r (LC_CTYPE, base_name, sizeof (base_name));
-      if (err)
-        {
-          errno = err;
-          return NULL;
-        }
-      base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
+      {
+        int err = setlocale_null_r (LC_CTYPE, base_name, sizeof (base_name));
+        if (err)
+          {
+            errno = err;
+            return NULL;
+          }
+      }
+      locale_t base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
       if (base_copy == NULL)
         return NULL;
 
@@ -88,12 +88,14 @@ duplocale (locale_t locale)
           int category_mask = categories[i].mask;
           char name[SETLOCALE_NULL_MAX];
 
-          err = setlocale_null_r (category, name, sizeof (name));
-          if (err)
-            {
-              errno = err;
-              return NULL;
-            }
+          {
+            int err = setlocale_null_r (category, name, sizeof (name));
+            if (err)
+              {
+                errno = err;
+                return NULL;
+              }
+          }
           if (!streq (name, base_name))
             {
               locale_t copy = newlocale (category_mask, name, base_copy);
@@ -122,11 +124,10 @@ duplocale (locale_t locale)
       return NULL;
     }
 
-  int i;
-  int err;
-  for (i = 0; i < 6; i++)
+  for (int i = 0; i < 6; i++)
     {
       int log2_lcmask = gl_index_to_log2_lcmask (i);
+      int err;
 
       result->category[i].name = strdup (locale->category[i].name);
       if (result->category[i].name == NULL)
@@ -158,26 +159,30 @@ duplocale (locale_t locale)
             }
         }
 # endif
+
+      if (0)
+       fail_with_err:
+        {
+          while (--i >= 0)
+            {
+# if HAVE_WINDOWS_LOCALE_T
+              if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+                    || result->category[i].is_c_locale))
+                /* Documentation:
+                   <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
+                _free_locale (result->category[i].system_locale);
+# endif
+              free (result->category[i].name);
+            }
+          free (result);
+          errno = err;
+          return NULL;
+        }
     }
 
   /* Success.  */
   return result;
 
- fail_with_err:
-  while (--i >= 0)
-    {
-# if HAVE_WINDOWS_LOCALE_T
-      if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
-            || result->category[i].is_c_locale))
-        /* Documentation:
-           <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
-        _free_locale (result->category[i].system_locale);
-# endif
-      free (result->category[i].name);
-    }
-  free (result);
-  errno = err;
-  return NULL;
 
 #else
 

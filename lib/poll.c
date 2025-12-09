@@ -115,13 +115,12 @@ static BOOL IsConsoleHandle (HANDLE h)
 static BOOL
 IsSocketHandle (HANDLE h)
 {
-  WSANETWORKEVENTS ev;
-
   if (IsConsoleHandle (h))
     return FALSE;
 
   /* Under Wine, it seems that getsockopt returns 0 for pipes too.
      WSAEnumNetworkEvents instead distinguishes the two correctly.  */
+  WSANETWORKEVENTS ev;
   ev.lNetworkEvents = 0xDEADBEEF;
   WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
   return ev.lNetworkEvents != 0xDEADBEEF;
@@ -167,12 +166,6 @@ typedef DWORD (WINAPI *PNtQueryInformationFile)
 static int
 windows_compute_revents (HANDLE h, int *p_sought)
 {
-  int ret, happened;
-  INPUT_RECORD *irbuffer;
-  DWORD avail, nbuffer;
-  BOOL bRet;
-  IO_STATUS_BLOCK iosb;
-  FILE_PIPE_LOCAL_INFORMATION fpli;
   static PNtQueryInformationFile NtQueryInformationFile;
   static BOOL once_only;
 
@@ -187,46 +180,51 @@ windows_compute_revents (HANDLE h, int *p_sought)
           once_only = TRUE;
         }
 
-      happened = 0;
-      if (PeekNamedPipe (h, NULL, 0, NULL, &avail, NULL) != 0)
-        {
-          if (avail)
-            happened |= *p_sought & (POLLIN | POLLRDNORM);
-        }
-      else if (GetLastError () == ERROR_BROKEN_PIPE)
-        happened |= POLLHUP;
+      {
+        int happened = 0;
+        DWORD avail;
+        if (PeekNamedPipe (h, NULL, 0, NULL, &avail, NULL) != 0)
+          {
+            if (avail)
+              happened |= *p_sought & (POLLIN | POLLRDNORM);
+          }
+        else if (GetLastError () == ERROR_BROKEN_PIPE)
+          happened |= POLLHUP;
+        else
+          {
+            /* It was the write-end of the pipe.  Check if it is writable.
+               If NtQueryInformationFile fails, optimistically assume the pipe is
+               writable.  This could happen on Windows 9x, where
+               NtQueryInformationFile is not available, or if we inherit a pipe
+               that doesn't permit FILE_READ_ATTRIBUTES access on the write end
+               (I think this should not happen since Windows XP SP2; WINE seems
+               fine too).  Otherwise, ensure that enough space is available for
+               atomic writes.  */
+            IO_STATUS_BLOCK iosb;
+            memset (&iosb, 0, sizeof (iosb));
+            FILE_PIPE_LOCAL_INFORMATION fpli;
+            memset (&fpli, 0, sizeof (fpli));
 
-      else
-        {
-          /* It was the write-end of the pipe.  Check if it is writable.
-             If NtQueryInformationFile fails, optimistically assume the pipe is
-             writable.  This could happen on Windows 9x, where
-             NtQueryInformationFile is not available, or if we inherit a pipe
-             that doesn't permit FILE_READ_ATTRIBUTES access on the write end
-             (I think this should not happen since Windows XP SP2; WINE seems
-             fine too).  Otherwise, ensure that enough space is available for
-             atomic writes.  */
-          memset (&iosb, 0, sizeof (iosb));
-          memset (&fpli, 0, sizeof (fpli));
-
-          if (!NtQueryInformationFile
-              || NtQueryInformationFile (h, &iosb, &fpli, sizeof (fpli),
-                                         FilePipeLocalInformation)
-              || fpli.WriteQuotaAvailable >= PIPE_BUF
-              || (fpli.OutboundQuota < PIPE_BUF &&
-                  fpli.WriteQuotaAvailable == fpli.OutboundQuota))
-            happened |= *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
-        }
-      return happened;
+            if (!NtQueryInformationFile
+                || NtQueryInformationFile (h, &iosb, &fpli, sizeof (fpli),
+                                           FilePipeLocalInformation)
+                || fpli.WriteQuotaAvailable >= PIPE_BUF
+                || (fpli.OutboundQuota < PIPE_BUF &&
+                    fpli.WriteQuotaAvailable == fpli.OutboundQuota))
+              happened |= *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
+          }
+        return happened;
+      }
 
     case FILE_TYPE_CHAR:
-      ret = WaitForSingleObject (h, 0);
-      if (!IsConsoleHandle (h))
-        return ret == WAIT_OBJECT_0 ? *p_sought & ~(POLLPRI | POLLRDBAND) : 0;
+      {
+        int ret = WaitForSingleObject (h, 0);
+        if (!IsConsoleHandle (h))
+          return ret == WAIT_OBJECT_0 ? *p_sought & ~(POLLPRI | POLLRDBAND) : 0;
+      }
 
-      nbuffer = avail = 0;
-      bRet = GetNumberOfConsoleInputEvents (h, &nbuffer);
-      if (bRet)
+      DWORD nbuffer = 0;
+      if (GetNumberOfConsoleInputEvents (h, &nbuffer))
         {
           /* Input buffer.  */
           *p_sought &= POLLIN | POLLRDNORM;
@@ -235,9 +233,10 @@ windows_compute_revents (HANDLE h, int *p_sought)
           if (!*p_sought)
             return 0;
 
-          irbuffer = (INPUT_RECORD *) alloca (nbuffer * sizeof (INPUT_RECORD));
-          bRet = PeekConsoleInput (h, irbuffer, nbuffer, &avail);
-          if (!bRet || avail == 0)
+          INPUT_RECORD *irbuffer =
+            (INPUT_RECORD *) alloca (nbuffer * sizeof (INPUT_RECORD));
+          DWORD avail = 0;
+          if (! PeekConsoleInput (h, irbuffer, nbuffer, &avail) || avail == 0)
             return POLLHUP;
 
           for (int i = 0; i < avail; i++)
@@ -253,9 +252,11 @@ windows_compute_revents (HANDLE h, int *p_sought)
         }
 
     default:
-      ret = WaitForSingleObject (h, 0);
-      if (ret == WAIT_OBJECT_0)
-        return *p_sought & ~(POLLPRI | POLLRDBAND);
+      {
+        int ret = WaitForSingleObject (h, 0);
+        if (ret == WAIT_OBJECT_0)
+          return *p_sought & ~(POLLPRI | POLLRDBAND);
+      }
 
       return *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
     }
@@ -270,15 +271,12 @@ windows_compute_revents_socket (SOCKET h, int sought, long lNetworkEvents)
 
   if ((lNetworkEvents & (FD_READ | FD_ACCEPT | FD_CLOSE)) == FD_ACCEPT)
     happened |= (POLLIN | POLLRDNORM) & sought;
-
   else if (lNetworkEvents & (FD_READ | FD_ACCEPT | FD_CLOSE))
     {
-      int r, error;
-
       char data[64];
       WSASetLastError (0);
-      r = recv (h, data, sizeof (data), MSG_PEEK);
-      error = WSAGetLastError ();
+      int r = recv (h, data, sizeof (data), MSG_PEEK);
+      int error = WSAGetLastError ();
       WSASetLastError (0);
 
       if (r > 0 || error == WSAENOTCONN)
@@ -302,7 +300,7 @@ windows_compute_revents_socket (SOCKET h, int sought, long lNetworkEvents)
   return happened;
 }
 
-#else /* !MinGW */
+#else /* !WINDOWS_NATIVE */
 
 /* Convert select(2) returned fd_sets into poll(2) revents values.  */
 static int
@@ -357,18 +355,12 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
 
   return happened;
 }
-#endif /* !MinGW */
+#endif /* !WINDOWS_NATIVE */
 
 int
 poll (struct pollfd *pfd, nfds_t nfd, int timeout)
 {
 #ifndef WINDOWS_NATIVE
-  fd_set rfds, wfds, efds;
-  struct timeval tv;
-  struct timeval *ptv;
-  int maxfd, rc;
-  nfds_t i;
-
   if (nfd > INT_MAX)
     {
       errno = EINVAL;
@@ -388,6 +380,8 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
     }
 
   /* convert timeout number into a timeval structure */
+  struct timeval tv;
+  struct timeval *ptv;
   if (timeout == 0)
     {
       ptv = &tv;
@@ -411,9 +405,12 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
     }
 
   /* create fd sets and determine max fd */
-  maxfd = -1;
+  int maxfd = -1;
+  fd_set rfds;
   FD_ZERO (&rfds);
+  fd_set wfds;
   FD_ZERO (&wfds);
+  fd_set efds;
   FD_ZERO (&efds);
   for (int i = 0; i < nfd; i++)
     {
@@ -441,12 +438,14 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
     }
 
   /* examine fd sets */
-  rc = select (maxfd + 1, &rfds, &wfds, &efds, ptv);
-  if (rc < 0)
-    return rc;
+  {
+    int rc = select (maxfd + 1, &rfds, &wfds, &efds, ptv);
+    if (rc < 0)
+      return rc;
+  }
 
   /* establish results */
-  rc = 0;
+  int rc = 0;
   for (int i = 0; i < nfd; i++)
     {
       pfd[i].revents = (pfd[i].fd < 0
@@ -460,13 +459,6 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
 #else
   static struct timeval tv0;
   static HANDLE hEvent;
-  WSANETWORKEVENTS ev;
-  HANDLE h, handle_array[FD_SETSIZE + 2];
-  DWORD ret, wait_timeout, nhandles;
-  fd_set rfds, wfds, xfds;
-  BOOL poll_again;
-  MSG msg;
-  int rc = 0;
 
   if (nfd > INT_MAX || timeout < -1)
     {
@@ -477,11 +469,16 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   if (!hEvent)
     hEvent = CreateEvent (NULL, FALSE, FALSE, NULL);
 
+  HANDLE handle_array[FD_SETSIZE + 2];
+
 restart:
   handle_array[0] = hEvent;
-  nhandles = 1;
+  DWORD nhandles = 1;
+  fd_set rfds;
   FD_ZERO (&rfds);
+  fd_set wfds;
   FD_ZERO (&wfds);
+  fd_set xfds;
   FD_ZERO (&xfds);
 
   /* Classify socket handles and create fd sets. */
@@ -493,7 +490,7 @@ restart:
           && (sought & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM | POLLWRBAND
                         | POLLPRI | POLLRDBAND)))
         {
-          h = (HANDLE) _get_osfhandle (pfd[i].fd);
+          HANDLE h = (HANDLE) _get_osfhandle (pfd[i].fd);
           assure (h != NULL);
           if (IsSocketHandle (h))
             {
@@ -534,6 +531,8 @@ restart:
         }
     }
 
+  BOOL poll_again;
+  DWORD wait_timeout;
   if (select (0, &rfds, &wfds, &xfds, &tv0) > 0)
     {
       /* Do MsgWaitForMultipleObjects anyway to dispatch messages, but
@@ -552,14 +551,14 @@ restart:
 
   for (;;)
     {
-      ret = MsgWaitForMultipleObjects (nhandles, handle_array, FALSE,
-                                       wait_timeout, QS_ALLINPUT);
+      DWORD ret = MsgWaitForMultipleObjects (nhandles, handle_array, FALSE,
+                                             wait_timeout, QS_ALLINPUT);
 
       if (ret == WAIT_OBJECT_0 + nhandles)
         {
           /* new input of some other kind */
-          BOOL bRet;
-          while ((bRet = PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) != 0)
+          MSG msg;
+          while (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE) != 0)
             {
               TranslateMessage (&msg);
               DispatchMessage (&msg);
@@ -572,6 +571,8 @@ restart:
   if (poll_again)
     select (0, &rfds, &wfds, &xfds, &tv0);
 
+  int rc = 0;
+
   /* Place a sentinel at the end of the array.  */
   handle_array[nhandles] = NULL;
   nhandles = 1;
@@ -583,10 +584,11 @@ restart:
           && (pfd[i].events & (POLLIN | POLLRDNORM |
                                POLLOUT | POLLWRNORM | POLLWRBAND)))
         {
-          h = (HANDLE) _get_osfhandle (pfd[i].fd);
+          HANDLE h = (HANDLE) _get_osfhandle (pfd[i].fd);
           if (h != handle_array[nhandles])
             {
               /* It's a socket.  */
+              WSANETWORKEVENTS ev;
               WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
               WSAEventSelect ((SOCKET) h, 0, 0);
 

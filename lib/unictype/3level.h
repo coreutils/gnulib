@@ -113,7 +113,6 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
   uint32_t index1 = wc >> (t->q + t->p);
   uint32_t index2 = (wc >> t->p) & ((1 << t->q) - 1);
   uint32_t index3 = wc & ((1 << t->p) - 1);
-  size_t i1, i2;
 
   if (value == CONCAT(TABLE,_get) (t, wc))
     return;
@@ -142,8 +141,8 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
                                              (alloc << t->q) * sizeof (uint32_t));
           t->level2_alloc = alloc;
         }
-      i1 = t->level2_size << t->q;
-      i2 = (t->level2_size + 1) << t->q;
+      size_t i1 = t->level2_size << t->q;
+      size_t i2 = (t->level2_size + 1) << t->q;
       for (size_t i = i1; i < i2; i++)
         t->level2[i] = EMPTY;
       t->level1[index1] = t->level2_size++;
@@ -160,8 +159,8 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc, ELEMENT value)
                                             (alloc << t->p) * sizeof (ELEMENT));
           t->level3_alloc = alloc;
         }
-      i1 = t->level3_size << t->p;
-      i2 = (t->level3_size + 1) << t->p;
+      size_t i1 = t->level3_size << t->p;
+      size_t i2 = (t->level3_size + 1) << t->p;
       for (size_t i = i1; i < i2; i++)
         t->level3[i] = DEFAULT;
       t->level2[index2] = t->level3_size++;
@@ -209,63 +208,68 @@ CONCAT(TABLE,_iterate) (struct TABLE *t,
 static void
 CONCAT(TABLE,_finalize) (struct TABLE *t)
 {
-  size_t k;
-  uint32_t reorder3[t->level3_size];
-  uint32_t reorder2[t->level2_size];
-  uint32_t level1_offset, level2_offset, level3_offset, last_offset;
-
   /* Uniquify level3 blocks.  */
-  k = 0;
-  for (size_t j = 0; j < t->level3_size; j++)
+  {
+    uint32_t reorder3[t->level3_size];
     {
-      size_t i;
-      for (i = 0; i < k; i++)
-        if (memeq (&t->level3[i << t->p], &t->level3[j << t->p],
-                   (1 << t->p) * sizeof (ELEMENT)))
-          break;
-      /* Relocate block j to block i.  */
-      reorder3[j] = i;
-      if (i == k)
+      size_t k = 0;
+      for (size_t j = 0; j < t->level3_size; j++)
         {
-          if (i != j)
-            memcpy (&t->level3[i << t->p], &t->level3[j << t->p],
-                    (1 << t->p) * sizeof (ELEMENT));
-          k++;
+          size_t i;
+          for (i = 0; i < k; i++)
+            if (memeq (&t->level3[i << t->p], &t->level3[j << t->p],
+                       (1 << t->p) * sizeof (ELEMENT)))
+              break;
+          /* Relocate block j to block i.  */
+          reorder3[j] = i;
+          if (i == k)
+            {
+              if (i != j)
+                memcpy (&t->level3[i << t->p], &t->level3[j << t->p],
+                        (1 << t->p) * sizeof (ELEMENT));
+              k++;
+            }
         }
+      t->level3_size = k;
     }
-  t->level3_size = k;
 
-  for (size_t i = 0; i < (t->level2_size << t->q); i++)
-    if (t->level2[i] != EMPTY)
-      t->level2[i] = reorder3[t->level2[i]];
+    for (size_t i = 0; i < (t->level2_size << t->q); i++)
+      if (t->level2[i] != EMPTY)
+        t->level2[i] = reorder3[t->level2[i]];
+  }
 
   /* Uniquify level2 blocks.  */
-  k = 0;
-  for (size_t j = 0; j < t->level2_size; j++)
+  {
+    uint32_t reorder2[t->level2_size];
     {
-      size_t i;
-      for (i = 0; i < k; i++)
-        if (memeq (&t->level2[i << t->q], &t->level2[j << t->q],
-                   (1 << t->q) * sizeof (uint32_t)))
-          break;
-      /* Relocate block j to block i.  */
-      reorder2[j] = i;
-      if (i == k)
+      size_t k = 0;
+      for (size_t j = 0; j < t->level2_size; j++)
         {
-          if (i != j)
-            memcpy (&t->level2[i << t->q], &t->level2[j << t->q],
-                    (1 << t->q) * sizeof (uint32_t));
-          k++;
+          size_t i;
+          for (i = 0; i < k; i++)
+            if (memeq (&t->level2[i << t->q], &t->level2[j << t->q],
+                       (1 << t->q) * sizeof (uint32_t)))
+              break;
+          /* Relocate block j to block i.  */
+          reorder2[j] = i;
+          if (i == k)
+            {
+              if (i != j)
+                memcpy (&t->level2[i << t->q], &t->level2[j << t->q],
+                        (1 << t->q) * sizeof (uint32_t));
+              k++;
+            }
         }
+      t->level2_size = k;
     }
-  t->level2_size = k;
 
-  for (size_t i = 0; i < t->level1_size; i++)
-    if (t->level1[i] != EMPTY)
-      t->level1[i] = reorder2[t->level1[i]];
+    for (size_t i = 0; i < t->level1_size; i++)
+      if (t->level1[i] != EMPTY)
+        t->level1[i] = reorder2[t->level1[i]];
+  }
 
   /* Create and fill the resulting compressed representation.  */
-  last_offset =
+  uint32_t last_offset =
     5 * sizeof (uint32_t)
     + t->level1_size * sizeof (uint32_t)
     + (t->level2_size << t->q) * sizeof (uint32_t)
@@ -273,12 +277,12 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   t->result_size = (last_offset + 3) & ~3ul;
   t->result = (char *) xmalloc (t->result_size);
 
-  level1_offset =
+  uint32_t level1_offset =
     5 * sizeof (uint32_t);
-  level2_offset =
+  uint32_t level2_offset =
     5 * sizeof (uint32_t)
     + t->level1_size * sizeof (uint32_t);
-  level3_offset =
+  uint32_t level3_offset =
     5 * sizeof (uint32_t)
     + t->level1_size * sizeof (uint32_t)
     + (t->level2_size << t->q) * sizeof (uint32_t);

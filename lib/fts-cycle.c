@@ -75,13 +75,11 @@ enter_dir (FTS *fts, FTSENT *ent)
 {
   if (fts->fts_options & (FTS_TIGHT_CYCLE_CHECK | FTS_LOGICAL))
     {
-      struct stat const *st = ent->fts_statp;
       struct Active_dir *ad = malloc (sizeof *ad);
-      struct Active_dir *ad_from_table;
-
       if (!ad)
         return false;
 
+      struct stat const *st = ent->fts_statp;
       ad->dev = st->st_dev;
       ad->ino = st->st_ino;
       ad->fts_ent = ent;
@@ -89,7 +87,7 @@ enter_dir (FTS *fts, FTSENT *ent)
       /* See if we've already encountered this directory.
          This can happen when following symlinks as well as
          with a corrupted directory hierarchy. */
-      ad_from_table = hash_insert (fts->fts_cycle.ht, ad);
+      struct Active_dir *ad_from_table = hash_insert (fts->fts_cycle.ht, ad);
 
       if (ad_from_table != ad)
         {
@@ -128,10 +126,9 @@ leave_dir (FTS *fts, FTSENT *ent)
   if (fts->fts_options & (FTS_TIGHT_CYCLE_CHECK | FTS_LOGICAL))
     {
       struct Active_dir obj;
-      void *found;
       obj.dev = st->st_dev;
       obj.ino = st->st_ino;
-      found = hash_remove (fts->fts_cycle.ht, &obj);
+      void *found = hash_remove (fts->fts_cycle.ht, &obj);
       if (!found)
         abort ();
       free (found);

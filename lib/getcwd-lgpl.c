@@ -45,8 +45,6 @@ typedef int dummy;
 char *
 rpl_getcwd (char *buf, size_t size)
 {
-  char *result;
-
   /* Handle single size operations.  */
   if (buf)
     {
@@ -67,7 +65,7 @@ rpl_getcwd (char *buf, size_t size)
           errno = ENOMEM;
           return NULL;
         }
-      result = getcwd (buf, size);
+      char *result = getcwd (buf, size);
       if (!result)
         free (buf);
       return result;
@@ -82,7 +80,7 @@ rpl_getcwd (char *buf, size_t size)
     char *ptr = getcwd (tmp, size);
     if (ptr)
       {
-        result = strdup (ptr);
+        char *result = strdup (ptr);
         if (!result)
           errno = ENOMEM;
         return result;
@@ -92,6 +90,7 @@ rpl_getcwd (char *buf, size_t size)
   }
 
   /* My what a large directory name we have.  */
+  char *result;
   do
     {
       size <<= 1;

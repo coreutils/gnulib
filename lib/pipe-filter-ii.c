@@ -60,9 +60,7 @@ static HANDLE
 _beginthreadex (void *s, unsigned n, unsigned int WINAPI (*start) (void *),
                 void *arg, unsigned fl, unsigned *th)
 {
-  HANDLE h;
-
-  h = malloc (sizeof (*h));
+  HANDLE h = malloc (sizeof (*h));
   if (!h)
     return NULL;
 
@@ -77,8 +75,8 @@ _beginthreadex (void *s, unsigned n, unsigned int WINAPI (*start) (void *),
 
       DosCloseEventSem (h->hevDone);
     }
-  free (h);
 
+  free (h);
   return NULL;
 }
 
@@ -111,12 +109,7 @@ static DWORD
 WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
                         DWORD ms)
 {
-  HMUX hmux;
-  PSEMRECORD psr;
-  ULONG ulUser;
-  ULONG rc = (ULONG) -1;
-
-  psr = malloc (sizeof (*psr) * nCount);
+  PSEMRECORD psr = malloc (sizeof (*psr) * nCount);
   if (!psr)
     return (DWORD) -1;
 
@@ -126,10 +119,12 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
       psr[i].ulUser  = WAIT_OBJECT_0 + i;
     }
 
+  HMUX hmux;
   if (! DosCreateMuxWaitSem (NULL, &hmux, nCount, psr,
                              bWaitAll ? DCMW_WAIT_ALL : DCMW_WAIT_ANY))
     {
-      rc = DosWaitMuxWaitSem (hmux, ms, &ulUser);
+      ULONG ulUser;
+      ULONG rc = DosWaitMuxWaitSem (hmux, ms, &ulUser);
       DosCloseMuxWaitSem (hmux);
       free (psr);
       return rc ? (DWORD) -1 : ulUser;
@@ -277,8 +272,6 @@ pipe_filter_ii_execute (const char *progname,
     HANDLE handles[2];
     #define writer_thread_handle handles[0]
     #define reader_thread_handle handles[1]
-    bool writer_cleaned_up;
-    bool reader_cleaned_up;
 
     l.prepare_write = prepare_write;
     l.done_write = done_write;
@@ -306,13 +299,12 @@ pipe_filter_ii_execute (const char *progname,
           CloseHandle (writer_thread_handle);
         goto fail;
       }
-    writer_cleaned_up = false;
-    reader_cleaned_up = false;
+    bool writer_cleaned_up = false;
+    bool reader_cleaned_up = false;
     for (;;)
       {
-        DWORD ret;
-
         /* Here !(writer_cleaned_up && reader_cleaned_up).  */
+        DWORD ret;
         if (writer_cleaned_up)
           ret = WaitForSingleObject (reader_thread_handle, INFINITE);
         else if (reader_cleaned_up)
@@ -381,12 +373,6 @@ pipe_filter_ii_execute (const char *progname,
   }
 
   {
-# if HAVE_SELECT
-    fd_set readfds;  /* All bits except fd[0] are always cleared.  */
-    fd_set writefds; /* All bits except fd[1] are always cleared.  */
-# endif
-    bool done_writing;
-
     /* Enable non-blocking I/O.  This permits the read() and write() calls
        to return -1/EAGAIN without blocking; this is important for polling
        if HAVE_SELECT is not defined.  It also permits the read() and write()
@@ -412,17 +398,17 @@ pipe_filter_ii_execute (const char *progname,
     }
 
 # if HAVE_SELECT
+    fd_set readfds;  /* All bits except fd[0] are always cleared.  */
     FD_ZERO (&readfds);
+    fd_set writefds; /* All bits except fd[1] are always cleared.  */
     FD_ZERO (&writefds);
 # endif
-    done_writing = false;
+    bool done_writing = false;
     for (;;)
       {
 # if HAVE_SELECT
-        int n, retval;
-
         FD_SET (fd[0], &readfds);
-        n = fd[0] + 1;
+        int n = fd[0] + 1;
         if (!done_writing)
           {
             FD_SET (fd[1], &writefds);
@@ -433,11 +419,14 @@ pipe_filter_ii_execute (const char *progname,
         /* Do EINTR handling here instead of in pipe-filter-aux.h,
            because select() cannot be referred to from an inline
            function on AIX 7.1.  */
-        do
-          retval = select (n, &readfds, (!done_writing ? &writefds : NULL),
-                           NULL, NULL);
-        while (retval < 0 && errno == EINTR);
-        n = retval;
+        {
+          int retval;
+          do
+            retval = select (n, &readfds, (!done_writing ? &writefds : NULL),
+                             NULL, NULL);
+          while (retval < 0 && errno == EINTR);
+          n = retval;
+        }
 
         if (n < 0)
           {

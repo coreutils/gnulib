@@ -118,18 +118,14 @@ SCANDIR (const char *dir,
 #endif
 {
   DIR *dp = __opendir (dir);
-  DIRENT_TYPE **v = NULL;
-  size_t vsize = 0;
-  struct scandir_cancel_struct c;
-  DIRENT_TYPE *d;
-  int saved_errno;
 
   if (dp == NULL)
     return -1;
 
-  saved_errno = errno;
+  int saved_errno = errno;
   __set_errno (0);
 
+  struct scandir_cancel_struct c;
   c.dp = dp;
   c.v = NULL;
   c.cnt = 0;
@@ -137,6 +133,10 @@ SCANDIR (const char *dir,
   __libc_cleanup_push (cancel_handler, &c);
 #endif
 
+  DIRENT_TYPE **v = NULL;
+  size_t vsize = 0;
+
+  DIRENT_TYPE *d;
   while ((d = READDIR (dp)) != NULL)
     {
       int use_it = select == NULL;
@@ -152,9 +152,6 @@ SCANDIR (const char *dir,
 
       if (use_it)
         {
-          DIRENT_TYPE *vnew;
-          size_t dsize;
-
           /* Ignore errors from select or readdir */
           __set_errno (0);
 
@@ -172,8 +169,8 @@ SCANDIR (const char *dir,
               c.v = (void *) v;
             }
 
-          dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
-          vnew = (DIRENT_TYPE *) malloc (dsize);
+          size_t dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
+          DIRENT_TYPE *vnew = (DIRENT_TYPE *) malloc (dsize);
           if (vnew == NULL)
             break;
 

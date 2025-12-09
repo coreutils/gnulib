@@ -59,13 +59,13 @@ struct linebuffer *
 readlinebuffer_delim (struct linebuffer *linebuffer, FILE *stream,
                       char delimiter)
 {
-  int c;
+  if (feof (stream))
+    return NULL;
+
   char *buffer = linebuffer->buffer;
   char *p = linebuffer->buffer;
   char *end = buffer + linebuffer->size; /* Sentinel. */
-
-  if (feof (stream))
-    return NULL;
+  int c;
 
   do
     {

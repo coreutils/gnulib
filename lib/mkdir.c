@@ -50,10 +50,9 @@
 int
 rpl_mkdir (char const *dir, maybe_unused mode_t mode)
 {
-  int ret_val;
-  char *tmp_dir;
   size_t len = strlen (dir);
 
+  char *tmp_dir;
   if (len && dir[len - 1] == '/')
     {
       tmp_dir = strdup (dir);
@@ -69,6 +68,7 @@ rpl_mkdir (char const *dir, maybe_unused mode_t mode)
     {
       tmp_dir = (char *) dir;
     }
+
 #if FUNC_MKDIR_DOT_BUG
   /* Additionally, cygwin 1.5 mistakenly creates a directory "d/./".  */
   {
@@ -84,7 +84,7 @@ rpl_mkdir (char const *dir, maybe_unused mode_t mode)
   }
 #endif /* FUNC_MKDIR_DOT_BUG */
 
-  ret_val = mkdir (tmp_dir, mode);
+  int ret_val = mkdir (tmp_dir, mode);
 
   if (tmp_dir != dir)
     free (tmp_dir);

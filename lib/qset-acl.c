@@ -39,11 +39,12 @@ int
 qset_acl (char const *name, int desc, mode_t mode)
 {
   struct permission_context ctx;
-  int ret;
-
   memset (&ctx, 0, sizeof ctx);
   ctx.mode = mode;
-  ret = set_permissions (&ctx, name, desc);
+
+  int ret = set_permissions (&ctx, name, desc);
+
   free_permission_context (&ctx);
+
   return ret;
 }

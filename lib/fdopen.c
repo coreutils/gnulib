@@ -57,10 +57,9 @@ FILE *
 rpl_fdopen (int fd, const char *mode)
 {
   int saved_errno = errno;
-  FILE *fp;
 
   errno = 0;
-  fp = fdopen_nothrow (fd, mode);
+  FILE *fp = fdopen_nothrow (fd, mode);
   if (fp == NULL)
     {
       if (errno == 0)

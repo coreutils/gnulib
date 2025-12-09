@@ -127,28 +127,23 @@ execute_csharp_using_mono (const char *assembly_path,
       /* Test for presence of mono:
          "mono --version >/dev/null 2>/dev/null"  */
       const char *argv[3];
-      int exitstatus;
-
       argv[0] = "mono";
       argv[1] = "--version";
       argv[2] = NULL;
-      exitstatus = execute ("mono", "mono", argv, NULL, NULL,
-                            false, false, true, true,
-                            true, false, NULL);
+      int exitstatus = execute ("mono", "mono", argv, NULL, NULL,
+                                false, false, true, true,
+                                true, false, NULL);
       mono_present = (exitstatus == 0);
       mono_tested = true;
     }
 
   if (mono_present)
     {
-      char *old_monopath;
+      /* Set MONO_PATH.  */
+      char *old_monopath = set_monopath (libdirs, libdirs_count, false, verbose);
+
       const char **argv =
         (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-      bool err;
-
-      /* Set MONO_PATH.  */
-      old_monopath = set_monopath (libdirs, libdirs_count, false, verbose);
-
       argv[0] = "mono";
       argv[1] = assembly_path;
       for (unsigned int i = 0; i <= nargs; i++)
@@ -161,12 +156,12 @@ execute_csharp_using_mono (const char *assembly_path,
           free (command);
         }
 
-      err = executer ("mono", "mono", argv, private_data);
+      bool err = executer ("mono", "mono", argv, private_data);
+
+      freea (argv);
 
       /* Reset MONO_PATH.  */
       reset_monopath (old_monopath);
-
-      freea (argv);
 
       return err;
     }
@@ -190,24 +185,18 @@ execute_csharp_using_dotnet (const char *assembly_path,
       /* Test for presence of dotnet:
          "dotnet --list-runtimes >/dev/null 2>/dev/null"  */
       const char *argv[3];
-      int exitstatus;
-
       argv[0] = "dotnet";
       argv[1] = "--list-runtimes";
       argv[2] = NULL;
-      exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
-                            false, false, true, true,
-                            true, false, NULL);
+      int exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
+                                false, false, true, true,
+                                true, false, NULL);
       dotnet_present = (exitstatus == 0);
       dotnet_tested = true;
     }
 
   if (dotnet_present)
     {
-      bool err = false;
-
-      char *assembly_path_converted = cygpath_w (assembly_path);
-
       /* Handle the -L options.
          The way this works is that we have to copy (or symlink) the DLLs into
          the directory where FOO.exe resides.
@@ -229,11 +218,9 @@ execute_csharp_using_dotnet (const char *assembly_path,
             {
               const char *libdir = libdirs[l];
 
-              struct dirent **dlls;
-              int num_dlls;
-
               /* Get a list of all *.dll files in libdir.  */
-              num_dlls = scandir (libdir, &dlls, name_is_dll, alphasort);
+              struct dirent **dlls;
+              int num_dlls = scandir (libdir, &dlls, name_is_dll, alphasort);
               if (num_dlls < 0 && errno == ENOMEM)
                 xalloc_die ();
               if (num_dlls <= 0)
@@ -317,6 +304,10 @@ execute_csharp_using_dotnet (const char *assembly_path,
           free (assembly_dir);
         }
 
+      bool err = false;
+
+      char *assembly_path_converted = cygpath_w (assembly_path);
+
       /* Test whether alongside FOO.exe, a file FOO.runtimeconfig.json already
          exists.  */
       char *runtimeconfig_filename =
@@ -337,7 +328,6 @@ execute_csharp_using_dotnet (const char *assembly_path,
         {
           const char **argv =
             (const char **) xmalloca ((3 + nargs + 1) * sizeof (const char *));
-
           argv[0] = "dotnet";
           argv[1] = "exec";
           argv[2] = assembly_path_converted;
@@ -499,10 +489,10 @@ execute_csharp_using_dotnet (const char *assembly_path,
                         {
                           char *runtimeconfig_converted =
                             cygpath_w (runtimeconfig);
+
                           const char **argv =
                             (const char **)
                             xmalloca ((5 + nargs + 1) * sizeof (const char *));
-
                           argv[0] = "dotnet";
                           argv[1] = "exec";
                           argv[2] = "--runtimeconfig";
@@ -563,13 +553,11 @@ execute_csharp_using_sscli (const char *assembly_path,
       /* Test for presence of clix:
          "clix >/dev/null 2>/dev/null ; test $? = 1"  */
       const char *argv[2];
-      int exitstatus;
-
       argv[0] = "clix";
       argv[1] = NULL;
-      exitstatus = execute ("clix", "clix", argv, NULL, NULL,
-                            false, false, true, true,
-                            true, false, NULL);
+      int exitstatus = execute ("clix", "clix", argv, NULL, NULL,
+                                false, false, true, true,
+                                true, false, NULL);
       clix_present = (exitstatus == 0 || exitstatus == 1);
       clix_tested = true;
     }
@@ -579,14 +567,12 @@ execute_csharp_using_sscli (const char *assembly_path,
       /* Here, we assume that 'clix' is a native Windows program, therefore
          we need to use cygpath_w.  */
       char *assembly_path_converted = cygpath_w (assembly_path);
-      char *old_clixpath;
-      const char **argv =
-        (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-      bool err;
 
       /* Set clix' PATH variable.  */
-      old_clixpath = set_clixpath (libdirs, libdirs_count, false, verbose);
+      char *old_clixpath = set_clixpath (libdirs, libdirs_count, false, verbose);
 
+      const char **argv =
+        (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
       argv[0] = "clix";
       argv[1] = assembly_path_converted;
       for (unsigned int i = 0; i <= nargs; i++)
@@ -599,12 +585,13 @@ execute_csharp_using_sscli (const char *assembly_path,
           free (command);
         }
 
-      err = executer ("clix", "clix", argv, private_data);
+      bool err = executer ("clix", "clix", argv, private_data);
+
+      freea (argv);
 
       /* Reset clix' PATH variable.  */
       reset_clixpath (old_clixpath);
 
-      freea (argv);
       free (assembly_path_converted);
 
       return err;
@@ -621,16 +608,16 @@ execute_csharp_program (const char *assembly_path,
                         bool verbose, bool quiet,
                         execute_fn *executer, void *private_data)
 {
-  unsigned int nargs;
-  int result;
-
   /* Count args.  */
+  unsigned int nargs;
   {
     const char * const *arg;
 
     for (nargs = 0, arg = args; *arg != NULL; nargs++, arg++)
      ;
   }
+
+  int result;
 
   /* First try the C# implementation specified through --enable-csharp.  */
 #if CSHARP_CHOICE_MONO

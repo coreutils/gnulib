@@ -94,46 +94,48 @@ static BOOL IsConsoleHandle (HANDLE h)
 
 static BOOL IsCygwinConsoleHandle (HANDLE h)
 {
-  /* A handle to a Cygwin console is in fact a named pipe whose client process
-     and server process is <CYGWIN_INSTALL_DIR>\bin\mintty.exe.  */
-  BOOL result = FALSE;
-  ULONG processId;
-
 #if !(_WIN32_WINNT >= _WIN32_WINNT_VISTA)
   if (!initialized)
     initialize ();
 #endif
 
+  /* A handle to a Cygwin console is in fact a named pipe whose client process
+     and server process is <CYGWIN_INSTALL_DIR>\bin\mintty.exe.  */
+  BOOL result = FALSE;
+
   /* GetNamedPipeClientProcessId
      <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-getnamedpipeclientprocessid>
      It requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA or higher.  */
-  if (GetNamedPipeClientProcessIdFunc && QueryFullProcessImageNameFunc
-      && GetNamedPipeClientProcessIdFunc (h, &processId))
+  if (GetNamedPipeClientProcessIdFunc && QueryFullProcessImageNameFunc)
     {
-      /* OpenProcess
-         <https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocess> */
-      HANDLE processHandle =
-        OpenProcess (PROCESS_QUERY_LIMITED_INFORMATION, FALSE, processId);
-      if (processHandle != NULL)
+      ULONG processId;
+      if (GetNamedPipeClientProcessIdFunc (h, &processId))
         {
-          char buf[1024];
-          DWORD bufsize = sizeof (buf);
-          /* The file name can be determined through
-             GetProcessImageFileName
-             <https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getprocessimagefilenamea>
-             or
-             QueryFullProcessImageName
-             <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamea>
-             The former returns a file name in non-standard notation (it starts
-             with '\Device\') and may require linking with psapi.dll.
-             The latter is better, but requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA
-             or higher.  */
-          if (QueryFullProcessImageNameFunc (processHandle, 0, buf, &bufsize))
+          /* OpenProcess
+             <https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocess> */
+          HANDLE processHandle =
+            OpenProcess (PROCESS_QUERY_LIMITED_INFORMATION, FALSE, processId);
+          if (processHandle != NULL)
             {
-              if (str_endswith (buf, "\\mintty.exe"))
-                result = TRUE;
+              char buf[1024];
+              DWORD bufsize = sizeof (buf);
+              /* The file name can be determined through
+                 GetProcessImageFileName
+                 <https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getprocessimagefilenamea>
+                 or
+                 QueryFullProcessImageName
+                 <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamea>
+                 The former returns a file name in non-standard notation (it
+                 starts with '\Device\') and may require linking with psapi.dll.
+                 The latter is better, but requires
+                 -D_WIN32_WINNT=_WIN32_WINNT_VISTA or higher.  */
+              if (QueryFullProcessImageNameFunc (processHandle, 0, buf, &bufsize))
+                {
+                  if (str_endswith (buf, "\\mintty.exe"))
+                    result = TRUE;
+                }
+              CloseHandle (processHandle);
             }
-          CloseHandle (processHandle);
         }
     }
   return result;

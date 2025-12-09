@@ -59,11 +59,10 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   /* Allocate room for needle_mbchars and the table.  */
   void *memory = nmalloca (m + !!extra_align,
                            sizeof (mbchar_t) + sizeof (size_t));
-  void *table_memory;
   if (memory == NULL)
     return false;
   needle_mbchars = memory;
-  table_memory = needle_mbchars + m;
+  void *table_memory = needle_mbchars + m;
   char *aligned = table_memory;
   aligned += extra_align;
   aligned -= (uintptr_t) aligned % alignof (size_t);
@@ -76,9 +75,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
 #else
   {
     mbui_iterator_t iter;
-    size_t j;
-
-    j = 0;
+    size_t j = 0;
     for (mbui_init (iter, needle); mbui_avail (iter); mbui_advance (iter), j++)
       mb_copy (&needle_mbchars[j], &mbui_cur (iter));
   }
@@ -154,11 +151,10 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   /* Search, using the table to accelerate the processing.  */
   {
 #if GNULIB_MCEL_PREFER
-    size_t j;
     char const *rhaystack = haystack;
     char const *phaystack = haystack;
 
-    j = 0;
+    size_t j = 0;
     /* Invariant: phaystack = rhaystack + j.  */
     for (;;)
       {
@@ -193,13 +189,11 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
       }
     *resultp = rhaystack;
 #else
-    size_t j;
-    mbui_iterator_t rhaystack;
-    mbui_iterator_t phaystack;
-
     *resultp = NULL;
-    j = 0;
+    size_t j = 0;
+    mbui_iterator_t rhaystack;
     mbui_init (rhaystack, haystack);
+    mbui_iterator_t phaystack;
     mbui_init (phaystack, haystack);
     /* Invariant: phaystack = rhaystack + j.  */
     while (mbui_avail (phaystack))
@@ -283,7 +277,7 @@ mbsstr (const char *haystack, const char *needle)
 
       char const *iter_haystack = haystack;
 
-      for (mcel_t hg; *iter_haystack; iter_haystack += hg.len)
+      for (; *iter_haystack; )
         {
           /* See whether it's advisable to use an asymptotically faster
              algorithm.  */
@@ -312,7 +306,7 @@ mbsstr (const char *haystack, const char *needle)
 
           outer_loop_count++;
           comparison_count++;
-          hg = mcel_scanz (iter_haystack);
+          mcel_t hg = mcel_scanz (iter_haystack);
           if (mcel_eq (hg, ng))
             /* The first character matches.  */
             {
@@ -331,12 +325,13 @@ mbsstr (const char *haystack, const char *needle)
                 }
               while (mcel_eq (rhg, rng));
             }
+
+          iter_haystack += hg.len;
         }
 
       return NULL;
 #else
       mbui_iterator_t iter_needle;
-
       mbui_init (iter_needle, needle);
       if (mbui_avail (iter_needle))
         {
@@ -358,11 +353,11 @@ mbsstr (const char *haystack, const char *needle)
           size_t outer_loop_count = 0;
           size_t comparison_count = 0;
           size_t last_ccount = 0;                  /* last comparison count */
+
           mbui_iterator_t iter_needle_last_ccount; /* = needle + last_ccount */
+          mbui_init (iter_needle_last_ccount, needle);
 
           mbui_iterator_t iter_haystack;
-
-          mbui_init (iter_needle_last_ccount, needle);
           mbui_init (iter_haystack, haystack);
           for (;; mbui_advance (iter_haystack))
             {
@@ -403,11 +398,10 @@ mbsstr (const char *haystack, const char *needle)
                 /* The first character matches.  */
                 {
                   mbui_iterator_t rhaystack;
-                  mbui_iterator_t rneedle;
-
                   memcpy (&rhaystack, &iter_haystack, sizeof (mbui_iterator_t));
                   mbui_advance (rhaystack);
 
+                  mbui_iterator_t rneedle;
                   mbui_init (rneedle, needle);
                   if (!mbui_avail (rneedle))
                     abort ();

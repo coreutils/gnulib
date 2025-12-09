@@ -37,8 +37,6 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
   char *result;      /* either == resultbuf or == tmpbuf or freshly allocated
                         or NULL.  */
   size_t allocated;  /* number of bytes allocated at result */
-  size_t length;
-
   if (resultbuf != NULL)
     {
       result = resultbuf;
@@ -49,10 +47,10 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
       result = NULL;
       allocated = 0;
     }
+  size_t length;
 
   {
     size_t l = strlen (s);
-    size_t k;
 
     /* A call to strxfrm costs about 20 times more than a call to strdup of
        the result.  Therefore it is worth to try to avoid calling strxfrm
@@ -69,13 +67,10 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
           }
         else
           {
-            size_t new_allocated;
-            char *new_result;
-
-            new_allocated = 3 * l + 1;
+            size_t new_allocated = 3 * l + 1;
             if (new_allocated < 2 * allocated)
               new_allocated = 2 * allocated;
-            new_result = (char *) malloc (new_allocated);
+            char *new_result = (char *) malloc (new_allocated);
             if (new_result != NULL)
               {
                 allocated = new_allocated;
@@ -85,7 +80,7 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
       }
 
     errno = 0;
-    k = strxfrm (result, s, allocated);
+    size_t k = strxfrm (result, s, allocated);
     if (errno != 0)
       goto fail;
     if (k >= allocated)
@@ -100,11 +95,8 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
           }
         else
           {
-            size_t new_allocated;
-            char *new_result;
-
-            new_allocated = k + 1;
-            new_result = (char *) malloc (new_allocated);
+            size_t new_allocated = k + 1;
+            char *new_result = (char *) malloc (new_allocated);
             if (new_result == NULL)
               goto out_of_memory;
             allocated = new_allocated;
@@ -139,7 +131,6 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
       else
         {
           char *memory = (char *) malloc (length);
-
           if (memory == NULL)
             goto out_of_memory;
           memcpy (memory, result, length);

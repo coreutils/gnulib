@@ -204,10 +204,6 @@ static int kernel_rem_pio2 (double *x, double *y, int e0, int nx, int prec,
 int
 ieee754_rem_pio2l (long double x, long double *y)
 {
-  long double z, w, t;
-  double tx[8];
-  int exp, n;
-
   if (x >= -0.78539816339744830961566084581987572104929234984377
       && x <= 0.78539816339744830961566084581987572104929234984377)
     /* x in <-pi/4, pi/4> */
@@ -220,7 +216,7 @@ ieee754_rem_pio2l (long double x, long double *y)
   if (x > 0 && x < 2.35619449019234492884698253745962716314787704953131)
       {
         /* 113 + 93 bit PI is ok */
-        z = x - PI_2_1;
+        long double z = x - PI_2_1;
         y[0] = z - PI_2_1t;
         y[1] = (z - y[0]) - PI_2_1t;
         return 1;
@@ -229,7 +225,7 @@ ieee754_rem_pio2l (long double x, long double *y)
   if (x < 0 && x > -2.35619449019234492884698253745962716314787704953131)
       {
         /* 113 + 93 bit PI is ok */
-        z = x + PI_2_1;
+        long double z = x + PI_2_1;
         y[0] = z + PI_2_1t;
         y[1] = (z - y[0]) + PI_2_1t;
         return -1;
@@ -245,7 +241,10 @@ ieee754_rem_pio2l (long double x, long double *y)
   /* Handle large arguments.
      We split the 113 bits of the mantissa into 5 24bit integers
      stored in a double array.  */
-  z = frexp (x, &exp);
+  int exp;
+  long double z = frexp (x, &exp);
+
+  double tx[8];
   tx[0] = floorl (z *= 16777216.0);
   z -= tx[0];
   tx[1] = floorl (z *= 16777216.0);
@@ -256,12 +255,12 @@ ieee754_rem_pio2l (long double x, long double *y)
   z -= tx[3];
   tx[4] = floorl (z *= 16777216.0);
 
-  n = kernel_rem_pio2 (tx, tx + 5, exp - 24, tx[4] ? 5 : 4, 3, two_over_pi);
+  int n = kernel_rem_pio2 (tx, tx + 5, exp - 24, tx[4] ? 5 : 4, 3, two_over_pi);
 
   /* The result is now stored in 3 double values, we need to convert it into
      two long double values.  */
-  t = (long double) tx[6] + (long double) tx[7];
-  w = (long double) tx[5];
+  long double t = (long double) tx[6] + (long double) tx[7];
+  long double w = (long double) tx[5];
 
   if (x > 0)
     {
@@ -429,53 +428,59 @@ static int
 kernel_rem_pio2 (double *x, double *y, int e0, int nx, int prec,
                  const int *ipio2)
 {
-  int jz, jx, jv, jp, jk, carry, n, iq[20], i, j, k, m, q0, ih;
-  double z, fw, f[20], fq[20], q[20];
-
   /* initialize jk */
-  jk = init_jk[prec];
-  jp = jk;
+  int jk = init_jk[prec];
+  int jp = jk;
 
   /* determine jx,jv,q0, note that 3>q0 */
-  jx = nx - 1;
-  jv = (e0 - 3) / 24;
+  int jx = nx - 1;
+  int jv = (e0 - 3) / 24;
   if (jv < 0)
     jv = 0;
-  q0 = e0 - 24 * (jv + 1);
+  int q0 = e0 - 24 * (jv + 1);
 
   /* set up f[0] to f[jx+jk] where f[jx+jk] = ipio2[jv+jk] */
-  j = jv - jx;
-  m = jx + jk;
-  for (i = 0; i <= m; i++, j++)
+  int j = jv - jx;
+  int m = jx + jk;
+  double f[20];
+  for (int i = 0; i <= m; i++, j++)
     f[i] = (j < 0) ? zero : (double) ipio2[j];
 
   /* compute q[0],q[1],...q[jk] */
-  for (i = 0; i <= jk; i++)
+  double q[20];
+  for (int i = 0; i <= jk; i++)
     {
+      double fw;
       for (j = 0, fw = 0.0; j <= jx; j++)
         fw += x[j] * f[jx + i - j];
       q[i] = fw;
     }
 
-  jz = jk;
-recompute:
+  int jz = jk;
+recompute: ;
+  double z;
+
   /* distill q[] into iq[] in reverse order */
-  for (i = 0, j = jz, z = q[jz]; j > 0; i++, j--)
-    {
-      fw = (double) ((int) (twon24 * z));
-      iq[i] = (int) (z - two24 * fw);
-      z = q[j - 1] + fw;
-    }
+  int iq[20];
+  {
+    int i;
+    for (i = 0, j = jz, z = q[jz]; j > 0; i++, j--)
+      {
+        double fw = (double) ((int) (twon24 * z));
+        iq[i] = (int) (z - two24 * fw);
+        z = q[j - 1] + fw;
+      }
+  }
 
   /* compute n */
   z = ldexp (z, q0);            /* actual value of z */
   z -= 8.0 * floor (z * 0.125); /* trim off integer >= 8 */
-  n = (int) z;
+  int n = (int) z;
   z -= (double) n;
-  ih = 0;
+  int ih = 0;
   if (q0 > 0)
     {                           /* need iq[jz-1] to determine n */
-      i = (iq[jz - 1] >> (24 - q0));
+      int i = (iq[jz - 1] >> (24 - q0));
       n += i;
       iq[jz - 1] -= i << (24 - q0);
       ih = iq[jz - 1] >> (23 - q0);
@@ -488,8 +493,8 @@ recompute:
   if (ih > 0)
     {                           /* q > 0.5 */
       n += 1;
-      carry = 0;
-      for (i = 0; i < jz; i++)
+      int carry = 0;
+      for (int i = 0; i < jz; i++)
         {                       /* compute 1-q */
           j = iq[i];
           if (carry == 0)
@@ -527,15 +532,17 @@ recompute:
   if (z == zero)
     {
       j = 0;
-      for (i = jz - 1; i >= jk; i--)
+      for (int i = jz - 1; i >= jk; i--)
         j |= iq[i];
       if (j == 0)
         {                       /* need recomputation */
+          int k;
           for (k = 1; iq[jk - k] == 0; k++);    /* k = no. of terms needed */
 
-          for (i = jz + 1; i <= jz + k; i++)
+          for (int i = jz + 1; i <= jz + k; i++)
             {                   /* add q[jz+1] to q[jz+k] */
               f[jx + i] = (double) ipio2[jv + i];
+              double fw;
               for (j = 0, fw = 0.0; j <= jx; j++)
                 fw += x[j] * f[jx + i - j];
               q[i] = fw;
@@ -561,7 +568,7 @@ recompute:
       z = ldexp (z, -q0);
       if (z >= two24)
         {
-          fw = (double) ((int) (twon24 * z));
+          double fw = (double) ((int) (twon24 * z));
           iq[jz] = (int) (z - two24 * fw);
           jz += 1;
           q0 += 24;
@@ -572,54 +579,61 @@ recompute:
     }
 
   /* convert integer "bit" chunk to floating-point value */
-  fw = ldexp (one, q0);
-  for (i = jz; i >= 0; i--)
-    {
-      q[i] = fw * (double) iq[i];
-      fw *= twon24;
-    }
+  {
+    double fw = ldexp (one, q0);
+    for (int i = jz; i >= 0; i--)
+      {
+        q[i] = fw * (double) iq[i];
+        fw *= twon24;
+      }
+  }
 
   /* compute PIo2[0,...,jp]*q[jz,...,0] */
-  for (i = jz; i >= 0; i--)
+  double fq[20];
+  for (int i = jz; i >= 0; i--)
     {
+      double fw;
+      int k;
       for (fw = 0.0, k = 0; k <= jp && k <= jz - i; k++)
         fw += PIo2[k] * q[i + k];
       fq[jz - i] = fw;
     }
 
   /* compress fq[] into y[] */
+  double fw;
   switch (prec)
     {
     case 0:
       fw = 0.0;
-      for (i = jz; i >= 0; i--)
+      for (int i = jz; i >= 0; i--)
         fw += fq[i];
       y[0] = (ih == 0) ? fw : -fw;
       break;
     case 1:
     case 2:
       fw = 0.0;
-      for (i = jz; i >= 0; i--)
+      for (int i = jz; i >= 0; i--)
         fw += fq[i];
       y[0] = (ih == 0) ? fw : -fw;
       fw = fq[0] - fw;
-      for (i = 1; i <= jz; i++)
+      for (int i = 1; i <= jz; i++)
         fw += fq[i];
       y[1] = (ih == 0) ? fw : -fw;
       break;
     case 3:                     /* painful */
-      for (i = jz; i > 0; i--)
+      for (int i = jz; i > 0; i--)
         {
           fw = fq[i - 1] + fq[i];
           fq[i] += fq[i - 1] - fw;
           fq[i - 1] = fw;
         }
-      for (i = jz; i > 1; i--)
+      for (int i = jz; i > 1; i--)
         {
           fw = fq[i - 1] + fq[i];
           fq[i] += fq[i - 1] - fw;
           fq[i - 1] = fw;
         }
+      int i;
       for (fw = 0.0, i = jz; i >= 2; i--)
         fw += fq[i];
       if (ih == 0)

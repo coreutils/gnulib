@@ -67,21 +67,16 @@ rebalance (CONTAINER_T container,
 {
   for (;;)
     {
-      NODE_T child;
-      int previous_balance;
-      int balance_diff;
-      NODE_T nodeleft;
-      NODE_T noderight;
-
-      child = node;
+      NODE_T child = node;
       node = parent;
 
-      previous_balance = node->balance;
+      int previous_balance = node->balance;
 
       /* The balance of NODE is incremented by BALANCE_DIFF: +1 if the right
          branch's height has increased by 1 or the left branch's height has
          decreased by 1, -1 if the right branch's height has decreased by 1 or
          the left branch's height has increased by 1, 0 if no height change.  */
+      int balance_diff;
       if (node->left != NULL || node->right != NULL)
         balance_diff = (child == node->right ? height_diff : -height_diff);
       else
@@ -106,8 +101,8 @@ rebalance (CONTAINER_T container,
           else
             abort ();
 
-          nodeleft = node->left;
-          noderight = node->right;
+          NODE_T nodeleft = node->left;
+          NODE_T noderight = node->right;
 
           if (balance_diff < 0)
             {
@@ -318,7 +313,6 @@ gl_tree_nx_add_first (CONTAINER_T container, NODE_PAYLOAD_PARAMS)
   else
     {
       NODE_T node;
-
       for (node = container->root; node->left != NULL; )
         node = node->left;
 
@@ -339,13 +333,12 @@ gl_tree_nx_add_first (CONTAINER_T container, NODE_PAYLOAD_PARAMS)
 static void
 gl_tree_add_node_before (CONTAINER_T container, NODE_T node, NODE_T new_node)
 {
-  bool height_inc;
-
   new_node->left = NULL;
   new_node->right = NULL;
   new_node->balance = 0;
 
   /* Add it to the tree.  */
+  bool height_inc;
   if (node->left == NULL)
     {
       node->left = new_node;
@@ -389,13 +382,12 @@ gl_tree_nx_add_before (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
 static void
 gl_tree_add_node_after (CONTAINER_T container, NODE_T node, NODE_T new_node)
 {
-  bool height_inc;
-
   new_node->left = NULL;
   new_node->right = NULL;
   new_node->balance = 0;
 
   /* Add it to the tree.  */
+  bool height_inc;
   if (node->right == NULL)
     {
       node->right = new_node;
@@ -483,15 +475,12 @@ gl_tree_remove_node_no_free (CONTAINER_T container, NODE_T node)
     {
       /* Replace node with the rightmost element of the node->left subtree.  */
       NODE_T subst;
-      NODE_T subst_parent;
-      NODE_T child;
-
       for (subst = node->left; subst->right != NULL; )
         subst = subst->right;
 
-      subst_parent = subst->parent;
+      NODE_T subst_parent = subst->parent;
 
-      child = subst->left;
+      NODE_T child = subst->left;
 
       /* The case subst_parent == node is special:  If we do nothing special,
          we get confusion about node->left, subst->left and child->parent.

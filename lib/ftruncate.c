@@ -96,14 +96,13 @@ SetFileSize (HANDLE h, LONGLONG size)
           static char zero_bytes[1024];
           LONG pos_hi = 0;
           LONG pos_lo = SetFilePointer (tmph, (LONG) 0, &pos_hi, FILE_END);
-          LONGLONG pos;
           if (pos_lo == INVALID_SET_FILE_POINTER
               && GetLastError() != NO_ERROR)
             {
               CloseHandle (tmph);
               return FALSE;
             }
-          pos = ((LONGLONG) pos_hi << 32) | (ULONGLONG) (ULONG) pos_lo;
+          LONGLONG pos = ((LONGLONG) pos_hi << 32) | (ULONGLONG) (ULONG) pos_lo;
           while (pos < size)
             {
               DWORD written;

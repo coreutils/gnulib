@@ -171,16 +171,14 @@ Gc_rc
 gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
                 gc_cipher_handle * outhandle)
 {
-  _gc_cipher_ctx *ctx;
-  Gc_rc rc = GC_OK;
-
-  ctx = calloc (1, sizeof (*ctx));
+  _gc_cipher_ctx *ctx = calloc (1, sizeof (*ctx));
   if (!ctx)
     return GC_MALLOC_ERROR;
 
   ctx->alg = alg;
   ctx->mode = mode;
 
+  Gc_rc rc = GC_OK;
   switch (alg)
     {
 #if GNULIB_GC_ARCTWO
@@ -285,25 +283,31 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
     case GC_AES192:
     case GC_AES256:
       {
-        rijndael_rc rc;
         char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
 
         for (size_t i = 0; i < keylen; i++)
           sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFFU);
 
-        rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
-                              keylen * 8, keyMaterial);
-        if (rc < 0)
-          return GC_INVALID_CIPHER;
-
-        rc = rijndaelMakeKey (&ctx->aesDecKey, RIJNDAEL_DIR_DECRYPT,
-                              keylen * 8, keyMaterial);
-        if (rc < 0)
-          return GC_INVALID_CIPHER;
-
-        rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_ECB, NULL);
-        if (rc < 0)
-          return GC_INVALID_CIPHER;
+        {
+          rijndael_rc rc =
+            rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
+                             keylen * 8, keyMaterial);
+          if (rc < 0)
+            return GC_INVALID_CIPHER;
+        }
+        {
+          rijndael_rc rc =
+            rijndaelMakeKey (&ctx->aesDecKey, RIJNDAEL_DIR_DECRYPT,
+                             keylen * 8, keyMaterial);
+          if (rc < 0)
+            return GC_INVALID_CIPHER;
+        }
+        {
+          rijndael_rc rc =
+            rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_ECB, NULL);
+          if (rc < 0)
+            return GC_INVALID_CIPHER;
+        }
       }
       break;
 #endif
@@ -342,14 +346,13 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 
         case GC_CBC:
           {
-            rijndael_rc rc;
             char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
-
             for (size_t i = 0; i < ivlen; i++)
               sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFFU);
 
-            rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
-                                     ivMaterial);
+            rijndael_rc rc =
+              rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
+                                  ivMaterial);
             if (rc < 0)
               return GC_INVALID_CIPHER;
           }
@@ -420,10 +423,9 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     case GC_AES192:
     case GC_AES256:
       {
-        int nblocks;
-
-        nblocks = rijndaelBlockEncrypt (&ctx->aesContext, &ctx->aesEncKey,
-                                        data, 8 * len, data);
+        int nblocks =
+          rijndaelBlockEncrypt (&ctx->aesContext, &ctx->aesEncKey,
+                                data, 8 * len, data);
         if (nblocks < 0)
           return GC_INVALID_CIPHER;
       }
@@ -491,10 +493,9 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     case GC_AES192:
     case GC_AES256:
       {
-        int nblocks;
-
-        nblocks = rijndaelBlockDecrypt (&ctx->aesContext, &ctx->aesDecKey,
-                                        data, 8 * len, data);
+        int nblocks =
+          rijndaelBlockDecrypt (&ctx->aesContext, &ctx->aesDecKey,
+                                data, 8 * len, data);
         if (nblocks < 0)
           return GC_INVALID_CIPHER;
       }
@@ -553,19 +554,17 @@ typedef struct _gc_hash_ctx
 Gc_rc
 gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 {
-  _gc_hash_ctx *ctx;
-  Gc_rc rc = GC_OK;
-
   if (mode != 0)
     return GC_INVALID_HASH;
 
-  ctx = calloc (1, sizeof (*ctx));
+  _gc_hash_ctx *ctx = calloc (1, sizeof (*ctx));
   if (!ctx)
     return GC_MALLOC_ERROR;
 
   ctx->alg = hash;
   ctx->mode = mode;
 
+  Gc_rc rc = GC_OK;
   switch (hash)
     {
 #if GNULIB_GC_MD2
@@ -628,9 +627,7 @@ Gc_rc
 gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
 {
   _gc_hash_ctx *in = handle;
-  _gc_hash_ctx *out;
-
-  out = calloc (1, sizeof (*out));
+  _gc_hash_ctx *out = calloc (1, sizeof (*out));
   if (!out)
     return GC_MALLOC_ERROR;
 

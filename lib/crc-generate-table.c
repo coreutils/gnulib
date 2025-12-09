@@ -43,11 +43,9 @@ static unsigned long crc_table[256];
 static void
 make_crc_table (int bits)
 {
-  unsigned long c;
-
   for (int n = 0; n < 256; n++)
     {
-      c = (unsigned long) n;
+      unsigned long c = (unsigned long) n;
       for (int k = 0; k < bits; k++)
         {
           if (c & 1)

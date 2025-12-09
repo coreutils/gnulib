@@ -39,7 +39,6 @@ u8_conv_from_encoding (const char *fromcode,
   if (STRCASEEQ (fromcode, "UTF-8", 'U','T','F','-','8',0,0,0,0))
     {
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
-      uint8_t *result;
 
       if (u8_check ((const uint8_t *) src, srclen))
         {
@@ -61,6 +60,7 @@ u8_conv_from_encoding (const char *fromcode,
           }
 
       /* Memory allocation.  */
+      uint8_t *result;
       if (resultbuf != NULL && *lengthp >= srclen)
         result = resultbuf;
       else

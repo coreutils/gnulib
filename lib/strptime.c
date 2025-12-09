@@ -233,7 +233,6 @@ __strptime_internal (const char *rp, const char *fmt, struct tm *tm,
   struct locale_data *const current = locale->__locales[LC_TIME];
 #endif
 
-  int cnt;
   size_t val;
   int have_I, is_pm;
   int century, want_century;
@@ -296,82 +295,88 @@ __strptime_internal (const char *rp, const char *fmt, struct tm *tm,
         case 'a':
         case 'A':
           /* Match day of week.  */
-          for (cnt = 0; cnt < 7; ++cnt)
-            {
+          {
+            int cnt;
+            for (cnt = 0; cnt < 7; ++cnt)
+              {
 #ifdef _NL_CURRENT
-              if (*decided !=raw)
-                {
-                  if (match_string (_NL_CURRENT (LC_TIME, DAY_1 + cnt), rp))
-                    {
-                      if (*decided == not
-                          && strcmp (_NL_CURRENT (LC_TIME, DAY_1 + cnt),
-                                     weekday_name[cnt]))
-                        *decided = loc;
-                      break;
-                    }
-                  if (match_string (_NL_CURRENT (LC_TIME, ABDAY_1 + cnt), rp))
-                    {
-                      if (*decided == not
-                          && strcmp (_NL_CURRENT (LC_TIME, ABDAY_1 + cnt),
-                                     ab_weekday_name[cnt]))
-                        *decided = loc;
-                      break;
-                    }
-                }
+                if (*decided !=raw)
+                  {
+                    if (match_string (_NL_CURRENT (LC_TIME, DAY_1 + cnt), rp))
+                      {
+                        if (*decided == not
+                            && strcmp (_NL_CURRENT (LC_TIME, DAY_1 + cnt),
+                                       weekday_name[cnt]))
+                          *decided = loc;
+                        break;
+                      }
+                    if (match_string (_NL_CURRENT (LC_TIME, ABDAY_1 + cnt), rp))
+                      {
+                        if (*decided == not
+                            && strcmp (_NL_CURRENT (LC_TIME, ABDAY_1 + cnt),
+                                       ab_weekday_name[cnt]))
+                          *decided = loc;
+                        break;
+                      }
+                  }
 #endif
-              if (*decided != loc
-                  && (match_string (weekday_name[cnt], rp)
-                      || match_string (ab_weekday_name[cnt], rp)))
-                {
-                  *decided = raw;
-                  break;
-                }
-            }
-          if (cnt == 7)
-            /* Does not match a weekday name.  */
-            return NULL;
-          tm->tm_wday = cnt;
-          have_wday = 1;
+                if (*decided != loc
+                    && (match_string (weekday_name[cnt], rp)
+                        || match_string (ab_weekday_name[cnt], rp)))
+                  {
+                    *decided = raw;
+                    break;
+                  }
+              }
+            if (cnt == 7)
+              /* Does not match a weekday name.  */
+              return NULL;
+            tm->tm_wday = cnt;
+            have_wday = 1;
+          }
           break;
         case 'b':
         case 'B':
         case 'h':
           /* Match month name.  */
-          for (cnt = 0; cnt < 12; ++cnt)
-            {
+          {
+            int cnt;
+            for (cnt = 0; cnt < 12; ++cnt)
+              {
 #ifdef _NL_CURRENT
-              if (*decided !=raw)
-                {
-                  if (match_string (_NL_CURRENT (LC_TIME, MON_1 + cnt), rp))
-                    {
-                      if (*decided == not
-                          && strcmp (_NL_CURRENT (LC_TIME, MON_1 + cnt),
-                                     month_name[cnt]))
-                        *decided = loc;
-                      break;
-                    }
-                  if (match_string (_NL_CURRENT (LC_TIME, ABMON_1 + cnt), rp))
-                    {
-                      if (*decided == not
-                          && strcmp (_NL_CURRENT (LC_TIME, ABMON_1 + cnt),
-                                     ab_month_name[cnt]))
-                        *decided = loc;
-                      break;
-                    }
-                }
+                if (*decided !=raw)
+                  {
+                    if (match_string (_NL_CURRENT (LC_TIME, MON_1 + cnt), rp))
+                      {
+                        if (*decided == not
+                            && strcmp (_NL_CURRENT (LC_TIME, MON_1 + cnt),
+                                       month_name[cnt]))
+                          *decided = loc;
+                        break;
+                      }
+                    if (match_string (_NL_CURRENT (LC_TIME, ABMON_1 + cnt), rp))
+                      {
+                        if (*decided == not
+                            && strcmp (_NL_CURRENT (LC_TIME, ABMON_1 + cnt),
+                                       ab_month_name[cnt]))
+                          *decided = loc;
+                        break;
+                      }
+                  }
 #endif
-              if (match_string (month_name[cnt], rp)
-                  || match_string (ab_month_name[cnt], rp))
-                {
-                  *decided = raw;
-                  break;
-                }
-            }
-          if (cnt == 12)
-            /* Does not match a month name.  */
-            return NULL;
-          tm->tm_mon = cnt;
-          want_xday = 1;
+                if (match_string (month_name[cnt], rp)
+                    || match_string (ab_month_name[cnt], rp))
+                  {
+                    *decided = raw;
+                    break;
+                  }
+              }
+            if (cnt == 12)
+              /* Does not match a month name.  */
+              return NULL;
+            tm->tm_mon = cnt;
+            want_xday = 1;
+          }
           break;
         case 'c':
           /* Match locale's date and time format.  */

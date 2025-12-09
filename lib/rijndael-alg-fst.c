@@ -754,7 +754,6 @@ rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
                      const char cipherKey[], size_t keyBits)
 {
   size_t i = 0;
-  uint32_t temp;
 
   rk[0] = GETU32 (cipherKey);
   rk[1] = GETU32 (cipherKey + 4);
@@ -764,7 +763,7 @@ rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
     {
       for (;;)
         {
-          temp = rk[3];
+          uint32_t temp = rk[3];
           rk[4] = rk[0] ^
             (Te4[(temp >> 16) & 0xff] & 0xff000000) ^
             (Te4[(temp >> 8) & 0xff] & 0x00ff0000) ^
@@ -786,7 +785,7 @@ rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
     {
       for (;;)
         {
-          temp = rk[5];
+          uint32_t temp = rk[5];
           rk[6] = rk[0] ^
             (Te4[(temp >> 16) & 0xff] & 0xff000000) ^
             (Te4[(temp >> 8) & 0xff] & 0x00ff0000) ^
@@ -810,28 +809,32 @@ rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
     {
       for (;;)
         {
-          temp = rk[7];
-          rk[8] = rk[0] ^
-            (Te4[(temp >> 16) & 0xff] & 0xff000000) ^
-            (Te4[(temp >> 8) & 0xff] & 0x00ff0000) ^
-            (Te4[(temp) & 0xff] & 0x0000ff00) ^
-            (Te4[(temp >> 24)] & 0x000000ff) ^ rcon[i];
-          rk[9] = rk[1] ^ rk[8];
-          rk[10] = rk[2] ^ rk[9];
-          rk[11] = rk[3] ^ rk[10];
-          if (++i == 7)
-            {
-              return 14;
-            }
-          temp = rk[11];
-          rk[12] = rk[4] ^
-            (Te4[(temp >> 24)] & 0xff000000) ^
-            (Te4[(temp >> 16) & 0xff] & 0x00ff0000) ^
-            (Te4[(temp >> 8) & 0xff] & 0x0000ff00) ^
-            (Te4[(temp) & 0xff] & 0x000000ff);
-          rk[13] = rk[5] ^ rk[12];
-          rk[14] = rk[6] ^ rk[13];
-          rk[15] = rk[7] ^ rk[14];
+          {
+            uint32_t temp = rk[7];
+            rk[8] = rk[0] ^
+              (Te4[(temp >> 16) & 0xff] & 0xff000000) ^
+              (Te4[(temp >> 8) & 0xff] & 0x00ff0000) ^
+              (Te4[(temp) & 0xff] & 0x0000ff00) ^
+              (Te4[(temp >> 24)] & 0x000000ff) ^ rcon[i];
+            rk[9] = rk[1] ^ rk[8];
+            rk[10] = rk[2] ^ rk[9];
+            rk[11] = rk[3] ^ rk[10];
+            if (++i == 7)
+              {
+                return 14;
+              }
+          }
+          {
+            uint32_t temp = rk[11];
+            rk[12] = rk[4] ^
+              (Te4[(temp >> 24)] & 0xff000000) ^
+              (Te4[(temp >> 16) & 0xff] & 0x00ff0000) ^
+              (Te4[(temp >> 8) & 0xff] & 0x0000ff00) ^
+              (Te4[(temp) & 0xff] & 0x000000ff);
+            rk[13] = rk[5] ^ rk[12];
+            rk[14] = rk[6] ^ rk[13];
+            rk[15] = rk[7] ^ rk[14];
+          }
 
           rk += 8;
         }
@@ -848,30 +851,38 @@ int
 rijndaelKeySetupDec (uint32_t rk[ /*4*(Nr + 1) */ ],
                      const char cipherKey[], size_t keyBits)
 {
-  size_t Nr, i, j;
-  uint32_t temp;
-
   /* expand the cipher key: */
-  Nr = rijndaelKeySetupEnc (rk, cipherKey, keyBits);
+  size_t Nr = rijndaelKeySetupEnc (rk, cipherKey, keyBits);
   /* invert the order of the round keys: */
-  for (i = 0, j = 4 * Nr; i < j; i += 4, j -= 4)
-    {
-      temp = rk[i];
-      rk[i] = rk[j];
-      rk[j] = temp;
-      temp = rk[i + 1];
-      rk[i + 1] = rk[j + 1];
-      rk[j + 1] = temp;
-      temp = rk[i + 2];
-      rk[i + 2] = rk[j + 2];
-      rk[j + 2] = temp;
-      temp = rk[i + 3];
-      rk[i + 3] = rk[j + 3];
-      rk[j + 3] = temp;
-    }
+  {
+    size_t i, j;
+    for (i = 0, j = 4 * Nr; i < j; i += 4, j -= 4)
+      {
+        {
+          uint32_t temp = rk[i];
+          rk[i] = rk[j];
+          rk[j] = temp;
+        }
+        {
+          uint32_t temp = rk[i + 1];
+          rk[i + 1] = rk[j + 1];
+          rk[j + 1] = temp;
+        }
+        {
+          uint32_t temp = rk[i + 2];
+          rk[i + 2] = rk[j + 2];
+          rk[j + 2] = temp;
+        }
+        {
+          uint32_t temp = rk[i + 3];
+          rk[i + 3] = rk[j + 3];
+          rk[j + 3] = temp;
+        }
+      }
+  }
   /* apply the inverse MixColumn transform to all round keys but the
      first and the last: */
-  for (i = 1; i < Nr; i++)
+  for (size_t i = 1; i < Nr; i++)
     {
       rk += 4;
       rk[0] =
@@ -902,86 +913,87 @@ void
 rijndaelEncrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
                  const char pt[16], char ct[16])
 {
-  uint32_t s0, s1, s2, s3, t0, t1, t2, t3;
-  size_t r;
+  uint32_t t0, t1, t2, t3;
 
-  /*
-   * map byte array block to cipher state
-   * and add initial round key:
-   */
-  s0 = GETU32 (pt) ^ rk[0];
-  s1 = GETU32 (pt + 4) ^ rk[1];
-  s2 = GETU32 (pt + 8) ^ rk[2];
-  s3 = GETU32 (pt + 12) ^ rk[3];
-  /*
-   * Nr - 1 full rounds:
-   */
-  r = Nr >> 1;
-  for (;;)
-    {
-      t0 =
-        Te0[(s0 >> 24)] ^
-        Te1[(s1 >> 16) & 0xff] ^
-        Te2[(s2 >> 8) & 0xff] ^ Te3[(s3) & 0xff] ^ rk[4];
-      t1 =
-        Te0[(s1 >> 24)] ^
-        Te1[(s2 >> 16) & 0xff] ^
-        Te2[(s3 >> 8) & 0xff] ^ Te3[(s0) & 0xff] ^ rk[5];
-      t2 =
-        Te0[(s2 >> 24)] ^
-        Te1[(s3 >> 16) & 0xff] ^
-        Te2[(s0 >> 8) & 0xff] ^ Te3[(s1) & 0xff] ^ rk[6];
-      t3 =
-        Te0[(s3 >> 24)] ^
-        Te1[(s0 >> 16) & 0xff] ^
-        Te2[(s1 >> 8) & 0xff] ^ Te3[(s2) & 0xff] ^ rk[7];
+  {
+    /*
+     * map byte array block to cipher state
+     * and add initial round key:
+     */
+    uint32_t s0 = GETU32 (pt) ^ rk[0];
+    uint32_t s1 = GETU32 (pt + 4) ^ rk[1];
+    uint32_t s2 = GETU32 (pt + 8) ^ rk[2];
+    uint32_t s3 = GETU32 (pt + 12) ^ rk[3];
+    /*
+     * Nr - 1 full rounds:
+     */
+    size_t r = Nr >> 1;
+    for (;;)
+      {
+        t0 =
+          Te0[(s0 >> 24)] ^
+          Te1[(s1 >> 16) & 0xff] ^
+          Te2[(s2 >> 8) & 0xff] ^ Te3[(s3) & 0xff] ^ rk[4];
+        t1 =
+          Te0[(s1 >> 24)] ^
+          Te1[(s2 >> 16) & 0xff] ^
+          Te2[(s3 >> 8) & 0xff] ^ Te3[(s0) & 0xff] ^ rk[5];
+        t2 =
+          Te0[(s2 >> 24)] ^
+          Te1[(s3 >> 16) & 0xff] ^
+          Te2[(s0 >> 8) & 0xff] ^ Te3[(s1) & 0xff] ^ rk[6];
+        t3 =
+          Te0[(s3 >> 24)] ^
+          Te1[(s0 >> 16) & 0xff] ^
+          Te2[(s1 >> 8) & 0xff] ^ Te3[(s2) & 0xff] ^ rk[7];
 
-      rk += 8;
-      if (--r == 0)
-        {
-          break;
-        }
+        rk += 8;
+        if (--r == 0)
+          {
+            break;
+          }
 
-      s0 =
-        Te0[(t0 >> 24)] ^
-        Te1[(t1 >> 16) & 0xff] ^
-        Te2[(t2 >> 8) & 0xff] ^ Te3[(t3) & 0xff] ^ rk[0];
-      s1 =
-        Te0[(t1 >> 24)] ^
-        Te1[(t2 >> 16) & 0xff] ^
-        Te2[(t3 >> 8) & 0xff] ^ Te3[(t0) & 0xff] ^ rk[1];
-      s2 =
-        Te0[(t2 >> 24)] ^
-        Te1[(t3 >> 16) & 0xff] ^
-        Te2[(t0 >> 8) & 0xff] ^ Te3[(t1) & 0xff] ^ rk[2];
-      s3 =
-        Te0[(t3 >> 24)] ^
-        Te1[(t0 >> 16) & 0xff] ^
-        Te2[(t1 >> 8) & 0xff] ^ Te3[(t2) & 0xff] ^ rk[3];
-    }
+        s0 =
+          Te0[(t0 >> 24)] ^
+          Te1[(t1 >> 16) & 0xff] ^
+          Te2[(t2 >> 8) & 0xff] ^ Te3[(t3) & 0xff] ^ rk[0];
+        s1 =
+          Te0[(t1 >> 24)] ^
+          Te1[(t2 >> 16) & 0xff] ^
+          Te2[(t3 >> 8) & 0xff] ^ Te3[(t0) & 0xff] ^ rk[1];
+        s2 =
+          Te0[(t2 >> 24)] ^
+          Te1[(t3 >> 16) & 0xff] ^
+          Te2[(t0 >> 8) & 0xff] ^ Te3[(t1) & 0xff] ^ rk[2];
+        s3 =
+          Te0[(t3 >> 24)] ^
+          Te1[(t0 >> 16) & 0xff] ^
+          Te2[(t1 >> 8) & 0xff] ^ Te3[(t2) & 0xff] ^ rk[3];
+      }
+  }
   /*
    * apply last round and
    * map cipher state to byte array block:
    */
-  s0 =
+  uint32_t s0 =
     (Te4[(t0 >> 24)] & 0xff000000) ^
     (Te4[(t1 >> 16) & 0xff] & 0x00ff0000) ^
     (Te4[(t2 >> 8) & 0xff] & 0x0000ff00) ^
     (Te4[(t3) & 0xff] & 0x000000ff) ^ rk[0];
   PUTU32 (ct, s0);
-  s1 =
+  uint32_t s1 =
     (Te4[(t1 >> 24)] & 0xff000000) ^
     (Te4[(t2 >> 16) & 0xff] & 0x00ff0000) ^
     (Te4[(t3 >> 8) & 0xff] & 0x0000ff00) ^
     (Te4[(t0) & 0xff] & 0x000000ff) ^ rk[1];
   PUTU32 (ct + 4, s1);
-  s2 =
+  uint32_t s2 =
     (Te4[(t2 >> 24)] & 0xff000000) ^
     (Te4[(t3 >> 16) & 0xff] & 0x00ff0000) ^
     (Te4[(t0 >> 8) & 0xff] & 0x0000ff00) ^
     (Te4[(t1) & 0xff] & 0x000000ff) ^ rk[2];
   PUTU32 (ct + 8, s2);
-  s3 =
+  uint32_t s3 =
     (Te4[(t3 >> 24)] & 0xff000000) ^
     (Te4[(t0 >> 16) & 0xff] & 0x00ff0000) ^
     (Te4[(t1 >> 8) & 0xff] & 0x0000ff00) ^
@@ -993,86 +1005,87 @@ void
 rijndaelDecrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
                  const char ct[16], char pt[16])
 {
-  uint32_t s0, s1, s2, s3, t0, t1, t2, t3;
-  size_t r;
+  uint32_t t0, t1, t2, t3;
 
-  /*
-   * map byte array block to cipher state
-   * and add initial round key:
-   */
-  s0 = GETU32 (ct) ^ rk[0];
-  s1 = GETU32 (ct + 4) ^ rk[1];
-  s2 = GETU32 (ct + 8) ^ rk[2];
-  s3 = GETU32 (ct + 12) ^ rk[3];
-  /*
-   * Nr - 1 full rounds:
-   */
-  r = Nr >> 1;
-  for (;;)
-    {
-      t0 =
-        Td0[(s0 >> 24)] ^
-        Td1[(s3 >> 16) & 0xff] ^
-        Td2[(s2 >> 8) & 0xff] ^ Td3[(s1) & 0xff] ^ rk[4];
-      t1 =
-        Td0[(s1 >> 24)] ^
-        Td1[(s0 >> 16) & 0xff] ^
-        Td2[(s3 >> 8) & 0xff] ^ Td3[(s2) & 0xff] ^ rk[5];
-      t2 =
-        Td0[(s2 >> 24)] ^
-        Td1[(s1 >> 16) & 0xff] ^
-        Td2[(s0 >> 8) & 0xff] ^ Td3[(s3) & 0xff] ^ rk[6];
-      t3 =
-        Td0[(s3 >> 24)] ^
-        Td1[(s2 >> 16) & 0xff] ^
-        Td2[(s1 >> 8) & 0xff] ^ Td3[(s0) & 0xff] ^ rk[7];
+  {
+    /*
+     * map byte array block to cipher state
+     * and add initial round key:
+     */
+    uint32_t s0 = GETU32 (ct) ^ rk[0];
+    uint32_t s1 = GETU32 (ct + 4) ^ rk[1];
+    uint32_t s2 = GETU32 (ct + 8) ^ rk[2];
+    uint32_t s3 = GETU32 (ct + 12) ^ rk[3];
+    /*
+     * Nr - 1 full rounds:
+     */
+    size_t r = Nr >> 1;
+    for (;;)
+      {
+        t0 =
+          Td0[(s0 >> 24)] ^
+          Td1[(s3 >> 16) & 0xff] ^
+          Td2[(s2 >> 8) & 0xff] ^ Td3[(s1) & 0xff] ^ rk[4];
+        t1 =
+          Td0[(s1 >> 24)] ^
+          Td1[(s0 >> 16) & 0xff] ^
+          Td2[(s3 >> 8) & 0xff] ^ Td3[(s2) & 0xff] ^ rk[5];
+        t2 =
+          Td0[(s2 >> 24)] ^
+          Td1[(s1 >> 16) & 0xff] ^
+          Td2[(s0 >> 8) & 0xff] ^ Td3[(s3) & 0xff] ^ rk[6];
+        t3 =
+          Td0[(s3 >> 24)] ^
+          Td1[(s2 >> 16) & 0xff] ^
+          Td2[(s1 >> 8) & 0xff] ^ Td3[(s0) & 0xff] ^ rk[7];
 
-      rk += 8;
-      if (--r == 0)
-        {
-          break;
-        }
+        rk += 8;
+        if (--r == 0)
+          {
+            break;
+          }
 
-      s0 =
-        Td0[(t0 >> 24)] ^
-        Td1[(t3 >> 16) & 0xff] ^
-        Td2[(t2 >> 8) & 0xff] ^ Td3[(t1) & 0xff] ^ rk[0];
-      s1 =
-        Td0[(t1 >> 24)] ^
-        Td1[(t0 >> 16) & 0xff] ^
-        Td2[(t3 >> 8) & 0xff] ^ Td3[(t2) & 0xff] ^ rk[1];
-      s2 =
-        Td0[(t2 >> 24)] ^
-        Td1[(t1 >> 16) & 0xff] ^
-        Td2[(t0 >> 8) & 0xff] ^ Td3[(t3) & 0xff] ^ rk[2];
-      s3 =
-        Td0[(t3 >> 24)] ^
-        Td1[(t2 >> 16) & 0xff] ^
-        Td2[(t1 >> 8) & 0xff] ^ Td3[(t0) & 0xff] ^ rk[3];
-    }
+        s0 =
+          Td0[(t0 >> 24)] ^
+          Td1[(t3 >> 16) & 0xff] ^
+          Td2[(t2 >> 8) & 0xff] ^ Td3[(t1) & 0xff] ^ rk[0];
+        s1 =
+          Td0[(t1 >> 24)] ^
+          Td1[(t0 >> 16) & 0xff] ^
+          Td2[(t3 >> 8) & 0xff] ^ Td3[(t2) & 0xff] ^ rk[1];
+        s2 =
+          Td0[(t2 >> 24)] ^
+          Td1[(t1 >> 16) & 0xff] ^
+          Td2[(t0 >> 8) & 0xff] ^ Td3[(t3) & 0xff] ^ rk[2];
+        s3 =
+          Td0[(t3 >> 24)] ^
+          Td1[(t2 >> 16) & 0xff] ^
+          Td2[(t1 >> 8) & 0xff] ^ Td3[(t0) & 0xff] ^ rk[3];
+      }
+  }
   /*
    * apply last round and
    * map cipher state to byte array block:
    */
-  s0 =
+  uint32_t s0 =
     (Td4[(t0 >> 24)] & 0xff000000) ^
     (Td4[(t3 >> 16) & 0xff] & 0x00ff0000) ^
     (Td4[(t2 >> 8) & 0xff] & 0x0000ff00) ^
     (Td4[(t1) & 0xff] & 0x000000ff) ^ rk[0];
   PUTU32 (pt, s0);
-  s1 =
+  uint32_t s1 =
     (Td4[(t1 >> 24)] & 0xff000000) ^
     (Td4[(t0 >> 16) & 0xff] & 0x00ff0000) ^
     (Td4[(t3 >> 8) & 0xff] & 0x0000ff00) ^
     (Td4[(t2) & 0xff] & 0x000000ff) ^ rk[1];
   PUTU32 (pt + 4, s1);
-  s2 =
+  uint32_t s2 =
     (Td4[(t2 >> 24)] & 0xff000000) ^
     (Td4[(t1 >> 16) & 0xff] & 0x00ff0000) ^
     (Td4[(t0 >> 8) & 0xff] & 0x0000ff00) ^
     (Td4[(t3) & 0xff] & 0x000000ff) ^ rk[2];
   PUTU32 (pt + 8, s2);
-  s3 =
+  uint32_t s3 =
     (Td4[(t3 >> 24)] & 0xff000000) ^
     (Td4[(t2 >> 16) & 0xff] & 0x00ff0000) ^
     (Td4[(t1 >> 8) & 0xff] & 0x0000ff00) ^

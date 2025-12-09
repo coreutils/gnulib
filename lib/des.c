@@ -320,20 +320,20 @@ bool
 gl_des_is_weak_key (const char * key)
 {
   char work[8];
-  int left, right, middle, cmp_result;
 
   /* clear parity bits */
   for (int i = 0; i < 8; ++i)
     work[i] = ((unsigned char)key[i]) & 0xfe;
 
   /* binary search in the weak key table */
-  left = 0;
-  right = 63;
+  int left = 0;
+  int right = 63;
   while (left <= right)
     {
-      middle = (left + right) / 2;
+      int middle = (left + right) / 2;
 
-      if (!(cmp_result = memcmp (work, weak_keys[middle], 8)))
+      int cmp_result = memcmp (work, weak_keys[middle], 8);
+      if (!cmp_result)
         return -1;
 
       if (cmp_result > 0)
@@ -616,10 +616,8 @@ gl_3des_ecb_crypt (gl_3des_ctx *ctx,
 {
   const unsigned char *from = (const unsigned char *) _from;
   unsigned char *to = (unsigned char *) _to;
+  uint32_t *keys = mode ? ctx->decrypt_subkeys : ctx->encrypt_subkeys;
   uint32_t left, right, work;
-  uint32_t *keys;
-
-  keys = mode ? ctx->decrypt_subkeys : ctx->encrypt_subkeys;
 
   READ_64BIT_DATA (from, left, right)
     INITIAL_PERMUTATION (left, work, right)

@@ -230,15 +230,10 @@ parse_number (const char *nptr,
               char **endptr)
 {
   const char *s = nptr;
-  const char *digits_start;
-  const char *digits_end;
-  const char *radixchar_ptr;
-  long int exponent;
-  DOUBLE num;
 
   /* First, determine the start and end of the digit sequence.  */
-  digits_start = s;
-  radixchar_ptr = NULL;
+  const char *digits_start = s;
+  const char *radixchar_ptr = NULL;
   for (;; ++s)
     {
       if (base == 16 ? c_isxdigit (*s) : c_isdigit (*s))
@@ -252,10 +247,11 @@ parse_number (const char *nptr,
         /* Any other character terminates the digit sequence.  */
         break;
     }
-  digits_end = s;
+  const char *digits_end = s;
   /* Now radixchar_ptr == NULL or
      digits_start <= radixchar_ptr < digits_end.  */
 
+  long int exponent;
   if (false)
     { /* Unoptimized.  */
       exponent =
@@ -282,13 +278,12 @@ parse_number (const char *nptr,
     }
 
   /* Then, convert the digit sequence to a number.  */
+  DOUBLE num;
   {
     num = 0;
     for (const char *dp = digits_start; dp < digits_end; dp++)
       if (dp != radixchar_ptr)
         {
-          int digit;
-
           /* Make sure that multiplication by BASE will not overflow.  */
           if (!(num <= MAX / base))
             {
@@ -304,6 +299,7 @@ parse_number (const char *nptr,
             }
 
           /* Eat the next digit.  */
+          int digit;
           if (c_isdigit (*dp))
             digit = *dp - '0';
           else if (base == 16 && c_isxdigit (*dp))
@@ -387,31 +383,26 @@ STRTOD (const char *nptr, char **endptr)
 /* From here on, STRTOD refers to the underlying implementation.  It needs
    to handle only finite unsigned decimal numbers with non-null ENDPTR.  */
 {
-  char radixchar;
-  bool negative = false;
-
-  /* The number so far.  */
-  DOUBLE num;
-
-  const char *s = nptr;
-  const char *end;
-  char *endbuf;
   int saved_errno = errno;
 
-  radixchar = decimal_point_char ();
+  char radixchar = decimal_point_char ();
+
+  const char *s = nptr;
 
   /* Eat whitespace.  */
   while (locale_isspace (*s))
     ++s;
 
   /* Get the sign.  */
-  negative = *s == '-';
+  bool negative = *s == '-';
   if (*s == '-' || *s == '+')
     ++s;
 
-  num = STRTOD (s, &endbuf);
+  char *endbuf;
+  DOUBLE num = /* The number so far.  */
+    STRTOD (s, &endbuf);
   SET_ERRNO_UPON_GRADUAL_UNDERFLOW (num);
-  end = endbuf;
+  const char *end = endbuf;
 
   if (c_isdigit (s[*s == radixchar]))
     {

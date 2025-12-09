@@ -224,12 +224,12 @@ x2nrealloc (void *p, size_t *pn, size_t s)
 void *
 xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
 {
-  idx_t n0 = *pn;
-
   /* The approximate size to use for initial small allocation
      requests.  This is the largest "small" request for the GNU C
      library malloc.  */
   enum { DEFAULT_MXFAST = 64 * sizeof (size_t) / 4 };
+
+  idx_t n0 = *pn;
 
   /* If the array is tiny, grow it to about (but no greater than)
      DEFAULT_MXFAST bytes.  Otherwise, grow it by about 50%.

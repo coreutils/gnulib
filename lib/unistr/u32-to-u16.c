@@ -40,11 +40,10 @@ DST_UNIT *
 FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
 {
   const SRC_UNIT *s_end = s + n;
+
   /* Output string accumulator.  */
   DST_UNIT *result;
   size_t allocated;
-  size_t length;
-
   if (resultbuf != NULL)
     {
       result = resultbuf;
@@ -55,23 +54,20 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
       result = NULL;
       allocated = 0;
     }
-  length = 0;
+  size_t length = 0;
   /* Invariants:
      result is either == resultbuf or == NULL or malloc-allocated.
      If length > 0, then result != NULL.  */
 
   while (s < s_end)
     {
-      ucs4_t uc;
-      int count;
-
       /* Fetch a Unicode character from the input string.  */
-      uc = *s++;
+      ucs4_t uc = *s++;
       /* No need to call the safe variant u32_mbtouc, because
          u16_uctomb will verify uc anyway.  */
 
       /* Store it in the output string.  */
-      count = u16_uctomb (result + length, uc, allocated - length);
+      int count = u16_uctomb (result + length, uc, allocated - length);
       if (count == -1)
         {
           if (!(result == resultbuf || result == NULL))
@@ -81,11 +77,11 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
         }
       if (count == -2)
         {
-          DST_UNIT *memory;
-
           allocated = (allocated > 0 ? 2 * allocated : 12);
           if (length + 2 > allocated)
             allocated = length + 2;
+
+          DST_UNIT *memory;
           if (result == resultbuf || result == NULL)
             memory = (DST_UNIT *) malloc (allocated * sizeof (DST_UNIT));
           else
@@ -126,9 +122,8 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
   else if (result != resultbuf && length < allocated)
     {
       /* Shrink the allocated memory if possible.  */
-      DST_UNIT *memory;
-
-      memory = (DST_UNIT *) realloc (result, length * sizeof (DST_UNIT));
+      DST_UNIT *memory =
+        (DST_UNIT *) realloc (result, length * sizeof (DST_UNIT));
       if (memory != NULL)
         result = memory;
     }

@@ -190,14 +190,6 @@ __getcwd_generic (char *buf, size_t size)
   size_t dotsize = sizeof dots;
   size_t dotlen = 0;
 #endif
-  DIR *dirstream = NULL;
-  dev_t rootdev, thisdev;
-  ino_t rootino, thisino;
-  char *dir;
-  register char *dirp;
-  struct stat64 st;
-  size_t allocated = size;
-  size_t used;
 
 #if HAVE_MINIMALLY_WORKING_GETCWD
   /* If AT_FDCWD is not defined, the algorithm below is O(N**2) and
@@ -215,9 +207,11 @@ __getcwd_generic (char *buf, size_t size)
      this wrong result with errno = 0.  */
 
 # undef getcwd
-  dir = getcwd_system (buf, size);
-  if (dir || (size && errno == ERANGE))
-    return dir;
+  {
+    char *dir = getcwd_system (buf, size);
+    if (dir || (size && errno == ERANGE))
+      return dir;
+  }
 
   /* Solaris getcwd (NULL, 0) fails with errno == EINVAL, but it has
      internal magic that lets it work even if an ancestor directory is
@@ -226,7 +220,7 @@ __getcwd_generic (char *buf, size_t size)
   if (errno == EINVAL && buf == NULL && size == 0)
     {
       char big_buffer[BIG_FILE_NAME_LENGTH + 1];
-      dir = getcwd_system (big_buffer, sizeof big_buffer);
+      char *dir = getcwd_system (big_buffer, sizeof big_buffer);
       if (dir)
         return strdup (dir);
     }
@@ -238,6 +232,8 @@ __getcwd_generic (char *buf, size_t size)
     return NULL;
 # endif
 #endif
+
+  size_t allocated = size;
   if (size == 0)
     {
       if (buf != NULL)
@@ -249,6 +245,7 @@ __getcwd_generic (char *buf, size_t size)
       allocated = BIG_FILE_NAME_LENGTH + 1;
     }
 
+  char *dir;
   if (buf == NULL)
     {
       dir = malloc (allocated);
@@ -258,56 +255,65 @@ __getcwd_generic (char *buf, size_t size)
   else
     dir = buf;
 
-  dirp = dir + allocated;
+  register char *dirp = dir + allocated;
   *--dirp = '\0';
 
-  if (__lstat64 (".", &st) < 0)
-    goto lose;
-  thisdev = st.st_dev;
-  thisino = st.st_ino;
+  DIR *dirstream = NULL;
 
-  if (__lstat64 ("/", &st) < 0)
-    goto lose;
-  rootdev = st.st_dev;
-  rootino = st.st_ino;
+  dev_t thisdev;
+  ino_t thisino;
+  {
+    struct stat64 st;
+    if (__lstat64 (".", &st) < 0)
+      goto lose;
+    thisdev = st.st_dev;
+    thisino = st.st_ino;
+  }
+
+  dev_t rootdev;
+  ino_t rootino;
+  {
+    struct stat64 st;
+    if (__lstat64 ("/", &st) < 0)
+      goto lose;
+    rootdev = st.st_dev;
+    rootino = st.st_ino;
+  }
 
   while (!(thisdev == rootdev && thisino == rootino))
     {
-      struct dirent64 *d;
+      /* Look at the parent directory.  */
       dev_t dotdev;
       ino_t dotino;
-      bool mount_point;
-      int parent_status;
-      size_t dirroom;
-      size_t namlen;
-      bool use_d_ino = true;
-
-      /* Look at the parent directory.  */
+      {
+        struct stat64 st;
+        int parent_status;
 #if HAVE_OPENAT_SUPPORT
-      fd = __openat64 (fd, "..", O_RDONLY);
-      if (fd < 0)
-        goto lose;
-      fd_needs_closing = true;
-      parent_status = __fstat64 (fd, &st);
-#else
-      dotlist[dotlen++] = '.';
-      dotlist[dotlen++] = '.';
-      dotlist[dotlen] = '\0';
-      parent_status = __lstat64 (dotlist, &st);
-#endif
-      if (parent_status != 0)
-        goto lose;
-
-      if (dirstream && __closedir (dirstream) != 0)
-        {
-          dirstream = NULL;
+        fd = __openat64 (fd, "..", O_RDONLY);
+        if (fd < 0)
           goto lose;
-        }
+        fd_needs_closing = true;
+        parent_status = __fstat64 (fd, &st);
+#else
+        dotlist[dotlen++] = '.';
+        dotlist[dotlen++] = '.';
+        dotlist[dotlen] = '\0';
+        parent_status = __lstat64 (dotlist, &st);
+#endif
+        if (parent_status != 0)
+          goto lose;
 
+        if (dirstream && __closedir (dirstream) != 0)
+          {
+            dirstream = NULL;
+            goto lose;
+          }
+
+        dotdev = st.st_dev;
+        dotino = st.st_ino;
+      }
       /* Figure out if this directory is a mount point.  */
-      dotdev = st.st_dev;
-      dotino = st.st_ino;
-      mount_point = dotdev != thisdev;
+      bool mount_point = dotdev != thisdev;
 
       /* Search for the last directory.  */
 #if HAVE_OPENAT_SUPPORT
@@ -321,6 +327,8 @@ __getcwd_generic (char *buf, size_t size)
         goto lose;
       dotlist[dotlen++] = '/';
 #endif
+      struct dirent64 *d;
+      bool use_d_ino = true;
       for (;;)
         {
           /* Clear errno to distinguish EOF from error if readdir returns
@@ -363,6 +371,7 @@ __getcwd_generic (char *buf, size_t size)
             }
 
           {
+            struct stat64 st;
             int entry_status;
 #if HAVE_OPENAT_SUPPORT
             entry_status = __fstatat64 (fd, d->d_name, &st, AT_SYMLINK_NOFOLLOW);
@@ -415,8 +424,8 @@ __getcwd_generic (char *buf, size_t size)
           }
         }
 
-      dirroom = dirp - dir;
-      namlen = _D_EXACT_NAMLEN (d);
+      size_t dirroom = dirp - dir;
+      size_t namlen = _D_EXACT_NAMLEN (d);
 
       if (dirroom <= namlen)
         {
@@ -532,7 +541,7 @@ __getcwd_generic (char *buf, size_t size)
     free (dotlist);
 #endif
 
-  used = dir + allocated - dirp;
+  size_t used = dir + allocated - dirp;
   memmove (dir, dirp, used);
 
   if (size == 0)

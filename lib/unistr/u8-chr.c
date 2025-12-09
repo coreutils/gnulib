@@ -46,8 +46,7 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
 
   {
     uint8_t c[6];
-    size_t uc_size;
-    uc_size = u8_uctomb_aux (c, uc, 6);
+    size_t uc_size = u8_uctomb_aux (c, uc, 6);
 
     if (n < uc_size)
       return NULL;

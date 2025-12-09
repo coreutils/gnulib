@@ -60,13 +60,13 @@ canon_host (const char *host)
 char *
 canon_host_r (char const *host, int *cherror)
 {
-  char *retval = NULL;
   static struct addrinfo hints;
-  struct addrinfo *res = NULL;
-  int status;
-
   hints.ai_flags = AI_CANONNAME;
-  status = getaddrinfo (host, NULL, &hints, &res);
+
+  struct addrinfo *res = NULL;
+  int status = getaddrinfo (host, NULL, &hints, &res);
+
+  char *retval = NULL;
   if (!status)
     {
       /* https://lists.gnu.org/r/bug-coreutils/2006-09/msg00300.html

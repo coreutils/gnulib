@@ -83,9 +83,6 @@ sinl (long double x)
 long double
 sinl (long double x)
 {
-  long double y[2], z = 0.0L;
-  int n;
-
   /* sinl(NaN) is NaN */
   if (isnanl (x))
     return x;
@@ -93,7 +90,10 @@ sinl (long double x)
   /* |x| ~< pi/4 */
   if (x >= -0.7853981633974483096156608458198757210492
       && x <= 0.7853981633974483096156608458198757210492)
-    return kernel_sinl (x, z, 0);
+    {
+      long double z = 0.0L;
+      return kernel_sinl (x, z, 0);
+    }
 
     /* sinl(Inf) is NaN, sinl(0) is 0 */
   else if (x + x == x)
@@ -102,7 +102,8 @@ sinl (long double x)
   /* argument reduction needed */
   else
     {
-      n = ieee754_rem_pio2l (x, y);
+      long double y[2];
+      int n = ieee754_rem_pio2l (x, y);
       switch (n & 3)
         {
         case 0:

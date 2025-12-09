@@ -187,19 +187,13 @@ set_int32 (void *p, int32_t v)
 int
 __srandom_r (unsigned int seed, struct random_data *buf)
 {
-  int type;
-  int32_t *state;
-  int32_t word;
-  int32_t *dst;
-  int kc;
-
   if (buf == NULL)
     goto fail;
-  type = buf->rand_type;
+  int type = buf->rand_type;
   if ((unsigned int) type >= MAX_TYPES)
     goto fail;
 
-  state = buf->state;
+  int32_t *state = buf->state;
   /* We must make sure the seed is not 0.  Take arbitrarily 1 in this case.  */
   if (seed == 0)
     seed = 1;
@@ -207,9 +201,9 @@ __srandom_r (unsigned int seed, struct random_data *buf)
   if (type == TYPE_0)
     goto done;
 
-  dst = state;
-  word = seed;
-  kc = buf->rand_deg;
+  int32_t *dst = state;
+  int32_t word = seed;
+  int kc = buf->rand_deg;
   for (long int i = 1; i < kc; ++i)
     {
       /* This does:
@@ -320,28 +314,26 @@ int
 __setstate_r (char *arg_state, struct random_data *buf)
 {
   int32_t *new_state = 1 + (int32_t *) arg_state;
-  int type;
-  int old_type;
-  int32_t *old_state;
-  int degree;
-  int separation;
 
   if (arg_state == NULL || buf == NULL)
     goto fail;
 
-  old_type = buf->rand_type;
-  old_state = buf->state;
+  int old_type = buf->rand_type;
+  int32_t *old_state = buf->state;
   set_int32 (&old_state[-1],
              (old_type == TYPE_0
               ? TYPE_0
               : (MAX_TYPES * (buf->rptr - old_state)) + old_type));
 
-  type = get_int32 (&new_state[-1]) % MAX_TYPES;
+  int type = get_int32 (&new_state[-1]) % MAX_TYPES;
   if (type < TYPE_0 || type > TYPE_4)
     goto fail;
 
-  buf->rand_deg = degree = random_poly_info.degrees[type];
-  buf->rand_sep = separation = random_poly_info.seps[type];
+  int degree = random_poly_info.degrees[type];
+  int separation = random_poly_info.seps[type];
+
+  buf->rand_deg = degree;
+  buf->rand_sep = separation;
   buf->rand_type = type;
 
   if (type != TYPE_0)
@@ -377,12 +369,10 @@ weak_alias (__setstate_r, setstate_r)
 int
 __random_r (struct random_data *buf, int32_t *result)
 {
-  int32_t *state;
-
   if (buf == NULL || result == NULL)
     goto fail;
 
-  state = buf->state;
+  int32_t *state = buf->state;
 
   if (buf->rand_type == TYPE_0)
     {

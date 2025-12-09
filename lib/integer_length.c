@@ -65,7 +65,6 @@ integer_length (unsigned int x)
       else
         {
           memory_double m;
-          unsigned int exponent;
 
           if (1)
             {
@@ -95,7 +94,7 @@ integer_length (unsigned int x)
               m.value = m.value - TWO_DBL_MANT_DIG;
             }
 
-          exponent =
+          unsigned int exponent =
             (m.word[DBL_EXPBIT0_WORD] >> DBL_EXPBIT0_BIT) & DBL_EXP_MASK;
           return exponent - DBL_EXP_BIAS;
         }

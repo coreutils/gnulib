@@ -24,10 +24,8 @@ char *
 c_xasprintf (const char *format, ...)
 {
   va_list args;
-  char *result;
-
   va_start (args, format);
-  result = c_xvasprintf (format, args);
+  char *result = c_xvasprintf (format, args);
   va_end (args);
 
   return result;
