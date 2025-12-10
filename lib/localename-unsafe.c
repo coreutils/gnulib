@@ -2580,33 +2580,36 @@ static glwthread_mutex_t get_lcid_lock = GLWTHREAD_MUTEX_INIT;
 /* Return the Locale ID (LCID) number given the locale's name, a
    string, in LOCALE_NAME.  This works by enumerating all the locales
    supported by the system, until we find one whose name matches
-   LOCALE_NAME.  */
+   LOCALE_NAME.  Return 0 if LOCALE_NAME does not correspond to a locale
+   supported by the system.  */
 static LCID
 get_lcid (const char *locale_name)
 {
   /* A simple cache.  */
+  static unsigned int last_cached /* = 0 */;
   static LCID last_lcid;
   static char last_locale[sizeof (lname)];
 
   /* Lock while looking for an LCID, to protect access to static
      variables: last_lcid, last_locale, found_lcid, and lname.  */
   glwthread_mutex_lock (&get_lcid_lock);
-  if (last_lcid > 0 && streq (locale_name, last_locale))
+
+  if (!(last_cached && streq (locale_name, last_locale)))
     {
-      glwthread_mutex_unlock (&get_lcid_lock);
-      return last_lcid;
-    }
-  strncpy (lname, locale_name, sizeof (lname) - 1);
-  lname[sizeof (lname) - 1] = '\0';
-  found_lcid = 0;
-  EnumSystemLocales (enum_locales_fn, LCID_SUPPORTED);
-  if (found_lcid > 0)
-    {
+      strncpy (lname, locale_name, sizeof (lname) - 1);
+      lname[sizeof (lname) - 1] = '\0';
+
+      found_lcid = 0;
+      EnumSystemLocales (enum_locales_fn, LCID_SUPPORTED);
+
       last_lcid = found_lcid;
       strcpy (last_locale, lname);
+      last_cached = 1;
     }
+
+  LCID result = last_lcid;
   glwthread_mutex_unlock (&get_lcid_lock);
-  return found_lcid;
+  return result;
 }
 
 # endif
