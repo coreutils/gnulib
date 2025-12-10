@@ -2069,10 +2069,8 @@ vma_iterate (struct callback_locals *locals)
 
   for (prmap_t *mp = maps; mp < maps_end; mp++)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) mp->pr_vaddr;
-      end = start + mp->pr_size;
+      uintptr_t start = (uintptr_t) mp->pr_vaddr;
+      uintptr_t end = start + mp->pr_size;
       if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
         {
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
