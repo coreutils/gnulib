@@ -2585,29 +2585,104 @@ static glwthread_mutex_t get_lcid_lock = GLWTHREAD_MUTEX_INIT;
 static LCID
 get_lcid (const char *locale_name)
 {
-  /* A simple cache.  */
-  static unsigned int last_cached /* = 0 */;
-  static LCID last_lcid;
-  static char last_locale[sizeof (lname)];
+  /* A least-recently-used cache with at most N = 6 entries.
+     (Because there are 6 locale categories.)  */
 
-  /* Lock while looking for an LCID, to protect access to static
-     variables: last_lcid, last_locale, found_lcid, and lname.  */
+  /* Number of bits for a index into the cache.  */
+  enum { nbits = 3 };
+  /* Maximum number of entries in the cache.  */
+  enum { N = 6 }; /* <= (1 << nbits) */
+  /* An entry in the cache.  */
+  typedef struct { LCID e_lcid; char e_locale[sizeof (lname)]; } entry_t;
+  /* An unsigned integer type with at least N * nbits bits.
+     Used as an array:
+       element [0] = bits nbits-1 .. 0,
+       element [1] = bits 2*nbits-1 .. nbits,
+       element [2] = bits 3*nbits-1 .. 2*nbits,
+       and so on.  */
+  typedef unsigned int indices_t;
+
+  /* Number of entries in the cache.  */
+  static size_t n; /* <= N */
+  /* The entire cache.  Only elements 0..n-1 are in use.  */
+  static entry_t lru[N];
+  /* Indices of used cache entries.  Only elements 0..n-1 are in use.  */
+  static indices_t indices;
+
+  /* Lock while looking for an LCID, to protect access to static variables:
+     found_lcid, lname, and the cache.  */
   glwthread_mutex_lock (&get_lcid_lock);
 
-  if (!(last_cached && streq (locale_name, last_locale)))
+  /* Look up locale_name in the cache.  */
+  size_t found = (size_t)(-1);
+  size_t i;
+  for (i = 0; i < n; i++)
     {
+      size_t j = /* indices[i] */
+        (indices >> (nbits * i)) & ((1U << nbits) - 1U);
+      if (streq (locale_name, lru[j].e_locale))
+        {
+          found = j;
+          break;
+        }
+    }
+  LCID result;
+  if (i < n)
+    {
+      /* We have a cache hit.  0 <= found < n.  */
+      result = lru[found].e_lcid;
+      if (i > 0)
+        {
+          /* Perform these assignments in parallel:
+             indices[0] := indices[i]
+             indices[1] := indices[0]
+             ...
+             indices[i] := indices[i-1]  */
+          indices = (indices & (-1U << (nbits * (i + 1))))
+                    | ((indices & ((1U << (nbits * i)) - 1U)) << nbits)
+                    | found;
+        }
+    }
+  else
+    {
+      /* We have a cache miss.  */
       strncpy (lname, locale_name, sizeof (lname) - 1);
       lname[sizeof (lname) - 1] = '\0';
 
       found_lcid = 0;
       EnumSystemLocales (enum_locales_fn, LCID_SUPPORTED);
 
-      last_lcid = found_lcid;
-      strcpy (last_locale, lname);
-      last_cached = 1;
-    }
+      size_t j;
+      if (n < N)
+        {
+          /* There is still room in the cache.  */
+          j = n;
+          /* Perform these assignments in parallel:
+             indices[0] := n
+             indices[1] := indices[0]
+             ...
+             indices[n] := indices[n-1]  */
+          indices = (indices << nbits) | n;
+          n++;
+        }
+      else /* n == N */
+        {
+          /* The cache is full.  Drop the least recently used entry and
+             reuse it.  */
+          j = /* indices[N-1] */
+            (indices >> (nbits * (N - 1))) & ((1U << nbits) - 1U);
+          /* Perform these assignments in parallel:
+             indices[0] := j
+             indices[1] := indices[0]
+             ...
+             indices[N-1] := indices[N-2]  */
+          indices = ((indices & ((1U << (nbits * (N - 1))) - 1U)) << nbits) | j;
+        }
+      strcpy (lru[j].e_locale, lname);
+      lru[j].e_lcid = found_lcid;
 
-  LCID result = last_lcid;
+      result = found_lcid;
+    }
   glwthread_mutex_unlock (&get_lcid_lock);
   return result;
 }
