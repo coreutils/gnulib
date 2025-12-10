@@ -208,11 +208,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
   char *dest;
   char const *start;
 
-  bool logical = (can_mode & CAN_NOLINKS) != 0;
-
-  int num_links = 0;
   Hash_table *ht = NULL;
-  bool end_in_extra_buffer = false;
   bool failed = true;
 
   if (!IS_ABSOLUTE_FILE_NAME (name))
@@ -277,6 +273,11 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
         }
       start = name + prefix_len;
     }
+
+  bool logical = (can_mode & CAN_NOLINKS) != 0;
+
+  int num_links = 0;
+  bool end_in_extra_buffer = false;
 
   for (; *start;)
     {
