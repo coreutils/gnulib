@@ -2586,7 +2586,7 @@ get_lcid (const char *locale_name)
 {
   /* A simple cache.  */
   static LCID last_lcid;
-  static char last_locale[1000];
+  static char last_locale[sizeof (lname)];
 
   /* Lock while looking for an LCID, to protect access to static
      variables: last_lcid, last_locale, found_lcid, and lname.  */
@@ -2603,7 +2603,7 @@ get_lcid (const char *locale_name)
   if (found_lcid > 0)
     {
       last_lcid = found_lcid;
-      strcpy (last_locale, locale_name);
+      strcpy (last_locale, lname);
     }
   glwthread_mutex_unlock (&get_lcid_lock);
   return found_lcid;
