@@ -218,6 +218,8 @@ realpath_stk (const char *name, char *resolved, struct realpath_bufs *bufs)
   char *dest;
   char const *start;
 
+  bool failed = true;
+
   if (!IS_ABSOLUTE_FILE_NAME (name))
     {
       while (!__getcwd (bufs->rname.data, bufs->rname.length))
@@ -252,7 +254,6 @@ realpath_stk (const char *name, char *resolved, struct realpath_bufs *bufs)
 
   int num_links = 0;
   bool end_in_extra_buffer = false;
-  bool failed = true;
 
   for (; *start;)
     {
