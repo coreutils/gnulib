@@ -188,6 +188,11 @@ human_readable (uintmax_t n, char *buf, int opts,
      2 means adjusted N == AMT.TENTHS + 0.05;
      3 means AMT.TENTHS + 0.05 < adjusted N < AMT.TENTHS + 0.1.  */
   int rounding;
+
+  int exponent = -1;
+  int exponent_max = sizeof power_letter - 1;
+  char const *integerlim;
+
   if (to_block_size <= from_block_size)
     {
       if (from_block_size % to_block_size == 0)
@@ -212,10 +217,6 @@ human_readable (uintmax_t n, char *buf, int opts,
       rounding = r2 < divisor ? 0 < r2 : 2 + (divisor < r2);
       goto use_integer_arithmetic;
     }
-
-  int exponent = -1;
-  int exponent_max = sizeof power_letter - 1;
-  char const *integerlim;
 
   {
     /* Either the result cannot be computed easily using uintmax_t,
