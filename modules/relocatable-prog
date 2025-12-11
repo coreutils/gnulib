@@ -12,6 +12,7 @@ lib/relocatable.c
 lib/progreloc.c
 m4/relocatable.m4
 m4/relocatable-lib.m4
+m4/libdl.m4
 m4/lib-ld.m4
 m4/host-cpu-c-abi.m4
 
