@@ -16,8 +16,8 @@
 
 /* Written by Marc Nieper-Wißkirchen <marc@nieper-wisskirchen.de>, 2021.  */
 
-#include <config.h>
 #define _GL_HAMT_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 #include "hamt.h"
 
 #include <flexmember.h>

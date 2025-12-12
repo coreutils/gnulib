@@ -19,10 +19,10 @@
 
 /* derived from a function in touch.c */
 
+#define _GL_UTIMENS_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 /* Specification.  */
-#define _GL_UTIMENS_INLINE _GL_EXTERN_INLINE
 #include "utimens.h"
 
 #include <errno.h>

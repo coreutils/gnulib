@@ -17,9 +17,8 @@
 
 /* Written by Paul Eggert.  */
 
-#include <config.h>
-
 #define GETHRXTIME_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 #include "gethrxtime.h"
 
 #if ! (HAVE_ARITHMETIC_HRTIME_T && HAVE_DECL_GETHRTIME)

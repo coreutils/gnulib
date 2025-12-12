@@ -17,9 +17,8 @@
 
 /* Written by Paul Eggert.  */
 
-#include <config.h>
-
 #define ALIGNALLOC_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 #include "alignalloc.h"
 
 #include <limits.h>

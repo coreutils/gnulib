@@ -37,10 +37,10 @@
  *
  */
 
+#define BASE32_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 /* Get prototype. */
-#define BASE32_INLINE _GL_EXTERN_INLINE
 #include "base32.h"
 
 /* Get imalloc. */

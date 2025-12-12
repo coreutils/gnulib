@@ -17,10 +17,10 @@
 
    Written by Paul Eggert, Andreas Grünbacher, and Bruno Haible.  */
 
+#define ACL_INTERNAL_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 /* Specification.  */
-#define ACL_INTERNAL_INLINE _GL_EXTERN_INLINE
 #include "acl-internal.h"
 
 #include "acl.h"

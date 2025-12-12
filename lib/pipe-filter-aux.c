@@ -14,10 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include <config.h>
-
 #define PIPE_FILTER_AUX_INLINE _GL_EXTERN_INLINE
-
+#include <config.h>
 #include "pipe-filter.h"
 
 #include <errno.h>

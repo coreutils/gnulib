@@ -39,10 +39,10 @@
  *
  */
 
+#define BASE64_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 /* Get prototype. */
-#define BASE64_INLINE _GL_EXTERN_INLINE
 #include "base64.h"
 
 /* Get imalloc. */

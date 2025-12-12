@@ -14,9 +14,8 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 
-#include <config.h>
-
 #define MBCHAR_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 
 #include <limits.h>
 

@@ -17,9 +17,8 @@
 /* Written by Yoann Vandoorselaere <yoann@prelude-ids.org>, 2008,
    and Bruno Haible <bruno@clisp.org>, 2008.  */
 
-#include <config.h>
-
 #define _GLTHREAD_COND_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 #include "glthread/cond.h"
 
 /* ========================================================================= */

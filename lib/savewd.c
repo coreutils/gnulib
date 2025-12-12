@@ -17,10 +17,8 @@
 
 /* Written by Paul Eggert.  */
 
-#include <config.h>
-
 #define SAVEWD_INLINE _GL_EXTERN_INLINE
-
+#include <config.h>
 #include "savewd.h"
 
 #include <errno.h>

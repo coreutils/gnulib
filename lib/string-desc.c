@@ -16,9 +16,8 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2023.  */
 
-#include <config.h>
-
 #define GL_STRING_DESC_INLINE _GL_EXTERN_INLINE
+#include <config.h>
 
 /* Specification and inline definitions.  */
 #include "string-desc.h"

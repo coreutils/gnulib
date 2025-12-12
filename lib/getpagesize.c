@@ -17,10 +17,10 @@
 
 /* Written by Bruno Haible and Martin Lambers.  */
 
+#define _GL_GETPAGESIZE_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 /* Specification. */
-#define _GL_GETPAGESIZE_INLINE _GL_EXTERN_INLINE
 #include <unistd.h>
 
 /* This implementation is only for native Windows systems.  */
