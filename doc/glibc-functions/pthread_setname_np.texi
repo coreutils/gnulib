@@ -15,6 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on many non-glibc platforms:
 glibc 2.11, Mac OS X 10.5, FreeBSD 12.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.0, Cygwin 1.7.x, mingw, MSVC 14.
+See also @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3554.htm}.
 @item
 This function has a different signature on some platforms:
 macOS 14, NetBSD 10.0.
