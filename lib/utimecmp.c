@@ -189,6 +189,7 @@ utimecmpat (int dfd, char const *dst_name,
 
       /* Try to do a hash lookup, but fall back to stack variables and
          recomputation on low memory situations.  */
+      struct fs_res tmp_dst_res;
       if (! ht)
         ht = hash_initialize (16, NULL, dev_info_hash, dev_info_compare, free);
       if (ht)
@@ -216,7 +217,6 @@ utimecmpat (int dfd, char const *dst_name,
       else
         {
         low_memory: ;
-          struct fs_res tmp_dst_res;
           if (ht)
             {
               tmp_dst_res.dev = dst_stat->st_dev;
