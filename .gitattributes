@@ -11,3 +11,6 @@ ChangeLog	merge=merge-changelog
 
 # Improve diff hunk context on Python files.
 *.py	diff=python
+
+# Don't check some specific files against trailing whitespace.
+doc/Copyright/*	-text
