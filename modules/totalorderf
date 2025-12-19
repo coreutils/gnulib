@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 isnanf          [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1]
-signbit         [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1]
+signbit-no-c++  [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1]
 
 configure.ac:
 gl_FUNC_TOTALORDERF

@@ -11,7 +11,7 @@ frexp-nolibm
 frexpl-nolibm
 printf-frexp
 printf-frexpl
-signbit
+signbit-no-c++
 fpucw
 
 configure.ac:

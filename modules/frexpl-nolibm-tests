@@ -10,7 +10,7 @@ tests/randoml.c
 Depends-on:
 fpucw
 isnanl-nolibm
-signbit
+signbit-no-c++
 nan
 
 configure.ac:

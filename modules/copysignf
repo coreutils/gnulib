@@ -9,7 +9,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 extensions
-signbit         [test $HAVE_COPYSIGNF = 0]
+signbit-no-c++  [test $HAVE_COPYSIGNF = 0]
 
 configure.ac:
 gl_FUNC_COPYSIGNF

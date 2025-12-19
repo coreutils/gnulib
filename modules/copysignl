@@ -10,7 +10,7 @@ Depends-on:
 math-h
 extensions
 copysign        [test $HAVE_COPYSIGNL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-signbit         [test $HAVE_COPYSIGNL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signbit-no-c++  [test $HAVE_COPYSIGNL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_COPYSIGNL

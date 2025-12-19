@@ -10,7 +10,7 @@ tests/randomf.c
 Depends-on:
 isnanf-nolibm
 nan
-signbit
+signbit-no-c++
 
 configure.ac:
 

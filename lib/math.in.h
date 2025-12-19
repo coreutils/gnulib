@@ -2681,7 +2681,7 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 #endif
 
 
-#if @GNULIB_SIGNBIT@
+#if @GNULIB_SIGNBIT@ || @GNULIB_SIGNBIT_NO_CXX@
 # if (@REPLACE_SIGNBIT_USING_BUILTINS@ \
       && (!defined __cplusplus || __cplusplus < 201103))
 #  undef signbit
@@ -2739,7 +2739,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
     gl_signbitf (x))
 #  define GNULIB_defined_signbit 1
 # endif
-# ifdef __cplusplus
+# if @GNULIB_SIGNBIT@ && defined __cplusplus
 #  if defined signbit || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
 #   undef signbit

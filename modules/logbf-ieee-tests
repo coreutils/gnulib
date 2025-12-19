@@ -9,7 +9,7 @@ Depends-on:
 isnanf-nolibm
 float-h
 nan
-signbit
+signbit-no-c++
 
 configure.ac:
 

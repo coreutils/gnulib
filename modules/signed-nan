@@ -6,7 +6,7 @@ lib/signed-nan.h
 
 Depends-on:
 nan
-signbit
+signbit-no-c++
 
 configure.ac:
 

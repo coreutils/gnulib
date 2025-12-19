@@ -136,6 +136,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_SETPAYLOADSIGF''@/$(GNULIB_SETPAYLOADSIGF)/g' \
 	      -e 's/@''GNULIB_SETPAYLOADSIGL''@/$(GNULIB_SETPAYLOADSIGL)/g' \
 	      -e 's/@''GNULIB_SIGNBIT''@/$(GNULIB_SIGNBIT)/g' \
+	      -e 's/@''GNULIB_SIGNBIT_NO_CXX''@/$(GNULIB_SIGNBIT_NO_CXX)/g' \
 	      -e 's/@''GNULIB_SINF''@/$(GNULIB_SINF)/g' \
 	      -e 's/@''GNULIB_SINL''@/$(GNULIB_SINL)/g' \
 	      -e 's/@''GNULIB_SINHF''@/$(GNULIB_SINHF)/g' \

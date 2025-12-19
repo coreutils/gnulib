@@ -10,7 +10,7 @@ Depends-on:
 math-h
 extensions
 fabs            [{ test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-signbit         [{ test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signbit-no-c++  [{ test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_FABSL

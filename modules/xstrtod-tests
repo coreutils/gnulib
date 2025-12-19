@@ -7,7 +7,7 @@ Depends-on:
 strtod
 float-h
 isnand-nolibm
-signbit
+signbit-no-c++
 
 configure.ac:
 

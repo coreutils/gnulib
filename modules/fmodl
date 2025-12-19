@@ -13,7 +13,7 @@ extensions
 fmod            [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float-h         [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isfinite-no-c++ [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-signbit         [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signbit-no-c++  [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 fabsl           [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 frexpl          [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 truncl          [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

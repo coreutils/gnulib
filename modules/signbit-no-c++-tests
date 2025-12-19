@@ -1,0 +1,17 @@
+Files:
+tests/test-signbit.c
+tests/minus-zero.h
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+float-h
+signed-nan
+signed-snan
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-signbit
+check_PROGRAMS += test-signbit
+

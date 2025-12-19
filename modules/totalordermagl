@@ -17,7 +17,7 @@ bool            [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL
 stdint-h        [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 verify          [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isnanl          [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-signbit         [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signbit-no-c++  [{ test $HAVE_TOTALORDERMAGL = 0 || test $REPLACE_TOTALORDERMAGL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_TOTALORDERMAGL

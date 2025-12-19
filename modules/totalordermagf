@@ -13,7 +13,7 @@ math-h
 extensions
 verify          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
 isnanf          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
-signbit         [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
+signbit-no-c++  [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
 
 configure.ac:
 gl_FUNC_TOTALORDERMAGF

@@ -9,7 +9,7 @@ tests/randomf.c
 
 Depends-on:
 isnanf-nolibm
-signbit
+signbit-no-c++
 float-h
 nan
 

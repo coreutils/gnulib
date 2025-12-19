@@ -7,7 +7,7 @@ tests/macros.h
 tests/randoml.c
 
 Depends-on:
-signbit
+signbit-no-c++
 
 configure.ac:
 

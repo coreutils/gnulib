@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 isnand          [test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1]
-signbit         [test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1]
+signbit-no-c++  [test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1]
 
 configure.ac:
 gl_FUNC_TOTALORDER

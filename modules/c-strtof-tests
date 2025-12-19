@@ -13,7 +13,7 @@ m4/codeset.m4
 Depends-on:
 float-h
 isnanf-nolibm
-signbit
+signbit-no-c++
 setlocale
 thread
 nanosleep

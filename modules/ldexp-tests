@@ -9,7 +9,7 @@ tests/randomd.c
 
 Depends-on:
 isnand-nolibm
-signbit
+signbit-no-c++
 float-h
 nan
 

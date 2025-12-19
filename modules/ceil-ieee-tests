@@ -8,7 +8,7 @@ Depends-on:
 isnand-nolibm
 float-h
 nan
-signbit
+signbit-no-c++
 
 configure.ac:
 

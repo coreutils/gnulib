@@ -7,7 +7,7 @@ Depends-on:
 strtold
 float-h
 isnanl-nolibm
-signbit
+signbit-no-c++
 
 configure.ac:
 

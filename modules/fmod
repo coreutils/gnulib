@@ -9,7 +9,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 isfinite-no-c++ [test $REPLACE_FMOD = 1]
-signbit         [test $REPLACE_FMOD = 1]
+signbit-no-c++  [test $REPLACE_FMOD = 1]
 fabs            [test $REPLACE_FMOD = 1]
 frexp           [test $REPLACE_FMOD = 1]
 trunc           [test $REPLACE_FMOD = 1]
