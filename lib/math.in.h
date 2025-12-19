@@ -2496,7 +2496,7 @@ _GL_WARN_REAL_FLOATING_DECL (isfinite);
 #endif
 
 
-#if @GNULIB_ISINF@
+#if @GNULIB_ISINF@ || @GNULIB_ISINF_NO_CXX@
 # if @REPLACE_ISINF@
 _GL_EXTERN_C int gl_isinff (float x);
 _GL_EXTERN_C int gl_isinfd (double x);
@@ -2507,7 +2507,7 @@ _GL_EXTERN_C int gl_isinfl (long double x);
     sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
     gl_isinff (x))
 # endif
-# ifdef __cplusplus
+# if @GNULIB_ISINF@ && defined __cplusplus
 #  if defined isinf || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isinf)
 #   undef isinf

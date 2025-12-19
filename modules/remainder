@@ -13,7 +13,7 @@ signbit         [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 fabs            [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 fmod            [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 isnand          [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
-isinf           [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
+isinf-no-c++    [test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1]
 
 configure.ac:
 gl_FUNC_REMAINDER

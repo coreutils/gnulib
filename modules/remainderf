@@ -16,7 +16,7 @@ signbit         [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 fabsf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 fmodf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 isnanf          [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
-isinf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+isinf-no-c++    [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 
 configure.ac:
 gl_FUNC_REMAINDERF

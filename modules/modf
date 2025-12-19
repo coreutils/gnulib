@@ -10,7 +10,7 @@ Depends-on:
 math-h
 isfinite-no-c++ [test $REPLACE_MODF = 1]
 trunc           [test $REPLACE_MODF = 1]
-isinf           [test $REPLACE_MODF = 1]
+isinf-no-c++    [test $REPLACE_MODF = 1]
 
 configure.ac:
 gl_FUNC_MODF

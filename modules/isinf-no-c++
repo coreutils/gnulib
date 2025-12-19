@@ -1,0 +1,31 @@
+Description:
+isinf macro: test for positive or negative infinity
+
+Files:
+lib/isinf.c
+m4/isinf.m4
+m4/check-math-lib.m4
+
+Depends-on:
+math-h
+extensions
+float-h         [test $REPLACE_ISINF = 1]
+
+configure.ac:
+gl_ISINF
+gl_CONDITIONAL([GL_COND_OBJ_ISINF], [test $REPLACE_ISINF = 1])
+gl_MATH_MODULE_INDICATOR([isinf-no-cxx])
+
+Makefile.am:
+if GL_COND_OBJ_ISINF
+lib_SOURCES += isinf.c
+endif
+
+Include:
+<math.h>
+
+License:
+LGPL
+
+Maintainer:
+Ben Pfaff

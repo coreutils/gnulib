@@ -14,7 +14,7 @@ fabs            [test $REPLACE_HYPOT = 1]
 frexp           [test $REPLACE_HYPOT = 1]
 ldexp           [test $REPLACE_HYPOT = 1]
 sqrt            [test $REPLACE_HYPOT = 1]
-isinf           [test $REPLACE_HYPOT = 1]
+isinf-no-c++    [test $REPLACE_HYPOT = 1]
 
 configure.ac:
 gl_FUNC_HYPOT

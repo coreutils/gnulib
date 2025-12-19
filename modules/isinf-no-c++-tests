@@ -1,0 +1,18 @@
+Files:
+tests/test-isinf.c
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+c99
+float-h
+nan
+snan
+
+configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
+Makefile.am:
+TESTS += test-isinf
+check_PROGRAMS += test-isinf
+test_isinf_LDADD = $(LDADD) @ISINF_LIBM@
