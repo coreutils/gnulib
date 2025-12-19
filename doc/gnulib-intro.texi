@@ -127,7 +127,7 @@ There is no clear borderline between both areas.
 
 For example, Gnulib has a facility for generating the name of backup
 files.  While this task is entirely at the application level---no
-standard specifies an API for it---the na@"{@dotless{i}}ve code has
+standard specifies an API for it---the naïve code has
 some portability problems because on some platforms the length of file
 name components is limited to 30 characters or so.  Gnulib handles
 that.
