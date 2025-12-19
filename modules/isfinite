@@ -2,29 +2,14 @@ Description:
 isfinite macro: test for finite value (zero, subnormal, or normal, and not infinite or NaN).
 
 Files:
-lib/isfinite.c
-m4/isfinite.m4
-m4/check-math-lib.m4
-m4/exponentl.m4
-m4/exponentd.m4
-m4/math_h.m4
 
 Depends-on:
-math-h
-extensions
-isnanf-nolibm   [test $REPLACE_ISFINITE = 1]
-isnand-nolibm   [test $REPLACE_ISFINITE = 1]
-isnanl-nolibm   [test $REPLACE_ISFINITE = 1]
+isfinite-no-c++
 
 configure.ac:
-gl_ISFINITE
-gl_CONDITIONAL([GL_COND_OBJ_ISFINITE], [test $REPLACE_ISFINITE = 1])
 gl_MATH_MODULE_INDICATOR([isfinite])
 
 Makefile.am:
-if GL_COND_OBJ_ISFINITE
-lib_SOURCES += isfinite.c
-endif
 
 Include:
 <math.h>

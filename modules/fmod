@@ -8,7 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math-h
-isfinite        [test $REPLACE_FMOD = 1]
+isfinite-no-c++ [test $REPLACE_FMOD = 1]
 signbit         [test $REPLACE_FMOD = 1]
 fabs            [test $REPLACE_FMOD = 1]
 frexp           [test $REPLACE_FMOD = 1]

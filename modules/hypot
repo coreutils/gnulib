@@ -9,7 +9,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 extensions
-isfinite        [test $REPLACE_HYPOT = 1]
+isfinite-no-c++ [test $REPLACE_HYPOT = 1]
 fabs            [test $REPLACE_HYPOT = 1]
 frexp           [test $REPLACE_HYPOT = 1]
 ldexp           [test $REPLACE_HYPOT = 1]

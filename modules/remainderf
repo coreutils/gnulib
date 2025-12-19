@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 remainder       [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
-isfinite        [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+isfinite-no-c++ [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 signbit         [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 fabsf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 fmodf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]

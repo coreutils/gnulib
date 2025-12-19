@@ -1,0 +1,18 @@
+Files:
+tests/test-isfinite.c
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+c99
+float-h
+nan
+snan
+
+configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
+Makefile.am:
+TESTS += test-isfinite
+check_PROGRAMS += test-isfinite
+test_isfinite_LDADD = $(LDADD) @ISFINITE_LIBM@

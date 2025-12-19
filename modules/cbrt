@@ -9,7 +9,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 extensions
-isfinite        [test $HAVE_CBRT = 0]
+isfinite-no-c++ [test $HAVE_CBRT = 0]
 fabs            [test $HAVE_CBRT = 0]
 frexp           [test $HAVE_CBRT = 0]
 ldexp           [test $HAVE_CBRT = 0]

@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 cbrt            [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-isfinite        [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isfinite-no-c++ [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 frexpl          [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 ldexpl          [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 

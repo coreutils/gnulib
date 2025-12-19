@@ -8,7 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math-h
-isfinite        [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
+isfinite-no-c++ [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
 frexp           [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
 isnand          [test $HAVE_ILOGB = 0 || test $REPLACE_ILOGB = 1]
 

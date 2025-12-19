@@ -11,7 +11,7 @@ Depends-on:
 math-h
 extensions
 ilogb           [{ test $HAVE_ILOGBL = 0 || test $REPLACE_ILOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-isfinite        [{ test $HAVE_ILOGBL = 0 || test $REPLACE_ILOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isfinite-no-c++ [{ test $HAVE_ILOGBL = 0 || test $REPLACE_ILOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 frexpl          [{ test $HAVE_ILOGBL = 0 || test $REPLACE_ILOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 isnanl          [{ test $HAVE_ILOGBL = 0 || test $REPLACE_ILOGBL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 

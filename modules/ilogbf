@@ -10,7 +10,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 extensions
-isfinite        [test $HAVE_ILOGBF = 0 || test $REPLACE_ILOGBF = 1]
+isfinite-no-c++ [test $HAVE_ILOGBF = 0 || test $REPLACE_ILOGBF = 1]
 frexpf          [test $HAVE_ILOGBF = 0 || test $REPLACE_ILOGBF = 1]
 isnanf          [test $HAVE_ILOGBF = 0 || test $REPLACE_ILOGBF = 1]
 

@@ -10,7 +10,7 @@ m4/mathfunc.m4
 Depends-on:
 math-h
 extensions
-isfinite        [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
+isfinite-no-c++ [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 fabsf           [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 frexpf          [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 ldexpf          [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]

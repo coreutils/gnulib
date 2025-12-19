@@ -2461,7 +2461,7 @@ _GL_CXXALIASWARN (yn);
    declarations.  */
 
 
-#if @GNULIB_ISFINITE@
+#if @GNULIB_ISFINITE@ || @GNULIB_ISFINITE_NO_CXX@
 # if @REPLACE_ISFINITE@
 _GL_EXTERN_C int gl_isfinitef (float x);
 _GL_EXTERN_C int gl_isfinited (double x);
@@ -2472,7 +2472,7 @@ _GL_EXTERN_C int gl_isfinitel (long double x);
     sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
     gl_isfinitef (x))
 # endif
-# ifdef __cplusplus
+# if @GNULIB_ISFINITE@ && defined __cplusplus
 #  if defined isfinite || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
 #   undef isfinite
