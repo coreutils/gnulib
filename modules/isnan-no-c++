@@ -2,12 +2,19 @@ Description:
 isnan macro: test for NaN value.
 
 Files:
+m4/isnan.m4
 
 Depends-on:
-isnan-no-c++
+isnanf
+isnand
+isnanl
+math-h
+stringeq
+extensions
 
 configure.ac:
-gl_MATH_MODULE_INDICATOR([isnan])
+gl_ISNAN
+gl_MATH_MODULE_INDICATOR([isnan-no-cxx])
 
 Makefile.am:
 

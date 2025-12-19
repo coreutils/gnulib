@@ -91,6 +91,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ISINF''@/$(GNULIB_ISINF)/g' \
 	      -e 's/@''GNULIB_ISINF_NO_CXX''@/$(GNULIB_ISINF_NO_CXX)/g' \
 	      -e 's/@''GNULIB_ISNAN''@/$(GNULIB_ISNAN)/g' \
+	      -e 's/@''GNULIB_ISNAN_NO_CXX''@/$(GNULIB_ISNAN_NO_CXX)/g' \
 	      -e 's/@''GNULIB_ISNANF''@/$(GNULIB_ISNANF)/g' \
 	      -e 's/@''GNULIB_ISNAND''@/$(GNULIB_ISNAND)/g' \
 	      -e 's/@''GNULIB_ISNANL''@/$(GNULIB_ISNANL)/g' \

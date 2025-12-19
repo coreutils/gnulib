@@ -2611,7 +2611,7 @@ _GL_EXTERN_C int isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #endif
 
 /* This must come *after* the snippets for GNULIB_ISNANF and GNULIB_ISNANL!  */
-#if @GNULIB_ISNAN@
+#if @GNULIB_ISNAN@ || @GNULIB_ISNAN_NO_CXX@
 # if @REPLACE_ISNAN@
 /* We can't just use the isnanf macro (e.g.) as exposed by
    isnanf.h (e.g.) here, because those may end up being macros
@@ -2647,7 +2647,7 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
     sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
     __builtin_isnan ((float)(x)))
 # endif
-# ifdef __cplusplus
+# if @GNULIB_ISNAN@ && defined __cplusplus
 #  if defined isnan || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
 #   undef isnan
