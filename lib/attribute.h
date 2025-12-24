@@ -271,9 +271,7 @@
    the function cannot return a pointer to storage whose contents
    change later.)
    See also <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2956.htm> and
-   <https://stackoverflow.com/questions/76847905/>.
-   ATTENTION! Efforts are underway to change the meaning of this attribute.
-   See <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3494.htm>.  */
+   <https://stackoverflow.com/questions/76847905/>.  */
 /* Applies to: functions, pointer to functions, function type.  */
 #define UNSEQUENCED _GL_ATTRIBUTE_UNSEQUENCED
 
@@ -303,9 +301,7 @@
    and can change state addressed by its pointer arguments, but the
    function cannot return a pointer to storage whose contents change later.)
    See also <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2956.htm> and
-   <https://stackoverflow.com/questions/76847905/>.
-   ATTENTION! Efforts are underway to change the meaning of this attribute.
-   See <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3494.htm>.  */
+   <https://stackoverflow.com/questions/76847905/>.  */
 /* Applies to: functions, pointer to functions, function type.  */
 #define REPRODUCIBLE _GL_ATTRIBUTE_REPRODUCIBLE
 
