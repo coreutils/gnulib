@@ -21,7 +21,6 @@
 -Walloca-larger-than=<number>		FIXME: choose something sane?
 -Wampersand				fortran
 -Wanalyzer-allocation-size		enabled by -fanalyzer
--Wanalyzer-undefined-behavior-ptrdiff	enabled by -fanalyzer
 -Wanalyzer-deref-before-check		enabled by -fanalyzer
 -Wanalyzer-double-fclose		enabled by -fanalyzer
 -Wanalyzer-double-free			enabled by -fanalyzer
@@ -59,16 +58,17 @@
 -Wanalyzer-tainted-divisor		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-offset		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-size			FIXME requires -fanalyzer-checker=taint
--Wanalyzer-undefined-behavior-strtok	enabled by -fanalyzer
--Wanalyzer-va-arg-type-mismatch		enabled by -fanalyzer
--Wanalyzer-va-list-exhausted		enabled by -fanalyzer
--Wanalyzer-va-list-leak			enabled by -fanalyzer
--Wanalyzer-va-list-use-after-va-end	enabled by -fanalyzer
 -Wanalyzer-too-complex			enabled by -fanalyzer
+-Wanalyzer-undefined-behavior-ptrdiff	enabled by -fanalyzer
+-Wanalyzer-undefined-behavior-strtok	enabled by -fanalyzer
 -Wanalyzer-unsafe-call-within-signal-handler	enabled by -fanalyzer
 -Wanalyzer-use-after-free		enabled by -fanalyzer
 -Wanalyzer-use-of-pointer-in-stale-stack-frame	enabled by -fanalyzer
 -Wanalyzer-use-of-uninitialized-value	enabled by -fanalyzer
+-Wanalyzer-va-arg-type-mismatch		enabled by -fanalyzer
+-Wanalyzer-va-list-exhausted		enabled by -fanalyzer
+-Wanalyzer-va-list-leak			enabled by -fanalyzer
+-Wanalyzer-va-list-use-after-va-end	enabled by -fanalyzer
 -Wanalyzer-write-to-const		enabled by -fanalyzer
 -Wanalyzer-write-to-string-literal	enabled by -fanalyzer
 -Warray-bounds				covered by -Warray-bounds=
@@ -131,12 +131,12 @@
 -Wcomplain-wrong-lang			default
 -Wconditionally-supported		c++ and objc++
 -Wconversion				FIXME maybe? too much noise; encourages bad changes
--Wcoverage-too-many-conditions		default
--Wcoverage-too-many-paths		default
 -Wconversion-extra			fortran
 -Wconversion-null			c++ and objc++
 -Wcoverage-invalid-line-number		default if --coverage
 -Wcoverage-mismatch			default
+-Wcoverage-too-many-conditions		default
+-Wcoverage-too-many-paths		default
 -Wcpp					default
 -Wctad-maybe-unsupported		c++ and objc++
 -Wctor-dtor-privacy			c++
@@ -162,16 +162,16 @@
 -Wdisabled-optimization			warns about compiler not about program
 -Wdiscarded-array-qualifiers		default
 -Wdiscarded-qualifiers			default
--Wdo-subscript				fortran
 -Wdiv-by-zero				default
+-Wdo-subscript				fortran
 -Wduplicate-decl-specifier		enabled by -Wall
 -Weffc++				c++
 -Welaborated-enum-base			default, c++11+
 -Wempty-body				enabled by -Wextra
+-Wendif-labels				default
 -Wenum-compare				enabled by -Wall
 -Wenum-conversion			enabled by -Wextra
 -Wenum-int-mismatch			enabled by -Wall
--Wendif-labels				default
 -Werror-implicit-function-declaration	deprecated
 -Wexceptions				c++ and objc++
 -Wexpansion-to-defined			enabled by -Wextra
@@ -243,7 +243,6 @@
 -Wmemset-elt-size			enabled by -Wall
 -Wmemset-transposed-args		enabled by -Wall
 -Wmisleading-indentation		enabled by -Wall
--Wmissing-parameter-name		c and objc compatibility
 -Wmismatched-dealloc			default
 -Wmismatched-new-delete			default, c++ and objc++
 -Wmismatched-special-enum		d
@@ -253,14 +252,15 @@
 -Wmissing-field-initializers		enabled by -Wextra
 -Wmissing-format-attribute		obsolescent
 -Wmissing-noreturn			obsolescent
+-Wmissing-parameter-name		c and objc compatibility
 -Wmissing-parameter-type		enabled by -Wextra
 -Wmissing-profile			default
 -Wmissing-requires			default, c++
 -Wmissing-template-keyword		default, c++
--Wmusttail-local-addr			default
 -Wmultichar				default
 -Wmultiple-inheritance			c++ and objc++
 -Wmultistatement-macros			enabled by -Wall
+-Wmusttail-local-addr			default
 -Wnamespaces				c++
 -Wnarrowing				enabled by -Wall
 -Wno-alloc-size-larger-than		see -Walloc-size-larger-than
@@ -323,8 +323,8 @@
 -Wreturn-type				enabled by -Wall
 -Wscalar-storage-order			default
 -Wselector				objc and objc++
--Wsequence-point			enabled by -Wall
 -Wself-move				c++ and objc++
+-Wsequence-point			enabled by -Wall
 -Wshadow-compatible-local		covered by -Wshadow
 -Wshadow-ivar				objc
 -Wshadow-local				covered by -Wshadow
