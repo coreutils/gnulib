@@ -392,7 +392,7 @@
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
 -Wunterminated-string-initialization	enabled by -Wextra
 -Wunused				enabled by -Wall
--Wunused-but-set-parameter		enabled by -Wunused
+-Wunused-but-set-parameter		enabled by -Wextra -Wunused
 -Wunused-but-set-variable		enabled by -Wunused
 -Wunused-const-variable			covered by -Wunused-const-variable=2
 -Wunused-const-variable=<0,2>		gcc --help=warnings artifact
@@ -400,7 +400,7 @@
 -Wunused-function			enabled by -Wunused
 -Wunused-label				enabled by -Wunused
 -Wunused-local-typedefs			enabled by -Wunused
--Wunused-parameter			enabled by -Wunused
+-Wunused-parameter			enabled by -Wextra -Wunused
 -Wunused-result				enabled by -Wunused
 -Wunused-value				enabled by -Wunused
 -Wunused-variable			enabled by -Wunused
