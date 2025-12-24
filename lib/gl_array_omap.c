@@ -360,7 +360,7 @@ gl_array_iterator_next (gl_omap_iterator_t *iterator,
 }
 
 static void
-gl_array_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_omap_iterator_t *iterator)
+gl_array_iterator_free (gl_omap_iterator_t *_GL_UNNAMED (iterator))
 {
 }
 

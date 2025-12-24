@@ -19,8 +19,7 @@
 #ifndef SELINUX_CONTEXT_H
 #define SELINUX_CONTEXT_H
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
-   _GL_ATTRIBUTE_MAYBE_UNUSED.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_UNNAMED.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -32,55 +31,49 @@ _GL_INLINE_HEADER_BEGIN
 # define SE_CONTEXT_INLINE _GL_INLINE
 #endif
 
-/* _GL_ATTRIBUTE_MAYBE_UNUSED declares that it is not a programming mistake if
-   the entity is not used.  The compiler should not warn if the entity is not
-   used.  */
-#ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
-# if 0 /* no GCC or clang version supports this yet */
-#  define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
-# elif defined __GNUC__ || defined __clang__
-#  define _GL_ATTRIBUTE_MAYBE_UNUSED __attribute__ ((__unused__))
+/* _GL_UNNAMED (ID) is the "name" of an unnamed function parameter.  */
+#ifndef _GL_UNNAMED
+# if ((defined __STDC_VERSION__ ? __STDC_VERSION__ : 0) < 202311 \
+      && !defined __cplusplus)
+#  define _GL_UNNAMED(id) unnamed_##id _GL_ATTRIBUTE_UNUSED
 # else
-#  define _GL_ATTRIBUTE_MAYBE_UNUSED
+#  define _GL_UNNAMED(id)
 # endif
 #endif
 
+
 typedef int context_t;
 SE_CONTEXT_INLINE context_t
-context_new (_GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
+context_new (char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return 0; }
 SE_CONTEXT_INLINE char *
-context_str (_GL_ATTRIBUTE_MAYBE_UNUSED context_t con)
+context_str (context_t _GL_UNNAMED (con))
   { errno = ENOTSUP; return (void *) 0; }
-SE_CONTEXT_INLINE void context_free (_GL_ATTRIBUTE_MAYBE_UNUSED context_t c) {}
+SE_CONTEXT_INLINE void context_free (context_t _GL_UNNAMED (c)) {}
 
 SE_CONTEXT_INLINE int
-context_user_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
-                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
+context_user_set (context_t _GL_UNNAMED (sc), char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return -1; }
 SE_CONTEXT_INLINE int
-context_role_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
-                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
+context_role_set (context_t _GL_UNNAMED (sc), char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return -1; }
 SE_CONTEXT_INLINE int
-context_range_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
-                   _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
+context_range_set (context_t _GL_UNNAMED (sc), char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return -1; }
 SE_CONTEXT_INLINE int
-context_type_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
-                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
+context_type_set (context_t _GL_UNNAMED (sc), char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return -1; }
 SE_CONTEXT_INLINE char *
-context_type_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
+context_type_get (context_t _GL_UNNAMED (sc))
   { errno = ENOTSUP; return (void *) 0; }
 SE_CONTEXT_INLINE char *
-context_range_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
+context_range_get (context_t _GL_UNNAMED (sc))
   { errno = ENOTSUP; return (void *) 0; }
 SE_CONTEXT_INLINE char *
-context_role_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
+context_role_get (context_t _GL_UNNAMED (sc))
   { errno = ENOTSUP; return (void *) 0; }
 SE_CONTEXT_INLINE char *
-context_user_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
+context_user_get (context_t _GL_UNNAMED (sc))
   { errno = ENOTSUP; return (void *) 0; }
 
 _GL_INLINE_HEADER_END

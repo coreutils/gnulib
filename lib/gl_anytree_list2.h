@@ -60,8 +60,7 @@ gl_tree_size (gl_list_t list)
 }
 
 static const void * _GL_ATTRIBUTE_PURE
-gl_tree_node_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
-                    gl_list_node_t node)
+gl_tree_node_value (gl_list_t _GL_UNNAMED (list), gl_list_node_t node)
 {
   return node->value;
 }
@@ -103,8 +102,7 @@ gl_tree_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_next_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
-                   gl_list_node_t node)
+gl_tree_next_node (gl_list_t _GL_UNNAMED (list), gl_list_node_t node)
 {
   if (node->right != NULL)
     {
@@ -122,8 +120,7 @@ gl_tree_next_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_previous_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
-                       gl_list_node_t node)
+gl_tree_previous_node (gl_list_t _GL_UNNAMED (list), gl_list_node_t node)
 {
   if (node->left != NULL)
     {
@@ -141,7 +138,7 @@ gl_tree_previous_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_first_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list)
+gl_tree_first_node (gl_list_t list)
 {
   gl_list_node_t node = list->root;
 
@@ -154,7 +151,7 @@ gl_tree_first_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list)
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_last_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list)
+gl_tree_last_node (gl_list_t list)
 {
   gl_list_node_t node = list->root;
 
@@ -659,7 +656,7 @@ gl_tree_iterator_next (gl_list_iterator_t *iterator,
 }
 
 static void
-gl_tree_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_iterator_t *iterator)
+gl_tree_iterator_free (gl_list_iterator_t *_GL_UNNAMED (iterator))
 {
 }
 

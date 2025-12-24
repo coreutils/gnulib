@@ -163,8 +163,7 @@ test_general (void)
 }
 
 static bool
-true_processor (_GL_ATTRIBUTE_MAYBE_UNUSED Hamt_entry *elt,
-                _GL_ATTRIBUTE_MAYBE_UNUSED void *data)
+true_processor (Hamt_entry *_GL_UNNAMED (elt), void *_GL_UNNAMED (data))
 {
   return true;
 }

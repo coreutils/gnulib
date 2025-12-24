@@ -432,6 +432,6 @@ gl_tree_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
 }
 
 static void
-gl_tree_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_oset_iterator_t *iterator)
+gl_tree_iterator_free (gl_oset_iterator_t *_GL_UNNAMED (iterator))
 {
 }

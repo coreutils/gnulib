@@ -593,7 +593,9 @@ AC_DEFUN([gl_COMMON_BODY], [
 
 /* _GL_ATTRIBUTE_MAYBE_UNUSED declares that it is not a programming mistake if
    the entity is not used.  The compiler should not warn if the entity is not
-   used.  */
+   used.  However, 'int _GL_UNNAMED (i)' is preferable to
+   '_GL_ATTRIBUTE_MAYBE_UNUSED int i' when parameter I is unused
+   regardless of preprocessor macro settings.  */
 /* Applies to:
      - function, variable,
      - struct, union, struct/union member,
@@ -876,6 +878,21 @@ AC_DEFUN([gl_COMMON_BODY], [
 #  define _GL_UNUSED_LABEL _GL_ATTRIBUTE_UNUSED
 # else
 #  define _GL_UNUSED_LABEL
+# endif
+#endif
+
+/* _GL_UNNAMED (ID) is the "name" of an unnamed function parameter.
+   Each of the function's unnamed parameters should have a unique "name".
+   The "name" cannot be used.  This ports both to C17 and earlier, which
+   lack unnamed parameters, and to C++ and later C, which have them.  */
+/* Applies to:
+     - function parameters.  */
+#ifndef _GL_UNNAMED
+# if ((defined __STDC_VERSION__ ? __STDC_VERSION__ : 0) < 202311 \
+      && !defined __cplusplus)
+#  define _GL_UNNAMED(id) unnamed_##id _GL_ATTRIBUTE_UNUSED
+# else
+#  define _GL_UNNAMED(id)
 # endif
 #endif
 
