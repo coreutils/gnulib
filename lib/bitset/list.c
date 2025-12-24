@@ -1235,7 +1235,7 @@ static struct bitset_vtable lbitset_vtable = {
 
 /* Return size of initial structure.  */
 size_t
-lbitset_bytes (MAYBE_UNUSED bitset_bindex n_bits)
+lbitset_bytes (bitset_bindex UNNAMED (n_bits))
 {
   return sizeof (struct lbitset_struct);
 }
@@ -1243,7 +1243,7 @@ lbitset_bytes (MAYBE_UNUSED bitset_bindex n_bits)
 
 /* Initialize a bitset.  */
 bitset
-lbitset_init (bitset bset, MAYBE_UNUSED bitset_bindex n_bits)
+lbitset_init (bitset bset, bitset_bindex n_bits)
 {
   BITSET_NBITS_ (bset) = n_bits;
   bset->b.vtable = &lbitset_vtable;

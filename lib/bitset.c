@@ -94,7 +94,7 @@ bitset_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
    specified by ATTR.  For variable size bitsets, N_BITS is only a
    hint and may be zero.  */
 enum bitset_type
-bitset_type_choose (MAYBE_UNUSED bitset_bindex n_bits, unsigned attr)
+bitset_type_choose (bitset_bindex UNNAMED (n_bits), unsigned attr)
 {
   /* Check attributes.  */
   if (attr & BITSET_FIXED && attr & BITSET_VARIABLE)

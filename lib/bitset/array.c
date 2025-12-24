@@ -84,7 +84,7 @@ abitset_small_list (bitset src, bitset_bindex *list,
 
 /* Set bit BITNO in bitset DST.  */
 static void
-abitset_set (MAYBE_UNUSED bitset dst, MAYBE_UNUSED bitset_bindex bitno)
+abitset_set (bitset UNNAMED (dst), bitset_bindex UNNAMED (bitno))
 {
   /* This should never occur for abitsets since we should always hit
      the cache.  It is likely someone is trying to access outside the
@@ -95,8 +95,7 @@ abitset_set (MAYBE_UNUSED bitset dst, MAYBE_UNUSED bitset_bindex bitno)
 
 /* Reset bit BITNO in bitset DST.  */
 static void
-abitset_reset (MAYBE_UNUSED bitset dst,
-               MAYBE_UNUSED bitset_bindex bitno)
+abitset_reset (bitset UNNAMED (dst), bitset_bindex UNNAMED (bitno))
 {
   /* This should never occur for abitsets since we should always hit
      the cache.  It is likely someone is trying to access outside the
@@ -106,8 +105,7 @@ abitset_reset (MAYBE_UNUSED bitset dst,
 
 /* Test bit BITNO in bitset SRC.  */
 static bool
-abitset_test (MAYBE_UNUSED bitset src,
-              MAYBE_UNUSED bitset_bindex bitno)
+abitset_test (bitset UNNAMED (src), bitset_bindex UNNAMED (bitno))
 {
   /* This should never occur for abitsets since we should always
      hit the cache.  */

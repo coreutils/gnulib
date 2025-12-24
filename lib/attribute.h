@@ -89,7 +89,7 @@
    _GL_ATTRIBUTE_NONNULL_IF_NONZERO, _GL_ATTRIBUTE_NONSTRING,
    _GL_ATTRIBUTE_NOTHROW, _GL_ATTRIBUTE_PACKED, _GL_ATTRIBUTE_PURE,
    _GL_ATTRIBUTE_REPRODUCIBLE, _GL_ATTRIBUTE_RETURNS_NONNULL,
-   _GL_ATTRIBUTE_SENTINEL, _GL_ATTRIBUTE_UNSEQUENCED.  */
+   _GL_ATTRIBUTE_SENTINEL, _GL_ATTRIBUTE_UNSEQUENCED, _GL_UNNAMED.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -336,6 +336,20 @@
    other types, thus disabling strict aliasing optimization.  */
 /* Applies to: types.  */
 #define ATTRIBUTE_MAY_ALIAS _GL_ATTRIBUTE_MAY_ALIAS
+
+
+/* ==================== Unnamed function parameters ======================== */
+
+/* Although UNNAMED is not an attribute, it is related to MAYBE_UNUSED
+   and so is defined here for convenience.  */
+
+/* UNNAMED (ID) is the "name" of an unnamed function parameter.
+   Each of the function's unnamed parameters should have a unique "name".
+   The "name" cannot be used.  This ports both to C17 and earlier, which
+   lack unnamed parameters, and to C++ and later C, which have them.  */
+/* Applies to:
+     - function parameters.  */
+#define UNNAMED(id) _GL_UNNAMED (id)
 
 
 #endif /* _GL_ATTRIBUTE_H */

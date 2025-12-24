@@ -126,7 +126,7 @@ vbitset_set (bitset dst, bitset_bindex bitno)
 
 /* Reset bit BITNO in bitset DST.  */
 static void
-vbitset_reset (MAYBE_UNUSED bitset dst, MAYBE_UNUSED bitset_bindex bitno)
+vbitset_reset (bitset UNNAMED (dst), bitset_bindex UNNAMED (bitno))
 {
   /* We must be accessing outside the cache so the bit is
      zero anyway.  */
@@ -135,8 +135,7 @@ vbitset_reset (MAYBE_UNUSED bitset dst, MAYBE_UNUSED bitset_bindex bitno)
 
 /* Test bit BITNO in bitset SRC.  */
 static bool
-vbitset_test (MAYBE_UNUSED bitset src,
-              MAYBE_UNUSED bitset_bindex bitno)
+vbitset_test (bitset UNNAMED (src), bitset_bindex UNNAMED (bitno))
 {
   /* We must be accessing outside the cache so the bit is
      zero anyway.  */
@@ -964,7 +963,7 @@ static struct bitset_vtable vbitset_vtable = {
 
 
 size_t
-vbitset_bytes (MAYBE_UNUSED bitset_bindex n_bits)
+vbitset_bytes (bitset_bindex UNNAMED (n_bits))
 {
   return sizeof (struct vbitset_struct);
 }

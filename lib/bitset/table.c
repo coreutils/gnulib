@@ -1137,7 +1137,7 @@ static struct bitset_vtable tbitset_vtable = {
 
 /* Return size of initial structure.  */
 size_t
-tbitset_bytes (MAYBE_UNUSED bitset_bindex n_bits)
+tbitset_bytes (bitset_bindex UNNAMED (n_bits))
 {
   return sizeof (struct tbitset_struct);
 }

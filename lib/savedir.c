@@ -74,7 +74,7 @@ direntry_cmp_name (void const *a, void const *b, void *arg)
 /* Compare the inode numbers of two directory entries */
 
 static int
-direntry_cmp_inode (void const *a, void const *b, MAYBE_UNUSED void *arg)
+direntry_cmp_inode (void const *a, void const *b, void *UNNAMED (arg))
 {
   direntry_t const *dea = a;
   direntry_t const *deb = b;

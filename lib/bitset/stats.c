@@ -208,7 +208,7 @@ bitset_stats_print_1 (FILE *file, const char *name,
 
 /* Print all bitset statistics to FILE.  */
 static void
-bitset_stats_print (FILE *file, MAYBE_UNUSED bool verbose)
+bitset_stats_print (FILE *file, bool UNNAMED (verbose))
 {
   if (!bitset_stats_info)
     return;

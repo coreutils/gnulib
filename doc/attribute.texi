@@ -49,3 +49,21 @@ be defined to @code{[[deprecated]]} etc.@: on C23 platforms.
 Also, these exceptional macros should be placed at the start of
 function declarations, whereas the @code{ATTRIBUTE_*} macros can be
 placed at the end.
+
+The module also defines the macro @code{UNNAMED},
+designed for function parameters that are never used,
+whereas the @code{MAYBE_UNUSED} attribute is better suited for parameters
+that might or might not be unused depending on preprocessor macro settings.
+For example:
+
+@example
+int
+f (int a, MAYBE_UNUSED int b, int UNNAMED (c))
+@{
+  int r = a;
+#ifdef B_FEATURE
+  r |= b;
+#endif
+  return r;
+@}
+@end example
