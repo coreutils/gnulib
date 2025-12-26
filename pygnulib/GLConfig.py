@@ -876,7 +876,7 @@ class GLConfig:
     def resetGnuMake(self) -> None:
         '''Reset the --gnu-make argument to its default. This feature must be
         explicitly enabled by programs who utilize GNU Make features instead
-        of Autmake.'''
+        of Automake.'''
         self.table['gnu_make'] = False
 
     def getModuleIndicatorPrefix(self) -> str:

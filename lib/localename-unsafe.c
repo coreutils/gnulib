@@ -1153,7 +1153,7 @@ void
 gl_locale_name_canonicalize (char *name)
 {
   /* This conversion is based on a posting by
-     Deborah GoldSmith <goldsmit@apple.com> on 2005-03-08,
+     Deborah Goldsmith <goldsmit@apple.com> on 2005-03-08,
      https://lists.apple.com/archives/carbon-dev/2005/Mar/msg00293.html */
 
   /* Convert legacy (NeXTstep inherited) English names to Unix (ISO 639 and
