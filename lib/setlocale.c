@@ -941,7 +941,7 @@ static char const locales_with_principal_territory[][6 + 1] =
     "cr_CA",    /* Cree         Canada */
     /* Don't put "crh_UZ" or "crh_UA" here.  That would be asking for fruitless
        political discussion.  */
-    "cs_CZ",    /* Czech        Czech Republic */
+    "cs_CZ",    /* Czech        Czechia */
     "csb_PL",   /* Kashubian    Poland */
     "cy_GB",    /* Welsh        Britain */
     "da_DK",    /* Danish       Denmark */
@@ -1247,7 +1247,7 @@ static char const locales_with_principal_language[][6 + 1] =
     "es_CU",    /* Spanish      Cuba */
     /* Curaçao has three official languages: "nl_CW", "pap_CW", "en_CW".  */
     "el_CY",    /* Greek        Cyprus */
-    "cs_CZ",    /* Czech        Czech Republic */
+    "cs_CZ",    /* Czech        Czechia */
     "de_DE",    /* German       Germany */
     /* Djibouti has two official languages: "ar_DJ" and "fr_DJ".  */
     "da_DK",    /* Danish       Denmark */
