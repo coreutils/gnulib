@@ -77,7 +77,7 @@ Send patches and bug reports to <bug-gnulib@gnu.org>."
 func_version ()
 {
   echo "install-reloc (GNU gnulib, module relocatable-prog-wrapper)"
-  echo "Copyright (C) 2025 Free Software Foundation, Inc.
+  echo "Copyright (C) 2026 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
