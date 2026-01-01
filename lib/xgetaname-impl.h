@@ -1,6 +1,6 @@
 /* xgetaname-impl.c -- common implementation of xgethostname and xgetdomainname
 
-   Copyright (C) 1992, 1996, 2000-2001, 2003-2006, 2009-2025 Free Software
+   Copyright (C) 1992, 1996, 2000-2001, 2003-2006, 2009-2026 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

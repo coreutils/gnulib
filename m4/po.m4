@@ -1,6 +1,6 @@
 # po.m4
 # serial 33 (gettext-0.23)
-dnl Copyright (C) 1995-2014, 2016, 2018-2022, 2024-2025 Free Software
+dnl Copyright (C) 1995-2014, 2016, 2018-2022, 2024-2026 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

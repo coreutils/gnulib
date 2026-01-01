@@ -1,5 +1,5 @@
 /* Determine the program name of a given process.
-   Copyright (C) 2016-2025 Free Software Foundation, Inc.
+   Copyright (C) 2016-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2019.
 
    This file is free software: you can redistribute it and/or modify

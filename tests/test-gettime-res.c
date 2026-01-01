@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Free Software Foundation, Inc.
+ * Copyright 2022-2026 Free Software Foundation, Inc.
  * Written by Paul Eggert.
  *
  * This program is free software: you can redistribute it and/or modify

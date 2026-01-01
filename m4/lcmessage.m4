@@ -1,6 +1,6 @@
 # lcmessage.m4
 # serial 8
-dnl Copyright (C) 1995-2002, 2004-2005, 2008-2014, 2016, 2019-2025 Free
+dnl Copyright (C) 1995-2002, 2004-2005, 2008-2014, 2016, 2019-2026 Free
 dnl Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

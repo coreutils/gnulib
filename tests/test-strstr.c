@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2007-2025 Free Software Foundation, Inc.
+ * Copyright (C) 2004, 2007-2026 Free Software Foundation, Inc.
  * Written by Bruno Haible and Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify

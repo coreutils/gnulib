@@ -1,5 +1,5 @@
 /* Count characters in UTF-8 string.
-   Copyright (C) 2007, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This file is free software.

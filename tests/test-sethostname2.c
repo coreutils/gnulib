@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2025 Free Software Foundation, Inc.
+ * Copyright (C) 2011-2026 Free Software Foundation, Inc.
  * Written by Ben Walton.
  *
  * This program is free software: you can redistribute it and/or modify

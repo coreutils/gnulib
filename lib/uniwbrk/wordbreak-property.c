@@ -1,5 +1,5 @@
 /* Word break property.
-   Copyright (C) 2001-2003, 2006-2025 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This file is free software.

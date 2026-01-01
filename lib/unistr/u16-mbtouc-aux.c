@@ -1,5 +1,5 @@
 /* Conversion UTF-16 to UCS-4.
-   Copyright (C) 2001-2002, 2006-2007, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2006-2007, 2009-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This file is free software.

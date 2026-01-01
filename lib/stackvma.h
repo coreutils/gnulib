@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002-2025 Free Software Foundation, Inc.
+   Copyright (C) 2002-2026 Free Software Foundation, Inc.
    Copyright (C) 2003-2006  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /* Simple hash table (no removals) where the keys are memory blocks.
-   Copyright (C) 1994-2025 Free Software Foundation, Inc.
+   Copyright (C) 1994-2026 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, October 1994.
 
    This file is free software: you can redistribute it and/or modify

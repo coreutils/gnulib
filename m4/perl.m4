@@ -1,6 +1,6 @@
 # perl.m4
 # serial 11
-dnl Copyright (C) 1998-2001, 2003-2004, 2007, 2009-2025 Free Software
+dnl Copyright (C) 1998-2001, 2003-2004, 2007, 2009-2026 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

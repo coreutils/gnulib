@@ -1,6 +1,6 @@
 /* stdopen.c - ensure that the three standard file descriptors are in use
 
-   Copyright (C) 2005-2006, 2019-2025 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2019-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

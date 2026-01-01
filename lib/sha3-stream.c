@@ -1,7 +1,7 @@
 /* sha3-stream.c - Functions to compute the SHA-3 message digest of files as
    specified by FIPS-202.
 
-   Copyright (C) 2025 Free Software Foundation, Inc.
+   Copyright (C) 2025-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

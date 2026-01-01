@@ -1,5 +1,5 @@
 /* A dummy file, to prevent empty libraries from breaking builds.
-   Copyright (C) 2004, 2007, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2007, 2009-2026 Free Software Foundation, Inc.
 
    This file is in the public domain.  */
 

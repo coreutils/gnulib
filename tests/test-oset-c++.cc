@@ -1,5 +1,5 @@
 /* Test of ordered set data type implementation as a C++ class.
-   Copyright (C) 2020-2025 Free Software Foundation, Inc.
+   Copyright (C) 2020-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2020.
 
    This program is free software: you can redistribute it and/or modify

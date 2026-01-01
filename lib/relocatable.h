@@ -1,5 +1,5 @@
 /* Provide relocatable packages.
-   Copyright (C) 2003, 2005, 2008-2025 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005, 2008-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This file is free software: you can redistribute it and/or modify

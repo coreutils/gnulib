@@ -1,6 +1,6 @@
 # assert.m4
 # serial 8
-dnl Copyright (C) 1998-1999, 2001, 2004, 2008-2025 Free Software Foundation,
+dnl Copyright (C) 1998-1999, 2001, 2004, 2008-2026 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

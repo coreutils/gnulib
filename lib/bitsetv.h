@@ -1,6 +1,6 @@
 /* Bitset vectors.
 
-   Copyright (C) 2002, 2004, 2009-2015, 2018-2025 Free Software Foundation,
+   Copyright (C) 2002, 2004, 2009-2015, 2018-2026 Free Software Foundation,
    Inc.
 
    Contributed by Michael Hayes (m.hayes@elec.canterbury.ac.nz).

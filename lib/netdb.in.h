@@ -1,5 +1,5 @@
 /* Provide a netdb.h header file for systems lacking it (read: MinGW).
-   Copyright (C) 2008-2025 Free Software Foundation, Inc.
+   Copyright (C) 2008-2026 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This file is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /* Locating a program in PATH.
-   Copyright (C) 2001-2003, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2009-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This file is free software: you can redistribute it and/or modify
