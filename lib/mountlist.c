@@ -1,6 +1,6 @@
 /* mountlist.c -- return a list of mounted file systems
 
-   Copyright (C) 1991-1992, 1997-2025 Free Software Foundation, Inc.
+   Copyright (C) 1991-1992, 1997-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -717,7 +717,8 @@ read_file_system_list (bool need_fs_type)
         if (fs_stat_dev (dev, &fi) >= 0)
           {
             /* Note: fi.dev == dev. */
-            for (struct rootdir_entry *re = rootdir_list; re; re = re->next)
+            struct rootdir_entry *re;
+            for (re = rootdir_list; re; re = re->next)
               if (re->dev == fi.dev && re->ino == fi.root)
                 break;
 
