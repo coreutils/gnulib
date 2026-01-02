@@ -652,6 +652,7 @@ enum leaf_optimization
 /* Linux-specific constants from coreutils' src/fs.h */
 # define S_MAGIC_AFS 0x5346414F
 # define S_MAGIC_CIFS 0xFF534D42
+# define S_MAGIC_LUSTRE 0x0BD00BD0
 # define S_MAGIC_NFS 0x6969
 # define S_MAGIC_PROC 0x9FA0
 # define S_MAGIC_TMPFS 0x1021994
@@ -758,6 +759,11 @@ dirent_inode_sort_may_be_useful (FTSENT const *p, int dir_fd)
 
   switch (filesystem_type (p, dir_fd))
     {
+    case S_MAGIC_LUSTRE:
+      /* On Lustre, sorting directory entries interferes with its ability to
+         prefetch file metadata (via statahead).  This would make a make a
+         command like 'du' around 9 times slower.  See
+         <https://bugs.gnu.org/80106>.  */
     case S_MAGIC_CIFS:
     case S_MAGIC_NFS:
     case S_MAGIC_TMPFS:
