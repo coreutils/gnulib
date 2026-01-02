@@ -761,8 +761,8 @@ dirent_inode_sort_may_be_useful (FTSENT const *p, int dir_fd)
     {
     case S_MAGIC_LUSTRE:
       /* On Lustre, sorting directory entries interferes with its ability to
-         prefetch file metadata (via statahead).  This would make a make a
-         command like 'du' around 9 times slower.  See
+         prefetch file metadata (via statahead).  This would make a command
+         like 'du' around 9 times slower.  See
          <https://bugs.gnu.org/80106>.  */
     case S_MAGIC_CIFS:
     case S_MAGIC_NFS:
