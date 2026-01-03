@@ -36,6 +36,7 @@ openat
 openat-h
 opendirat
 readdir
+reallocarray
 realloc-posix
 bool
 stddef-h

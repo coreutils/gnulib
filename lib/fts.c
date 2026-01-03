@@ -1885,9 +1885,8 @@ fts_sort (FTS *sp, FTSENT *head, register size_t nitems)
         if (nitems > sp->fts_nitems) {
                 sp->fts_nitems = nitems + 40;
                 FTSENT **a;
-                if (SIZE_MAX / sizeof *a < sp->fts_nitems
-                    || ! (a = realloc (sp->fts_array,
-                                       sp->fts_nitems * sizeof *a))) {
+                if (! (a = reallocarray (sp->fts_array,
+                                         sp->fts_nitems, sizeof *a))) {
                         free(sp->fts_array);
                         sp->fts_array = NULL;
                         sp->fts_nitems = 0;
