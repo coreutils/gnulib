@@ -66,7 +66,8 @@ main (void)
 
   /* Note: The result->tm_gmtoff values and the result->tm_zone values are the
      same (3600, "CET" or 7200, "CEST") across all tested platforms:
-     glibc, musl, macOS, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin, Android.  */
+     glibc, musl, macOS, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin, Android,
+     except on Haiku.  */
 
   /* A time point when DST was in effect.  */
   {
@@ -88,7 +89,8 @@ main (void)
 #endif
 #if HAVE_STRUCT_TM_TM_ZONE
     printf ("tm_zone = %s\n", result->tm_zone == NULL ? "(null)" : result->tm_zone);
-    ASSERT (strcmp (result->tm_zone, "CEST") == 0);
+    ASSERT (strcmp (result->tm_zone, "CEST") == 0
+            || strcmp (result->tm_zone, "GMT+2") == 0 /* Haiku */);
 #endif
   }
 
@@ -112,7 +114,8 @@ main (void)
 #endif
 #if HAVE_STRUCT_TM_TM_ZONE
     printf ("tm_zone = %s\n", result->tm_zone == NULL ? "(null)" : result->tm_zone);
-    ASSERT (strcmp (result->tm_zone, "CET") == 0);
+    ASSERT (strcmp (result->tm_zone, "CET") == 0
+            || strcmp (result->tm_zone, FRENCH_TZ) == 0 /* Haiku */);
 #endif
   }
   {
@@ -134,7 +137,8 @@ main (void)
 #endif
 #if HAVE_STRUCT_TM_TM_ZONE
     printf ("tm_zone = %s\n", result->tm_zone == NULL ? "(null)" : result->tm_zone);
-    ASSERT (strcmp (result->tm_zone, "CEST") == 0);
+    ASSERT (strcmp (result->tm_zone, "CEST") == 0
+            || strcmp (result->tm_zone, "GMT+2") == 0 /* Haiku */);
 #endif
   }
 
@@ -158,7 +162,8 @@ main (void)
 #endif
 #if HAVE_STRUCT_TM_TM_ZONE
     printf ("tm_zone = %s\n", result->tm_zone == NULL ? "(null)" : result->tm_zone);
-    ASSERT (strcmp (result->tm_zone, "CEST") == 0);
+    ASSERT (strcmp (result->tm_zone, "CEST") == 0
+            || strcmp (result->tm_zone, "GMT+2") == 0 /* Haiku */);
 #endif
   }
   {
@@ -180,7 +185,8 @@ main (void)
 #endif
 #if HAVE_STRUCT_TM_TM_ZONE
     printf ("tm_zone = %s\n", result->tm_zone == NULL ? "(null)" : result->tm_zone);
-    ASSERT (strcmp (result->tm_zone, "CET") == 0);
+    ASSERT (strcmp (result->tm_zone, "CET") == 0
+            || strcmp (result->tm_zone, FRENCH_TZ) == 0 /* Haiku */);
 #endif
   }
 
