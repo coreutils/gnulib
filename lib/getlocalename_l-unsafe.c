@@ -579,6 +579,15 @@ getlocalename_l_unsafe (int category, locale_t locale)
 # endif
       return (struct string_with_storage) { name, STORAGE_OBJECT };
 #elif defined __HAIKU__
+# if HAVE_GETLOCALENAME_L
+      /* Haiku revision hrev59293 (2026-01-07) or newer.  */
+#  undef getlocalename_l
+      const char *name = getlocalename_l (category, locale);
+      if (strcmp (name, "POSIX") != 0)
+        return (struct string_with_storage) { name, STORAGE_OBJECT };
+      else
+        return (struct string_with_storage) { "C", STORAGE_INDEFINITE };
+# else
       /* Since 2022, Haiku has per-thread locales.  locale_t is 'void *',
          but in fact a 'LocaleBackendData *'.  */
       struct LocaleBackendData {
@@ -641,6 +650,7 @@ getlocalename_l_unsafe (int category, locale_t locale)
       else
         /* It's the "C" or "POSIX" locale.  */
         return (struct string_with_storage) { "C", STORAGE_INDEFINITE };
+# endif
 #elif defined __ANDROID__
       /* Android API level >= 21 */
       struct __locale_t {
