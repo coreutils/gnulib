@@ -21,6 +21,10 @@ Solaris 11.3.
 @item
 This function does not ignore the second argument when the first argument is NULL on some platforms:
 mingw with UCRT, MSVC 14.
+@item
+This function fails to handle wide characters produced by @code{mbrtowc} on some platforms:
+@c https://dev.haiku-os.org/ticket/19881
+Haiku.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -78,6 +78,10 @@ FreeBSD 14.2.
 platforms:
 NetBSD 10.0.
 @item
+@code{open ("fifo", O_DIRECTORY ...)} does not fail on some platforms:
+@c https://dev.haiku-os.org/ticket/19879
+Haiku.
+@item
 On Windows, this function returns a file handle in @code{O_TEXT} mode by
 default; this means that it translates @code{'\n'} to CR/LF by default.  Use the
 @code{O_BINARY} flag if you need reliable binary I/O.
