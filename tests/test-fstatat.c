@@ -83,7 +83,7 @@ main (_GL_UNUSED int argc, _GL_UNUSED char *argv[])
     struct stat statbuf;
 
     errno = 0;
-    ASSERT (fstatat (AT_FDCWD == -1 ? -2 : -1, "foo", &statbuf, 0) == -1);
+    ASSERT (fstatat (AT_FDCWD == -2 ? -1 : -2, "foo", &statbuf, 0) == -1);
     ASSERT (errno == EBADF);
   }
   {

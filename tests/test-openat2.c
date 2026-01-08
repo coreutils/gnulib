@@ -587,7 +587,7 @@ main ()
   /* Test behavior for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (openat2 (AT_FDCWD == -1 ? -2 : -1, "foo", &ro, sizeof ro) == -1);
+    ASSERT (openat2 (AT_FDCWD == -2 ? -1 : -2, "foo", &ro, sizeof ro) == -1);
     ASSERT (errno == EBADF);
   }
   {
