@@ -1,5 +1,5 @@
 # getlocalename_l.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2025-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,8 @@ AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
   if test $ac_cv_func_getlocalename_l = yes; then
     dnl Check against the Cygwin 3.6.0 bug: It returns an invalid pointer when
     dnl the second argument is LC_GLOBAL_LOCALE.
+    dnl Check against a Haiku >= hrev59293 oddity: It returns "POSIX" instead
+    dnl of "C". We prefer "C".
     AC_REQUIRE([AC_CANONICAL_HOST])
     AC_CACHE_CHECK([whether getlocalename_l works],
       [gl_cv_func_getlocalename_l_works],
@@ -39,13 +41,28 @@ AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
 #include <string.h>
 int main ()
 {
-  const char *ret = getlocalename_l (LC_COLLATE, LC_GLOBAL_LOCALE);
-  return strlen (ret) == 0;
+  int result = 0;
+  /* Check againt the Cygwin bug.  */
+  {
+    const char *ret = getlocalename_l (LC_COLLATE, LC_GLOBAL_LOCALE);
+    if (strlen (ret) == 0)
+      result |= 1;
+  }
+  /* Check against the Haiku oddity.  */
+  {
+    const char *ret =
+      getlocalename_l (LC_COLLATE, newlocale (LC_ALL_MASK, "C", NULL));
+    if (strcmp (ret, "C") != 0)
+      result |= 2;
+  }
+  return result;
 }]])],
          [gl_cv_func_getlocalename_l_works=yes],
          [gl_cv_func_getlocalename_l_works=no],
          [case "$host_os" in
             cygwin*) # Guess no on Cygwin.
+              gl_cv_func_getlocalename_l_works="guessing no" ;;
+            haiku*)  # Guess no on Haiku.
               gl_cv_func_getlocalename_l_works="guessing no" ;;
             *)       # Guess yes otherwise.
               gl_cv_func_getlocalename_l_works="guessing yes" ;;
