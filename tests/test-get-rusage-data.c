@@ -61,7 +61,7 @@ main ()
       ASSERT (value2 >= value1);
       ASSERT (value3 >= value2);
 
-#if !(__GLIBC__ == 2 || MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __OpenBSD__ || defined _WIN32 || defined __CYGWIN__)
+#if !(__GLIBC__ == 2 || MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __OpenBSD__ || defined _WIN32 || defined __CYGWIN__ || defined __HAIKU__)
       /* Allocating 2.5 MB of memory should increase the data segment size.  */
       ASSERT (value3 > value1);
 #endif
