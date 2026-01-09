@@ -202,9 +202,9 @@ sub print_checksums ($@)
           print '  ', digest_file_base64_wrap ($f, "SHA-256"), "\n";
           print '  ', digest_file_base64_wrap ($f, "SHA3-256"), "\n";
         }
-      print "\nVerify the base64 SHA256 checksum with cksum -a sha256 --check\n";
+      print "\nVerify the base64 SHA256 checksum with 'cksum -a sha256 --check'\n";
       print "from coreutils-9.2 or OpenBSD's cksum since 2007.\n";
-      print "\nVerify the base64 SHA3-256 checksum with cksum -a sha3 --check\n";
+      print "\nVerify the base64 SHA3-256 checksum with 'cksum -a sha3 --check'\n";
       print "from coreutils-9.8.\n\n";
     }
   else
@@ -217,8 +217,8 @@ sub print_checksums ($@)
           print "\n";
         }
       print "Verify the SHA256 checksum with either sha256sum, sha256, or\n";
-      print "shasum -a 256.\n";
-      print "\nVerify the SHA3-256 checksum with cksum -a sha3 --check\n";
+      print "'shasum -a 256'.\n";
+      print "\nVerify the SHA3-256 checksum with 'cksum -a sha3 -l 256 --base64'\n";
       print "from coreutils-9.8.\n\n";
     }
 }
