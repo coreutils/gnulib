@@ -1,6 +1,8 @@
 @node Gnulib Git Bundle
 @section Gnulib Git Bundle
 
+@set LATEST_GNULIB_BUNDLE 20260109
+
 To provide a serialized archival copy of the Gnulib Git repository we
 publish Git Bundles (@url{https://git-scm.com/docs/git-bundle}) of
 Gnulib at @url{https://ftp.gnu.org/gnu/gnulib/}.  These may be useful
@@ -8,7 +10,7 @@ if Savannah happens to be offline or if you want to have a GnuPG
 signed confirmation of the Gnulib content.
 
 The files are named like @code{gnulib-YYYYMMDD.bundle}, for example
-@code{gnulib-20250729.bundle}, where @code{YYYYMMDD} corresponds to
+@code{gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle}, where @code{YYYYMMDD} corresponds to
 the Git commit date (in UTC0) of the last commit on the @code{master}
 branch in the bundle.
 
@@ -16,16 +18,21 @@ After downloading the Git bundle you may use it to create a local
 gnulib clone using normal Git commands:
 
 @example
-wget -nv https://ftp.gnu.org/gnu/gnulib/gnulib-20250729.bundle
-git clone gnulib-20250729.bundle gnulib
+wget -nv https://ftp.gnu.org/gnu/gnulib/gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle
+git clone gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle gnulib
 cd gnulib
 @end example
 
-Below are SHA-256 checksums of known releases:
+Below are SHA-256 and SHA3-256 checksums of known releases:
 
 @example
 9dae009ef9dd7cff17b74c0cda5d7a423e2ed98b4f5b7aa29a970565b0591c06  gnulib-20250303.bundle
 f01e423a7ef6b48e947fabd24bb11744204f4549342416e15dc64f427caa32e2  gnulib-20250729.bundle
+ae7f76abdf11d70f87170363b8f5807ec377a3ebf231499ab8278270c7a19f1a  gnulib-20260109.bundle
+
+XMv72pyPrDiGrukOrQ9UwgLh+bbekQhQWuyaEmEf3Co=  gnulib-20250303.bundle
+c3X/89WHMIRVqGpOHHQPZfw2bcxnZEIkgOam7WwRUyw=  gnulib-20250729.bundle
+6kYv60oHv7kXpkJM2vUlADWNmh62nus1xA80bJJiJEs=  gnulib-20260109.bundle
 @end example
 
 Next to the Git Bundle is a GnuPG signature on the file, named
@@ -33,13 +40,13 @@ Next to the Git Bundle is a GnuPG signature on the file, named
 as usual:
 
 @example
-gpg --verify gnulib-20250729.bundle.sig
+gpg --verify gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle.sig
 @end example
 
 Or using the simpler @code{gpgv} tool like this:
 
 @example
-gpgv gnulib-20250729.bundle.sig gnulib-20250729.bundle
+gpgv gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle.sig gnulib-@value{LATEST_GNULIB_BUNDLE}.bundle
 @end example
 
 The following GnuPG keys have signed releases:
@@ -52,16 +59,16 @@ uid           [ultimate] Simon Josefsson <simon@@josefsson.org>
 
 We desire that the Gnulib Git bundles will be forever bit-by-bit
 reproducible for others from the official git repository.  Currently
-gnulib maintainers may invoke the following commands to prepare and
-upload a Gnulib git bundle.  We appreciate ideas on how to improve
+gnulib maintainers invoke the following commands to prepare and upload
+the latest Gnulib git bundle.  We appreciate ideas on how to improve
 these set of commands (or the upstream Git tool) to make further
 supply-chain security related improvements.
 
 @example
 cd $(mktemp -d)
-REV=225973a89f50c2b494ad947399425182dd42618c   # master branch commit to package
-S1REV=475dd38289d33270d0080085084bf687ad77c74d # stable-202501 branch commit
-S2REV=e8cc0791e6bb0814cf4e88395c06d5e06655d8b5 # stable-202507 branch commit
+REV=2961ed7a687c11aebdf5951d5267dec85d9e59cb   # master branch commit to package
+S1REV=e93789db7e86c51d6cb9683ea508e676a55cdefa # stable-202601 branch commit
+S2REV=b6d56475ad6d8bc59e85cdf7fa8dd60fbddc6ffc # stable-202507 branch commit
 git clone https://git.savannah.gnu.org/git/gnulib.git
 cd gnulib
 git fsck # attempt to validate input
