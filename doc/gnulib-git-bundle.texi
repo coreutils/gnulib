@@ -35,6 +35,13 @@ c3X/89WHMIRVqGpOHHQPZfw2bcxnZEIkgOam7WwRUyw=  gnulib-20250729.bundle
 6kYv60oHv7kXpkJM2vUlADWNmh62nus1xA80bJJiJEs=  gnulib-20260109.bundle
 @end example
 
+Verify the SHA256 checksum
+with either @code{sha256sum}, @code{sha256}, or @code{shasum -a 256}.
+
+Verify the base64 SHA3-256 checksum
+with @code{cksum -a sha3 -l 256 --base64} from coreutils 9.8 or newer,
+or with @code{cksum -a sha3 --check} from coreutils 9.9 or newer.
+
 Next to the Git Bundle is a GnuPG signature on the file, named
 @code{gnulib-YYYYMMDD.bundle.sig}, which can be verified using GnuPG
 as usual:
