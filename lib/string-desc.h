@@ -60,6 +60,18 @@
 # define HAVE__GENERIC 1
 #endif
 
+/* Whether the compiler supports typeof.
+   Test program:
+     int f (int x) { typeof (x) y = x; return y; }
+ */
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) /* both C and C++ mode */ \
+    || (defined __clang__ && __clang_major__ >= 3 /* both C and C++ mode */ \
+        && !(defined __cplusplus && !defined __GNUC__)) /* except for clang-cl in C++ mode */ \
+    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5110) /* C mode */ \
+    || __STDC_VERSION__ >= 202311L /* C mode */
+# define HAVE_TYPEOF 1
+#endif
+
 /* Whether the compiler supports __builtin_choose_expr.
    _Generic and __builtin_choose_expr are like conditional expressions,
    except that the return types of the branches need not match: They avoid an
@@ -86,8 +98,8 @@
 #endif
 
 /* Whether we support rw_string_desc_t as distinct from string_desc_t.  */
-#if HAVE_STATEMENT_EXPRESSIONS && HAVE__GENERIC && HAVE_BUILTIN_CHOOSE_EXPR \
-    && HAVE_BUILTIN_CONSTANT_P
+#if HAVE_STATEMENT_EXPRESSIONS && HAVE__GENERIC && HAVE_TYPEOF \
+    && HAVE_BUILTIN_CHOOSE_EXPR && HAVE_BUILTIN_CONSTANT_P
 # define HAVE_RW_STRING_DESC 1
 #endif
 
