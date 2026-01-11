@@ -42,8 +42,10 @@
    Test program:
      int f (int x) { return ({ x; x; }); }
  */
-#if defined __GNUC__ || defined __clang__ \
-    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150)
+#if defined __GNUC__ /* both C and C++ mode */ \
+    || defined __clang__ /* both C and C++ mode */ \
+    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150) /* C mode */ \
+    || (defined __SUNPRO_CC && __SUNPRO_CC >= 0x5150) /* C++ mode */
 # define HAVE_STATEMENT_EXPRESSIONS 1
 #endif
 
@@ -51,9 +53,10 @@
    Test program:
      int f (int x) { return _Generic (x, char *: 2, int: 3); }
  */
-#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
-    || (defined __clang__ && __clang_major__ >= 3) \
-    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150)
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __cplusplus) /* C mode */ \
+    || (defined __clang__ && __clang_major__ >= 3) /* both C and C++ mode */ \
+    || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150) /* C mode */ \
+    || __STDC_VERSION__ >= 201112L /* C mode */
 # define HAVE__GENERIC 1
 #endif
 
@@ -64,8 +67,8 @@
    Test program:
      int f (int x) { return __builtin_choose_expr (sizeof (x) == 4, 2, 3); }
  */
-#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) \
-    || (defined __clang__ && __clang_major__ >= 3)
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) /* both C and C++ mode */ \
+    || (defined __clang__ && __clang_major__ >= 3) /* both C and C++ mode */
 # define HAVE_BUILTIN_CHOOSE_EXPR 1
 #endif
 
@@ -77,8 +80,8 @@
    Test program:
      int i, v[__builtin_constant_p ("x") > __builtin_constant_p (i) ? 1 : -1];
  */
-#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) \
-    || (defined __clang__ && __clang_major__ >= 4)
+#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) /* both C and C++ mode */ \
+    || (defined __clang__ && __clang_major__ >= 4) /* both C and C++ mode */
 # define HAVE_BUILTIN_CONSTANT_P 1
 #endif
 
