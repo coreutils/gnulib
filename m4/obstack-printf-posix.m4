@@ -1,5 +1,5 @@
 # obstack-printf-posix.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,8 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF_POSIX],
   gl_DECL_OBSTACK_PRINTF
 ])
 
-dnl Test whether obstack_printf exists and is POSIX compliant.
+dnl Test whether obstack_printf exists and interprets the format string in a
+dnl POSIX compliant way.
 dnl Result is gl_cv_func_obstack_printf_posix.
 AC_DEFUN([gl_FUNC_OBSTACK_PRINTF_IS_POSIX],
 [
