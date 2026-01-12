@@ -99,10 +99,15 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (func (BASE "file/", ts) == -1);
     ASSERT (errno == ENOTDIR || errno == EINVAL);
   }
+  /* On Haiku, the access time is continually updated.  See
+     <https://git.haiku-os.org/haiku.git/tree/docs/develop/libroot/index.rst>.
+     This causes this part of the test to fail.  */
+#if !defined __HAIKU__
   ASSERT (stat (BASE "file", &st2) == 0);
   ASSERT (st1.st_atime == st2.st_atime);
   ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
   ASSERT (utimecmp (BASE "file", &st1, &st2, 0) == 0);
+#endif
 
   /* Set both times.  */
   {
