@@ -8,15 +8,16 @@ lib/w32sock.h
 
 Depends-on:
 unistd-h
-sys_socket-h    [test $HAVE_GETHOSTNAME = 0]
-errno-h         [test $HAVE_GETHOSTNAME = 0]
-sockets         [test $HAVE_GETHOSTNAME = 0]
-msvc-nothrow    [test $HAVE_GETHOSTNAME = 0]
+sys_socket-h    [test $HAVE_GETHOSTNAME = 0 || test $UNISTD_H_HAVE_WINSOCK2_H = 1]
+errno-h         [test $HAVE_GETHOSTNAME = 0 || test $UNISTD_H_HAVE_WINSOCK2_H = 1]
+sockets         [test $HAVE_GETHOSTNAME = 0 || test $UNISTD_H_HAVE_WINSOCK2_H = 1]
+msvc-nothrow    [test $HAVE_GETHOSTNAME = 0 || test $UNISTD_H_HAVE_WINSOCK2_H = 1]
 strncpy         [test $HAVE_GETHOSTNAME = 0]
 
 configure.ac:
 gl_FUNC_GETHOSTNAME
-gl_CONDITIONAL([GL_COND_OBJ_GETHOSTNAME], [test $HAVE_GETHOSTNAME = 0])
+gl_CONDITIONAL([GL_COND_OBJ_GETHOSTNAME],
+               [test $HAVE_GETHOSTNAME = 0 || test $UNISTD_H_HAVE_WINSOCK2_H = 1])
 AM_COND_IF([GL_COND_OBJ_GETHOSTNAME], [
   gl_PREREQ_GETHOSTNAME
 ])
