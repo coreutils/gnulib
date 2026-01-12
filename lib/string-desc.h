@@ -56,7 +56,7 @@
 #if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __cplusplus) /* C mode */ \
     || (defined __clang__ && __clang_major__ >= 3) /* both C and C++ mode */ \
     || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150) /* C mode */ \
-    || __STDC_VERSION__ >= 201112L /* C mode */
+    || (__STDC_VERSION__ >= 201112L && !defined __GNUC__) /* C mode */
 # define HAVE__GENERIC 1
 #endif
 
