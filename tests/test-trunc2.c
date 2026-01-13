@@ -58,7 +58,7 @@ static const DOUBLE TWO_MANT_DIG =
   * (DOUBLE) (1U << ((MANT_DIG - 1 + 3) / 5))
   * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
-DOUBLE
+static DOUBLE
 trunc_reference (DOUBLE x)
 {
   /* The use of 'volatile' guarantees that excess precision bits are dropped
