@@ -50,7 +50,9 @@ fd_safer (int fd)
 int
 main ()
 {
-  char *argv[3] = { (char *) BOURNE_SHELL, (char *) CHILD_PROGRAM_FILENAME, NULL };
+  char argv0[] = BOURNE_SHELL;
+  char argv1[] = CHILD_PROGRAM_FILENAME;
+  char *argv[] = { argv0, argv1, NULL };
   int ofd[2];
   sigset_t blocked_signals;
   sigset_t fatal_signal_set;

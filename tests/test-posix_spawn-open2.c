@@ -38,7 +38,9 @@ static int
 parent_main (void)
 {
   FILE *fp;
-  char *argv[3] = { CHILD_PROGRAM_FILENAME, "-child", NULL };
+  char argv0[] = CHILD_PROGRAM_FILENAME;
+  char argv1[] = "-child";
+  char *argv[] = { argv0, argv1, NULL };
   posix_spawn_file_actions_t actions;
   bool actions_allocated;
   int err;
