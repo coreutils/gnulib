@@ -78,11 +78,8 @@ test_func (int parameter[3])
   ASSERT (countof (unbounded) >= 0);
 #endif
 
-  {
-    extern int a, b, c;
-    ASSERT (countof ((int[]) { a, b, c }) == 3);
-    ASSERT (countof (((int[]) { a, b, c })) == 3);
-  }
+  ASSERT (countof ((int[]) { integer, integer, integer }) == 3);
+  ASSERT (countof (((int[]) { integer, integer, integer })) == 3);
 
   /* Check that countof(...) is an expression of type size_t.  */
 #if !defined __cplusplus && HAVE__GENERIC
