@@ -1,5 +1,5 @@
 /* Test <stdcountof.h>.
-   Copyright 2025 Free Software Foundation, Inc.
+   Copyright 2025-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -62,10 +62,14 @@ test_func (int parameter[3])
   ASSERT (countof (unbounded) >= 0);
 #endif
 
+  /* Avoid MSVC C++ error C4576 "a parenthesized type followed by an
+     initializer list is a non-standard explicit type conversion syntax".  */
+#if !defined __cplusplus
   {
     extern int a, b, c;
     ASSERT (countof (((int[]) { a, b, c })) == 3);
   }
+#endif
 
   /* Check that countof(...) is an expression of type size_t.  */
 #if !defined __cplusplus && HAVE__GENERIC
