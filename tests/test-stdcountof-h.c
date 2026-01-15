@@ -34,6 +34,7 @@ extern int integer;
 extern int unbounded[];
 extern int bounded[10];
 extern int multidimensional[10][20];
+extern int a, b, c;
 
 static void
 test_func (int parameter[3])
@@ -81,8 +82,8 @@ test_func (int parameter[3])
   /* Avoid MSVC C++ error C4576 "a parenthesized type followed by an
      initializer list is a non-standard explicit type conversion syntax".  */
 #if !defined __cplusplus
-  ASSERT (countof ((int[]) { integer, integer, integer }) == 3);
-  ASSERT (countof (((int[]) { integer, integer, integer })) == 3);
+  ASSERT (countof ((int[]) { a, b, c }) == 3);
+  ASSERT (countof (((int[]) { a, b, c })) == 3);
 #endif
 
   /* Check that countof(...) is an expression of type size_t.  */
