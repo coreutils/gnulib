@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 29
+# serial 30
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,7 +150,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wvector-operation-performance \
     -Wvla \
     -Wwrite-strings \
-    \
+    -Wzero-as-null-pointer-constant \
     ; do
     AS_VAR_APPEND([$1], [" $gl_manywarn_item"])
   done
