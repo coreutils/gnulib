@@ -42,10 +42,10 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 
 
-typedef int context_t;
+typedef struct context_t *context_t;
 SE_CONTEXT_INLINE context_t
 context_new (char const *_GL_UNNAMED (s))
-  { errno = ENOTSUP; return 0; }
+  { errno = ENOTSUP; return (void *) 0; }
 SE_CONTEXT_INLINE char *
 context_str (context_t _GL_UNNAMED (con))
   { errno = ENOTSUP; return (void *) 0; }

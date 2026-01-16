@@ -64,7 +64,7 @@ SE_LABEL_INLINE struct selabel_handle *
 selabel_open (int _GL_UNNAMED (backend),
               struct selinux_opt *_GL_UNNAMED (options),
               unsigned _GL_UNNAMED (nopt))
-{ errno = ENOTSUP; return 0; }
+{ errno = ENOTSUP; return (void *) 0; }
 
 SE_LABEL_INLINE void
 selabel_close (struct selabel_handle *_GL_UNNAMED (hnd))
