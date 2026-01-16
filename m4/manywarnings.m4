@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 30
+# serial 31
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,7 +150,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wvector-operation-performance \
     -Wvla \
     -Wwrite-strings \
-    -Wzero-as-null-pointer-constant \
     ; do
     AS_VAR_APPEND([$1], [" $gl_manywarn_item"])
   done
@@ -169,18 +168,27 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   AS_VAR_APPEND([$1], [' -Wunused-const-variable=2'])
   AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
 
-  # These are needed for older GCC versions.
+  # These depend on the GCC version.
   if test -n "$GCC" && gl_gcc_version=`($CC --version) 2>/dev/null`; then
     case $gl_gcc_version in
-      'gcc (GCC) '[[0-3]].* | \
-      'gcc (GCC) '4.[[0-7]].*)
+      gcc*' ('*') '[[0-3]].* | \
+      gcc*' ('*') '4.[[0-7]].*)
         AS_VAR_APPEND([$1], [' -fdiagnostics-show-option'])
         AS_VAR_APPEND([$1], [' -funit-at-a-time'])
           ;;
     esac
     case $gl_gcc_version in
-      'gcc (GCC) '[[0-9]].*)
+      gcc*' ('*') '[[0-9]].*)
         AS_VAR_APPEND([$1], [' -fno-common'])
+          ;;
+    esac
+    case $gl_gcc_version in
+      gcc*' ('*') '?.* | gcc*' ('*') '1[[1-4]].*)
+          # In GCC < 15 the option either does not exist,
+          # or is accepted but always warns.
+          ;;
+      *)
+          AS_VAR_APPEND([$1], [' -Wzero-as-null-pointer-constant'])
           ;;
     esac
   fi
