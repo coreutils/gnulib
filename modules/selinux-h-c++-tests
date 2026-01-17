@@ -1,0 +1,30 @@
+Files:
+tests/test-selinux-context-h-c++.cc
+tests/test-selinux-label-h-c++.cc
+tests/test-selinux-selinux-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += \
+  test-selinux-context-h-c++ \
+  test-selinux-label-h-c++ \
+  test-selinux-selinux-h-c++
+check_PROGRAMS += \
+  test-selinux-context-h-c++ \
+  test-selinux-label-h-c++ \
+  test-selinux-selinux-h-c++
+test_selinux_context_h_c___SOURCES = test-selinux-context-h-c++.cc
+test_selinux_context_h_c___LDADD = $(LDADD) @LIB_SELINUX@
+test_selinux_label_h_c___SOURCES = test-selinux-label-h-c++.cc
+test_selinux_label_h_c___LDADD = $(LDADD) @LIB_SELINUX@
+test_selinux_selinux_h_c___SOURCES = test-selinux-selinux-h-c++.cc
+test_selinux_selinux_h_c___LDADD = $(LDADD) @LIB_SELINUX@
+endif

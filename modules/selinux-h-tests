@@ -1,0 +1,22 @@
+Files:
+tests/test-selinux-context-h.c
+tests/test-selinux-label-h.c
+tests/test-selinux-selinux-h.c
+
+Depends-on:
+selinux-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += \
+  test-selinux-context-h \
+  test-selinux-label-h \
+  test-selinux-selinux-h
+check_PROGRAMS += \
+  test-selinux-context-h \
+  test-selinux-label-h \
+  test-selinux-selinux-h
+test_selinux_context_h_LDADD = $(LDADD) @LIB_SELINUX@
+test_selinux_label_h_LDADD = $(LDADD) @LIB_SELINUX@
+test_selinux_selinux_h_LDADD = $(LDADD) @LIB_SELINUX@
