@@ -183,7 +183,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
           ;;
     esac
     case $gl_gcc_version in
-      gcc*' ('*') '?.* | gcc*' ('*') '1[[1-4]].*)
+      gcc*' ('*') '?.* | gcc*' ('*') '1[[0-4]].*)
           # In GCC < 15 the option either does not exist,
           # or is accepted but always warns.
           ;;
