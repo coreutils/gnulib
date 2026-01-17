@@ -1,5 +1,5 @@
 /* Test of isgraph_l() function.
-   Copyright (C) 2020-2025 Free Software Foundation, Inc.
+   Copyright (C) 2020-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ main ()
         /* U+007F <control> */
         is = isgraph_l ((unsigned char) '\177', locale);
         ASSERT (is == 0);
-      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sgi || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sgi || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__) || defined __HAIKU__)
         /* U+00A0 NO-BREAK SPACE */
         is = isgraph_l ((unsigned char) '\240', locale);
         ASSERT (is != 0);

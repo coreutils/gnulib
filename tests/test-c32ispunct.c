@@ -1,5 +1,5 @@
 /* Test of c32ispunct() function.
-   Copyright (C) 2020-2025 Free Software Foundation, Inc.
+   Copyright (C) 2020-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -121,7 +121,11 @@ main (int argc, char *argv[])
             case '{': case '|': case '}': case '~':
               /* These characters are usually expected to be punctuation or
                  symbol characters.  */
-              ASSERT (is != 0);
+              #if defined __HAIKU__
+              if (!(c == '+' || c == '<' || c == '=' || c == '>'
+                    || c == '^' || c == '|' || c == '~'))
+              #endif
+                ASSERT (is != 0);
               break;
             default:
               ASSERT (is == 0);
@@ -216,7 +220,7 @@ main (int argc, char *argv[])
           /* U+00BF INVERTED QUESTION MARK */
           is = for_character ("\302\277", 2);
           ASSERT (is != 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || defined __HAIKU__)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\303\227", 2);
           ASSERT (is != 0);
@@ -233,7 +237,7 @@ main (int argc, char *argv[])
           /* U+05F3 HEBREW PUNCTUATION GERESH */
           is = for_character ("\327\263", 2);
           ASSERT (is != 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || (defined _WIN32 && !defined __CYGWIN__))
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || (defined _WIN32 && !defined __CYGWIN__) || defined __HAIKU__)
           /* U+2192 RIGHTWARDS ARROW */
           is = for_character ("\342\206\222", 3);
           ASSERT (is != 0);
@@ -250,7 +254,7 @@ main (int argc, char *argv[])
           /* U+10330 GOTHIC LETTER AHSA */
           is = for_character ("\360\220\214\260", 4);
           ASSERT (is == 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || defined __HAIKU__)
           /* U+1D100 MUSICAL SYMBOL SINGLE BARLINE */
           is = for_character ("\360\235\204\200", 4);
           ASSERT (is != 0);

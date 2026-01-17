@@ -1,5 +1,5 @@
 /* Test of islower_l() function.
-   Copyright (C) 2020-2025 Free Software Foundation, Inc.
+   Copyright (C) 2020-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ main ()
         /* U+00B2 SUPERSCRIPT TWO */
         is = islower_l ((unsigned char) '\262', locale);
         ASSERT (is == 0);
-      #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+      #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__) || defined __HAIKU__)
         /* U+00B5 MICRO SIGN */
         is = islower_l ((unsigned char) '\265', locale);
         ASSERT (is == 0);

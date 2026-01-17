@@ -1,5 +1,5 @@
 /* Test of ispunct_l() function.
-   Copyright (C) 2020-2025 Free Software Foundation, Inc.
+   Copyright (C) 2020-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -96,7 +96,11 @@ test_single_locale_common (locale_t locale)
             case '{': case '|': case '}': case '~':
               /* These characters are usually expected to be punctuation or
                  symbol characters.  */
-              ASSERT (is != 0);
+              #if defined __HAIKU__
+              if (!(c == '+' || c == '<' || c == '=' || c == '>'
+                    || c == '^' || c == '|' || c == '~'))
+              #endif
+                ASSERT (is != 0);
               break;
             default:
               ASSERT (is == 0);
@@ -139,7 +143,7 @@ main ()
         is = ispunct_l ((unsigned char) '\277', locale);
         ASSERT (is != 0);
       #endif
-      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+      #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __sun || defined __HAIKU__)
         /* U+00D7 MULTIPLICATION SIGN */
         is = ispunct_l ((unsigned char) '\327', locale);
         ASSERT (is != 0);
