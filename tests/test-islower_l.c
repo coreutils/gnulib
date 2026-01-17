@@ -117,7 +117,7 @@ main ()
         /* U+00B2 SUPERSCRIPT TWO */
         is = islower_l ((unsigned char) '\262', locale);
         ASSERT (is == 0);
-      #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+      #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__) || defined __HAIKU__)
         /* U+00B5 MICRO SIGN */
         is = islower_l ((unsigned char) '\265', locale);
         ASSERT (is == 0);
