@@ -61,4 +61,8 @@ therefore cannot accommodate all Unicode characters.
 However, the ISO C11 function @code{mbrtoc32}, provided by Gnulib module
 @code{mbrtoc32}, operates on 32-bit wide characters and therefore does not have
 this limitation.
+@item
+This function does not work with a copied @code{mbstate_t} on some platforms:
+@c https://dev.haiku-os.org/ticket/19899
+Haiku.
 @end itemize
