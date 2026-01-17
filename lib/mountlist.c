@@ -967,7 +967,7 @@ read_file_system_list (bool need_fs_type)
   {
     /* Ask how many bytes to allocate for the mounted file system info.  */
     int bufsize;
-    if (mntctl (MCTL_QUERY, sizeof bufsize, &bufsize) != 0)
+    if (mntctl (MCTL_QUERY, sizeof bufsize, (char *) &bufsize) != 0)
       return NULL;
     void *entries = xmalloc (bufsize);
 
