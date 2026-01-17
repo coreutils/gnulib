@@ -41,7 +41,8 @@ test_rmdir_func (int (*func) (char const *name), bool print)
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (func (".") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EBUSY
+          || errno == EPERM /* Haiku */);
   /* Resulting errno after ".." or "/" is too varied to test; it is
      reasonable to see any of EINVAL, EBUSY, EEXIST, ENOTEMPTY,
      EACCES, EPERM.  */
