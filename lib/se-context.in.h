@@ -41,14 +41,18 @@ _GL_INLINE_HEADER_BEGIN
 # endif
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef struct context_t *context_t;
+
+typedef struct selinux_context_t *context_t;
 SE_CONTEXT_INLINE context_t
 context_new (char const *_GL_UNNAMED (s))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (context_t) 0; }
 SE_CONTEXT_INLINE char *
 context_str (context_t _GL_UNNAMED (con))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (char *) 0; }
 SE_CONTEXT_INLINE void context_free (context_t _GL_UNNAMED (c)) {}
 
 SE_CONTEXT_INLINE int
@@ -65,16 +69,21 @@ context_type_set (context_t _GL_UNNAMED (sc), char const *_GL_UNNAMED (s))
   { errno = ENOTSUP; return -1; }
 SE_CONTEXT_INLINE char *
 context_type_get (context_t _GL_UNNAMED (sc))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (char *) 0; }
 SE_CONTEXT_INLINE char *
 context_range_get (context_t _GL_UNNAMED (sc))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (char *) 0; }
 SE_CONTEXT_INLINE char *
 context_role_get (context_t _GL_UNNAMED (sc))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (char *) 0; }
 SE_CONTEXT_INLINE char *
 context_user_get (context_t _GL_UNNAMED (sc))
-  { errno = ENOTSUP; return (void *) 0; }
+  { errno = ENOTSUP; return (char *) 0; }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

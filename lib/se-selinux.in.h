@@ -50,6 +50,11 @@ _GL_INLINE_HEADER_BEGIN
 #   endif
 #  endif
 
+#  ifdef __cplusplus
+extern "C" {
+#  endif
+
+
 #  if !GNULIB_defined_security_types
 
 typedef unsigned short security_class_t;
@@ -151,6 +156,11 @@ matchpathcon_init_prefix (char const *_GL_UNNAMED (path),
   { errno = ENOTSUP; return -1; }
 
 #   define GNULIB_defined_security_types 1
+#  endif
+
+
+#  ifdef __cplusplus
+}
 #  endif
 
 _GL_INLINE_HEADER_END

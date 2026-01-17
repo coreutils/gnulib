@@ -42,6 +42,11 @@ _GL_INLINE_HEADER_BEGIN
 # endif
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define SELABEL_CTX_FILE 0
 
 struct selabel_handle;
@@ -64,11 +69,16 @@ SE_LABEL_INLINE struct selabel_handle *
 selabel_open (int _GL_UNNAMED (backend),
               struct selinux_opt *_GL_UNNAMED (options),
               unsigned _GL_UNNAMED (nopt))
-{ errno = ENOTSUP; return (void *) 0; }
+{ errno = ENOTSUP; return (struct selabel_handle *) 0; }
 
 SE_LABEL_INLINE void
 selabel_close (struct selabel_handle *_GL_UNNAMED (hnd))
 { errno = ENOTSUP; }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 
