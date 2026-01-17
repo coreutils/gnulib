@@ -1,5 +1,5 @@
 # fenv-exceptions-state.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,10 +74,27 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
                 #include <fenv.h>
+                #if !(defined _WIN32 && !defined __CYGWIN__
+                /* Avoid a crash on POSIX systems.  */
+                #include <signal.h>
+                #include <unistd.h>
+                /* A POSIX signal handler.  */
+                static void exception_handler (int sig)
+                {
+                  _exit (1);
+                }
+                static void nocrash_init (void)
+                {
+                  signal (SIGFPE, exception_handler);
+                }
+                #else
+                static void nocrash_init (void) {}
+                #endif
                 static volatile double a, b;
                 static volatile long double al, bl;
                 ]],
-                [[fexcept_t saved_flags;
+                [[nocrash_init ();
+                  fexcept_t saved_flags;
                   if (feraiseexcept (FE_INVALID) == 0
                       && fegetexceptflag (&saved_flags, FE_INVALID) == 0
                       && feclearexcept (FE_INVALID) == 0
