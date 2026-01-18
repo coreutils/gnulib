@@ -417,6 +417,7 @@
 -Wvolatile				c++ and objc++
 -Wvolatile-register-var			enabled by -Wall
 -Wxor-used-as-pow			default
+-Wzero-as-null-pointer-constant		handled specially by gl_MANYWARN_ALL_GCC
 -Wzero-length-bounds			enabled by -Wall
 -Wzerotrip				fortran
 -frequire-return-statement		go
