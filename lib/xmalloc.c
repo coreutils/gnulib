@@ -72,10 +72,7 @@ xcharalloc (size_t n)
 void *
 xrealloc (void *p, size_t s)
 {
-  void *r = realloc (p, s);
-  if (!r)
-    xalloc_die ();
-  return r;
+  return check_nonnull (realloc (p, s));
 }
 
 void *
@@ -90,10 +87,7 @@ xirealloc (void *p, idx_t s)
 void *
 xreallocarray (void *p, size_t n, size_t s)
 {
-  void *r = reallocarray (p, n, s);
-  if (!r)
-    xalloc_die ();
-  return r;
+  return check_nonnull (reallocarray (p, n, s));
 }
 
 void *
