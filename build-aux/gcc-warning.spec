@@ -4,7 +4,7 @@
 -W					alias for -Wextra
 -WNSObject-attribute			objc and objc++
 -Wabi					this is now a no-op
--Wabi-tag				c++
+-Wabi-tag				c++ and objc++
 -Wabi=					c++
 -Wabsolute-value			enabled by -Wextra
 -Waddress				enabled by -Wall
@@ -139,7 +139,7 @@
 -Wcoverage-too-many-paths		default
 -Wcpp					default
 -Wctad-maybe-unsupported		c++ and objc++
--Wctor-dtor-privacy			c++
+-Wctor-dtor-privacy			c++ and objc++
 -Wdangling-else				enabled by -Wparentheses
 -Wdangling-pointer			enabled by -Wall
 -Wdangling-pointer=<0,2>		enabled by -Wall
@@ -148,7 +148,7 @@
 -Wdeclaration-missing-parameter-type	default
 -Wdefaulted-function-deleted		default, c++ and objc++
 -Wdelete-incomplete			c++ and objc++
--Wdelete-non-virtual-dtor		c++
+-Wdelete-non-virtual-dtor		c++ and objc++
 -Wdeprecated				default
 -Wdeprecated-copy			c++ and objc++
 -Wdeprecated-copy-dtor			c++ and objc++
@@ -224,7 +224,7 @@
 -Wintrinsic-shadow			fortran
 -Wintrinsics-std			fortran
 -Winvalid-constexpr			c++
--Winvalid-imported-macros		c++ and objc++
+-Winvalid-imported-macros		c++
 -Winvalid-memory-model			default
 -Winvalid-offsetof			c++ and objc++
 -Winvalid-utf8				enabled by -finput-charset=UTF-8
@@ -357,7 +357,9 @@
 -Wstringop-truncation			default
 -Wsubobject-linkage			c++ and objc++
 -Wsuggest-attribute=returns_nonnull	https://gcc.gnu.org/PR114833
--Wsuggest-override			c++ and objc++
+-Wsuggest-final-methods			c++
+-Wsuggest-final-types			c++
+-Wsuggest-override			c++
 -Wsurprising				fortran
 -Wswitch				enabled by -Wall
 -Wswitch-bool				default

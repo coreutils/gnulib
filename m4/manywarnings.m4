@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 31
+# serial 32
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -110,8 +110,8 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wduplicated-branches \
     -Wduplicated-cond \
     -Wextra \
-    -Wformat-signedness \
     -Wflex-array-member-not-at-end \
+    -Wformat-signedness \
     -Winit-self \
     -Winline \
     -Winvalid-pch \
@@ -138,8 +138,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wsuggest-attribute=malloc \
     -Wsuggest-attribute=noreturn \
     -Wsuggest-attribute=pure \
-    -Wsuggest-final-methods \
-    -Wsuggest-final-types \
     -Wsync-nand \
     -Wtrampolines \
     -Wuninitialized \
