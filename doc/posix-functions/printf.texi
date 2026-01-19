@@ -111,6 +111,10 @@ musl libc 1.2.4.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 14.0, NetBSD 5.0.
+@item
+This function returns zero instead of a negative number after running
+out of memory:
+OpenBSD 7.8.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{printf-gnu}:
