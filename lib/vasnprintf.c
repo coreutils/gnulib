@@ -134,6 +134,16 @@
 # include "fpucw.h"
 #endif
 
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+/* Override macros from fpucw.h.  */
+# undef DECL_LONG_DOUBLE_ROUNDING
+# define DECL_LONG_DOUBLE_ROUNDING
+# undef BEGIN_LONG_DOUBLE_ROUNDING
+# define BEGIN_LONG_DOUBLE_ROUNDING()
+# undef END_LONG_DOUBLE_ROUNDING
+# define END_LONG_DOUBLE_ROUNDING()
+#endif
+
 /* Default parameters.  */
 #ifndef VASNPRINTF
 # if WIDE_CHAR_VERSION
