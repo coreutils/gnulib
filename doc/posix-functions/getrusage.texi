@@ -19,4 +19,8 @@ Portability problems not fixed by Gnulib:
 @item
 Many platforms don't fill in all the fields of @code{struct rusage} with
 meaningful values.
+@item
+Some platforms fill the @code{ru_maxrss} field of @code{struct rusage}
+with the maximum resident set size in bytes instead of kilobytes:
+macOS 26.
 @end itemize
