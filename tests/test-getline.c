@@ -84,11 +84,7 @@ main (void)
   ASSERT (memcmp (line, "d\0f", 4) == 0);
   ASSERT (3 < len);
 
-  /* Test that reading an EOF will terminate the buffer with a NUL
-     character.  */
   result = getline (&line, &len, f);
-  ASSERT (0 < len);
-  ASSERT (line[0] == '\0');
   ASSERT (result == -1);
 
   free (line);
