@@ -21,6 +21,9 @@ the @code{AI_NUMERICSERV} hints flag.
 @item
 On native Windows, in 32-bit mode, this function is defined
 with a calling convention that is different from @code{cdecl}.
+@item
+On Solaris 10, this function does not support
+the @code{AI_NUMERICHOST} hints flag.
 @end itemize
 
 Portability problems not fixed by Gnulib:
