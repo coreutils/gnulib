@@ -1897,6 +1897,7 @@ This list of functions is sorted according to the header that declares them.
 * strtoumax::
 * wcstoimax::
 * wcstoumax::
+* umaxabs::
 @end menu
 
 @include posix-functions/imaxabs.texi
@@ -1905,6 +1906,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/strtoumax.texi
 @include posix-functions/wcstoimax.texi
 @include posix-functions/wcstoumax.texi
+@include posix-functions/umaxabs.texi
 
 @c @node Functions in <iso646.h>
 @c @section Functions in @code{<iso646.h>}
@@ -5160,7 +5162,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc grp.h::
 * Glibc gshadow.h::
 * Glibc ifaddrs.h::
-* Glibc inttypes.h::
 * Glibc link.h::
 * Glibc malloc.h::
 * Glibc math.h::
@@ -5737,16 +5738,6 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/getifaddrs.texi
 @include glibc-functions/freeifaddrs.texi
-
-@node Glibc inttypes.h
-@section Glibc Extensions to @code{<inttypes.h>}
-
-@menu
-* uimaxabs::
-@end menu
-
-@include glibc-functions/uimaxabs.texi
-
 
 @c @node Glibc iso646.h
 @c @section Glibc Extensions to @code{<iso646.h>}

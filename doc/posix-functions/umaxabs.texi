@@ -1,6 +1,6 @@
-@node uimaxabs
-@subsection @code{uimaxabs}
-@findex uimaxabs
+@node umaxabs
+@subsection @code{umaxabs}
+@findex umaxabs
 
 Documentation:
 @itemize
@@ -12,7 +12,7 @@ Documentation:
 @url{https://www.gnu.org/software/libc/manual/html_node/Absolute-Value.html},
 @end ifnotinfo
 @item
-@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/uimaxabs.3.html,,man uimaxabs}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/umaxabs.3.html,,man umaxabs}.
 @end itemize
 
 Gnulib module: ---
@@ -25,5 +25,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on most platforms:
-glibc 2.41, macOS 15, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.7, Minix, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin, mingw, MSVC 14.
+glibc 2.42, macOS 15, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.7, Minix, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin, mingw, MSVC 14.
 @end itemize
