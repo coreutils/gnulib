@@ -1,6 +1,6 @@
 /* A GNU-like <math.h>.
 
-   Copyright (C) 2002-2003, 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -2554,11 +2554,18 @@ _GL_CXXALIASWARN (yn);
 _GL_EXTERN_C int gl_isfinitef (float x);
 _GL_EXTERN_C int gl_isfinited (double x);
 _GL_EXTERN_C int gl_isfinitel (long double x);
-#  undef isfinite
-#  define isfinite(x) \
-   (sizeof (x) == sizeof (long double) ? gl_isfinitel (x) : \
-    sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
-    gl_isfinitef (x))
+#  ifdef __cplusplus
+template <typename T> int isfinite (T);
+template <> inline int isfinite<float> (float x) { return gl_isfinitef (x); }
+template <> inline int isfinite<double> (double x) { return gl_isfinited (x); }
+template <> inline int isfinite<long double> (long double x) { return gl_isfinitel (x); }
+#  else
+#   undef isfinite
+#   define isfinite(x) \
+      (sizeof (x) == sizeof (long double) ? gl_isfinitel (x) : \
+       sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
+       gl_isfinitef (x))
+#  endif
 # endif
 # ifdef __cplusplus
 #  if defined isfinite || defined GNULIB_NAMESPACE
