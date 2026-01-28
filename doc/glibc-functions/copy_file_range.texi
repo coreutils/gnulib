@@ -28,15 +28,15 @@ But the replacement function is only a stub: It always fails with error @code{EN
 
 @item
 This function has many problems on Linux kernel versions before 5.3.
-See @url{``Fixes for major copy_file_range() issues'',
-https://lwn.net/Articles/789527/}.
+See @url{https://lwn.net/Articles/789527/, ``Fixes for major
+copy_file_range() issues''}.
 On these kernel versions, the replacement function always fails with
 error @code{ENOSYS}.
 
 @item
 This function returns an incorrect value when the number of bytes copied
 exceeds @code{INT_MAX} on systems using glibc version 2.41 or 2.42.
-See @url{glibc bug 33245, https://sourceware.org/PR33245}.
+See @url{https://sourceware.org/PR33245, glibc bug 33245}.
 
 @item
 This function is provided on GNU/Hurd but it is only a stub: It always
