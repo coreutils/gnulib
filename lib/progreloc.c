@@ -259,7 +259,6 @@ find_executable (const char *argv0)
     char *link = xreadlink (buf);
     if (link != NULL && link[0] != '[')
       return link;
-    }
     if (executable_fd < 0)
       executable_fd = open (buf, O_EXEC | O_CLOEXEC, 0);
   }
