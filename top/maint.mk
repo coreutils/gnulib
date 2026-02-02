@@ -1744,6 +1744,7 @@ web-manual:
 	$(AM_V_GEN)test -z "$(manual_title)" \
 	  && { echo define manual_title in cfg.mk 1>&2; exit 1; } || :
 	$(AM_V_at)cd '$(srcdir)/doc'; \
+	  MAKEINFO="$(MAKEINFO)" \
 	  $(SHELL) ../$(_build-aux)/gendocs.sh $(gendocs_options_) \
 	     -o '$(abs_builddir)/doc/manual' \
 	     --email $(PACKAGE_BUGREPORT) $(PACKAGE) \
