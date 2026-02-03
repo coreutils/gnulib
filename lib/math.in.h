@@ -2596,11 +2596,18 @@ _GL_WARN_REAL_FLOATING_DECL (isfinite);
 _GL_EXTERN_C int gl_isinff (float x);
 _GL_EXTERN_C int gl_isinfd (double x);
 _GL_EXTERN_C int gl_isinfl (long double x);
-#  undef isinf
-#  define isinf(x) \
-   (sizeof (x) == sizeof (long double) ? gl_isinfl (x) : \
-    sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
-    gl_isinff (x))
+#  ifdef __cplusplus
+template <typename T> int isinf (T);
+template <> inline int isinf<float> (float x) { return gl_isinff (x); }
+template <> inline int isinf<double> (double x) { return gl_isinfd (x); }
+template <> inline int isinf<long double> (long double x) { return gl_isinfl (x); }
+#  else
+#   undef isinf
+#   define isinf(x) \
+      (sizeof (x) == sizeof (long double) ? gl_isinfl (x) : \
+       sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
+       gl_isinff (x))
+#  endif
 # endif
 # ifdef __cplusplus
 #  if defined isinf || defined GNULIB_NAMESPACE
