@@ -1,6 +1,6 @@
 # isfinite.m4
-# serial 20.1
-dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
+# serial 20.2
+dnl Copyright (C) 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -53,6 +53,8 @@ AC_DEFUN([gl_ISFINITEL_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isfinite(long double) works], [gl_cv_func_isfinitel_works],
     [
+      saved_LIBS="$LIBS"
+      LIBS="$LIBS $ISFINITE_LIBM"
       AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <limits.h>
@@ -186,5 +188,6 @@ int main ()
          *)                 gl_cv_func_isfinitel_works="guessing yes" ;;
        esac
       ])
+      LIBS="$saved_LIBS"
     ])
 ])
