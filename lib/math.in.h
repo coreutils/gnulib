@@ -2804,10 +2804,17 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
       && (!defined __cplusplus || __cplusplus < 201103))
 #  undef signbit
    /* GCC >= 4.0 and clang provide three built-ins for signbit.  */
-#  define signbit(x) \
-   (sizeof (x) == sizeof (long double) ? __builtin_signbitl (x) : \
-    sizeof (x) == sizeof (double) ? __builtin_signbit (x) : \
-    __builtin_signbitf (x))
+#  if defined __cplusplus && !defined __clang__
+template <typename T> int signbit (T);
+template <> inline int signbit<float> (float x) { return __builtin_signbitf (x); }
+template <> inline int signbit<double> (double x) { return __builtin_signbit (x); }
+template <> inline int signbit<long double> (long double x) { return __builtin_signbitl (x); }
+#  else
+#   define signbit(x) \
+      (sizeof (x) == sizeof (long double) ? __builtin_signbitl (x) : \
+       sizeof (x) == sizeof (double) ? __builtin_signbit (x) : \
+       __builtin_signbitf (x))
+#  endif
 # endif
 # if @REPLACE_SIGNBIT@ && !GNULIB_defined_signbit
 #  undef signbit
@@ -2851,10 +2858,17 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
         })
 #   endif
 #  endif
-#  define signbit(x) \
-   (sizeof (x) == sizeof (long double) ? gl_signbitl (x) : \
-    sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
-    gl_signbitf (x))
+#  if defined __cplusplus && !defined __clang__
+template <typename T> int signbit (T);
+template <> inline int signbit<float> (float x) { return gl_signbitf (x); }
+template <> inline int signbit<double> (double x) { return gl_signbitd (x); }
+template <> inline int signbit<long double> (long double x) { return gl_signbitl (x); }
+#  else
+#   define signbit(x) \
+      (sizeof (x) == sizeof (long double) ? gl_signbitl (x) : \
+       sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
+       gl_signbitf (x))
+#  endif
 #  define GNULIB_defined_signbit 1
 # endif
 # ifdef __cplusplus
