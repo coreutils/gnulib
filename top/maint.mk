@@ -1065,7 +1065,7 @@ sc_GFDL_version:
 # Look out for FSF postal addresses -- use URLs instead:
 # https://www.gnu.org/prep/maintain/html_node/License-Notices-for-Code.html
 sc_fsf_postal:
-	@prohibit='(Mass Ave|Massachusetts Ave|Temple Pl|Franklin St|Milk St)' \
+	@prohibit='([M]ass Ave|[M]assachusetts Ave|[T]emple Pl|[F]ranklin St|[M]ilk St)' \
 	halt='use license URLs instead of FSF postal address' \
 	 $(_sc_search_regexp)
 
