@@ -2737,17 +2737,33 @@ _GL_EXTERN_C int rpl_isnand (double x);
 _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #   define gl_isnan_l(x) rpl_isnanl (x)
 #  endif
-#  undef isnan
-#  define isnan(x) \
-   (sizeof (x) == sizeof (long double) ? gl_isnan_l (x) : \
-    sizeof (x) == sizeof (double) ? gl_isnan_d (x) : \
-    gl_isnan_f (x))
+#  ifdef __cplusplus
+#   undef isnan
+template <typename T> int isnan (T);
+template <> inline int isnan<float> (float x) { return gl_isnan_f (x); }
+template <> inline int isnan<double> (double x) { return gl_isnan_d (x); }
+template <> inline int isnan<long double> (long double x) { return gl_isnan_l (x); }
+#  else
+#   undef isnan
+#   define isnan(x) \
+      (sizeof (x) == sizeof (long double) ? gl_isnan_l (x) : \
+       sizeof (x) == sizeof (double) ? gl_isnan_d (x) : \
+       gl_isnan_f (x))
+#  endif
 # elif (__GNUC__ >= 4) || (__clang_major__ >= 4)
-#  undef isnan
-#  define isnan(x) \
-   (sizeof (x) == sizeof (long double) ? __builtin_isnan ((long double)(x)) : \
-    sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
-    __builtin_isnan ((float)(x)))
+#  ifdef __cplusplus
+#   undef isnan
+template <typename T> int isnan (T);
+template <> inline int isnan<float> (float x) { return __builtin_isnan (x); }
+template <> inline int isnan<double> (double x) { return __builtin_isnan (x); }
+template <> inline int isnan<long double> (long double x) { return __builtin_isnan (x); }
+#  else
+#   undef isnan
+#   define isnan(x) \
+      (sizeof (x) == sizeof (long double) ? __builtin_isnan ((long double)(x)) : \
+       sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
+       __builtin_isnan ((float)(x)))
+#  endif
 # endif
 # ifdef __cplusplus
 #  if defined isnan || defined GNULIB_NAMESPACE
