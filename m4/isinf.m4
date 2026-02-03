@@ -1,6 +1,6 @@
 # isinf.m4
-# serial 15
-dnl Copyright (C) 2007-2025 Free Software Foundation, Inc.
+# serial 15.1
+dnl Copyright (C) 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -56,6 +56,8 @@ AC_DEFUN([gl_ISINFL_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isinf(long double) works], [gl_cv_func_isinfl_works],
     [
+      saved_LIBS="$LIBS"
+      LIBS="$LIBS $ISINF_LIBM"
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
 #include <float.h>
@@ -177,5 +179,6 @@ int main ()
            ;;
        esac
       ])
+      LIBS="$saved_LIBS"
     ])
 ])
