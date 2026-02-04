@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2025-11-12.12 # UTC
+VERSION=2026-02-04.14 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -178,16 +178,19 @@ stub_line=$(sed -n "${stub_range}p" $news \
 test -n "$stub_line" \
   || die "one of line(s) $stub_range of $news must be exactly '$noteworthy_stub'"
 
+# One more than the line number $stub_line is relative to.
+stub_offset=$(sed -n "${stub_range}{=;q;}" "$news")
+
 ## --------------- ##
 ## Then, changes.  ##
 ## --------------- ##
 
 # Update NEWS to have today's date, plus desired version number and $type.
 env gl_ver=$ver gl_ver_stub="$ver_stub" \
-    gl_type=$type gl_type_stub="$type_stub" \
-    gl_date_stub="$date_stub" gl_line="$stub_line" \
+    gl_type=$type gl_type_stub="$type_stub" gl_date_stub="$date_stub" \
+    gl_offset="$stub_offset" gl_line="$stub_line" \
     perl -MPOSIX -pi \
-         -e 'if ($. == $ENV{gl_line}) {' \
+         -e 'if ($. == $ENV{gl_offset} + $ENV{gl_line} - 1) {' \
          -e '  my $today = strftime "%F", localtime time;' \
          -e '  s/\Q$ENV{gl_ver_stub}/$ENV{gl_ver}/;' \
          -e '  s/\Q$ENV{gl_date_stub}/($today)/;' \
