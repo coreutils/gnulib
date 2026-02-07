@@ -424,7 +424,7 @@ d=`dirname $srcfile`
   # Omit patterns that do not expand to file names.
   pats=
 
-  if case `$MAKEINFO --version | sed -e 's/^[^0-9]*//' -e 1q` in \
+  if case `eval $MAKEINFO --version | sed -e 's/^[^0-9]*//' -e 1q` in \
        [1-6]* | 7.[01]*) false;; \
        *) true;; \
      esac \
