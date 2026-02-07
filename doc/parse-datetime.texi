@@ -172,6 +172,7 @@ numerically or literally.  All these strings specify the same calendar date:
 22-11-14       # Assume 19xx for 69 through 99,
                # 20xx for 00 through 68 (not recommended).
 11/14/2022     # Common U.S. writing.
+14.11.2022     # Common European writing.
 14 November 2022
 14 Nov 2022    # Three-letter abbreviations always allowed.
 November 14, 2022
@@ -184,6 +185,7 @@ used, or the current year if none.  For example:
 
 @example
 11/14
+14.11.
 nov 14
 @end example
 
@@ -200,6 +202,8 @@ is added to it; otherwise, if @var{year} is less than 100,
 then 1900 is added to it.  The construct
 @samp{@var{month}/@var{day}/@var{year}}, popular in the United States,
 is accepted.  Also @samp{@var{month}/@var{day}}, omitting the year.
+Similarly, the construct @samp{@var{day}.@var{month}.@var{year}}, popular in
+Europe, and its short form @samp{@var{day}.@var{month}.} are accepted.
 
 @cindex month names in date strings
 @cindex abbreviations for months

@@ -224,6 +224,8 @@ typedef struct
   idx_t zones_seen;
   bool year_seen;
 
+  bool not_decimal;
+
 #ifdef GNULIB_PARSE_DATETIME2
   /* Print debugging output to stderr.  */
   bool parse_datetime_debug;
@@ -573,8 +575,8 @@ debug_print_relative_time (char const *item, parser_control const *pc)
 %parse-param { parser_control *pc }
 %lex-param { parser_control *pc }
 
-/* This grammar has 31 shift/reduce conflicts.  */
-%expect 31
+/* This grammar has 32 shift/reduce conflicts.  */
+%expect 32
 
 %union
 {
@@ -846,6 +848,19 @@ date:
             pc->day = $3.value;
             pc->year = $5;
           }
+      }
+  | tUNUMBER '.' tUNUMBER '.'
+      {
+        /* E.g., 17.6.  */
+        pc->day = $1.value;
+        pc->month = $3.value;
+      }
+  | tUNUMBER '.' tUNUMBER '.' tUNUMBER
+      {
+        /* E.g., 17.6.1992  */
+        pc->day = $1.value;
+        pc->month = $3.value;
+        pc->year = $5;
       }
   | tUNUMBER tMONTH tSNUMBER
       {
@@ -1460,8 +1475,15 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
 
           if ((c == '.' || c == ',') && c_isdigit (p[1]))
             {
+              /* We are at the second period in a DD.MM.YYYY date */
+              if (pc->not_decimal)
+                {
+                  pc->not_decimal = false;
+                  goto normal_value;
+                }
               time_t s = value;
               int digits;
+              char const *old_p = p;
 
               /* Accumulate fraction, to ns precision.  */
               p++;
@@ -1469,6 +1491,12 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
               for (digits = 2; digits <= LOG10_BILLION; digits++)
                 {
                   ns *= 10;
+                  /* Don't parse DD.MM.YYYY dates as a decimal  */
+                  if (*p == '.') {
+                    p = old_p;
+                    pc->not_decimal = true;
+                    goto normal_value;
+                  }
                   if (c_isdigit (*p))
                     ns += *p++ - '0';
                 }
@@ -1501,6 +1529,7 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
             }
           else
             {
+             normal_value:
               lvalp->textintval.negative = sign < 0;
               lvalp->textintval.value = value;
               lvalp->textintval.digits = p - pc->input;
@@ -1851,6 +1880,7 @@ parse_datetime_body (struct timespec *result, char const *p,
   pc.dsts_seen = 0;
   pc.zones_seen = 0;
   pc.year_seen = false;
+  pc.not_decimal = false;
   pc.debug_dates_seen = false;
   pc.debug_days_seen = false;
   pc.debug_times_seen = false;
