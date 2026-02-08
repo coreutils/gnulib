@@ -100,6 +100,7 @@ Documentation License''.
 * Keyword Substitutes::             Replacing language keywords.
 * Header File Substitutes::         Overriding system headers.
 * Function Substitutes::            Replacing system functions.
+* Legacy Header File Substitutes::  Overriding system headers.
 * Legacy Function Substitutes::     Replacing system functions.
 * Glibc Header File Substitutes::   Overriding system headers.
 * Glibc Function Substitutes::      Replacing system functions.
@@ -1173,7 +1174,6 @@ which (known) portability problems are not worked around by Gnulib.
 * stdnoreturn.h::
 * string.h::
 * strings.h::
-* stropts.h::
 * sys/ipc.h::
 * sys/mman.h::
 * sys/msg.h::
@@ -1185,7 +1185,6 @@ which (known) portability problems are not worked around by Gnulib.
 * sys/stat.h::
 * sys/statvfs.h::
 * sys/time.h::
-* sys/timeb.h::
 * sys/times.h::
 * sys/types.h::
 * sys/uio.h::
@@ -1198,12 +1197,8 @@ which (known) portability problems are not worked around by Gnulib.
 * tgmath.h::
 * threads.h::
 * time.h::
-* trace.h::
 * uchar.h::
-* ucontext.h::
-* ulimit.h::
 * unistd.h::
-* utime.h::
 * utmpx.h::
 * wchar.h::
 * wctype.h::
@@ -1269,7 +1264,6 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/stdnoreturn.texi
 @include posix-headers/string.texi
 @include posix-headers/strings.texi
-@include posix-headers/stropts.texi
 @include posix-headers/sys_ipc.texi
 @include posix-headers/sys_mman.texi
 @include posix-headers/sys_msg.texi
@@ -1281,7 +1275,6 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/sys_stat.texi
 @include posix-headers/sys_statvfs.texi
 @include posix-headers/sys_time.texi
-@include posix-headers/sys_timeb.texi
 @include posix-headers/sys_times.texi
 @include posix-headers/sys_types.texi
 @include posix-headers/sys_uio.texi
@@ -1294,12 +1287,8 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/tgmath.texi
 @include posix-headers/threads.texi
 @include posix-headers/time.texi
-@include posix-headers/trace.texi
 @include posix-headers/uchar.texi
-@include posix-headers/ucontext.texi
-@include posix-headers/ulimit.texi
 @include posix-headers/unistd.texi
-@include posix-headers/utime.texi
 @include posix-headers/utmpx.texi
 @include posix-headers/wchar.texi
 @include posix-headers/wctype.texi
@@ -4804,6 +4793,32 @@ This list of functions is sorted according to the header that declares them.
 
 @include posix-functions/wordexp.texi
 @include posix-functions/wordfree.texi
+
+@node Legacy Header File Substitutes
+@chapter Past POSIX Header File Substitutes
+
+This chapter describes which header files specified by older versions of
+POSIX are substituted by Gnulib, which portability pitfalls are fixed by
+Gnulib, and which (known) portability problems are not worked around by
+Gnulib.
+
+@nosuchmodulenote header file
+
+@menu
+* stropts.h::
+* sys/timeb.h::
+* trace.h::
+* ucontext.h::
+* ulimit.h::
+* utime.h::
+@end menu
+
+@include pastposix-headers/stropts.texi
+@include pastposix-headers/sys_timeb.texi
+@include pastposix-headers/trace.texi
+@include pastposix-headers/ucontext.texi
+@include pastposix-headers/ulimit.texi
+@include pastposix-headers/utime.texi
 
 @node Legacy Function Substitutes
 @chapter Past POSIX Function Substitutes
