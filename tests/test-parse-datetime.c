@@ -235,6 +235,41 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
 
+  /* DD.MM.YYYY */
+  p = "01.05.2011 11:55:18";
+  expected.tv_sec = ref_time - gmtoff;
+  expected.tv_nsec = 0;
+  ASSERT (parse_datetime (&result, p, NULL));
+  LOG (p, expected, result);
+  ASSERT (expected.tv_sec == result.tv_sec
+          && expected.tv_nsec == result.tv_nsec);
+
+  /* DD.MM. */
+  now.tv_sec = SOME_TIMEPOINT + 4711;
+  now.tv_nsec = 1267;
+  p = "01.05";
+  ASSERT (!parse_datetime (&result, p, &now));
+  p = "01.05.";
+  ASSERT (parse_datetime (&result, p, &now));
+  LOG (p, now, result);
+  ASSERT (result.tv_nsec == 0);
+
+  /* MM/DD/YYYY */
+  p = "05/01/2011 11:55:18";
+  expected.tv_sec = ref_time - gmtoff;
+  expected.tv_nsec = 0;
+  ASSERT (parse_datetime (&result, p, NULL));
+  LOG (p, expected, result);
+  ASSERT (expected.tv_sec == result.tv_sec
+          && expected.tv_nsec == result.tv_nsec);
+
+  /* MM/DD */
+  now.tv_sec = SOME_TIMEPOINT + 4711;
+  now.tv_nsec = 1267;
+  p = "05/01";
+  ASSERT (parse_datetime (&result, p, &now));
+  LOG (p, now, result);
+  ASSERT (result.tv_nsec == 0);
 
   now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
