@@ -279,14 +279,16 @@ windows_compute_revents_socket (SOCKET h, int sought, long lNetworkEvents)
       int error = WSAGetLastError ();
       WSASetLastError (0);
 
-      if (r > 0 || error == WSAENOTCONN)
-        happened |= (POLLIN | POLLRDNORM) & sought;
+      happened |= (POLLIN | POLLRDNORM) & sought;
 
+      if (r > 0 || error == WSAENOTCONN)
+        {
+          /* Do nothing */
+        }
       /* Distinguish hung-up sockets from other errors.  */
       else if (r == 0 || error == WSAESHUTDOWN || error == WSAECONNRESET
                || error == WSAECONNABORTED || error == WSAENETRESET)
         happened |= POLLHUP;
-
       else
         happened |= POLLERR;
     }
@@ -326,13 +328,18 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
       r = recv (fd, data, sizeof (data), MSG_PEEK);
       socket_errno = (r < 0) ? errno : 0;
 # endif
+
+      happened |= (POLLIN | POLLRDNORM) & sought;
+
       if (r == 0)
         happened |= POLLHUP;
 
       /* If the event happened on an unconnected server socket,
          that's fine. */
       else if (r > 0 || ( /* (r == -1) && */ socket_errno == ENOTCONN))
-        happened |= (POLLIN | POLLRDNORM) & sought;
+        {
+          /* Do nothing */
+        }
 
       /* Distinguish hung-up sockets from other errors.  */
       else if (socket_errno == ESHUTDOWN || socket_errno == ECONNRESET
