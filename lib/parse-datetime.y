@@ -575,8 +575,8 @@ debug_print_relative_time (char const *item, parser_control const *pc)
 %parse-param { parser_control *pc }
 %lex-param { parser_control *pc }
 
-/* This grammar has 32 shift/reduce conflicts.  */
-%expect 32
+/* This grammar has 31 shift/reduce conflicts.  */
+%expect 31
 
 %union
 {
@@ -595,7 +595,7 @@ debug_print_relative_time (char const *item, parser_control const *pc)
 %token <intval> tDAY tDAYZONE tLOCAL_ZONE tMERIDIAN
 %token <intval> tMONTH tORDINAL tZONE
 
-%token <textintval> tSNUMBER tUNUMBER
+%token <textintval> tSNUMBER tUNUMBER tUNUMBER_DOTTED
 %token <timespec> tSDECIMAL_NUMBER tUDECIMAL_NUMBER
 
 %type <intval> o_colon_minutes
@@ -855,7 +855,7 @@ date:
         pc->day = $1.value;
         pc->month = $3.value;
       }
-  | tUNUMBER '.' tUNUMBER '.' tUNUMBER
+  | tUNUMBER '.' tUNUMBER_DOTTED '.' tUNUMBER
       {
         /* E.g., 17.6.1992  */
         pc->day = $1.value;
@@ -1479,7 +1479,11 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
               if (pc->not_decimal)
                 {
                   pc->not_decimal = false;
-                  goto normal_value;
+                  lvalp->textintval.negative = sign < 0;
+                  lvalp->textintval.value = value;
+                  lvalp->textintval.digits = p - pc->input;
+                  pc->input = p;
+                  return tUNUMBER_DOTTED;
                 }
               time_t s = value;
               int digits;
@@ -1492,11 +1496,12 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
                 {
                   ns *= 10;
                   /* Don't parse DD.MM.YYYY dates as a decimal  */
-                  if (*p == '.') {
-                    p = old_p;
-                    pc->not_decimal = true;
-                    goto normal_value;
-                  }
+                  if (*p == '.')
+                    {
+                      p = old_p;
+                      pc->not_decimal = true;
+                      goto normal_value;
+                    }
                   if (c_isdigit (*p))
                     ns += *p++ - '0';
                 }
@@ -1529,6 +1534,7 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
             }
           else
             {
+              pc->not_decimal = false;
              normal_value:
               lvalp->textintval.negative = sign < 0;
               lvalp->textintval.value = value;

@@ -253,6 +253,10 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (result.tv_nsec == 0);
+  p = "01.05. 6:7:8.9";
+  ASSERT (parse_datetime (&result, p, NULL));
+  LOG (p, now, result);
+  ASSERT (result.tv_nsec == 900000000);
 
   /* MM/DD/YYYY */
   p = "05/01/2011 11:55:18";
@@ -270,6 +274,24 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (result.tv_nsec == 0);
+
+  /* DD.MM.YY MM/DD/YY equivalence */
+  p = "2.1.3 day";
+  ASSERT (parse_datetime (&result, p, NULL));
+  LOG (p, now, result);
+  p = "1/2/3 day";
+  ASSERT (parse_datetime (&result2, p, NULL));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec);
+
+  /* DD.MM. MM/DD equivalence */
+  p = "2.1. 3";
+  ASSERT (parse_datetime (&result, p, NULL));
+  LOG (p, now, result);
+  p = "1/2  3";
+  ASSERT (parse_datetime (&result2, p, NULL));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec);
 
   now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
