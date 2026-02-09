@@ -2716,7 +2716,7 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
       && (!defined __cplusplus || __cplusplus < 201103))
 #  undef signbit
    /* GCC >= 4.0 and clang provide three built-ins for signbit.  */
-#  ifdef __cplusplus
+#  if defined __cplusplus && !defined __clang__
 template <typename T> int signbit (T);
 template <> inline int signbit<float> (float x) { return __builtin_signbitf (x); }
 template <> inline int signbit<double> (double x) { return __builtin_signbit (x); }
@@ -2770,7 +2770,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
         })
 #   endif
 #  endif
-#  ifdef __cplusplus
+#  if defined __cplusplus && !defined __clang__
 template <typename T> int signbit (T);
 template <> inline int signbit<float> (float x) { return gl_signbitf (x); }
 template <> inline int signbit<double> (double x) { return gl_signbitd (x); }
