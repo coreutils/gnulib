@@ -2650,6 +2650,7 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #   define gl_isnan_l(x) rpl_isnanl (x)
 #  endif
 #  ifdef __cplusplus
+#   undef isnan
 template <typename T> int isnan (T);
 template <> inline int isnan<float> (float x) { return gl_isnan_f (x); }
 template <> inline int isnan<double> (double x) { return gl_isnan_d (x); }
@@ -2663,6 +2664,7 @@ template <> inline int isnan<long double> (long double x) { return gl_isnan_l (x
 #  endif
 # elif (__GNUC__ >= 4) || (__clang_major__ >= 4)
 #  ifdef __cplusplus
+#   undef isnan
 template <typename T> int isnan (T);
 template <> inline int isnan<float> (float x) { return __builtin_isnan (x); }
 template <> inline int isnan<double> (double x) { return __builtin_isnan (x); }
