@@ -1,5 +1,5 @@
 # gl-openssl.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2013-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,8 +24,8 @@ AC_DEFUN([gl_CRYPTO_CHECK],
     [[  --with-openssl[=ARG]    use libcrypto hash routines for the hash functions
                           MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512.
                           Valid ARGs are:
-                            'yes',
-                            'no',
+                            'yes' => use external libcrypto,
+                            'no' => use gnulib fallback implementation,
                             'auto' => use if any version available,
                             'auto-gpl-compat' => use if GPL compatible version
                                                  available,
