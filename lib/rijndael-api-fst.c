@@ -234,10 +234,12 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
         char *iv = cipher->IV;
         for (size_t i = numBlocks; i > 0; i--)
           {
-            block.words[0] = ((uint32_t *) input)[0] ^ ((uint32_t *) iv)[0];
-            block.words[1] = ((uint32_t *) input)[1] ^ ((uint32_t *) iv)[1];
-            block.words[2] = ((uint32_t *) input)[2] ^ ((uint32_t *) iv)[2];
-            block.words[3] = ((uint32_t *) input)[3] ^ ((uint32_t *) iv)[3];
+            uint32_t const *input_word = (uint32_t const *) input;
+            uint32_t const *iv_word = (uint32_t const *) iv;
+            block.words[0] = input_word[0] ^ iv_word[0];
+            block.words[1] = input_word[1] ^ iv_word[1];
+            block.words[2] = input_word[2] ^ iv_word[2];
+            block.words[3] = input_word[3] ^ iv_word[3];
             rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
             memcpy (cipher->IV, outBuffer, 16);
             input += 16;
@@ -317,10 +319,12 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
         char *iv = cipher->IV;
         for (size_t i = numBlocks; i > 0; i--)
           {
-            block.words[0] = ((uint32_t *) input)[0] ^ ((uint32_t *) iv)[0];
-            block.words[1] = ((uint32_t *) input)[1] ^ ((uint32_t *) iv)[1];
-            block.words[2] = ((uint32_t *) input)[2] ^ ((uint32_t *) iv)[2];
-            block.words[3] = ((uint32_t *) input)[3] ^ ((uint32_t *) iv)[3];
+            uint32_t const *input_word = (uint32_t const *) input;
+            uint32_t const *iv_word = (uint32_t const *) iv;
+            block.words[0] = input_word[0] ^ iv_word[0];
+            block.words[1] = input_word[1] ^ iv_word[1];
+            block.words[2] = input_word[2] ^ iv_word[2];
+            block.words[3] = input_word[3] ^ iv_word[3];
             rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
             memcpy (cipher->IV, outBuffer, 16);
             input += 16;
