@@ -103,7 +103,7 @@ GL_OPENSSL_INLINE void *
 GL_CRYPTO_FN (_read_ctx) (const struct _gl_ctx *ctx, void *restrict res)
 {
   /* Assume any unprocessed bytes in ctx are not to be ignored.  */
-  _gl_CTX tmp_ctx = *(_gl_CTX *) ctx;
+  _gl_CTX tmp_ctx = *(_gl_CTX const *) ctx;
   OPENSSL_FN (_Final) ((unsigned char *) res, &tmp_ctx);
   return res;
 }
