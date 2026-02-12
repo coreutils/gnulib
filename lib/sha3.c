@@ -137,19 +137,21 @@ DEFINE_SHA3_BUFFER (512)
 bool
 sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 {
+  char const *buf = buffer;
+
   if (0 < ctx->buflen)
     {
       size_t left = ctx->blocklen - ctx->buflen;
       if (len < left)
         {
           /* Not enough to fill a full block.  */
-          memcpy (ctx->buffer + ctx->buflen, buffer, len);
+          memcpy (ctx->buffer + ctx->buflen, buf, len);
           ctx->buflen += len;
           return true;
         }
       /* Process the block that already had bytes buffered.  */
-      memcpy (ctx->buffer + ctx->buflen, buffer, left);
-      buffer = (char *) buffer + left;
+      memcpy (ctx->buffer + ctx->buflen, buf, left);
+      buf += left;
       len -= left;
       sha3_process_block (ctx->buffer, ctx->blocklen, ctx);
     }
@@ -157,10 +159,10 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
   if (0 < len)
     {
       size_t full_blocks = (len / ctx->blocklen) * ctx->blocklen;
-      sha3_process_block (buffer, full_blocks, ctx);
-      buffer = (char *) buffer + full_blocks;
+      sha3_process_block (buf, full_blocks, ctx);
+      buf += full_blocks;
       len -= full_blocks;
-      memcpy (ctx->buffer, buffer, len);
+      memcpy (ctx->buffer, buf, len);
       ctx->buflen = len;
     }
   return true;
