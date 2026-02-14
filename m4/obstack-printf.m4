@@ -1,16 +1,15 @@
 # obstack-printf.m4
-# serial 5
-dnl Copyright (C) 2008-2025 Free Software Foundation, Inc.
+# serial 6
+dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 dnl This file is offered as-is, without any warranty.
 
 dnl From Eric Blake.
-dnl Test whether obstack_printf() exists.  For now, we assume that
-dnl obstack_vprintf behaves identically, so we only test for one.
 
-AC_DEFUN([gl_FUNC_OBSTACK_PRINTF],
+dnl Sets REPLACE_OBSTACK_PRINTF if needed.
+AC_DEFUN_ONCE([gl_FUNC_OBSTACK_PRINTF_REPLACE],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_OBSTACK])
@@ -18,6 +17,8 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF],
   dnl Persuade glibc <stdio.h> to declare obstack_printf(), obstack_vprintf().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
+  dnl Test whether obstack_printf() exists.  For now, we assume that
+  dnl obstack_vprintf behaves identically, so we only test for one.
   AC_CHECK_FUNCS_ONCE([obstack_printf])
   dnl The obstack_printf function from glibc does not work with the
   dnl 'struct obstack' defined in gnulib's <obstack.h>.  Therefore, when
@@ -25,6 +26,17 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF],
   if test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1; then
     gl_REPLACE_OBSTACK_PRINTF
   fi
+
+  m4_ifdef([gl_FUNC_OBSTACK_PRINTF_POSIX_REPLACE],
+    [gl_FUNC_OBSTACK_PRINTF_POSIX_REPLACE])
+
+  m4_ifdef([gl_FUNC_OBSTACK_PRINTF_GNU_REPLACE],
+    [gl_FUNC_OBSTACK_PRINTF_GNU_REPLACE])
+])
+
+AC_DEFUN([gl_FUNC_OBSTACK_PRINTF],
+[
+  gl_FUNC_OBSTACK_PRINTF_REPLACE
 
   gl_DECL_OBSTACK_PRINTF
 ])
