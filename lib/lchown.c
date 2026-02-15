@@ -137,10 +137,12 @@ rpl_lchown (const char *file, uid_t owner, gid_t group)
   if (result == 0 && change_time_check
       && (((owner == st.st_uid) | uid_noop)
           & ((group == st.st_gid) | gid_noop)))
-    utimensat (AT_FDCWD, file,
-               ((struct timespec[]) { get_stat_atime (&st),
-                                      get_stat_mtime (&st) }),
-               AT_SYMLINK_NOFOLLOW);
+    {
+      struct timespec times[2];
+      times[0] = get_stat_atime (&st);
+      times[1] = get_stat_mtime (&st);
+      utimensat (AT_FDCWD, file, times, AT_SYMLINK_NOFOLLOW);
+    }
 
   return result;
 }

@@ -156,10 +156,12 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
   if (result == 0 && change_time_check
       && (((owner == st.st_uid) | uid_noop)
           & ((group == st.st_gid) | gid_noop)))
-    utimensat (fd, file,
-               ((struct timespec[]) { get_stat_atime (&st),
-                                      get_stat_mtime (&st) }),
-               flag);
+    {
+      struct timespec times[2];
+      times[0] = get_stat_atime (&st);
+      times[1] = get_stat_mtime (&st);
+      utimensat (fd, file, times, flag);
+    }
 
   return result;
 }
