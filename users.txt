@@ -115,6 +115,7 @@ The following packages are using gnulib without gnulib-tool:
   miktex          https://miktex.org/
                   https://github.com/MiKTeX/miktex
   Net::CDP        https://st.aticpan.org/source/MCHAPMAN/Net-CDP-0.09/libcdp/
+  universal-ctags https://github.com/universal-ctags/ctags
   wydawca         https://git.gnu.org.ua/cgit/wydawca.git/tree/
   wyslij-po       https://git.gnu.org.ua/wyslij-po.git/tree/
 
