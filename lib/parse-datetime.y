@@ -99,8 +99,8 @@ static_assert (TYPE_MAXIMUM (time_t) <= INTMAX_MAX);
 static bool
 time_overflow (intmax_t n)
 {
-  return ! ((TYPE_SIGNED (time_t) ? TYPE_MINIMUM (time_t) <= n : 0 <= n)
-            && n <= TYPE_MAXIMUM (time_t));
+  time_t t;
+  return ckd_add (&t, n, 0);
 }
 
 /* Convert a possibly-signed character to an unsigned character.  This is
