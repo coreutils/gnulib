@@ -133,10 +133,12 @@ rpl_chown (const char *file, uid_t owner, gid_t group)
   if (result == 0 && change_time_check
       && (((uid == st.st_uid) | uid_noop)
           & ((gid == st.st_gid) | gid_noop)))
-    utimensat (AT_FDCWD, file,
-               ((struct timespec[]) { get_stat_atime (&st),
-                                      get_stat_mtime (&st) }),
-               0);
+    {
+      struct timespec times[2];
+      times[0] = get_stat_atime (&st);
+      times[1] = get_stat_mtime (&st);
+      utimensat (AT_FDCWD, file, times, 0);
+    }
 
   return result;
 }
