@@ -1167,6 +1167,7 @@ which (known) portability problems are not worked around by Gnulib.
 * stdbit.h::
 * stdbool.h::
 * stdckdint.h::
+* stdcountof.h::
 * stddef.h::
 * stdint.h::
 * stdio.h::
@@ -1257,6 +1258,7 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/stdbit.texi
 @include posix-headers/stdbool.texi
 @include posix-headers/stdckdint.texi
+@include posix-headers/stdcountof.texi
 @include posix-headers/stddef.texi
 @include posix-headers/stdint.texi
 @include posix-headers/stdio.texi

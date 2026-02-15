@@ -34,7 +34,13 @@ extern int integer;
 extern int unbounded[];
 extern int bounded[10];
 extern int multidimensional[10][20];
-extern int a, b, c;
+
+static int call_count;
+static int
+do_call ()
+{
+  return call_count++;
+}
 
 static void
 test_func (int parameter[3])
@@ -82,8 +88,15 @@ test_func (int parameter[3])
   /* Avoid MSVC C++ error C4576 "a parenthesized type followed by an
      initializer list is a non-standard explicit type conversion syntax".  */
 #if !defined __cplusplus
-  ASSERT (countof ((int[]) { a, b, c }) == 3);
-  ASSERT (countof (((int[]) { a, b, c })) == 3);
+  /* Work around a bug in MSVC 14.50, Oracle Developer Studio 12.6,
+     and IBM XL C for AIX 16.1, where sizeof of a designated
+     initializer evaluates the initializer.  */
+  if (sizeof (int[]) { do_call () } == sizeof (int[]) {0} && call_count == 0)
+    {
+      ASSERT (countof ((int[]) { do_call (), 0, 0 }) == 3);
+      ASSERT (countof (((int[]) { do_call (), 0, 0 })) == 3);
+      ASSERT (call_count == 0);
+    }
 #endif
 
   /* Check that countof(...) is an expression of type size_t.  */
@@ -110,13 +123,3 @@ main ()
 
   return test_exit_status;
 }
-
-/* A definition of the variables a, b, c is not required by ISO C, because
-   these identifiers are only used as part of 'sizeof' expressions whose
-   results are integer expressions.  See ISO C 23 § 6.9.1.(5).  However,
-   MSVC 14 and Oracle Developer Studio 12.6 generate actual references
-   to these variables.  We thus need to define these variables;
-   otherwise we get link errors.  */
-#if (defined _MSC_VER && !defined __clang__) || defined __SUNPRO_C
-int a, b, c;
-#endif

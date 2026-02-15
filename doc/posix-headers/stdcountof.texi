@@ -1,0 +1,29 @@
+@node stdcountof.h
+@section @file{stdcountof.h}
+
+POSIX specification:@* Not in POSIX yet, but we expect it will be.
+ISO draft C2y N3783
+(@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
+§ 7.21.
+
+Gnulib module: stdcountof-h
+@mindex stdcountof-h
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on many platforms:
+GCC 15, Clang 20, MSVC 14.50, Oracle Developer Studio 12.6,
+IBM Open XL C for AIX 17.1, TCC 0.9.27.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On some platforms, arguments of @code{countof} are evaluated
+if they contain designated initializers, e.g.,
+@code{countof ((int[]) @{getchar ()@})} incorrectly calls @code{getchar}.
+This is because these platforms have a similar bug with
+@code{sizeof ((int[]) @{getchar ()@})}:
+MSVC 14.50, Oracle Developer Studio 12.6, IBM XL C for AIX 16.1.
+@end itemize
