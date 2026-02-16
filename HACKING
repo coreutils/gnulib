@@ -223,6 +223,43 @@ For C source code:
   Only static variables are better kept declared upfront in a function or block.
 
 
+Acceptable use of LLM generated code
+====================================
+
+General-purpose LLMs as well as LLMs specialized for software programming
+can produce ready-to-use and, in many cases, actually working code.
+
+We need to avoid two problems with that:
+
+  * Copyright and license issue: An LLM may regurgitate a piece of copyrighted
+    code without the copyright header, thus violating the code's license.
+    (Most code licenses require that the copyright header remains intact when
+    the code is copied or becomes the basis of derivative works.)
+
+  * Maintainability issues: Such generated code has initially not been
+    reviewed by a human programmer. It is often greater in size than what a
+    careful programmer would write. Sometimes it also lacks comments.
+    People who use "vibe coding" often also observe that the code is of
+    lower quality.
+    Where software in general can be qualified as for long-term use vs.
+    short-term use, vibe coding tends to be more suitable for short-term used
+    software.
+
+To this end:
+
+  1) Code included in this package that comes from a single LLM prompt
+     must be limited in size: it must be at most 5 lines long.
+
+  2) As a submitter, you assert that you have reviewed such code that you
+     submit.
+
+Rule 1 guarantees that the LLM generated code size is smaller than the
+"legally significant for copyright purposes" threshold, see
+https://www.gnu.org/prep/maintain/html_node/Legally-Significant.html
+
+Rule 2 encourages you to not submit unreviewed garbage.
+
+
 Warning Options
 ===============
 
