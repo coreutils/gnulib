@@ -276,10 +276,10 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (result.tv_nsec == 0);
 
   /* DD.MM.YY MM/DD/YY equivalence */
-  p = "2.1.3 day";
+  p = "2.1.03 day";
   ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, now, result);
-  p = "1/2/3 day";
+  p = "1/2/03 day";
   ASSERT (parse_datetime (&result2, p, NULL));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec);
