@@ -53,7 +53,9 @@
 /* Return the glibc.cpu.hwcaps setting (prepended with "-"),
    corresponding to the passed gcc _builtin_cpu_supports(FEATURE).
    Supported hwcaps can be identified from the bit_cpu_* defines
-   in GLIBC's sysdeps/x86/include/cpu-features.h
+   in GLIBC's sysdeps/x86/include/cpu-features.h for x86 and
+   the HWCAP_* defines in sysdeps/unix/sysv/linux/aarch64/bits/hwcap.h
+   for aarch64.
    Note this mapping should resolve at compile time.  */
 ATTRIBUTE_PURE
 static inline char const *
@@ -70,6 +72,7 @@ gcc_feature_to_glibc_hwcap (char const *feature)
   else if (streq (feature, "pclmul"))       hwcap = "-PCLMULQDQ";
   else if (streq (feature, "vpclmulqdq"))   hwcap = "-VPCLMULQDQ";
   /* aarch64 */
+  else if (streq (feature, "asimd"))        hwcap = "-ASIMD";
   else if (streq (feature, "pmull"))        hwcap = "-PMULL";
 
   return hwcap;
