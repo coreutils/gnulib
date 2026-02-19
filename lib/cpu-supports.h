@@ -51,7 +51,7 @@
 
 
 /* Return the glibc.cpu.hwcaps setting (prepended with "-"),
-   corresponding to the passed gcc _builtin_cpu_supports(FEATURE).
+   corresponding to the passed gcc __builtin_cpu_supports(FEATURE).
    Supported hwcaps can be identified from the bit_cpu_* defines
    in GLIBC's sysdeps/x86/include/cpu-features.h for x86 and
    the HWCAP_* defines in sysdeps/unix/sysv/linux/aarch64/bits/hwcap.h
@@ -64,7 +64,7 @@ gcc_feature_to_glibc_hwcap (char const *feature)
   char const *hwcap = NULL;
 
   if (0) {}
-  /* x64_64 */
+  /* x86_64 */
   else if (streq (feature, "avx"))          hwcap = "-AVX";
   else if (streq (feature, "avx2"))         hwcap = "-AVX2";
   else if (streq (feature, "avx512bw"))     hwcap = "-AVX512BW";
