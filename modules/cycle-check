@@ -23,7 +23,7 @@ Include:
 "cycle-check.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering
