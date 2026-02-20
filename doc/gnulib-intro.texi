@@ -208,6 +208,8 @@ OpenBSD 7.0 or newer is occasionally tested.
 @item
 NetBSD 10.0 or newer is occasionally tested.
 @item
+CheriBSD 25.03 or newer is occasionally tested.
+@item
 AIX 7.1 and 7.3 are occasionally tested.
 @item
 Solaris 10 and 11.4 are occasionally tested.  Solaris 9 is rarely
