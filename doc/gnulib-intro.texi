@@ -258,6 +258,8 @@ Mac OS X 10.4 and older.
 @item
 AIX 6 and older.
 @item
+IBM XL C/C++ 13.1 and older.
+@item
 HP-UX 11.31.
 @item
 @c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
