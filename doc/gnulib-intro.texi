@@ -332,7 +332,8 @@ descends from the System/38 (1978).
 
 @item
 The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
-integers use a ones'-complement representation.  On these machines,
+integers use a ones'-complement representation that conforms to
+C17 and earlier but not to C23 and later.  On these machines,
 @code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
 @code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
 requirement that it be one less than a power of two.  Although
@@ -345,7 +346,8 @@ The Unisys ClearPath Libra's machine word is 48 bits
 with a 4-bit tag and a 4-bit data extension.  Its
 @code{unsigned int} uses the low-order 40 bits of the word, and
 @code{int} uses the low-order 41 bits of the word with a
-signed-magnitude representation.  On these machines, @code{INT_MAX ==
+signed-magnitude representation that conforms to C17 and earlier
+but not to C23 and later.  On these machines, @code{INT_MAX ==
 UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
 This platform's architecture descends from the Burroughs B5000 (1961).
 @end itemize
