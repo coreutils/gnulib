@@ -1,0 +1,12 @@
+Files:
+tests/test-strnul.c
+tests/macros.h
+
+Depends-on:
+strnul-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strnul
+check_PROGRAMS += test-strnul
