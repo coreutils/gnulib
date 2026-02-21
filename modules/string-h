@@ -68,6 +68,7 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_STRNCPY''@/$(GNULIB_STRNCPY)/g' \
 	      -e 's/@''GNULIB_STRNDUP''@/$(GNULIB_STRNDUP)/g' \
 	      -e 's/@''GNULIB_STRNLEN''@/$(GNULIB_STRNLEN)/g' \
+	      -e 's/@''GNULIB_STRNUL''@/$(GNULIB_STRNUL)/g' \
 	      -e 's/@''GNULIB_STRPBRK''@/$(GNULIB_STRPBRK)/g' \
 	      -e 's/@''GNULIB_STRSEP''@/$(GNULIB_STRSEP)/g' \
 	      -e 's/@''GNULIB_STRSTR''@/$(GNULIB_STRSTR)/g' \
