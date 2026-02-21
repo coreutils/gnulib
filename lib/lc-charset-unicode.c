@@ -35,7 +35,7 @@
 # include <wchar.h>
 
 # include "localcharset.h"
-# include "streq.h"
+# include "streq-opt.h"
 # include "glthread/once.h"
 # include "glthread/tls.h"
 # include "unistr.h"

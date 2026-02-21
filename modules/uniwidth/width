@@ -10,7 +10,7 @@ lib/unictype/bitmap.h
 
 Depends-on:
 uniwidth/base
-streq
+streq-opt
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [uniwidth/width])

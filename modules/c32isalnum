@@ -18,7 +18,7 @@ uchar-h
 wchar-h
 wctype-h
 localcharset    [test $REPLACE_MBSTATE_T = 1]
-streq           [test $REPLACE_MBSTATE_T = 1]
+streq-opt       [test $REPLACE_MBSTATE_T = 1]
 unictype/ctype-alnum
 assert-h
 

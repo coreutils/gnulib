@@ -2,7 +2,7 @@ Description:
 Optimized string comparison.
 
 Files:
-lib/streq.h
+lib/streq-opt.h
 
 Depends-on:
 stringeq
@@ -12,7 +12,7 @@ configure.ac:
 Makefile.am:
 
 Include:
-"streq.h"
+"streq-opt.h"
 
 License:
 LGPLv2+

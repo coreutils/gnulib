@@ -20,7 +20,7 @@ wchar-h
 wctype-h
 iswxdigit
 localcharset    [test $REPLACE_MBSTATE_T = 1]
-streq           [test $REPLACE_MBSTATE_T = 1]
+streq-opt       [test $REPLACE_MBSTATE_T = 1]
 unictype/ctype-xdigit
 assert-h
 

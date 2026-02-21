@@ -16,7 +16,7 @@ attribute       [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 wchar-h         [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 wcrtomb         [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 localcharset    [{ test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1; } && test $SMALL_WCHAR_T = 1]
-streq           [{ test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1; } && test $SMALL_WCHAR_T = 1]
+streq-opt       [{ test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1; } && test $SMALL_WCHAR_T = 1]
 
 configure.ac:
 gl_FUNC_C32RTOMB

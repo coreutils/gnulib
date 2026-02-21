@@ -78,6 +78,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-02-21  streq           This module is renamed to 'streq-opt'. Its include
+                            file is renamed from "streq.h" to "streq-opt.h".
+
 2025-12-04  issymlinkat     The include file is changed from "issymlink.h" to
                             "issymlinkat.h".
 

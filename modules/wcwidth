@@ -11,7 +11,7 @@ wchar-h
 extensions
 wctype-h        [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
 localcharset    [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
-streq           [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
+streq-opt       [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
 uniwidth/width  [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
 
 configure.ac:

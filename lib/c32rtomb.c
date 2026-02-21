@@ -26,7 +26,7 @@
 
 #include "attribute.h" /* FALLTHROUGH */
 #include "localcharset.h"
-#include "streq.h"
+#include "streq-opt.h"
 
 #if GL_CHAR32_T_IS_UNICODE
 # include "lc-charset-unicode.h"

@@ -19,7 +19,7 @@ wchar-h
 wctype-h
 iswdigit
 localcharset    [test $REPLACE_MBSTATE_T = 1]
-streq           [test $REPLACE_MBSTATE_T = 1]
+streq-opt       [test $REPLACE_MBSTATE_T = 1]
 unictype/ctype-digit
 assert-h
 

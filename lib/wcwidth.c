@@ -23,7 +23,7 @@
 #include <wctype.h>
 
 #include "localcharset.h"
-#include "streq.h"
+#include "streq-opt.h"
 #include "uniwidth.h"
 
 /* Returns 1 if the current locale is an UTF-8 locale, 0 otherwise.  */

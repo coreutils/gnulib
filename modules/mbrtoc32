@@ -31,7 +31,7 @@ mbsinit         [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && t
 mbszero         [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
 assert-h        [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 localcharset    [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
-streq           [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
+streq-opt       [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 
 configure.ac:
 gl_FUNC_MBRTOC32

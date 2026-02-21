@@ -29,7 +29,7 @@
 #endif
 
 #if GNULIB_defined_mbstate_t
-# include "streq.h"
+# include "streq-opt.h"
 #endif
 
 #include "localcharset.h"

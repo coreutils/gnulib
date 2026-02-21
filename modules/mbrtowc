@@ -28,7 +28,7 @@ hard-locale     [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && tes
 mbsinit         [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && test $REPLACE_MBSTATE_T = 0]
 assert-h        [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 localcharset    [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
-streq           [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+streq-opt       [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBRTOWC

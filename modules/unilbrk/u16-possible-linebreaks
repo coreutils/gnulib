@@ -10,7 +10,7 @@ Depends-on:
 unilbrk/base
 unilbrk/tables
 unistr/u16-mbtouc-unsafe
-streq
+streq-opt
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unilbrk/u16-possible-linebreaks])
