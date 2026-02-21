@@ -19,6 +19,7 @@ alphasort
 sh-quote
 safe-read
 stringeq
+str_endswith
 xmalloca
 xvasprintf
 gettext-h

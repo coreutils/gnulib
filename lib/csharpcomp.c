@@ -177,9 +177,7 @@ compile_csharp_using_mono (const char * const *sources,
         for (unsigned int i = 0; i < sources_count; i++)
           {
             const char *source_file = sources[i];
-            if (strlen (source_file) >= 10
-                && memeq (source_file + strlen (source_file) - 10,
-                          ".resources", 10))
+            if (str_endswith (source_file, ".resources"))
               {
                 char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
 
@@ -588,10 +586,7 @@ compile_csharp_using_dotnet (const char * const *sources,
             const char *source_file = sources[i];
             char *source_file_converted = cygpath_w (source_file);
             *mallocedp++ = source_file_converted;
-            if (strlen (source_file_converted) >= 10
-                && memeq ((source_file_converted
-                           + strlen (source_file_converted) - 10),
-                          ".resources", 10))
+            if (str_endswith (source_file_converted, ".resources"))
               {
                 char *option =
                   (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -771,10 +766,7 @@ compile_csharp_using_dotnet (const char * const *sources,
                 const char *source_file = sources[i];
                 char *source_file_converted = cygpath_w (source_file);
                 *mallocedp++ = source_file_converted;
-                if (strlen (source_file_converted) >= 10
-                    && memeq ((source_file_converted
-                               + strlen (source_file_converted) - 10),
-                              ".resources", 10))
+                if (str_endswith (source_file_converted, ".resources"))
                   {
                     char *option =
                       (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -934,10 +926,7 @@ compile_csharp_using_sscli (const char * const *sources,
             const char *source_file = sources[i];
             char *source_file_converted = cygpath_w (source_file);
             *mallocedp++ = source_file_converted;
-            if (strlen (source_file_converted) >= 10
-                && memeq ((source_file_converted
-                           + strlen (source_file_converted) - 10),
-                          ".resources", 10))
+            if (str_endswith (source_file_converted, ".resources"))
               {
                 char *option =
                   (char *) xmalloc (10 + strlen (source_file_converted) + 1);
@@ -990,9 +979,7 @@ compile_csharp_class (const char * const *sources,
                       bool optimize, bool debug,
                       bool verbose)
 {
-  bool output_is_library =
-    (strlen (output_file) >= 4
-     && memeq (output_file + strlen (output_file) - 4, ".dll", 4));
+  bool output_is_library = str_endswith (output_file, ".dll");
 
   int result;
 
