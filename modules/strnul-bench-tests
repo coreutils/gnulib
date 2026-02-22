@@ -1,0 +1,16 @@
+Files:
+tests/bench-strnul.c
+tests/bench-multibyte.h
+tests/bench.h
+
+Depends-on:
+strnul
+striconv
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-strnul
+bench_strnul_LDADD = $(LDADD) $(LIBICONV)
