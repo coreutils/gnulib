@@ -363,8 +363,10 @@ sha3_free_ctx (struct sha3_ctx *ctx)
 {
   if (ctx->evp_ctx != NULL)
     {
+      int saved_errno = errno;
       EVP_MD_CTX_free (ctx->evp_ctx);
       ctx->evp_ctx = NULL;
+      errno = saved_errno;
     }
 }
 

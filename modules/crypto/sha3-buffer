@@ -11,6 +11,7 @@ Depends-on:
 bool
 byteswap
 c99
+free-posix
 stddef-h
 stdint-h
 u64
