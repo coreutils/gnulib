@@ -46,22 +46,45 @@ static const struct test_case test_cases[] = {
 };
 
 static int
+mismatch (char const expect[SHA3_256_DIGEST_SIZE],
+          char const buf[SHA3_256_DIGEST_SIZE])
+{
+  if (memcmp (expect, buf, SHA3_256_DIGEST_SIZE) == 0)
+    return 0;
+  printf ("expected:\n");
+  for (size_t i = 0; i < SHA3_256_DIGEST_SIZE; i++)
+    printf ("%02x ", expect[i] & 0xFFu);
+  printf ("\ncomputed:\n");
+  for (size_t i = 0; i < SHA3_256_DIGEST_SIZE; i++)
+    printf ("%02x ", buf[i] & 0xFFu);
+  printf ("\n");
+  return 1;
+}
+
+static int
 check (char const *message, size_t len, char const *expect)
 {
+  int failed = 0;
+
   char buf[SHA3_256_DIGEST_SIZE];
-  if (memcmp (sha3_256_buffer (message, len, buf),
-              expect, SHA3_256_DIGEST_SIZE) != 0)
+  failed |= mismatch (expect, sha3_256_buffer (message, len, buf));
+
+  while (SHA3_256_BLOCK_SIZE <= len)
     {
-      printf ("expected:\n");
-      for (size_t i = 0; i < SHA3_256_DIGEST_SIZE; i++)
-        printf ("%02x ", expect[i] & 0xFFu);
-      printf ("\ncomputed:\n");
-      for (size_t i = 0; i < SHA3_256_DIGEST_SIZE; i++)
-        printf ("%02x ", buf[i] & 0xFFu);
-      printf ("\n");
-      return 1;
+      struct sha3_ctx ctx;
+      sha3_256_init_ctx (&ctx);
+      int part = SHA3_256_BLOCK_SIZE / 3;
+      sha3_process_bytes (message, part, &ctx);
+      sha3_process_bytes (message + part, SHA3_256_BLOCK_SIZE - part, &ctx);
+      char buf2[SHA3_256_DIGEST_SIZE];
+      sha3_finish_ctx (&ctx, buf2);
+      failed |= mismatch (sha3_256_buffer (message, SHA3_256_BLOCK_SIZE, buf),
+                          buf2);
+      message += SHA3_256_BLOCK_SIZE;
+      len -= SHA3_256_BLOCK_SIZE;
     }
-  return 0;
+
+  return failed;
 }
 
 int
