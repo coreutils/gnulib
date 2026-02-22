@@ -163,8 +163,8 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
       buf += full_blocks;
       len -= full_blocks;
       memcpy (ctx->buffer, buf, len);
-      ctx->buflen = len;
     }
+  ctx->buflen = len;
   return true;
 }
 
