@@ -75,11 +75,15 @@ check (char const *message, size_t len, char const *expect)
       sha3_256_init_ctx (&ctx);
       int part = SHA3_256_BLOCK_SIZE / 3;
       sha3_process_bytes (message, part, &ctx);
+      sha3_read_ctx (&ctx, buf);
       sha3_process_bytes (message + part, SHA3_256_BLOCK_SIZE - part, &ctx);
       char buf2[SHA3_256_DIGEST_SIZE];
       sha3_finish_ctx (&ctx, buf2);
-      failed |= mismatch (sha3_256_buffer (message, SHA3_256_BLOCK_SIZE, buf),
-                          buf2);
+      if (mismatch (sha3_256_buffer (message, SHA3_256_BLOCK_SIZE, buf), buf2))
+        {
+          failed = 1;
+          break;
+        }
       message += SHA3_256_BLOCK_SIZE;
       len -= SHA3_256_BLOCK_SIZE;
     }

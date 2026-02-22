@@ -373,8 +373,21 @@ sha3_free_ctx (struct sha3_ctx *ctx)
 void *
 sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
 {
-  /* Assume any unprocessed bytes in ctx are not to be ignored.  */
-  return sha3_finish_ctx ((struct sha3_ctx *) ctx, resbuf);
+  void *result = NULL;
+  int err = ENOMEM;
+  EVP_MD_CTX *evp_ctx = EVP_MD_CTX_new ();
+  if (evp_ctx)
+    {
+      if (EVP_MD_CTX_copy_ex (evp_ctx, ctx->evp_ctx))
+        {
+          if (EVP_DigestFinal_ex (evp_ctx, resbuf, 0))
+            result = resbuf;
+          err = EINVAL;
+        }
+      EVP_MD_CTX_free (evp_ctx);
+    }
+  errno = err; /* OK to set errno even if successful.  */
+  return result;
 }
 
 void *
