@@ -1557,8 +1557,6 @@ _GL_EXTERN_C char * mbstok_r (char *restrict string, const char *delim,
 _GL_EXTERN_C bool mbs_startswith (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
-/* No extra code is needed for multibyte locales for this function.  */
-# define mbs_startswith str_startswith
 #endif
 
 #if @GNULIB_MBS_ENDSWITH@
