@@ -1,6 +1,6 @@
 /* A GNU-like <string.h>.
 
-   Copyright (C) 1995-1996, 2001-2025 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 2001-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -1546,8 +1546,6 @@ _GL_EXTERN_C char * mbstok_r (char *restrict string, const char *delim,
 _GL_EXTERN_C bool mbs_startswith (const char *string, const char *prefix)
      _GL_ATTRIBUTE_PURE
      _GL_ARG_NONNULL ((1, 2));
-/* No extra code is needed for multibyte locales for this function.  */
-# define mbs_startswith str_startswith
 #endif
 
 #if @GNULIB_MBS_ENDSWITH@
