@@ -10,6 +10,7 @@ uchar-h
 wchar-h
 iconv
 localcharset
+stringeq
 streq
 once
 tls

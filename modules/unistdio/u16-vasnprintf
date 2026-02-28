@@ -44,6 +44,7 @@ memchr
 multiarch
 assert-h
 mbszero
+stringeq
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS

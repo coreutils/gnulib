@@ -11,7 +11,6 @@ m4/libunistring-base.m4
 Depends-on:
 gen-header
 bool
-stringeq
 unitypes-h
 
 configure.ac:
