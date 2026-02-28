@@ -12,6 +12,7 @@ Depends-on:
 math-h
 fpieee
 memcmp
+stringeq
 
 configure.ac:
 gl_FUNC_ISNANF

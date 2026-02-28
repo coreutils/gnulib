@@ -12,6 +12,7 @@ m4/isnand.m4
 Depends-on:
 fpieee
 memcmp
+stringeq
 
 configure.ac:
 gl_FUNC_ISNAND_NO_LIBM

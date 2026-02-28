@@ -18,6 +18,7 @@ d-ino
 fcntl-h
 ialloc
 memcmp
+stringeq
 opendirat
 readdir
 renameatu
