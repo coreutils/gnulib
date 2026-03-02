@@ -39,13 +39,18 @@
 #include <stddef.h>
 
 /* Returns the number of elements of the array A, as a value of type size_t.
+
    Example declarations of arrays:
      extern int a[];
      extern int a[10];
      static int a[10][20];
      void func () { int a[10]; ... }
-   Attempts to produce an error if A is a pointer, e.g. in
+   It works for arrays that are declared outside functions and for local
+   variables of array type.  It does *not* work for function parameters
+   of array type, because they are actually parameters of pointer type.
+   In this case, i.e. if A is a pointer, e.g. in
      void func (int a[10]) { ... }
+   this macro attempts to produce an error.
  */
 #define countof(...) \
   ((size_t) (sizeof (__VA_ARGS__) / sizeof (__VA_ARGS__)[0] \
