@@ -18,7 +18,6 @@ read-file
 bool
 stdint-h
 unistd-h
-streq
 memeq
 
 configure.ac:

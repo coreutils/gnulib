@@ -125,16 +125,16 @@ main (int argc, char *argv[])
     case 2:
       /* Check argument passing.  */
       return !(argc == 12
-               && streq (argv[2], "abc def")
-               && streq (argv[3], "abc\"def\"ghi")
-               && streq (argv[4], "xyz\"")
-               && streq (argv[5], "abc\\def\\ghi")
-               && streq (argv[6], "xyz\\")
-               && streq (argv[7], "???")
-               && streq (argv[8], "***")
-               && streq (argv[9], "")
-               && streq (argv[10], "foo")
-               && streq (argv[11], ""));
+               && strcmp (argv[2], "abc def") == 0
+               && strcmp (argv[3], "abc\"def\"ghi") == 0
+               && strcmp (argv[4], "xyz\"") == 0
+               && strcmp (argv[5], "abc\\def\\ghi") == 0
+               && strcmp (argv[6], "xyz\\") == 0
+               && strcmp (argv[7], "???") == 0
+               && strcmp (argv[8], "***") == 0
+               && strcmp (argv[9], "") == 0
+               && strcmp (argv[10], "foo") == 0
+               && strcmp (argv[11], "") == 0);
     #if !(defined _WIN32 && !defined __CYGWIN__)
     case 3:
       /* Check SIGPIPE handling with ignore_sigpipe = false.  */
@@ -192,7 +192,7 @@ main (int argc, char *argv[])
               p += strlen (p);
             }
         const char *expected = (test < 16 ? "0 1 2 10 " : "0 1 2 ");
-        if (streq (buf, expected))
+        if (strcmp (buf, expected) == 0)
           return 0;
         else
           {
@@ -243,7 +243,7 @@ main (int argc, char *argv[])
         if (getcwd (cwd, sizeof (cwd)) == NULL)
           return 2;
         #endif
-        return (argc == 3 && streq (argv[2], cwd) ? 0 : 3);
+        return (argc == 3 && strcmp (argv[2], cwd) == 0 ? 0 : 3);
       }
     default:
       abort ();
