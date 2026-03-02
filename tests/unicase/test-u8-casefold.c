@@ -20,6 +20,7 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "unistr.h"
@@ -115,19 +116,19 @@ main ()
         0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
         0xED, 0x95, 0x9C, 0xEA, 0xB8, 0x80, '\n'
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
   }
 
   /* Case mapping can increase the number of Unicode characters.  */
   { /* LATIN SMALL LETTER N PRECEDED BY APOSTROPHE */
     static const uint8_t input[]      = { 0xC5, 0x89 };
     static const uint8_t casefolded[] = { 0xCA, 0xBC, 0x6E };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
   }
   { /* GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS */
     static const uint8_t input[]      = { 0xCE, 0x90 };
     static const uint8_t casefolded[] = { 0xCE, 0xB9, 0xCC, 0x88, 0xCC, 0x81 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
   }
 
   /* Turkish letters i İ ı I */
@@ -135,42 +136,42 @@ main ()
     static const uint8_t input[]         = { 0x49 };
     static const uint8_t casefolded[]    = { 0x69 };
     static const uint8_t casefolded_tr[] = { 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casefolded_tr, SIZEOF (casefolded_tr)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casefolded_tr, countof (casefolded_tr)) == 0);
   }
   { /* LATIN SMALL LETTER I */
     static const uint8_t input[]      = { 0x69 };
     static const uint8_t casefolded[] = { 0x69 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casefolded, countof (casefolded)) == 0);
   }
   { /* LATIN CAPITAL LETTER I WITH DOT ABOVE */
     static const uint8_t input[]         = { 0xC4, 0xB0 };
     static const uint8_t casefolded[]    = { 0x69, 0xCC, 0x87 };
     static const uint8_t casefolded_tr[] = { 0x69 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casefolded_tr, SIZEOF (casefolded_tr)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casefolded_tr, countof (casefolded_tr)) == 0);
   }
   { /* LATIN SMALL LETTER DOTLESS I */
     static const uint8_t input[]      = { 0xC4, 0xB1 };
     static const uint8_t casefolded[] = { 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casefolded, countof (casefolded)) == 0);
   }
   { /* "topkapı" */
     static const uint8_t input[] =
       { 0x74, 0x6F, 0x70, 0x6B, 0x61, 0x70, 0xC4, 0xB1 };
     static const uint8_t casefolded[] =
       { 0x74, 0x6F, 0x70, 0x6B, 0x61, 0x70, 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casefolded, countof (casefolded)) == 0);
   }
 
   /* Uppercasing can increase the number of Unicode characters.  */
   { /* "heiß" */
     static const uint8_t input[]      = { 0x68, 0x65, 0x69, 0xC3, 0x9F };
     static const uint8_t casefolded[] = { 0x68, 0x65, 0x69, 0x73, 0x73 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
   }
 
   /* Case mappings for some characters can depend on the surrounding characters.  */
@@ -189,7 +190,7 @@ main ()
         ' ', 0xCF, 0x80, 0xCE, 0xBB, 0xCE, 0xB7, 0xCF, 0x81, 0xCE, 0xBF,
         0xCF, 0x86, 0xCE, 0xBF, 0xCF, 0x81, 0xCE, 0xAF, 0xCE, 0xB5, 0xCF, 0x83
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casefolded, countof (casefolded)) == 0);
   }
 
   /* Case mapping can require subsequent normalization.  */
@@ -198,9 +199,9 @@ main ()
     static const uint8_t casefolded[]            = { 0x6A, 0xCC, 0x8C, 0xCC, 0xA3 };
     static const uint8_t casefolded_decomposed[] = { 0x6A, 0xCC, 0xA3, 0xCC, 0x8C };
     static const uint8_t casefolded_normalized[] = { 0xC7, 0xB0, 0xCC, 0xA3 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL,        casefolded, SIZEOF (casefolded)) == 0);
-    ASSERT (check (input, SIZEOF (input), NULL, UNINORM_NFD, casefolded_decomposed, SIZEOF (casefolded_decomposed)) == 0);
-    ASSERT (check (input, SIZEOF (input), NULL, UNINORM_NFC, casefolded_normalized, SIZEOF (casefolded_normalized)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL,        casefolded, countof (casefolded)) == 0);
+    ASSERT (check (input, countof (input), NULL, UNINORM_NFD, casefolded_decomposed, countof (casefolded_decomposed)) == 0);
+    ASSERT (check (input, countof (input), NULL, UNINORM_NFC, casefolded_normalized, countof (casefolded_normalized)) == 0);
   }
 
   return test_exit_status;

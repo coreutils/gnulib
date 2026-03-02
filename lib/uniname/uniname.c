@@ -28,13 +28,12 @@
 #include "uniname.h"
 
 #include <assert.h>
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "attribute.h"
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 
 /* Table of Unicode character names, derived from UnicodeData.txt.
@@ -74,7 +73,7 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
    */
 
   unsigned int i1 = 0;
-  unsigned int i2 = SIZEOF (unicode_name_by_length) - 1;
+  unsigned int i2 = countof (unicode_name_by_length) - 1;
   while (i2 - i1 > 1)
     {
       unsigned int i = (i1 + i2) >> 1;
@@ -95,7 +94,7 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
 static int
 unicode_name_word_lookup (const char *word, size_t length)
 {
-  if (length > 0 && length < SIZEOF (unicode_name_by_length) - 1)
+  if (length > 0 && length < countof (unicode_name_by_length) - 1)
     {
       /* Binary search among the words of given length.  */
       unsigned int extra_offset = unicode_name_by_length[length].extra_offset;
@@ -141,7 +140,7 @@ unicode_code_to_index (ucs4_t c)
 {
   /* Binary search in unicode_ranges.  */
   unsigned int i1 = 0;
-  unsigned int i2 = SIZEOF (unicode_ranges);
+  unsigned int i2 = countof (unicode_ranges);
 
   for (;;)
     {
@@ -179,7 +178,7 @@ unicode_index_to_code (uint16_t index)
 {
   /* Binary search in unicode_ranges.  */
   unsigned int i1 = 0;
-  unsigned int i2 = SIZEOF (unicode_ranges);
+  unsigned int i2 = countof (unicode_ranges);
 
   for (;;)
     {
@@ -295,7 +294,7 @@ unicode_character_name (ucs4_t c, char *buf)
         {
           /* Binary search in unicode_code_to_name.  */
           unsigned int i1 = 0;
-          unsigned int i2 = SIZEOF (unicode_index_to_name);
+          unsigned int i2 = countof (unicode_index_to_name);
           for (;;)
             {
               unsigned int i = (i1 + i2) >> 1;
@@ -577,7 +576,7 @@ unicode_name_character (const char *name)
                 /* Binary search in unicode_name_to_index.  */
                 {
                   unsigned int i1 = 0;
-                  unsigned int i2 = SIZEOF (unicode_name_to_index);
+                  unsigned int i2 = countof (unicode_name_to_index);
                   for (;;)
                     {
                       unsigned int i = (i1 + i2) >> 1;

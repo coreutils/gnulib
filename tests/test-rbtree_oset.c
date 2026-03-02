@@ -19,6 +19,7 @@
 
 #include "gl_rbtree_oset.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -36,7 +37,7 @@ static const char *objects[30] =
   };
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
+#define RANDOM_OBJECT() objects[RANDOM (countof (objects))]
 
 static void
 check_equals (gl_oset_t set1, gl_oset_t set2)

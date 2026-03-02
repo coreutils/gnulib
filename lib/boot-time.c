@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "boot-time.h"
 
+#include <stdcountof.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>

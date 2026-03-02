@@ -14,6 +14,7 @@ c-ctype
 snan
 read-file
 full-write
+stdcountof-h
 streq
 memeq
 

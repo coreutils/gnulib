@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 array-list
 linked-list-unportable-tests
+stdcountof-h
 
 configure.ac:
 

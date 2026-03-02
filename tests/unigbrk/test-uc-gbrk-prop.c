@@ -19,6 +19,8 @@
 /* Specification. */
 #include <unigbrk.h>
 
+#include <stdcountof.h>
+
 struct uc_gbrk_prop_range
 {
   ucs4_t end;
@@ -66,7 +68,7 @@ main (void)
   ucs4_t uc;
 
   uc = 0;
-  for (const struct uc_gbrk_prop_range *r = set; r < set + SIZEOF (set); r++)
+  for (const struct uc_gbrk_prop_range *r = set; r < set + countof (set); r++)
     {
       for (; uc < r->end; uc++)
         {

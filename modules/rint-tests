@@ -10,6 +10,7 @@ tests/randomd.c
 Depends-on:
 isnand-nolibm
 nan
+stdcountof-h
 
 configure.ac:
 

@@ -21,7 +21,7 @@ check_single (const UNIT *input, size_t length, size_t n)
 {
   static const UNIT base[] = { 'C', 'h', 'a', 'n', 'g', 'i', 'n', 'g', 0 };
 
-  for (size_t m = 0; m < SIZEOF (base); m++)
+  for (size_t m = 0; m < countof (base); m++)
     {
       UNIT *dest;
       UNIT *result;

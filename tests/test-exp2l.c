@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (exp2l, long double, (long double));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "fpucw.h"
 #include "macros.h"

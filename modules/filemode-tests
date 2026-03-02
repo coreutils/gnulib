@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 unistd-h
+stdcountof-h
 streq
 
 configure.ac:

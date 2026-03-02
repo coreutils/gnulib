@@ -6,6 +6,7 @@ tests/uniwbrk/WordBreakTest.txt
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 memeq
 
 configure.ac:

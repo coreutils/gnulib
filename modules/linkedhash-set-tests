@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 array-set
 xalloc
+stdcountof-h
 streq
 
 configure.ac:

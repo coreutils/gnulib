@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 int
@@ -43,7 +45,7 @@ main ()
         0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
         0xED, 0x95, 0x9C, 0xEA, 0xB8, 0x80, '\0'
       };
-    ASSERT (u8_strlen (input) == SIZEOF (input) - 1);
+    ASSERT (u8_strlen (input) == countof (input) - 1);
   }
 
   return test_exit_status;

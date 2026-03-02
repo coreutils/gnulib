@@ -24,10 +24,10 @@ main ()
     static const UNIT base[] = { 'C', 'h', 'a', 'n', 'g', 'i', 'n', 'g', 0 };
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e', 0 };
 
-    for (size_t m = 0; m < SIZEOF (base); m++)
-      for (size_t n = 1; n <= SIZEOF (src); n++)
+    for (size_t m = 0; m < countof (base); m++)
+      for (size_t n = 1; n <= countof (src); n++)
         {
-          UNIT dest[1 + (SIZEOF (base) - 1) + SIZEOF (src) + 1] =
+          UNIT dest[1 + (countof (base) - 1) + countof (src) + 1] =
             { MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC,
               MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC
             };
@@ -37,14 +37,14 @@ main ()
             dest[1 + i] = base[i];
           dest[1 + m] = 0;
 
-          result = U_STRCAT (dest + 1, src + SIZEOF (src) - n);
+          result = U_STRCAT (dest + 1, src + countof (src) - n);
           ASSERT (result == dest + 1);
 
           ASSERT (dest[0] == MAGIC);
           for (size_t i = 0; i < m; i++)
             ASSERT (dest[1 + i] == base[i]);
           for (size_t i = 0; i < n; i++)
-            ASSERT (dest[1 + m + i] == src[SIZEOF (src) - n + i]);
+            ASSERT (dest[1 + m + i] == src[countof (src) - n + i]);
           ASSERT (dest[1 + m + n] == MAGIC);
         }
   }

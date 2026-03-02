@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <float.h>
 #include <stdarg.h>
+#include <stdcountof.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -1064,7 +1065,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"123432123432123*********************.000000" },
         { 1.234321234321234e36, L"123432123432123**********************.000000" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -1395,7 +1396,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"123432123432123*********************.000000" },
         { 1.234321234321234e36L, L"123432123432123**********************.000000" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2115,7 +2116,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"1.234321e+35" },
         { 1.234321234321234e36, L"1.234321e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2482,7 +2483,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"1.234321e+35" },
         { 1.234321234321234e36L, L"1.234321e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -2931,7 +2932,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35, L"1.23432e+35" },
         { 1.234321234321234e36, L"1.23432e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =
@@ -3284,7 +3285,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         { 1.234321234321234e35L, L"1.23432e+35" },
         { 1.234321234321234e36L, L"1.23432e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         size_t length;
         wchar_t *result =

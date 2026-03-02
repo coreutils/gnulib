@@ -20,11 +20,10 @@
 #include <iconv.h>
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <string.h>
 #include "c-ctype.h"
 #include "c-strcase.h"
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 /* Namespace cleanliness.  */
 #define mapping_lookup rpl_iconv_open_mapping_lookup
@@ -117,7 +116,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
       {
         p++;
         q++;
-        if (q == &fromcode_upper[SIZEOF (fromcode_upper)])
+        if (q == &fromcode_upper[countof (fromcode_upper)])
           {
             errno = EINVAL;
             return (iconv_t)(-1);
@@ -135,7 +134,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
       {
         p++;
         q++;
-        if (q == &tocode_upper[SIZEOF (tocode_upper)])
+        if (q == &tocode_upper[countof (tocode_upper)])
           {
             errno = EINVAL;
             return (iconv_t)(-1);

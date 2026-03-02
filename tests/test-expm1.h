@@ -65,7 +65,7 @@ test_function (void)
 #endif
        : L_(5.0));
 
-    for (int i = 0; i < SIZEOF (RANDOM); i++)
+    for (int i = 0; i < countof (RANDOM); i++)
       {
         DOUBLE x = L_(2.0) * RANDOM[i]; /* 0.0 <= x <= 2.0 */
         DOUBLE y = EXPM1 (x);
@@ -91,8 +91,8 @@ test_function (void)
 #endif
        : L_(9.0));
 
-    for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
-      for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
+    for (int i = 0; i < countof (RANDOM) / 5; i++)
+      for (int j = 0; j < countof (RANDOM) / 5; j++)
         {
           DOUBLE x = L_(2.0) * RANDOM[i] - L_(1.0); /* -1.0 <= x <= 1.0 */
           DOUBLE y = L_(2.0) * RANDOM[j] - L_(1.0); /* -1.0 <= y <= 1.0 */

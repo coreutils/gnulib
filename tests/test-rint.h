@@ -24,7 +24,7 @@ test_function (void)
   ASSERT (ISNAN (RINT (NAN)));
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < countof (RANDOM); i++)
     {
       DOUBLE x;
 

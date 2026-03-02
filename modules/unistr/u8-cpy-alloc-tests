@@ -4,6 +4,7 @@ tests/unistr/test-cpy-alloc.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

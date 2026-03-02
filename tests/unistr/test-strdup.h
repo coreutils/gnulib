@@ -23,13 +23,13 @@ main ()
   {
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e', 0 };
 
-    for (size_t n = 1; n <= SIZEOF (src); n++)
+    for (size_t n = 1; n <= countof (src); n++)
       {
-        UNIT *result = U_STRDUP (src + SIZEOF (src) - n);
+        UNIT *result = U_STRDUP (src + countof (src) - n);
 
         ASSERT (result != NULL);
         for (size_t i = 0; i < n; i++)
-          ASSERT (result[i] == src[SIZEOF (src) - n + i]);
+          ASSERT (result[i] == src[countof (src) - n + i]);
 
         free (result);
       }

@@ -20,6 +20,7 @@
 
 #include <scratch_buffer.h>
 
+#include <stdcountof.h>
 #include <string.h>
 #include "macros.h"
 
@@ -35,7 +36,7 @@ main ()
   /* Check scratch_buffer_set_array_size.  */
   {
     size_t sizes[] = { 100, 1000, 10000, 100000 };
-    for (size_t s = 0; s < SIZEOF (sizes); s++)
+    for (size_t s = 0; s < countof (sizes); s++)
       {
         size_t size = sizes[s];
         struct scratch_buffer buf;
@@ -59,7 +60,7 @@ main ()
   /* Check scratch_buffer_grow.  */
   {
     size_t sizes[] = { 100, 1000, 10000, 100000 };
-    for (size_t s = 0; s < SIZEOF (sizes); s++)
+    for (size_t s = 0; s < countof (sizes); s++)
       {
         size_t size = sizes[s];
         struct scratch_buffer buf;
@@ -101,7 +102,7 @@ main ()
     for (size_t i = 0; i < size; i++)
       ((unsigned char *) buf.data)[i] = byte_at (i);
 
-    for (; s < SIZEOF (sizes); s++)
+    for (; s < countof (sizes); s++)
       {
         size_t oldsize = size;
         size = sizes[s];

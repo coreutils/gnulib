@@ -22,10 +22,9 @@
 #include <locale.h>
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 locale_t
 duplocale (locale_t locale)
@@ -82,7 +81,7 @@ duplocale (locale_t locale)
       if (base_copy == NULL)
         return NULL;
 
-      for (unsigned int i = 0; i < SIZEOF (categories); i++)
+      for (unsigned int i = 0; i < countof (categories); i++)
         {
           int category = categories[i].cat;
           int category_mask = categories[i].mask;

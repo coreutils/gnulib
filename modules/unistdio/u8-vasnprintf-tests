@@ -16,6 +16,7 @@ unistr/u8-cpy
 unistr/u8-strcmp
 unistr/u8-strlen
 setlocale
+stdcountof-h
 
 configure.ac:
 gt_LOCALE_FR

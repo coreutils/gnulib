@@ -8,6 +8,7 @@ tests/randomf.c
 
 Depends-on:
 signbit-no-c++
+stdcountof-h
 
 configure.ac:
 

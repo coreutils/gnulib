@@ -31,13 +31,13 @@ test_ascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, size_
     static const uint32_t input[] = { 'x', 'y' };
     int cmp;
 
-    ASSERT (my_normcmp (input, SIZEOF (input), NULL, 0, nf, &cmp) == 0);
+    ASSERT (my_normcmp (input, countof (input), NULL, 0, nf, &cmp) == 0);
     ASSERT (cmp == 1);
 
-    ASSERT (my_normcmp (NULL, 0, input, SIZEOF (input), nf, &cmp) == 0);
+    ASSERT (my_normcmp (NULL, 0, input, countof (input), nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input, SIZEOF (input), input, SIZEOF (input), nf, &cmp) == 0);
+    ASSERT (my_normcmp (input, countof (input), input, countof (input), nf, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -47,10 +47,10 @@ test_ascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, size_
     static const uint32_t input2[] = { 'A', 'm', 'i', 'g', 'o' };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), nf, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input2, SIZEOF (input2), input1, SIZEOF (input1), nf, &cmp) == 0);
+    ASSERT (my_normcmp (input2, countof (input2), input1, countof (input1), nf, &cmp) == 0);
     ASSERT (cmp == 1);
   }
 
@@ -60,10 +60,10 @@ test_ascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, size_
     static const uint32_t input2[] = { 'R', 'e', 'a', 'g', 'a', 'n', 'o', 'm', 'i', 'c', 's' };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), nf, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input2, SIZEOF (input2), input1, SIZEOF (input1), nf, &cmp) == 0);
+    ASSERT (my_normcmp (input2, countof (input2), input1, countof (input1), nf, &cmp) == 0);
     ASSERT (cmp == 1);
   }
 }

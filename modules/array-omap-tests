@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 xlist
 array-list
+stdcountof-h
 
 configure.ac:
 

@@ -22,6 +22,7 @@
 
 #include <float.h>
 #include <locale.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
@@ -76,7 +77,7 @@ main (int argc, char *argv[])
 #else
     const char *separator_mb =
       localeconv ()->thousands_sep; /* = nl_langinfo (THOUSEP) */
-    mbstowcs (separator, separator_mb, SIZEOF (separator));
+    mbstowcs (separator, separator_mb, countof (separator));
 #endif
     size_t separator_len = wcslen (separator);
 

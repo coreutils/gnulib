@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (hypotf, float, (float, float));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 

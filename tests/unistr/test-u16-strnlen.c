@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "zerosize-ptr.h"
 #include "macros.h"
 
@@ -40,7 +42,7 @@ main ()
         '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, 0
       };
-    check (input, SIZEOF (input));
+    check (input, countof (input));
   }
 
   /* String with characters outside the BMP.  */
@@ -49,7 +51,7 @@ main ()
       { '-', '(', 0xD835, 0xDD1E, 0x00D7, 0xD835, 0xDD1F, ')', '=',
         0xD835, 0xDD1F, 0x00D7, 0xD835, 0xDD1E, 0
       };
-    check (input, SIZEOF (input));
+    check (input, countof (input));
   }
 
   return test_exit_status;

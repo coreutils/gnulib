@@ -17,6 +17,7 @@ once
 thread-optim
 sigprocmask
 raise
+stdcountof-h
 
 configure.ac:
 gl_FATAL_SIGNAL

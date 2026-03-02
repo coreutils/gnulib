@@ -20,6 +20,7 @@
 #include "gl_array_map.h"
 
 #include <limits.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,7 +60,7 @@ string_hash (const void *x)
 }
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
+#define RANDOM_OBJECT() objects[RANDOM (countof (objects))]
 
 struct pair
 {

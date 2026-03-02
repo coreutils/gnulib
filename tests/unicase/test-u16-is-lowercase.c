@@ -20,6 +20,8 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
+
 #include "unistr.h"
 #include "macros.h"
 
@@ -35,35 +37,35 @@ test_nonascii (int (*my_is) (const uint16_t *, size_t, const char *, bool *))
     static const uint16_t input[] = { 0x24D7 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint16_t input[] = { 0x24BD };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const uint16_t input[] = { 0x02B0 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint16_t input[] = { 0x1D34 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint16_t input[] = { 0x02BD };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
 }

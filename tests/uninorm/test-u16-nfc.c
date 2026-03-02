@@ -23,6 +23,7 @@
 #include "uninorm.h"
 
 #include <signal.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -96,134 +97,134 @@ test_u16_nfc (void)
   }
   { /* SPACE */
     static const uint16_t input[]    = { 0x0020 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS */
     static const uint16_t input[]      = { 0x00C4 };
     static const uint16_t decomposed[] = { 0x0041, 0x0308 };
-    ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input),           input, countof (input)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), input, countof (input)) == 0);
   }
 
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS AND MACRON */
     static const uint16_t input[]      = { 0x01DE };
     static const uint16_t decomposed[] = { 0x0041, 0x0308, 0x0304 };
-    ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input),           input, countof (input)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), input, countof (input)) == 0);
   }
 
   { /* ANGSTROM SIGN */
     static const uint16_t input[]      = { 0x212B };
     static const uint16_t decomposed[] = { 0x0041, 0x030A };
     static const uint16_t expected[]   = { 0x00C5 };
-    ASSERT (check (input, SIZEOF (input),           expected, SIZEOF (expected)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), expected, SIZEOF (expected)) == 0);
-    ASSERT (check (expected, SIZEOF (expected),     expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input),           expected, countof (expected)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), expected, countof (expected)) == 0);
+    ASSERT (check (expected, countof (expected),     expected, countof (expected)) == 0);
   }
 
   { /* GREEK DIALYTIKA AND PERISPOMENI */
     static const uint16_t input[]      = { 0x1FC1 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* SCRIPT SMALL L */
     static const uint16_t input[]      = { 0x2113 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* NO-BREAK SPACE */
     static const uint16_t input[]      = { 0x00A0 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* ARABIC LETTER VEH INITIAL FORM */
     static const uint16_t input[]      = { 0xFB6C };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* ARABIC LETTER VEH MEDIAL FORM */
     static const uint16_t input[]      = { 0xFB6D };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* ARABIC LETTER VEH FINAL FORM */
     static const uint16_t input[]      = { 0xFB6B };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* ARABIC LETTER VEH ISOLATED FORM */
     static const uint16_t input[]      = { 0xFB6A };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* CIRCLED NUMBER FIFTEEN */
     static const uint16_t input[]      = { 0x246E };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* TRADE MARK SIGN */
     static const uint16_t input[]      = { 0x2122 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* LATIN SUBSCRIPT SMALL LETTER I */
     static const uint16_t input[]      = { 0x1D62 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* PRESENTATION FORM FOR VERTICAL LEFT PARENTHESIS */
     static const uint16_t input[]      = { 0xFE35 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* FULLWIDTH LATIN CAPITAL LETTER A */
     static const uint16_t input[]      = { 0xFF21 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* HALFWIDTH IDEOGRAPHIC COMMA */
     static const uint16_t input[]      = { 0xFF64 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* SMALL IDEOGRAPHIC COMMA */
     static const uint16_t input[]      = { 0xFE51 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* SQUARE MHZ */
     static const uint16_t input[]      = { 0x3392 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* VULGAR FRACTION THREE EIGHTHS */
     static const uint16_t input[]      = { 0x215C };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* MICRO SIGN */
     static const uint16_t input[]      = { 0x00B5 };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM */
     static const uint16_t input[]      = { 0xFDFA };
-    ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input), input, countof (input)) == 0);
   }
 
   { /* HANGUL SYLLABLE GEUL */
     static const uint16_t input[]      = { 0xAE00 };
     static const uint16_t decomposed[] = { 0x1100, 0x1173, 0x11AF };
-    ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input),           input, countof (input)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), input, countof (input)) == 0);
   }
 
   { /* HANGUL SYLLABLE GEU */
     static const uint16_t input[]      = { 0xADF8 };
     static const uint16_t decomposed[] = { 0x1100, 0x1173 };
-    ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input),           input, countof (input)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), input, countof (input)) == 0);
   }
 
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
@@ -244,8 +245,8 @@ test_u16_nfc (void)
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
         0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
       };
-    ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
-    ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
+    ASSERT (check (input, countof (input),           input, countof (input)) == 0);
+    ASSERT (check (decomposed, countof (decomposed), input, countof (input)) == 0);
   }
 
 #if HAVE_DECL_ALARM

@@ -14,6 +14,7 @@ idx
 stat-time
 gettimeofday
 bool
+stdcountof-h
 stdint-h
 memeq
 streq

@@ -6,6 +6,7 @@ Depends-on:
 xlist
 array-list
 xalloc
+stdcountof-h
 streq
 
 configure.ac:

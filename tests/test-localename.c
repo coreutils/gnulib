@@ -21,6 +21,7 @@
 #include "localename.h"
 
 #include <locale.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -241,7 +242,7 @@ test_locale_name (void)
 
   /* Check that gl_locale_name distinguishes different categories of the
      thread locale, and that the name is the right one for each.  */
-  for (unsigned int i = 0; i < SIZEOF (categories); i++)
+  for (unsigned int i = 0; i < countof (categories); i++)
     {
       int category_mask = categories[i].mask;
       locale_t loc = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
@@ -253,7 +254,7 @@ test_locale_name (void)
           else
             {
               uselocale (locale);
-              for (unsigned int j = 0; j < SIZEOF (categories); j++)
+              for (unsigned int j = 0; j < countof (categories); j++)
                 {
                   const char *name_j =
                     gl_locale_name (categories[j].cat, categories[j].string);
@@ -303,7 +304,7 @@ test_locale_name_thread (void)
 
   /* Check that gl_locale_name_thread distinguishes different categories of the
      thread locale, and that the name is the right one for each.  */
-  for (unsigned int i = 0; i < SIZEOF (categories); i++)
+  for (unsigned int i = 0; i < countof (categories); i++)
     {
       int category_mask = categories[i].mask;
       locale_t loc = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
@@ -315,7 +316,7 @@ test_locale_name_thread (void)
           else
             {
               uselocale (locale);
-              for (unsigned int j = 0; j < SIZEOF (categories); j++)
+              for (unsigned int j = 0; j < countof (categories); j++)
                 {
                   const char *name_j =
                     gl_locale_name_thread (categories[j].cat,
@@ -442,21 +443,21 @@ test_locale_name_thread (void)
         "zh_TW.UTF-8"
       };
     /* Remember which locales are available.  */
-    unsigned char /* bool */ available[SIZEOF (choices)];
+    unsigned char /* bool */ available[countof (choices)];
     /* Array of remembered results of gl_locale_name_thread.  */
-    const char *unsaved_names[SIZEOF (choices)][SIZEOF (categories)];
+    const char *unsaved_names[countof (choices)][countof (categories)];
     /* Array of remembered results of gl_locale_name_thread, stored in safe
        memory.  */
-    char *saved_names[SIZEOF (choices)][SIZEOF (categories)];
+    char *saved_names[countof (choices)][countof (categories)];
 
-    for (unsigned int j = 0; j < SIZEOF (choices); j++)
+    for (unsigned int j = 0; j < countof (choices); j++)
       {
         locale_t locale = newlocale (LC_ALL_MASK, choices[j], NULL);
         available[j] = (locale != NULL);
         if (locale != NULL)
           {
             uselocale (locale);
-            for (unsigned int i = 0; i < SIZEOF (categories); i++)
+            for (unsigned int i = 0; i < countof (categories); i++)
               {
                 unsaved_names[j][i] = gl_locale_name_thread (categories[i].cat, categories[i].string);
                 saved_names[j][i] = strdup (unsaved_names[j][i]);
@@ -466,15 +467,15 @@ test_locale_name_thread (void)
           }
       }
     /* Verify the unsaved_names are still valid.  */
-    for (unsigned int j = 0; j < SIZEOF (choices); j++)
+    for (unsigned int j = 0; j < countof (choices); j++)
       if (available[j])
         {
-          for (unsigned int i = 0; i < SIZEOF (categories); i++)
+          for (unsigned int i = 0; i < countof (categories); i++)
             ASSERT (streq (unsaved_names[j][i], saved_names[j][i]));
         }
     /* Allocate many locales, without freeing them.  This is an attempt at
        overwriting as much of the previously allocated memory as possible.  */
-    for (unsigned int j = SIZEOF (choices); j > 0; )
+    for (unsigned int j = countof (choices); j > 0; )
       {
         j--;
         if (available[j])
@@ -483,7 +484,7 @@ test_locale_name_thread (void)
 
             ASSERT (locale != NULL);
             uselocale (locale);
-            for (unsigned int i = 0; i < SIZEOF (categories); i++)
+            for (unsigned int i = 0; i < countof (categories); i++)
               {
                 const char *name = gl_locale_name_thread (categories[i].cat, categories[i].string);
                 ASSERT (streq (unsaved_names[j][i], name));
@@ -493,10 +494,10 @@ test_locale_name_thread (void)
           }
       }
     /* Verify the unsaved_names are still valid.  */
-    for (unsigned int j = 0; j < SIZEOF (choices); j++)
+    for (unsigned int j = 0; j < countof (choices); j++)
       if (available[j])
         {
-          for (unsigned int i = 0; i < SIZEOF (categories); i++)
+          for (unsigned int i = 0; i < countof (categories); i++)
             {
               ASSERT (streq (unsaved_names[j][i], saved_names[j][i]));
               free (saved_names[j][i]);

@@ -26,11 +26,11 @@ test_ascii (int (*my_casecmp) (const char *, size_t, const char *, size_t))
   {
     static const char input[] = { 'x', 'y' };
 
-    ASSERT (my_casecmp (input, SIZEOF (input), NULL, 0) > 0);
+    ASSERT (my_casecmp (input, countof (input), NULL, 0) > 0);
 
-    ASSERT (my_casecmp (NULL, 0, input, SIZEOF (input)) < 0);
+    ASSERT (my_casecmp (NULL, 0, input, countof (input)) < 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), input, SIZEOF (input)) == 0);
+    ASSERT (my_casecmp (input, countof (input), input, countof (input)) == 0);
   }
 
   /* Normal lexicographic order.  */
@@ -38,9 +38,9 @@ test_ascii (int (*my_casecmp) (const char *, size_t, const char *, size_t))
     static const char input1[] = { 'A', 'm', 'e', 'r', 'i', 'c', 'a' };
     static const char input2[] = { 'A', 'm', 'i', 'g', 'o' };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) < 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) < 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1)) > 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1)) > 0);
   }
 
   /* Shorter and longer strings.  */
@@ -48,9 +48,9 @@ test_ascii (int (*my_casecmp) (const char *, size_t, const char *, size_t))
     static const char input1[] = { 'R', 'e', 'a', 'g', 'a', 'n' };
     static const char input2[] = { 'R', 'e', 'a', 'g', 'a', 'n', 'o', 'm', 'i', 'c', 's' };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) < 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) < 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1)) > 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1)) > 0);
   }
 
   ASSERT (my_casecmp ("paragraph", 9, "Paragraph", 9) == 0);
@@ -80,17 +80,17 @@ test_iso_8859_1 (int (*my_casecmp) (const char *, size_t, const char *, size_t),
     static const char input4[] = { 'H', 0xD6, 'h', 'L', 'e', 'n' };
     static const char input5[] = { 'H', 'u', 'r', 'z' };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1)) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1)) == 0);
 
-    ASSERT (my_casecmp (input3, SIZEOF (input3), input4, SIZEOF (input4)) == 0);
+    ASSERT (my_casecmp (input3, countof (input3), input4, countof (input4)) == 0);
 
-    ASSERT (my_casecmp (input4, SIZEOF (input4), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input4, countof (input4), input3, countof (input3)) == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) < 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3)) < 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input4, SIZEOF (input4)) < 0);
+    ASSERT (my_casecmp (input1, countof (input1), input4, countof (input4)) < 0);
 
     if (assume_byte_values)
       {
@@ -98,9 +98,9 @@ test_iso_8859_1 (int (*my_casecmp) (const char *, size_t, const char *, size_t),
            because my_casecmp compares precomposed characters, whereas
            ulc_casecmp compares decomposed character sequences.  */
 
-        ASSERT (my_casecmp (input1, SIZEOF (input1), input5, SIZEOF (input5)) > 0);
+        ASSERT (my_casecmp (input1, countof (input1), input5, countof (input5)) > 0);
 
-        ASSERT (my_casecmp (input2, SIZEOF (input2), input5, SIZEOF (input5)) > 0);
+        ASSERT (my_casecmp (input2, countof (input2), input5, countof (input5)) > 0);
       }
   }
 
@@ -110,7 +110,7 @@ test_iso_8859_1 (int (*my_casecmp) (const char *, size_t, const char *, size_t),
     static const char input1[] = { 0x68, 0x65, 0x69, 0xDF };
     static const char input2[] = { 0x68, 0x65, 0x69, 0x73, 0x73 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   #endif
 }
@@ -151,54 +151,54 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char input4[] = { 'H', 'O', 0xCC, 0x88, 'h', 'L', 'e', 'n' };
     static const char input5[] = { 'H', 'u', 'r', 'z' };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1)) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1)) == 0);
 
-    ASSERT (my_casecmp (input3, SIZEOF (input3), input4, SIZEOF (input4)) == 0);
+    ASSERT (my_casecmp (input3, countof (input3), input4, countof (input4)) == 0);
 
-    ASSERT (my_casecmp (input4, SIZEOF (input4), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input4, countof (input4), input3, countof (input3)) == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) < 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3)) < 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input4, SIZEOF (input4)) < 0);
+    ASSERT (my_casecmp (input1, countof (input1), input4, countof (input4)) < 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input5, SIZEOF (input5)) < 0);
+    ASSERT (my_casecmp (input1, countof (input1), input5, countof (input5)) < 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input5, SIZEOF (input5)) < 0);
+    ASSERT (my_casecmp (input2, countof (input2), input5, countof (input5)) < 0);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS */
     static const char input1[] = { 0xC3, 0x84 };
     static const char input2[] = { 0x41, 0xCC, 0x88 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS AND MACRON */
     static const char input1[] = { 0xC7, 0x9E };
     static const char input2[] = { 0x41, 0xCC, 0x88, 0xCC, 0x84 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   { /* GREEK DIALYTIKA AND PERISPOMENI */
     static const char input1[] = { 0xE1, 0xBF, 0x81 };
     static const char input2[] = { 0xC2, 0xA8, 0xCD, 0x82 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   { /* HANGUL SYLLABLE GEUL */
     static const char input1[] = { 0xEA, 0xB8, 0x80 };
     static const char input2[] = { 0xEA, 0xB7, 0xB8, 0xE1, 0x86, 0xAF };
     static const char input3[] = { 0xE1, 0x84, 0x80, 0xE1, 0x85, 0xB3, 0xE1, 0x86, 0xAF };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3)) == 0);
   }
   { /* HANGUL SYLLABLE GEU */
     static const char input1[] = { 0xEA, 0xB7, 0xB8 };
     static const char input2[] = { 0xE1, 0x84, 0x80, 0xE1, 0x85, 0xB3 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   #endif
 
@@ -238,9 +238,9 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     (void) input1;
 
     #if 0 /* This functionality requires ulc_casecmp.  */
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3)) == 0);
     #endif
 
     {
@@ -252,7 +252,7 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
       if (mbrtowc (&wc, "\303\234", 2, &state) == 2
           && towlower (wc) != wc)
         {
-          ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) == 0);
+          ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3)) == 0);
         }
     }
   }
@@ -264,15 +264,15 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char input2[] = { 0xCA, 0xBC, 0x6E };
     static const char input3[] = { 0xCA, 0xBC, 0x4E };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3)) == 0);
   }
   { /* GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS */
     static const char input1[] = { 0xCE, 0x90 };
     static const char input2[] = { 0xCE, 0xB9, 0xCC, 0x88, 0xCC, 0x81 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   #endif
 
@@ -283,9 +283,9 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char casefolded_tr[] = { 0xC4, 0xB1 };
 
     if (!turkish)
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
     else
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr)) == 0);
   }
   { /* LATIN SMALL LETTER I */
     static const char input[]         = { 0x69 };
@@ -293,9 +293,9 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char casefolded_tr[] = { 0xC4, 0xB0 };
 
     if (!turkish)
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
     else
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr)) == 0);
   }
   { /* LATIN CAPITAL LETTER I WITH DOT ABOVE */
     static const char input[]         = { 0xC4, 0xB0 };
@@ -307,20 +307,20 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     if (!turkish)
       {
         #if 0 /* This functionality requires ulc_casecmp.  */
-        ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+        ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
         #endif
       }
     else
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr)) == 0);
   }
   { /* LATIN SMALL LETTER DOTLESS I */
     static const char input[]      = { 0xC4, 0xB1 };
     static const char casefolded[] = { 0x49 };
 
     if (!turkish)
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) > 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) > 0);
     else
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
   }
   { /* "topkapı" */
     static const char input[] =
@@ -329,9 +329,9 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
       { 0x74, 0x6F, 0x70, 0x6B, 0x61, 0x70, 0xC4, 0xB1 };
 
     if (!turkish)
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) < 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) < 0);
     else
-      ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+      ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
   }
 
   #if 0 /* This functionality requires ulc_casecmp.  */
@@ -340,7 +340,7 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char input1[] = { 0x68, 0x65, 0x69, 0xC3, 0x9F };
     static const char input2[] = { 0x68, 0x65, 0x69, 0x73, 0x73 };
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
   }
   #endif
 
@@ -371,12 +371,12 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     (void) input1;
 
     #if 0 /* This functionality requires ulc_casecmp.  */
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3)) == 0);
     #endif
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3)) == 0);
   }
 
   #if 0 /* This functionality requires ulc_casecmp.  */
@@ -386,13 +386,13 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     static const char casefolded[]            = { 0x6A, 0xCC, 0x8C, 0xCC, 0xA3 };
     static const char casefolded_decomposed[] = { 0x6A, 0xCC, 0xA3, 0xCC, 0x8C };
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_decomposed, SIZEOF (casefolded_decomposed)) != 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_decomposed, countof (casefolded_decomposed)) != 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded)) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded)) == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_decomposed, SIZEOF (casefolded_decomposed)) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_decomposed, countof (casefolded_decomposed)) == 0);
   }
   #endif
 }

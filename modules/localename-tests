@@ -15,6 +15,7 @@ unsetenv
 setlocale
 strdup
 test-xfail
+stdcountof-h
 streq
 
 configure.ac:

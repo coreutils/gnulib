@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include <stdlib.h>
 
 #include "macros.h"

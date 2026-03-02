@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"

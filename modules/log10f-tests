@@ -7,6 +7,7 @@ tests/macros.h
 tests/randomf.c
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

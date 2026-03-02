@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 unistr/u8-cmp
+stdcountof-h
 
 configure.ac:
 

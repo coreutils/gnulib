@@ -20,6 +20,7 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "zerosize-ptr.h"
@@ -45,7 +46,7 @@ main ()
         0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
         0xED, 0x95, 0x9C, 0xEA, 0xB8, 0x80, '\0'
       };
-    check (input, SIZEOF (input));
+    check (input, countof (input));
   }
 
   return test_exit_status;

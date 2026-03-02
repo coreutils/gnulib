@@ -25,6 +25,7 @@ SIGNATURE_CHECK (ilogbl, int, (long double));
 
 #include <float.h>
 #include <limits.h>
+#include <stdcountof.h>
 
 #include "minus-zero.h"
 #include "infinity.h"

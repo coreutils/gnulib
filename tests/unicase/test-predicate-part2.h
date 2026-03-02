@@ -22,7 +22,7 @@ main ()
   unsigned int c;
 
   c = 0;
-  for (size_t i = 0; i < SIZEOF (set); i++)
+  for (size_t i = 0; i < countof (set); i++)
     {
       for (; c < set[i].start; c++)
         ASSERT (!PREDICATE (c));

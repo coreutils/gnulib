@@ -20,6 +20,7 @@
 
 #include "unilbrk.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -36,9 +37,9 @@ test_function (void (*my_ulc_possible_linebreaks) (const char *, size_t, const c
     static const char input[36] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    my_ulc_possible_linebreaks (input, SIZEOF (input), "ISO-8859-1", p);
+    my_ulc_possible_linebreaks (input, countof (input), "ISO-8859-1", p);
     for (size_t i = 0; i < 36; i++)
       {
         ASSERT (p[i] == (i == 35 ? UC_BREAK_MANDATORY :
@@ -53,9 +54,9 @@ test_function (void (*my_ulc_possible_linebreaks) (const char *, size_t, const c
   {
     static const char input[21] _GL_ATTRIBUTE_NONSTRING =
       "<P>Some sentence.</P>";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    my_ulc_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_ulc_possible_linebreaks (input, countof (input), "UTF-8", p);
     for (size_t i = 0; i < 21; i++)
       {
         ASSERT (p[i] == (i == 8 || i == 17 || i == 19 ? UC_BREAK_POSSIBLE :

@@ -824,7 +824,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35, "123432123432123*********************.000000" },
         { 1.234321234321234e36, "123432123432123**********************.000000" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%f", data[k].value);
@@ -1083,7 +1083,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35L, "123432123432123*********************.000000" },
         { 1.234321234321234e36L, "123432123432123**********************.000000" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%Lf", data[k].value);
@@ -1626,7 +1626,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35, "1.234321e+35" },
         { 1.234321234321234e36, "1.234321e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%e", data[k].value);
@@ -1917,7 +1917,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35L, "1.234321e+35" },
         { 1.234321234321234e36L, "1.234321e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%Le", data[k].value);
@@ -2273,7 +2273,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35, "1.23432e+35" },
         { 1.234321234321234e36, "1.23432e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%g", data[k].value);
@@ -2550,7 +2550,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         { 1.234321234321234e35L, "1.23432e+35" },
         { 1.234321234321234e36L, "1.23432e+36" }
       };
-    for (size_t k = 0; k < SIZEOF (data); k++)
+    for (size_t k = 0; k < countof (data); k++)
       {
         int retval =
           my_sprintf (result, "%Lg", data[k].value);

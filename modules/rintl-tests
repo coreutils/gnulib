@@ -12,6 +12,7 @@ fpucw
 isnanl-nolibm
 float-h
 nan
+stdcountof-h
 
 configure.ac:
 

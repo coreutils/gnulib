@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 static int
@@ -106,7 +108,7 @@ main ()
   {
     static const uint32_t input[] = { 0x20AC };
     uc = 0xBADFACE;
-    ASSERT (check (input, SIZEOF (input), &uc) == 0);
+    ASSERT (check (input, countof (input), &uc) == 0);
     ASSERT (uc == 0x20AC);
   }
 
@@ -114,14 +116,14 @@ main ()
   {
     static const uint32_t input[] = { 0x1D51F };
     uc = 0xBADFACE;
-    ASSERT (check (input, SIZEOF (input), &uc) == 0);
+    ASSERT (check (input, countof (input), &uc) == 0);
     ASSERT (uc == 0x1D51F);
   }
 
   /* Test incomplete/invalid 1-unit input.  */
   {
     static const uint32_t input[] = { 0x340000 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
 
   return test_exit_status;

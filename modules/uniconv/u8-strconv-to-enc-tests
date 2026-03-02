@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 unistr/u8-strcmp
+stdcountof-h
 streq
 
 configure.ac:

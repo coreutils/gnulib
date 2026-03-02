@@ -25,6 +25,7 @@
 
 #include <errno.h>
 #include <signal.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -46,8 +47,6 @@
 #include "full-write.h"
 #include "same-inode.h"
 #include "xalloc.h"
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 
 /* ============================ EINTR handling ============================ */
@@ -532,7 +531,7 @@ static int const job_control_signals[] =
     0
   };
 
-# define num_job_control_signals (SIZEOF (job_control_signals) - 1)
+# define num_job_control_signals (countof (job_control_signals) - 1)
 
 #endif
 

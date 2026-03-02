@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (log1p, double, (double));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 

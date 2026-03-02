@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (ldexpf, float, (float, int));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "isnanf-nolibm.h"
 #include "minus-zero.h"

@@ -20,6 +20,7 @@
 
 #include "uniconv.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "unistr.h"
@@ -37,7 +38,7 @@ main ()
      ISO-8859-2, and UTF-8.  */
 
   /* Test conversion from ISO-8859-1 to UTF-16 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -54,7 +55,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to UTF-16 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -75,7 +76,7 @@ main ()
   if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
       /* Test conversions from autodetect_jp to UTF-16.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
@@ -88,7 +89,7 @@ main ()
           ASSERT (u16_strcmp (result, expected) == 0);
           free (result);
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
@@ -101,7 +102,7 @@ main ()
           ASSERT (u16_strcmp (result, expected) == 0);
           free (result);
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */

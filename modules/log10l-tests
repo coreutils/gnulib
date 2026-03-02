@@ -8,6 +8,7 @@ tests/randoml.c
 
 Depends-on:
 fpucw
+stdcountof-h
 
 configure.ac:
 

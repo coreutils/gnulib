@@ -3,6 +3,7 @@ tests/test-aligned_alloc.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 stdint-h
 
 configure.ac:

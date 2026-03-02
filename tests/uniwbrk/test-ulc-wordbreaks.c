@@ -21,6 +21,7 @@
 #include "uniwbrk.h"
 
 #include <locale.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -40,9 +41,9 @@ main ()
     static const char input[36] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. x=(-b±sqrt(b²-4ac))/(2a)" */
       "Gr\374\337 Gott. x=(-b\261sqrt(b\262-4ac))/(2a)\n";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    ulc_wordbreaks (input, SIZEOF (input), p);
+    ulc_wordbreaks (input, countof (input), p);
 
     for (size_t i = 0; i < 36; i++)
       {

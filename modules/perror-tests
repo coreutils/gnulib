@@ -10,6 +10,7 @@ dup2
 ftruncate
 strerror
 test-framework-sh
+stdcountof-h
 streq
 
 configure.ac:

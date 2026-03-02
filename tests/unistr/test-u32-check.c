@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 int
@@ -35,31 +37,31 @@ main ()
   {
     static const uint32_t input[] = /* "Данило Шеган" */
       { 0x0414, 0x0430, 0x043D, 0x0438, 0x043B, 0x043E, 0x0020, 0x0428, 0x0435, 0x0433, 0x0430, 0x043D };
-    ASSERT (u32_check (input, SIZEOF (input)) == NULL);
+    ASSERT (u32_check (input, countof (input)) == NULL);
   }
 
   /* Test out-of-range character with 1 unit: U+110000.  */
   {
     static const uint32_t input[] = { 0x0414, 0x0430, 0x110000 };
-    ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
+    ASSERT (u32_check (input, countof (input)) == input + 2);
   }
 
   /* Test surrogate codepoints.  */
   {
     static const uint32_t input[] = { 0x0414, 0x0430, 0xDBFF, 0xDFFF };
-    ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
+    ASSERT (u32_check (input, countof (input)) == input + 2);
   }
   {
     static const uint32_t input[] = { 0x0414, 0x0430, 0xDBFF };
-    ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
+    ASSERT (u32_check (input, countof (input)) == input + 2);
   }
   {
     static const uint32_t input[] = { 0x0414, 0x0430, 0xDFFF };
-    ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
+    ASSERT (u32_check (input, countof (input)) == input + 2);
   }
   {
     static const uint32_t input[] = { 0x0414, 0x0430, 0xDFFF, 0xDBFF };
-    ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
+    ASSERT (u32_check (input, countof (input)) == input + 2);
   }
 
   return test_exit_status;

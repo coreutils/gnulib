@@ -12,6 +12,7 @@ uniconv/u8-conv-to-enc
 unistr/u32-to-u8
 unistr/u32-mblen
 unistr/u8-mblen
+stdcountof-h
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [uniconv/u32-conv-to-enc])

@@ -18,6 +18,7 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdlib.h>
 

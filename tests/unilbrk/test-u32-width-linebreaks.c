@@ -20,6 +20,7 @@
 
 #include "unilbrk.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -43,9 +44,9 @@ test_function (int (*my_u32_width_linebreaks) (const uint32_t *, size_t, int, in
       };
 
     {
-      char *p = (char *) malloc (SIZEOF (input));
+      char *p = (char *) malloc (countof (input));
 
-      my_u32_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
+      my_u32_width_linebreaks (input, countof (input), 25, 0, 0, NULL, "GB18030", p);
       for (size_t i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
@@ -56,9 +57,9 @@ test_function (int (*my_u32_width_linebreaks) (const uint32_t *, size_t, int, in
     }
 
     {
-      char *p = (char *) malloc (SIZEOF (input));
+      char *p = (char *) malloc (countof (input));
 
-      my_u32_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
+      my_u32_width_linebreaks (input, countof (input), 25, 0, 0, NULL, "GB2312", p);
       for (size_t i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :

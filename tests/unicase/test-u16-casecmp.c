@@ -20,6 +20,8 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
+
 #include "uninorm.h"
 #include "macros.h"
 
@@ -39,28 +41,28 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input5[] = { 'H', 'u', 'r', 'z' };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input3, SIZEOF (input3), input4, SIZEOF (input4), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input3, countof (input3), input4, countof (input4), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input4, SIZEOF (input4), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input4, countof (input4), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input4, SIZEOF (input4), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input4, countof (input4), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input5, SIZEOF (input5), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input5, countof (input5), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input5, SIZEOF (input5), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input5, countof (input5), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS */
@@ -68,7 +70,7 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x0041, 0x0308 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS AND MACRON */
@@ -76,7 +78,7 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x0041, 0x0308, 0x0304 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* GREEK DIALYTIKA AND PERISPOMENI */
@@ -84,7 +86,7 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x00A8, 0x0342 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* HANGUL SYLLABLE GEUL */
@@ -93,10 +95,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input3[] = { 0x1100, 0x1173, 0x11AF };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* HANGUL SYLLABLE GEU */
@@ -104,7 +106,7 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x1100, 0x1173 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -136,22 +138,22 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
       };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -162,16 +164,16 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input3[] = { 0x02BC, 0x004E };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS */
@@ -179,10 +181,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x03B9, 0x0308, 0x0301 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -193,10 +195,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t casefolded_tr[] = { 0x0131 };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr), "tr", NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr), "tr", NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* LATIN SMALL LETTER I */
@@ -205,10 +207,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t casefolded_tr[] = { 0x0130 };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr), "tr", NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr), "tr", NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* LATIN CAPITAL LETTER I WITH DOT ABOVE */
@@ -217,10 +219,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t casefolded_tr[] = { 0x0069 };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_tr, SIZEOF (casefolded_tr), "tr", NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_tr, countof (casefolded_tr), "tr", NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* LATIN SMALL LETTER DOTLESS I */
@@ -228,10 +230,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t casefolded[] = { 0x0049 };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 1);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), "tr", NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), "tr", NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* "topkapı" */
@@ -241,10 +243,10 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
       { 0x0074, 0x006F, 0x0070, 0x006B, 0x0061, 0x0070, 0x0131 };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), "tr", NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), "tr", NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -254,7 +256,7 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t input2[] = { 0x0068, 0x0065, 0x0069, 0x0073, 0x0073 };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -280,13 +282,13 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
       };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input3, countof (input3), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input3, countof (input3), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -297,16 +299,16 @@ test_nonascii (int (*my_casecmp) (const uint16_t *, size_t, const uint16_t *, si
     static const uint16_t casefolded_decomposed[] = { 0x006A, 0x0323, 0x030C };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, NULL, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_decomposed, SIZEOF (casefolded_decomposed), NULL, NULL, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_decomposed, countof (casefolded_decomposed), NULL, NULL, &cmp) == 0);
     ASSERT (cmp != 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded, SIZEOF (casefolded), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded, countof (casefolded), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), casefolded_decomposed, SIZEOF (casefolded_decomposed), NULL, UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), casefolded_decomposed, countof (casefolded_decomposed), NULL, UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 }

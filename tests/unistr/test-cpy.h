@@ -23,9 +23,9 @@ main ()
   {
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e' };
 
-    for (size_t n = 0; n <= SIZEOF (src); n++)
+    for (size_t n = 0; n <= countof (src); n++)
       {
-        UNIT dest[1 + SIZEOF (src) + 1] =
+        UNIT dest[1 + countof (src) + 1] =
           { MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC, MAGIC };
         UNIT *ret;
 

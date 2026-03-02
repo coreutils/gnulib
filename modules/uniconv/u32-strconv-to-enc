@@ -11,6 +11,7 @@ striconveha
 uniconv/u8-strconv-to-enc
 unistr/u32-to-u8
 unistr/u32-strlen
+stdcountof-h
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [uniconv/u32-strconv-to-enc])

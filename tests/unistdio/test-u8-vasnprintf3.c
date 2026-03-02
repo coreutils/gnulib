@@ -22,6 +22,7 @@
 
 #include <locale.h>
 #include <stdarg.h>
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -83,7 +84,7 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
   {
     const char *locale_string = "h\303\251t\303\251rog\303\251n\303\251it\303\251"; /* hétérogénéité */
     wchar_t wide_string[20];
-    ASSERT (mbstowcs (wide_string, locale_string, SIZEOF (wide_string)) == 13);
+    ASSERT (mbstowcs (wide_string, locale_string, countof (wide_string)) == 13);
     {
       size_t length;
       uint8_t *result =

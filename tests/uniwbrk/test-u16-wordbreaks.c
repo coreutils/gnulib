@@ -20,6 +20,7 @@
 
 #include "uniwbrk.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -40,9 +41,9 @@ main ()
         '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u16_wordbreaks (input, SIZEOF (input), p);
+    u16_wordbreaks (input, countof (input), p);
 
     for (size_t i = 0; i < 61; i++)
       {
@@ -71,9 +72,9 @@ main ()
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
         0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
       };
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u16_wordbreaks (input, SIZEOF (input), p);
+    u16_wordbreaks (input, countof (input), p);
 
     for (size_t i = 0; i < 67; i++)
       {
@@ -94,9 +95,9 @@ main ()
   {
     static const uint16_t input[8] =
       { 'a', '\n', 'b', '\r', 'c', '\r', '\n', 'd' };
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u16_wordbreaks (input, SIZEOF (input), p);
+    u16_wordbreaks (input, countof (input), p);
     for (size_t i = 0; i < 8; i++)
       {
         ASSERT (p[i] == (i == 1 || i == 2 || i == 3 || i == 4 || i == 5
@@ -110,9 +111,9 @@ main ()
   {
     static const uint16_t input[10] =
       { '.', 0xD83C, 0xDDE9, 0xD83C, 0xDDEA, 0xD83C, 0xDDEB, 0xD83C, 0xDDF7, '.' };
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u16_wordbreaks (input, SIZEOF (input), p);
+    u16_wordbreaks (input, countof (input), p);
     for (size_t i = 0; i < 10; i++)
       {
         ASSERT (p[i] == (i == 1 || i == 5 || i == 9 ? 1 : 0));

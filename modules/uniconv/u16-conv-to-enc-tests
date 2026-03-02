@@ -3,6 +3,7 @@ tests/uniconv/test-u16-conv-to-enc.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 memeq
 
 configure.ac:

@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "fatal-signal.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
@@ -29,8 +30,6 @@
 #include "glthread/once.h"
 #include "thread-optim.h"
 #include "sig-handler.h"
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 /* ========================================================================= */
 
@@ -79,7 +78,7 @@ static int fatal_signals[] =
     0
   };
 
-#define num_fatal_signals (SIZEOF (fatal_signals) - 1)
+#define num_fatal_signals (countof (fatal_signals) - 1)
 
 /* Eliminate signals whose signal handler is SIG_IGN.  */
 
@@ -125,7 +124,7 @@ actions_entry_t;
 static actions_entry_t static_actions[32];
 static actions_entry_t * volatile actions = static_actions;
 static sig_atomic_t volatile actions_count = 0;
-static size_t actions_allocated = SIZEOF (static_actions);
+static size_t actions_allocated = countof (static_actions);
 
 
 /* The saved signal handlers.

@@ -12,6 +12,7 @@ m4/codeset.m4
 
 Depends-on:
 bool
+stdcountof-h
 setlocale
 mbrtowc
 wctype-h

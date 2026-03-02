@@ -22,6 +22,7 @@
 /* Specification.  */
 #include <stdlib.h>
 
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -38,14 +39,14 @@ main (int argc, char *argv[])
       /* Test also a zero size.  */
       0
     };
-  void *aligned2_blocks[SIZEOF (sizes)];
-  void *aligned4_blocks[SIZEOF (sizes)];
-  void *aligned8_blocks[SIZEOF (sizes)];
-  void *aligned16_blocks[SIZEOF (sizes)];
-  void *aligned32_blocks[SIZEOF (sizes)];
-  void *aligned64_blocks[SIZEOF (sizes)];
+  void *aligned2_blocks[countof (sizes)];
+  void *aligned4_blocks[countof (sizes)];
+  void *aligned8_blocks[countof (sizes)];
+  void *aligned16_blocks[countof (sizes)];
+  void *aligned32_blocks[countof (sizes)];
+  void *aligned64_blocks[countof (sizes)];
 
-  for (size_t i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < countof (sizes); i++)
     {
       size_t size = sizes[i];
 
@@ -89,7 +90,7 @@ main (int argc, char *argv[])
       memset (aligned64_blocks[i], 'z', size);
     }
 
-  for (size_t i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < countof (sizes); i++)
     {
       if (sizeof (void *) <= 2)
         free (aligned2_blocks[i]);

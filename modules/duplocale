@@ -10,6 +10,7 @@ locale-h
 freelocale      [test $HAVE_LOCALE_T = 0 || { test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1; }]
 newlocale       [test $HAVE_LOCALE_T = 0 || { test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1; }]
 setlocale-null  [test $HAVE_LOCALE_T = 0 || { test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1; }]
+stdcountof-h    [test $HAVE_LOCALE_T = 0 || { test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1; }]
 streq           [test $HAVE_LOCALE_T = 0 || { test $HAVE_DUPLOCALE = 1 && test $REPLACE_DUPLOCALE = 1; }]
 
 configure.ac:

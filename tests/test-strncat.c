@@ -23,6 +23,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (strncat, char *, (char *, const char *, size_t));
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "zerosize-ptr.h"
@@ -66,7 +67,7 @@ main ()
         (char) 0xED, (char) 0x95, (char) 0x9C, (char) 0xEA, (char) 0xB8,
         (char) 0x80, '\0'
       };
-    check (input, SIZEOF (input));
+    check (input, countof (input));
   }
 
   /* Test zero-length operations on NULL pointers, allowed by

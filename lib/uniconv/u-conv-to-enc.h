@@ -79,7 +79,7 @@ FUNC (const char *tocode,
   return result;
 #else
   uint8_t tmpbuf[4096];
-  size_t tmpbufsize = SIZEOF (tmpbuf);
+  size_t tmpbufsize = countof (tmpbuf);
   uint8_t *utf8_src = U_TO_U8 (src, srclen, tmpbuf, &tmpbufsize);
   if (utf8_src == NULL)
     return NULL;

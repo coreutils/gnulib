@@ -4,6 +4,7 @@ tests/unictype/test-incb_of.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

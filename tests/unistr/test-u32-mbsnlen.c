@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 int
@@ -36,7 +38,7 @@ main ()
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
 
-    for (size_t n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= countof (input); n++)
       {
         size_t len = u32_mbsnlen (input, n);
         ASSERT (len == n);
@@ -50,7 +52,7 @@ main ()
         0x1D51F, 0x00D7, 0x1D51E
       };
 
-    for (size_t n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= countof (input); n++)
       {
         size_t len = u32_mbsnlen (input, n);
         ASSERT (len == n);

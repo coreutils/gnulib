@@ -6,6 +6,7 @@ Depends-on:
 unistr/u8-cmp
 uninorm/nfc
 uninorm/nfd
+stdcountof-h
 
 configure.ac:
 

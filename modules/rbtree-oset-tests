@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 array-oset
+stdcountof-h
 
 configure.ac:
 

@@ -25,6 +25,7 @@
 #endif
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -55,7 +56,7 @@ main ()
   /* ------------------------- Test mem_iconveha() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -85,7 +86,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -145,7 +146,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -178,7 +179,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -215,7 +216,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
@@ -278,7 +279,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
@@ -310,7 +311,7 @@ main ()
   if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
       /* Test conversions from autodetect_jp to UTF-8.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
@@ -338,7 +339,7 @@ main ()
               free (result);
             }
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
@@ -366,7 +367,7 @@ main ()
               free (result);
             }
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
@@ -405,7 +406,7 @@ main ()
 
 # if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) && !defined __UCLIBC__) || (_LIBICONV_VERSION >= 0x0105 && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__))
   /* Test conversion from UTF-8 to ISO-8859-1 with transliteration.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */
@@ -438,7 +439,7 @@ main ()
   /* ------------------------- Test str_iconveha() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -450,7 +451,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -480,7 +481,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -492,7 +493,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -504,7 +505,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */
@@ -534,7 +535,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
@@ -550,7 +551,7 @@ main ()
   if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
       /* Test conversions from autodetect_jp to UTF-8.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
@@ -560,7 +561,7 @@ main ()
           ASSERT (streq (result, expected));
           free (result);
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
@@ -570,7 +571,7 @@ main ()
           ASSERT (streq (result, expected));
           free (result);
         }
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
@@ -585,7 +586,7 @@ main ()
 
 # if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) && !defined __UCLIBC__) || (_LIBICONV_VERSION >= 0x0105 && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__))
   /* Test conversion from UTF-8 to ISO-8859-1 with transliteration.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */

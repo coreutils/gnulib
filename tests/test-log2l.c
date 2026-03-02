@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (log2l, long double, (long double));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "fpucw.h"
 #include "minus-zero.h"

@@ -20,6 +20,7 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "unistr.h"
@@ -111,61 +112,61 @@ main ()
         '-', '4', 'A', 'c', ')', ')', '/', '(', '2', 'A', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Case mapping can increase the number of Unicode characters.  */
   { /* LATIN SMALL LETTER N PRECEDED BY APOSTROPHE */
     static const uint16_t input[]      = { 0x0149 };
     static const uint16_t casemapped[] = { 0x02BC, 0x004E };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS */
     static const uint16_t input[]      = { 0x0390 };
     static const uint16_t casemapped[] = { 0x0399, 0x0308, 0x0301 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Turkish letters i İ ı I */
   { /* LATIN CAPITAL LETTER I */
     static const uint16_t input[]      = { 0x0049 };
     static const uint16_t casemapped[] = { 0x0049 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* LATIN SMALL LETTER I */
     static const uint16_t input[]         = { 0x0069 };
     static const uint16_t casemapped[]    = { 0x0049 };
     static const uint16_t casemapped_tr[] = { 0x0130 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped_tr, SIZEOF (casemapped_tr)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped_tr, countof (casemapped_tr)) == 0);
   }
   { /* LATIN CAPITAL LETTER I WITH DOT ABOVE */
     static const uint16_t input[]      = { 0x0130 };
     static const uint16_t casemapped[] = { 0x0130 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* LATIN SMALL LETTER DOTLESS I */
     static const uint16_t input[]      = { 0x0131 };
     static const uint16_t casemapped[] = { 0x0049 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "topkapı" */
     static const uint16_t input[] =
       { 0x0074, 0x006F, 0x0070, 0x006B, 0x0061, 0x0070, 0x0131 };
     static const uint16_t casemapped[] =
       { 0x0054, 0x006F, 0x0070, 0x006B, 0x0061, 0x0070, 0x0131 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Uppercasing can increase the number of Unicode characters.  */
   { /* "heiß" */
     static const uint16_t input[]      = { 0x0068, 0x0065, 0x0069, 0x00DF };
     static const uint16_t casemapped[] = { 0x0048, 0x0065, 0x0069, 0x00DF };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Case mappings for some characters can depend on the surrounding characters.  */
@@ -182,7 +183,7 @@ main ()
         0x03B5, 0x03C1, 0x03B5, 0x03C2, 0x0020, 0x03A0, 0x03BB, 0x03B7,
         0x03C1, 0x03BF, 0x03C6, 0x03BF, 0x03C1, 0x03AF, 0x03B5, 0x03C2
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Case mapping can require subsequent normalization.  */
@@ -190,8 +191,8 @@ main ()
     static const uint16_t input[]                 = { 0x01F0, 0x0323 };
     static const uint16_t casemapped[]            = { 0x004A, 0x030C, 0x0323 };
     static const uint16_t casemapped_normalized[] = { 0x004A, 0x0323, 0x030C };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL,        casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), NULL, UNINORM_NFC, casemapped_normalized, SIZEOF (casemapped_normalized)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL,        casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, UNINORM_NFC, casemapped_normalized, countof (casemapped_normalized)) == 0);
   }
 
   return test_exit_status;

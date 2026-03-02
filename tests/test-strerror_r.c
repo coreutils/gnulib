@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (strerror_r, int, (int, char *, size_t));
 
 #include <errno.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 
@@ -90,7 +91,7 @@ main (void)
     int errs[] = { EACCES, 0, -3, };
 
     buf[sizeof buf - 1] = '\0';
-    for (int j = 0; j < SIZEOF (errs); j++)
+    for (int j = 0; j < countof (errs); j++)
       {
         int err = errs[j];
         char buf2[sizeof buf] = "";

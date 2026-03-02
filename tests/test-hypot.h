@@ -52,8 +52,8 @@ test_function (void)
   }
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (int j = 0; j < SIZEOF (RANDOM) / 5;j++)
+  for (int i = 0; i < countof (RANDOM) / 5; i++)
+    for (int j = 0; j < countof (RANDOM) / 5;j++)
       {
         DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
         DOUBLE y = L_(16.0) * RANDOM[j]; /* 0.0 <= y <= 16.0 */

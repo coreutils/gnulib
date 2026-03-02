@@ -3,6 +3,7 @@ tests/test-execinfo.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

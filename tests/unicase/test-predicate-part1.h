@@ -18,6 +18,7 @@
 
 #include "unicase/caseprop.h"
 
+#include <stdcountof.h>
 #include <string.h>
 
 #include "macros.h"

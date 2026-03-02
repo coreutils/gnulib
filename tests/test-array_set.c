@@ -19,6 +19,7 @@
 
 #include "gl_array_set.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -34,7 +35,7 @@ static const char *objects[30] =
   };
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
+#define RANDOM_OBJECT() objects[RANDOM (countof (objects))]
 
 static int
 cmp_objects_in_array (const void *objptr1, const void *objptr2)

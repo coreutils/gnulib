@@ -4,6 +4,7 @@ tests/unictype/test-joiningtype_of.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

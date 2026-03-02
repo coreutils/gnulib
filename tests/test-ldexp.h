@@ -122,7 +122,7 @@ test_function (void)
   }
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < countof (RANDOM); i++)
     {
       x = L_(20.0) * RANDOM[i] - L_(10.0); /* -10.0 <= x <= 10.0 */
       /* LDEXP only does rounding when it returns a denormalized number

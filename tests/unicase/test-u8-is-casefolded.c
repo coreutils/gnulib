@@ -20,6 +20,8 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
+
 #include "unistr.h"
 #include "macros.h"
 
@@ -35,7 +37,7 @@ test_nonascii (int (*my_is) (const uint8_t *, size_t, const char *, bool *))
     static const uint8_t input[] = { 0xC3, 0x9F };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
 }

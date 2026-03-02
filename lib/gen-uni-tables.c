@@ -47,7 +47,9 @@
 #include <string.h>
 #include <time.h>
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+/* We can't assume that <stdcountof.h> exists, yet.  */
+#undef countof
+#define countof(a) (sizeof(a) / sizeof(a[0]))
 
 /* ========================================================================= */
 
@@ -2252,7 +2254,7 @@ output_numeric (const char *filename, const char *version)
           break;
       if (i == nfractions)
         {
-          assert (nfractions != SIZEOF (fractions));
+          assert (nfractions != countof (fractions));
           for (i = 0; i < nfractions; i++)
             if (value.denominator < fractions[i].denominator
                 || (value.denominator == fractions[i].denominator
@@ -2527,7 +2529,7 @@ fill_mirror (const char *bidimirroring_filename)
         else
           {
             /* A new pair.  */
-            if (mirror_pairs_count == SIZEOF (mirror_pairs))
+            if (mirror_pairs_count == countof (mirror_pairs))
               {
                 fprintf (stderr, "%s contains more pairs than expected, "
                          "increase mirror_pairs' size.\n",
@@ -5407,7 +5409,7 @@ fill_blocks (const char *blocks_filename)
       /* It must be sorted.  */
       assert (numblocks == 0 || blocks[numblocks-1].end < blocks[numblocks].start);
       numblocks++;
-      assert (numblocks != SIZEOF (blocks));
+      assert (numblocks != countof (blocks));
     }
 
   if (ferror (stream) || fclose (stream))

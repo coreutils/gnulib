@@ -28,7 +28,7 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < countof (RANDOM); i++)
     {
       DOUBLE x = RANDOM[i]; /* 0.0 <= x < 1.0 */
       DOUBLE y;

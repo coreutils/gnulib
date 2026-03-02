@@ -33,6 +33,8 @@ main ()
 
 #else
 
+# include <stdcountof.h>
+
 # include "infinity.h"
 # include "macros.h"
 # include "minus-zero.h"
@@ -82,7 +84,7 @@ main ()
       positive_NaN_with_payload (641),
       positive_NaN_with_payload (1729)
     };
-  int n = SIZEOF (x);
+  int n = countof (x);
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)

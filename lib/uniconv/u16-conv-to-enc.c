@@ -30,13 +30,12 @@
 #include "uniconv.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "striconveha.h"
 #include "unistr.h"
-
-#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 
 /* Name of UTF-16 encoding with machine dependent endianness and alignment.  */
 #if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \

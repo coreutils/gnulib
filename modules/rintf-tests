@@ -10,6 +10,7 @@ tests/randomf.c
 Depends-on:
 isnanf-nolibm
 nan
+stdcountof-h
 
 configure.ac:
 

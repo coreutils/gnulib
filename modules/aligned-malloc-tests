@@ -3,6 +3,7 @@ tests/test-aligned-malloc.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

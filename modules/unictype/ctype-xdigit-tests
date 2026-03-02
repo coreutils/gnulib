@@ -5,6 +5,7 @@ tests/unictype/test-predicate-part2.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

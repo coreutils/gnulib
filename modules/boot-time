@@ -17,6 +17,7 @@ gettimeofday
 bool
 time-h
 unlocked-io-internal
+stdcountof-h
 
 configure.ac:
 gl_PREREQ_READUTMP_H

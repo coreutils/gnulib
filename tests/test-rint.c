@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (rint, double, (double));
 
 #include <float.h>
+#include <stdcountof.h>
 #include <stdio.h>
 
 #include "isnand-nolibm.h"

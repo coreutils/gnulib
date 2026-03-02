@@ -12,6 +12,7 @@ fpucw
 isnanl-nolibm
 signbit-no-c++
 nan
+stdcountof-h
 
 configure.ac:
 

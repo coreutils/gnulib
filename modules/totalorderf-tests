@@ -10,6 +10,7 @@ Depends-on:
 signed-nan
 signed-snan
 setpayloadf
+stdcountof-h
 
 configure.ac:
 

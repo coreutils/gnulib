@@ -3,6 +3,7 @@ tests/test-striconveh.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 streq
 memeq
 

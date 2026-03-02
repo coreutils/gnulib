@@ -20,6 +20,8 @@
 /* Specification.  */
 #include "uniwidth.h"
 
+#include <stdcountof.h>
+
 #include "cjk.h"
 
 /* The non-spacing attribute table consists of:
@@ -50,15 +52,13 @@
 #include "uniwidth/width2.h"
 #include "unictype/bitmap.h"
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
-
 
 /* Determine number of column positions required for UC.  */
 int
 uc_width (ucs4_t uc, const char *encoding)
 {
   /* Test for non-spacing or control character.  */
-  if ((uc >> 9) < SIZEOF (nonspacing_table_ind))
+  if ((uc >> 9) < countof (nonspacing_table_ind))
     {
       int ind = nonspacing_table_ind[uc >> 9];
       if (ind >= 0)

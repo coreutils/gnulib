@@ -18,6 +18,7 @@
 
 #include "unictype.h"
 
+#include <stdcountof.h>
 #include <string.h>
 
 #include "macros.h"
@@ -35,7 +36,7 @@ main ()
   uc_fraction_t value;
 
   c = 0;
-  for (size_t i = 0; i < SIZEOF (mapping); i++)
+  for (size_t i = 0; i < countof (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
         {

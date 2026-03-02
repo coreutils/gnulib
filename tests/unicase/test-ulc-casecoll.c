@@ -22,6 +22,7 @@
 #include "unicase.h"
 
 #include <locale.h>
+#include <stdcountof.h>
 
 #include "uninorm.h"
 #include "macros.h"

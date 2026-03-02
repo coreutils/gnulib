@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 int
@@ -41,7 +43,7 @@ main ()
         '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, 0
       };
-    ASSERT (u32_strlen (input) == SIZEOF (input) - 1);
+    ASSERT (u32_strlen (input) == countof (input) - 1);
   }
 
   /* String with characters outside the BMP.  */
@@ -50,7 +52,7 @@ main ()
       { '-', '(', 0x1D51E, 0x00D7, 0x1D51F, ')', '=',
         0x1D51F, 0x00D7, 0x1D51E, 0
       };
-    ASSERT (u32_strlen (input) == SIZEOF (input) - 1);
+    ASSERT (u32_strlen (input) == countof (input) - 1);
   }
 
   return test_exit_status;

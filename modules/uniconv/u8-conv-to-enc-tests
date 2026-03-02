@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 unistr/u8-strlen
+stdcountof-h
 memeq
 
 configure.ac:

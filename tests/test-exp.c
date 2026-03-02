@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (exp, double, (double));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 

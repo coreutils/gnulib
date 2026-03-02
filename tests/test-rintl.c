@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (rintl, long double, (long double));
 
 #include <float.h>
+#include <stdcountof.h>
 #include <stdio.h>
 
 #include "fpucw.h"

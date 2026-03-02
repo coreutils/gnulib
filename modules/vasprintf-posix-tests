@@ -10,6 +10,7 @@ stdint-h
 float-h
 nan
 snan
+stdcountof-h
 streq
 memeq
 

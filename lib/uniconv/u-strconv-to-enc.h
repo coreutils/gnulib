@@ -46,7 +46,7 @@ FUNC (const UNIT *string,
   return result;
 #else
   uint8_t tmpbuf[4096];
-  size_t tmpbufsize = SIZEOF (tmpbuf);
+  size_t tmpbufsize = countof (tmpbuf);
   uint8_t *utf8_string = U_TO_U8 (string, U_STRLEN (string) + 1, tmpbuf, &tmpbufsize);
   if (utf8_string == NULL)
     return NULL;

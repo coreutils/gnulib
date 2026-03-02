@@ -19,6 +19,7 @@
 
 #include "gl_carray_list.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "gl_array_list.h"
@@ -30,7 +31,7 @@ static const char *objects[15] =
   };
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
+#define RANDOM_OBJECT() objects[RANDOM (countof (objects))]
 
 static void
 check_equals (gl_list_t list1, gl_list_t list2)

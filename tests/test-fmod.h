@@ -38,8 +38,8 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
+  for (int i = 0; i < countof (RANDOM) / 5; i++)
+    for (int j = 0; j < countof (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -61,8 +61,8 @@ test_function (void)
           }
       }
 
-  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
+  for (int i = 0; i < countof (RANDOM) / 5; i++)
+    for (int j = 0; j < countof (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(1.0e9) * RANDOM[i]; /* 0.0 <= x <= 10^9 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -99,8 +99,8 @@ test_function (void)
   {
     int large_exp = (MAX_EXP - 1 < 1000 ? MAX_EXP - 1 : 1000);
     DOUBLE large = my_ldexp (L_(1.0), large_exp); /* = 2^large_exp */
-    for (int i = 0; i < SIZEOF (RANDOM) / 10; i++)
-      for (int j = 0; j < SIZEOF (RANDOM) / 10; j++)
+    for (int i = 0; i < countof (RANDOM) / 10; i++)
+      for (int j = 0; j < countof (RANDOM) / 10; j++)
         {
           DOUBLE x = large * RANDOM[i]; /* 0.0 <= x <= 2^large_exp */
           DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */

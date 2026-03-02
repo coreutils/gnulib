@@ -17,6 +17,7 @@ nan
 snan
 setlocale
 localeconv
+stdcountof-h
 streq
 memeq
 

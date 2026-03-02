@@ -11,6 +11,7 @@ striconveha
 uniconv/u8-strconv-to-enc
 unistr/u16-to-u8
 unistr/u16-strlen
+stdcountof-h
 
 configure.ac:
 AC_REQUIRE([gl_BIGENDIAN])

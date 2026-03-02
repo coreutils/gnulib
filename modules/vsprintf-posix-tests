@@ -8,6 +8,7 @@ tests/macros.h
 
 Depends-on:
 c99
+stdcountof-h
 stdint-h
 float-h
 nan

@@ -3,6 +3,7 @@ tests/unistr/test-u16-mbsnlen.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

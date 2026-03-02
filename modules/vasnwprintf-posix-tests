@@ -18,6 +18,7 @@ nan
 snan
 setlocale
 localeconv
+stdcountof-h
 wcscmp
 wcsspn
 wmemcmp

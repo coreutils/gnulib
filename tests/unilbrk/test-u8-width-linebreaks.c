@@ -20,6 +20,7 @@
 
 #include "unilbrk.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -37,9 +38,9 @@ test_function (int (*my_u8_width_linebreaks) (const uint8_t *, size_t, int, int,
       "Gr\303\274\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\271\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\355\225\234\352\270\200\n";
 
     {
-      char *p = (char *) malloc (SIZEOF (input));
+      char *p = (char *) malloc (countof (input));
 
-      my_u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
+      my_u8_width_linebreaks (input, countof (input), 25, 0, 0, NULL, "GB18030", p);
       for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
@@ -50,9 +51,9 @@ test_function (int (*my_u8_width_linebreaks) (const uint8_t *, size_t, int, int,
     }
 
     {
-      char *p = (char *) malloc (SIZEOF (input));
+      char *p = (char *) malloc (countof (input));
 
-      my_u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
+      my_u8_width_linebreaks (input, countof (input), 25, 0, 0, NULL, "GB2312", p);
       for (size_t i = 0; i < 91; i++)
         {
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :

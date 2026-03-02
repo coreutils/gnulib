@@ -25,6 +25,7 @@
 #endif
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -145,7 +146,7 @@ main ()
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -180,7 +181,7 @@ main ()
   /* Test conversion from ASCII to ISO-8859-1 with invalid input (EILSEQ).  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -230,7 +231,7 @@ main ()
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -294,7 +295,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -328,7 +329,7 @@ main ()
 
 # if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -362,7 +363,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -399,7 +400,7 @@ main ()
     }
 
   /* Test conversion from ASCII to UTF-8 with invalid input (EILSEQ).  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -462,7 +463,7 @@ main ()
   /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
      Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
      Andreas Schwab on 2012-02-06.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -523,7 +524,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
@@ -587,7 +588,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
@@ -619,7 +620,7 @@ main ()
          -1 / EILSEQ when converting the 7th byte of the input "+VDLYP9hA".  */
 # if !(defined __sun && !defined _LIBICONV_VERSION)
       /* Test conversion from UTF-7 to UTF-8 with EINVAL.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           /* This is base64 encoded 0x54 0x32 0xD8 0x3F 0xD8 0x40.  It would
@@ -646,7 +647,7 @@ main ()
 
 #  if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
       /* Test conversion from UTF-7 to GB18030 with EINVAL.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           /* This is base64 encoded 0x54 0x32 0xD8 0x3F 0xD8 0x40.  It would
@@ -676,7 +677,7 @@ main ()
          the input "+2D/YQNhB" to U+1FED8 U+3FD8 U+40D8.  */
 #  if !(defined __NetBSD__ && !defined _LIBICONV_VERSION)
       /* Test conversion from UTF-7 to UTF-8 with EILSEQ.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           /* This is base64 encoded 0xD8 0x3F 0xD8 0x40 0xD8 0x41.  It would
@@ -748,7 +749,7 @@ main ()
       /* Test conversion from UTF-7 to GB18030 with EILSEQ.
          Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
          Andreas Schwab on 2012-02-06.  */
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           /* This is base64 encoded 0xD8 0x3F 0xD8 0x40 0xD8 0x41.  It would
@@ -823,7 +824,7 @@ main ()
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -842,7 +843,7 @@ main ()
   /* Test conversion from ASCII to ISO-8859-1 with invalid input (EILSEQ).  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -873,7 +874,7 @@ main ()
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
   for (size_t indirect = 0; indirect <= 1; indirect++)
     {
-      for (size_t h = 0; h < SIZEOF (handlers); h++)
+      for (size_t h = 0; h < countof (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
           static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -909,7 +910,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -924,7 +925,7 @@ main ()
 
 # if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -939,7 +940,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -953,7 +954,7 @@ main ()
     }
 
   /* Test conversion from ASCII to UTF-8 with invalid input (EILSEQ).  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -989,7 +990,7 @@ main ()
   /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
      Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
      Andreas Schwab on 2012-02-06.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
@@ -1023,7 +1024,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */
@@ -1056,7 +1057,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
@@ -1080,7 +1081,7 @@ main ()
   /* ------------------------- Test mem_iconveh() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1110,7 +1111,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -1171,7 +1172,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1205,7 +1206,7 @@ main ()
 
 # if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1239,7 +1240,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -1276,7 +1277,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
@@ -1340,7 +1341,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
@@ -1369,7 +1370,7 @@ main ()
   /* ------------------------- Test str_iconveh() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1381,7 +1382,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
@@ -1412,7 +1413,7 @@ main ()
     }
 
   /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1425,7 +1426,7 @@ main ()
 
 # if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
@@ -1438,7 +1439,7 @@ main ()
 # endif
 
   /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
@@ -1450,7 +1451,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */
@@ -1481,7 +1482,7 @@ main ()
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";

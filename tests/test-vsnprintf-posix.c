@@ -22,6 +22,7 @@
 
 #include <float.h>
 #include <stdarg.h>
+#include <stdcountof.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>

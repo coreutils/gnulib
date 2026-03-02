@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (sprintf, int, (char *, char const *, ...));
 
 #include <float.h>
+#include <stdcountof.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>

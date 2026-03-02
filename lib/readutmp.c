@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <stdint.h>
 

@@ -4,6 +4,7 @@ tests/unicase/test-is-cased.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

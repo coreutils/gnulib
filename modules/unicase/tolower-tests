@@ -5,6 +5,7 @@ tests/unicase/test-mapping-part2.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

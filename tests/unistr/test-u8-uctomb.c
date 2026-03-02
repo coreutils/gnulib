@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 #define MAGIC 0xBA
@@ -130,7 +132,7 @@ main ()
     ucs4_t invalid[] = { 0x110000, 0xD800, 0xDBFF, 0xDC00, 0xDFFF };
     uint8_t buf[5] = { MAGIC, MAGIC, MAGIC, MAGIC, MAGIC };
 
-    for (size_t i = 0; i < SIZEOF (invalid); i++)
+    for (size_t i = 0; i < countof (invalid); i++)
       {
         ucs4_t uc = invalid[i];
 

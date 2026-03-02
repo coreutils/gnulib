@@ -11,6 +11,7 @@ Depends-on:
 isnanf-nolibm
 nan
 signbit-no-c++
+stdcountof-h
 
 configure.ac:
 

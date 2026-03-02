@@ -3,6 +3,7 @@ tests/test-scratch-buffer.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

@@ -24,42 +24,42 @@ test_ascii (int (*my_is) (const UNIT *, size_t, const char *, bool *))
     static const UNIT input[] = { 'A' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const UNIT input[] = { 'J', 'O', 'H', 'N', ' ', 'S', 'M', 'I', 'T', 'H' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const UNIT input[] = { 'J', 'o', 'h', 'n', ' ', 'S', 'm', 'i', 't', 'h' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const UNIT input[] = { 'j', 'o', 'h', 'n', ' ', 's', 'm', 'i', 't', 'h' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const UNIT input[] = { 'A', '2' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const UNIT input[] = { '3' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
 
@@ -68,28 +68,28 @@ test_ascii (int (*my_is) (const UNIT *, size_t, const char *, bool *))
     static const UNIT input[] = { 'H', 'H' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const UNIT input[] = { 'h', 'h' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const UNIT input[] = { 'H', 'h' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const UNIT input[] = { 'h', 'H' };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
 }

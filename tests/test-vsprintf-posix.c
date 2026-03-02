@@ -25,6 +25,7 @@ SIGNATURE_CHECK (vsprintf, int, (char *, char const *, va_list));
 
 #include <float.h>
 #include <stdarg.h>
+#include <stdcountof.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>

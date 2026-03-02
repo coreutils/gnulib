@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -269,7 +270,7 @@ static size_t block_sizes[] =
   };
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_BLOCK_SIZE() block_sizes[RANDOM (SIZEOF (block_sizes))]
+#define RANDOM_BLOCK_SIZE() block_sizes[RANDOM (countof (block_sizes))]
 
 int
 main (int argc, char *argv[])
@@ -284,9 +285,9 @@ main (int argc, char *argv[])
      Also verify that there are no unexpected modifications to the contents of
      these blocks.  */
   {
-    char *blocks[SIZEOF (block_sizes)];
+    char *blocks[countof (block_sizes)];
 
-    for (size_t i = 0; i < SIZEOF (block_sizes); i++)
+    for (size_t i = 0; i < countof (block_sizes); i++)
       blocks[i] = NULL;
 
     for (unsigned int repeat = 0; repeat < 100000; repeat++)
@@ -297,7 +298,7 @@ main (int argc, char *argv[])
           {
           case 0:
             { /* Allocate a block.  */
-              size_t i = RANDOM (SIZEOF (block_sizes));
+              size_t i = RANDOM (countof (block_sizes));
               size_t size = block_sizes[i];
               if (blocks[i] == NULL)
                 {
@@ -311,7 +312,7 @@ main (int argc, char *argv[])
             break;
           case 1:
             { /* Free a block.  */
-              size_t i = RANDOM (SIZEOF (block_sizes));
+              size_t i = RANDOM (countof (block_sizes));
               size_t size = block_sizes[i];
               if (blocks[i] != NULL)
                 {
@@ -326,7 +327,7 @@ main (int argc, char *argv[])
       }
 
     /* Free the remaining blocks.  */
-    for (size_t i = 0; i < SIZEOF (block_sizes); i++)
+    for (size_t i = 0; i < countof (block_sizes); i++)
       if (blocks[i] != NULL)
         {
           uintptr_t block = (uintptr_t) blocks[i];

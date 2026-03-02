@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#include <stdcountof.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -81,12 +82,12 @@ main (int argc, char *argv[])
 {
   static size_t sizes[] =
     { 13, 8, 17, 450, 320, 1, 99, 4, 15, 16, 2, 76, 37, 127, 2406, 641 };
-  void *aligned4_blocks[SIZEOF (sizes)];
-  void *aligned8_blocks[SIZEOF (sizes)];
-  void *aligned16_blocks[SIZEOF (sizes)];
-  void *aligned32_blocks[SIZEOF (sizes)];
+  void *aligned4_blocks[countof (sizes)];
+  void *aligned8_blocks[countof (sizes)];
+  void *aligned16_blocks[countof (sizes)];
+  void *aligned32_blocks[countof (sizes)];
 
-  for (size_t i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < countof (sizes); i++)
     {
       size_t size = sizes[i];
 
@@ -107,7 +108,7 @@ main (int argc, char *argv[])
       memset (aligned32_blocks[i], 'z', size);
     }
 
-  for (size_t i = 0; i < SIZEOF (sizes); i++)
+  for (size_t i = 0; i < countof (sizes); i++)
     {
       aligned4_free (aligned4_blocks[i]);
       aligned8_free (aligned8_blocks[i]);

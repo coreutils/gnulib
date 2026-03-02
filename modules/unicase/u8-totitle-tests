@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 unistr/u8-cmp
 uninorm/nfc
+stdcountof-h
 
 configure.ac:
 

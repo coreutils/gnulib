@@ -3,6 +3,7 @@ tests/unilbrk/test-u32-width-linebreaks.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

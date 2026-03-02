@@ -19,6 +19,7 @@
 #include <stdio.h>
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -95,7 +96,7 @@ main (void)
   /* Test that perror uses the same message as strerror.  */
   {
     int errs[] = { EACCES, 0, -3, };
-    for (int i = 0; i < SIZEOF (errs); i++)
+    for (int i = 0; i < countof (errs); i++)
       {
         char buf[256];
         const char *err = strerror (errs[i]);

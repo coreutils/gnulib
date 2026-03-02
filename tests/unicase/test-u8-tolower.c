@@ -20,6 +20,7 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "unistr.h"
@@ -115,7 +116,7 @@ main ()
         0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
         0xED, 0x95, 0x9C, 0xEA, 0xB8, 0x80, '\n'
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Turkish letters i İ ı I */
@@ -123,41 +124,41 @@ main ()
     static const uint8_t input[]         = { 0x49 };
     static const uint8_t casemapped[]    = { 0x69 };
     static const uint8_t casemapped_tr[] = { 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped_tr, SIZEOF (casemapped_tr)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped_tr, countof (casemapped_tr)) == 0);
   }
   { /* LATIN SMALL LETTER I */
     static const uint8_t input[]      = { 0x69 };
     static const uint8_t casemapped[] = { 0x69 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* LATIN CAPITAL LETTER I WITH DOT ABOVE */
     static const uint8_t input[]         = { 0xC4, 0xB0 };
     static const uint8_t casemapped[]    = { 0x69, 0xCC, 0x87 };
     static const uint8_t casemapped_tr[] = { 0x69 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped_tr, SIZEOF (casemapped_tr)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped_tr, countof (casemapped_tr)) == 0);
   }
   { /* LATIN SMALL LETTER DOTLESS I */
     static const uint8_t input[]      = { 0xC4, 0xB1};
     static const uint8_t casemapped[] = { 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "TOPKAPI" */
     static const uint8_t input[] =
       { 0x54, 0x4F, 0x50, 0x4B, 0x41, 0x50, 0x49 };
     static const uint8_t casemapped[] =
       { 0x74, 0x6F, 0x70, 0x6B, 0x61, 0x70, 0xC4, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), "tr", NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), "tr", NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Uppercasing can increase the number of Unicode characters.  */
   { /* "HEIß" */
     static const uint8_t input[]      = { 0x48, 0x45, 0x49, 0xC3, 0x9F };
     static const uint8_t casemapped[] = { 0x68, 0x65, 0x69, 0xC3, 0x9F };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   /* Case mappings for some characters can depend on the surrounding characters.  */
@@ -176,17 +177,17 @@ main ()
         ' ', 0xCF, 0x80, 0xCE, 0xBB, 0xCE, 0xB7, 0xCF, 0x81, 0xCE, 0xBF,
         0xCF, 0x86, 0xCE, 0xBF, 0xCF, 0x81, 0xCE, 0xAF, 0xCE, 0xB5, 0xCF, 0x82
       };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "Σ" -> "σ" */
     static const uint8_t input[] =      { 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0xCF, 0x83 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ΑΣ" -> "ας" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x82 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   /* It's a final sigma only if not followed by a case-ignorable sequence and
      then a cased letter.  Note that U+0345 and U+037A are simultaneously
@@ -194,27 +195,27 @@ main ()
   { /* "ΑΣΑ" -> "ασα" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0xCE, 0x91 };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0xCE, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ΑΣ:" -> "ας:" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x82, 0x3A };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ΑΣ:Α" -> "ασ:α" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCE, 0x91 };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCE, 0xB1 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ΑΣ:ͺ" -> "ασ:ͺ" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCD, 0xBA };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCD, 0xBA };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ΑΣ:ͺ " -> "ασ:ͺ " */
     static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCD, 0xBA, 0x20 };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCD, 0xBA, 0x20 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   /* It's a final sigma only if preceded by a case-ignorable sequence and
      a cased letter before it.  Note that U+0345 and U+037A are simultaneously
@@ -222,22 +223,22 @@ main ()
   { /* ":Σ" -> ":σ" */
     static const uint8_t input[] =      { 0x3A, 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0x3A, 0xCF, 0x83 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "Α:Σ" -> "α:ς" */
     static const uint8_t input[] =      { 0xCE, 0x91, 0x3A, 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0xCE, 0xB1, 0x3A, 0xCF, 0x82 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* "ͺ:Σ" -> "ͺ:ς" */
     static const uint8_t input[] =      { 0xCD, 0xBA, 0x3A, 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0xCD, 0xBA, 0x3A, 0xCF, 0x82 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
   { /* " ͺ:Σ" -> " ͺ:ς" */
     static const uint8_t input[] =      { 0x20, 0xCD, 0xBA, 0x3A, 0xCE, 0xA3 };
     static const uint8_t casemapped[] = { 0x20, 0xCD, 0xBA, 0x3A, 0xCF, 0x82 };
-    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+    ASSERT (check (input, countof (input), NULL, NULL, casemapped, countof (casemapped)) == 0);
   }
 
   return test_exit_status;

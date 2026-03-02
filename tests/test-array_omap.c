@@ -19,6 +19,7 @@
 
 #include "gl_array_omap.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,7 +34,7 @@ static const char *objects[30] =
   };
 
 #define RANDOM(n) (rand () % (n))
-#define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
+#define RANDOM_OBJECT() objects[RANDOM (countof (objects))]
 
 static void
 check_equals (gl_omap_t map1, gl_list_t keys, gl_list_t values)

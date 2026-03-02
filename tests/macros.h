@@ -130,13 +130,6 @@ int volatile test_exit_status = EXIT_SUCCESS;
     (void) ret;                         \
   }
 
-/* SIZEOF (array)
-   returns the number of elements of an array.  It works for arrays that are
-   declared outside functions and for local variables of array type.  It does
-   *not* work for function parameters of array type, because they are actually
-   parameters of pointer type.  */
-#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-
 /* Some numbers in the interval [0,1).  */
 extern const float randomf[1000];
 extern const double randomd[1000];

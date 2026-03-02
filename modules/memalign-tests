@@ -3,6 +3,7 @@ tests/test-memalign.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 stdint-h
 
 configure.ac:

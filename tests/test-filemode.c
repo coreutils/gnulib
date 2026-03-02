@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "filemode.h"
 
+#include <stdcountof.h>
 #include <sys/stat.h>
 
 /* The strmode function is already defined on some systems in <string.h> or
@@ -67,7 +68,7 @@ main (void)
 {
   char buffer[12];
 
-  for (size_t i = 0; i < SIZEOF (table); ++i)
+  for (size_t i = 0; i < countof (table); ++i)
     {
       strmode (table[i].mode, buffer);
       ASSERT (streq (table[i].str, buffer));

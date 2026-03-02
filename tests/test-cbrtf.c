@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (cbrtf, float, (float));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 

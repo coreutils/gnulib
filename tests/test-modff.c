@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (modff, float, (float, float *));
 
 #include <float.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 

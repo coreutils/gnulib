@@ -11,6 +11,7 @@ lib/unictype/bitmap.h
 Depends-on:
 uniwidth/base
 streq-opt
+stdcountof-h
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [uniwidth/width])

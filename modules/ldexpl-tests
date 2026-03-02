@@ -13,6 +13,7 @@ isnanl-nolibm
 signbit-no-c++
 float-h
 nan
+stdcountof-h
 
 configure.ac:
 

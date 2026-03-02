@@ -23,7 +23,7 @@ main ()
   {
     static const UNIT src[] = { 'c', 'l', 'i', 'm', 'a', 't', 'e' };
 
-    for (size_t n = 0; n <= SIZEOF (src); n++)
+    for (size_t n = 0; n <= countof (src); n++)
       {
         UNIT *result = U_CPY_ALLOC (src, n);
 

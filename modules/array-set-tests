@@ -6,6 +6,7 @@ Depends-on:
 xoset
 array-oset
 xalloc
+stdcountof-h
 
 configure.ac:
 

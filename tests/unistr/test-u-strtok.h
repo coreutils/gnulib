@@ -52,15 +52,15 @@ test_u_strtok (void)
     ucs4_t u_delim[] = { 0x3000, 0x3001, 0 };
     /* Convert ucs4_t[] to UNIT[].
        Every ucs4_t yields at most 4 / sizeof (UNIT) units.  */
-    size_t input_len = SIZEOF (u_input) * (4 / sizeof (UNIT));
+    size_t input_len = countof (u_input) * (4 / sizeof (UNIT));
     UNIT *input = (UNIT *) malloc (input_len * sizeof (UNIT));
-    size_t delim_len = SIZEOF (u_delim) * (4 / sizeof (UNIT));
+    size_t delim_len = countof (u_delim) * (4 / sizeof (UNIT));
     UNIT *delim = (UNIT *) malloc (delim_len * sizeof (UNIT));
     UNIT *state;
     const UNIT *result;
     UNIT *ptr, *first_ptr, *second_ptr;
     size_t i;
-    for (i = 0, ptr = input; i < SIZEOF (u_input) && u_input[i] != 0; i++)
+    for (i = 0, ptr = input; i < countof (u_input) && u_input[i] != 0; i++)
       {
         int ret = U_UCTOMB (ptr, u_input[i], input_len - (ptr - input));
         if (i == 4)
@@ -70,7 +70,7 @@ test_u_strtok (void)
         ptr += ret;
       }
     *ptr = 0;
-    for (i = 0, ptr = delim; i < SIZEOF (u_delim) && u_delim[i] != 0; i++)
+    for (i = 0, ptr = delim; i < countof (u_delim) && u_delim[i] != 0; i++)
       {
         int ret = U_UCTOMB (ptr, u_delim[i], delim_len - (ptr - delim));
         ptr += ret;

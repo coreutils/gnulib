@@ -21,6 +21,7 @@
 #include "unistr.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 
@@ -106,7 +107,7 @@ main ()
         '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
   }
 
   /* String with characters outside the BMP.  */
@@ -119,7 +120,7 @@ main ()
       { '-', '(', 0xD835, 0xDD1E, 0x00D7, 0xD835, 0xDD1F, ')', '=',
         0xD835, 0xDD1F, 0x00D7, 0xD835, 0xDD1E
       };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
   }
 
   /* Invalid input.  */
@@ -127,26 +128,26 @@ main ()
     static const uint32_t input[] = { 'x', 0x340000, 0x50000000, 'y' };
 #if 0 /* Currently invalid input is rejected, not accommodated.  */
     static const uint16_t expected[] = { 'x', 0xFFFD, 0xFFFD, 'y' };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
 #else
     size_t length;
     uint16_t *result;
     uint16_t preallocated[10];
 
     /* Test return conventions with resultbuf == NULL.  */
-    result = u32_to_u16 (input, SIZEOF (input), NULL, &length);
+    result = u32_to_u16 (input, countof (input), NULL, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 
     /* Test return conventions with resultbuf too small.  */
     length = 1;
-    result = u32_to_u16 (input, SIZEOF (input), preallocated, &length);
+    result = u32_to_u16 (input, countof (input), preallocated, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 
     /* Test return conventions with resultbuf large enough.  */
-    length = SIZEOF (preallocated);
-    result = u32_to_u16 (input, SIZEOF (input), preallocated, &length);
+    length = countof (preallocated);
+    result = u32_to_u16 (input, countof (input), preallocated, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 #endif

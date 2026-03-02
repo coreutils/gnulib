@@ -21,6 +21,8 @@
 
 #include "uninorm.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 #include "test-u32-normcmp.h"

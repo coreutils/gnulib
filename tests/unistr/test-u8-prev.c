@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 static int
@@ -220,7 +222,7 @@ main ()
   {
     static const uint8_t input[] = { 0xC3, 0x97 };
     uc = 0xBADFACE;
-    ASSERT (check (input, SIZEOF (input), &uc) == 0);
+    ASSERT (check (input, countof (input), &uc) == 0);
     ASSERT (uc == 0x00D7);
   }
 
@@ -228,7 +230,7 @@ main ()
   {
     static const uint8_t input[] = { 0xE2, 0x82, 0xAC };
     uc = 0xBADFACE;
-    ASSERT (check (input, SIZEOF (input), &uc) == 0);
+    ASSERT (check (input, countof (input), &uc) == 0);
     ASSERT (uc == 0x20AC);
   }
 
@@ -236,70 +238,70 @@ main ()
   {
     static const uint8_t input[] = { 0xF4, 0x8F, 0xBF, 0xBD };
     uc = 0xBADFACE;
-    ASSERT (check (input, SIZEOF (input), &uc) == 0);
+    ASSERT (check (input, countof (input), &uc) == 0);
     ASSERT (uc == 0x10FFFD);
   }
 
   /* Test incomplete/invalid 1-byte input.  */
   {
     static const uint8_t input[] = { 0xC1 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xC3 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xE2 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF4 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xFE };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
 
   /* Test incomplete/invalid 2-byte input.  */
   {
     static const uint8_t input[] = { 0xE0, 0x9F };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xE2, 0x82 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xE2, 0xD0 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF0, 0x8F };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF3, 0x8F };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF3, 0xD0 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
 
   /* Test incomplete/invalid 3-byte input.  */
   {
     static const uint8_t input[] = { 0xF3, 0x8F, 0xBF };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF3, 0xE4, 0xBF };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
   {
     static const uint8_t input[] = { 0xF3, 0x8F, 0xD0 };
-    ASSERT (check_invalid (input, SIZEOF (input)) == 0);
+    ASSERT (check_invalid (input, countof (input)) == 0);
   }
 
   return test_exit_status;

@@ -15,6 +15,7 @@ snan
 read-file
 full-write
 usleep
+stdcountof-h
 streq
 memeq
 

@@ -22,6 +22,7 @@
 #include "wait-process.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
@@ -35,8 +36,6 @@
 #include "gettext.h"
 
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 
 #if defined _WIN32 && ! defined __CYGWIN__
@@ -102,7 +101,7 @@ slaves_entry_t;
 static slaves_entry_t static_slaves[32];
 static slaves_entry_t * volatile slaves = static_slaves;
 static sig_atomic_t volatile slaves_count = 0;
-static size_t slaves_allocated = SIZEOF (static_slaves);
+static size_t slaves_allocated = countof (static_slaves);
 
 /* The termination signal for slave subprocesses.
    2003-10-07:  Terminator becomes Governator.  */

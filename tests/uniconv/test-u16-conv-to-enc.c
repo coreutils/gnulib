@@ -21,6 +21,7 @@
 #include "uniconv.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -48,7 +49,7 @@ main ()
      ISO-8859-2, and UTF-8.  */
 
   /* Test conversion from UTF-16 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint16_t input[] = /* Ärger mit bösen Bübchen ohne Augenmaß */
@@ -60,10 +61,10 @@ main ()
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       for (size_t o = 0; o < 2; o++)
         {
-          size_t *offsets = (o ? new_offsets (SIZEOF (input)) : NULL);
+          size_t *offsets = (o ? new_offsets (countof (input)) : NULL);
           size_t length;
           char *result = u16_conv_to_encoding ("ISO-8859-1", handler,
-                                               input, SIZEOF (input),
+                                               input, countof (input),
                                                offsets,
                                                NULL, &length);
           ASSERT (result != NULL);
@@ -81,7 +82,7 @@ main ()
     }
 
   /* Test conversion from UTF-16 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint16_t input[] = /* Rafał Maszkowski */
@@ -91,10 +92,10 @@ main ()
         };
       for (size_t o = 0; o < 2; o++)
         {
-          size_t *offsets = (o ? new_offsets (SIZEOF (input)) : NULL);
+          size_t *offsets = (o ? new_offsets (countof (input)) : NULL);
           size_t length = 0xdead;
           char *result = u16_conv_to_encoding ("ISO-8859-1", handler,
-                                               input, SIZEOF (input),
+                                               input, countof (input),
                                                offsets,
                                                NULL, &length);
           switch (handler)
@@ -145,16 +146,16 @@ main ()
     }
 
   /* Test conversion from UTF-16 to ISO-8859-1 with EINVAL.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint16_t input[] = { 0xD845 };
       for (size_t o = 0; o < 2; o++)
         {
-          size_t *offsets = (o ? new_offsets (SIZEOF (input)) : NULL);
+          size_t *offsets = (o ? new_offsets (countof (input)) : NULL);
           size_t length;
           char *result = u16_conv_to_encoding ("ISO-8859-1", handler,
-                                               input, SIZEOF (input),
+                                               input, countof (input),
                                                offsets,
                                                NULL, &length);
           ASSERT (result != NULL);

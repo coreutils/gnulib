@@ -31,13 +31,13 @@ test_ascii (int (*my_casecmp) (const UNIT *, size_t, const UNIT *, size_t, const
     static const UNIT input[] = { 'x', 'y' };
     int cmp;
 
-    ASSERT (my_casecmp (input, SIZEOF (input), NULL, 0, NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), NULL, 0, NULL, nf, &cmp) == 0);
     ASSERT (cmp == 1);
 
-    ASSERT (my_casecmp (NULL, 0, input, SIZEOF (input), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (NULL, 0, input, countof (input), NULL, nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input, SIZEOF (input), input, SIZEOF (input), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input, countof (input), input, countof (input), NULL, nf, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 
@@ -47,10 +47,10 @@ test_ascii (int (*my_casecmp) (const UNIT *, size_t, const UNIT *, size_t, const
     static const UNIT input2[] = { 'A', 'm', 'i', 'g', 'o' };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1), NULL, nf, &cmp) == 0);
     ASSERT (cmp == 1);
   }
 
@@ -60,10 +60,10 @@ test_ascii (int (*my_casecmp) (const UNIT *, size_t, const UNIT *, size_t, const
     static const UNIT input2[] = { 'R', 'e', 'a', 'g', 'a', 'n', 'o', 'm', 'i', 'c', 's' };
     int cmp;
 
-    ASSERT (my_casecmp (input1, SIZEOF (input1), input2, SIZEOF (input2), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2), NULL, nf, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input1, SIZEOF (input1), NULL, nf, &cmp) == 0);
+    ASSERT (my_casecmp (input2, countof (input2), input1, countof (input1), NULL, nf, &cmp) == 0);
     ASSERT (cmp == 1);
   }
 }

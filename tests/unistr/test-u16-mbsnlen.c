@@ -20,6 +20,8 @@
 
 #include "unistr.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 int
@@ -36,7 +38,7 @@ main ()
         0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
 
-    for (size_t n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= countof (input); n++)
       {
         size_t len = u16_mbsnlen (input, n);
         ASSERT (len == n);
@@ -49,13 +51,13 @@ main ()
       { '-', '(', 0xD835, 0xDD1E, 0x00D7, 0xD835, 0xDD1F, ')', '=',
         0xD835, 0xDD1F, 0x00D7, 0xD835, 0xDD1E
       };
-    static const size_t expected[SIZEOF (input) + 1] =
+    static const size_t expected[countof (input) + 1] =
       { 0,
         1, 2, 3, 3, 4, 5, 5, 6, 7,
         8, 8, 9, 10, 10
       };
 
-    for (size_t n = 0; n <= SIZEOF (input); n++)
+    for (size_t n = 0; n <= countof (input); n++)
       {
         size_t len = u16_mbsnlen (input, n);
         ASSERT (len == expected[n]);

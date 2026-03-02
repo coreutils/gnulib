@@ -20,6 +20,7 @@
 /* Specification.  */
 #include "unictype.h"
 
+#include <stdcountof.h>
 #include <string.h>
 
 #include "macros.h"
@@ -37,7 +38,7 @@ main ()
   unsigned int c;
 
   c = 0;
-  for (size_t i = 0; i < SIZEOF (mapping); i++)
+  for (size_t i = 0; i < countof (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
         ASSERT (uc_joining_group (c) == UC_JOINING_GROUP_NONE);

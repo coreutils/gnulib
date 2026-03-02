@@ -21,6 +21,7 @@
 /* Specification.  */
 #include <execinfo.h>
 
+#include <stdcountof.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,7 +35,7 @@ test_backtrace (int pass)
   int size;
   char **symbols;
 
-  max_size = (pass == 0 ? SIZEOF (buffer) : 1);
+  max_size = (pass == 0 ? countof (buffer) : 1);
   size = backtrace (buffer, max_size);
   ASSERT (size >= 0 && size <= max_size);
 

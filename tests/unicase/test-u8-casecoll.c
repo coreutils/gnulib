@@ -21,6 +21,8 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
+
 #include "uninorm.h"
 #include "macros.h"
 

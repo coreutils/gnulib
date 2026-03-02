@@ -20,6 +20,7 @@
 
 #include "uniwbrk.h"
 
+#include <stdcountof.h>
 #include <stdlib.h>
 
 #include "macros.h"
@@ -34,9 +35,9 @@ main ()
     static const uint8_t input[91] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gr\303\274\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\271\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\355\225\234\352\270\200\n";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u8_wordbreaks (input, SIZEOF (input), p);
+    u8_wordbreaks (input, countof (input), p);
 
     for (size_t i = 0; i < 91; i++)
       {
@@ -60,9 +61,9 @@ main ()
     static const uint8_t input[106] _GL_ATTRIBUTE_NONSTRING =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       "Gru\314\210\303\237 Gott. \320\227\320\264\321\200\320\260\320\262\321\201\321\202\320\262\321\203\320\270\314\206\321\202\320\265! x=(-b\302\261sqrt(b\302\262-4ac))/(2a)  \346\227\245\346\234\254\350\252\236,\344\270\255\346\226\207,\341\204\222\341\205\241\341\206\253\341\204\200\341\205\263\341\206\257\n";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u8_wordbreaks (input, SIZEOF (input), p);
+    u8_wordbreaks (input, countof (input), p);
 
     for (size_t i = 0; i < 106; i++)
       {
@@ -84,9 +85,9 @@ main ()
   /* CR LF handling.  */
   {
     static const uint8_t input[8] _GL_ATTRIBUTE_NONSTRING = "a\nb\rc\r\nd";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u8_wordbreaks (input, SIZEOF (input), p);
+    u8_wordbreaks (input, countof (input), p);
     for (size_t i = 0; i < 8; i++)
       {
         ASSERT (p[i] == (i == 1 || i == 2 || i == 3 || i == 4 || i == 5
@@ -100,9 +101,9 @@ main ()
   {
     static const uint8_t input[18] _GL_ATTRIBUTE_NONSTRING =
       ".\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267.";
-    char *p = (char *) malloc (SIZEOF (input));
+    char *p = (char *) malloc (countof (input));
 
-    u8_wordbreaks (input, SIZEOF (input), p);
+    u8_wordbreaks (input, countof (input), p);
     for (size_t i = 0; i < 18; i++)
       {
         ASSERT (p[i] == (i == 1 || i == 9 || i == 17 ? 1 : 0));

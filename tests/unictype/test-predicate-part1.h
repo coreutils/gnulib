@@ -18,6 +18,7 @@
 
 #include "unictype.h"
 
+#include <stdcountof.h>
 #include <string.h>
 
 #include "macros.h"

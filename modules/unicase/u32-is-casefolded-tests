@@ -4,6 +4,7 @@ tests/unicase/test-is-casefolded.h
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 unistr/u16-strcmp
+stdcountof-h
 
 configure.ac:
 

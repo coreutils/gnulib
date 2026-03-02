@@ -21,6 +21,7 @@
 #include "unistr.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 
 #include "macros.h"
 
@@ -108,7 +109,7 @@ main ()
         0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
         0xED, 0x95, 0x9C, 0xEA, 0xB8, 0x80, '\n'
       };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
   }
 
   /* String with characters outside the BMP.  */
@@ -121,7 +122,7 @@ main ()
       { '-', '(', 0xF0, 0x9D, 0x94, 0x9E, 0xC3, 0x97, 0xF0, 0x9D, 0x94, 0x9F,
         ')', '=', 0xF0, 0x9D, 0x94, 0x9F, 0xC3, 0x97, 0xF0, 0x9D, 0x94, 0x9E
       };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
   }
 
   /* Invalid input.  */
@@ -130,26 +131,26 @@ main ()
 #if 0 /* Currently invalid input is rejected, not accommodated.  */
     static const uint8_t expected[] =
       { 'x', 0xEF, 0xBF, 0xBD, 0xEF, 0xBF, 0xBD, 'y' };
-    ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
+    ASSERT (check (input, countof (input), expected, countof (expected)) == 0);
 #else
     size_t length;
     uint8_t *result;
     uint8_t preallocated[10];
 
     /* Test return conventions with resultbuf == NULL.  */
-    result = u16_to_u8 (input, SIZEOF (input), NULL, &length);
+    result = u16_to_u8 (input, countof (input), NULL, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 
     /* Test return conventions with resultbuf too small.  */
     length = 1;
-    result = u16_to_u8 (input, SIZEOF (input), preallocated, &length);
+    result = u16_to_u8 (input, countof (input), preallocated, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 
     /* Test return conventions with resultbuf large enough.  */
-    length = SIZEOF (preallocated);
-    result = u16_to_u8 (input, SIZEOF (input), preallocated, &length);
+    length = countof (preallocated);
+    result = u16_to_u8 (input, countof (input), preallocated, &length);
     ASSERT (result == NULL);
     ASSERT (errno == EILSEQ);
 #endif

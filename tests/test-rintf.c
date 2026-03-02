@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (rintf, float, (float));
 
 #include <float.h>
+#include <stdcountof.h>
 #include <stdio.h>
 
 #include "isnanf-nolibm.h"

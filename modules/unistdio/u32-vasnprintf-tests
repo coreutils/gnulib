@@ -16,6 +16,7 @@ unistr/u32-cpy
 unistr/u32-strcmp
 unistr/u32-strlen
 setlocale
+stdcountof-h
 
 configure.ac:
 gt_LOCALE_FR

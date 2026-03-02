@@ -28,7 +28,7 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < countof (RANDOM); i++)
     {
       DOUBLE x = L_(32.0) * RANDOM[i] - L_(16.0); /* -16.0 <= x <= 16.0 */
       DOUBLE y = CBRT (x);
@@ -37,8 +37,8 @@ test_function (void)
               && err < L_(4.0) * L_(16.0) / TWO_MANT_DIG);
     }
 
-  for (int i = 0; i < SIZEOF (RANDOM) / 5; i++)
-    for (int j = 0; j < SIZEOF (RANDOM) / 5; j++)
+  for (int i = 0; i < countof (RANDOM) / 5; i++)
+    for (int j = 0; j < countof (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(32.0) * RANDOM[i] - L_(16.0); /* -16.0 <= x <= 16.0 */
         DOUBLE y = L_(32.0) * RANDOM[j] - L_(16.0); /* -16.0 <= y <= 16.0 */

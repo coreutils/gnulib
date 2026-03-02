@@ -23,6 +23,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (fabsl, long double, (long double));
 
+#include <stdcountof.h>
 #include <string.h>
 
 #include "macros.h"

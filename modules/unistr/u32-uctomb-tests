@@ -3,6 +3,7 @@ tests/unistr/test-u32-uctomb.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

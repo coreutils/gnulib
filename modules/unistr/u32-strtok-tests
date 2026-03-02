@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 unistr/u32-uctomb
+stdcountof-h
 
 configure.ac:
 

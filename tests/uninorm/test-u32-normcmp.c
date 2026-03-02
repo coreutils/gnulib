@@ -20,6 +20,8 @@
 
 #include "uninorm.h"
 
+#include <stdcountof.h>
+
 #include "macros.h"
 
 #include "test-u32-normcmp.h"
@@ -36,28 +38,28 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input5[] = { 'H', 'u', 'r', 'z' };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_normcmp (input2, SIZEOF (input2), input1, SIZEOF (input1), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input2, countof (input2), input1, countof (input1), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_normcmp (input3, SIZEOF (input3), input4, SIZEOF (input4), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input3, countof (input3), input4, countof (input4), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_normcmp (input4, SIZEOF (input4), input3, SIZEOF (input3), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input4, countof (input4), input3, countof (input3), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_normcmp (input2, SIZEOF (input2), input3, SIZEOF (input3), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input2, countof (input2), input3, countof (input3), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input4, SIZEOF (input4), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input4, countof (input4), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input5, SIZEOF (input5), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input5, countof (input5), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
 
-    ASSERT (my_normcmp (input2, SIZEOF (input2), input5, SIZEOF (input5), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input2, countof (input2), input5, countof (input5), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == -1);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS */
@@ -65,7 +67,7 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input2[] = { 0x0041, 0x0308 };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* LATIN CAPITAL LETTER A WITH DIAERESIS AND MACRON */
@@ -73,7 +75,7 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input2[] = { 0x0041, 0x0308, 0x0304 };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* GREEK DIALYTIKA AND PERISPOMENI */
@@ -81,7 +83,7 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input2[] = { 0x00A8, 0x0342 };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* HANGUL SYLLABLE GEUL */
@@ -90,10 +92,10 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input3[] = { 0x1100, 0x1173, 0x11AF };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input3, SIZEOF (input3), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input3, countof (input3), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
   { /* HANGUL SYLLABLE GEU */
@@ -101,7 +103,7 @@ test_nonascii (int (*my_normcmp) (const uint32_t *, size_t, const uint32_t *, si
     static const uint32_t input2[] = { 0x1100, 0x1173 };
     int cmp;
 
-    ASSERT (my_normcmp (input1, SIZEOF (input1), input2, SIZEOF (input2), UNINORM_NFD, &cmp) == 0);
+    ASSERT (my_normcmp (input1, countof (input1), input2, countof (input2), UNINORM_NFD, &cmp) == 0);
     ASSERT (cmp == 0);
   }
 }

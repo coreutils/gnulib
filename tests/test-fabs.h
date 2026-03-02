@@ -32,7 +32,7 @@ test_function (void)
   ASSERT (!signbit (y));
 
   /* Randomized tests.  */
-  for (int i = 0; i < SIZEOF (RANDOM); i++)
+  for (int i = 0; i < countof (RANDOM); i++)
     {
       x = L_(10.0) * RANDOM[i]; /* 0.0 <= x <= 10.0 */
       ASSERT (FABS (x) == x);

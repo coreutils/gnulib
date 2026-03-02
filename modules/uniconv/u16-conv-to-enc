@@ -13,6 +13,7 @@ unistr/u16-mbtoucr
 unistr/u8-uctomb
 unistr/u16-mblen
 unistr/u8-mblen
+stdcountof-h
 
 configure.ac:
 AC_REQUIRE([gl_BIGENDIAN])

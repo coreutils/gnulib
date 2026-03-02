@@ -19,6 +19,7 @@
 /* Specification.  */
 #include <string.h>
 
+#include <stdcountof.h>
 #include <stddef.h>
 
 #include "zerosize-ptr.h"
@@ -105,7 +106,7 @@ main (void)
   /* Simple string.  */
   { /* "Grüß Gott." */
     static const char input[] = "Gr\303\274\303\237 Gott.";
-    check (input, SIZEOF (input));
+    check (input, countof (input));
   }
 
   /* Test zero-length operations on NULL pointers, allowed by

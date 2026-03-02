@@ -9,6 +9,7 @@ tests/randoml.c
 
 Depends-on:
 nan
+stdcountof-h
 
 configure.ac:
 

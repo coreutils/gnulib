@@ -21,6 +21,7 @@
 #include "mbmemcasecoll.h"
 
 #include <locale.h>
+#include <stdcountof.h>
 #include <string.h>
 #include <wchar.h>
 #include <wctype.h>

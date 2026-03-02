@@ -3,6 +3,7 @@ tests/unilbrk/test-u16-possible-linebreaks.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

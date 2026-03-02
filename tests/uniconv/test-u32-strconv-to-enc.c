@@ -21,6 +21,7 @@
 #include "uniconv.h"
 
 #include <errno.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 #include "macros.h"
@@ -36,7 +37,7 @@ main ()
      ISO-8859-2, and UTF-8.  */
 
   /* Test conversion from UTF-32 to ISO-8859-1 with no errors.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint32_t input[] = /* Ärger mit bösen Bübchen ohne Augenmaß */
@@ -53,7 +54,7 @@ main ()
     }
 
   /* Test conversion from UTF-32 to ISO-8859-1 with EILSEQ.  */
-  for (size_t h = 0; h < SIZEOF (handlers); h++)
+  for (size_t h = 0; h < countof (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint32_t input[] = /* Rafał Maszkowski */

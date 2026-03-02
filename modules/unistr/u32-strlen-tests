@@ -3,6 +3,7 @@ tests/unistr/test-u32-strlen.c
 tests/macros.h
 
 Depends-on:
+stdcountof-h
 
 configure.ac:
 

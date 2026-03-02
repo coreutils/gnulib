@@ -20,6 +20,8 @@
 
 #include "unicase.h"
 
+#include <stdcountof.h>
+
 #include "unistr.h"
 #include "macros.h"
 
@@ -35,35 +37,35 @@ test_nonascii (int (*my_is) (const uint8_t *, size_t, const char *, bool *))
     static const uint8_t input[] = { 0xE2, 0x93, 0x97 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == false);
   }
   {
     static const uint8_t input[] = { 0xE2, 0x92, 0xBD };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint8_t input[] = { 0xCA, 0xB0 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint8_t input[] = { 0xE1, 0x80, 0xB4 };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
   {
     static const uint8_t input[] = { 0xCA, 0xBD };
     bool result;
 
-    ASSERT (my_is (input, SIZEOF (input), NULL, &result) == 0);
+    ASSERT (my_is (input, countof (input), NULL, &result) == 0);
     ASSERT (result == true);
   }
 }

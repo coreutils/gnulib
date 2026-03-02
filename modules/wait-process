@@ -15,6 +15,7 @@ xalloc-die
 gettext-h
 gnulib-i18n
 bool
+stdcountof-h
 stdlib-h
 sys_wait-h
 unistd-h
