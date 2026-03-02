@@ -17,6 +17,7 @@ memcmp
 quote
 quotearg
 bool
+stdcountof-h
 stdlib-h
 memeq
 streq

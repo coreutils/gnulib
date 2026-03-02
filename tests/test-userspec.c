@@ -20,6 +20,7 @@
 
 #include "userspec.h"
 
+#include <stdcountof.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
@@ -29,8 +30,6 @@
 #include <grp.h>
 
 #include "xalloc.h"
-
-#define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 
 struct test
 {
@@ -107,7 +106,7 @@ main (void)
       size_t len;
       if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
         continue;
-      j = ARRAY_CARDINALITY (T) - 1;
+      j = countof (T) - 1;
       len = strlen (pw->pw_name);
       if (sizeof T[j].in - 2 < len)
         continue;
@@ -127,7 +126,7 @@ main (void)
   char *user_name = NULL;
   char *group_name = NULL;
 
-  for (unsigned int i = 0; i < ARRAY_CARDINALITY (T); i++)
+  for (unsigned int i = 0; i < countof (T); i++)
     {
       uid_t uid = (uid_t) -1;
       gid_t gid = (gid_t) -1;

@@ -28,6 +28,7 @@
 # endif
 
 # include <limits.h>
+# include <stdcountof.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <string.h> /* memeq */
@@ -39,14 +40,11 @@
 extern "C" {
 # endif
 
-# define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
-
 /* Assert there are as many real arguments as there are values
    (argument list ends with a NULL guard).  */
 
 # define ARGMATCH_VERIFY(Arglist, Vallist) \
-    static_assert (ARRAY_CARDINALITY (Arglist) \
-                   == ARRAY_CARDINALITY (Vallist) + 1)
+    static_assert (countof (Arglist) == countof (Vallist) + 1)
 
 /* Return the index of the element of ARGLIST (NULL terminated) that
    matches with ARG.  If VALLIST is not NULL, then use it to resolve

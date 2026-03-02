@@ -20,12 +20,11 @@
 
 #include "argv-iter.h"
 
+#include <stdcountof.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "macros.h"
-
-#define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 
 static FILE *
 write_nul_delimited_argv (char **argv)
@@ -58,7 +57,7 @@ main (void)
 
   for (int use_stream = 0; use_stream < 2; use_stream++)
     {
-      for (size_t i = 0; i < ARRAY_CARDINALITY (av); i++)
+      for (size_t i = 0; i < countof (av); i++)
         {
           FILE *fp;
           struct argv_iterator *ai;

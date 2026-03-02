@@ -21,6 +21,7 @@
 #include "hashcode-string2.h"
 #include "inttostr.h"
 
+#include <stdcountof.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +29,6 @@
 
 #include "macros.h"
 
-#define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 
 static bool
 hash_compare_strings (void const *x, void const *y)
@@ -102,7 +102,7 @@ main (int argc, char **argv)
       srand (seed);
     }
 
-  for (unsigned int i = 0; i < ARRAY_CARDINALITY (table_size); i++)
+  for (unsigned int i = 0; i < countof (table_size); i++)
     {
       size_t sz = table_size[i];
       ht = hash_initialize (sz, NULL, hash_pjw, hash_compare_strings, NULL);
