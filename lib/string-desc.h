@@ -61,9 +61,10 @@
    Test program:
      int f (int x) { typeof (x) y = x; return y; }
  */
-#if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) /* both C and C++ mode */ \
-    || (defined __clang__ && __clang_major__ >= 3 /* both C and C++ mode */ \
-        && !(defined __cplusplus && !defined __GNUC__)) /* except for clang-cl in C++ mode */ \
+#if (((defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 1) > 3) /* both C and C++ mode */ \
+      || (defined __clang__ && __clang_major__ >= 3 /* both C and C++ mode */ \
+          && !(defined __cplusplus && !defined __GNUC__))) /* except for clang-cl in C++ mode */ \
+     && !defined __STRICT_ANSI__) /* but not with -std=c99 or -std=c11 */ \
     || (defined __SUNPRO_C && __SUNPRO_C >= 0x5110) /* C mode */ \
     || __STDC_VERSION__ >= 202311L /* C mode */
 # define HAVE_TYPEOF 1
