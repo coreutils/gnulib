@@ -1,4 +1,4 @@
-/* Copyright 2025 Free Software Foundation, Inc.
+/* Copyright 2025-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -98,7 +98,8 @@ template <typename T> _gl_array_type_test<T> _gl_array_type_test_helper(T&);
 #else
 /* In C, we can use typeof and __builtin_types_compatible_p.  */
 /* Work around clang bug <https://github.com/llvm/llvm-project/issues/143284>.  */
-# if _GL_GNUC_PREREQ (3, 1) && ! defined __clang__ /* || defined __clang__ */
+# if (_GL_GNUC_PREREQ (3, 1) && ! defined __clang__ /* || defined __clang__ */) \
+     && !(defined __STRICT_ANSI__ && __STDC_VERSION__ < 202311L) /* but not with -std=c99 or -std=c11 */
 #  define _gl_verify_is_array(a) \
     sizeof (struct { unsigned int _gl_verify_error_if_negative : __builtin_types_compatible_p (typeof (a), typeof (&*(a))) ? -1 : 1; })
 # else
