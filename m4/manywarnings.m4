@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 32
+# serial 33
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -193,6 +193,20 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
 
   # These options are not supported by gcc, but are useful with clang.
   AS_VAR_APPEND([$1], [' -Wthread-safety'])
+
+  # These options are not supported by gcc, only by clang.  clang enables
+  # them by default, but they are never useful.  So, disable them.
+  # Note! This applies *only* to options that are really never useful.
+  #       When in doubt, let the package maintainer decide.  The principle
+  #       of this module is to enable *all* possible warnings and then allow
+  #       the package maintainer to disable warnings they find not useful
+  #       in the context of their package.
+  # Gnulib uses #include_next in many .h files.
+  AS_VAR_APPEND([$1], [' -Wno-gnu-include-next'])
+  # C programmers know what '+' does. These warning options are targeted
+  # at fresh C programmers that are used to JavaScript, Java, or C#.
+  AS_VAR_APPEND([$1], [' -Wno-string-plus-int'])
+  AS_VAR_APPEND([$1], [' -Wno-string-plus-char'])
 
   # Disable specific options as needed.
   if test "$gl_cv_cc_nomfi_needed" = yes; then
