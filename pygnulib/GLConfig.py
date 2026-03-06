@@ -208,10 +208,8 @@ class GLConfig:
         self.setCopyMode(copymode)
         # lcopymode (--local-symlink and --local-hardlink)
         self.resetLCopyMode()
-        if lcopymode == None:
-            # Default to the mode used for non-local modules.
-            lcopymode = copymode
-        self.setLCopyMode(lcopymode)
+        if lcopymode != None:
+            self.setLCopyMode(lcopymode)
         # configure_ac
         self.resetAutoconfFile()
         if configure_ac != None:
@@ -321,9 +319,9 @@ class GLConfig:
                          'automake_subdir', 'automake_subdir_tests',
                          'libtests', 'dryrun']:
                 return False
-            elif key in ['copymode', 'lcopymode']:
+            elif key in ['copymode']:
                 return CopyAction.Copy
-            elif key in ['lgpl', 'gpl', 'libtool', 'conddeps', 'vc_files']:
+            elif key in ['lgpl', 'gpl', 'libtool', 'conddeps', 'vc_files', 'lcopymode']:
                 return None
             elif key == 'errors':
                 return True
@@ -1113,7 +1111,7 @@ class GLConfig:
         self.table['copymode'] = CopyAction.Copy
 
     # Define lcopymode methods.
-    def checkLCopyMode(self) -> CopyAction:
+    def checkLCopyMode(self) -> CopyAction | None:
         '''Check if pygnulib will copy files, create symlinks, or create hard links,
         only for files from the local override directories.'''
         return self.table['lcopymode']
@@ -1128,9 +1126,9 @@ class GLConfig:
                             % type(value).__name__)
 
     def resetLCopyMode(self) -> None:
-        '''Reset the method used for creating files to copying instead of linking,
+        '''Reset the method used for creating files,
         only for files from the local override directories.'''
-        self.table['lcopymode'] = CopyAction.Copy
+        self.table['lcopymode'] = None
 
     # Define verbosity methods.
     def getVerbosity(self) -> int:

@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2025 Free Software Foundation, Inc.
+# Copyright (C) 2002-2026 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ class GLFileSystem:
 
         # Don't bother checking the localpath's if we end up performing the same
         # action anyways.
-        if copymode != lcopymode:
+        if lcopymode != None and lcopymode != copymode:
             for localdir in localpath:
                 if lookedup == joinpath(localdir, original):
                     return lcopymode
