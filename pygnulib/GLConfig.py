@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2025 Free Software Foundation, Inc.
+# Copyright (C) 2002-2026 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -209,8 +209,8 @@ class GLConfig:
         # lcopymode (--local-symlink and --local-hardlink)
         self.resetLCopyMode()
         if lcopymode == None:
-            # Default to copying.
-            lcopymode = CopyAction.Copy
+            # Default to the mode used for non-local modules.
+            lcopymode = copymode
         self.setLCopyMode(lcopymode)
         # configure_ac
         self.resetAutoconfFile()
