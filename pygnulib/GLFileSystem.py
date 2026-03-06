@@ -130,7 +130,7 @@ class GLFileSystem:
 
         # Don't bother checking the localpath's if we end up performing the same
         # action anyways.
-        if copymode != lcopymode:
+        if lcopymode != None and lcopymode != copymode:
             for localdir in localpath:
                 if lookedup == joinpath(localdir, original):
                     return lcopymode
