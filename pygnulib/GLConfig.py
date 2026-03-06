@@ -209,8 +209,8 @@ class GLConfig:
         # lcopymode (--local-symlink and --local-hardlink)
         self.resetLCopyMode()
         if lcopymode == None:
-            # Default to copying.
-            lcopymode = CopyAction.Copy
+            # Default to the mode used for non-local modules.
+            lcopymode = copymode
         self.setLCopyMode(lcopymode)
         # configure_ac
         self.resetAutoconfFile()
