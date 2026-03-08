@@ -10,7 +10,7 @@ stdbit-h
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])
-GL_STDC_COUNT_ONES=1
+gl_STDBIT_MODULE_INDICATOR([stdc_count_ones])
 
 Makefile.am:
 if GL_GENERATE_STDBIT_H
