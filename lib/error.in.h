@@ -59,7 +59,7 @@
 #if defined __GNUC__ || defined __clang__
 /* Use 'gl_unreachable' to tell the compiler when the function call does not
    return.  */
-# define __gl_error_call1(function, status, ...) \
+# define _gl_error_call1(function, status, ...) \
     ((function) (status, __VA_ARGS__), \
      (status) != 0 ? gl_unreachable () : (void) 0)
 /* If STATUS is a not a constant, the function call may or may not return;
@@ -69,16 +69,16 @@
    would trigger a -Wimplicit-fallthrough warning even when STATUS is != 0,
    when not optimizing.  This causes STATUS to be evaluated twice, but
    that's OK since it does not have side effects.  */
-# define __gl_error_call(function, status, ...)                 \
-    (__builtin_constant_p (status)                              \
-     ? __gl_error_call1 (function, status, __VA_ARGS__)         \
-     : __extension__                                            \
-       ({                                                       \
-         int const __errstatus = status;                        \
-         __gl_error_call1 (function, __errstatus, __VA_ARGS__); \
+# define _gl_error_call(function, status, ...)                 \
+    (__builtin_constant_p (status)                             \
+     ? _gl_error_call1 (function, status, __VA_ARGS__)         \
+     : __extension__                                           \
+       ({                                                      \
+         int const __errstatus = status;                       \
+         _gl_error_call1 (function, __errstatus, __VA_ARGS__); \
        }))
 #else
-# define __gl_error_call(function, status, ...) \
+# define _gl_error_call(function, status, ...) \
     (function) (status, __VA_ARGS__)
 #endif
 
@@ -103,7 +103,7 @@ _GL_CXXALIAS_RPL (error, void,
 # ifndef _GL_NO_INLINE_ERROR
 #  undef error
 #  define error(status, ...) \
-     __gl_error_call (rpl_error, status, __VA_ARGS__)
+     _gl_error_call (rpl_error, status, __VA_ARGS__)
 # endif
 #else
 # if ! @HAVE_ERROR@
@@ -131,11 +131,11 @@ _gl_inline_error (int __status, int __errnum, const char *__format, ...)
 #    pragma GCC diagnostic pop
 #    undef error
 #    define error(status, ...) \
-       __gl_error_call (_gl_inline_error, status, __VA_ARGS__)
+       _gl_error_call (_gl_inline_error, status, __VA_ARGS__)
 #   endif
 #  else
 #   define error(status, ...) \
-      __gl_error_call (error, status, __VA_ARGS__)
+      _gl_error_call (error, status, __VA_ARGS__)
 #  endif
 # endif
 #endif
@@ -161,7 +161,7 @@ _GL_CXXALIAS_RPL (error_at_line, void,
 # ifndef _GL_NO_INLINE_ERROR
 #  undef error_at_line
 #  define error_at_line(status, ...) \
-     __gl_error_call (rpl_error_at_line, status, __VA_ARGS__)
+     _gl_error_call (rpl_error_at_line, status, __VA_ARGS__)
 # endif
 #else
 # if ! @HAVE_ERROR_AT_LINE@
@@ -193,11 +193,11 @@ _gl_inline_error_at_line (int __status, int __errnum, const char *__filename,
 #    pragma GCC diagnostic pop
 #    undef error_at_line
 #    define error_at_line(status, ...) \
-       __gl_error_call (_gl_inline_error_at_line, status, __VA_ARGS__)
+       _gl_error_call (_gl_inline_error_at_line, status, __VA_ARGS__)
 #   endif
 #  else
 #   define error_at_line(status, ...) \
-      __gl_error_call (error_at_line, status, __VA_ARGS__)
+      _gl_error_call (error_at_line, status, __VA_ARGS__)
 #  endif
 # endif
 #endif
@@ -216,7 +216,7 @@ extern void verror (int __status, int __errnum, const char *__format,
 #ifndef _GL_NO_INLINE_ERROR
 # ifndef verror
 #  define verror(status, ...) \
-     __gl_error_call (verror, status, __VA_ARGS__)
+     _gl_error_call (verror, status, __VA_ARGS__)
 #  define GNULIB_defined_verror 1
 # endif
 #endif
@@ -236,7 +236,7 @@ extern void verror_at_line (int __status, int __errnum, const char *__fname,
 #ifdef _GL_NO_INLINE_ERROR
 # ifndef verror_at_line
 #  define verror_at_line(status, ...) \
-     __gl_error_call (verror_at_line, status, __VA_ARGS__)
+     _gl_error_call (verror_at_line, status, __VA_ARGS__)
 #  define GNULIB_defined_verror_at_line 1
 # endif
 #endif
