@@ -135,17 +135,17 @@ extern "C" {
 /* Count leading 0 bits of N, even if N is 0.  */
 #ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
 _GL_STDBIT_INLINE int
-__gl_stdbit_clz (unsigned int n)
+_gl_stdbit_clz (unsigned int n)
 {
   return n ? __builtin_clz (n) : 8 * sizeof n;
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzl (unsigned long int n)
+_gl_stdbit_clzl (unsigned long int n)
 {
   return n ? __builtin_clzl (n) : 8 * sizeof n;
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzll (unsigned long long int n)
+_gl_stdbit_clzll (unsigned long long int n)
 {
   return n ? __builtin_clzll (n) : 8 * sizeof n;
 }
@@ -161,32 +161,32 @@ extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
 # endif
 
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzl (unsigned long int n)
+_gl_stdbit_clzl (unsigned long int n)
 {
   unsigned long int r;
   return 8 * sizeof n - (_BitScanReverse (&r, n) ? r + 1 : 0);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clz (unsigned int n)
+_gl_stdbit_clz (unsigned int n)
 {
-  return __gl_stdbit_clzl (n) - 8 * (sizeof 0ul - sizeof n);
+  return _gl_stdbit_clzl (n) - 8 * (sizeof 0ul - sizeof n);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzll (unsigned long long int n)
+_gl_stdbit_clzll (unsigned long long int n)
 {
 # ifdef _M_X64
   unsigned long int r;
   return 8 * sizeof n - (_BitScanReverse64 (&r, n) ? r + 1 : 0);
 # else
   unsigned long int hi = n >> 32;
-  return __gl_stdbit_clzl (hi ? hi : n) + (hi ? 0 : 32);
+  return _gl_stdbit_clzl (hi ? hi : n) + (hi ? 0 : 32);
 # endif
 }
 
 #else /* !_MSC_VER */
 
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzll (unsigned long long int n)
+_gl_stdbit_clzll (unsigned long long int n)
 {
   int r = 0;
   for (int i = 8 * sizeof n >> 1; 1 << 6 <= i; i >>= 1)
@@ -200,31 +200,31 @@ __gl_stdbit_clzll (unsigned long long int n)
   return (8 * sizeof n - (1 << 2) - r) + ((0x11112234ull >> (n << 2)) & 0xf);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clz (unsigned int n)
+_gl_stdbit_clz (unsigned int n)
 {
-  return __gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0u);
+  return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0u);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_clzl (unsigned long int n)
+_gl_stdbit_clzl (unsigned long int n)
 {
-  return __gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0ul);
+  return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0ul);
 }
 #endif
 
 /* Count trailing 0 bits of N, even if N is 0.  */
 #ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctz (unsigned int n)
+_gl_stdbit_ctz (unsigned int n)
 {
   return n ? __builtin_ctz (n) : 8 * sizeof n;
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzl (unsigned long int n)
+_gl_stdbit_ctzl (unsigned long int n)
 {
   return n ? __builtin_ctzl (n) : 8 * sizeof n;
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzll (unsigned long long int n)
+_gl_stdbit_ctzll (unsigned long long int n)
 {
   return n ? __builtin_ctzll (n) : 8 * sizeof n;
 }
@@ -240,56 +240,56 @@ extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
 # endif
 
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzl (unsigned long int n)
+_gl_stdbit_ctzl (unsigned long int n)
 {
   unsigned long int r;
   return _BitScanForward (&r, n) ? r : 8 * sizeof n;
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctz (unsigned int n)
+_gl_stdbit_ctz (unsigned int n)
 {
-  return __gl_stdbit_ctzl (n | (1ul << (8 * sizeof n - 1) << 1));
+  return _gl_stdbit_ctzl (n | (1ul << (8 * sizeof n - 1) << 1));
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzll (unsigned long long int n)
+_gl_stdbit_ctzll (unsigned long long int n)
 {
 # ifdef _M_X64
   unsigned long int r;
   return _BitScanForward64 (&r, n) ? r : 8 * sizeof n;
 # else
   unsigned int lo = n;
-  return __gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
+  return _gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
 # endif
 }
 
 #else /* !_MSC_VER */
 
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctz (unsigned int n)
+_gl_stdbit_ctz (unsigned int n)
 {
-  return 8 * sizeof n - (n ? __gl_stdbit_clz (n & -n) + 1 : 0);
+  return 8 * sizeof n - (n ? _gl_stdbit_clz (n & -n) + 1 : 0);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzl (unsigned long int n)
+_gl_stdbit_ctzl (unsigned long int n)
 {
-  return 8 * sizeof n - (n ? __gl_stdbit_clzl (n & -n) + 1 : 0);
+  return 8 * sizeof n - (n ? _gl_stdbit_clzl (n & -n) + 1 : 0);
 }
 _GL_STDBIT_INLINE int
-__gl_stdbit_ctzll (unsigned long long int n)
+_gl_stdbit_ctzll (unsigned long long int n)
 {
-  return 8 * sizeof n - (n ? __gl_stdbit_clzll (n & -n) + 1 : 0);
+  return 8 * sizeof n - (n ? _gl_stdbit_clzll (n & -n) + 1 : 0);
 }
 #endif
 
 #if @GNULIB_STDC_COUNT_ONES@
 /* Count 1 bits in N.  */
 # ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
-#  define __gl_stdbit_popcount __builtin_popcount
-#  define __gl_stdbit_popcountl __builtin_popcountl
-#  define __gl_stdbit_popcountll __builtin_popcountll
+#  define _gl_stdbit_popcount __builtin_popcount
+#  define _gl_stdbit_popcountl __builtin_popcountl
+#  define _gl_stdbit_popcountll __builtin_popcountll
 # else
 _GL_STDC_COUNT_ONES_INLINE int
-__gl_stdbit_popcount_wide (unsigned long long int n)
+_gl_stdbit_popcount_wide (unsigned long long int n)
 {
   if (sizeof n & (sizeof n - 1))
     {
@@ -356,12 +356,12 @@ __popcnt64 (unsigned long long int n)
 #   endif
 
 /* 1 if supported, -1 if not, 0 if unknown.  */
-extern signed char __gl_stdbit_popcount_support;
+extern signed char _gl_stdbit_popcount_support;
 
 _GL_STDC_COUNT_ONES_INLINE bool
-__gl_stdbit_popcount_supported (void)
+_gl_stdbit_popcount_supported (void)
 {
-  if (!__gl_stdbit_popcount_support)
+  if (!_gl_stdbit_popcount_support)
     {
       /* Do as described in
          <https://docs.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64>
@@ -369,35 +369,35 @@ __gl_stdbit_popcount_supported (void)
          we'll be more cautious.  */
       int cpu_info[4];
       __cpuid (cpu_info, 1);
-      __gl_stdbit_popcount_support = cpu_info[2] & 1 << 23 ? 1 : -1;
+      _gl_stdbit_popcount_support = cpu_info[2] & 1 << 23 ? 1 : -1;
     }
-  return 0 < __gl_stdbit_popcount_support;
+  return 0 < _gl_stdbit_popcount_support;
 }
 _GL_STDC_COUNT_ONES_INLINE int
-__gl_stdbit_popcount (unsigned int n)
+_gl_stdbit_popcount (unsigned int n)
 {
-  return (__gl_stdbit_popcount_supported ()
+  return (_gl_stdbit_popcount_supported ()
           ? __popcnt (n)
-          : __gl_stdbit_popcount_wide (n));
+          : _gl_stdbit_popcount_wide (n));
 }
 _GL_STDC_COUNT_ONES_INLINE int
-__gl_stdbit_popcountl (unsigned long int n)
+_gl_stdbit_popcountl (unsigned long int n)
 {
-  return (__gl_stdbit_popcount_supported ()
+  return (_gl_stdbit_popcount_supported ()
           ? __popcnt (n)
-          : __gl_stdbit_popcount_wide (n));
+          : _gl_stdbit_popcount_wide (n));
 }
 _GL_STDC_COUNT_ONES_INLINE int
-__gl_stdbit_popcountll (unsigned long long int n)
+_gl_stdbit_popcountll (unsigned long long int n)
 {
-  return (__gl_stdbit_popcount_supported ()
+  return (_gl_stdbit_popcount_supported ()
           ? __popcnt64 (n)
-          : __gl_stdbit_popcount_wide (n));
+          : _gl_stdbit_popcount_wide (n));
 }
 #  else /* !_MSC_VER */
-#   define __gl_stdbit_popcount __gl_stdbit_popcount_wide
-#   define __gl_stdbit_popcountl __gl_stdbit_popcount_wide
-#   define __gl_stdbit_popcountll __gl_stdbit_popcount_wide
+#   define _gl_stdbit_popcount _gl_stdbit_popcount_wide
+#   define _gl_stdbit_popcountl _gl_stdbit_popcount_wide
+#   define _gl_stdbit_popcountll _gl_stdbit_popcount_wide
 #  endif
 # endif
 #endif
@@ -410,7 +410,7 @@ __gl_stdbit_popcountll (unsigned long long int n)
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
 {
-  return __gl_stdbit_clz (n);
+  return _gl_stdbit_clz (n);
 }
 
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
@@ -428,13 +428,13 @@ stdc_leading_zeros_us (unsigned short int n)
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ul (unsigned long int n)
 {
-  return __gl_stdbit_clzl (n);
+  return _gl_stdbit_clzl (n);
 }
 
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ull (unsigned long long int n)
 {
-  return __gl_stdbit_clzll (n);
+  return _gl_stdbit_clzll (n);
 }
 
 # define stdc_leading_zeros(n) \
@@ -498,7 +498,7 @@ stdc_leading_ones_ull (unsigned long long int n)
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ui (unsigned int n)
 {
-  return __gl_stdbit_ctz (n);
+  return _gl_stdbit_ctz (n);
 }
 
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
@@ -516,13 +516,13 @@ stdc_trailing_zeros_us (unsigned short int n)
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ul (unsigned long int n)
 {
-  return __gl_stdbit_ctzl (n);
+  return _gl_stdbit_ctzl (n);
 }
 
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ull (unsigned long long int n)
 {
-  return __gl_stdbit_ctzll (n);
+  return _gl_stdbit_ctzll (n);
 }
 
 # define stdc_trailing_zeros(n) \
@@ -802,7 +802,7 @@ stdc_first_trailing_one_ull (unsigned long long int n)
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ui (unsigned int n)
 {
-  return __gl_stdbit_popcount (n);
+  return _gl_stdbit_popcount (n);
 }
 
 _GL_STDC_COUNT_ONES_INLINE unsigned int
@@ -820,13 +820,13 @@ stdc_count_ones_us (unsigned short int n)
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ul (unsigned long int n)
 {
-  return __gl_stdbit_popcountl (n);
+  return _gl_stdbit_popcountl (n);
 }
 
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ull (unsigned long long int n)
 {
-  return __gl_stdbit_popcountll (n);
+  return _gl_stdbit_popcountll (n);
 }
 
 # define stdc_count_ones(n) \
