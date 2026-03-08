@@ -11,7 +11,7 @@ stdc_bit_width
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])
-GL_STDC_BIT_CEIL=1
+gl_STDBIT_MODULE_INDICATOR([stdc_bit_ceil])
 
 Makefile.am:
 if GL_GENERATE_STDBIT_H
