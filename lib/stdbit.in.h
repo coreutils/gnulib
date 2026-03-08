@@ -1,6 +1,6 @@
 /* stdbit.h - C23 bit and byte utilities for non-C23 platforms
 
-   Copyright 2024-2025 Free Software Foundation, Inc.
+   Copyright 2024-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -281,7 +281,7 @@ __gl_stdbit_ctzll (unsigned long long int n)
 }
 #endif
 
-#if @GL_STDC_COUNT_ONES@
+#if @GNULIB_STDC_COUNT_ONES@
 /* Count 1 bits in N.  */
 # ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
 #  define __gl_stdbit_popcount __builtin_popcount
@@ -405,7 +405,7 @@ __gl_stdbit_popcountll (unsigned long long int n)
 
 /* ISO C 23 § 7.18.3 Count Leading Zeros  */
 
-#if @GL_STDC_LEADING_ZEROS@
+#if @GNULIB_STDC_LEADING_ZEROS@
 
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
@@ -449,7 +449,7 @@ stdc_leading_zeros_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.4 Count Leading Ones  */
 
-#if @GL_STDC_LEADING_ONES@
+#if @GNULIB_STDC_LEADING_ONES@
 
 _GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_uc (unsigned char n)
@@ -493,7 +493,7 @@ stdc_leading_ones_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.5 Count Trailing Zeros  */
 
-#if @GL_STDC_TRAILING_ZEROS@
+#if @GNULIB_STDC_TRAILING_ZEROS@
 
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ui (unsigned int n)
@@ -537,7 +537,7 @@ stdc_trailing_zeros_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.6 Count Trailing Ones  */
 
-#if @GL_STDC_TRAILING_ONES@
+#if @GNULIB_STDC_TRAILING_ONES@
 
 _GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_uc (unsigned char n)
@@ -581,7 +581,7 @@ stdc_trailing_ones_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.7 First Leading Zero  */
 
-#if @GL_STDC_FIRST_LEADING_ZERO@
+#if @GNULIB_STDC_FIRST_LEADING_ZERO@
 
 _GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_uc (unsigned char n)
@@ -635,7 +635,7 @@ stdc_first_leading_zero_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.8 First Leading One  */
 
-#if @GL_STDC_FIRST_LEADING_ONE@
+#if @GNULIB_STDC_FIRST_LEADING_ONE@
 
 _GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_uc (unsigned char n)
@@ -689,7 +689,7 @@ stdc_first_leading_one_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.9 First Trailing Zero  */
 
-#if @GL_STDC_FIRST_TRAILING_ZERO@
+#if @GNULIB_STDC_FIRST_TRAILING_ZERO@
 
 _GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_uc (unsigned char n)
@@ -743,7 +743,7 @@ stdc_first_trailing_zero_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.10 First Trailing One  */
 
-#if @GL_STDC_FIRST_TRAILING_ONE@
+#if @GNULIB_STDC_FIRST_TRAILING_ONE@
 
 _GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_uc (unsigned char n)
@@ -797,7 +797,7 @@ stdc_first_trailing_one_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.12 Count Ones  */
 
-#if @GL_STDC_COUNT_ONES@
+#if @GNULIB_STDC_COUNT_ONES@
 
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ui (unsigned int n)
@@ -841,7 +841,7 @@ stdc_count_ones_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.11 Count Zeros  */
 
-#if @GL_STDC_COUNT_ZEROS@
+#if @GNULIB_STDC_COUNT_ZEROS@
 
 _GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_uc (unsigned char n)
@@ -885,7 +885,7 @@ stdc_count_zeros_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.13 Single-bit Check  */
 
-#if @GL_STDC_HAS_SINGLE_BIT@
+#if @GNULIB_STDC_HAS_SINGLE_BIT@
 
 _GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_uc (unsigned char n)
@@ -935,7 +935,7 @@ stdc_has_single_bit_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.14 Bit Width  */
 
-#if @GL_STDC_BIT_WIDTH@
+#if @GNULIB_STDC_BIT_WIDTH@
 
 _GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_uc (unsigned char n)
@@ -979,7 +979,7 @@ stdc_bit_width_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.15 Bit Floor  */
 
-#if @GL_STDC_BIT_FLOOR@
+#if @GNULIB_STDC_BIT_FLOOR@
 
 _GL_STDC_BIT_FLOOR_INLINE unsigned char
 stdc_bit_floor_uc (unsigned char n)
@@ -1025,7 +1025,7 @@ stdc_bit_floor_ull (unsigned long long int n)
 
 /* ISO C 23 § 7.18.16 Bit Ceiling  */
 
-#if @GL_STDC_BIT_CEIL@
+#if @GNULIB_STDC_BIT_CEIL@
 
 _GL_STDC_BIT_CEIL_INLINE unsigned char
 stdc_bit_ceil_uc (unsigned char n)
