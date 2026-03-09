@@ -1,0 +1,22 @@
+@node stdc_memreverse8
+@subsection @code{stdc_memreverse8}
+@findex stdc_memreverse8
+
+Documentation:@*
+ISO C2y (draft
+@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
+section 7.18.19.
+
+Gnulib module: stdc_memreverse8
+@mindex stdc_memreverse8
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc 2.43, macOS 26, FreeBSD 15.0, NetBSD 10.0, OpenBSD 7.8, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 17, Android 15.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

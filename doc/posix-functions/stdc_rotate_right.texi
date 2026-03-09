@@ -1,0 +1,27 @@
+@node stdc_rotate_right
+@subsection @code{stdc_rotate_right}
+@findex stdc_rotate_right
+@findex stdc_rotate_right_uc
+@findex stdc_rotate_right_us
+@findex stdc_rotate_right_ui
+@findex stdc_rotate_right_ul
+@findex stdc_rotate_right_ull
+
+Documentation:@*
+ISO C2y (draft
+@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
+section 7.18.18.
+
+Gnulib module: stdc_rotate_right
+@mindex stdc_rotate_right
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This macro and its associated functions is missing on many platforms:
+glibc 2.43, macOS 26, FreeBSD 15.0, NetBSD 10.0, OpenBSD 7.8, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 17, Android 15.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

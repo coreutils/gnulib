@@ -3364,7 +3364,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/kill_dependency.texi
 
 @node Functions in <stdbit.h>
-@section Functions in @code{<stdbit.h>}
+@section Functions and generic functions in @code{<stdbit.h>}
 
 @menu
 * stdc_bit_ceil::
@@ -3379,6 +3379,45 @@ This list of functions is sorted according to the header that declares them.
 * stdc_has_single_bit::
 * stdc_leading_ones::
 * stdc_leading_zeros::
+* stdc_load8_aligned_les8::
+* stdc_load8_aligned_les16::
+* stdc_load8_aligned_les32::
+* stdc_load8_aligned_les64::
+* stdc_load8_aligned_leu8::
+* stdc_load8_aligned_leu16::
+* stdc_load8_aligned_leu32::
+* stdc_load8_aligned_leu64::
+* stdc_load8_les8::
+* stdc_load8_les16::
+* stdc_load8_les32::
+* stdc_load8_les64::
+* stdc_load8_leu8::
+* stdc_load8_leu16::
+* stdc_load8_leu32::
+* stdc_load8_leu64::
+* stdc_memreverse8::
+* stdc_memreverse8u8::
+* stdc_memreverse8u16::
+* stdc_memreverse8u32::
+* stdc_memreverse8u64::
+* stdc_rotate_left::
+* stdc_rotate_right::
+* stdc_store8_aligned_les8::
+* stdc_store8_aligned_les16::
+* stdc_store8_aligned_les32::
+* stdc_store8_aligned_les64::
+* stdc_store8_aligned_leu8::
+* stdc_store8_aligned_leu16::
+* stdc_store8_aligned_leu32::
+* stdc_store8_aligned_leu64::
+* stdc_store8_les8::
+* stdc_store8_les16::
+* stdc_store8_les32::
+* stdc_store8_les64::
+* stdc_store8_leu8::
+* stdc_store8_leu16::
+* stdc_store8_leu32::
+* stdc_store8_leu64::
 * stdc_trailing_ones::
 * stdc_trailing_zeros::
 @end menu
@@ -3395,6 +3434,45 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/stdc_has_single_bit.texi
 @include posix-functions/stdc_leading_ones.texi
 @include posix-functions/stdc_leading_zeros.texi
+@include posix-functions/stdc_load8_aligned_les8.texi
+@include posix-functions/stdc_load8_aligned_les16.texi
+@include posix-functions/stdc_load8_aligned_les32.texi
+@include posix-functions/stdc_load8_aligned_les64.texi
+@include posix-functions/stdc_load8_aligned_leu8.texi
+@include posix-functions/stdc_load8_aligned_leu16.texi
+@include posix-functions/stdc_load8_aligned_leu32.texi
+@include posix-functions/stdc_load8_aligned_leu64.texi
+@include posix-functions/stdc_load8_les8.texi
+@include posix-functions/stdc_load8_les16.texi
+@include posix-functions/stdc_load8_les32.texi
+@include posix-functions/stdc_load8_les64.texi
+@include posix-functions/stdc_load8_leu8.texi
+@include posix-functions/stdc_load8_leu16.texi
+@include posix-functions/stdc_load8_leu32.texi
+@include posix-functions/stdc_load8_leu64.texi
+@include posix-functions/stdc_memreverse8.texi
+@include posix-functions/stdc_memreverse8u8.texi
+@include posix-functions/stdc_memreverse8u16.texi
+@include posix-functions/stdc_memreverse8u32.texi
+@include posix-functions/stdc_memreverse8u64.texi
+@include posix-functions/stdc_rotate_left.texi
+@include posix-functions/stdc_rotate_right.texi
+@include posix-functions/stdc_store8_aligned_les8.texi
+@include posix-functions/stdc_store8_aligned_les16.texi
+@include posix-functions/stdc_store8_aligned_les32.texi
+@include posix-functions/stdc_store8_aligned_les64.texi
+@include posix-functions/stdc_store8_aligned_leu8.texi
+@include posix-functions/stdc_store8_aligned_leu16.texi
+@include posix-functions/stdc_store8_aligned_leu32.texi
+@include posix-functions/stdc_store8_aligned_leu64.texi
+@include posix-functions/stdc_store8_les8.texi
+@include posix-functions/stdc_store8_les16.texi
+@include posix-functions/stdc_store8_les32.texi
+@include posix-functions/stdc_store8_les64.texi
+@include posix-functions/stdc_store8_leu8.texi
+@include posix-functions/stdc_store8_leu16.texi
+@include posix-functions/stdc_store8_leu32.texi
+@include posix-functions/stdc_store8_leu64.texi
 @include posix-functions/stdc_trailing_ones.texi
 @include posix-functions/stdc_trailing_zeros.texi
 
