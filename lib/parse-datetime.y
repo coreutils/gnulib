@@ -1116,7 +1116,7 @@ static table const relative_time_table[] =
 
 /* The universal time zone table.  These labels can be used even for
    timestamps that would not otherwise be valid, e.g., GMT timestamps
-   oin London during summer.  */
+   in London during summer.  */
 static table const universal_time_zone_table[] =
 {
   { "GMT",      tZONE,     HOUR ( 0) }, /* Greenwich Mean */
