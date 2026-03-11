@@ -1,0 +1,12 @@
+Files:
+tests/test-vaprintf.c
+tests/macros.h
+
+Depends-on:
+streq
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vaprintf
+check_PROGRAMS += test-vaprintf
