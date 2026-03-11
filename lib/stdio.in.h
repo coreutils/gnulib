@@ -122,6 +122,20 @@
 # endif
 #endif
 
+/* _GL_ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
+   can be freed via 'free'; it can be used only after declaring 'free'.  */
+/* Applies to: functions.  Cannot be used on inline functions.  */
+#ifndef _GL_ATTRIBUTE_DEALLOC_FREE
+# if defined __cplusplus && defined __GNUC__ && !defined __clang__
+/* Work around GCC bug <https://gcc.gnu.org/PR108231> */
+#  define _GL_ATTRIBUTE_DEALLOC_FREE \
+     _GL_ATTRIBUTE_DEALLOC ((void (*) (void *)) free, 1)
+# else
+#  define _GL_ATTRIBUTE_DEALLOC_FREE \
+     _GL_ATTRIBUTE_DEALLOC (free, 1)
+# endif
+#endif
+
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The __-protected variants of the attributes 'format' and 'printf' are
    accepted by gcc versions 2.6.4 (effectively 2.7) and later.
@@ -230,6 +244,50 @@
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
+
+/* Make _GL_ATTRIBUTE_DEALLOC_FREE work, even though <stdlib.h> may not have
+   been included yet.  */
+#if @GNULIB_FREE_POSIX@
+# if (@REPLACE_FREE@ && !defined free \
+      && !(defined __cplusplus && defined GNULIB_NAMESPACE))
+/* We can't do '#define free rpl_free' here.  */
+#  if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void rpl_free (void *) _GL_ATTRIBUTE_NOTHROW;
+#  else
+_GL_EXTERN_C void rpl_free (void *);
+#  endif
+#  undef _GL_ATTRIBUTE_DEALLOC_FREE
+#  define _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_DEALLOC (rpl_free, 1)
+# else
+#  if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+#  else
+#   if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) _GL_ATTRIBUTE_NOTHROW;
+#   else
+_GL_EXTERN_C void free (void *);
+#   endif
+#  endif
+# endif
+#else
+# if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+# else
+#  if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) _GL_ATTRIBUTE_NOTHROW;
+#  else
+_GL_EXTERN_C void free (void *);
+#  endif
+# endif
+#endif
 
 /* Macros for stringification.  */
 #define _GL_STDIO_STRINGIZE(token) #token
@@ -1806,6 +1864,26 @@ _GL_CXXALIAS_SYS (vasprintf, int,
                   (char **result, const char *format, va_list args));
 # endif
 _GL_CXXALIASWARN (vasprintf);
+#endif
+
+#if @GNULIB_VAPRINTF@
+/* Write formatted output to a string dynamically allocated with malloc().
+   Return the resulting string.  Upon memory allocation error, or some
+   other error, return NULL, with errno set.  */
+_GL_FUNCDECL_SYS (aprintf, char *,
+                  (const char *format, ...),
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 2)
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+_GL_CXXALIAS_SYS (aprintf, char *,
+                  (const char *format, ...));
+_GL_FUNCDECL_SYS (vaprintf, char *,
+                  (const char *format, va_list args),
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 0)
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+_GL_CXXALIAS_SYS (vaprintf, char *,
+                  (const char *format, va_list args));
 #endif
 
 #if @GNULIB_VDZPRINTF@

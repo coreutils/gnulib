@@ -1,0 +1,31 @@
+Description:
+Simplified variant of vasprintf and asprintf.
+
+Files:
+lib/vaprintf.c
+lib/aprintf.c
+
+Depends-on:
+stdio-h
+vaszprintf
+malloc-posix
+xsize
+stdarg-h
+errno-h
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([vaprintf])
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_][XGETTEXT_OPTION([--flag=aprintf:1:c-format])])
+
+Makefile.am:
+lib_SOURCES += vaprintf.c aprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
