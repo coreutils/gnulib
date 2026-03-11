@@ -1,5 +1,5 @@
 /* Test of xvasprintf() and xasprintf() functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ test_xasprintf (void)
   ASSERT (strcmp (result, "foobar") == 0);
   free (result);
 
-  result = my_xasprintf ("%s%sbaz", "foo", "bar");
+  result = xasprintf ("%s%sbaz", "foo", "bar");
   ASSERT (result != NULL);
   ASSERT (strcmp (result, "foobarbaz") == 0);
   free (result);
