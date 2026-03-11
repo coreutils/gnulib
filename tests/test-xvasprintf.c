@@ -117,7 +117,7 @@ test_xasprintf (void)
   ASSERT (streq (result, "foobar"));
   free (result);
 
-  result = my_xasprintf ("%s%sbaz", "foo", "bar");
+  result = xasprintf ("%s%sbaz", "foo", "bar");
   ASSERT (result != NULL);
   ASSERT (streq (result, "foobarbaz"));
   free (result);
