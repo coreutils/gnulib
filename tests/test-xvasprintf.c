@@ -117,7 +117,7 @@ test_xasprintf (void)
   ASSERT (strcmp (result, "foobar") == 0);
   free (result);
 
-  result = my_xasprintf ("%s%sbaz", "foo", "bar");
+  result = xasprintf ("%s%sbaz", "foo", "bar");
   ASSERT (result != NULL);
   ASSERT (strcmp (result, "foobarbaz") == 0);
   free (result);
