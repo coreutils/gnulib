@@ -17,8 +17,20 @@
 
 /* Written by Paul Eggert.  */
 
-#ifndef STDBIT_H
-#define STDBIT_H 1
+#ifndef _@GUARD_PREFIX@_STDBIT_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+@PRAGMA_COLUMNS@
+
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_STDBIT_H@
+# @INCLUDE_NEXT@ @NEXT_STDBIT_H@
+#endif
+
+#ifndef _@GUARD_PREFIX@_STDBIT_H
+#define _@GUARD_PREFIX@_STDBIT_H
 
 /* This file uses _GL_INLINE, WORDS_BIGENDIAN.  */
 #if !_GL_CONFIG_H_INCLUDED
@@ -89,6 +101,9 @@ _GL_INLINE_HEADER_BEGIN
 # define _GL_STDBIT_TYPEOF_CAST(a, b) (b)
 #endif
 
+
+/* Some systems are only missing C2y features in stdbit.h.  */
+#if !@HAVE_STDBIT_H@
 
 /* ISO C 23 § 7.18.1 General  */
 
@@ -1068,6 +1083,8 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 #endif
 
+#endif /* @HAVE_STDBIT_H@ */
+
 
 #ifdef __cplusplus
 }
@@ -1075,4 +1092,5 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 _GL_INLINE_HEADER_END
 
-#endif /* STDBIT_H */
+#endif /* _@GUARD_PREFIX@_STDBIT_H */
+#endif /* _@GUARD_PREFIX@_STDBIT_H */
