@@ -1,5 +1,5 @@
 # stdbit_h.m4
-# serial 4
+# serial 5
 dnl Copyright 2024-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,9 +12,22 @@ AC_DEFUN_ONCE([gl_STDBIT_H],
 [
   AC_REQUIRE([gl_BIGENDIAN])
 
-  AC_CHECK_HEADERS_ONCE([stdbit.h])
+  gl_CHECK_NEXT_HEADERS([stdbit.h])
   if test $ac_cv_header_stdbit_h = yes; then
-    GL_GENERATE_STDBIT_H=false
+    HAVE_STDBIT_H=1
+  else
+    HAVE_STDBIT_H=0
+  fi
+  AC_SUBST([HAVE_STDBIT_H])
+
+  if test $ac_cv_header_stdbit_h = yes; then
+    dnl We may have a stdbit.h without C2y features.
+    AC_CHECK_DECLS([stdc_rotate_left_uc], , , [[#include <stdbit.h>]])
+    if test $ac_cv_have_decl_stdc_rotate_left_uc = no; then
+      GL_GENERATE_STDBIT_H=true
+    else
+      GL_GENERATE_STDBIT_H=false
+    fi
   else
     GL_GENERATE_STDBIT_H=true
   fi
