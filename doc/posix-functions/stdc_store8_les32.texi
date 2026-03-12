@@ -7,8 +7,7 @@ ISO C2y (draft
 @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
 section 7.18.22.
 
-Gnulib module: stdc_store8_les32
-@mindex stdc_store8_les32
+Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize

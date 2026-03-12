@@ -12,8 +12,7 @@ ISO C2y (draft
 @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
 section 7.18.17.
 
-Gnulib module: stdc_rotate_left
-@mindex stdc_rotate_left
+Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize

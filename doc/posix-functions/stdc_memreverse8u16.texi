@@ -7,8 +7,7 @@ ISO C2y (draft
 @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3783.pdf})
 section 7.18.20.
 
-Gnulib module: stdc_memreverse8u16
-@mindex stdc_memreverse8u16
+Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
