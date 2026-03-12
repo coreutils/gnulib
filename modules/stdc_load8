@@ -1,0 +1,27 @@
+Description:
+stdc_load8_* (unaligned) functions: Endian-aware loading of a few bytes.
+
+Files:
+lib/stdc_load8.c
+
+Depends-on:
+stdbit-h
+stdint-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_load8])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_load8.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

@@ -1,5 +1,5 @@
 # stdbit_h.m4
-# serial 6
+# serial 7
 dnl Copyright 2024-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,6 +67,7 @@ AC_DEFUN([gl_STDBIT_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STDC_BIT_FLOOR])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STDC_BIT_CEIL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STDC_LOAD8_ALIGNED])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STDC_LOAD8])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_STDBIT_H_MODULE_INDICATOR_DEFAULTS])
   AC_REQUIRE([gl_STDBIT_H_DEFAULTS])

@@ -37,11 +37,15 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@
+#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@
 
 /* Get int_least8_t, int_least16_t, int_least32_t, int_least64_t,
    uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t.  */
 # include <stdint.h>
+
+#endif
+
+#if @GNULIB_STDC_LOAD8_ALIGNED@
 
 /* Get bswap_16, bswap_32, bswap_64.  */
 # include <byteswap.h>
@@ -97,6 +101,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 #ifndef _GL_STDC_LOAD8_ALIGNED_INLINE
 # define _GL_STDC_LOAD8_ALIGNED_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_LOAD8_INLINE
+# define _GL_STDC_LOAD8_INLINE _GL_INLINE
 #endif
 
 /* An expression, preferably with the type of A, that has the value of B.  */
@@ -1258,6 +1265,126 @@ stdc_load8_aligned_les64 (const unsigned char ptr[8])
 # else
   return *(const int64_t *)ptr;
 # endif
+}
+
+#endif
+
+#if @GNULIB_STDC_LOAD8@
+
+_GL_STDC_LOAD8_INLINE uint_least8_t
+stdc_load8_beu8 (const unsigned char ptr[1])
+{
+  return ptr[0];
+}
+
+_GL_STDC_LOAD8_INLINE uint_least16_t
+stdc_load8_beu16 (const unsigned char ptr[2])
+{
+  return ((uint_fast16_t) ptr[0] << 8) | (uint_fast16_t) ptr[1];
+}
+
+_GL_STDC_LOAD8_INLINE uint_least32_t
+stdc_load8_beu32 (const unsigned char ptr[4])
+{
+  return ((uint_fast32_t) ptr[0] << 24) | ((uint_fast32_t) ptr[1] << 16)
+         | ((uint_fast32_t) ptr[2] << 8) | (uint_fast32_t) ptr[3];
+}
+
+_GL_STDC_LOAD8_INLINE uint_least64_t
+stdc_load8_beu64 (const unsigned char ptr[8])
+{
+  return ((uint_fast64_t) ptr[0] << 56) | ((uint_fast64_t) ptr[1] << 48)
+         | ((uint_fast64_t) ptr[2] << 40) | ((uint_fast64_t) ptr[3] << 32)
+         | ((uint_fast64_t) ptr[4] << 24) | ((uint_fast64_t) ptr[5] << 16)
+         | ((uint_fast64_t) ptr[6] << 8) | (uint_fast64_t) ptr[7];
+}
+
+_GL_STDC_LOAD8_INLINE uint_least8_t
+stdc_load8_leu8 (const unsigned char ptr[1])
+{
+  return ptr[0];
+}
+
+_GL_STDC_LOAD8_INLINE uint_least16_t
+stdc_load8_leu16 (const unsigned char ptr[2])
+{
+  return (uint_fast16_t) ptr[0] | ((uint_fast16_t) ptr[1] << 8);
+}
+
+_GL_STDC_LOAD8_INLINE uint_least32_t
+stdc_load8_leu32 (const unsigned char ptr[4])
+{
+  return (uint_fast32_t) ptr[0] | ((uint_fast32_t) ptr[1] << 8)
+         | ((uint_fast32_t) ptr[2] << 16) | ((uint_fast32_t) ptr[3] << 24);
+}
+
+_GL_STDC_LOAD8_INLINE uint_least64_t
+stdc_load8_leu64 (const unsigned char ptr[8])
+{
+  return (uint_fast64_t) ptr[0] | ((uint_fast64_t) ptr[1] << 8)
+         | ((uint_fast64_t) ptr[2] << 16) | ((uint_fast64_t) ptr[3] << 24)
+         | ((uint_fast64_t) ptr[4] << 32) | ((uint_fast64_t) ptr[5] << 40)
+         | ((uint_fast64_t) ptr[6] << 48) | ((uint_fast64_t) ptr[7] << 56);
+}
+
+_GL_STDC_LOAD8_INLINE int_least8_t
+stdc_load8_bes8 (const unsigned char ptr[1])
+{
+  return *(signed char *)ptr;
+}
+
+_GL_STDC_LOAD8_INLINE int_least16_t
+stdc_load8_bes16 (const unsigned char ptr[2])
+{
+  return (int16_t) (((uint_fast16_t) ptr[0] << 8) | (uint_fast16_t) ptr[1]);
+}
+
+_GL_STDC_LOAD8_INLINE int_least32_t
+stdc_load8_bes32 (const unsigned char ptr[4])
+{
+  return (int32_t)
+         (((uint_fast32_t) ptr[0] << 24) | ((uint_fast32_t) ptr[1] << 16)
+          | ((uint_fast32_t) ptr[2] << 8) | (uint_fast32_t) ptr[3]);
+}
+
+_GL_STDC_LOAD8_INLINE int_least64_t
+stdc_load8_bes64 (const unsigned char ptr[8])
+{
+  return (int64_t)
+         (((uint_fast64_t) ptr[0] << 56) | ((uint_fast64_t) ptr[1] << 48)
+          | ((uint_fast64_t) ptr[2] << 40) | ((uint_fast64_t) ptr[3] << 32)
+          | ((uint_fast64_t) ptr[4] << 24) | ((uint_fast64_t) ptr[5] << 16)
+          | ((uint_fast64_t) ptr[6] << 8) | (uint_fast64_t) ptr[7]);
+}
+
+_GL_STDC_LOAD8_INLINE int_least8_t
+stdc_load8_les8 (const unsigned char ptr[1])
+{
+  return *(signed char *)ptr;
+}
+
+_GL_STDC_LOAD8_INLINE int_least16_t
+stdc_load8_les16 (const unsigned char ptr[2])
+{
+  return (int16_t) ((uint_fast16_t) ptr[0] | ((uint_fast16_t) ptr[1] << 8));
+}
+
+_GL_STDC_LOAD8_INLINE int_least32_t
+stdc_load8_les32 (const unsigned char ptr[4])
+{
+  return (int32_t)
+         ((uint_fast32_t) ptr[0] | ((uint_fast32_t) ptr[1] << 8)
+          | ((uint_fast32_t) ptr[2] << 16) | ((uint_fast32_t) ptr[3] << 24));
+}
+
+_GL_STDC_LOAD8_INLINE int_least64_t
+stdc_load8_les64 (const unsigned char ptr[8])
+{
+  return (int64_t)
+         ((uint_fast64_t) ptr[0] | ((uint_fast64_t) ptr[1] << 8)
+          | ((uint_fast64_t) ptr[2] << 16) | ((uint_fast64_t) ptr[3] << 24)
+          | ((uint_fast64_t) ptr[4] << 32) | ((uint_fast64_t) ptr[5] << 40)
+          | ((uint_fast64_t) ptr[6] << 48) | ((uint_fast64_t) ptr[7] << 56));
 }
 
 #endif
