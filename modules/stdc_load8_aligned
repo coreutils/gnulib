@@ -6,8 +6,8 @@ lib/stdc_load8_aligned.c
 
 Depends-on:
 stdbit-h
+stdc_load8
 stdint-h
-byteswap
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])

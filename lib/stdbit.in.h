@@ -45,16 +45,6 @@
 
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
-
-/* Get bswap_16, bswap_32, bswap_64.  */
-# include <byteswap.h>
-
-/* Get memcpy.  */
-# include <string.h>
-
-#endif
-
 _GL_INLINE_HEADER_BEGIN
 
 #ifndef _GL_STDBIT_INLINE
@@ -1118,309 +1108,6 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 /* ISO C2y § 7.18.21 Endian-Aware 8-Bit Load  */
 
-/* Here we need to avoid type-punning, because the compiler's aliasing
-   analysis would frequently produce incorrect code, and requiring the
-   option '-fno-strict-aliasing' is no viable solution.
-   So, this definition won't work:
-
-     uint16_t
-     load16 (const unsigned char ptr[2])
-     {
-       return *(const uint16_t *)ptr;
-     }
-
-   Instead, the following definitions are candidates:
-
-     // Trick from Lasse Collin: use memcpy and __builtin_assume_aligned.
-     uint16_t
-     load16_a (const unsigned char ptr[2])
-     {
-       uint16_t value;
-       memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
-       return value;
-     }
-
-     // Use __builtin_assume_aligned, without memcpy.
-     uint16_t
-     load16_b (const unsigned char ptr[2])
-     {
-       const unsigned char *aptr =
-         (const unsigned char *) __builtin_assume_aligned (ptr, 2);
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) aptr [0] << 8) | (uint16_t) aptr [1];
-       #else
-       return (uint16_t) aptr [0] | ((uint16_t) aptr [1] << 8);
-       #endif
-     }
-
-     // Use memcpy and __assume.
-     uint16_t
-     load16_c (const unsigned char ptr[2])
-     {
-       __assume (((uintptr_t) ptr & (2 - 1)) == 0);
-       uint16_t value;
-       memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
-       return value;
-     }
-
-     // Use __assume, without memcpy.
-     uint16_t
-     load16_d (const unsigned char ptr[2])
-     {
-       __assume (((uintptr_t) ptr & (2 - 1)) == 0);
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) ptr [0] << 8) | (uint16_t) ptr [1];
-       #else
-       return (uint16_t) ptr [0] | ((uint16_t) ptr [1] << 8);
-       #endif
-     }
-
-     // Use memcpy, without __builtin_assume_aligned or __assume.
-     uint16_t
-     load16_e (const unsigned char ptr[2])
-     {
-       uint16_t value;
-       memcpy (&value, ptr, 2);
-       return value;
-     }
-
-     // Use the code for the unaligned case.
-     uint16_t
-     load16_f (const unsigned char ptr[2])
-     {
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) ptr [0] << 8) | (uint16_t) ptr [1];
-       #else
-       return (uint16_t) ptr [0] | ((uint16_t) ptr [1] << 8);
-       #endif
-     }
-
-   Portability constraints:
-     - __builtin_assume_aligned works only in GCC >= 4.7 and clang >= 4.
-     - __assume works only with MSVC (_MSC_VER >= 1200).
-
-   Which variant produces the best code?
-     - memcpy is inlined only in gcc >= 3.4, g++ >= 4.9, clang >= 4.
-     - MSVC's __assume has no effect.
-     - With gcc 13:
-       On armelhf, arm64, i686, powerpc, powerpc64, powerpc64le, s390x, x86_64:
-       All of a,b,e,f are equally good.
-       On alpha, arm, hppa, mips, mips64, riscv64, sh4, sparc64:
-       Only a,b are good; f medium; e worst.
-     - With older gcc versions on x86_64:
-       gcc >= 10: All of a,b,e,f are equally good.
-       gcc < 10: Only a,e are good; b,f medium.
-     - With MSVC 14: Only c,e are good; d,f medium.
-
-   So, we use the following heuristic for getting good code:
-     - gcc >= 4.7, g++ >= 4.9, clang >= 4: Use variant a.
-     - MSVC: Use variant e.
-     - Otherwise: Use variant f.
- */
-#if (defined __clang__ ? __clang_major__ >= 4 : \
-     (defined __GNUC__ \
-      && (defined __cplusplus \
-          ? __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 \
-          : __GNUC__ + (__GNUC_MINOR__ >= 7) > 4)))
-# define _GL_LOADSTORE8_VARIANT_A 1
-#elif defined _MSC_VER
-# define _GL_LOADSTORE8_VARIANT_E 1
-#else
-# define _GL_LOADSTORE8_VARIANT_F 1
-#endif
-
-#if @GNULIB_STDC_LOAD8_ALIGNED@
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least8_t
-stdc_load8_aligned_beu8 (const unsigned char ptr[1])
-{
-  return ptr[0];
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least16_t
-stdc_load8_aligned_beu16 (const unsigned char ptr[2])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return ((uint_fast16_t) ptr[0] << 8) | (uint_fast16_t) ptr[1];
-# else
-  uint16_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 2);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return value;
-#  else
-  return bswap_16 (value);
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least32_t
-stdc_load8_aligned_beu32 (const unsigned char ptr[4])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return ((uint_fast32_t) ptr[0] << 24) | ((uint_fast32_t) ptr[1] << 16)
-         | ((uint_fast32_t) ptr[2] << 8) | (uint_fast32_t) ptr[3];
-# else
-  uint32_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 4), 4);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 4);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return value;
-#  else
-  return bswap_32 (value);
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least64_t
-stdc_load8_aligned_beu64 (const unsigned char ptr[8])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return ((uint_fast64_t) ptr[0] << 56) | ((uint_fast64_t) ptr[1] << 48)
-         | ((uint_fast64_t) ptr[2] << 40) | ((uint_fast64_t) ptr[3] << 32)
-         | ((uint_fast64_t) ptr[4] << 24) | ((uint_fast64_t) ptr[5] << 16)
-         | ((uint_fast64_t) ptr[6] << 8) | (uint_fast64_t) ptr[7];
-# else
-  uint64_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 8), 8);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 8);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return value;
-#  else
-  return bswap_64 (value);
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least8_t
-stdc_load8_aligned_leu8 (const unsigned char ptr[1])
-{
-  return ptr[0];
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least16_t
-stdc_load8_aligned_leu16 (const unsigned char ptr[2])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return (uint_fast16_t) ptr[0] | ((uint_fast16_t) ptr[1] << 8);
-# else
-  uint16_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 2);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return bswap_16 (value);
-#  else
-  return value;
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least32_t
-stdc_load8_aligned_leu32 (const unsigned char ptr[4])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return (uint_fast32_t) ptr[0] | ((uint_fast32_t) ptr[1] << 8)
-         | ((uint_fast32_t) ptr[2] << 16) | ((uint_fast32_t) ptr[3] << 24);
-# else
-  uint32_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 4), 4);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 4);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return bswap_32 (value);
-#  else
-  return value;
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE uint_least64_t
-stdc_load8_aligned_leu64 (const unsigned char ptr[8])
-{
-# if _GL_LOADSTORE8_VARIANT_F
-  return (uint_fast64_t) ptr[0] | ((uint_fast64_t) ptr[1] << 8)
-         | ((uint_fast64_t) ptr[2] << 16) | ((uint_fast64_t) ptr[3] << 24)
-         | ((uint_fast64_t) ptr[4] << 32) | ((uint_fast64_t) ptr[5] << 40)
-         | ((uint_fast64_t) ptr[6] << 48) | ((uint_fast64_t) ptr[7] << 56);
-# else
-  uint64_t value;
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (&value, __builtin_assume_aligned (ptr, 8), 8);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (&value, ptr, 8);
-#  endif
-#  ifdef WORDS_BIGENDIAN
-  return bswap_64 (value);
-#  else
-  return value;
-#  endif
-# endif
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least8_t
-stdc_load8_aligned_bes8 (const unsigned char ptr[1])
-{
-  return (int8_t) ptr[0];
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least16_t
-stdc_load8_aligned_bes16 (const unsigned char ptr[2])
-{
-  return (int16_t) stdc_load8_aligned_beu16 (ptr);
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least32_t
-stdc_load8_aligned_bes32 (const unsigned char ptr[4])
-{
-  return (int32_t) stdc_load8_aligned_beu32 (ptr);
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least64_t
-stdc_load8_aligned_bes64 (const unsigned char ptr[8])
-{
-  return (int64_t) stdc_load8_aligned_beu64 (ptr);
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least8_t
-stdc_load8_aligned_les8 (const unsigned char ptr[1])
-{
-  return (int8_t) ptr[0];
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least16_t
-stdc_load8_aligned_les16 (const unsigned char ptr[2])
-{
-  return (int16_t) stdc_load8_aligned_leu16 (ptr);
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least32_t
-stdc_load8_aligned_les32 (const unsigned char ptr[4])
-{
-  return (int32_t) stdc_load8_aligned_leu32 (ptr);
-}
-
-_GL_STDC_LOAD8_ALIGNED_INLINE int_least64_t
-stdc_load8_aligned_les64 (const unsigned char ptr[8])
-{
-  return (int64_t) stdc_load8_aligned_leu64 (ptr);
-}
-
-#endif
-
 #if @GNULIB_STDC_LOAD8@
 
 _GL_STDC_LOAD8_INLINE uint_least8_t
@@ -1541,214 +1228,108 @@ stdc_load8_les64 (const unsigned char ptr[8])
 
 #endif
 
+#if @GNULIB_STDC_LOAD8_ALIGNED@
 
-/* ISO C2y § 7.18.22 Endian-Aware 8-Bit Store  */
-
-#if @GNULIB_STDC_STORE8_ALIGNED@
-
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_beu8 (uint_least8_t value, unsigned char ptr[1])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least8_t
+stdc_load8_aligned_beu8 (const unsigned char ptr[1])
 {
-  ptr[0] = value;
+  return stdc_load8_beu8 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_beu16 (uint_least16_t value, unsigned char ptr[2])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least16_t
+stdc_load8_aligned_beu16 (const unsigned char ptr[2])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[1] = (unsigned char) value & 0xFFU;
-# else
-  uint16_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = value;
-#  else
-  uvalue = bswap_16 (value);
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 2), &uvalue, 2);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 2);
-#  endif
-# endif
+  return stdc_load8_beu16 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_beu32 (uint_least32_t value, unsigned char ptr[4])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least32_t
+stdc_load8_aligned_beu32 (const unsigned char ptr[4])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[3] = (unsigned char) value & 0xFFU;
-# else
-  uint32_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = value;
-#  else
-  uvalue = bswap_32 (value);
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 4), &uvalue, 4);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 4);
-#  endif
-# endif
+  return stdc_load8_beu32 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_beu64 (uint_least64_t value, unsigned char ptr[8])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least64_t
+stdc_load8_aligned_beu64 (const unsigned char ptr[8])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) (value >> 56) & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 48) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 40) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 32) & 0xFFU;
-  ptr[4] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[5] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[6] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[7] = (unsigned char) value & 0xFFU;
-# else
-  uint64_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = value;
-#  else
-  uvalue = bswap_64 (value);
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 8), &uvalue, 8);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 8);
-#  endif
-# endif
+  return stdc_load8_beu64 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_leu8 (uint_least8_t value, unsigned char ptr[1])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least8_t
+stdc_load8_aligned_leu8 (const unsigned char ptr[1])
 {
-  ptr[0] = value;
+  return stdc_load8_leu8 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_leu16 (uint_least16_t value, unsigned char ptr[2])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least16_t
+stdc_load8_aligned_leu16 (const unsigned char ptr[2])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
-# else
-  uint16_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = bswap_16 (value);
-#  else
-  uvalue = value;
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 2), &uvalue, 2);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 2);
-#  endif
-# endif
+  return stdc_load8_leu16 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_leu32 (uint_least32_t value, unsigned char ptr[4])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least32_t
+stdc_load8_aligned_leu32 (const unsigned char ptr[4])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
-# else
-  uint32_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = bswap_32 (value);
-#  else
-  uvalue = value;
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 4), &uvalue, 4);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 4);
-#  endif
-# endif
+  return stdc_load8_leu32 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_leu64 (uint_least64_t value, unsigned char ptr[8])
+_GL_STDC_LOAD8_ALIGNED_INLINE uint_least64_t
+stdc_load8_aligned_leu64 (const unsigned char ptr[8])
 {
-# if _GL_LOADSTORE8_VARIANT_F
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[4] = (unsigned char) (value >> 32) & 0xFFU;
-  ptr[5] = (unsigned char) (value >> 40) & 0xFFU;
-  ptr[6] = (unsigned char) (value >> 48) & 0xFFU;
-  ptr[7] = (unsigned char) (value >> 56) & 0xFFU;
-# else
-  uint64_t uvalue;
-#  ifdef WORDS_BIGENDIAN
-  uvalue = bswap_64 (value);
-#  else
-  uvalue = value;
-#  endif
-#  if _GL_LOADSTORE8_VARIANT_A
-  memcpy (__builtin_assume_aligned (ptr, 8), &uvalue, 8);
-#  else /* _GL_LOADSTORE8_VARIANT_E */
-  memcpy (ptr, &uvalue, 8);
-#  endif
-# endif
+  return stdc_load8_leu64 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_bes8 (int_least8_t value, unsigned char ptr[1])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least8_t
+stdc_load8_aligned_bes8 (const unsigned char ptr[1])
 {
-  ptr[0] = (uint8_t) value;
+  return stdc_load8_bes8 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_bes16 (int_least16_t value, unsigned char ptr[2])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least16_t
+stdc_load8_aligned_bes16 (const unsigned char ptr[2])
 {
-  stdc_store8_aligned_beu16 ((uint16_t) value, ptr);
+  return stdc_load8_bes16 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_bes32 (int_least32_t value, unsigned char ptr[4])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least32_t
+stdc_load8_aligned_bes32 (const unsigned char ptr[4])
 {
-  stdc_store8_aligned_beu32 ((uint32_t) value, ptr);
+  return stdc_load8_bes32 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_bes64 (int_least64_t value, unsigned char ptr[8])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least64_t
+stdc_load8_aligned_bes64 (const unsigned char ptr[8])
 {
-  stdc_store8_aligned_beu64 ((uint64_t) value, ptr);
+  return stdc_load8_bes64 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_les8 (int_least8_t value, unsigned char ptr[1])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least8_t
+stdc_load8_aligned_les8 (const unsigned char ptr[1])
 {
-  ptr[0] = (uint8_t) value;
+  return stdc_load8_les8 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_les16 (int_least16_t value, unsigned char ptr[2])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least16_t
+stdc_load8_aligned_les16 (const unsigned char ptr[2])
 {
-  stdc_store8_aligned_leu16 ((uint16_t) value, ptr);
+  return stdc_load8_les16 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_les32 (int_least32_t value, unsigned char ptr[4])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least32_t
+stdc_load8_aligned_les32 (const unsigned char ptr[4])
 {
-  stdc_store8_aligned_leu32 ((uint32_t) value, ptr);
+  return stdc_load8_les32 (ptr);
 }
 
-_GL_STDC_STORE8_ALIGNED_INLINE void
-stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
+_GL_STDC_LOAD8_ALIGNED_INLINE int_least64_t
+stdc_load8_aligned_les64 (const unsigned char ptr[8])
 {
-  stdc_store8_aligned_leu64 ((uint64_t) value, ptr);
+  return stdc_load8_les64 (ptr);
 }
 
 #endif
+
+
+/* ISO C2y § 7.18.22 Endian-Aware 8-Bit Store  */
 
 #if @GNULIB_STDC_STORE8@
 
@@ -1890,6 +1471,106 @@ stdc_store8_les64 (int_least64_t value, unsigned char ptr[8])
   ptr[5] = (unsigned char) ((uint_least64_t) value >> 40) & 0xFFU;
   ptr[6] = (unsigned char) ((uint_least64_t) value >> 48) & 0xFFU;
   ptr[7] = (unsigned char) (value >> 56) & 0xFFU;
+}
+
+#endif
+
+#if @GNULIB_STDC_STORE8_ALIGNED@
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  stdc_store8_beu8 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu16 (uint_least16_t value, unsigned char ptr[2])
+{
+  stdc_store8_beu16 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu32 (uint_least32_t value, unsigned char ptr[4])
+{
+  stdc_store8_beu32 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu64 (uint_least64_t value, unsigned char ptr[8])
+{
+  stdc_store8_beu64 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  stdc_store8_leu8 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu16 (uint_least16_t value, unsigned char ptr[2])
+{
+  stdc_store8_leu16 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu32 (uint_least32_t value, unsigned char ptr[4])
+{
+  stdc_store8_leu32 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu64 (uint_least64_t value, unsigned char ptr[8])
+{
+  stdc_store8_leu64 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes8 (int_least8_t value, unsigned char ptr[1])
+{
+  stdc_store8_bes8 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes16 (int_least16_t value, unsigned char ptr[2])
+{
+  stdc_store8_bes16 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes32 (int_least32_t value, unsigned char ptr[4])
+{
+  stdc_store8_bes32 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes64 (int_least64_t value, unsigned char ptr[8])
+{
+  stdc_store8_bes64 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les8 (int_least8_t value, unsigned char ptr[1])
+{
+  stdc_store8_les8 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les16 (int_least16_t value, unsigned char ptr[2])
+{
+  stdc_store8_les16 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les32 (int_least32_t value, unsigned char ptr[4])
+{
+  stdc_store8_les32 (value, ptr);
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
+{
+  stdc_store8_les64 (value, ptr);
 }
 
 #endif
