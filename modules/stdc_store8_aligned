@@ -1,0 +1,28 @@
+Description:
+stdc_store8_aligned_* functions: Endian-aware storing of a few bytes.
+
+Files:
+lib/stdc_store8_aligned.c
+
+Depends-on:
+stdbit-h
+stdint-h
+byteswap
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_store8_aligned])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_store8_aligned.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

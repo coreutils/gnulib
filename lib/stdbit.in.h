@@ -37,7 +37,7 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@
+#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@
 
 /* Get int_least8_t, int_least16_t, int_least32_t, int_least64_t,
    uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t.  */
@@ -45,7 +45,7 @@
 
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@
+#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
 
 /* Get bswap_16, bswap_32, bswap_64.  */
 # include <byteswap.h>
@@ -104,6 +104,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 #ifndef _GL_STDC_LOAD8_INLINE
 # define _GL_STDC_LOAD8_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_STORE8_ALIGNED_INLINE
+# define _GL_STDC_STORE8_ALIGNED_INLINE _GL_INLINE
 #endif
 
 /* An expression, preferably with the type of A, that has the value of B.  */
@@ -1385,6 +1388,157 @@ stdc_load8_les64 (const unsigned char ptr[8])
           | ((uint_fast64_t) ptr[2] << 16) | ((uint_fast64_t) ptr[3] << 24)
           | ((uint_fast64_t) ptr[4] << 32) | ((uint_fast64_t) ptr[5] << 40)
           | ((uint_fast64_t) ptr[6] << 48) | ((uint_fast64_t) ptr[7] << 56));
+}
+
+#endif
+
+
+/* ISO C2y § 7.18.22 Endian-Aware 8-Bit Store  */
+
+#if @GNULIB_STDC_STORE8_ALIGNED@
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = value;
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu16 (uint_least16_t value, unsigned char ptr[2])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint16_t *)ptr = value;
+# else
+  *(uint16_t *)ptr = bswap_16 (value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu32 (uint_least32_t value, unsigned char ptr[4])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint32_t *)ptr = value;
+# else
+  *(uint32_t *)ptr = bswap_32 (value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_beu64 (uint_least64_t value, unsigned char ptr[8])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint64_t *)ptr = value;
+# else
+  *(uint64_t *)ptr = bswap_64 (value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = value;
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu16 (uint_least16_t value, unsigned char ptr[2])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint16_t *)ptr = bswap_16 (value);
+# else
+  *(uint16_t *)ptr = value;
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu32 (uint_least32_t value, unsigned char ptr[4])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint32_t *)ptr = bswap_32 (value);
+# else
+  *(uint32_t *)ptr = value;
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_leu64 (uint_least64_t value, unsigned char ptr[8])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint64_t *)ptr = bswap_64 (value);
+# else
+  *(uint64_t *)ptr = value;
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes8 (int_least8_t value, unsigned char ptr[1])
+{
+  *(signed char *)ptr = value;
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes16 (int_least16_t value, unsigned char ptr[2])
+{
+# ifdef WORDS_BIGENDIAN
+  *(int16_t *)ptr = value;
+# else
+  *(uint16_t *)ptr = bswap_16 ((uint16_t) value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes32 (int_least32_t value, unsigned char ptr[4])
+{
+# ifdef WORDS_BIGENDIAN
+  *(int32_t *)ptr = value;
+# else
+  *(uint32_t *)ptr = bswap_32 ((uint32_t) value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_bes64 (int_least64_t value, unsigned char ptr[8])
+{
+# ifdef WORDS_BIGENDIAN
+  *(int64_t *)ptr = value;
+# else
+  *(uint64_t *)ptr = bswap_64 ((uint64_t) value);
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les8 (int_least8_t value, unsigned char ptr[1])
+{
+  *(signed char *)ptr = value;
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les16 (int_least16_t value, unsigned char ptr[2])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint16_t *)ptr = bswap_16 ((uint16_t) value);
+# else
+  *(int16_t *)ptr = value;
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les32 (int_least32_t value, unsigned char ptr[4])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint32_t *)ptr = bswap_32 ((uint32_t) value);
+# else
+  *(int32_t *)ptr = value;
+# endif
+}
+
+_GL_STDC_STORE8_ALIGNED_INLINE void
+stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
+{
+# ifdef WORDS_BIGENDIAN
+  *(uint64_t *)ptr = bswap_64 ((uint64_t) value);
+# else
+  *(int64_t *)ptr = value;
+# endif
 }
 
 #endif
