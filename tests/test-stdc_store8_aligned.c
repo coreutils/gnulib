@@ -194,6 +194,26 @@ test_stdc_store8_aligned_les64 (void)
   ASSERT (data.bytes[7] == (unsigned char) 0xDF);
 }
 
+static void
+test_strict_aliasing (void)
+{
+  unsigned char *buf = malloc (8);
+  ASSERT (buf);
+  stdc_store8_aligned_leu32 (0x13121110, buf);
+  stdc_store8_aligned_leu32 (0x17161514, buf + 4);
+  stdc_store8_aligned_leu16 (0xF3F2, buf + 2);
+  ASSERT (stdc_load8_aligned_leu32 (buf) == 0xF3F21110);
+  ASSERT (stdc_load8_aligned_leu32 (buf + 4) == 0x17161514);
+  ASSERT (buf[0] == 0x10);
+  ASSERT (buf[1] == 0x11);
+  ASSERT (buf[2] == 0xF2);
+  ASSERT (buf[3] == 0xF3);
+  ASSERT (buf[4] == 0x14);
+  ASSERT (buf[5] == 0x15);
+  ASSERT (buf[6] == 0x16);
+  ASSERT (buf[7] == 0x17);
+}
+
 int
 main ()
 {
@@ -213,6 +233,7 @@ main ()
   test_stdc_store8_aligned_les16 ();
   test_stdc_store8_aligned_les32 ();
   test_stdc_store8_aligned_les64 ();
+  test_strict_aliasing ();
 
   return test_exit_status;
 }

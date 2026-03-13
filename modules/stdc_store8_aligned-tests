@@ -3,6 +3,7 @@ tests/test-stdc_store8_aligned.c
 tests/macros.h
 
 Depends-on:
+stdc_load8_aligned
 
 configure.ac:
 
