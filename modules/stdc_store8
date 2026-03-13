@@ -1,0 +1,27 @@
+Description:
+stdc_store8_* (unaligned) functions: Endian-aware storing of a few bytes.
+
+Files:
+lib/stdc_store8.c
+
+Depends-on:
+stdbit-h
+stdint-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_store8])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_store8.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

@@ -37,7 +37,7 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@
+#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@ || @GNULIB_STDC_STORE8@
 
 /* Get int_least8_t, int_least16_t, int_least32_t, int_least64_t,
    uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t.  */
@@ -107,6 +107,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 #ifndef _GL_STDC_STORE8_ALIGNED_INLINE
 # define _GL_STDC_STORE8_ALIGNED_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_STORE8_INLINE
+# define _GL_STDC_STORE8_INLINE _GL_INLINE
 #endif
 
 /* An expression, preferably with the type of A, that has the value of B.  */
@@ -1539,6 +1542,150 @@ stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
 # else
   *(int64_t *)ptr = value;
 # endif
+}
+
+#endif
+
+#if @GNULIB_STDC_STORE8@
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_beu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = value;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_beu16 (uint_least16_t value, unsigned char ptr[2])
+{
+  ptr[0] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[1] = (unsigned char) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_beu32 (uint_least32_t value, unsigned char ptr[4])
+{
+  ptr[0] = (unsigned char) (value >> 24) & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 16) & 0xFFU;
+  ptr[2] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[3] = (unsigned char) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_beu64 (uint_least64_t value, unsigned char ptr[8])
+{
+  ptr[0] = (unsigned char) (value >> 56) & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 48) & 0xFFU;
+  ptr[2] = (unsigned char) (value >> 40) & 0xFFU;
+  ptr[3] = (unsigned char) (value >> 32) & 0xFFU;
+  ptr[4] = (unsigned char) (value >> 24) & 0xFFU;
+  ptr[5] = (unsigned char) (value >> 16) & 0xFFU;
+  ptr[6] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[7] = (unsigned char) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_leu8 (uint_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = value;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_leu16 (uint_least16_t value, unsigned char ptr[2])
+{
+  ptr[0] = (unsigned char) value & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_leu32 (uint_least32_t value, unsigned char ptr[4])
+{
+  ptr[0] = (unsigned char) value & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
+  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_leu64 (uint_least64_t value, unsigned char ptr[8])
+{
+  ptr[0] = (unsigned char) value & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
+  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
+  ptr[4] = (unsigned char) (value >> 32) & 0xFFU;
+  ptr[5] = (unsigned char) (value >> 40) & 0xFFU;
+  ptr[6] = (unsigned char) (value >> 48) & 0xFFU;
+  ptr[7] = (unsigned char) (value >> 56) & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_bes8 (int_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = (unsigned char) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_bes16 (int_least16_t value, unsigned char ptr[2])
+{
+  ptr[0] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[1] = (unsigned char) (uint_least16_t) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_bes32 (int_least32_t value, unsigned char ptr[4])
+{
+  ptr[0] = (unsigned char) (value >> 24) & 0xFFU;
+  ptr[1] = (unsigned char) ((uint_least32_t) value >> 16) & 0xFFU;
+  ptr[2] = (unsigned char) ((uint_least32_t) value >> 8) & 0xFFU;
+  ptr[3] = (unsigned char) (uint_least32_t) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_bes64 (int_least64_t value, unsigned char ptr[8])
+{
+  ptr[0] = (unsigned char) (value >> 56) & 0xFFU;
+  ptr[1] = (unsigned char) ((uint_least64_t) value >> 48) & 0xFFU;
+  ptr[2] = (unsigned char) ((uint_least64_t) value >> 40) & 0xFFU;
+  ptr[3] = (unsigned char) ((uint_least64_t) value >> 32) & 0xFFU;
+  ptr[4] = (unsigned char) ((uint_least64_t) value >> 24) & 0xFFU;
+  ptr[5] = (unsigned char) ((uint_least64_t) value >> 16) & 0xFFU;
+  ptr[6] = (unsigned char) ((uint_least64_t) value >> 8) & 0xFFU;
+  ptr[7] = (unsigned char) (uint_least64_t) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_les8 (int_least8_t value, unsigned char ptr[1])
+{
+  ptr[0] = (unsigned char) value & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_les16 (int_least16_t value, unsigned char ptr[2])
+{
+  ptr[0] = (unsigned char) (uint_least16_t) value & 0xFFU;
+  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_les32 (int_least32_t value, unsigned char ptr[4])
+{
+  ptr[0] = (unsigned char) (uint_least32_t) value & 0xFFU;
+  ptr[1] = (unsigned char) ((uint_least32_t) value >> 8) & 0xFFU;
+  ptr[2] = (unsigned char) ((uint_least32_t) value >> 16) & 0xFFU;
+  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
+}
+
+_GL_STDC_STORE8_INLINE void
+stdc_store8_les64 (int_least64_t value, unsigned char ptr[8])
+{
+  ptr[0] = (unsigned char) (uint_least64_t) value & 0xFFU;
+  ptr[1] = (unsigned char) ((uint_least64_t) value >> 8) & 0xFFU;
+  ptr[2] = (unsigned char) ((uint_least64_t) value >> 16) & 0xFFU;
+  ptr[3] = (unsigned char) ((uint_least64_t) value >> 24) & 0xFFU;
+  ptr[4] = (unsigned char) ((uint_least64_t) value >> 32) & 0xFFU;
+  ptr[5] = (unsigned char) ((uint_least64_t) value >> 40) & 0xFFU;
+  ptr[6] = (unsigned char) ((uint_least64_t) value >> 48) & 0xFFU;
+  ptr[7] = (unsigned char) (value >> 56) & 0xFFU;
 }
 
 #endif
