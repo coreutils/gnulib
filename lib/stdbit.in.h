@@ -1119,7 +1119,7 @@ stdc_load8_beu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_beu16 (const unsigned char ptr[2])
 {
-  return ((uint_fast16_t) ptr[0] << 8) | (uint_fast16_t) ptr[1];
+  return (ptr[0] << 8) | ptr[1];
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
@@ -1147,7 +1147,7 @@ stdc_load8_leu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_leu16 (const unsigned char ptr[2])
 {
-  return (uint_fast16_t) ptr[0] | ((uint_fast16_t) ptr[1] << 8);
+  return ptr[0] | (ptr[1] << 8);
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
@@ -1330,30 +1330,30 @@ stdc_store8_beu8 (uint_least8_t value, unsigned char ptr[1])
 _GL_STDC_STORE8_INLINE void
 stdc_store8_beu16 (uint_least16_t value, unsigned char ptr[2])
 {
-  ptr[0] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[1] = (unsigned char) value & 0xFFU;
+  ptr[0] = (value >> 8) & 0xFFU;
+  ptr[1] = value & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
 stdc_store8_beu32 (uint_least32_t value, unsigned char ptr[4])
 {
-  ptr[0] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[3] = (unsigned char) value & 0xFFU;
+  ptr[0] = (value >> 24) & 0xFFU;
+  ptr[1] = (value >> 16) & 0xFFU;
+  ptr[2] = (value >> 8) & 0xFFU;
+  ptr[3] = value & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
 stdc_store8_beu64 (uint_least64_t value, unsigned char ptr[8])
 {
-  ptr[0] = (unsigned char) (value >> 56) & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 48) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 40) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 32) & 0xFFU;
-  ptr[4] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[5] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[6] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[7] = (unsigned char) value & 0xFFU;
+  ptr[0] = (value >> 56) & 0xFFU;
+  ptr[1] = (value >> 48) & 0xFFU;
+  ptr[2] = (value >> 40) & 0xFFU;
+  ptr[3] = (value >> 32) & 0xFFU;
+  ptr[4] = (value >> 24) & 0xFFU;
+  ptr[5] = (value >> 16) & 0xFFU;
+  ptr[6] = (value >> 8) & 0xFFU;
+  ptr[7] = value & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
@@ -1365,30 +1365,30 @@ stdc_store8_leu8 (uint_least8_t value, unsigned char ptr[1])
 _GL_STDC_STORE8_INLINE void
 stdc_store8_leu16 (uint_least16_t value, unsigned char ptr[2])
 {
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
+  ptr[0] = value & 0xFFU;
+  ptr[1] = (value >> 8) & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
 stdc_store8_leu32 (uint_least32_t value, unsigned char ptr[4])
 {
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
+  ptr[0] = value & 0xFFU;
+  ptr[1] = (value >> 8) & 0xFFU;
+  ptr[2] = (value >> 16) & 0xFFU;
+  ptr[3] = (value >> 24) & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
 stdc_store8_leu64 (uint_least64_t value, unsigned char ptr[8])
 {
-  ptr[0] = (unsigned char) value & 0xFFU;
-  ptr[1] = (unsigned char) (value >> 8) & 0xFFU;
-  ptr[2] = (unsigned char) (value >> 16) & 0xFFU;
-  ptr[3] = (unsigned char) (value >> 24) & 0xFFU;
-  ptr[4] = (unsigned char) (value >> 32) & 0xFFU;
-  ptr[5] = (unsigned char) (value >> 40) & 0xFFU;
-  ptr[6] = (unsigned char) (value >> 48) & 0xFFU;
-  ptr[7] = (unsigned char) (value >> 56) & 0xFFU;
+  ptr[0] = value & 0xFFU;
+  ptr[1] = (value >> 8) & 0xFFU;
+  ptr[2] = (value >> 16) & 0xFFU;
+  ptr[3] = (value >> 24) & 0xFFU;
+  ptr[4] = (value >> 32) & 0xFFU;
+  ptr[5] = (value >> 40) & 0xFFU;
+  ptr[6] = (value >> 48) & 0xFFU;
+  ptr[7] = (value >> 56) & 0xFFU;
 }
 
 _GL_STDC_STORE8_INLINE void
