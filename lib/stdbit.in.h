@@ -1208,7 +1208,8 @@ stdc_bit_ceil_ull (unsigned long long int n)
      - With MSVC 14: Only c,e are good; d,f medium.
 
    So, we use the following heuristic for getting good code:
-     - gcc >= 4.7, g++ >= 4.9, clang >= 4: Use variant a.
+     - gcc >= 4.7, g++ >= 4.9, clang >= 4, or any other platform
+       with __builtin_assume_aligned: Use variant a.
      - MSVC: Use variant e.
      - Otherwise: Use variant f.
  */
@@ -1217,15 +1218,21 @@ stdc_bit_ceil_ull (unsigned long long int n)
       && (defined __cplusplus \
           ? __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 \
           : __GNUC__ + (__GNUC_MINOR__ >= 7) > 4)))
+# define _GL_HAS_BUILTIN_ASSUME_ALIGNED 1
+#elif defined __has_builtin
+# if __has_builtin (__builtin_assume_aligned)
+#  define _GL_HAS_BUILTIN_ASSUME_ALIGNED 1
+# endif
+#endif
+#ifdef _GL_HAS_BUILTIN_ASSUME_ALIGNED
 # define _GL_STDBIT_ASSUME_ALIGNED(ptr, align) \
     __builtin_assume_aligned (ptr, align)
-# define _GL_STDBIT_OPTIMIZE_VIA_MEMCPY 1
-#elif defined _MSC_VER
-# define _GL_STDBIT_OPTIMIZE_VIA_MEMCPY 1
+#else
+# define _GL_STDBIT_ASSUME_ALIGNED(ptr, align) (ptr)
 #endif
 
-#ifndef _GL_STDBIT_ASSUME_ALIGNED
-# define _GL_STDBIT_ASSUME_ALIGNED(ptr, align) (ptr)
+#if defined _GL_HAS_BUILTIN_ASSUME_ALIGNED || defined _MSC_VER
+# define _GL_STDBIT_OPTIMIZE_VIA_MEMCPY 1
 #endif
 
 #ifndef _GL_STDBIT_OPTIMIZE_VIA_MEMCPY
