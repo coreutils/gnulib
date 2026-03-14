@@ -50,8 +50,16 @@
 /* Get bswap_16, bswap_32, bswap_64.  */
 # include <byteswap.h>
 
-/* Get memcpy.  */
-# include <string.h>
+/* Get memcpy, but keep namespace clean on GNU.  */
+# ifdef __has_builtin
+#  if __has_builtin (__builtin_memcpy)
+#   define _GL_STDBIT_MEMCPY(dest, src, n) __builtin_memcpy (dest, src, n)
+#  endif
+# endif
+# ifndef _GL_STDBIT_MEMCPY
+#  include <string.h>
+#  define _GL_STDBIT_MEMCPY(dest, src, n) memcpy (dest, src, n)
+# endif
 
 #endif
 
@@ -1363,7 +1371,7 @@ stdc_load8_aligned_beu16 (const unsigned char ptr[2])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least16_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_16 (value);
       return value;
@@ -1378,7 +1386,7 @@ stdc_load8_aligned_beu32 (const unsigned char ptr[4])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least32_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_32 (value);
       return value;
@@ -1393,7 +1401,7 @@ stdc_load8_aligned_beu64 (const unsigned char ptr[8])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least64_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_64 (value);
       return value;
@@ -1414,7 +1422,7 @@ stdc_load8_aligned_leu16 (const unsigned char ptr[2])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least16_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_16 (value);
       return value;
@@ -1429,7 +1437,7 @@ stdc_load8_aligned_leu32 (const unsigned char ptr[4])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least32_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_32 (value);
       return value;
@@ -1444,7 +1452,7 @@ stdc_load8_aligned_leu64 (const unsigned char ptr[8])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       uint_least64_t value;
-      memcpy (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
+      _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_64 (value);
       return value;
@@ -1643,7 +1651,7 @@ stdc_store8_aligned_beu16 (uint_least16_t value, unsigned char ptr[2])
     {
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_16 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
     }
   else
     stdc_store8_beu16 (value, ptr);
@@ -1656,7 +1664,7 @@ stdc_store8_aligned_beu32 (uint_least32_t value, unsigned char ptr[4])
     {
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_32 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
     }
   else
     stdc_store8_beu32 (value, ptr);
@@ -1669,7 +1677,7 @@ stdc_store8_aligned_beu64 (uint_least64_t value, unsigned char ptr[8])
     {
       if (!_GL_STDBIT_BIGENDIAN)
         value = bswap_64 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
     }
   else
     stdc_store8_beu64 (value, ptr);
@@ -1688,7 +1696,7 @@ stdc_store8_aligned_leu16 (uint_least16_t value, unsigned char ptr[2])
     {
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_16 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
     }
   else
     stdc_store8_leu16 (value, ptr);
@@ -1701,7 +1709,7 @@ stdc_store8_aligned_leu32 (uint_least32_t value, unsigned char ptr[4])
     {
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_32 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
     }
   else
     stdc_store8_leu32 (value, ptr);
@@ -1714,7 +1722,7 @@ stdc_store8_aligned_leu64 (uint_least64_t value, unsigned char ptr[8])
     {
       if (_GL_STDBIT_BIGENDIAN)
         value = bswap_64 (value);
-      memcpy (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
+      _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
     }
   else
     stdc_store8_leu64 (value, ptr);
