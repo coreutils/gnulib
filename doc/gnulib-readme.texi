@@ -488,17 +488,27 @@ and the GNU coding standards both require this.
 @item
 Signed integer arithmetic is two's complement.
 
-Previously, Gnulib code sometimes also assumed that signed integer
-arithmetic wraps around, but modern compiler optimizations
-sometimes do not guarantee this, and Gnulib code with this
-assumption is now considered to be questionable.
-@xref{Integer Properties}.
-
 Although some Gnulib modules contain explicit support for
 ones' complement and signed magnitude integer representations,
 which are allowed by C17 and earlier,
 these modules are the exception rather than the rule.
 All practical Gnulib targets use two's complement, which is required by C23.
+
+@item
+When an out-of-range integer value is copied to a signed integer,
+low-order bits are copied and high-order bits are silently discarded.
+
+Although the C standard says the that the resulting signed value is
+implementation-defined or an implementation-defined signal is raised,
+all known platforms simply copy the low-order bits,
+just as the C standard requires when copying to an unsigned integer.
+
+This assumption is merely about copying data, not about arithmetic.
+Previously, Gnulib code sometimes also assumed that signed integer
+arithmetic wraps around, but modern compiler optimizations
+sometimes do not guarantee this, and Gnulib code with this
+assumption is now considered to be questionable.
+@xref{Integer Properties}.
 
 @item
 There are no ``holes'' in integer values: all the bits of an integer
