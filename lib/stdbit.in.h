@@ -1124,76 +1124,70 @@ stdc_bit_ceil_ull (unsigned long long int n)
    option '-fno-strict-aliasing' is no viable solution.
    So, this definition won't work:
 
-     uint16_t
+     uint_least16_t
      load16 (const unsigned char ptr[2])
      {
-       return *(const uint16_t *)ptr;
+       return *(const uint_least16_t *)ptr;
      }
 
    Instead, the following definitions are candidates:
 
      // Trick from Lasse Collin: use memcpy and __builtin_assume_aligned.
-     uint16_t
+     uint_least16_t
      load16_a (const unsigned char ptr[2])
      {
-       uint16_t value;
+       uint_least16_t value;
        memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
        return value;
      }
 
      // Use __builtin_assume_aligned, without memcpy.
-     uint16_t
+     uint_least16_t
      load16_b (const unsigned char ptr[2])
      {
        const unsigned char *aptr =
          (const unsigned char *) __builtin_assume_aligned (ptr, 2);
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) aptr [0] << 8) | (uint16_t) aptr [1];
-       #else
-       return (uint16_t) aptr [0] | ((uint16_t) aptr [1] << 8);
-       #endif
+       return (_GL_STDBIT_BIGENDIAN
+               ? ((uint_least16_t) aptr [0] << 8) | (uint_least16_t) aptr [1]
+               : (uint_least16_t) aptr [0] | ((uint_least16_t) aptr [1] << 8));
      }
 
      // Use memcpy and __assume.
-     uint16_t
+     uint_least16_t
      load16_c (const unsigned char ptr[2])
      {
        __assume (((uintptr_t) ptr & (2 - 1)) == 0);
-       uint16_t value;
+       uint_least16_t value;
        memcpy (&value, __builtin_assume_aligned (ptr, 2), 2);
        return value;
      }
 
      // Use __assume, without memcpy.
-     uint16_t
+     uint_least16_t
      load16_d (const unsigned char ptr[2])
      {
        __assume (((uintptr_t) ptr & (2 - 1)) == 0);
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) ptr [0] << 8) | (uint16_t) ptr [1];
-       #else
-       return (uint16_t) ptr [0] | ((uint16_t) ptr [1] << 8);
-       #endif
+       return (_GL_STDBIT_BIGENDIAN
+               ? ((uint_least16_t) ptr [0] << 8) | (uint_least16_t) ptr [1]
+               : (uint_least16_t) ptr [0] | ((uint_least16_t) ptr [1] << 8));
      }
 
      // Use memcpy, without __builtin_assume_aligned or __assume.
-     uint16_t
+     uint_least16_t
      load16_e (const unsigned char ptr[2])
      {
-       uint16_t value;
+       uint_least16_t value;
        memcpy (&value, ptr, 2);
        return value;
      }
 
      // Use the code for the unaligned case.
-     uint16_t
+     uint_least16_t
      load16_f (const unsigned char ptr[2])
      {
-       #if WORDS_BIGENDIAN
-       return ((uint16_t) ptr [0] << 8) | (uint16_t) ptr [1];
-       #else
-       return (uint16_t) ptr [0] | ((uint16_t) ptr [1] << 8);
-       #endif
+       return (_GL_STDBIT_BIGENDIAN
+               ? ((uint_least16_t) ptr [0] << 8) | (uint_least16_t) ptr [1]
+               : (uint_least16_t) ptr [0] | ((uint_least16_t) ptr [1] << 8));
      }
 
    Portability constraints:
