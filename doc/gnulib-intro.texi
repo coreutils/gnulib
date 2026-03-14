@@ -344,8 +344,8 @@ This platform's architecture descends from the UNIVAC 1103 (1953).
 @item
 The Unisys ClearPath Libra's machine word is 48 bits
 with a 4-bit tag and a 4-bit data extension.  Its
-@code{unsigned int} uses the low-order 40 bits of the word, and
-@code{int} uses the low-order 41 bits of the word with a
+@code{unsigned int} uses the low-order 39 bits of the word, and
+@code{int} uses the low-order 40 bits of the word with a
 signed-magnitude representation that conforms to C17 and earlier
 but not to C23 and later.  On these machines, @code{INT_MAX ==
 UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
