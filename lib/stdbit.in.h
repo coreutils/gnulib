@@ -141,6 +141,9 @@ _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_STDC_BIT_CEIL_INLINE
 # define _GL_STDC_BIT_CEIL_INLINE _GL_INLINE
 #endif
+#ifndef _GL_STDC_ROTATE_LEFT_INLINE
+# define _GL_STDC_ROTATE_LEFT_INLINE _GL_INLINE
+#endif
 #ifndef _GL_STDC_MEMREVERSE8_INLINE
 # define _GL_STDC_MEMREVERSE8_INLINE _GL_INLINE
 #endif
@@ -1160,6 +1163,65 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 #endif /* @HAVE_STDBIT_H@ */
 
+/* ISO C2y § 7.18.17 Rotate Left  */
+
+#if @GNULIB_STDC_ROTATE_LEFT@
+
+# ifdef __has_builtin
+#  if __has_builtin (__builtin_stdc_rotate_left)
+#   define _gl_stdc_rotate_left __builtin_stdc_rotate_left
+#   define stdc_rotate_left __builtin_stdc_rotate_left
+#  endif
+# endif
+
+# ifndef _gl_stdc_rotate_left
+#  define _gl_stdc_rotate_left(v, c)                \
+  (((v) << ((c) & (sizeof (v) * 8 - 1)))            \
+   | ((v) >> (-(c) & (sizeof (v) * 8 - 1))))
+# endif
+
+_GL_STDC_ROTATE_LEFT_INLINE unsigned char
+stdc_rotate_left_uc (unsigned char v, unsigned int c)
+{
+  return _gl_stdc_rotate_left (v, c);
+}
+
+_GL_STDC_ROTATE_LEFT_INLINE unsigned short int
+stdc_rotate_left_us (unsigned short int v, unsigned int c)
+{
+  return _gl_stdc_rotate_left (v, c);
+}
+
+_GL_STDC_ROTATE_LEFT_INLINE unsigned int
+stdc_rotate_left_ui (unsigned int v, unsigned int c)
+{
+  return _gl_stdc_rotate_left (v, c);
+}
+
+_GL_STDC_ROTATE_LEFT_INLINE unsigned long int
+stdc_rotate_left_ul (unsigned long int v, unsigned int c)
+{
+  return _gl_stdc_rotate_left (v, c);
+}
+
+_GL_STDC_ROTATE_LEFT_INLINE unsigned long long int
+stdc_rotate_left_ull (unsigned long long int v, unsigned int c)
+{
+  return _gl_stdc_rotate_left (v, c);
+}
+
+# ifndef stdc_rotate_left
+#  define stdc_rotate_left(v, c)                                        \
+  (_GL_STDBIT_TYPEOF_CAST                                               \
+   (v,                                                                  \
+    (sizeof (v) == 1 ? stdc_rotate_left_uc (v, c)                       \
+     : sizeof (v) == sizeof (unsigned short int) ? stdc_rotate_left_us (v, c) \
+     : sizeof (v) == sizeof 0u ? stdc_rotate_left_ui (v, c)             \
+     : sizeof (v) == sizeof 0ul ? stdc_rotate_left_ul (v, c)            \
+     : stdc_rotate_left_ull (v, c))))
+# endif
+
+#endif
 
 /* ISO C2y § 7.18.19 8-bit Memory Reversal  */
 

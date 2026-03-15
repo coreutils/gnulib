@@ -1,0 +1,27 @@
+Description:
+stdc_rotate_left macro, stdc_rotate_left_* functions:
+Perform a left circular shift.
+
+Files:
+lib/stdc_rotate_left.c
+
+Depends-on:
+stdbit-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_rotate_left])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_rotate_left.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
