@@ -6,7 +6,7 @@ lib/hamt.h
 lib/hamt.c
 
 Depends-on:
-count-one-bits
+stdc_count_ones
 extern-inline
 flexmember
 inttypes-h-incomplete

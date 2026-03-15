@@ -22,8 +22,8 @@
 
 #include <flexmember.h>
 #include <inttypes.h>
+#include <stdbit.h>
 #include <stdlib.h>
-#include "count-one-bits.h"
 #include "verify.h"
 #include "xalloc.h"
 
@@ -240,9 +240,7 @@ is_shared (const Hamt_entry *entry)
 static int
 trienode_count (const struct subtrie *subtrie)
 {
-  return count_one_bits (subtrie->map); /* In Gnulib, we assume that
-                                           an integer has at least 32
-                                           bits. */
+  return stdc_count_ones (subtrie->map);
 }
 
 /* Allocate a partially initialized subtrie with a given number of nodes.  */
@@ -481,7 +479,7 @@ subtrie_lookup (const struct function_table *functions,
   if (! (map & (1 << i)))
     return NULL;
 
-  int j = i == 0 ? 0 : count_one_bits (map << (32 - i));
+  int j = i == 0 ? 0 : stdc_count_ones (map << (32 - i));
   return entry_lookup (functions, subtrie->nodes[j], elt, hash >> 5);
 }
 
@@ -623,7 +621,7 @@ subtrie_insert (const struct function_table *functions, struct subtrie *subtrie,
 {
   uint32_t map = subtrie->map;
   int i = hash & 31;
-  int j = i == 0 ? 0 : count_one_bits (map << (32 - i));
+  int j = i == 0 ? 0 : stdc_count_ones (map << (32 - i));
   if (map & (1 << i))
     {
       Hamt_entry *entry = subtrie->nodes[j];
@@ -777,7 +775,7 @@ subtrie_remove (const struct function_table *functions, struct subtrie *subtrie,
 {
   uint32_t map = subtrie->map;
   int i = hash & 31;
-  int j = i == 0 ? 0 : count_one_bits (map << (32 - i));
+  int j = i == 0 ? 0 : stdc_count_ones (map << (32 - i));
   if (map & (1 << i))
     {
       Hamt_entry *entry = subtrie->nodes[j];
