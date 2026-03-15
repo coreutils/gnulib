@@ -170,7 +170,7 @@ struct gl_msvc_inval_per_thread
 extern void gl_msvc_inval_ensure_handler (void);
 
 /* Return a pointer to the per-thread data for the current thread.  */
-extern struct gl_msvc_inval_per_thread *gl_msvc_inval_current (void);
+extern struct gl_msvc_inval_per_thread *_gl_msvc_inval_current (void);
 
 #   ifdef __cplusplus
 }
@@ -181,7 +181,7 @@ extern struct gl_msvc_inval_per_thread *gl_msvc_inval_current (void);
         {                                                                      \
           gl_msvc_inval_ensure_handler ();                                     \
           struct gl_msvc_inval_per_thread *msvc_inval_current =                \
-            gl_msvc_inval_current ();                                          \
+            _gl_msvc_inval_current ();                                         \
           /* First, initialize gl_msvc_inval_restart.  */                      \
           if (setjmp (msvc_inval_current->restart) == 0)                       \
             {                                                                  \
