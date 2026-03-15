@@ -58,13 +58,13 @@ struct __spawn_action
 };
 
 #if !_LIBC
-# define __posix_spawn_file_actions_realloc gl_posix_spawn_file_actions_realloc
+# define __posix_spawn_file_actions_realloc _gl_posix_spawn_file_actions_realloc
 #endif
 extern int __posix_spawn_file_actions_realloc (posix_spawn_file_actions_t *
                                                file_actions);
 
 #if !_LIBC
-# define __spawni gl_posix_spawn_internal
+# define __spawni _gl_posix_spawn_internal
 #endif
 extern int __spawni (pid_t *pid, const char *path,
                      const posix_spawn_file_actions_t *file_actions,
