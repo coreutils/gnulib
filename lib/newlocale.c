@@ -126,7 +126,7 @@ newlocale (int category_mask, const char *name, locale_t base)
   int err;
   for (int i = 0; i < 6; i++)
     {
-      int log2_lcmask = gl_index_to_log2_lcmask (i);
+      int log2_lcmask = _gl_index_to_log2_lcmask (i);
 
       if ((category_mask & (1 << log2_lcmask)) != 0)
         {
@@ -136,17 +136,17 @@ newlocale (int category_mask, const char *name, locale_t base)
               /* name == "" means to look at the environment variables.  */
               static struct { int cat; char cat_name[11 + 1]; } const categories[6] =
                 {
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_COLLATE))]  =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_COLLATE))]  =
                     { LC_COLLATE,  "LC_COLLATE" },
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_CTYPE))]    =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_CTYPE))]    =
                     { LC_CTYPE,    "LC_CTYPE" },
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))] =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MESSAGES))] =
                     { LC_MESSAGES, "LC_MESSAGES" },
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MONETARY))] =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MONETARY))] =
                     { LC_MONETARY, "LC_MONETARY" },
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_NUMERIC))]  =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_NUMERIC))]  =
                     { LC_NUMERIC,  "LC_NUMERIC" },
-                  [gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_TIME))]     =
+                  [_gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_TIME))]     =
                     { LC_TIME,     "LC_TIME" }
                 };
               lcname = gl_locale_name_environ (categories[i].cat,
@@ -175,7 +175,7 @@ newlocale (int category_mask, const char *name, locale_t base)
             {
               result->category[i].is_c_locale = false;
 # if HAVE_WINDOWS_LOCALE_T
-              if (log2_lcmask == gl_log2_lc_mask (LC_MESSAGES))
+              if (log2_lcmask == _gl_log2_lc_mask (LC_MESSAGES))
                 result->category[i].system_locale = NULL;
               else
                 {
@@ -219,7 +219,7 @@ newlocale (int category_mask, const char *name, locale_t base)
           while (--i >= 0)
             {
 # if HAVE_WINDOWS_LOCALE_T
-              if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+              if (!(i == _gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MESSAGES))
                     || result->category[i].is_c_locale))
                 /* Documentation:
                    <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
@@ -240,11 +240,11 @@ newlocale (int category_mask, const char *name, locale_t base)
       /* Copy the modified entries from RESULT to BASE.  */
       for (int i = 0; i < 6; i++)
         {
-          int log2_lcmask = gl_index_to_log2_lcmask (i);
+          int log2_lcmask = _gl_index_to_log2_lcmask (i);
           if ((category_mask & (1 << log2_lcmask)) != 0)
             {
 # if HAVE_WINDOWS_LOCALE_T
-              if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+              if (!(i == _gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MESSAGES))
                     || base->category[i].is_c_locale))
                 /* Documentation:
                    <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */

@@ -29,7 +29,7 @@ freelocale (locale_t locale)
   for (int i = 6; --i >= 0; )
     {
 #if HAVE_WINDOWS_LOCALE_T
-      if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+      if (!(i == _gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MESSAGES))
             || locale->category[i].is_c_locale))
         /* Documentation:
            <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */

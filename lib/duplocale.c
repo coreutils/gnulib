@@ -125,7 +125,7 @@ duplocale (locale_t locale)
 
   for (int i = 0; i < 6; i++)
     {
-      int log2_lcmask = gl_index_to_log2_lcmask (i);
+      int log2_lcmask = _gl_index_to_log2_lcmask (i);
       int err;
 
       result->category[i].name = strdup (locale->category[i].name);
@@ -136,7 +136,7 @@ duplocale (locale_t locale)
         }
       result->category[i].is_c_locale = locale->category[i].is_c_locale;
 # if HAVE_WINDOWS_LOCALE_T
-      if (log2_lcmask == gl_log2_lc_mask (LC_MESSAGES)
+      if (log2_lcmask == _gl_log2_lc_mask (LC_MESSAGES)
           || result->category[i].is_c_locale)
         {
           /* Just to initialize it.  */
@@ -165,7 +165,7 @@ duplocale (locale_t locale)
           while (--i >= 0)
             {
 # if HAVE_WINDOWS_LOCALE_T
-              if (!(i == gl_log2_lcmask_to_index (gl_log2_lc_mask (LC_MESSAGES))
+              if (!(i == _gl_log2_lcmask_to_index (_gl_log2_lc_mask (LC_MESSAGES))
                     || result->category[i].is_c_locale))
                 /* Documentation:
                    <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/free-locale>  */
