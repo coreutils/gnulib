@@ -331,24 +331,24 @@ _GL_EXTERN_C void free (void *);
 
 #if (defined _WIN32 && !defined __CYGWIN__) && !defined _UCRT
 /* Workarounds against msvcrt bugs.  */
-_GL_FUNCDECL_SYS (gl_consolesafe_fwrite, size_t,
+_GL_FUNCDECL_SYS (_gl_consolesafe_fwrite, size_t,
                   (const void *ptr, size_t size, size_t nmemb, FILE *fp),
                   _GL_ARG_NONNULL ((1, 4)));
 # if defined __MINGW32__
-_GL_FUNCDECL_SYS (gl_consolesafe_fprintf, int,
+_GL_FUNCDECL_SYS (_gl_consolesafe_fprintf, int,
                   (FILE *restrict fp, const char *restrict format, ...),
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
                   _GL_ARG_NONNULL ((1, 2)));
-_GL_FUNCDECL_SYS (gl_consolesafe_printf, int,
+_GL_FUNCDECL_SYS (_gl_consolesafe_printf, int,
                   (const char *restrict format, ...),
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 2)
                   _GL_ARG_NONNULL ((1)));
-_GL_FUNCDECL_SYS (gl_consolesafe_vfprintf, int,
+_GL_FUNCDECL_SYS (_gl_consolesafe_vfprintf, int,
                   (FILE *restrict fp,
                    const char *restrict format, va_list args),
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
                   _GL_ARG_NONNULL ((1, 2)));
-_GL_FUNCDECL_SYS (gl_consolesafe_vprintf, int,
+_GL_FUNCDECL_SYS (_gl_consolesafe_vprintf, int,
                   (const char *restrict format, va_list args),
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 0)
                   _GL_ARG_NONNULL ((1)));
@@ -691,7 +691,7 @@ _GL_CXXALIASWARN (fprintf);
 #elif defined __MINGW32__ && !defined _UCRT && __USE_MINGW_ANSI_STDIO
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef fprintf
-#  define fprintf gl_consolesafe_fprintf
+#  define fprintf _gl_consolesafe_fprintf
 # endif
 #endif
 #if !@GNULIB_FPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
@@ -1043,7 +1043,7 @@ _GL_CXXALIASWARN (fwrite);
 #elif (defined _WIN32 && !defined __CYGWIN__) && !defined _UCRT
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef fwrite
-#  define fwrite gl_consolesafe_fwrite
+#  define fwrite _gl_consolesafe_fwrite
 # endif
 #endif
 
@@ -1429,7 +1429,7 @@ _GL_CXXALIASWARN (printf);
 #elif defined __MINGW32__ && !defined _UCRT && __USE_MINGW_ANSI_STDIO
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef printf
-#  define printf gl_consolesafe_printf
+#  define printf _gl_consolesafe_printf
 # endif
 #endif
 #if !@GNULIB_PRINTF_POSIX@ && defined GNULIB_POSIXCHECK
@@ -1996,7 +1996,7 @@ _GL_CXXALIASWARN (vfprintf);
 #elif defined __MINGW32__ && !defined _UCRT && __USE_MINGW_ANSI_STDIO
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef vfprintf
-#  define vfprintf gl_consolesafe_vfprintf
+#  define vfprintf _gl_consolesafe_vfprintf
 # endif
 #endif
 #if !@GNULIB_VFPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
@@ -2079,7 +2079,7 @@ _GL_CXXALIASWARN (vprintf);
 #elif defined __MINGW32__ && !defined _UCRT && __USE_MINGW_ANSI_STDIO
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef vprintf
-#  define vprintf gl_consolesafe_vprintf
+#  define vprintf _gl_consolesafe_vprintf
 # endif
 #endif
 #if !@GNULIB_VPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
