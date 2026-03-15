@@ -757,7 +757,7 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
 #if @REPLACE_MB_CUR_MAX@
 # if !GNULIB_defined_MB_CUR_MAX
 _GL_STDLIB_INLINE size_t
-gl_MB_CUR_MAX (void)
+_gl_MB_CUR_MAX (void)
 {
 #  if 0 < @REPLACE_MB_CUR_MAX@
   return @REPLACE_MB_CUR_MAX@;
@@ -768,7 +768,7 @@ gl_MB_CUR_MAX (void)
 #  endif
 }
 #  undef MB_CUR_MAX
-#  define MB_CUR_MAX gl_MB_CUR_MAX ()
+#  define MB_CUR_MAX _gl_MB_CUR_MAX ()
 #  define GNULIB_defined_MB_CUR_MAX 1
 # endif
 #endif
