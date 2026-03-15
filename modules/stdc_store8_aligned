@@ -8,7 +8,7 @@ Depends-on:
 stdbit-h
 stdc_store8
 stdint-h
-byteswap
+stdc_memreverse8u
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])

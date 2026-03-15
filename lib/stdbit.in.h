@@ -74,28 +74,6 @@
 
 #if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
 
-/* Get bswap_16, bswap_32, bswap_64, but keep namespace clean on GNU.  */
-# if ! (defined _GL_STDBIT_HAS_BUILTIN_BSWAP16 \
-        && defined _GL_STDBIT_HAS_BUILTIN_BSWAP32 \
-        && defined _GL_STDBIT_HAS_BUILTIN_BSWAP64)
-#  include <byteswap.h>
-# endif
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
-#  define _GL_STDBIT_BSWAP16(x) __builtin_bswap16 (x)
-# else
-#  define _GL_STDBIT_BSWAP16(x) bswap_16 (x)
-# endif
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
-#  define _GL_STDBIT_BSWAP32(x) __builtin_bswap32 (x)
-# else
-#  define _GL_STDBIT_BSWAP32(x) bswap_32 (x)
-# endif
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
-#  define _GL_STDBIT_BSWAP64(x) __builtin_bswap64 (x)
-# else
-#  define _GL_STDBIT_BSWAP64(x) bswap_64 (x)
-# endif
-
 /* Get memcpy, but keep namespace clean on GNU.  */
 # ifdef __has_builtin
 #  if __has_builtin (__builtin_memcpy)
@@ -1177,14 +1155,14 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 #if @GNULIB_STDC_MEMREVERSE8U@
 
-_GL_STDC_MEMREVERSE8U_INLINE uint8_t
-stdc_memreverse8u8 (uint8_t value)
+_GL_STDC_MEMREVERSE8U_INLINE uint_least8_t
+stdc_memreverse8u8 (uint_least8_t value)
 {
   return value;
 }
 
-_GL_STDC_MEMREVERSE8U_INLINE uint16_t
-stdc_memreverse8u16 (uint16_t value)
+_GL_STDC_MEMREVERSE8U_INLINE uint_least16_t
+stdc_memreverse8u16 (uint_least16_t value)
 {
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (value);
@@ -1195,8 +1173,8 @@ stdc_memreverse8u16 (uint16_t value)
 # endif
 }
 
-_GL_STDC_MEMREVERSE8U_INLINE uint32_t
-stdc_memreverse8u32 (uint32_t value)
+_GL_STDC_MEMREVERSE8U_INLINE uint_least32_t
+stdc_memreverse8u32 (uint_least32_t value)
 {
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (value);
@@ -1209,8 +1187,8 @@ stdc_memreverse8u32 (uint32_t value)
 # endif
 }
 
-_GL_STDC_MEMREVERSE8U_INLINE uint64_t
-stdc_memreverse8u64 (uint64_t value)
+_GL_STDC_MEMREVERSE8U_INLINE uint_least64_t
+stdc_memreverse8u64 (uint_least64_t value)
 {
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (value);
@@ -1479,7 +1457,7 @@ stdc_load8_aligned_beu16 (const unsigned char ptr[2])
       uint_least16_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP16 (value);
+        value = stdc_memreverse8u16 (value);
       return value;
     }
   else
@@ -1494,7 +1472,7 @@ stdc_load8_aligned_beu32 (const unsigned char ptr[4])
       uint_least32_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP32 (value);
+        value = stdc_memreverse8u32 (value);
       return value;
     }
   else
@@ -1509,7 +1487,7 @@ stdc_load8_aligned_beu64 (const unsigned char ptr[8])
       uint_least64_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP64 (value);
+        value = stdc_memreverse8u64 (value);
       return value;
     }
   else
@@ -1530,7 +1508,7 @@ stdc_load8_aligned_leu16 (const unsigned char ptr[2])
       uint_least16_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 2), 2);
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP16 (value);
+        value = stdc_memreverse8u16 (value);
       return value;
     }
   else
@@ -1545,7 +1523,7 @@ stdc_load8_aligned_leu32 (const unsigned char ptr[4])
       uint_least32_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 4), 4);
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP32 (value);
+        value = stdc_memreverse8u32 (value);
       return value;
     }
   else
@@ -1560,7 +1538,7 @@ stdc_load8_aligned_leu64 (const unsigned char ptr[8])
       uint_least64_t value;
       _GL_STDBIT_MEMCPY (&value, _GL_STDBIT_ASSUME_ALIGNED (ptr, 8), 8);
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP64 (value);
+        value = stdc_memreverse8u64 (value);
       return value;
     }
   else
@@ -1756,7 +1734,7 @@ stdc_store8_aligned_beu16 (uint_least16_t value, unsigned char ptr[2])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP16 (value);
+        value = stdc_memreverse8u16 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
     }
   else
@@ -1769,7 +1747,7 @@ stdc_store8_aligned_beu32 (uint_least32_t value, unsigned char ptr[4])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP32 (value);
+        value = stdc_memreverse8u32 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
     }
   else
@@ -1782,7 +1760,7 @@ stdc_store8_aligned_beu64 (uint_least64_t value, unsigned char ptr[8])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (!_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP64 (value);
+        value = stdc_memreverse8u64 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
     }
   else
@@ -1801,7 +1779,7 @@ stdc_store8_aligned_leu16 (uint_least16_t value, unsigned char ptr[2])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP16 (value);
+        value = stdc_memreverse8u16 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 2), &value, 2);
     }
   else
@@ -1814,7 +1792,7 @@ stdc_store8_aligned_leu32 (uint_least32_t value, unsigned char ptr[4])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP32 (value);
+        value = stdc_memreverse8u32 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 4), &value, 4);
     }
   else
@@ -1827,7 +1805,7 @@ stdc_store8_aligned_leu64 (uint_least64_t value, unsigned char ptr[8])
   if (_GL_STDBIT_OPTIMIZE_VIA_MEMCPY)
     {
       if (_GL_STDBIT_BIGENDIAN)
-        value = _GL_STDBIT_BSWAP64 (value);
+        value = stdc_memreverse8u64 (value);
       _GL_STDBIT_MEMCPY (_GL_STDBIT_ASSUME_ALIGNED (ptr, 8), &value, 8);
     }
   else
