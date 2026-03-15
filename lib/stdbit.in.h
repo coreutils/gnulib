@@ -37,17 +37,20 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@ || @GNULIB_STDC_STORE8@
+#if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@ || @GNULIB_STDC_STORE8@
 
-/* Get int_least8_t, int_least16_t, int_least32_t, int_least64_t,
-   uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t.  */
+/* Get uint8_t, uint16_t, uint32_t, uint64_t,
+   int_least8_t, int_least16_t, int_least32_t, int_least64_t,
+   uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t,
+   uint_fast16_t, uint_fast32_t, uint_fast64_t.  */
 # include <stdint.h>
 
 #endif
 
-#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
+#if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
 
-/* Get bswap_16, bswap_32, bswap_64, but keep namespace clean on GNU.  */
+/* Determine whether the compiler supports the __builtin_bswap{16,32,64}
+   builtins.  */
 # if defined __GNUC__ && 4 < __GNUC__ + (8 <= __GNUC_MINOR__)
 #  define _GL_STDBIT_HAS_BUILTIN_BSWAP16 1
 # elif defined __has_builtin
@@ -66,6 +69,12 @@
 #   define _GL_STDBIT_HAS_BUILTIN_BSWAP64 1
 #  endif
 # endif
+
+#endif
+
+#if @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
+
+/* Get bswap_16, bswap_32, bswap_64, but keep namespace clean on GNU.  */
 # if ! (defined _GL_STDBIT_HAS_BUILTIN_BSWAP16 \
         && defined _GL_STDBIT_HAS_BUILTIN_BSWAP32 \
         && defined _GL_STDBIT_HAS_BUILTIN_BSWAP64)
@@ -146,6 +155,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 #ifndef _GL_STDC_BIT_CEIL_INLINE
 # define _GL_STDC_BIT_CEIL_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_MEMREVERSE8U_INLINE
+# define _GL_STDC_MEMREVERSE8U_INLINE _GL_INLINE
 #endif
 #ifndef _GL_STDC_LOAD8_ALIGNED_INLINE
 # define _GL_STDC_LOAD8_ALIGNED_INLINE _GL_INLINE
@@ -1159,6 +1171,63 @@ stdc_bit_ceil_ull (unsigned long long int n)
 #endif
 
 #endif /* @HAVE_STDBIT_H@ */
+
+
+/* ISO C2y § 7.18.20 Exact-width 8-bit Memory Reversal  */
+
+#if @GNULIB_STDC_MEMREVERSE8U@
+
+_GL_STDC_MEMREVERSE8U_INLINE uint8_t
+stdc_memreverse8u8 (uint8_t value)
+{
+  return value;
+}
+
+_GL_STDC_MEMREVERSE8U_INLINE uint16_t
+stdc_memreverse8u16 (uint16_t value)
+{
+# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
+  return __builtin_bswap16 (value);
+# else
+  uint_fast16_t const mask = 0xFFU;
+  return (  (value & (mask << (8 * 1))) >> (8 * 1)
+          | (value & (mask << (8 * 0))) << (8 * 1));
+# endif
+}
+
+_GL_STDC_MEMREVERSE8U_INLINE uint32_t
+stdc_memreverse8u32 (uint32_t value)
+{
+# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
+  return __builtin_bswap32 (value);
+# else
+  uint_fast32_t const mask = 0xFFU;
+  return (  (value & (mask << (8 * 3))) >> (8 * 3)
+          | (value & (mask << (8 * 2))) >> (8 * 1)
+          | (value & (mask << (8 * 1))) << (8 * 1)
+          | (value & (mask << (8 * 0))) << (8 * 3));
+# endif
+}
+
+_GL_STDC_MEMREVERSE8U_INLINE uint64_t
+stdc_memreverse8u64 (uint64_t value)
+{
+# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
+  return __builtin_bswap64 (value);
+# else
+  uint_fast64_t const mask = 0xFFU;
+  return (  (value & (mask << (8 * 7))) >> (8 * 7)
+          | (value & (mask << (8 * 6))) >> (8 * 5)
+          | (value & (mask << (8 * 5))) >> (8 * 3)
+          | (value & (mask << (8 * 4))) >> (8 * 1)
+          | (value & (mask << (8 * 3))) << (8 * 1)
+          | (value & (mask << (8 * 2))) << (8 * 3)
+          | (value & (mask << (8 * 1))) << (8 * 5)
+          | (value & (mask << (8 * 0))) << (8 * 7));
+# endif
+}
+
+#endif
 
 
 /* ISO C2y § 7.18.21 Endian-Aware 8-Bit Load  */

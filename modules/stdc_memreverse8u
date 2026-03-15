@@ -1,0 +1,27 @@
+Description:
+stdc_memreverse8u* functions: Swap bytes of an unsigned integer value.
+
+Files:
+lib/stdc_memreverse8u.c
+
+Depends-on:
+stdbit-h
+stdint-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_memreverse8u])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_memreverse8u.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
