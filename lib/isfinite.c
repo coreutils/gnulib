@@ -35,17 +35,17 @@ static long double zerol;
 # define zerol 0.L
 #endif
 
-int gl_isfinitef (float x)
+int _gl_isfinitef (float x)
 {
   return !isnanf (x) && x - x == zerof;
 }
 
-int gl_isfinited (double x)
+int _gl_isfinited (double x)
 {
   return !isnand (x) && x - x == zerod;
 }
 
-int gl_isfinitel (long double x)
+int _gl_isfinitel (long double x)
 {
   return !isnanl (x) && x - x == zerol;
 }

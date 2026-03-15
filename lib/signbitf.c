@@ -23,12 +23,12 @@
 #include "isnanf-nolibm.h"
 #include "float+.h"
 
-#ifdef gl_signbitf_OPTIMIZED_MACRO
-# undef gl_signbitf
+#ifdef _gl_signbitf_OPTIMIZED_MACRO
+# undef _gl_signbitf
 #endif
 
 int
-gl_signbitf (float arg)
+_gl_signbitf (float arg)
 {
 #if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT
   /* The use of a union to extract the bits of the representation of a

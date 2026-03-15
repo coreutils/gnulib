@@ -2463,20 +2463,20 @@ _GL_CXXALIASWARN (yn);
 
 #if @GNULIB_ISFINITE@ || @GNULIB_ISFINITE_NO_CXX@
 # if @REPLACE_ISFINITE@
-_GL_EXTERN_C int gl_isfinitef (float x);
-_GL_EXTERN_C int gl_isfinited (double x);
-_GL_EXTERN_C int gl_isfinitel (long double x);
+_GL_EXTERN_C int _gl_isfinitef (float x);
+_GL_EXTERN_C int _gl_isfinited (double x);
+_GL_EXTERN_C int _gl_isfinitel (long double x);
 #  ifdef __cplusplus
 template <typename T> int isfinite (T);
-template <> inline int isfinite<float> (float x) { return gl_isfinitef (x); }
-template <> inline int isfinite<double> (double x) { return gl_isfinited (x); }
-template <> inline int isfinite<long double> (long double x) { return gl_isfinitel (x); }
+template <> inline int isfinite<float> (float x) { return _gl_isfinitef (x); }
+template <> inline int isfinite<double> (double x) { return _gl_isfinited (x); }
+template <> inline int isfinite<long double> (long double x) { return _gl_isfinitel (x); }
 #  else
 #   undef isfinite
 #   define isfinite(x) \
-      (sizeof (x) == sizeof (long double) ? gl_isfinitel (x) : \
-       sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
-       gl_isfinitef (x))
+      (sizeof (x) == sizeof (long double) ? _gl_isfinitel (x) : \
+       sizeof (x) == sizeof (double) ? _gl_isfinited (x) : \
+       _gl_isfinitef (x))
 #  endif
 # endif
 # if @GNULIB_ISFINITE@ && defined __cplusplus
@@ -2505,20 +2505,20 @@ _GL_WARN_REAL_FLOATING_DECL (isfinite);
 
 #if @GNULIB_ISINF@ || @GNULIB_ISINF_NO_CXX@
 # if @REPLACE_ISINF@
-_GL_EXTERN_C int gl_isinff (float x);
-_GL_EXTERN_C int gl_isinfd (double x);
-_GL_EXTERN_C int gl_isinfl (long double x);
+_GL_EXTERN_C int _gl_isinff (float x);
+_GL_EXTERN_C int _gl_isinfd (double x);
+_GL_EXTERN_C int _gl_isinfl (long double x);
 #  ifdef __cplusplus
 template <typename T> int isinf (T);
-template <> inline int isinf<float> (float x) { return gl_isinff (x); }
-template <> inline int isinf<double> (double x) { return gl_isinfd (x); }
-template <> inline int isinf<long double> (long double x) { return gl_isinfl (x); }
+template <> inline int isinf<float> (float x) { return _gl_isinff (x); }
+template <> inline int isinf<double> (double x) { return _gl_isinfd (x); }
+template <> inline int isinf<long double> (long double x) { return _gl_isinfl (x); }
 #  else
 #   undef isinf
 #   define isinf(x) \
-      (sizeof (x) == sizeof (long double) ? gl_isinfl (x) : \
-       sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
-       gl_isinff (x))
+      (sizeof (x) == sizeof (long double) ? _gl_isinfl (x) : \
+       sizeof (x) == sizeof (double) ? _gl_isinfd (x) : \
+       _gl_isinff (x))
 #  endif
 # endif
 # if @GNULIB_ISINF@ && defined __cplusplus
@@ -2632,35 +2632,35 @@ _GL_EXTERN_C int isnanl (long double x) _GL_ATTRIBUTE_CONST;
    that recursively expand back to isnan.  So use the gnulib
    replacements for them directly. */
 #  if @HAVE_ISNANF@ && (__GNUC__ >= 4) || (__clang_major__ >= 4)
-#   define gl_isnan_f(x) __builtin_isnan ((float)(x))
+#   define _gl_isnanf(x) __builtin_isnan ((float)(x))
 #  else
 _GL_EXTERN_C int rpl_isnanf (float x);
-#   define gl_isnan_f(x) rpl_isnanf (x)
+#   define _gl_isnanf(x) rpl_isnanf (x)
 #  endif
 #  if @HAVE_ISNAND@ && (__GNUC__ >= 4) || (__clang_major__ >= 4)
-#   define gl_isnan_d(x) __builtin_isnan ((double)(x))
+#   define _gl_isnand(x) __builtin_isnan ((double)(x))
 #  else
 _GL_EXTERN_C int rpl_isnand (double x);
-#   define gl_isnan_d(x) rpl_isnand (x)
+#   define _gl_isnand(x) rpl_isnand (x)
 #  endif
 #  if @HAVE_ISNANL@ && (__GNUC__ >= 4) || (__clang_major__ >= 4)
-#   define gl_isnan_l(x) __builtin_isnan ((long double)(x))
+#   define _gl_isnanl(x) __builtin_isnan ((long double)(x))
 #  else
 _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
-#   define gl_isnan_l(x) rpl_isnanl (x)
+#   define _gl_isnanl(x) rpl_isnanl (x)
 #  endif
 #  ifdef __cplusplus
 #   undef isnan
 template <typename T> int isnan (T);
-template <> inline int isnan<float> (float x) { return gl_isnan_f (x); }
-template <> inline int isnan<double> (double x) { return gl_isnan_d (x); }
-template <> inline int isnan<long double> (long double x) { return gl_isnan_l (x); }
+template <> inline int isnan<float> (float x) { return _gl_isnanf (x); }
+template <> inline int isnan<double> (double x) { return _gl_isnand (x); }
+template <> inline int isnan<long double> (long double x) { return _gl_isnanl (x); }
 #  else
 #   undef isnan
 #   define isnan(x) \
-      (sizeof (x) == sizeof (long double) ? gl_isnan_l (x) : \
-       sizeof (x) == sizeof (double) ? gl_isnan_d (x) : \
-       gl_isnan_f (x))
+      (sizeof (x) == sizeof (long double) ? _gl_isnanl (x) : \
+       sizeof (x) == sizeof (double) ? _gl_isnand (x) : \
+       _gl_isnanf (x))
 #  endif
 # elif (__GNUC__ >= 4) || (__clang_major__ >= 4)
 #  ifdef __cplusplus
@@ -2730,15 +2730,15 @@ template <> inline int signbit<long double> (long double x) { return __builtin_s
 # endif
 # if @REPLACE_SIGNBIT@ && !GNULIB_defined_signbit
 #  undef signbit
-_GL_EXTERN_C int gl_signbitf (float arg);
-_GL_EXTERN_C int gl_signbitd (double arg);
-_GL_EXTERN_C int gl_signbitl (long double arg);
+_GL_EXTERN_C int _gl_signbitf (float arg);
+_GL_EXTERN_C int _gl_signbitd (double arg);
+_GL_EXTERN_C int _gl_signbitl (long double arg);
 #  if __GNUC__ >= 2 || defined __clang__
 #   define _GL_NUM_UINT_WORDS(type) \
       ((sizeof (type) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-#   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
-#    define gl_signbitf_OPTIMIZED_MACRO
-#    define gl_signbitf(arg) \
+#   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined _gl_signbitf
+#    define _gl_signbitf_OPTIMIZED_MACRO
+#    define _gl_signbitf(arg) \
        __extension__                                                    \
        ({ union { float _value;                                         \
                   unsigned int _word[_GL_NUM_UINT_WORDS (float)];       \
@@ -2747,9 +2747,9 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
           (_m._word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;          \
         })
 #   endif
-#   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined gl_signbitd
-#    define gl_signbitd_OPTIMIZED_MACRO
-#    define gl_signbitd(arg) \
+#   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined _gl_signbitd
+#    define _gl_signbitd_OPTIMIZED_MACRO
+#    define _gl_signbitd(arg) \
        __extension__                                                    \
        ({ union { double _value;                                        \
                   unsigned int _word[_GL_NUM_UINT_WORDS (double)];      \
@@ -2758,9 +2758,9 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
           (_m._word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1;          \
         })
 #   endif
-#   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT && !defined gl_signbitl
-#    define gl_signbitl_OPTIMIZED_MACRO
-#    define gl_signbitl(arg) \
+#   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT && !defined _gl_signbitl
+#    define _gl_signbitl_OPTIMIZED_MACRO
+#    define _gl_signbitl(arg) \
        __extension__                                                    \
        ({ union { long double _value;                                   \
                   unsigned int _word[_GL_NUM_UINT_WORDS (long double)]; \
@@ -2772,14 +2772,14 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #  endif
 #  if defined __cplusplus && !defined __clang__
 template <typename T> int signbit (T);
-template <> inline int signbit<float> (float x) { return gl_signbitf (x); }
-template <> inline int signbit<double> (double x) { return gl_signbitd (x); }
-template <> inline int signbit<long double> (long double x) { return gl_signbitl (x); }
+template <> inline int signbit<float> (float x) { return _gl_signbitf (x); }
+template <> inline int signbit<double> (double x) { return _gl_signbitd (x); }
+template <> inline int signbit<long double> (long double x) { return _gl_signbitl (x); }
 #  else
 #   define signbit(x) \
-      (sizeof (x) == sizeof (long double) ? gl_signbitl (x) : \
-       sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
-       gl_signbitf (x))
+      (sizeof (x) == sizeof (long double) ? _gl_signbitl (x) : \
+       sizeof (x) == sizeof (double) ? _gl_signbitd (x) : \
+       _gl_signbitf (x))
 #  endif
 #  define GNULIB_defined_signbit 1
 # endif
