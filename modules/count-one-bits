@@ -1,6 +1,12 @@
 Description:
 Counts the number of 1-bits in a word.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete; use the stdbit module instead.
+
 Files:
 lib/count-one-bits.c
 lib/count-one-bits.h

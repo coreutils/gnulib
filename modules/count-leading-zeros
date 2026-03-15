@@ -1,6 +1,12 @@
 Description:
 Counts the number of leading 0-bits in a word.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete; use the stdbit module instead.
+
 Files:
 lib/count-leading-zeros.c
 lib/count-leading-zeros.h

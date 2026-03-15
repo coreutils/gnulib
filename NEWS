@@ -78,6 +78,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-03-14  count-leading-zeros
+            count-one-bits
+            count-trailing-zeros
+                            These modules are now obsolete.
+                            Use the stdbit module instead.
+
 2026-02-21  streq           This module is renamed to 'streq-opt'. Its include
                             file is renamed from "streq.h" to "streq-opt.h".
 

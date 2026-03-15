@@ -1,6 +1,12 @@
 Description:
 Counts the number of trailing 0-bits in a word.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete; use the stdbit module instead.
+
 Files:
 lib/count-trailing-zeros.c
 lib/count-trailing-zeros.h
