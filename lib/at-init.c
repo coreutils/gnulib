@@ -22,7 +22,7 @@
 #if defined _MSC_VER
 
 void
-gl_at_init_dummy (_GL_UNUSED const void *p)
+_gl_at_init_dummy (_GL_UNUSED const void *p)
 {
 }
 

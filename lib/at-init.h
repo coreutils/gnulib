@@ -85,7 +85,7 @@
   static void function(void); \
   extern int (* _array ## function)(void); \
   int function ## _wrapper(void); \
-  int function ## _wrapper(void) { function(); gl_at_init_dummy (_array ## function); return 0; } \
+  int function ## _wrapper(void) { function(); _gl_at_init_dummy (_array ## function); return 0; } \
   __pragma(comment(linker,"/include:" _sym_prefix # function "_wrapper")) \
   __pragma(section(".CRT$XCU",read)) \
   __declspec(allocate(".CRT$XCU")) int (* _array ## function)(void) = function ## _wrapper
@@ -94,12 +94,12 @@
   static void function(void); \
   extern int (* _array ## function)(void); \
   int function ## _constructor(void); \
-  int function ## _constructor(void) { atexit (function); gl_at_init_dummy (_array ## function); return 0; } \
+  int function ## _constructor(void) { atexit (function); _gl_at_init_dummy (_array ## function); return 0; } \
    __pragma(comment(linker,"/include:" _sym_prefix # function "_constructor")) \
   __pragma(section(".CRT$XCU",read)) \
   __declspec(allocate(".CRT$XCU")) int (* _array ## function)(void) = function ## _constructor
 
-extern void gl_at_init_dummy (const void *);
+extern void _gl_at_init_dummy (const void *);
 
 #elif defined __SUNPRO_C
 /* Sun C */
