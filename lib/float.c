@@ -22,7 +22,7 @@
 
 #if GNULIB_defined_long_double_union
 # ifdef __i386__
-const union gl_long_double_union gl_LDBL_MAX =
+const union gl_long_double_union _gl_LDBL_MAX =
   { { 0xFFFFFFFF, 0xFFFFFFFF, 32766 } };
 # endif
 # if defined __i386__ && (defined __FreeBSD__ || defined __DragonFly__)
@@ -31,7 +31,7 @@ const union gl_long_double_union gl_LDBL_MAX =
    END_LONG_DOUBLE_ROUNDING invocations.  It simpler to just write down the
    representation of LDBL_TRUE_MIN, based on
    <https://en.wikipedia.org/wiki/Extended_precision#x86_extended_precision_format>.  */
-const union gl_long_double_union gl_LDBL_TRUE_MIN =
+const union gl_long_double_union _gl_LDBL_TRUE_MIN =
   { { 0x00000001, 0x00000000, 0 } };
 # endif
 #endif
@@ -39,7 +39,7 @@ const union gl_long_double_union gl_LDBL_TRUE_MIN =
 #if GNULIB_defined_FLT_SNAN
 /* Define like memory_positive_SNaNf(), see signed-snan.h and snan.h,
    or like setpayloadsigf() with an arbitrary payload.  */
-gl_FLT_SNAN_t gl_FLT_SNAN =
+gl_FLT_SNAN_t _gl_FLT_SNAN =
 # if FLT_MANT_DIG == 24
 #  if defined __hppa || (defined __mips__ && !MIPS_NAN2008_FLOAT) || defined __sh__
   /* sign bit: 0, 8 exponent bits: all 1, next bit: 1, payload: 0b10...0 */
@@ -55,7 +55,7 @@ gl_FLT_SNAN_t gl_FLT_SNAN =
 #if GNULIB_defined_DBL_SNAN
 /* Define like memory_positive_SNaNd(), see signed-snan.h and snan.h,
    or like setpayloadsig() with an arbitrary payload.  */
-gl_DBL_SNAN_t gl_DBL_SNAN =
+gl_DBL_SNAN_t _gl_DBL_SNAN =
 # if DBL_MANT_DIG == 53
 #  if defined __hppa || (defined __mips__ && !MIPS_NAN2008_FLOAT) || defined __sh__
   /* sign bit: 0, 11 exponent bits: all 1, next bit: 1, payload: 0b10...0 */
@@ -76,7 +76,7 @@ gl_DBL_SNAN_t gl_DBL_SNAN =
 # endif
 /* Define like memory_positive_SNaNl(), see signed-snan.h and snan.h,
    or like setpayloadsigl() with an arbitrary payload.  */
-gl_LDBL_SNAN_t gl_LDBL_SNAN =
+gl_LDBL_SNAN_t _gl_LDBL_SNAN =
 # if LDBL_MANT_DIG == 53 /* on arm, hppa, mips, sh, but also MSVC */
 #  if defined __hppa || (defined __mips__ && !MIPS_NAN2008_FLOAT) || defined __sh__
   /* sign bit: 0, 11 exponent bits: all 1, next bit: 1, payload: 0b10...0 */

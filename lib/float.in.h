@@ -103,8 +103,8 @@ union gl_long_double_union
   };
 #  define GNULIB_defined_long_double_union 1
 # endif
-extern const union gl_long_double_union gl_LDBL_MAX;
-# define LDBL_MAX (gl_LDBL_MAX.ld)
+extern const union gl_long_double_union _gl_LDBL_MAX;
+# define LDBL_MAX (_gl_LDBL_MAX.ld)
 /* Minimum e such that 10^e is in the range of normalized numbers.  */
 # undef LDBL_MIN_10_EXP
 # define LDBL_MIN_10_EXP (-4931)
@@ -207,8 +207,8 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 # elif LDBL_MANT_DIG == 64
 #  if defined __i386__ && (defined __FreeBSD__ || defined __DragonFly__)
 /* Work around FreeBSD/x86 problem mentioned above.  */
-extern const union gl_long_double_union gl_LDBL_TRUE_MIN;
-#   define LDBL_TRUE_MIN (gl_LDBL_TRUE_MIN.ld)
+extern const union gl_long_double_union _gl_LDBL_TRUE_MIN;
+#   define LDBL_TRUE_MIN (_gl_LDBL_TRUE_MIN.ld)
 #  else
 #   define LDBL_TRUE_MIN (LDBL_MIN / 9223372036854775808.0L)
 #  endif
@@ -239,8 +239,8 @@ extern const union gl_long_double_union gl_LDBL_TRUE_MIN;
 #  define FLT_SNAN __builtin_nansf ("")
 # else
 typedef union { unsigned int word[1]; float value; } gl_FLT_SNAN_t;
-extern gl_FLT_SNAN_t gl_FLT_SNAN;
-#  define FLT_SNAN (gl_FLT_SNAN.value)
+extern gl_FLT_SNAN_t _gl_FLT_SNAN;
+#  define FLT_SNAN (_gl_FLT_SNAN.value)
 #  define GNULIB_defined_FLT_SNAN 1
 # endif
 #endif
@@ -263,8 +263,8 @@ extern gl_FLT_SNAN_t gl_FLT_SNAN;
 #  define DBL_SNAN __builtin_nans ("")
 # else
 typedef union { unsigned long long word[1]; double value; } gl_DBL_SNAN_t;
-extern gl_DBL_SNAN_t gl_DBL_SNAN;
-#  define DBL_SNAN (gl_DBL_SNAN.value)
+extern gl_DBL_SNAN_t _gl_DBL_SNAN;
+#  define DBL_SNAN (_gl_DBL_SNAN.value)
 #  define GNULIB_defined_DBL_SNAN 1
 # endif
 #endif
@@ -301,8 +301,8 @@ typedef union { unsigned int word[3]; long double value; } gl_LDBL_SNAN_t;
 #  else
 typedef union { unsigned long long word[2]; long double value; } gl_LDBL_SNAN_t;
 #  endif
-extern gl_LDBL_SNAN_t gl_LDBL_SNAN;
-#  define LDBL_SNAN (gl_LDBL_SNAN.value)
+extern gl_LDBL_SNAN_t _gl_LDBL_SNAN;
+#  define LDBL_SNAN (_gl_LDBL_SNAN.value)
 #  define GNULIB_defined_LDBL_SNAN 1
 # endif
 #endif
