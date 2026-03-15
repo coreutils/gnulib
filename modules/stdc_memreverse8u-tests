@@ -1,0 +1,11 @@
+Files:
+tests/test-stdc_memreverse8u.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdc_memreverse8u
+check_PROGRAMS += test-stdc_memreverse8u
