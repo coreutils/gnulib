@@ -37,6 +37,13 @@
  #error "Please include config.h first."
 #endif
 
+#if @GNULIB_STDC_MEMREVERSE8@
+
+/* Get size_t.  */
+# include <stddef.h>
+
+#endif
+
 #if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@ || @GNULIB_STDC_STORE8@
 
 /* Get uint8_t, uint16_t, uint32_t, uint64_t,
@@ -133,6 +140,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 #ifndef _GL_STDC_BIT_CEIL_INLINE
 # define _GL_STDC_BIT_CEIL_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_MEMREVERSE8_INLINE
+# define _GL_STDC_MEMREVERSE8_INLINE _GL_INLINE
 #endif
 #ifndef _GL_STDC_MEMREVERSE8U_INLINE
 # define _GL_STDC_MEMREVERSE8U_INLINE _GL_INLINE
@@ -1149,6 +1159,34 @@ stdc_bit_ceil_ull (unsigned long long int n)
 #endif
 
 #endif /* @HAVE_STDBIT_H@ */
+
+
+/* ISO C2y § 7.18.19 8-bit Memory Reversal  */
+
+#if @GNULIB_STDC_MEMREVERSE8@
+
+_GL_STDC_MEMREVERSE8_INLINE void
+stdc_memreverse8 (size_t n, unsigned char *ptr)
+{
+  if (n > 0)
+    {
+      /* There is no need to optimize the cases N == 1, N == 2, N == 4
+         specially using __builtin_constant_p, because GCC does the possible
+         optimizations already, taking into account the alignment of PTR:
+         GCC >= 3 for N == 1, GCC >= 8 for N == 2, GCC >= 13 for N == 4.
+         (Whereas clang >= 3, <= 22 optimizes only the case N == 1.)  */
+      size_t i, j;
+      for (i = 0, j = n-1; i < j; i++, j--)
+        {
+          unsigned char xi = ptr[i];
+          unsigned char xj = ptr[j];
+          ptr[j] = xi;
+          ptr[i] = xj;
+        }
+    }
+}
+
+#endif
 
 
 /* ISO C2y § 7.18.20 Exact-width 8-bit Memory Reversal  */

@@ -1,0 +1,26 @@
+Description:
+stdc_memreverse8 function: Swap bytes in memory.
+
+Files:
+lib/stdc_memreverse8.c
+
+Depends-on:
+stdbit-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+gl_STDBIT_MODULE_INDICATOR([stdc_memreverse8])
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_memreverse8.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
