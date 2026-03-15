@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-/* gl_expl_table[i] = exp((i - 128) * log(2)/256).
+/* _gl_expl_table[i] = exp((i - 128) * log(2)/256).
    Computed in GNU clisp through
      (setf (long-float-digits) 128)
      (setq a 0L0)
@@ -24,7 +24,7 @@
      (dotimes (i 257)
        (format t "    ~D,~%"
                (float (exp (* (/ (- i 128) 256) (log 2L0))) a)))  */
-const long double gl_expl_table[257] =
+const long double _gl_expl_table[257] =
   {
     0.707106781186547524400844362104849039284L,
     0.709023942160207598920563322257676190836L,

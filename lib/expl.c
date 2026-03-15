@@ -31,8 +31,8 @@ expl (long double x)
 
 # include <float.h>
 
-/* gl_expl_table[i] = exp((i - 128) * log(2)/256).  */
-extern const long double gl_expl_table[257];
+/* _gl_expl_table[i] = exp((i - 128) * log(2)/256).  */
+extern const long double _gl_expl_table[257];
 
 /* A value slightly larger than log(2).  */
 #define LOG2_PLUS_EPSILON 0.6931471805599454L
@@ -143,7 +143,7 @@ expl (long double x)
     int n = (int) roundl (nm * (1.0L / 256.0L));
     int m = (int) nm - 256 * n;
 
-    return ldexpl (gl_expl_table[128 + m] * exp_y, n);
+    return ldexpl (_gl_expl_table[128 + m] * exp_y, n);
   }
 }
 
