@@ -6,7 +6,6 @@ lib/stdc_store8.c
 
 Depends-on:
 stdbit-h
-stdint-h
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])

@@ -7,7 +7,6 @@ lib/stdc_load8_aligned.c
 Depends-on:
 stdbit-h
 stdc_load8
-stdint-h
 stdc_memreverse8u
 
 configure.ac:

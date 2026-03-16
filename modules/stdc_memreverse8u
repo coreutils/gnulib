@@ -6,7 +6,6 @@ lib/stdc_memreverse8u.c
 
 Depends-on:
 stdbit-h
-stdint-h
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])
