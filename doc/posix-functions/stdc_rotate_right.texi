@@ -13,6 +13,7 @@ ISO C2y (draft
 section 7.18.18.
 
 Gnulib module: stdc_rotate_right
+@mindex stdc_rotate_right
 
 Portability problems fixed by Gnulib:
 @itemize
