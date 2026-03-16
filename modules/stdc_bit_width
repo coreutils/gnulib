@@ -15,7 +15,8 @@ AC_REQUIRE([gl_STDBIT_H])
 gl_STDBIT_MODULE_INDICATOR([stdc_bit_width])
 
 Makefile.am:
-if GL_GENERATE_STDBIT_H
+if GL_HAVE_STDBIT_H
+else
 lib_SOURCES += stdc_bit_width.c
 endif
 

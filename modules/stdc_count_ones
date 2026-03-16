@@ -13,7 +13,8 @@ AC_REQUIRE([gl_STDBIT_H])
 gl_STDBIT_MODULE_INDICATOR([stdc_count_ones])
 
 Makefile.am:
-if GL_GENERATE_STDBIT_H
+if GL_HAVE_STDBIT_H
+else
 lib_SOURCES += stdc_count_ones.c
 endif
 
