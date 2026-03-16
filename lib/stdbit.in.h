@@ -188,6 +188,11 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Some systems are only missing C2y features in stdbit.h.  */
 #if !@HAVE_STDBIT_H@
 
@@ -206,10 +211,6 @@ _GL_INLINE_HEADER_BEGIN
 # define __STDC_ENDIAN_NATIVE__ __STDC_ENDIAN_LITTLE__
 #endif
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #if 3 < __GNUC__ + (4 <= __GNUC_MINOR__) || 4 <= __clang_major__
 # define _GL_STDBIT_HAS_BUILTIN_CLZ true
@@ -1171,6 +1172,7 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 #endif /* @HAVE_STDBIT_H@ */
 
+
 /* ISO C2y § 7.18.17 Rotate Left  */
 
 #if @GNULIB_STDC_ROTATE_LEFT@
@@ -1231,6 +1233,7 @@ stdc_rotate_left_ull (unsigned long long int v, unsigned int c)
 
 #endif
 
+
 /* ISO C2y § 7.18.18 Rotate Right  */
 
 #if @GNULIB_STDC_ROTATE_RIGHT@
@@ -1290,6 +1293,7 @@ stdc_rotate_right_ull (unsigned long long int v, unsigned int c)
 # endif
 
 #endif
+
 
 /* ISO C2y § 7.18.19 8-bit Memory Reversal  */
 
