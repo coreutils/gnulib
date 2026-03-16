@@ -1332,6 +1332,11 @@ stdc_memreverse8 (size_t n, unsigned char *ptr)
 
 #if @GNULIB_STDC_MEMREVERSE8U@
 
+/* Note: ISO C defines these functions with argument and return type uintN_t.
+   We do it here with argument and return type uint_leastN_t.  This is a
+   generalization that does not contradict ISO C: When uintN_t exists, it is
+   known that uint_leastN_t is the same type as uintN_t.  */
+
 _GL_STDC_MEMREVERSE8U_INLINE uint_least8_t
 stdc_memreverse8u8 (uint_least8_t value)
 {
