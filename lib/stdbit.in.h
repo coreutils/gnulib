@@ -1387,7 +1387,7 @@ stdc_memreverse8u64 (uint_least64_t value)
 
 /* ISO C2y § 7.18.21 Endian-Aware 8-Bit Load  */
 
-/* On hosts where _GL_STDBIT_OPTIMIZE_VIA_MEMCPY might be useful,
+/* On hosts where _GL_STDBIT_OPTIMIZE_VIA_MEMCPY (see below) might be useful,
    we need to avoid type-punning, because the compiler's aliasing
    analysis would frequently produce incorrect code, and requiring the
    option '-fno-strict-aliasing' is no viable solution.
@@ -1501,7 +1501,14 @@ stdc_memreverse8u64 (uint_least64_t value)
 #endif
 
 #if defined _GL_HAS_BUILTIN_ASSUME_ALIGNED || defined _MSC_VER
-# define _GL_STDBIT_OPTIMIZE_VIA_MEMCPY 1
+/* The _GL_STDBIT_OPTIMIZE_VIA_MEMCPY trick works on typical hosts
+   where CHAR_BIT == 8 and uint_leastN_t types have minimal sizes.
+   Check to be safe and to document the assumption.  */
+# define _GL_STDBIT_OPTIMIZE_VIA_MEMCPY \
+   ((unsigned char) -1 == 0xFF \
+    && sizeof (uint_least16_t) == 2 \
+    && sizeof (uint_least32_t) == 4 \
+    && sizeof (uint_least64_t) == 8)
 #endif
 
 #ifndef _GL_STDBIT_OPTIMIZE_VIA_MEMCPY
