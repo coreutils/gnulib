@@ -19,6 +19,11 @@
 #ifndef _CYGPATH_H
 #define _CYGPATH_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC and _GL_ATTRIBUTE_DEALLOC_FREE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 #ifdef __cplusplus
