@@ -1521,33 +1521,27 @@ stdc_load8_beu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_beu16 (const unsigned char ptr[2])
 {
-  _GL_STDBIT_UINT_FAST16 zero = 0;
-  return (((ptr[0] | zero) << (8 * 1))
-          | ((ptr[1] | zero) << (8 * 0)));
+  _GL_STDBIT_UINT_FAST16 v0 = ptr[0], v1 = ptr[1];
+  return (v0 << (8 * 1)) | (v1 << (8 * 0));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
 stdc_load8_beu32 (const unsigned char ptr[4])
 {
-  _GL_STDBIT_UINT_FAST32 zero = 0;
-  return (((ptr[0] | zero) << (8 * 3))
-          | ((ptr[1] | zero) << (8 * 2))
-          | ((ptr[2] | zero) << (8 * 1))
-          | ((ptr[3] | zero) << (8 * 0)));
+  _GL_STDBIT_UINT_FAST32 v0 = ptr[0], v1 = ptr[1], v2 = ptr[2], v3 = ptr[3];
+  return (v0 << (8 * 3)) | (v1 << (8 * 2)) | (v2 << (8 * 1)) | (v3 << (8 * 0));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least64_t
 stdc_load8_beu64 (const unsigned char ptr[8])
 {
-  _GL_STDBIT_UINT_FAST64 zero = 0;
-  return (((ptr[0] | zero) << (8 * 7))
-          | ((ptr[1] | zero) << (8 * 6))
-          | ((ptr[2] | zero) << (8 * 5))
-          | ((ptr[3] | zero) << (8 * 4))
-          | ((ptr[4] | zero) << (8 * 3))
-          | ((ptr[5] | zero) << (8 * 2))
-          | ((ptr[6] | zero) << (8 * 1))
-          | ((ptr[7] | zero) << (8 * 0)));
+  _GL_STDBIT_UINT_FAST64
+    v0 = ptr[0], v1 = ptr[1], v2 = ptr[2], v3 = ptr[3],
+    v4 = ptr[4], v5 = ptr[5], v6 = ptr[6], v7 = ptr[7];
+  return ((v0 << (8 * 7)) | (v1 << (8 * 6))
+          | (v2 << (8 * 5)) | (v3 << (8 * 4))
+          | (v4 << (8 * 3)) | (v5 << (8 * 2))
+          | (v6 << (8 * 1)) | (v7 << (8 * 0)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least8_t
@@ -1559,33 +1553,27 @@ stdc_load8_leu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_leu16 (const unsigned char ptr[2])
 {
-  _GL_STDBIT_UINT_FAST16 zero = 0;
-  return (((ptr[0] | zero) << (8 * 0))
-          | ((ptr[1] | zero) << (8 * 1)));
+  _GL_STDBIT_UINT_FAST16 v0 = ptr[0], v1 = ptr[1];
+  return (v0 << (8 * 0)) | (v1 << (8 * 1));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
 stdc_load8_leu32 (const unsigned char ptr[4])
 {
-  _GL_STDBIT_UINT_FAST32 zero = 0;
-  return (((ptr[0] | zero) << (8 * 0))
-          | ((ptr[1] | zero) << (8 * 1))
-          | ((ptr[2] | zero) << (8 * 2))
-          | ((ptr[3] | zero) << (8 * 3)));
+  _GL_STDBIT_UINT_FAST32 v0 = ptr[0], v1 = ptr[1], v2 = ptr[2], v3 = ptr[3];
+  return (v0 << (8 * 0)) | (v1 << (8 * 1)) | (v2 << (8 * 2)) | (v3 << (8 * 3));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least64_t
 stdc_load8_leu64 (const unsigned char ptr[8])
 {
-  _GL_STDBIT_UINT_FAST64 zero = 0;
-  return (((ptr[0] | zero) << (8 * 0))
-          | ((ptr[1] | zero) << (8 * 1))
-          | ((ptr[2] | zero) << (8 * 2))
-          | ((ptr[3] | zero) << (8 * 3))
-          | ((ptr[4] | zero) << (8 * 4))
-          | ((ptr[5] | zero) << (8 * 5))
-          | ((ptr[6] | zero) << (8 * 6))
-          | ((ptr[7] | zero) << (8 * 7)));
+  _GL_STDBIT_UINT_FAST64
+    v0 = ptr[0], v1 = ptr[1], v2 = ptr[2], v3 = ptr[3],
+    v4 = ptr[4], v5 = ptr[5], v6 = ptr[6], v7 = ptr[7];
+  return ((v0 << (8 * 0)) | (v1 << (8 * 1))
+          | (v2 << (8 * 2)) | (v3 << (8 * 3))
+          | (v4 << (8 * 4)) | (v5 << (8 * 5))
+          | (v6 << (8 * 6)) | (v7 << (8 * 7)));
 }
 
 _GL_STDC_LOAD8_INLINE int_least8_t
