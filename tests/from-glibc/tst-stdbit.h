@@ -30,7 +30,6 @@
 # include <array_length.h>
 # include <support/check.h>
 #else
-# include <stdint.h>
 # include <macros.h>
 # define array_length(a) (sizeof (a) / sizeof *(a))
 # define TEST_COMPARE(a, b) ASSERT ((a) == (b))
