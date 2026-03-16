@@ -104,9 +104,6 @@
 
 _GL_INLINE_HEADER_BEGIN
 
-#ifndef _GL_STDBIT_INLINE
-# define _GL_STDBIT_INLINE _GL_INLINE
-#endif
 #ifndef _GL_STDC_LEADING_ZEROS_INLINE
 # define _GL_STDC_LEADING_ZEROS_INLINE _GL_INLINE
 #endif
@@ -238,17 +235,17 @@ extern "C" {
 
 /* Count leading 0 bits of N, even if N is 0.  */
 #ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clz (unsigned int n)
 {
   return n ? __builtin_clz (n) : 8 * sizeof n;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzl (unsigned long int n)
 {
   return n ? __builtin_clzl (n) : 8 * sizeof n;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
 {
   return n ? __builtin_clzll (n) : 8 * sizeof n;
@@ -264,18 +261,18 @@ extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
 #  pragma intrinsic (_BitScanReverse64)
 # endif
 
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzl (unsigned long int n)
 {
   unsigned long int r;
   return 8 * sizeof n - (_BitScanReverse (&r, n) ? r + 1 : 0);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clz (unsigned int n)
 {
   return _gl_stdbit_clzl (n) - 8 * (sizeof 0ul - sizeof n);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
 {
 # ifdef _M_X64
@@ -289,7 +286,7 @@ _gl_stdbit_clzll (unsigned long long int n)
 
 #else /* !_MSC_VER */
 
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
 {
   int r = 0;
@@ -303,12 +300,12 @@ _gl_stdbit_clzll (unsigned long long int n)
   int a2 = (0x000000000000000f < n) << 2; n >>= a2; r += a2;
   return (8 * sizeof n - (1 << 2) - r) + ((0x11112234ull >> (n << 2)) & 0xf);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clz (unsigned int n)
 {
   return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0u);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzl (unsigned long int n)
 {
   return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0ul);
@@ -317,17 +314,17 @@ _gl_stdbit_clzl (unsigned long int n)
 
 /* Count trailing 0 bits of N, even if N is 0.  */
 #ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctz (unsigned int n)
 {
   return n ? __builtin_ctz (n) : 8 * sizeof n;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzl (unsigned long int n)
 {
   return n ? __builtin_ctzl (n) : 8 * sizeof n;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzll (unsigned long long int n)
 {
   return n ? __builtin_ctzll (n) : 8 * sizeof n;
@@ -343,18 +340,18 @@ extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
 #  pragma intrinsic (_BitScanForward64)
 # endif
 
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzl (unsigned long int n)
 {
   unsigned long int r;
   return _BitScanForward (&r, n) ? r : 8 * sizeof n;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctz (unsigned int n)
 {
   return _gl_stdbit_ctzl (n | (1ul << (8 * sizeof n - 1) << 1));
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzll (unsigned long long int n)
 {
 # ifdef _M_X64
@@ -368,17 +365,17 @@ _gl_stdbit_ctzll (unsigned long long int n)
 
 #else /* !_MSC_VER */
 
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctz (unsigned int n)
 {
   return 8 * sizeof n - (n ? _gl_stdbit_clz (n & -n) + 1 : 0);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzl (unsigned long int n)
 {
   return 8 * sizeof n - (n ? _gl_stdbit_clzl (n & -n) + 1 : 0);
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzll (unsigned long long int n)
 {
   return 8 * sizeof n - (n ? _gl_stdbit_clzll (n & -n) + 1 : 0);

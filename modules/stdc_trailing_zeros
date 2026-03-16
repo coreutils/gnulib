@@ -7,6 +7,7 @@ lib/stdc_trailing_zeros.c
 
 Depends-on:
 stdbit-h
+stdc_leading_zeros
 
 configure.ac:
 AC_REQUIRE([gl_STDBIT_H])
