@@ -37,21 +37,29 @@
  #error "Please include config.h first."
 #endif
 
-#if @GNULIB_STDC_MEMREVERSE8@
-
+#if !@HAVE_STDBIT_H@
 /* Get size_t.  */
 # include <stddef.h>
-
 #endif
 
-#if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_STORE8_ALIGNED@ || @GNULIB_STDC_STORE8@
-
-/* Get uint8_t, uint16_t, uint32_t, uint64_t,
-   int_least8_t, int_least16_t, int_least32_t, int_least64_t,
-   uint_least8_t, uint_least16_t, uint_least32_t, uint_least64_t,
-   uint_fast16_t, uint_fast32_t, uint_fast64_t.  */
+#if (!@HAVE_STDBIT_H@ \
+     || (!defined __UINT_FAST64_TYPE__ \
+         && (@GNULIB_STDC_MEMREVERSE8U@ \
+             || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
+             || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)))
+/* Get intN_t, uintN_t, int_leastN_t, uint_leastN_t.  */
 # include <stdint.h>
+#endif
 
+/* uint_fast{16,32,64}_t equivalents, sans namespace pollution on GNU.  */
+#if @HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__
+# define _GL_STDBIT_UINT_FAST16 __UINT_FAST16_TYPE__
+# define _GL_STDBIT_UINT_FAST32 __UINT_FAST32_TYPE__
+# define _GL_STDBIT_UINT_FAST64 __UINT_FAST64_TYPE__
+#else
+# define _GL_STDBIT_UINT_FAST16 uint_fast16_t
+# define _GL_STDBIT_UINT_FAST32 uint_fast32_t
+# define _GL_STDBIT_UINT_FAST64 uint_fast64_t
 #endif
 
 #if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
@@ -1330,7 +1338,7 @@ stdc_memreverse8u16 (uint_least16_t value)
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (value);
 # else
-  uint_fast16_t const mask = 0xFFU;
+  _GL_STDBIT_UINT_FAST16 mask = 0xFFU;
   return (  (value & (mask << (8 * 1))) >> (8 * 1)
           | (value & (mask << (8 * 0))) << (8 * 1));
 # endif
@@ -1342,7 +1350,7 @@ stdc_memreverse8u32 (uint_least32_t value)
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (value);
 # else
-  uint_fast32_t const mask = 0xFFU;
+  _GL_STDBIT_UINT_FAST32 mask = 0xFFU;
   return (  (value & (mask << (8 * 3))) >> (8 * 3)
           | (value & (mask << (8 * 2))) >> (8 * 1)
           | (value & (mask << (8 * 1))) << (8 * 1)
@@ -1356,7 +1364,7 @@ stdc_memreverse8u64 (uint_least64_t value)
 # ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (value);
 # else
-  uint_fast64_t const mask = 0xFFU;
+  _GL_STDBIT_UINT_FAST64 mask = 0xFFU;
   return (  (value & (mask << (8 * 7))) >> (8 * 7)
           | (value & (mask << (8 * 6))) >> (8 * 5)
           | (value & (mask << (8 * 5))) >> (8 * 3)
@@ -1507,23 +1515,33 @@ stdc_load8_beu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_beu16 (const unsigned char ptr[2])
 {
-  return ((uint_fast16_t) ptr[0] << 8) | (uint_fast16_t) ptr[1];
+  _GL_STDBIT_UINT_FAST16 zero = 0;
+  return (((ptr[0] | zero) << (8 * 1))
+          | ((ptr[1] | zero) << (8 * 0)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
 stdc_load8_beu32 (const unsigned char ptr[4])
 {
-  return ((uint_fast32_t) ptr[0] << 24) | ((uint_fast32_t) ptr[1] << 16)
-         | ((uint_fast32_t) ptr[2] << 8) | (uint_fast32_t) ptr[3];
+  _GL_STDBIT_UINT_FAST32 zero = 0;
+  return (((ptr[0] | zero) << (8 * 3))
+          | ((ptr[1] | zero) << (8 * 2))
+          | ((ptr[2] | zero) << (8 * 1))
+          | ((ptr[3] | zero) << (8 * 0)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least64_t
 stdc_load8_beu64 (const unsigned char ptr[8])
 {
-  return ((uint_fast64_t) ptr[0] << 56) | ((uint_fast64_t) ptr[1] << 48)
-         | ((uint_fast64_t) ptr[2] << 40) | ((uint_fast64_t) ptr[3] << 32)
-         | ((uint_fast64_t) ptr[4] << 24) | ((uint_fast64_t) ptr[5] << 16)
-         | ((uint_fast64_t) ptr[6] << 8) | (uint_fast64_t) ptr[7];
+  _GL_STDBIT_UINT_FAST64 zero = 0;
+  return (((ptr[0] | zero) << (8 * 7))
+          | ((ptr[1] | zero) << (8 * 6))
+          | ((ptr[2] | zero) << (8 * 5))
+          | ((ptr[3] | zero) << (8 * 4))
+          | ((ptr[4] | zero) << (8 * 3))
+          | ((ptr[5] | zero) << (8 * 2))
+          | ((ptr[6] | zero) << (8 * 1))
+          | ((ptr[7] | zero) << (8 * 0)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least8_t
@@ -1535,23 +1553,33 @@ stdc_load8_leu8 (const unsigned char ptr[1])
 _GL_STDC_LOAD8_INLINE uint_least16_t
 stdc_load8_leu16 (const unsigned char ptr[2])
 {
-  return (uint_fast16_t) ptr[0] | ((uint_fast16_t) ptr[1] << 8);
+  _GL_STDBIT_UINT_FAST16 zero = 0;
+  return (((ptr[0] | zero) << (8 * 0))
+          | ((ptr[1] | zero) << (8 * 1)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least32_t
 stdc_load8_leu32 (const unsigned char ptr[4])
 {
-  return (uint_fast32_t) ptr[0] | ((uint_fast32_t) ptr[1] << 8)
-         | ((uint_fast32_t) ptr[2] << 16) | ((uint_fast32_t) ptr[3] << 24);
+  _GL_STDBIT_UINT_FAST32 zero = 0;
+  return (((ptr[0] | zero) << (8 * 0))
+          | ((ptr[1] | zero) << (8 * 1))
+          | ((ptr[2] | zero) << (8 * 2))
+          | ((ptr[3] | zero) << (8 * 3)));
 }
 
 _GL_STDC_LOAD8_INLINE uint_least64_t
 stdc_load8_leu64 (const unsigned char ptr[8])
 {
-  return (uint_fast64_t) ptr[0] | ((uint_fast64_t) ptr[1] << 8)
-         | ((uint_fast64_t) ptr[2] << 16) | ((uint_fast64_t) ptr[3] << 24)
-         | ((uint_fast64_t) ptr[4] << 32) | ((uint_fast64_t) ptr[5] << 40)
-         | ((uint_fast64_t) ptr[6] << 48) | ((uint_fast64_t) ptr[7] << 56);
+  _GL_STDBIT_UINT_FAST64 zero = 0;
+  return (((ptr[0] | zero) << (8 * 0))
+          | ((ptr[1] | zero) << (8 * 1))
+          | ((ptr[2] | zero) << (8 * 2))
+          | ((ptr[3] | zero) << (8 * 3))
+          | ((ptr[4] | zero) << (8 * 4))
+          | ((ptr[5] | zero) << (8 * 5))
+          | ((ptr[6] | zero) << (8 * 6))
+          | ((ptr[7] | zero) << (8 * 7)));
 }
 
 _GL_STDC_LOAD8_INLINE int_least8_t
