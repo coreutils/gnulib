@@ -144,6 +144,9 @@ _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_STDC_ROTATE_LEFT_INLINE
 # define _GL_STDC_ROTATE_LEFT_INLINE _GL_INLINE
 #endif
+#ifndef _GL_STDC_ROTATE_RIGHT_INLINE
+# define _GL_STDC_ROTATE_RIGHT_INLINE _GL_INLINE
+#endif
 #ifndef _GL_STDC_MEMREVERSE8_INLINE
 # define _GL_STDC_MEMREVERSE8_INLINE _GL_INLINE
 #endif
@@ -1219,6 +1222,66 @@ stdc_rotate_left_ull (unsigned long long int v, unsigned int c)
      : sizeof (v) == sizeof 0u ? stdc_rotate_left_ui (v, c)             \
      : sizeof (v) == sizeof 0ul ? stdc_rotate_left_ul (v, c)            \
      : stdc_rotate_left_ull (v, c))))
+# endif
+
+#endif
+
+/* ISO C2y § 7.18.18 Rotate Right  */
+
+#if @GNULIB_STDC_ROTATE_RIGHT@
+
+# ifdef __has_builtin
+#  if __has_builtin (__builtin_stdc_rotate_right)
+#   define _gl_stdc_rotate_right __builtin_stdc_rotate_right
+#   define stdc_rotate_right __builtin_stdc_rotate_right
+#  endif
+# endif
+
+# ifndef _gl_stdc_rotate_right
+#  define _gl_stdc_rotate_right(v, c)               \
+  (((v) >> ((c) & (sizeof (v) * 8 - 1)))            \
+   | ((v) << (-(c) & (sizeof (v) * 8 - 1))))
+# endif
+
+_GL_STDC_ROTATE_RIGHT_INLINE unsigned char
+stdc_rotate_right_uc (unsigned char v, unsigned int c)
+{
+  return _gl_stdc_rotate_right (v, c);
+}
+
+_GL_STDC_ROTATE_RIGHT_INLINE unsigned short int
+stdc_rotate_right_us (unsigned short int v, unsigned int c)
+{
+  return _gl_stdc_rotate_right (v, c);
+}
+
+_GL_STDC_ROTATE_RIGHT_INLINE unsigned int
+stdc_rotate_right_ui (unsigned int v, unsigned int c)
+{
+  return _gl_stdc_rotate_right (v, c);
+}
+
+_GL_STDC_ROTATE_RIGHT_INLINE unsigned long int
+stdc_rotate_right_ul (unsigned long int v, unsigned int c)
+{
+  return _gl_stdc_rotate_right (v, c);
+}
+
+_GL_STDC_ROTATE_RIGHT_INLINE unsigned long long int
+stdc_rotate_right_ull (unsigned long long int v, unsigned int c)
+{
+  return _gl_stdc_rotate_right (v, c);
+}
+
+# ifndef stdc_rotate_right
+#  define stdc_rotate_right(v, c)                                       \
+  (_GL_STDBIT_TYPEOF_CAST                                               \
+   (v,                                                                  \
+    (sizeof (v) == 1 ? stdc_rotate_right_uc (v, c)                      \
+     : sizeof (v) == sizeof (unsigned short int) ? stdc_rotate_right_us (v, c) \
+     : sizeof (v) == sizeof 0u ? stdc_rotate_right_ui (v, c)            \
+     : sizeof (v) == sizeof 0ul ? stdc_rotate_right_ul (v, c)           \
+     : stdc_rotate_right_ull (v, c))))
 # endif
 
 #endif
