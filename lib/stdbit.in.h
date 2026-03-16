@@ -212,30 +212,22 @@ extern "C" {
 #endif
 
 
-#if 3 < __GNUC__ + (4 <= __GNUC_MINOR__) || 4 <= __clang_major__
-# define _GL_STDBIT_HAS_BUILTIN_CLZ true
-# define _GL_STDBIT_HAS_BUILTIN_CTZ true
-# define _GL_STDBIT_HAS_BUILTIN_POPCOUNT true
-#elif defined __has_builtin
-# if (__has_builtin (__builtin_clz) \
-      && __has_builtin (__builtin_clzl) \
-      && __has_builtin (__builtin_clzll))
+/* ISO C 23 § 7.18.3 Count Leading Zeros  */
+
+#if @GNULIB_STDC_LEADING_ZEROS@
+
+# if 3 < __GNUC__ + (4 <= __GNUC_MINOR__) || 4 <= __clang_major__
 #  define _GL_STDBIT_HAS_BUILTIN_CLZ true
+# elif defined __has_builtin
+#  if (__has_builtin (__builtin_clz) \
+       && __has_builtin (__builtin_clzl) \
+       && __has_builtin (__builtin_clzll))
+#   define _GL_STDBIT_HAS_BUILTIN_CLZ true
+#  endif
 # endif
-# if (__has_builtin (__builtin_ctz) \
-      && __has_builtin (__builtin_ctzl) \
-      && __has_builtin (__builtin_ctzll))
-#  define _GL_STDBIT_HAS_BUILTIN_CTZ true
-# endif
-# if (__has_builtin (__builtin_popcount) \
-      && __has_builtin (__builtin_popcountl) \
-      && __has_builtin (__builtin_popcountll))
-#  define _GL_STDBIT_HAS_BUILTIN_POPCOUNT true
-# endif
-#endif
 
 /* Count leading 0 bits of N, even if N is 0.  */
-#ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
+# ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clz (unsigned int n)
 {
@@ -251,16 +243,16 @@ _gl_stdbit_clzll (unsigned long long int n)
 {
   return n ? __builtin_clzll (n) : 8 * sizeof n;
 }
-#elif defined _MSC_VER
+# elif defined _MSC_VER
 
 /* Declare the few MSVC intrinsics that we need.  We prefer not to include
    <intrin.h> because it would pollute the namespace.  */
 extern unsigned char _BitScanReverse (unsigned long *, unsigned long);
-# pragma intrinsic (_BitScanReverse)
-# ifdef _M_X64
+#  pragma intrinsic (_BitScanReverse)
+#  ifdef _M_X64
 extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
-#  pragma intrinsic (_BitScanReverse64)
-# endif
+#   pragma intrinsic (_BitScanReverse64)
+#  endif
 
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzl (unsigned long int n)
@@ -276,16 +268,16 @@ _gl_stdbit_clz (unsigned int n)
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
 {
-# ifdef _M_X64
+#  ifdef _M_X64
   unsigned long int r;
   return 8 * sizeof n - (_BitScanReverse64 (&r, n) ? r + 1 : 0);
-# else
+#  else
   unsigned long int hi = n >> 32;
   return _gl_stdbit_clzl (hi ? hi : n) + (hi ? 0 : 32);
-# endif
+#  endif
 }
 
-#else /* !_MSC_VER */
+# else /* !_MSC_VER */
 
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
@@ -311,203 +303,7 @@ _gl_stdbit_clzl (unsigned long int n)
 {
   return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0ul);
 }
-#endif
-
-/* Count trailing 0 bits of N, even if N is 0.  */
-#ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctz (unsigned int n)
-{
-  return n ? __builtin_ctz (n) : 8 * sizeof n;
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzl (unsigned long int n)
-{
-  return n ? __builtin_ctzl (n) : 8 * sizeof n;
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzll (unsigned long long int n)
-{
-  return n ? __builtin_ctzll (n) : 8 * sizeof n;
-}
-#elif defined _MSC_VER
-
-/* Declare the few MSVC intrinsics that we need.  We prefer not to include
-   <intrin.h> because it would pollute the namespace.  */
-extern unsigned char _BitScanForward (unsigned long *, unsigned long);
-# pragma intrinsic (_BitScanForward)
-# ifdef _M_X64
-extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
-#  pragma intrinsic (_BitScanForward64)
 # endif
-
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzl (unsigned long int n)
-{
-  unsigned long int r;
-  return _BitScanForward (&r, n) ? r : 8 * sizeof n;
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctz (unsigned int n)
-{
-  return _gl_stdbit_ctzl (n | (1ul << (8 * sizeof n - 1) << 1));
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzll (unsigned long long int n)
-{
-# ifdef _M_X64
-  unsigned long int r;
-  return _BitScanForward64 (&r, n) ? r : 8 * sizeof n;
-# else
-  unsigned int lo = n;
-  return _gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
-# endif
-}
-
-#else /* !_MSC_VER */
-
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctz (unsigned int n)
-{
-  return 8 * sizeof n - (n ? _gl_stdbit_clz (n & -n) + 1 : 0);
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzl (unsigned long int n)
-{
-  return 8 * sizeof n - (n ? _gl_stdbit_clzl (n & -n) + 1 : 0);
-}
-_GL_STDC_TRAILING_ZEROS_INLINE int
-_gl_stdbit_ctzll (unsigned long long int n)
-{
-  return 8 * sizeof n - (n ? _gl_stdbit_clzll (n & -n) + 1 : 0);
-}
-#endif
-
-#if @GNULIB_STDC_COUNT_ONES@
-/* Count 1 bits in N.  */
-# ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
-#  define _gl_stdbit_popcount __builtin_popcount
-#  define _gl_stdbit_popcountl __builtin_popcountl
-#  define _gl_stdbit_popcountll __builtin_popcountll
-# else
-_GL_STDC_COUNT_ONES_INLINE int
-_gl_stdbit_popcount_wide (unsigned long long int n)
-{
-  if (sizeof n & (sizeof n - 1))
-    {
-      /* Use a simple O(log N) loop on theoretical platforms where N's
-         width is not a power of 2.  */
-      int count = 0;
-      for (int i = 0; i < 8 * sizeof n; i++, n >>= 1)
-        count += n & 1;
-      return count;
-    }
-  else
-    {
-      /* N's width is a power of 2; count in parallel.  */
-      unsigned long long int
-        max = -1ull,
-        x555555 = max / (1 << 1 | 1),	/* 0x555555... */
-        x333333 = max / (1 << 2 | 1),	/* 0x333333... */
-        x0f0f0f = max / (1 << 4 | 1),	/* 0x0f0f0f... */
-        x010101 = max / ((1 << 8) - 1),	/* 0x010101... */
-        x000_7f = max / 0xffffffffffffffffLL * 0x7f; /* 0x000000000000007f... */
-      n -= (n >> 1) & x555555;
-      n = (n & x333333) + ((n >> 2) & x333333);
-      n = (n + (n >> 4)) & x0f0f0f;
-
-      /* If the popcount always fits in 8 bits, multiply so that the
-         popcount is in the leading 8 bits of the product; these days
-         this is typically faster than the alternative below.  */
-      if (8 * sizeof n < 1 << 8)
-        return n * x010101 >> 8 * (sizeof n - 1);
-
-      /* N is at least 256 bits wide!  Fall back on an O(log log N)
-         loop that a compiler could unroll.  Unroll the first three
-         iterations by hand, to skip some division and masking.  This
-         is the most we can easily do without hassling with constants
-         that a typical-platform compiler would reject.  */
-      n += n >> (1 << 3);
-      n += n >> (1 << 4);
-      n += n >> (1 << 5);
-      n &= x000_7f;
-      for (int i = 64; i < 8 * sizeof n; i <<= 1)
-        n = (n + (n >> i)) & max / (1ull << i | 1);
-      return n;
-    }
-}
-
-#  ifdef _MSC_VER
-#   if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
-/* Declare the few MSVC intrinsics that we need.  We prefer not to include
-   <intrin.h> because it would pollute the namespace.  */
-extern void __cpuid (int[4], int);
-#    pragma intrinsic (__cpuid)
-extern unsigned int __popcnt (unsigned int);
-#    pragma intrinsic (__popcnt)
-#    ifdef _M_X64
-extern unsigned long long __popcnt64 (unsigned long long);
-#     pragma intrinsic (__popcnt64)
-#    else
-_GL_STDC_COUNT_ONES_INLINE int
-__popcnt64 (unsigned long long int n)
-{
-  return __popcnt (n >> 32) + __popcnt (n);
-}
-#    endif
-#   endif
-
-/* 1 if supported, -1 if not, 0 if unknown.  */
-extern signed char _gl_stdbit_popcount_support;
-
-_GL_STDC_COUNT_ONES_INLINE bool
-_gl_stdbit_popcount_supported (void)
-{
-  if (!_gl_stdbit_popcount_support)
-    {
-      /* Do as described in
-         <https://docs.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64>
-         Although Microsoft started requiring POPCNT in MS-Windows 11 24H2,
-         we'll be more cautious.  */
-      int cpu_info[4];
-      __cpuid (cpu_info, 1);
-      _gl_stdbit_popcount_support = cpu_info[2] & 1 << 23 ? 1 : -1;
-    }
-  return 0 < _gl_stdbit_popcount_support;
-}
-_GL_STDC_COUNT_ONES_INLINE int
-_gl_stdbit_popcount (unsigned int n)
-{
-  return (_gl_stdbit_popcount_supported ()
-          ? __popcnt (n)
-          : _gl_stdbit_popcount_wide (n));
-}
-_GL_STDC_COUNT_ONES_INLINE int
-_gl_stdbit_popcountl (unsigned long int n)
-{
-  return (_gl_stdbit_popcount_supported ()
-          ? __popcnt (n)
-          : _gl_stdbit_popcount_wide (n));
-}
-_GL_STDC_COUNT_ONES_INLINE int
-_gl_stdbit_popcountll (unsigned long long int n)
-{
-  return (_gl_stdbit_popcount_supported ()
-          ? __popcnt64 (n)
-          : _gl_stdbit_popcount_wide (n));
-}
-#  else /* !_MSC_VER */
-#   define _gl_stdbit_popcount _gl_stdbit_popcount_wide
-#   define _gl_stdbit_popcountl _gl_stdbit_popcount_wide
-#   define _gl_stdbit_popcountll _gl_stdbit_popcount_wide
-#  endif
-# endif
-#endif
-
-
-/* ISO C 23 § 7.18.3 Count Leading Zeros  */
-
-#if @GNULIB_STDC_LEADING_ZEROS@
 
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
@@ -596,6 +392,86 @@ stdc_leading_ones_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.5 Count Trailing Zeros  */
 
 #if @GNULIB_STDC_TRAILING_ZEROS@
+
+# if 3 < __GNUC__ + (4 <= __GNUC_MINOR__) || 4 <= __clang_major__
+#  define _GL_STDBIT_HAS_BUILTIN_CTZ true
+# elif defined __has_builtin
+#  if (__has_builtin (__builtin_ctz) \
+       && __has_builtin (__builtin_ctzl) \
+       && __has_builtin (__builtin_ctzll))
+#   define _GL_STDBIT_HAS_BUILTIN_CTZ true
+#  endif
+# endif
+
+/* Count trailing 0 bits of N, even if N is 0.  */
+# ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctz (unsigned int n)
+{
+  return n ? __builtin_ctz (n) : 8 * sizeof n;
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzl (unsigned long int n)
+{
+  return n ? __builtin_ctzl (n) : 8 * sizeof n;
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzll (unsigned long long int n)
+{
+  return n ? __builtin_ctzll (n) : 8 * sizeof n;
+}
+# elif defined _MSC_VER
+
+/* Declare the few MSVC intrinsics that we need.  We prefer not to include
+   <intrin.h> because it would pollute the namespace.  */
+extern unsigned char _BitScanForward (unsigned long *, unsigned long);
+#  pragma intrinsic (_BitScanForward)
+#  ifdef _M_X64
+extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
+#   pragma intrinsic (_BitScanForward64)
+#  endif
+
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzl (unsigned long int n)
+{
+  unsigned long int r;
+  return _BitScanForward (&r, n) ? r : 8 * sizeof n;
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctz (unsigned int n)
+{
+  return _gl_stdbit_ctzl (n | (1ul << (8 * sizeof n - 1) << 1));
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzll (unsigned long long int n)
+{
+#  ifdef _M_X64
+  unsigned long int r;
+  return _BitScanForward64 (&r, n) ? r : 8 * sizeof n;
+#  else
+  unsigned int lo = n;
+  return _gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
+#  endif
+}
+
+# else /* !_MSC_VER */
+
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctz (unsigned int n)
+{
+  return 8 * sizeof n - (n ? _gl_stdbit_clz (n & -n) + 1 : 0);
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzl (unsigned long int n)
+{
+  return 8 * sizeof n - (n ? _gl_stdbit_clzl (n & -n) + 1 : 0);
+}
+_GL_STDC_TRAILING_ZEROS_INLINE int
+_gl_stdbit_ctzll (unsigned long long int n)
+{
+  return 8 * sizeof n - (n ? _gl_stdbit_clzll (n & -n) + 1 : 0);
+}
+# endif
 
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ui (unsigned int n)
@@ -900,6 +776,135 @@ stdc_first_trailing_one_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.12 Count Ones  */
 
 #if @GNULIB_STDC_COUNT_ONES@
+
+# if 3 < __GNUC__ + (4 <= __GNUC_MINOR__) || 4 <= __clang_major__
+#  define _GL_STDBIT_HAS_BUILTIN_POPCOUNT true
+# elif defined __has_builtin
+#  if (__has_builtin (__builtin_popcount) \
+       && __has_builtin (__builtin_popcountl) \
+       && __has_builtin (__builtin_popcountll))
+#   define _GL_STDBIT_HAS_BUILTIN_POPCOUNT true
+#  endif
+# endif
+
+/* Count 1 bits in N.  */
+# ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
+#  define _gl_stdbit_popcount __builtin_popcount
+#  define _gl_stdbit_popcountl __builtin_popcountl
+#  define _gl_stdbit_popcountll __builtin_popcountll
+# else
+_GL_STDC_COUNT_ONES_INLINE int
+_gl_stdbit_popcount_wide (unsigned long long int n)
+{
+  if (sizeof n & (sizeof n - 1))
+    {
+      /* Use a simple O(log N) loop on theoretical platforms where N's
+         width is not a power of 2.  */
+      int count = 0;
+      for (int i = 0; i < 8 * sizeof n; i++, n >>= 1)
+        count += n & 1;
+      return count;
+    }
+  else
+    {
+      /* N's width is a power of 2; count in parallel.  */
+      unsigned long long int
+        max = -1ull,
+        x555555 = max / (1 << 1 | 1),	/* 0x555555... */
+        x333333 = max / (1 << 2 | 1),	/* 0x333333... */
+        x0f0f0f = max / (1 << 4 | 1),	/* 0x0f0f0f... */
+        x010101 = max / ((1 << 8) - 1),	/* 0x010101... */
+        x000_7f = max / 0xffffffffffffffffLL * 0x7f; /* 0x000000000000007f... */
+      n -= (n >> 1) & x555555;
+      n = (n & x333333) + ((n >> 2) & x333333);
+      n = (n + (n >> 4)) & x0f0f0f;
+
+      /* If the popcount always fits in 8 bits, multiply so that the
+         popcount is in the leading 8 bits of the product; these days
+         this is typically faster than the alternative below.  */
+      if (8 * sizeof n < 1 << 8)
+        return n * x010101 >> 8 * (sizeof n - 1);
+
+      /* N is at least 256 bits wide!  Fall back on an O(log log N)
+         loop that a compiler could unroll.  Unroll the first three
+         iterations by hand, to skip some division and masking.  This
+         is the most we can easily do without hassling with constants
+         that a typical-platform compiler would reject.  */
+      n += n >> (1 << 3);
+      n += n >> (1 << 4);
+      n += n >> (1 << 5);
+      n &= x000_7f;
+      for (int i = 64; i < 8 * sizeof n; i <<= 1)
+        n = (n + (n >> i)) & max / (1ull << i | 1);
+      return n;
+    }
+}
+
+#  ifdef _MSC_VER
+#   if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+/* Declare the few MSVC intrinsics that we need.  We prefer not to include
+   <intrin.h> because it would pollute the namespace.  */
+extern void __cpuid (int[4], int);
+#    pragma intrinsic (__cpuid)
+extern unsigned int __popcnt (unsigned int);
+#    pragma intrinsic (__popcnt)
+#    ifdef _M_X64
+extern unsigned long long __popcnt64 (unsigned long long);
+#     pragma intrinsic (__popcnt64)
+#    else
+_GL_STDC_COUNT_ONES_INLINE int
+__popcnt64 (unsigned long long int n)
+{
+  return __popcnt (n >> 32) + __popcnt (n);
+}
+#    endif
+#   endif
+
+/* 1 if supported, -1 if not, 0 if unknown.  */
+extern signed char _gl_stdbit_popcount_support;
+
+_GL_STDC_COUNT_ONES_INLINE bool
+_gl_stdbit_popcount_supported (void)
+{
+  if (!_gl_stdbit_popcount_support)
+    {
+      /* Do as described in
+         <https://docs.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64>
+         Although Microsoft started requiring POPCNT in MS-Windows 11 24H2,
+         we'll be more cautious.  */
+      int cpu_info[4];
+      __cpuid (cpu_info, 1);
+      _gl_stdbit_popcount_support = cpu_info[2] & 1 << 23 ? 1 : -1;
+    }
+  return 0 < _gl_stdbit_popcount_support;
+}
+_GL_STDC_COUNT_ONES_INLINE int
+_gl_stdbit_popcount (unsigned int n)
+{
+  return (_gl_stdbit_popcount_supported ()
+          ? __popcnt (n)
+          : _gl_stdbit_popcount_wide (n));
+}
+_GL_STDC_COUNT_ONES_INLINE int
+_gl_stdbit_popcountl (unsigned long int n)
+{
+  return (_gl_stdbit_popcount_supported ()
+          ? __popcnt (n)
+          : _gl_stdbit_popcount_wide (n));
+}
+_GL_STDC_COUNT_ONES_INLINE int
+_gl_stdbit_popcountll (unsigned long long int n)
+{
+  return (_gl_stdbit_popcount_supported ()
+          ? __popcnt64 (n)
+          : _gl_stdbit_popcount_wide (n));
+}
+#  else /* !_MSC_VER */
+#   define _gl_stdbit_popcount _gl_stdbit_popcount_wide
+#   define _gl_stdbit_popcountl _gl_stdbit_popcount_wide
+#   define _gl_stdbit_popcountll _gl_stdbit_popcount_wide
+#  endif
+# endif
 
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ui (unsigned int n)
