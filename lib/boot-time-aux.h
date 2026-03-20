@@ -16,8 +16,6 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>.  */
 
-#define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
-
 #if defined __linux__ || defined __ANDROID__
 
 /* Store the uptime counter, as managed by the Linux kernel, in *P_UPTIME.
