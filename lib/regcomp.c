@@ -499,7 +499,7 @@ regerror (int errcode, const regex_t *__restrict preg, char *__restrict errbuf,
 {
   const char *msg;
   size_t msg_size;
-  int nerrcodes = sizeof __re_error_msgid_idx / sizeof __re_error_msgid_idx[0];
+  int nerrcodes = countof (__re_error_msgid_idx);
 
   if (__glibc_unlikely (errcode < 0 || errcode >= nerrcodes))
     /* Only error codes returned by the rest of the code should be passed

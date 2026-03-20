@@ -19,6 +19,7 @@ libc-config
 locale-h
 bool
 stdckdint-h
+stdcountof-h
 streq
 strnul
 time_rz

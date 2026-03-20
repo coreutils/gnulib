@@ -26,6 +26,7 @@ localcharset
 localename-unsafe-limited [case "$host_os" in darwin*) false ;; *) true ;; esac]
 bool
 stdckdint-h
+stdcountof-h
 streq
 strnul
 time_rz

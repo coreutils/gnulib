@@ -30,6 +30,7 @@
 #include <wchar.h>
 #include <wctype.h>
 #include <stdckdint.h>
+#include <stdcountof.h>
 #include <stdint.h>
 
 #ifndef _LIBC

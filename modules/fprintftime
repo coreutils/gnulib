@@ -10,6 +10,7 @@ Depends-on:
 stdio-h
 sys_types-h
 nstrftime
+stdcountof-h
 streq
 strnul
 time_rz

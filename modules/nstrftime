@@ -25,6 +25,7 @@ localcharset
 localename-unsafe [case "$host_os" in darwin*) false ;; *) true ;; esac]
 bool
 stdckdint-h
+stdcountof-h
 stdint-h
 streq
 strnul

@@ -19,6 +19,7 @@ stat
 streq
 bool
 sys_stat-h
+stdcountof-h
 stdint-h
 
 configure.ac:
