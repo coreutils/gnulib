@@ -878,12 +878,12 @@ iso_week_days (int yday, int wday)
 
 
 #if !defined _NL_CURRENT && (HAVE_ONLY_C_LOCALE || (USE_C_LOCALE && !HAVE_STRFTIME_L))
-static CHAR_T const c_weekday_names[][sizeof L_("Wednesday")] =
+static CHAR_T const c_weekday_names[][sizeof "Wednesday"] =
   {
     L_("Sunday"), L_("Monday"), L_("Tuesday"), L_("Wednesday"),
     L_("Thursday"), L_("Friday"), L_("Saturday")
   };
-static CHAR_T const c_month_names[][sizeof L_("September")] =
+static CHAR_T const c_month_names[][sizeof "September"] =
   {
     L_("January"), L_("February"), L_("March"), L_("April"), L_("May"),
     L_("June"), L_("July"), L_("August"), L_("September"), L_("October"),
