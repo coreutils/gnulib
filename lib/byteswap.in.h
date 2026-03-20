@@ -23,14 +23,13 @@
  #error "Please include config.h first."
 #endif
 
-/* Define this now, rather than after including stdint.h, in case
-   stdint.h recursively includes us.  This is for Gnulib endian.h.  */
+/* Define this now, rather than after including stdbit.h, in case stdbit.h
+   recursively includes us via stdint.h.  This is for Gnulib endian.h.  */
 #ifndef _GL_BYTESWAP_INLINE
 # define _GL_BYTESWAP_INLINE _GL_INLINE
 #endif
 
 #include <stdbit.h>
-#include <stdint.h>
 
 _GL_INLINE_HEADER_BEGIN
 
