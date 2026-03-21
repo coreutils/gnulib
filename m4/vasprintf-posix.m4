@@ -1,5 +1,5 @@
 # vasprintf-posix.m4
-# serial 21
+# serial 22
 dnl Copyright (C) 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_VASPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_vasprintf_posix=no
-  AC_CHECK_FUNCS([vasprintf])
+  AC_CHECK_FUNCS_ONCE([vasprintf])
   case "$gl_cv_func_printf_sizes_c99" in
     *yes)
       case "$gl_cv_func_printf_sizes_c23" in

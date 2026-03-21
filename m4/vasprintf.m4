@@ -1,5 +1,5 @@
 # vasprintf.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2002-2003, 2006-2007, 2009-2026 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -9,7 +9,7 @@ dnl This file is offered as-is, without any warranty.
 
 AC_DEFUN([gl_FUNC_VASPRINTF],
 [
-  AC_CHECK_FUNCS([vasprintf])
+  AC_CHECK_FUNCS_ONCE([vasprintf])
   if test $ac_cv_func_vasprintf = no; then
     gl_REPLACE_VASPRINTF
   fi
