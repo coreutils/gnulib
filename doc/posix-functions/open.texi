@@ -78,6 +78,11 @@ FreeBSD 14.2.
 platforms:
 NetBSD 10.0.
 @item
+@code{open ("directory", O_CREAT ...)} fails with @code{errno} set to
+@code{EINVAL} instead of the POSIX-required @code{EISDIR} on some
+platforms:
+Solaris 11.4.
+@item
 @code{open ("fifo", O_DIRECTORY ...)} does not fail on some platforms:
 @c https://dev.haiku-os.org/ticket/19879
 Haiku.

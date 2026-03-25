@@ -60,4 +60,9 @@ FreeBSD 10.1.
 set to @code{EFTYPE} instead of the POSIX-required @code{ELOOP} on
 some platforms:
 NetBSD 6.1.
+@item
+@code{openat (fd, "directory", O_CREAT ...)} fails with @code{errno} set
+to @code{EINVAL} instead of the POSIX-required @code{EISDIR} on some
+platforms:
+Solaris 11.4.
 @end itemize
