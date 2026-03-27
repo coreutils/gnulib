@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2025-06-10.02; # UTC
+VERSION=2026-03-27.02; # UTC
 
 # Copyright (C) 2009-2026 Free Software Foundation, Inc.
 
@@ -41,7 +41,9 @@ Options:
   -C, --builddir=DIR  location of (configured) Makefile (default: .)
   -n, --dry-run       don't actually commit anything
   -m, --mirror        remove out of date files from document server
-  -u, --user          the name of the CVS user on Savannah
+  -u, --user=USER     use USER as the name of the CVS user on Savannah
+                      instead of the value of the SAVANNAH_CVS_USER
+                      environment variable
   --help              print this help, then exit
   --version           print version number, then exit
 
@@ -110,7 +112,7 @@ find_tool XARGS gxargs xargs
 builddir=.
 dryrun=
 rm_stale='echo'
-cvs_user="$USER"
+cvs_user="${SAVANNAH_CVS_USER:-$USER}"
 while test $# != 0
 do
   # Handle --option=value by splitting apart and putting back on argv.
