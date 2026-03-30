@@ -59,6 +59,16 @@ main (void)
   char *cwd;
   int result;
 
+  /* Test that the RENAME_* macros are defined and unique.  */
+  switch (0)
+    {
+    case RENAME_NOREPLACE:
+    case RENAME_EXCHANGE:
+    case RENAME_WHITEOUT:
+    default:
+      ;
+    }
+
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
