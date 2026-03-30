@@ -59,7 +59,7 @@ main (void)
   char *cwd;
   int result;
 
-  /* Test that the RENAME_* macros are defined and unique.  */
+  /* Test that the RENAME_* macros are defined and have distinct values.  */
   switch (0)
     {
     case RENAME_NOREPLACE:
@@ -68,6 +68,10 @@ main (void)
     default:
       ;
     }
+  /* Test that the RENAME_* macros have disjoint values (as bit sets).  */
+  ASSERT ((RENAME_NOREPLACE & RENAME_EXCHANGE) == 0);
+  ASSERT ((RENAME_NOREPLACE & RENAME_WHITEOUT) == 0);
+  ASSERT ((RENAME_EXCHANGE & RENAME_WHITEOUT) == 0);
 
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
