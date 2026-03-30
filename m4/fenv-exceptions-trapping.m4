@@ -1,6 +1,6 @@
 # fenv-exceptions-trapping.m4
-# serial 3
-dnl Copyright (C) 2023-2025 Free Software Foundation, Inc.
+# serial 4
+dnl Copyright (C) 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -20,6 +20,7 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRAPPING],
     dnl Fixed through
     dnl <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=302949e2940a9da3f6364a1574619e621b7e1e71>.
     dnl Similarly on FreeBSD 12.2/arm, FreeBSD 12.2/arm64, NetBSD 10.0/arm64.
+    dnl On mingw 14.0.0, feenableexcept and fedisableexcept are broken as well.
     case "$host" in
       aarch64*-*-linux*)
         AC_CACHE_CHECK([whether feenableexcept works],
@@ -43,7 +44,8 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRAPPING],
           *) REPLACE_FEENABLEEXCEPT=1 ;;
         esac
         ;;
-      arm*-*-freebsd* | aarch64*-*-freebsd* | aarch64*-*-netbsd*)
+      arm*-*-freebsd* | aarch64*-*-freebsd* | aarch64*-*-netbsd* | \
+      *-*-mingw* | *-*-windows*)
         REPLACE_FEENABLEEXCEPT=1
         ;;
     esac
