@@ -30,6 +30,8 @@ This function does not detect failures on
 glibc 2.19/aarch64, FreeBSD 12.2/arm, FreeBSD 12.2/arm64,
 @c src/sys/arch/{aarch64,arm}/include/fenv.h src/lib/libm/arch/aarch64/fenv.c
 NetBSD 10.0/arm64.
+@item
+This function is broken on mingw 14.0.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
