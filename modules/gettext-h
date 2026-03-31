@@ -6,7 +6,6 @@ lib/gettext.h
 m4/gettext_h.m4
 
 Depends-on:
-locale-h
 vararrays
 
 configure.ac:

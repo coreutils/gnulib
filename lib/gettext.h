@@ -177,28 +177,31 @@ dcgettext (const char *domain, const char *msgid, int category)
    short and rarely need to change.
    The letter 'p' stands for 'particular' or 'special'.  */
 
-#include <locale.h> /* for LC_MESSAGES */
-
 #ifdef DEFAULT_TEXT_DOMAIN
 # define pgettext(Msgctxt, Msgid) \
-   pgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+   pgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, \
+                 Msgid, _GL_LC_MESSAGES)
 #else
 # define pgettext(Msgctxt, Msgid) \
-   pgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+   pgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, _GL_LC_MESSAGES)
 #endif
 #define dpgettext(Domainname, Msgctxt, Msgid) \
-  pgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+  pgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, \
+                Msgid, _GL_LC_MESSAGES)
 #define dcpgettext(Domainname, Msgctxt, Msgid, Category) \
   pgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, Category)
 #ifdef DEFAULT_TEXT_DOMAIN
 # define npgettext(Msgctxt, Msgid, MsgidPlural, N) \
-   npgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+   npgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, \
+                  Msgid, MsgidPlural, N, _GL_LC_MESSAGES)
 #else
 # define npgettext(Msgctxt, Msgid, MsgidPlural, N) \
-   npgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+   npgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, \
+                  Msgid, MsgidPlural, N, _GL_LC_MESSAGES)
 #endif
 #define dnpgettext(Domainname, Msgctxt, Msgid, MsgidPlural, N) \
-  npgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+  npgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, \
+                 Msgid, MsgidPlural, N, _GL_LC_MESSAGES)
 #define dcnpgettext(Domainname, Msgctxt, Msgid, MsgidPlural, N, Category) \
   npgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, Category)
 
@@ -268,9 +271,9 @@ npgettext_aux (const char *domain,
 #endif
 
 #define pgettext_expr(Msgctxt, Msgid) \
-  dcpgettext_expr (NULL, Msgctxt, Msgid, LC_MESSAGES)
+  dcpgettext_expr (NULL, Msgctxt, Msgid, _GL_LC_MESSAGES)
 #define dpgettext_expr(Domainname, Msgctxt, Msgid) \
-  dcpgettext_expr (Domainname, Msgctxt, Msgid, LC_MESSAGES)
+  dcpgettext_expr (Domainname, Msgctxt, Msgid, _GL_LC_MESSAGES)
 
 #if defined __GNUC__ || defined __clang__
 __inline
@@ -314,9 +317,9 @@ dcpgettext_expr (const char *domain,
 }
 
 #define npgettext_expr(Msgctxt, Msgid, MsgidPlural, N) \
-  dcnpgettext_expr (NULL, Msgctxt, Msgid, MsgidPlural, N, LC_MESSAGES)
+  dcnpgettext_expr (NULL, Msgctxt, Msgid, MsgidPlural, N, _GL_LC_MESSAGES)
 #define dnpgettext_expr(Domainname, Msgctxt, Msgid, MsgidPlural, N) \
-  dcnpgettext_expr (Domainname, Msgctxt, Msgid, MsgidPlural, N, LC_MESSAGES)
+  dcnpgettext_expr (Domainname, Msgctxt, Msgid, MsgidPlural, N, _GL_LC_MESSAGES)
 
 #if defined __GNUC__ || defined __clang__
 __inline
