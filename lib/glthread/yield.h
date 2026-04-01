@@ -21,8 +21,6 @@
 #ifndef _GLTHREAD_YIELD_H
 #define _GLTHREAD_YIELD_H
 
-#include <errno.h>
-
 /* ========================================================================= */
 
 #if USE_ISOC_THREADS || USE_ISOC_AND_POSIX_THREADS

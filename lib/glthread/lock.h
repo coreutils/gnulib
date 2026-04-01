@@ -78,12 +78,13 @@
  #error "Please include config.h first."
 #endif
 
-#include <errno.h>
 #include <stdlib.h>
 
-#include "glthread/once.h"
-
+#if (USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS \
+     || USE_WINDOWS_THREADS)
+# include "glthread/once.h"
 /* c11_threads_in_use() is defined in glthread/once.h.  */
+#endif
 
 /* ========================================================================= */
 

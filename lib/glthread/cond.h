@@ -57,7 +57,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "glthread/lock.h"
+#if (USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS \
+     || USE_WINDOWS_THREADS)
+# include "glthread/lock.h"
+#endif
 
 #if !defined c11_threads_in_use
 # if HAVE_THREADS_H && USE_POSIX_THREADS_FROM_LIBC

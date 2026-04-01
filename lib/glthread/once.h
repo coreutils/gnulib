@@ -39,7 +39,6 @@
  #error "Please include config.h first."
 #endif
 
-#include <errno.h>
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
