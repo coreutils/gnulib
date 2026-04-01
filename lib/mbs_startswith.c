@@ -21,7 +21,11 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbiter.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbiter.h"
+#endif
 
 #include <stdlib.h>
 
@@ -33,15 +37,26 @@ mbs_startswith (const char *string, const char *prefix)
   if (str_startswith (string, prefix))
     {
       /* It could be that PREFIX ends in an incomplete character and STRING
-         continues with a valid character or a longer incomplete character
-         instead.  In this case, mbs_startswith needs to return false.  */
+         continues with a valid character or (if !GNULIB_MCEL_PREFER)
+         a longer incomplete character instead.
+         In this case, mbs_startswith needs to return false.  */
       size_t mb_max = MB_CUR_MAX;
       if (mb_max == 1)
         /* In unibyte locales, there are no incomplete characters.  */
         return true;
       /* Determine where we can stop the comparison.  */
       size_t p_len = strlen (prefix);
-      size_t s_len = p_len + strnlen (string + p_len, mb_max);
+      char const *sp_lim = string + p_len;
+      size_t s_len = p_len + strnlen (sp_lim, mb_max);
+#if GNULIB_MCEL_PREFER
+      char const *s_lim = string + s_len;
+      while (string < sp_lim)
+        {
+          string += mcel_scan (string, s_lim).len;
+          if (sp_lim < string)
+            return false;
+        }
+#else
       mbi_iterator_t s_iter;
       mbi_init (s_iter, string, s_len);
       mbi_iterator_t p_iter;
@@ -53,6 +68,7 @@ mbs_startswith (const char *string, const char *prefix)
             return false;
           mbi_advance (s_iter);
         }
+#endif
       return true;
     }
   return false;

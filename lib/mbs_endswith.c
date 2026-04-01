@@ -21,7 +21,11 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbiter.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbiter.h"
+#endif
 
 bool
 mbs_endswith (const char *string, const char *suffix)
@@ -54,6 +58,11 @@ mbs_endswith (const char *string, const char *suffix)
       size_t n = mbslen (suffix);
       if (len >= n)
         {
+#if GNULIB_MCEL_PREFER
+          char const *stringlim = string + nbytes;
+          for (; len > n; len--)
+            string += mcel_scan (string, stringlim).len;
+#else
           mbi_iterator_t iter;
           mbi_init (iter, string, nbytes);
           /* Advance past (len - n) multibyte characters.  */
@@ -67,7 +76,9 @@ mbs_endswith (const char *string, const char *suffix)
           if (!mbi_avail (iter))
             /* We can get here due to incomplete multibyte characters.  */
             return false;
-          return streq (mbi_cur_ptr (iter), suffix);
+          string = mbi_cur_ptr (iter);
+#endif
+          return streq (string, suffix);
         }
     }
   return false;
