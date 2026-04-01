@@ -2,6 +2,7 @@ Description:
 POSIX compatible signal blocking.
 
 Files:
+lib/glthread/lock.h
 lib/sigprocmask.c
 m4/signalblocking.m4
 
