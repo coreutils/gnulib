@@ -22,6 +22,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#if USE_UNLOCKED_IO
+# include "unlocked-io.h"
+#endif
+
 /* Return true if we read an affirmative line from standard input.
 
    Since this function uses stdin, it is suggested that the caller not
