@@ -25,11 +25,11 @@
 #include <stdlib.h>
 
 #if GNULIB_SIGPROCMASK_SINGLE_THREAD
-# include "glthread/lock.h"
-#else
 # define gl_lock_define_initialized(storageclass,name)
 # define gl_lock_lock(lock)
 # define gl_lock_unlock(lock)
+#else
+# include "glthread/lock.h"
 #endif
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
