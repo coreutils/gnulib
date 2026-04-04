@@ -7,8 +7,8 @@ lib/asyncsafe-spin.c
 
 Depends-on:
 signal-h
+pthread_sigmask
 bool
-sigprocmask
 spin
 
 configure.ac:
@@ -18,6 +18,9 @@ lib_SOURCES += asyncsafe-spin.c
 
 Include:
 "asyncsafe-spin.h"
+
+Link:
+$(PTHREAD_SIGMASK_LIB)
 
 License:
 LGPLv2+
