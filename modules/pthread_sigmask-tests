@@ -9,17 +9,13 @@ Depends-on:
 inttypes-h
 sleep
 pthread-thread
-test-xfail
 streq
 memeq
 
 configure.ac:
 
 Makefile.am:
-# Work around https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57214
-if !OS_IS_NETBSD
 TESTS += test-pthread_sigmask1
-endif
 TESTS += test-pthread_sigmask2
 check_PROGRAMS += test-pthread_sigmask1 test-pthread_sigmask2
 test_pthread_sigmask1_LDADD = $(LDADD) @PTHREAD_SIGMASK_LIB@
