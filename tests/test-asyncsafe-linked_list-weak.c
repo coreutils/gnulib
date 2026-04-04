@@ -241,10 +241,7 @@ block_sigint (void)
 
   sigemptyset (&mask);
   sigaddset (&mask, MY_SIGNAL);
-  /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
-     behave differently on macOS and the sigprocmask behavior can cause
-     this thread to race with other threads in harmful ways.  */
-  sigprocmask (SIG_BLOCK, &mask, NULL);
+  pthread_sigmask (SIG_BLOCK, &mask, NULL);
 }
 
 /* This thread is idle.  */
