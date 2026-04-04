@@ -1,5 +1,5 @@
 # pthread_sigmask.m4
-# serial 24
+# serial 25
 dnl Copyright (C) 2011-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_PTHREAD_SIGMASK],
     [AC_EGREP_CPP([headers_define_pthread_sigmask], [
 #include <pthread.h>
 #include <signal.h>
-#ifdef pthread_sigmask
+#if defined _WIN32 && defined pthread_sigmask
  headers_define_pthread_sigmask
 #endif],
        [gl_cv_func_pthread_sigmask_macro=yes],
