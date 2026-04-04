@@ -450,13 +450,14 @@ create_pipe (const char *progname,
     }
 # endif
 
+# if !(defined _WIN32 && !defined __CYGWIN__)
   sigset_t blocked_signals;
+# endif
   if (slave_process)
     {
-      /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
-         behave differently on macOS and the sigprocmask behavior can cause
-         this thread to race with other threads in harmful ways.  */
-      sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
+# if !(defined _WIN32 && !defined __CYGWIN__)
+      pthread_sigmask (SIG_SETMASK, NULL, &blocked_signals);
+# endif
       block_fatal_signals ();
     }
 
