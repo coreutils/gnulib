@@ -17,13 +17,19 @@ This function is declared in @code{<pthread.h>} instead of @code{<signal.h>}
 on some platforms:
 FreeBSD 6.4, OpenBSD 3.8.
 @item
+This function requires compiling with @code{-pthread} and/or
+linking with @code{-lpthread} on some platforms:
+glibc 2.31, NetBSD, OpenBSD 5.8.
+@item
 This function does nothing and always returns 0 in programs that are not
 linked with @code{-lpthread} on some platforms:
 FreeBSD 14.0, MidnightBSD 1.1, HP-UX 11.31, Solaris 9.
 @item
 When it fails, this function returns @minus{}1 instead of the error number on
 some platforms:
-Cygwin 1.7.5.
+Cygwin 1.7.5,
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57214
+NetBSD 9.3 when libpthread is not in use.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -31,8 +37,4 @@ Portability problems not fixed by Gnulib:
 @item
 On platforms that do not natively support this function,
 it has unspecified behavior in a multi-threaded process.
-@item
-In case of failure, the return value is wrong on some platforms:
-@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57214
-NetBSD 9.3 when libpthread is not in use.
 @end itemize

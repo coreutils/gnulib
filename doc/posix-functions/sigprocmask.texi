@@ -36,7 +36,7 @@ while others use @code{pthread_sigmask}.
 Note: In single-threaded applications it's simpler to use
 @code{sigprocmask}, since it does not require compiling with
 @code{-pthread} and/or linking with @code{-lpthread} on some platforms:
-glibc 2.31, NetBSD, OpenBSD, AIX.
+AIX.
 
 Note: While on POSIX platforms, @code{sigprocmask} is multithread-safe
 and async-signal-safe (see

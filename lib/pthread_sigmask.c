@@ -30,7 +30,7 @@ int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
 #undef pthread_sigmask
 {
-#if HAVE_PTHREAD_SIGMASK
+#if HAVE_PTHREAD_SIGMASK && !PTHREAD_SIGMASK_NOT_IN_LIBC
 # if PTHREAD_SIGMASK_INEFFECTIVE
   sigset_t omask;
   sigset_t *old_mask_ptr = &omask;
