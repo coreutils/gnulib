@@ -283,6 +283,9 @@ execute (const char *progname,
 
   if (slave_process)
     {
+      /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+         behave differently on macOS and the sigprocmask behavior can cause
+         this thread to race with other threads in harmful ways.  */
       sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
       block_fatal_signals ();
     }

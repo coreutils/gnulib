@@ -50,10 +50,14 @@ asyncsafe_spin_lock (asyncsafe_spinlock_t *lock,
      Whereas on native Windows, sigprocmask() is not atomic, because it
      manipulates global variables.  Therefore in this case, we are *not*
      allowed to call it from within a signal handler.  */
+
+  /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+     behave differently on macOS and the sigprocmask behavior can cause
+     this thread to race with other threads in harmful ways.  */
 #if defined _WIN32 && !defined __CYGWIN__
   if (!from_signal_handler)
 #endif
-    sigprocmask (SIG_BLOCK, mask, saved_mask); /* equivalent to pthread_sigmask */
+    sigprocmask (SIG_BLOCK, mask, saved_mask);
 
   glthread_spinlock_lock (lock);
 }
@@ -66,10 +70,13 @@ asyncsafe_spin_unlock (asyncsafe_spinlock_t *lock,
   if (glthread_spinlock_unlock (lock))
     abort ();
 
+  /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+     behave differently on macOS and the sigprocmask behavior can cause
+     this thread to race with other threads in harmful ways.  */
 #if defined _WIN32 && !defined __CYGWIN__
   if (!from_signal_handler)
 #endif
-    sigprocmask (SIG_SETMASK, saved_mask, NULL); /* equivalent to pthread_sigmask */
+    sigprocmask (SIG_SETMASK, saved_mask, NULL);
 }
 
 void

@@ -453,6 +453,9 @@ create_pipe (const char *progname,
   sigset_t blocked_signals;
   if (slave_process)
     {
+      /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+         behave differently on macOS and the sigprocmask behavior can cause
+         this thread to race with other threads in harmful ways.  */
       sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
       block_fatal_signals ();
     }

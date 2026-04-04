@@ -56,7 +56,8 @@ extern "C" {
 /*extern*/ _Noreturn void sigpipe_die (void);
 
 /* Install a SIGPIPE handler that invokes PREPARE_DIE and then emits an
-   error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.  */
+   error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.
+   This function should not be called in a multithreaded process.  */
 extern void install_sigpipe_die_handler (void (*prepare_die) (void));
 
 

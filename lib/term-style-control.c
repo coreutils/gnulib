@@ -575,6 +575,9 @@ block_relevant_signals ()
   if (!relevant_signal_set_initialized)
     abort ();
 
+  /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+     behave differently on macOS and the sigprocmask behavior can cause
+     this thread to race with other threads in harmful ways.  */
   sigprocmask (SIG_BLOCK, &relevant_signal_set, NULL);
 }
 
@@ -582,6 +585,9 @@ block_relevant_signals ()
 static _GL_ASYNC_SAFE inline void
 unblock_relevant_signals ()
 {
+  /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
+     behave differently on macOS and the sigprocmask behavior can cause
+     this thread to race with other threads in harmful ways.  */
   sigprocmask (SIG_UNBLOCK, &relevant_signal_set, NULL);
 }
 
