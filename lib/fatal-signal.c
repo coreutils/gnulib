@@ -311,10 +311,7 @@ block_fatal_signals (void)
   if (fatal_signals_block_counter++ == 0)
     {
       init_fatal_signal_set ();
-      /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
-         behave differently on macOS and the sigprocmask behavior can cause
-         this thread to race with other threads in harmful ways.  */
-      sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
+      pthread_sigmask (SIG_BLOCK, &fatal_signal_set, NULL);
     }
 
   if (mt) gl_lock_unlock (fatal_signals_block_lock);
@@ -335,10 +332,7 @@ unblock_fatal_signals (void)
   if (--fatal_signals_block_counter == 0)
     {
       init_fatal_signal_set ();
-      /* FIXME: Use pthread_sigmask, not sigprocmask, as the two functions
-         behave differently on macOS and the sigprocmask behavior can cause
-         this thread to race with other threads in harmful ways.  */
-      sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+      pthread_sigmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
     }
 
   if (mt) gl_lock_unlock (fatal_signals_block_lock);
