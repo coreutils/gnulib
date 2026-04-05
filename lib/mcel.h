@@ -217,13 +217,6 @@ mcel_isbasic (char c)
   return _GL_LIKELY (0 <= c && c < MCEL_ERR_MIN);
 }
 
-/* With mcel there should be no need for the performance overhead of
-   replacing glibc mbrtoc32, as callers shouldn't care whether the
-   C locale treats a byte with the high bit set as an encoding error.  */
-#ifdef __GLIBC__
-# undef mbrtoc32
-#endif
-
 /* Scan bytes from P inclusive to LIM exclusive.  P must be less than LIM.
    Return the character or encoding error starting at P.  */
 MCEL_INLINE mcel_t
