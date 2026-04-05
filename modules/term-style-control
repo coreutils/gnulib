@@ -9,8 +9,8 @@ m4/tcgetattr.m4
 Depends-on:
 bool
 fatal-signal
+pthread_sigmask
 sigaction
-sigprocmask
 full-write
 fstat
 same-inode
