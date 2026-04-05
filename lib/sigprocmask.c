@@ -24,14 +24,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#if GNULIB_SIGPROCMASK_SINGLE_THREAD
-# define gl_lock_define_initialized(storageclass,name)
-# define gl_lock_lock(lock)
-# define gl_lock_unlock(lock)
-#else
-# include "glthread/lock.h"
-#endif
-
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 # include "msvc-inval.h"
 #endif
@@ -91,10 +83,6 @@ signal_nothrow (int sig, handler_t handler)
 }
 # define signal signal_nothrow
 #endif
-
-/* This lock protects the variables defined in this file from concurrent
-   modification in multiple threads.  */
-gl_lock_define_initialized(static, sig_lock)
 
 /* Handling of gnulib defined signals.  */
 
@@ -232,8 +220,6 @@ static volatile handler_t old_handlers[NSIG];
 int
 sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 {
-  gl_lock_lock (sig_lock);
-
   if (old_set != NULL)
     *old_set = blocked_set;
 
@@ -252,7 +238,6 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
           new_blocked_set = blocked_set & ~*set;
           break;
         default:
-          gl_lock_unlock (sig_lock);
           errno = EINVAL;
           return -1;
         }
@@ -294,7 +279,6 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
         }
     }
 
-  gl_lock_unlock (sig_lock);
   return 0;
 }
 
@@ -343,16 +327,11 @@ rpl_signal (int sig, handler_t handler)
 int
 _gl_raise_SIGPIPE (void)
 {
-  gl_lock_lock (sig_lock);
   if (blocked_set & (1U << SIGPIPE))
-    {
-      pending_array[SIGPIPE] = 1;
-      gl_lock_unlock (sig_lock);
-    }
+    pending_array[SIGPIPE] = 1;
   else
     {
       handler_t handler = SIGPIPE_handler;
-      gl_lock_unlock (sig_lock);
       if (handler == SIG_DFL)
         exit (128 + SIGPIPE);
       else if (handler != SIG_IGN)

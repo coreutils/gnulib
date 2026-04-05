@@ -27,20 +27,18 @@ unspecified behavior so @code{pthread_sigmask} should be used instead.
 On most platforms, @code{sigprocmask} is essentially equivalent to
 @code{pthread_sigmask}, with only a difference regarding the error
 return convention.
-However, on Darwin-based systems such as macOS, @code{sigprocmask} can
-affect the signal masks of other threads, and this discrepancy can
-lead to race conditions, e.g., if some threads use @code{sigprocmask}
-while others use @code{pthread_sigmask}.
+However, on macOS and on the Gnulib replacement on native MS-Windows,
+@code{sigprocmask} can affect the signal masks of other threads,
+which can lead to race conditions.
+
+@item
+The Gnulib replacement on native MS-Windows is not async-signal-safe
+(see
+@url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03,
+POSIX section ``Signal Actions''}).
 @end itemize
 
 Note: In single-threaded applications it's simpler to use
 @code{sigprocmask}, since it does not require compiling with
 @code{-pthread} and/or linking with @code{-lpthread} on some platforms:
 AIX.
-
-Note: While on POSIX platforms, @code{sigprocmask} is multithread-safe
-and async-signal-safe (see
-@url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03,
-POSIX section ``Signal Actions''}),
-the gnulib replacement on native Windows is only multithread-safe,
-not async-signal-safe.

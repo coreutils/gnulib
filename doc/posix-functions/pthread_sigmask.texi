@@ -37,4 +37,12 @@ Portability problems not fixed by Gnulib:
 @item
 On platforms that do not natively support this function,
 it has unspecified behavior in a multi-threaded process.
+For example, the Gnulib replacement on native MS-Windows can affect
+the signal masks of other threads, which can lead to race conditions.
+
+@item
+The Gnulib replacement on native MS-Windows is not async-signal-safe
+(see
+@url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03,
+POSIX section ``Signal Actions''}).
 @end itemize

@@ -26,6 +26,26 @@
 # include <string.h>
 #endif
 
+#if !HAVE_SIGPROCMASK && !GNULIB_PTHREAD_SIGMASK_SINGLE_THREAD
+# include "glthread/lock.h"
+
+gl_lock_define_initialized (static, sig_lock)
+
+/* A thread-safe variant of the Gnulib sigprocmask substitute.
+   Unfortunately it still has undesirable effects in multithreaded processes,
+   as it can stomp on other threads' signal masks.  */
+static int
+sigprocmask_r (int how, sigset_t const *new_mask, sigset_t *old_mask)
+{
+  gl_lock_lock (sig_lock);
+  int ret = sigprocmask (how, new_mask, old_mask);
+  gl_lock_unlock (sig_lock);
+  return ret;
+}
+# undef sigprocmask
+# define sigprocmask sigprocmask_r
+#endif
+
 int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
 #undef pthread_sigmask
