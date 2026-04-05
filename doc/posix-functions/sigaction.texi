@@ -55,4 +55,15 @@ except that @code{SIG_IGN} for @code{SIGCHLD} has the effect that the children
 execution times are not accounted in the @code{times} function.
 On some platforms (BSD? SystemV? Linux?), you need to use the @code{sigaction}
 flag @code{SA_NOCLDWAIT} in order to obtain this behavior.
+
+@item
+The Gnulib replacement on native MS-Windows can affect the signal
+masks of other threads, either when @code{sigaction} is called
+or when a signal handler is called, and this can lead to race conditions.
+
+@item
+The Gnulib replacement on native MS-Windows is not async-signal-safe
+(see
+@url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html#tag_16_04_03,
+POSIX section ``Signal Actions''}).
 @end itemize

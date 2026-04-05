@@ -10,7 +10,7 @@ m4/sigaction.m4
 Depends-on:
 extern-inline
 signal-h
-sigprocmask     [test $HAVE_SIGACTION = 0]
+pthread_sigmask [test $HAVE_SIGACTION = 0]
 
 configure.ac:
 gl_SIGACTION
