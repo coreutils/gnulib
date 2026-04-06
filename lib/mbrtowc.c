@@ -194,9 +194,10 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
       /* Here m > 0.  */
 
       int res;
-
+      {
 #  define FITS_IN_CHAR_TYPE(wc)  ((wc) <= WCHAR_MAX)
 #  include "mbrtowc-impl-utf8.h"
+      }
 
      success:
       /* res >= 0 is the corrected return value of
