@@ -37,7 +37,8 @@ different results:
 mingw, MSVC 14.
 @item
 @c https://sourceforge.net/p/mingw-w64/bugs/1009/
-On mingw, the @code{st_mode} field of @code{stat("NUL",buf)} is bogus,
+On mingw up to 14.0.0,
+the @code{st_mode} field of @code{stat("NUL",buf)} is bogus,
 suggesting that @code{NUL} is a regular file.
 @item
 On macOS 12.6, when this function yields a timestamp with a
