@@ -60,6 +60,10 @@ main ()
             fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);
             return 77;
           }
+        /* Check fegetexcept.  */
+        ASSERT (fegetexcept () == uint_to_exceptions (a));
+        /* Check the return value of fedisableexcept.  It should be consistent
+           with fegetexcept.  */
         ASSERT (fedisableexcept (uint_to_exceptions (b))
                 == uint_to_exceptions (a));
         /* Check fegetexcept.  */
