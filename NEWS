@@ -78,12 +78,6 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2026-04-05  sigprocmask     The native MS-Windows implementation no longer
-                            tries to be thread-safe. (As per POSIX,
-                            sigprocmask's behavior has never been
-                            well-defined in multithreaded programs,
-                            which should use pthread_sigmask instead.)
-
 2026-03-31  lock            This module no longer defines the once-only
                             execution primitives. For these, request the
                             'once' module and #include "glthread/once.h".

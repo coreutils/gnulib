@@ -19,39 +19,22 @@
 /* Specification.  */
 #include <signal.h>
 
-#include <errno.h>
-#include <stddef.h>
+/* The native Windows implementation is defined in sigprocmask.c.  */
+#if !(defined _WIN32 && !defined __CYGWIN__)
 
-#if PTHREAD_SIGMASK_INEFFECTIVE
-# include <string.h>
-#endif
+# include <errno.h>
+# include <stddef.h>
 
-#if !HAVE_SIGPROCMASK && !GNULIB_PTHREAD_SIGMASK_SINGLE_THREAD
-# include "glthread/lock.h"
-
-gl_lock_define_initialized (static, sig_lock)
-
-/* A thread-safe variant of the Gnulib sigprocmask substitute.
-   Unfortunately it still has undesirable effects in multithreaded processes,
-   as it can stomp on other threads' signal masks.  */
-static int
-sigprocmask_r (int how, sigset_t const *new_mask, sigset_t *old_mask)
-{
-  gl_lock_lock (sig_lock);
-  int ret = sigprocmask (how, new_mask, old_mask);
-  gl_lock_unlock (sig_lock);
-  return ret;
-}
-# undef sigprocmask
-# define sigprocmask sigprocmask_r
-#endif
+# if PTHREAD_SIGMASK_INEFFECTIVE
+#  include <string.h>
+# endif
 
 int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
-#undef pthread_sigmask
+# undef pthread_sigmask
 {
-#if HAVE_PTHREAD_SIGMASK && !PTHREAD_SIGMASK_NOT_IN_LIBC
-# if PTHREAD_SIGMASK_INEFFECTIVE
+# if HAVE_PTHREAD_SIGMASK && !PTHREAD_SIGMASK_NOT_IN_LIBC
+#  if PTHREAD_SIGMASK_INEFFECTIVE
   sigset_t omask;
   sigset_t *old_mask_ptr = &omask;
   sigemptyset (&omask);
@@ -60,13 +43,13 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
   sigaddset (&omask, SIGILL);
   sigset_t omask_copy;
   memcpy (&omask_copy, &omask, sizeof omask);
-# else
+#  else
   sigset_t *old_mask_ptr = old_mask;
-# endif
+#  endif
 
   int ret = pthread_sigmask (how, new_mask, old_mask_ptr);
 
-# if PTHREAD_SIGMASK_INEFFECTIVE
+#  if PTHREAD_SIGMASK_INEFFECTIVE
   if (ret == 0)
     {
       /* Detect whether pthread_sigmask is currently ineffective.
@@ -84,14 +67,16 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
       if (old_mask)
         memcpy (old_mask, &omask, sizeof omask);
     }
-# endif
-# if PTHREAD_SIGMASK_FAILS_WITH_ERRNO
+#  endif
+#  if PTHREAD_SIGMASK_FAILS_WITH_ERRNO
   if (ret == -1)
     return errno;
-# endif
+#  endif
   return ret;
-#else
+# else
   int ret = sigprocmask (how, new_mask, old_mask);
   return (ret < 0 ? errno : 0);
-#endif
+# endif
 }
+
+#endif
