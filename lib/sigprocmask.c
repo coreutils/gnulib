@@ -28,7 +28,12 @@
 # include "msvc-inval.h"
 #endif
 
-#include "windows-spin.h"
+#if GNULIB_SIGPROCMASK_SINGLE_THREAD
+# define glwthread_spin_lock(lock)
+# define glwthread_spin_unlock(lock)
+#else
+# include "windows-spin.h"
+#endif
 
 /* We assume that a platform without POSIX signal blocking functions
    also does not have the POSIX sigaction() function, only the
@@ -222,12 +227,14 @@ struct override
 };
 static struct override overrides[NSIG] /* = { { 0, NULL }, ... } */;
 
+#if !GNULIB_SIGPROCMASK_SINGLE_THREAD
 /* A spin lock that protects overrides against simultaneous use from
    different threads, outside signal handlers.  */
 static glwthread_spinlock_t overrides_mt_lock = GLWTHREAD_SPIN_INIT;
 /* A spin lock that protects overrides against simultaneous use from
    a signal handler and a pthread_sigmask invocation.  */
 static glwthread_spinlock_t overrides_handler_lock = GLWTHREAD_SPIN_INIT;
+#endif
 
 /* Signal handler that overrides an original one.  */
 static void
