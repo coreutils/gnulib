@@ -223,8 +223,11 @@ struct override
 static struct override overrides[NSIG] /* = { { 0, NULL }, ... } */;
 
 /* A spin lock that protects overrides against simultaneous use from
-   different threads.  */
-static glwthread_spinlock_t overrides_lock = GLWTHREAD_SPIN_INIT;
+   different threads, outside signal handlers.  */
+static glwthread_spinlock_t overrides_mt_lock = GLWTHREAD_SPIN_INIT;
+/* A spin lock that protects overrides against simultaneous use from
+   a signal handler and a pthread_sigmask invocation.  */
+static glwthread_spinlock_t overrides_handler_lock = GLWTHREAD_SPIN_INIT;
 
 /* Signal handler that overrides an original one.  */
 static void
@@ -247,8 +250,8 @@ override_handler (int sig)
         {
           /* Another thread has already installed the override_handler but
              is not yet done.  Wait until it has finished the operation.  */
-          glwthread_spin_lock (&overrides_lock);
-          glwthread_spin_unlock (&overrides_lock);
+          glwthread_spin_lock (&overrides_handler_lock);
+          glwthread_spin_unlock (&overrides_handler_lock);
           /* Now overrides[sig].overridden must be true.  */
           if (!overrides[sig].overridden)
             abort ();
@@ -300,7 +303,8 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
               blocked_set |= 1U << sig;
               if (!overrides[sig].overridden)
                 {
-                  glwthread_spin_lock (&overrides_lock);
+                  glwthread_spin_lock (&overrides_mt_lock);
+                  glwthread_spin_lock (&overrides_handler_lock);
                   if (!overrides[sig].overridden)
                     {
                       /* Now it's OK to install the override_handler:
@@ -308,8 +312,10 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
                            condition since blocked_set already has the sig bit
                            set.
                          - If it gets invoked in another thread, the
-                           overrides_lock protects it from proceeding until we
-                           have stored the old_handler.  */
+                           overrides_handler_lock protects it from proceeding
+                           until we have stored the old_handler.  For this case,
+                           it is important that the overrides_handler_lock is
+                           the innermost taken lock.  */
                       handler_t old_handler = signal (sig, override_handler);
                       if (old_handler != SIG_ERR)
                         {
@@ -323,7 +329,8 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
                           overrides[sig].overridden = 1;
                         }
                     }
-                  glwthread_spin_unlock (&overrides_lock);
+                  glwthread_spin_unlock (&overrides_handler_lock);
+                  glwthread_spin_unlock (&overrides_mt_lock);
                 }
             }
 
@@ -395,7 +402,7 @@ rpl_signal (int sig, handler_t handler)
         {
           /* Lock, in case of another thread calling pthread_sigmask, with the
              effect of installing the override_handler (race condition).  */
-          glwthread_spin_lock (&overrides_lock);
+          glwthread_spin_lock (&overrides_mt_lock);
           if (overrides[sig].overridden)
             {
               result = overrides[sig].original_handler;
@@ -403,7 +410,7 @@ rpl_signal (int sig, handler_t handler)
             }
           else
             result = signal (sig, handler);
-          glwthread_spin_unlock (&overrides_lock);
+          glwthread_spin_unlock (&overrides_mt_lock);
         }
       return result;
     }
