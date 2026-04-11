@@ -58,7 +58,7 @@ extern "C" {
 /* Install a SIGPIPE handler that invokes PREPARE_DIE and then emits an
    error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.
    This function should be called only in single-threaded processes.
-   In a multithreaded process, this function is typically called early
+   In a multithreaded program, this function is typically called early
    in the main thread while the process is still single-threaded.  */
 extern void install_sigpipe_die_handler (void (*prepare_die) (void));
 
