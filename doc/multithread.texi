@@ -324,9 +324,15 @@ You can get this macro defined by including the Gnulib module
 @code{wchar-single}.
 @item
 You may define the C macro @code{GNULIB_SIGPROCMASK_SINGLE_THREAD}, if all the
-programs in your package invoke the functions of the @code{sigprocmask} module
-(in particular, @code{sigprocmask}, @code{pthread_sigmask}, @code{signal}, and
-@code{sigaction}) only from a single thread.
+package's programs call the following functions only from a single thread:
+@code{pthread_sigmask}, @code{sigaction}, @code{signal}, @code{sigpending}.
+Regardless of whether this macro is defined, only single-threaded processes
+should call the @code{sigprocmask} function itself (@pxref{sigprocmask}).
+The macro is named after @code{sigprocmask} because it affects
+Gnulib's implementation of @code{sigprocmask} on native Windows,
+the only platform where the macro has any effect,
+and the other functions' Gnulib implementations use Gnulib
+@code{sigprocmask} on native Windows.
 @item
 You may define the C macro @code{GNULIB_EXCLUDE_SINGLE_THREAD}, if all the
 programs in your package invoke the functions of the @code{exclude} module
