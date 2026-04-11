@@ -1,4 +1,4 @@
-/* Multithread-safety test for localeconv()
+/* Thread safety test for localeconv()
    (in the absence of setlocale() or uselocale() calls).
    Copyright (C) 2019-2026 Free Software Foundation, Inc.
 

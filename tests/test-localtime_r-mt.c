@@ -1,4 +1,4 @@
-/* Multithread-safety test for localtime_r().
+/* Thread safety test for localtime_r().
    Copyright (C) 2024-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

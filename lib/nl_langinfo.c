@@ -59,7 +59,7 @@
 
 #endif
 
-/* nl_langinfo() must be multithread-safe.  To achieve this without using
+/* nl_langinfo() must be thread-safe.  To achieve this without using
    thread-local storage:
      1. We use a specific static buffer for each possible argument.
         So that different threads can call nl_langinfo with different arguments,

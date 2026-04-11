@@ -66,7 +66,7 @@ extern void gl_locale_name_canonicalize (char *name);
 #  error "This file should only be compiled if NEED_SETLOCALE_IMPROVED || NEED_SETLOCALE_MTSAFE."
 # endif
 
-/* Like setlocale, but guaranteed to be multithread-safe if LOCALE == NULL.  */
+/* Like setlocale, but guaranteed to be thread-safe if LOCALE == NULL.  */
 # if !SETLOCALE_NULL_ALL_MTSAFE || !SETLOCALE_NULL_ONE_MTSAFE /* i.e. if NEED_SETLOCALE_MTSAFE */
 
 #  if NEED_SETLOCALE_IMPROVED

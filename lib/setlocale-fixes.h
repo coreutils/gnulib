@@ -33,7 +33,7 @@ extern "C" {
 extern const char *setlocale_messages (const char *name);
 
 /* setlocale_messages_null () is like setlocale (LC_MESSAGES, NULL), except that
-   it is guaranteed to be multithread-safe.  */
+   it is guaranteed to be thread-safe.  */
 extern const char *setlocale_messages_null (void);
 
 #endif

@@ -131,7 +131,7 @@ uniconv_register_autodetect (const char *name,
       new_alias->name = new_name;
       new_alias->encodings_to_try = new_try_in_order;
       new_alias->next = NULL;
-      /* FIXME: Not multithread-safe.  */
+      /* FIXME: Not thread-safe.  */
       *autodetect_list_end = new_alias;
       autodetect_list_end = &new_alias->next;
       return 0;

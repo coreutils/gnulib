@@ -1,4 +1,4 @@
-/* Test of pthread_sigmask in a multi-threaded program.
+/* Test of pthread_sigmask in a multi-threaded process.
    Copyright (C) 2011-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

@@ -402,10 +402,10 @@ static char
 decimal_point_char (void)
 {
   const char *point;
-  /* Determine it in a multithread-safe way.  We know nl_langinfo is
-     multithread-safe on glibc systems and Mac OS X systems, but is not required
-     to be multithread-safe by POSIX.  sprintf(), however, is multithread-safe.
-     localeconv() is rarely multithread-safe.  */
+  /* Determine it in a thread-safe way.  We know nl_langinfo is
+     thread-safe on glibc systems and Mac OS X systems, but is not required
+     to be thread-safe by POSIX.  sprintf(), however, is thread-safe.
+     localeconv() is rarely thread-safe.  */
 #  if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__))
   point = nl_langinfo (RADIXCHAR);
 #  elif 1
@@ -432,13 +432,13 @@ decimal_point_char (void)
 static const char *
 thousands_separator_char (char stackbuf[10])
 {
-  /* Determine it in a multithread-safe way.
-     We know nl_langinfo is multithread-safe on glibc systems, on Mac OS X
-     systems, and on NetBSD, but is not required to be multithread-safe by
+  /* Determine it in a thread-safe way.
+     We know nl_langinfo is thread-safe on glibc systems, on Mac OS X
+     systems, and on NetBSD, but is not required to be thread-safe by
      POSIX.
-     localeconv() is not guaranteed to be multithread-safe by POSIX either;
+     localeconv() is not guaranteed to be thread-safe by POSIX either;
      however, on native Windows it is (cf. test-localeconv-mt).
-     sprintf(), however, is multithread-safe.  */
+     sprintf(), however, is thread-safe.  */
 #  if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__)
   return nl_langinfo (THOUSEP);
 #  elif defined _WIN32 && !defined __CYGWIN__
@@ -466,7 +466,7 @@ thousands_separator_char (char stackbuf[10])
 static const DCHAR_T *
 thousands_separator_DCHAR (DCHAR_T stackbuf[10])
 {
-  /* Determine it in a multithread-safe way.  */
+  /* Determine it in a thread-safe way.  */
   char tmpbuf[10];
   const char *tmp = thousands_separator_char (tmpbuf);
   if (*tmp != '\0')
@@ -589,9 +589,9 @@ thousands_separator_wchar (wchar_t stackbuf[10])
 static const signed char *
 grouping_rule (void)
 {
-  /* We know nl_langinfo is multithread-safe on glibc systems and on Cygwin,
-     but is not required to be multithread-safe by POSIX.
-     localeconv() is not guaranteed to be multithread-safe by POSIX either;
+  /* We know nl_langinfo is thread-safe on glibc systems and on Cygwin,
+     but is not required to be thread-safe by POSIX.
+     localeconv() is not guaranteed to be thread-safe by POSIX either;
      however, on all known systems it is (cf. test-localeconv-mt).  */
 #  if __GLIBC__ >= 2
   return (const signed char *) nl_langinfo (GROUPING);

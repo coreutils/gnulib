@@ -59,7 +59,7 @@ ttyname_r (int fd, char *buf, size_t buflen)
     }
 #elif HAVE_TTYNAME_R
   /* When ttyname_r exists, use it.  */
-  /* This code is multithread-safe.  */
+  /* This code is thread-safe.  */
   /* On Solaris, ttyname_r always fails if buflen < 128.
      So provide a buffer that is large enough.  */
   char largerbuf[512];
@@ -94,7 +94,7 @@ ttyname_r (int fd, char *buf, size_t buflen)
 # endif
   return 0;
 #elif HAVE_TTYNAME
-  /* Note: This is not multithread-safe.  */
+  /* Note: This is not thread-safe.  */
   char *name = ttyname (fd);
   if (name == NULL)
     return errno;

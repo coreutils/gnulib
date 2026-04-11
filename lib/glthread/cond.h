@@ -157,7 +157,7 @@ extern int glthread_in_use (void);
    that libpthread would not be loaded after libintl; i.e. if libintl is
    loaded first, by an executable that does not depend on libpthread, and
    then a module is dynamically loaded that depends on libpthread, libintl
-   will not be multithread-safe.  */
+   will not be thread-safe.  */
 
 /* The way to test at runtime whether libpthread is present is to test
    whether a function pointer's value, such as &pthread_mutex_init, is

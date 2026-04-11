@@ -17,13 +17,13 @@ AC_DEFUN([gl_FUNC_NL_LANGINFO],
   AC_CHECK_HEADERS_ONCE([threads.h])
   if test $ac_cv_func_nl_langinfo = yes; then
     # On macOS 26, Solaris 10, and Solaris 11.3, nl_langinfo is not
-    # multithread-safe.
+    # thread-safe.
     case "$host_os" in
       darwin* | solaris*) NL_LANGINFO_MTSAFE=0 ;;
       *)                  NL_LANGINFO_MTSAFE=1 ;;
     esac
     AC_DEFINE_UNQUOTED([NL_LANGINFO_MTSAFE], [$NL_LANGINFO_MTSAFE],
-      [Define to 1 if nl_langinfo is multithread-safe.])
+      [Define to 1 if nl_langinfo is thread-safe.])
     if test $HAVE_LANGINFO_CODESET = 1 \
        && test $HAVE_LANGINFO_ALTMON = 1 \
        && test $HAVE_LANGINFO_ABALTMON = 1 \

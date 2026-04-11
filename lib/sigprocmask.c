@@ -364,8 +364,8 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
   return 0;
 }
 
-/* sigprocmask is like pthread_sigmask, except that it has undefined behaviour
-   in multithreaded applications and a different return value convention.  */
+/* sigprocmask is like pthread_sigmask, but has unspecified behaviour
+   in multithreaded processes and a different return value convention.  */
 int
 sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 {

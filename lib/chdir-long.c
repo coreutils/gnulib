@@ -34,7 +34,7 @@
 
 /* The results of openat() in this file are not leaked to any
    single-threaded code that could use stdio.
-   FIXME - if the kernel ever adds support for multi-thread safety for
+   FIXME - if the kernel ever adds support for thread safety for
    avoiding standard fds, then we should use openat_safer.  */
 
 struct cd_buf

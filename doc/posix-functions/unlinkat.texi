@@ -13,7 +13,8 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
 AIX 5.1, HP-UX 11, Cygwin 1.5.x, mingw, MSVC 14.
-But the replacement function is not safe to be used in libraries and is not multithread-safe.
+But the replacement function is not safe to be used in libraries and
+is not thread-safe.
 @item
 This function is declared in @code{<fcntl.h>}, not in @code{<unistd.h>},
 on some platforms:

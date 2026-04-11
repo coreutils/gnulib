@@ -43,7 +43,7 @@ AIX 7.3, HP-UX 11, Solaris 11.4, mingw, MSVC 14.
 On some platforms the global state variables @code{daylight},
 @code{timezone} and @code{tzname} are not available.  Even on
 platforms where they are available, their contents are often unreliable,
-even in single-threaded programs.
+even in single-threaded processes.
 Portable code can instead use @code{struct tm}'s @code{tm_gmtoff} and
 @code{tm_zone} members when available, and the @code{strftime} function
 with @code{%z} or @code{%Z} conversion specifiers otherwise.

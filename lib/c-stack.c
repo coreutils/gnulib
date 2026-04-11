@@ -31,7 +31,7 @@
    (e.g., with malloc).  Yes, this is a pain, but we don't know of any
    better solution that is portable.
 
-   No attempt has been made to deal with multithreaded applications.  */
+   No attempt has been made to deal with multithreaded processes.  */
 
 #include <config.h>
 

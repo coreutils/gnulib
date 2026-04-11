@@ -1,9 +1,14 @@
 @node Multithreading
 @chapter Multithreading
 
-Multithreading is a programming paradigm.  In a multithreaded program,
-multiple threads execute concurrently (or quasi concurrently) at different
-places in the program.
+Multithreading is a programming paradigm.  In a @dfn{multithreaded
+process}, multiple threads execute concurrently (or quasi
+concurrently) at different places in the program, and a
+@dfn{multithreaded program} is one that contains primitives that can
+create threads.  In contrast, a @dfn{single-threaded process} has just
+one thread, and a @dfn{single-threaded program} contains no
+multithreading primitives and so executes entirely in its process's
+main thread.
 
 There are three motivations for using multithreading in a program:
 @itemize @bullet
@@ -290,10 +295,8 @@ if (mt) gl_lock_unlock (some_lock);
 You may use the @code{unlocked-io} module if you want the @code{FILE} stream
 functions @code{getc}, @code{putc}, etc.@: to use unlocked I/O if available,
 throughout the package.  Unlocked I/O can improve performance, sometimes
-dramatically.  But unlocked I/O is safe only in single-threaded programs,
-as well as in multithreaded programs for which you can guarantee that
-every @code{FILE} stream, including @code{stdin}, @code{stdout}, @code{stderr},
-is used only in a single thread.
+dramatically.  But unlocked I/O is safe only in processes in which
+two threads never simultaneously access the same @code{FILE} stream.
 
 You need extra code for this optimization to be effective: include the
 @code{"unlocked-io.h"} header file.  Some Gnulib modules that do operations

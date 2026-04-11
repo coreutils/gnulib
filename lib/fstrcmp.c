@@ -56,7 +56,7 @@
 /* Because fstrcmp is typically called multiple times, attempt to minimize
    the number of memory allocations performed.  Thus, let a call reuse the
    memory already allocated by the previous call, if it is sufficient.
-   To make it multithread-safe, without need for a lock that protects the
+   To make it thread-safe, without need for a lock that protects the
    already allocated memory, store the allocated memory per thread.  Free
    it only when the thread exits.  */
 

@@ -46,7 +46,7 @@ AC_DEFUN([gl_FUNC_RANDOM],
       future*) REPLACE_SETSTATE=1 ;;
     esac
   fi
-  dnl On several platforms, random() is not multithread-safe.
+  dnl On several platforms, random() is not thread-safe.
   if test $ac_cv_func_initstate = no || test $ac_cv_func_setstate = no \
      || case "$host_os" in \
           darwin* | freebsd* | solaris* | cygwin* | haiku*) true ;; \

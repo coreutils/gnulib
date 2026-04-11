@@ -258,7 +258,7 @@ file_is_remote (const char *file)
 #else                                                       /* Unknown OS */
 # if defined SLOW_AND_OVERKILL
   /* This makes many system calls, is therefore slow, and
-     is also not multithread-safe.  */
+     is also not thread-safe.  */
   struct stat statbuf;
   if (stat (file, &statbuf) < 0)
     return -1;

@@ -1,4 +1,4 @@
-/* Multithread-safety test for nl_langinfo().
+/* Thread safety test for nl_langinfo().
    Copyright (C) 2019-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

@@ -15,7 +15,7 @@ glibc 2.5, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX
 However, the replacement function may end up truncating timestamps to
 worse resolution than supported by the file system.  Furthermore, the
 replacement function is not safe to be used in libraries and is not
-multithread-safe.
+thread-safe.
 @item
 This function returns a bogus value instead of failing with
 @code{ENOSYS} on some platforms:

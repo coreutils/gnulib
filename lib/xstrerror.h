@@ -33,7 +33,7 @@ extern "C" {
    MESSAGE and the (internationalized) description of the error code ERRNUM.
    Upon [ENOMEM] memory allocation error, call xalloc_die.
 
-   This function is multithread-safe.  */
+   This function is thread-safe.  */
 extern char *xstrerror (const char *message, int errnum)
        _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
        _GL_ATTRIBUTE_RETURNS_NONNULL;

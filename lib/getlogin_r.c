@@ -111,7 +111,7 @@ getlogin_r (char *name, size_t size)
     char tty[1024];
     if (ttyname_r (STDIN_FILENO, tty, sizeof (tty)) == 0)
       {
-        /* We cannot use read_utmp here, since it is not multithread-safe.  */
+        /* We cannot use read_utmp here, since it is not thread-safe.  */
         /* Fallback for systems which don't maintain an utmp database
            or for ttys that are not recorded in that the utmp database:
            Look at the owner of that tty.  */

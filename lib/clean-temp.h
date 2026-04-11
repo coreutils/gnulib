@@ -59,8 +59,8 @@ extern "C" {
    Limitations: Files or directories can still be left over if
      - the program dies from a fatal signal such as SIGQUIT, SIGKILL, or
        SIGABRT, SIGSEGV, SIGBUS, SIGILL, SIGFPE, or
-     - in a multithreaded program, the fatal signal handler is already running
-       while another thread of the program creates a new temporary directory
+     - in a multithreaded process, the fatal signal handler is already running
+       while another thread of the process creates a new temporary directory
        or temporary file, or
      - on native Windows, some temporary files are used by a subprocess while
        the fatal signal interrupts the program.

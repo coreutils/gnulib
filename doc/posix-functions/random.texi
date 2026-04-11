@@ -16,7 +16,7 @@ mingw, MSVC 14.
 This function is only defined as an inline function on some platforms:
 Android 4.4.
 @item
-This function is not multithread-safe on some platforms:
+This function is not thread-safe on some platforms:
 macOS 14, FreeBSD 13.2, Solaris 11.4, Cygwin 3.4.6, Haiku.
 @end itemize
 

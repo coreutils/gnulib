@@ -24,4 +24,4 @@ when the current locale's notion of decimal point is a comma @samp{,},
 and no characters outside the basic character set are accepted.
 
 On platforms without @code{strtod_l}, this function is not safe for use in
-multi-threaded applications since it calls @code{setlocale}.
+multi-threaded processes since it calls @code{setlocale}.

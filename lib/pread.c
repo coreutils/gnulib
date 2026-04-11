@@ -29,7 +29,7 @@
 /* The following is identical to the function from glibc's
    sysdeps/posix/pread.c */
 
-/* Note: This implementation of pread is not multithread-safe.  */
+/* Note: This implementation of pread is not thread-safe.  */
 
 ssize_t
 pread (int fd, void *buf, size_t nbyte, off_t offset)

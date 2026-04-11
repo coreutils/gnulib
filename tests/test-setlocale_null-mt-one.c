@@ -1,4 +1,4 @@
-/* Multithread-safety test for setlocale_null_r (LC_xxx, ...).
+/* Thread safety test for setlocale_null_r (LC_xxx, ...).
    Copyright (C) 2019-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

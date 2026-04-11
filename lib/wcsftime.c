@@ -54,7 +54,7 @@ rpl_wcsftime (wchar_t *buf, size_t bufsize, const wchar_t *format, const struct 
   const char *tz = getenv ("TZ");
   if (tz != NULL && strchr (tz, '/') != NULL)
     {
-      /* Neutralize it, in a way that is multithread-safe.
+      /* Neutralize it, in a way that is thread-safe.
          (If we were to use _putenv ("TZ="), it would free the memory allocated
          for the environment variable "TZ", and thus other threads that are
          using the previously fetched value of getenv ("TZ") could crash.)  */

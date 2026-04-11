@@ -22,7 +22,7 @@ In case of failure, the return value is wrong on some platforms:
 NetBSD 10.0 when libpthread is in use.
 
 @item
-POSIX says that in multi-threaded programs @code{sigprocmask} has
+POSIX says that in multi-threaded processes @code{sigprocmask} has
 unspecified behavior so @code{pthread_sigmask} should be used instead.
 On most platforms, @code{sigprocmask} is essentially equivalent to
 @code{pthread_sigmask}, with only a difference regarding the error
@@ -38,7 +38,7 @@ The Gnulib replacement on native MS-Windows is not async-signal-safe
 POSIX section ``Signal Actions''}).
 @end itemize
 
-Note: In single-threaded applications it's simpler to use
+Note: In single-threaded programs it's simpler to use
 @code{sigprocmask}, since it does not require compiling with
 @code{-pthread} and/or linking with @code{-lpthread} on some platforms:
 AIX.

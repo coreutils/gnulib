@@ -1,4 +1,4 @@
-/* Retrieve the umask of the process (multithread-safe).
+/* Retrieve the umask of the process (thread-safe).
    Copyright (C) 2020-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
    Each has its drawbacks:
      (a) Causes additional system calls. May fail in some rare cases.
      (b) Causes globally visible code complexity / maintainer effort.
-     (c) Is not multithread-safe: open() calls in other threads may
+     (c) Is not thread-safe: open() calls in other threads may
          create files with wrong access permissions.
 
    Here we implement (a), as the least evil.  */
@@ -51,7 +51,7 @@ mode_t
 getumask (void)
 {
 #if 0
-  /* This is not multithread-safe!  */
+  /* This is not thread-safe!  */
   mode_t mask = umask (0);
   umask (mask);
   return mask;

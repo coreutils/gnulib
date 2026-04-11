@@ -85,7 +85,7 @@ static int fatal_signals[] =
 static void
 init_fatal_signals (void)
 {
-  /* This function is multithread-safe even without synchronization, because
+  /* This function is thread-safe even without synchronization, because
      if two threads execute it simultaneously, the fatal_signals[] array will
      not change any more after the first of the threads has completed this
      function.  */
@@ -199,7 +199,7 @@ install_handlers (void)
 }
 
 
-/* Lock that makes at_fatal_signal multi-thread safe.  */
+/* Lock that makes at_fatal_signal thread-safe.  */
 gl_lock_define_initialized (static, at_fatal_signal_lock)
 
 /* Register a cleanup function to be executed when a catchable fatal signal

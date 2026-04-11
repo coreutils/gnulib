@@ -32,7 +32,7 @@ extern "C" {
 #endif
 
 
-/* Note: The functions declared in this file are NOT multithread-safe.  */
+/* Note: The functions declared in this file are NOT thread-safe.  */
 
 
 /* Free a memory block.

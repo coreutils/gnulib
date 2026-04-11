@@ -55,7 +55,7 @@ strerror (int n)
      buffer, so all other clients of strerror have to see the error
      copied into a buffer that we manage.  This is not thread-safe,
      even if the system strerror is, but portable programs shouldn't
-     be using strerror if they care about thread-safety.  */
+     be using strerror if they care about thread safety.  */
   if (!msg || !*msg)
     {
       static char const fmt[] = "Unknown error %d";

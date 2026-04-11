@@ -32,13 +32,13 @@ AC_DEFUN([gl_FUNC_SETLOCALE],
   AC_DEFINE_UNQUOTED([NEED_SETLOCALE_IMPROVED], [$NEED_SETLOCALE_IMPROVED],
     [Define to 1 to enable general improvements of setlocale.])
 
-  dnl Test whether we need a multithread-safe setlocale(category,NULL).
+  dnl Test whether we need a thread-safe setlocale(category,NULL).
   NEED_SETLOCALE_MTSAFE=0
   if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
     NEED_SETLOCALE_MTSAFE=1
   fi
   AC_DEFINE_UNQUOTED([NEED_SETLOCALE_MTSAFE], [$NEED_SETLOCALE_MTSAFE],
-    [Define to 1 to enable a multithread-safety fix of setlocale.])
+    [Define to 1 to enable a thread safety fix of setlocale.])
 
   if test $NEED_SETLOCALE_IMPROVED = 1 || test $NEED_SETLOCALE_MTSAFE = 1; then
     REPLACE_SETLOCALE=1

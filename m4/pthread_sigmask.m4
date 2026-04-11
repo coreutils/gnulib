@@ -103,14 +103,14 @@ AC_DEFUN([gl_FUNC_PTHREAD_SIGMASK],
     ])
   fi
 
-  dnl We want to be able to use pthread_sigmask as a multithread-safe
+  dnl We want to be able to use pthread_sigmask as a thread-safe
   dnl replacement of sigprocmask, in both single-threaded and multithreaded
-  dnl programs. Therefore enforce PTHREAD_SIGMASK_LIB to be empty, whenever
+  dnl processes. Therefore enforce PTHREAD_SIGMASK_LIB to be empty, whenever
   dnl possible.
   if test -n "$PTHREAD_SIGMASK_LIB"; then
     dnl We get here on glibc ≤ 2.31, NetBSD, OpenBSD ≤ 5.8, AIX.
     dnl Except on AIX, pthread_sigmask and sigprocmask are equivalent.
-    dnl Whereas on AIX, sigprocmask is not allowed in multithreaded programs
+    dnl Whereas on AIX, sigprocmask is not allowed in multithreaded processes
     dnl <https://www.ibm.com/docs/en/aix/7.2.0?topic=s-sigprocmask-sigsetmask-sigblock-subroutine>.
     AC_REQUIRE([AC_CANONICAL_HOST])
     case "$host_os" in

@@ -1,4 +1,4 @@
-/* Multithread-safety test for c_strtod().
+/* Thread safety test for c_strtod().
    Copyright (C) 2024-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

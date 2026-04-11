@@ -620,7 +620,7 @@ avoid a conflict with the alternative Posix function @code{getdate},
 and a later rename to @code{parse_datetime}.  The Posix function
 @code{getdate} can parse more locale-specific dates using
 @code{strptime}, but relies on an environment variable and external
-file, and lacks the thread-safety of @code{parse_datetime}.
+file, and lacks the thread safety of @code{parse_datetime}.
 
 @cindex Pinard, F.
 @cindex Berry, K.

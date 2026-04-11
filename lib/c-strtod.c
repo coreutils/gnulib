@@ -79,10 +79,10 @@ static char
 decimal_point_char (void)
 {
   const char *point;
-  /* Determine it in a multithread-safe way.  We know nl_langinfo is
-     multithread-safe on glibc systems and Mac OS X systems, but is not required
-     to be multithread-safe by POSIX.  sprintf(), however, is multithread-safe.
-     localeconv() is rarely multithread-safe.  */
+  /* Determine it in a thread-safe way.  We know nl_langinfo is
+     thread-safe on glibc systems and Mac OS X systems, but is not required
+     to be thread-safe by POSIX.  sprintf(), however, is thread-safe.
+     localeconv() is rarely thread-safe.  */
 # if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__))
   point = nl_langinfo (RADIXCHAR);
 # elif 1

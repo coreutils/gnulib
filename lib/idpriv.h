@@ -62,7 +62,7 @@ extern "C" {
       As explained above, this approach has uncontrollable dangers for
       security.
 
-      This approach is normally not usable in multithreaded programs, because
+      This approach is normally not usable in multithreaded processes, because
       you cannot know what kind of system calls the other threads could be
       doing during the time the privileges are enabled.
 

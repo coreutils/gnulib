@@ -1,4 +1,4 @@
-/* Multithread-safety test for random().
+/* Thread safety test for random().
    Copyright (C) 2023-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 
 /* Number of random() invocations operations performed in each thread.
    This value is chosen so that the unit test terminates quickly.
-   To reliably determine whether a random() implementation is multithread-safe,
+   To reliably determine whether a random() implementation is thread-safe,
    set REPEAT_COUNT to 1000000 and run the test 100 times:
      $ for i in `seq 100`; do ./test-random-mt; done
  */

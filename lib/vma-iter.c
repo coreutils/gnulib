@@ -614,7 +614,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   size_t len = 0;
   if (sysctl (info_path, 4, NULL, &len, NULL, 0) < 0)
     return -1;
-  /* Allow for small variations over time.  In a multithreaded program
+  /* Allow for small variations over time.  In a multithreaded process
      new VMAs can be allocated at any moment.  */
   len = 2 * len + 200;
   /* Allocate memneed bytes of memory.
@@ -690,7 +690,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   size_t len = 0;
   if (sysctl (info_path, 5, NULL, &len, NULL, 0) < 0)
     return -1;
-  /* Allow for small variations over time.  In a multithreaded program
+  /* Allow for small variations over time.  In a multithreaded process
      new VMAs can be allocated at any moment.  */
   len = 2 * len + 10 * entry_size;
   /* But the system call rejects lengths > 1 MB.  */
@@ -769,7 +769,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
   size_t len = 0;
   if (sysctl (info_path, 3, NULL, &len, NULL, 0) < 0)
     return -1;
-  /* Allow for small variations over time.  In a multithreaded program
+  /* Allow for small variations over time.  In a multithreaded process
      new VMAs can be allocated at any moment.  */
   len = 2 * len + 10 * sizeof (struct kinfo_vmentry);
   /* But the system call rejects lengths > 64 KB.  */

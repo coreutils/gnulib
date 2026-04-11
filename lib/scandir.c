@@ -60,7 +60,7 @@
 /* The results of opendir() in this file are not used with dirfd and fchdir,
    and we do not leak fds to any single-threaded code that could use stdio,
    therefore save some unnecessary recursion in fchdir.c and opendir_safer.c.
-   FIXME - if the kernel ever adds support for multi-thread safety for
+   FIXME - if the kernel ever adds support for thread safety for
    avoiding standard fds, then we should use opendir_safer.  */
 # ifdef GNULIB_defined_DIR
 #  undef DIR

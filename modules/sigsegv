@@ -2,7 +2,7 @@ Description:
 A simplified variant of GNU libsigsegv.
 It implements the most important features of GNU libsigsegv: catching SIGSEGV
 and catching stack overflow. It does *not* implement the 'sigsegv_dispatcher'
-type (which is not multithread-safe).
+type (which is not thread-safe).
 It supports all modern Unix-like platforms: Linux, Hurd, FreeBSD, NetBSD,
 OpenBSD, macOS, AIX, Solaris, Cygwin, Haiku. It does *not* support HP-UX, Minix,
 native Windows; on these platforms the module compiles and provides a

@@ -75,7 +75,7 @@ extern "C" {
 
 /* Ensure that the invalid parameter handler in installed that just returns.
    Because we assume no other part of the program installs a different
-   invalid parameter handler, this solution is multithread-safe.  */
+   invalid parameter handler, this solution is thread-safe.  */
 extern void gl_msvc_inval_ensure_handler (void);
 
 #  ifdef __cplusplus
@@ -112,7 +112,7 @@ extern void gl_msvc_inval_ensure_handler (void);
 /* A compiler that supports __try/__except, as described in the page
    "try-except statement" on microsoft.com
    <https://docs.microsoft.com/en-us/cpp/cpp/try-except-statement>.
-   With __try/__except, we can use the multithread-safe exception handling.  */
+   With __try/__except, we can use the thread-safe exception handling.  */
 
 #   ifdef __cplusplus
 extern "C" {
@@ -121,7 +121,7 @@ extern "C" {
 /* Ensure that the invalid parameter handler in installed that raises a
    software exception with code STATUS_GNULIB_INVALID_PARAMETER.
    Because we assume no other part of the program installs a different
-   invalid parameter handler, this solution is multithread-safe.  */
+   invalid parameter handler, this solution is thread-safe.  */
 extern void gl_msvc_inval_ensure_handler (void);
 
 #   ifdef __cplusplus
@@ -166,7 +166,7 @@ struct gl_msvc_inval_per_thread
    control to the gl_msvc_inval_restart if it is valid, or raises a
    software exception with code STATUS_GNULIB_INVALID_PARAMETER otherwise.
    Because we assume no other part of the program installs a different
-   invalid parameter handler, this solution is multithread-safe.  */
+   invalid parameter handler, this solution is thread-safe.  */
 extern void gl_msvc_inval_ensure_handler (void);
 
 /* Return a pointer to the per-thread data for the current thread.  */

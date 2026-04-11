@@ -18,7 +18,7 @@
 /* Written by Paul Eggert.  */
 
 /* Although this module is not thread-safe, any races should be fairly
-   rare and reasonably benign.  For complete thread-safety, use a C
+   rare and reasonably benign.  For complete thread safety, use a C
    library with a working timezone_t type, so that this module is not
    needed.  */
 

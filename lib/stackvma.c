@@ -480,7 +480,7 @@ vma_iterate_bsd (struct callback_locals *locals)
   size_t len = 0;
   if (sysctl (info_path, 4, NULL, &len, NULL, 0) < 0)
     return -1;
-  /* Allow for small variations over time.  In a multithreaded program
+  /* Allow for small variations over time.  In a multithreaded process
      new VMAs can be allocated at any moment.  */
   len = 2 * len + 200;
   /* Allocate memneed bytes of memory.

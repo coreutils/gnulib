@@ -1,5 +1,5 @@
 Description:
-getumask() function: retrieve the umask of the process (multithread-safe)
+getumask() function: retrieve the umask of the process (thread-safe)
 
 Files:
 lib/getumask.c

@@ -77,7 +77,7 @@ rpl_fclose (FILE *fp)
      overridden close() function invokes.  See lib/close.c.  */
 #if WINDOWS_SOCKETS
   /* Call the overridden close(), then the original fclose().
-     Note about multithread-safety: There is a race condition where some
+     Note about thread safety: There is a race condition where some
      other thread could open fd between our close and fclose.  */
   if (close (fd) < 0 && saved_errno == 0)
     saved_errno = errno;
@@ -89,7 +89,7 @@ rpl_fclose (FILE *fp)
   /* Call fclose() and invoke all hooks of the overridden close().  */
 
 # if REPLACE_FCHDIR
-  /* Note about multithread-safety: There is a race condition here as well.
+  /* Note about thread safety: There is a race condition here as well.
      Some other thread could open fd between our calls to fclose and
      _gl_unregister_fd.  */
   result = fclose_nothrow (fp);

@@ -34,10 +34,10 @@ always fails.  The replacement, however, supports only the locale names
 Portability problems fixed by Gnulib module @code{setlocale} or @code{setlocale-null}:
 @itemize
 @item
-Invocations of @code{setlocale (..., NULL)} are not multithread-safe on some
+Invocations of @code{setlocale (..., NULL)} are not thread-safe on some
 platforms:
 musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Haiku, Cygwin.
-To make these invocations multithread-safe, you need the Gnulib module
+To make these invocations thread-safe, you need the Gnulib module
 @code{setlocale}, or you need to change the code to invoke @code{setlocale_null}
 or @code{setlocale_null_r} instead.
 @end itemize

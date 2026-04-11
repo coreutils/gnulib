@@ -51,7 +51,7 @@ struct all_tempdirs
 extern struct all_tempdirs dir_cleanup_list;
 
 /* A file descriptor to be closed.
-   In multithreaded programs, it is forbidden to close the same fd twice,
+   In multithreaded processes, it is forbidden to close the same fd twice,
    because you never know what unrelated open() calls are being executed in
    other threads. So, the 'close (fd)' must be guarded by a once-only guard.  */
 struct closeable_fd

@@ -20,9 +20,9 @@
 #ifndef _THREAD_OPTIM_H
 #define _THREAD_OPTIM_H
 
-/* This file defines a way to optimize multithreaded code for the single-thread
-   case, based on the variable '__libc_single_threaded', defined in
-   glibc >= 2.32.  */
+/* This file defines a way to optimize multithreaded code for the
+   single-threaded case, based on the variable '__libc_single_threaded',
+   defined in glibc >= 2.32.  */
 
 /* Typical use: In a block or function, use
 
@@ -34,11 +34,11 @@
      if (mt)
        if (pthread_mutex_unlock (&lock)) abort ();
 
-   The gl_multithreaded () invocation determines whether the program currently
-   is multithreaded.
+   gl_multithreaded () returns true if the process might be multithreaded,
+   and false if the process is definitely single-threaded.
 
-   if (mt) STATEMENT executes STATEMENT in the multithreaded case, and skips
-   it in the single-threaded case.
+   if (mt) STATEMENT executes STATEMENT in the possibly-multithreaded case,
+   and skips it in the single-threaded case.
 
    The code between the gl_multithreaded () invocation and any use of the
    variable 'mt' must not create threads or invoke functions that may

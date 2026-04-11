@@ -1,6 +1,6 @@
 Description:
 xstrerror() function: return diagnostic string based on error code.
-Multithread-safe. With out-of-memory checking.
+thread-safe. With out-of-memory checking.
 
 Files:
 lib/xstrerror.h

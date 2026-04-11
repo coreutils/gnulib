@@ -42,7 +42,7 @@ setlocale_messages (const char *name)
 const char *
 setlocale_messages_null (void)
 {
-  /* This implementation is multithread-safe, assuming no other thread changes
+  /* This implementation is thread-safe, assuming no other thread changes
      the LC_MESSAGES locale category.  */
   return lc_messages_name;
 }
@@ -227,7 +227,7 @@ setlocale_fixed (int category, const char *name)
 const char *
 setlocale_fixed_null (int category)
 {
-  /* This implementation is multithread-safe, assuming no other thread changes
+  /* This implementation is thread-safe, assuming no other thread changes
      any locale category.  */
   if (category == LC_ALL)
     return lc_all_name;

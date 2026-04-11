@@ -65,7 +65,7 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
 #else                                   /* HP-UX 11.00, mingw */
       /* Fallback for platforms that don't have wcrtomb().
          Implement on top of wctomb().
-         This code is not multithread-safe.  */
+         This code is not thread-safe.  */
       int ret = wctomb (s, wc);
 
       if (ret >= 0)

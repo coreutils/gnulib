@@ -28,7 +28,7 @@ The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
 @code{ERA_T_FMT}, @code{ALT_DIGITS} are not supported on some platforms:
 OpenBSD 7.5.
 @item
-This function is not multithread-safe on some platforms:
+This function is not thread-safe on some platforms:
 macOS 26, Solaris 11.3.
 @end itemize
 

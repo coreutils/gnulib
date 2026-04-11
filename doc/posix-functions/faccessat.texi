@@ -25,7 +25,7 @@ The replacement does not always take ACLs into account.
 @item
 The replacement is not safe to be used in libraries.
 @item
-The replacement is not multithread-safe.
+The replacement is not thread-safe.
 @item
 The replacement does not support the @code{AT_SYMLINK_NOFOLLOW} flag,
 which is supported by GNU @code{faccessat}.

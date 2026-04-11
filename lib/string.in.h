@@ -1041,7 +1041,7 @@ _GL_WARN_ON_USE_CXX (strrchr,
    If *STRINGP was already NULL, nothing happens.
    Return the old value of *STRINGP.
 
-   This is a variant of strtok() that is multithread-safe and supports
+   This is a variant of strtok() that is thread-safe and supports
    empty fields.
 
    Caveat: It modifies the original string.
@@ -1179,7 +1179,7 @@ _GL_WARN_ON_USE (strcasestr, "strcasestr does work correctly on character "
         x = strtok_r(NULL, "=", &sp);   // x = NULL
                 // s = "abc\0-def\0"
 
-   This is a variant of strtok() that is multithread-safe.
+   This is a variant of strtok() that is thread-safe.
 
    For the POSIX documentation for this function, see:
    https://pubs.opengroup.org/onlinepubs/9699919799/functions/strtok.html
@@ -1655,7 +1655,7 @@ _GL_WARN_ON_USE (strerror, "strerror is unportable - "
                  "use gnulib module strerror to guarantee non-NULL result");
 #endif
 
-/* Map any int, typically from errno, into an error message.  Multithread-safe.
+/* Map any int, typically from errno, into an error message.  Thread-safe.
    Uses the POSIX declaration, not the glibc declaration.  */
 #if @GNULIB_STRERROR_R@
 # if @REPLACE_STRERROR_R@
@@ -1711,7 +1711,7 @@ _GL_WARN_ON_USE (strerror_l, "strerror_l is unportable - "
 # endif
 #endif
 
-/* Map any int, typically from errno, into an error message.  Multithread-safe,
+/* Map any int, typically from errno, into an error message.  Thread-safe,
    with locale_t argument.
    Not portable! Only provided by gnulib.  */
 #if @GNULIB_STRERROR_L@
