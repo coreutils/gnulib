@@ -472,6 +472,23 @@ main (void)
   if (s && !streq (s, "Invalid back reference"))
     report_error ("%s: %s", pat_badback, s);
 
+  /* bug#68725, reported by Ed Morton.
+     The regex uses backrefs to detect palindromes and "ab"
+     is not a palindrome, so this should not match.  */
+  {
+    regex_t re68725;
+    int ret = regcomp (&re68725, "^(.?)(.?).?\\2\\1$", REG_EXTENDED);
+    if (ret)
+      report_error ("regcomp bug#68725 failed (%d)", ret);
+    else
+      {
+        regmatch_t pm;
+        if (regexec (&re68725, "ab", 1, &pm, 0) == 0)
+          report_error ("regexec bug#68725: \"ab\" matched, should not");
+        regfree (&re68725);
+      }
+  }
+
 #if 0
   /* It would be nice to reject hosts whose regoff_t values are too
      narrow (including glibc on hosts with 64-bit ptrdiff_t and

@@ -943,7 +943,10 @@ prune_impossible_nodes (re_match_context_t *mctx)
 		  goto free_return;
 		}
 	    } while (mctx->state_log[match_last] == NULL
-		     || !mctx->state_log[match_last]->halt);
+		     || !mctx->state_log[match_last]->halt
+		     || !check_halt_state_context (mctx,
+						   mctx->state_log[match_last],
+						   match_last));
 	  halt_node = check_halt_state_context (mctx,
 						mctx->state_log[match_last],
 						match_last);

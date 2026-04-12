@@ -1,5 +1,5 @@
 # regex.m4
-# serial 81
+# serial 82
 dnl Copyright (C) 1996-2001, 2003-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -317,6 +317,25 @@ AC_DEFUN([gl_REGEX],
                 free (regs.start);
                 free (regs.end);
               }
+
+            /* This test is derived from bug#68725, reported by Ed Morton.
+               The regex uses backrefs to detect palindromes and "ab"
+               is not a palindrome, so this should not match.  */
+            {
+              regex_t re68725;
+              i = regcomp (&re68725,
+                           "^(.?)(.?).?\\\\2\\\\1$",
+                           REG_EXTENDED);
+              if (i)
+                result |= 64;
+              else
+                {
+                  regmatch_t pm;
+                  if (regexec (&re68725, "ab", 1, &pm, 0) == 0)
+                    result |= 64;
+                  regfree (&re68725);
+                }
+            }
 
 #if 0
             /* It would be nice to reject hosts whose regoff_t values are too
