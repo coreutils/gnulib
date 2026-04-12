@@ -473,8 +473,7 @@ main (void)
     report_error ("%s: %s", pat_badback, s);
 
   /* bug#68725, reported by Ed Morton.
-     The regex uses backrefs to detect palindromes and "ab"
-     is not a palindrome, so this should not match.  */
+     The regex uses backrefs with optional groups to detect palindromes.  */
   {
     regex_t re68725;
     int ret = regcomp (&re68725, "^(.?)(.?).?\\2\\1$", REG_EXTENDED);
@@ -483,8 +482,25 @@ main (void)
     else
       {
         regmatch_t pm;
+        /* "ab" is not a palindrome, so must not match with $.  */
         if (regexec (&re68725, "ab", 1, &pm, 0) == 0)
-          report_error ("regexec bug#68725: \"ab\" matched, should not");
+          report_error ("regexec bug#68725: \"ab\" matched with $,"
+                        " should not");
+        regfree (&re68725);
+      }
+
+    /* Without $, "ab" should match: the engine must retry with a
+       shorter match_last when set_regs fails at the longest
+       structural match.  */
+    ret = regcomp (&re68725, "^(.?)(.?).?\\2\\1", REG_EXTENDED);
+    if (ret)
+      report_error ("regcomp bug#68725 (no $) failed (%d)", ret);
+    else
+      {
+        regmatch_t pm[3];
+        if (regexec (&re68725, "ab", 3, pm, 0) != 0)
+          report_error ("regexec bug#68725: \"ab\" should match"
+                        " without $");
         regfree (&re68725);
       }
   }

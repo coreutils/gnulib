@@ -318,9 +318,9 @@ AC_DEFUN([gl_REGEX],
                 free (regs.end);
               }
 
-            /* This test is derived from bug#68725, reported by Ed Morton.
-               The regex uses backrefs to detect palindromes and "ab"
-               is not a palindrome, so this should not match.  */
+            /* These tests are derived from bug#68725, reported by
+               Ed Morton.  The regex uses backrefs with optional groups
+               to detect palindromes.  */
             {
               regex_t re68725;
               i = regcomp (&re68725,
@@ -330,8 +330,22 @@ AC_DEFUN([gl_REGEX],
                 result |= 64;
               else
                 {
-                  regmatch_t pm;
-                  if (regexec (&re68725, "ab", 1, &pm, 0) == 0)
+                  regmatch_t pm[3];
+                  /* "ab" is not a palindrome, so must not match
+                     with $.  */
+                  if (regexec (&re68725, "ab", 1, pm, 0) == 0)
+                    result |= 64;
+                  /* Without $, a shorter match (e.g., empty or "a")
+                     is valid at position 0.  Ensure set_regs retries
+                     with a shorter match_last when the longest
+                     structural match fails content validation.  */
+                  regfree (&re68725);
+                  i = regcomp (&re68725,
+                               "^(.?)(.?).?\\\\2\\\\1",
+                               REG_EXTENDED);
+                  if (i)
+                    result |= 64;
+                  else if (regexec (&re68725, "ab", 3, pm, 0) != 0)
                     result |= 64;
                   regfree (&re68725);
                 }
