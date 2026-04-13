@@ -1,6 +1,6 @@
 # error_h.m4
-# serial 5
-dnl Copyright (C) 1996-2025 Free Software Foundation, Inc.
+# serial 6
+dnl Copyright (C) 1996-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -64,8 +64,18 @@ AC_DEFUN_ONCE([gl_ERROR_H],
          AC_LINK_IFELSE(
            [AC_LANG_PROGRAM([[
               #include <error.h>
+              #include <signal.h>
+              #ifdef SIGALRM
+              # include <unistd.h> /* for alarm */
+              #endif
               static void print_no_progname (void) {}
             ]], [[
+              /* error (0, 0, ...) infloops on Intel OneAPI icx 2025.3.2.  */
+              #ifdef SIGALRM
+                signal (SIGALRM, SIG_DFL);
+                alarm (2);
+              #endif
+
               error_print_progname = print_no_progname;
               error (0, 0, "foo");
             ]])
