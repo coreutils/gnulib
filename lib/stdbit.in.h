@@ -37,7 +37,7 @@
  #error "Please include config.h first."
 #endif
 
-#if !@HAVE_STDBIT_H@
+#if !@HAVE_STDBIT_H@ || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)
 /* Get size_t.  */
 # include <stddef.h>
 #endif
@@ -46,7 +46,8 @@
      || (!defined __UINT_FAST64_TYPE__ \
          && (@GNULIB_STDC_MEMREVERSE8U@ \
              || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
-             || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)))
+             || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)) \
+     || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
 /* Get intN_t, uintN_t, int_leastN_t, uint_leastN_t.  */
 # include <stdint.h>
 #endif
@@ -194,7 +195,7 @@ extern "C" {
 
 
 /* Some systems are only missing C2y features in stdbit.h.  */
-#if !@HAVE_STDBIT_H@
+#if !@HAVE_STDBIT_H@ || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)
 
 /* ISO C 23 § 7.18.1 General  */
 
@@ -211,6 +212,11 @@ extern "C" {
 # define __STDC_ENDIAN_NATIVE__ __STDC_ENDIAN_LITTLE__
 #endif
 
+#endif
+
+
+/* Some systems are only missing C2y features in stdbit.h.  */
+#if !@HAVE_STDBIT_H@
 
 /* ISO C 23 § 7.18.3 Count Leading Zeros  */
 
