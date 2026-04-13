@@ -627,6 +627,8 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
   /* We must check the longest matching, if nmatch > 0.  */
   fl_longest_match = (nmatch != 0 || dfa->nbackref);
 
+  re_dfastate_t **save_state_log = NULL;
+
   err = re_string_allocate (&mctx.input, string, length, dfa->nodes_len + 1,
 			    preg->translate, (preg->syntax & RE_ICASE) != 0,
 			    dfa);
@@ -677,8 +679,6 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 	| (start <= last_start ? 2 : 0)
 	| (t != NULL ? 1 : 0))
      : 8);
-
-  re_dfastate_t **save_state_log = NULL;
 
   for (;; match_first += incr)
     {
