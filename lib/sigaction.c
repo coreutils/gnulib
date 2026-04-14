@@ -171,6 +171,10 @@ sigaction (int sig, const struct sigaction *restrict act,
           signal (sig, oact->sa_handler);
           oact->sa_flags = SA_RESETHAND | SA_NODEFER;
           sigemptyset (&oact->sa_mask);
+          /* The sigaction_handler is an internal detail.  It must not be
+             visible to the caller.  */
+          if (oact->sa_handler == sigaction_handler)
+            *oact = action_array[sig];
         }
     }
 
