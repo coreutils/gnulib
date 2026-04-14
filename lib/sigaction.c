@@ -1,5 +1,5 @@
 /* POSIX compatible signal blocking.
-   Copyright (C) 2008-2025 Free Software Foundation, Inc.
+   Copyright (C) 2008-2026 Free Software Foundation, Inc.
    Written by Eric Blake <ebb9@byu.net>, 2008.
 
    This file is free software: you can redistribute it and/or modify
@@ -173,6 +173,10 @@ sigaction (int sig, const struct sigaction *restrict act,
           signal (sig, oact->sa_handler);
           oact->sa_flags = SA_RESETHAND | SA_NODEFER;
           sigemptyset (&oact->sa_mask);
+          /* The sigaction_handler is an internal detail.  It must not be
+             visible to the caller.  */
+          if (oact->sa_handler == sigaction_handler)
+            *oact = action_array[sig];
         }
     }
 
