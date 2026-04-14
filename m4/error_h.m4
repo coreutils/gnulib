@@ -70,7 +70,7 @@ AC_DEFUN_ONCE([gl_ERROR_H],
               #endif
               static void print_no_progname (void) {}
             ]], [[
-              /* error (0, 0, ...) infloops on Intel OneAPI icx 2026.0.0.  */
+              /* error (0, 0, ...) infloops on Intel OneAPI icx 2025.3.2.  */
               #ifdef SIGALRM
                 signal (SIGALRM, SIG_DFL);
                 alarm (2);
