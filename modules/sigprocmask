@@ -10,7 +10,9 @@ signal-h
 stdint-h        [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 raise           [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 msvc-inval      [test $HAVE_POSIX_SIGNALBLOCKING = 0]
+windows-once    [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 windows-spin    [test $HAVE_POSIX_SIGNALBLOCKING = 0]
+windows-tls     [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
 configure.ac:
 gl_SIGNALBLOCKING

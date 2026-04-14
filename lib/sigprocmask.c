@@ -28,11 +28,16 @@
 # include "msvc-inval.h"
 #endif
 
-#if GNULIB_SIGPROCMASK_SINGLE_THREAD
+#if !GNULIB_SIGPROCMASK_SINGLE_THREAD
+# include "windows-spin.h"
+#else
 # define glwthread_spin_lock(lock)
 # define glwthread_spin_unlock(lock)
-#else
-# include "windows-spin.h"
+#endif
+
+#if !GNULIB_SIGPROCMASK_SINGLE_THREAD
+# include "windows-tls.h"
+# include "windows-once.h"
 #endif
 
 /* We assume that a platform without POSIX signal blocking functions
@@ -181,7 +186,6 @@ sigdelset (sigset_t *set, int sig)
     }
 }
 
-
 int
 sigfillset (sigset_t *set)
 {
@@ -189,28 +193,67 @@ sigfillset (sigset_t *set)
   return 0;
 }
 
-/* Storage class specifier for thread-local storage.  */
-#undef thread_local
-#if defined _MSC_VER
-/* <https://learn.microsoft.com/en-us/cpp/parallel/thread-local-storage-tls> */
-# define thread_local __declspec(thread)
+/* Thread-local storage.
+   We don't use 'thread_local' here, since on mingw it (or '__thread') pulls in
+   libwinpthread, which we want to avoid.  See gl_AVOID_WINPTHREAD.  */
+
+struct per_thread
+{
+  /* Set of currently blocked signals.  */
+  sigset_t blocked_set /* = 0 */;
+  /* Set of currently blocked and pending signals.  */
+  volatile sig_atomic_t pending_array[NSIG] /* = { 0 } */;
+};
+
+#if !GNULIB_SIGPROCMASK_SINGLE_THREAD
+
+static glwthread_tls_key_t tls_key; /* TLS key for a 'struct per_thread *' */
+
+static void
+keys_init (void)
+{
+  if (glwthread_tls_key_create (&tls_key, free) != 0)
+    /* Should not happen.  */
+    abort ();
+  /* The per-thread initial value is NULL.  */
+}
+
+/* Ensure that keys_init is called once only.  */
+static glwthread_once_t keys_init_once = GLWTHREAD_ONCE_INIT;
+
+/* Returns the per-thread data belonging to the current thread.  */
+static struct per_thread *
+get_per_thread (void)
+{
+  glwthread_once (&keys_init_once, keys_init);
+  struct per_thread *data = glwthread_tls_get (tls_key);
+  if (data == NULL)
+    {
+      data = (struct per_thread *) calloc (1, sizeof (struct per_thread));
+      if (data == NULL)
+        /* Should not happen.  */
+        abort ();
+      glwthread_tls_set (tls_key, data);
+    }
+  return data;
+}
+
 #else
-/* <https://gcc.gnu.org/onlinedocs/gcc/Thread-Local.html> */
-# define thread_local __thread
+
+/* Assume a single thread.  */
+static struct per_thread per_thread_singleton;
+
+# define get_per_thread() (&per_thread_singleton)
+
 #endif
-
-/* Set of currently blocked signals.  */
-static thread_local sigset_t blocked_set /* = 0 */;
-
-/* Set of currently blocked and pending signals.  */
-static thread_local volatile sig_atomic_t pending_array[NSIG] /* = { 0 } */;
 
 int
 sigpending (sigset_t *set)
 {
+  const struct per_thread *pt = get_per_thread ();
   sigset_t pending = 0;
   for (int sig = 0; sig < NSIG; sig++)
-    if (pending_array[sig])
+    if (pt->pending_array[sig])
       pending |= 1U << sig;
 
   *set = pending;
@@ -246,10 +289,11 @@ override_handler (int sig)
      when we reinstall it will trigger the default handler; oh well.  */
   signal (sig, override_handler);
 
-  if ((blocked_set >> sig) & 1)
+  struct per_thread *pt = get_per_thread ();
+  if ((pt->blocked_set >> sig) & 1)
     {
       /* The signal is blocked in the current thread.  */
-      pending_array[sig] = 1;
+      pt->pending_array[sig] = 1;
     }
   else
     {
@@ -278,8 +322,10 @@ override_handler (int sig)
 int
 pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
 {
+  struct per_thread *pt = get_per_thread ();
+
   if (old_set != NULL)
-    *old_set = blocked_set;
+    *old_set = pt->blocked_set;
 
   if (set != NULL)
     {
@@ -287,27 +333,27 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
       switch (operation)
         {
         case SIG_BLOCK:
-          new_blocked_set = blocked_set | *set;
+          new_blocked_set = pt->blocked_set | *set;
           break;
         case SIG_SETMASK:
           new_blocked_set = *set;
           break;
         case SIG_UNBLOCK:
-          new_blocked_set = blocked_set & ~*set;
+          new_blocked_set = pt->blocked_set & ~*set;
           break;
         default:
           return EINVAL;
         }
 
-      sigset_t to_unblock = blocked_set & ~new_blocked_set;
-      sigset_t to_block = new_blocked_set & ~blocked_set;
+      sigset_t to_unblock = pt->blocked_set & ~ new_blocked_set;
+      sigset_t to_block = new_blocked_set & ~ pt->blocked_set;
 
       if (to_block != 0)
         for (int sig = 0; sig < NSIG; sig++)
           if ((to_block >> sig) & 1)
             {
-              /* All pending_array[sig] remain zero.  */
-              blocked_set |= 1U << sig;
+              /* All pt->pending_array[sig] remain zero.  */
+              pt->blocked_set |= 1U << sig;
               if (!overrides[sig].overridden)
                 {
                   glwthread_spin_lock (&overrides_mt_lock);
@@ -316,8 +362,8 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
                     {
                       /* Now it's OK to install the override_handler:
                          - If it gets invoked in this thread, there is no race
-                           condition since blocked_set already has the sig bit
-                           set.
+                           condition since pt->blocked_set already has the sig
+                           bit set.
                          - If it gets invoked in another thread, the
                            overrides_handler_lock protects it from proceeding
                            until we have stored the old_handler.  For this case,
@@ -348,9 +394,9 @@ pthread_sigmask (int operation, const sigset_t *set, sigset_t *old_set)
           for (int sig = 0; sig < NSIG; sig++)
             if ((to_unblock >> sig) & 1)
               {
-                received[sig] = pending_array[sig];
-                blocked_set &= ~(1U << sig);
-                pending_array[sig] = 0;
+                received[sig] = pt->pending_array[sig];
+                pt->blocked_set &= ~(1U << sig);
+                pt->pending_array[sig] = 0;
               }
             else
               received[sig] = 0;
@@ -437,9 +483,10 @@ _gl_raise_SIGPIPE (void)
      any thread of the current process.  In the SIGPIPE emulation here, we do
      it slightly differently: we deliver it to the current thread always,
      like  raise (SIGPIPE)  would do.  */
-  if (blocked_set & (1U << SIGPIPE))
+  struct per_thread *pt = get_per_thread ();
+  if (pt->blocked_set & (1U << SIGPIPE))
     /* The signal is blocked in the current thread.  */
-    pending_array[SIGPIPE] = 1;
+    pt->pending_array[SIGPIPE] = 1;
   else
     {
       handler_t handler = SIGPIPE_handler;
