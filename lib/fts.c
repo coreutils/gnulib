@@ -485,6 +485,7 @@ fts_open (char * const *argv,
                    FTS_XDEV) requires that.  */
                 if (defer_stat && root != NULL) {
                         p->fts_info = FTS_NSOK;
+                        p->fts_statp->st_mode = 0;
                         fts_set_stat_required(p, true);
                 } else {
                         p->fts_info = fts_stat(sp, p, false);
