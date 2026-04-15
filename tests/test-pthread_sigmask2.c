@@ -31,13 +31,22 @@
 #if USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS
 
 static pthread_t main_thread;
-static pthread_t killer_thread;
+static pthread_t killer_thread1;
+static pthread_t killer_thread2;
 
 static void *
-killer_thread_func (_GL_UNUSED void *arg)
+killer_thread1_func (_GL_UNUSED void *arg)
 {
   sleep (1);
   pthread_kill (main_thread, SIGINT);
+  return NULL;
+}
+
+static void *
+killer_thread2_func (_GL_UNUSED void *arg)
+{
+  sleep (1);
+  pthread_kill (pthread_self (), SIGINT);
   return NULL;
 }
 
@@ -63,10 +72,9 @@ main ()
       return 77;
     }
 
-  sigset_t set;
-
   signal (SIGINT, sigint_handler);
 
+  sigset_t set;
   sigemptyset (&set);
   sigaddset (&set, SIGINT);
 
@@ -81,7 +89,8 @@ main ()
 
   /* Request a SIGINT signal from another thread.  */
   main_thread = pthread_self ();
-  ASSERT (pthread_create (&killer_thread, NULL, killer_thread_func, NULL) == 0);
+  ASSERT (pthread_create (&killer_thread1, NULL, killer_thread1_func, NULL)
+          == 0);
 
   /* Wait.  */
   sleep (2);
@@ -98,9 +107,29 @@ main ()
         before the call to pthread_sigmask() returns."  */
   ASSERT (sigint_occurred == 1);
 
-  /* Clean up the thread.  This avoid a "ThreadSanitizer: thread leak" warning
+  /* Request a SIGINT signal from another thread.  */
+  ASSERT (pthread_create (&killer_thread2, NULL, killer_thread2_func, NULL)
+          == 0);
+
+  /* Block SIGINT.  */
+  ASSERT (pthread_sigmask (SIG_BLOCK, &set, NULL) == 0);
+
+  /* Wait.  */
+  sleep (2);
+
+  /* The signal should have arrived yet, because it is blocked only in the
+     main thread, not in killer_thread2.  */
+  ASSERT (sigint_occurred == 2);
+
+  /* Unblock SIGINT.  */
+  ASSERT (pthread_sigmask (SIG_UNBLOCK, &set, NULL) == 0);
+
+  ASSERT (sigint_occurred == 2);
+
+  /* Clean up the threads.  This avoids a "ThreadSanitizer: thread leak" warning
      from "gcc -fsanitize=thread".  */
-  ASSERT (pthread_join (killer_thread, NULL) == 0);
+  ASSERT (pthread_join (killer_thread1, NULL) == 0);
+  ASSERT (pthread_join (killer_thread2, NULL) == 0);
 
   return test_exit_status;
 }
