@@ -128,7 +128,15 @@ typedef struct {
 # define FTS_COMFOLLOW  0x0001          /* follow command line symlinks */
 # define FTS_LOGICAL    0x0002          /* logical walk */
 # define FTS_NOCHDIR    0x0004          /* don't change directories */
+
+  /* For efficiency do not set *fts_statp except for fts_statp->st_mode,
+     which is set to zero if the file type is unknown,
+     and which otherwise has at least its S_IFMT type bits set.
+     When fts_info == FTS_NSOK this supports expressions like
+     (fts_statp->st_mode ? !!S_ISDIR (fts_statp->st_mode): -1), which yields
+     1 for a directory, 0 for a non-directory, and -1 for unknown.  */
 # define FTS_NOSTAT     0x0008          /* don't get stat info */
+
 # define FTS_PHYSICAL   0x0010          /* physical walk */
 # define FTS_SEEDOT     0x0020          /* return dot and dot-dot */
 # define FTS_XDEV       0x0040          /* don't cross devices */
@@ -177,10 +185,8 @@ typedef struct {
      Use this flag to make fts_open and fts_read defer the stat/lstat/fststat
      of each entry until it is actually processed.  However, note that if you
      use this option and also specify a comparison function, that function may
-     not examine any data via fts_statp.  However, when fts_statp->st_mode is
-     nonzero, the S_IFMT type bits are valid, with mapped dirent.d_type data.
-     Of course, that happens only on file systems that provide useful
-     dirent.d_type data.  */
+     not examine any data via fts_statp, other than fts_statp->st_mode
+     which is set similarly to how FTS_NOSTAT behaves.  */
 # define FTS_DEFER_STAT         0x0400
 
   /* Use this flag to disable stripping of trailing slashes
