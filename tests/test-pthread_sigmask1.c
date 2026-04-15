@@ -46,7 +46,8 @@ int
 main ()
 {
   /* This test occasionally fails on Linux (glibc or musl libc), in a
-     VirtualBox VM with paravirtualization = Default or KVM, with ≥ 2 CPUs.
+     VirtualBox VM with paravirtualization = Default or KVM, with ≥ 2 CPUs,
+     when "Nested VT-x/AMD-V" and "PAE/NX" are not both enabled.
      Skip the test in this situation.  */
   if (is_running_under_virtualbox_kvm () && num_cpus () > 1)
     {
