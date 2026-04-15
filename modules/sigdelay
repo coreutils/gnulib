@@ -1,0 +1,31 @@
+Description:
+Delaying the delivery of signals to the current process.
+
+Files:
+lib/sigdelay.h
+lib/sigdelay.c
+
+Depends-on:
+lock
+sigaction
+thread-optim
+raise
+stdcountof-h
+
+configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
+
+Makefile.am:
+lib_SOURCES += sigdelay.c
+
+Include:
+"sigdelay.h"
+
+Link:
+$(LIBTHREAD)
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
