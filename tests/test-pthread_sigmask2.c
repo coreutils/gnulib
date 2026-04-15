@@ -107,6 +107,11 @@ main ()
         before the call to pthread_sigmask() returns."  */
   ASSERT (sigint_occurred == 1);
 
+  /* On SystemV derivatives, we need to reestablish the signal handler.  */
+#if defined __sun || defined _AIX /* Solaris, AIX */
+  signal (SIGINT, sigint_handler);
+#endif
+
   /* Request a SIGINT signal from another thread.  */
   ASSERT (pthread_create (&killer_thread2, NULL, killer_thread2_func, NULL)
           == 0);
