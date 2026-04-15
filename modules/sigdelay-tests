@@ -1,0 +1,20 @@
+Files:
+tests/test-sigdelay1.c
+tests/test-sigdelay2.c
+tests/virtualbox.h
+tests/macros.h
+
+Depends-on:
+inttypes-h
+sleep
+pthread-thread
+streq
+memeq
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sigdelay1 test-sigdelay2
+check_PROGRAMS += test-sigdelay1 test-sigdelay2
+test_sigdelay1_LDADD = $(LDADD) @LIBTHREAD@
+test_sigdelay2_LDADD = $(LDADD) @LIBMULTITHREAD@
