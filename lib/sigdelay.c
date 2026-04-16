@@ -41,8 +41,8 @@ struct state
 };
 
 /* The state for all signals.
-   Size 32 would not be sufficient: On HP-UX, SIGXCPU = 33, SIGXFSZ = 34.  */
-static struct state states[64];
+   NSIG is the maximum signal number + 1.  */
+static struct state states[NSIG];
 
 static _GL_ASYNC_SAFE void
 delaying_handler (int sig)
