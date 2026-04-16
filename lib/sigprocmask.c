@@ -136,7 +136,10 @@ sigismember (const sigset_t *set, int sig)
       return (*set >> sig) & 1;
     }
   else
-    return 0;
+    {
+      errno = EINVAL;
+      return -1;
+    }
 }
 
 int
