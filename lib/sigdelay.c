@@ -76,7 +76,7 @@ sigdelay (int how, const sigset_t *restrict set, sigset_t *restrict old_set)
         sigaddset (old_set, sig);
 
   for (int sig = 1; sig < countof (states); sig++)
-    if (sigismember (set, sig))
+    if (sigismember (set, sig) > 0)
       {
         switch (how)
           {
