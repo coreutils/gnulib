@@ -29,7 +29,8 @@
 # define _GL_BYTESWAP_INLINE _GL_INLINE
 #endif
 
-#include <stdbit.h>
+#include <stdbit.h> /* for stdc_memreverse8u* */
+#include <stdint.h> /* for UINT_LEAST64_MAX */
 
 _GL_INLINE_HEADER_BEGIN
 
