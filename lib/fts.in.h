@@ -133,8 +133,8 @@ typedef struct {
      which is set to zero if the file type is unknown,
      and which otherwise has at least its S_IFMT type bits set.
      When fts_info == FTS_NSOK this supports expressions like
-     (fts_statp->st_mode ? !!S_ISDIR (fts_statp->st_mode): -1), which yields
-     1 for a directory, 0 for a non-directory, and -1 for unknown.  */
+     (fts_statp->st_mode ? !!S_ISFIFO (fts_statp->st_mode): -1), which yields
+     1 for a FIFO, 0 for a non-FIFO, and -1 for unknown.  */
 # define FTS_NOSTAT     0x0008          /* don't get stat info */
 
 # define FTS_PHYSICAL   0x0010          /* physical walk */
