@@ -522,15 +522,15 @@ main (void)
     re_set_syntax (RE_NO_SUB | RE_NO_POSIX_BACKTRACKING | RE_NO_EMPTY_RANGES
                    | RE_INTERVALS | RE_DOT_NEWLINE | RE_CHAR_CLASSES
                    | RE_BK_PLUS_QM);
-    regex_t regex;
-    memset (&regex, 0, sizeof regex);
-    const char *errmsg = re_compile_pattern (addr, strlen (addr), &regex);
+    regex_t r;
+    memset (&r, 0, sizeof r);
+    const char *errmsg = re_compile_pattern (addr, strlen (addr), &r);
     if (errmsg)
       report_error ("dc.sed preparation failure: %s", errmsg);
     else
       {
-        regex.translate = NULL;
-        regoff_t ret = re_search (&regex, input, strlen (input),
+        r.translate = NULL;
+        regoff_t ret = re_search (&r, input, strlen (input),
                                   0, strlen (input), NULL);
         (void) ret;
       }
