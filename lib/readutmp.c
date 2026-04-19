@@ -798,7 +798,7 @@ static int
 read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
 {
   /* Fill entries, simulating what a utmp file would contain.  */
-  struct utmp_alloc a = {0};
+  struct utmp_alloc a = { NULL, 0, 0, 0 };
 
   /* Synthesize a BOOT_TIME entry.  */
   if (!(options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)))
