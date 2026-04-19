@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002-2025 Free Software Foundation, Inc.
+   Copyright (C) 2002-2026 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -1241,8 +1241,8 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
 }
 
 /* Insert the new element ELEM to the re_node_set* SET.
-   SET should not already have ELEM.
-   Return true if successful.  */
+   SET is not expected to already contain ELEM, but tolerate
+   duplicates as a no-op.  Return true if successful.  */
 
 static bool
 __attribute_warn_unused_result__
@@ -1286,7 +1286,9 @@ re_node_set_insert (re_node_set *set, Idx elem)
     {
       for (idx = set->nelem; set->elems[idx - 1] > elem; idx--)
 	set->elems[idx] = set->elems[idx - 1];
-      DEBUG_ASSERT (set->elems[idx - 1] < elem);
+      /* Already in set.  Return early.  */
+      if (__glibc_unlikely (set->elems[idx - 1] == elem))
+	return true;
     }
 
   /* Insert the new element.  */
