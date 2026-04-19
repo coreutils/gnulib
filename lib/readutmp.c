@@ -888,9 +888,8 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                   char *clasz;
                   if (sd_session_get_class (session, &clasz) < 0)
                     clasz = missing;
-                  short ctype =
-                    (strncmp (clasz, "manager", 7) == 0 ? LOGIN_PROCESS :
-                     USER_PROCESS);
+                  short ctype = (strncmp (clasz, "user", 4) == 0
+                                 ? USER_PROCESS : LOGIN_PROCESS);
 
                   char *host;
                   char *remote_host;
