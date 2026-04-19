@@ -1,6 +1,6 @@
 /* GNU's read utmp module.
 
-   Copyright (C) 1992-2001, 2003-2006, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 1992-2001, 2003-2006, 2009-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -892,9 +892,8 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                   char *clasz;
                   if (sd_session_get_class (session, &clasz) < 0)
                     clasz = missing;
-                  short ctype =
-                    (strncmp (clasz, "manager", 7) == 0 ? LOGIN_PROCESS :
-                     USER_PROCESS);
+                  short ctype = (strncmp (clasz, "user", 4) == 0
+                                 ? USER_PROCESS : LOGIN_PROCESS);
 
                   char *host;
                   char *remote_host;
