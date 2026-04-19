@@ -505,6 +505,37 @@ main (void)
       }
   }
 
+  /* An assertion failure related to back references, seen in sed's dc.sed.
+     To reproduce, use gcc or clang with UBSAN.  */
+  {
+    const char *addr = "^<\\([^~]*\\)\\([^~]\\)[^~]*~\\1\\(.\\).*|=.*\\3.*\\2";
+    const char *input =
+      "<,1583~,2002~2002~|P|K0|I10|O10|rpddsf[lfp[too early\n"
+      "]Pq]s@1583>@\n"
+      "ddd19%1+sg100/1+d3*4/12-sx8*5+25/5-sz5*4/lx-10-sdlg11*20+lz+lx-30%\n"
+      "d[30+]s@0>@d[[1+]s@lg11<@]s@25=@d[1+]s@24=@se44le-d[30+]s@21>@dld+7%-7+\n"
+      "[March ]smd[31-[April ]sm]s@31<@psnlmPpsn1z>p~|rf2002~|r@lfp[too early\n"
+      "]Pq~|?>@\n"
+      "ddd19%1+sg100/1+d3*4/12-sx8*5+25/5-sz5*4/lx-10-sdlg11*20+lz+lx-30%\n"
+      "d[30+]s@0>@d[[1+]s@lg11<@]s@25=@d[1+]s@24=@se44le-d[30+]s@21>@dld+7%-7+\n"
+      "[March ]smd[31-[April ]sm]s@31<@psnlmPpsn1z>p~|=-~.0,123456789<><";
+    re_set_syntax (RE_NO_SUB | RE_NO_POSIX_BACKTRACKING | RE_NO_EMPTY_RANGES
+                   | RE_INTERVALS | RE_DOT_NEWLINE | RE_CHAR_CLASSES
+                   | RE_BK_PLUS_QM);
+    regex_t regex;
+    memset (&regex, 0, sizeof regex);
+    const char *errmsg = re_compile_pattern (addr, strlen (addr), &regex);
+    if (errmsg)
+      report_error ("dc.sed preparation failure: %s", errmsg);
+    else
+      {
+        regex.translate = NULL;
+        regoff_t ret = re_search (&regex, input, strlen (input),
+                                  0, strlen (input), NULL);
+        (void) ret;
+      }
+  }
+
 #if 0
   /* It would be nice to reject hosts whose regoff_t values are too
      narrow (including glibc on hosts with 64-bit ptrdiff_t and
