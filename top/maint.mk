@@ -1475,7 +1475,7 @@ sc_prohibit_reversed_compare_failure:
 # and the 'bool' module supports it.
 sc_Wundef_boolean:
 	@prohibit='^#define.*(yes|no)$$'				\
-	in_files='$(CONFIG_INCLUDE)'					\
+	in_files='(^|/)$(subst .,\.,$(CONFIG_INCLUDE))$$'		\
 	halt='Use 0/1 or false/true for macro values'			\
 	  $(_sc_search_regexp)
 
