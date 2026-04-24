@@ -146,6 +146,9 @@ main ()
   test_correspondence ("ca", "ca");
   test_correspondence ("ca@valencia", "ca-valencia");
 
+  /* Languages with a spelling rules variant.  */
+  test_correspondence ("de@1901", "de-1901");
+
   /* Test xpg_to_bcp47 with an encoding.  */
   {
     char buf[BCP47_MAX];
