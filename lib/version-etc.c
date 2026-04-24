@@ -23,6 +23,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -245,7 +246,15 @@ emit_bug_reporting_address (void)
      for this package.  Please add _another line_ saying
      "Report translation bugs to <...>\n" with the address for translation
      bugs (typically your translation team's web or email address).  */
-  printf (_("Report bugs to: %s\n"), PACKAGE_BUGREPORT);
+  printf (_("Report bugs to: <%s>.\n"), PACKAGE_BUGREPORT);
+#ifdef PACKAGE_L10N_BUGREPORT
+  /* PACKAGE_L10N_BUGREPORT may be defined to the URL of the package's
+     translation project, e.g. "https://translationproject.org/team/".  */
+  /* Get this reporting instruction included in the (English) man page
+     only.  No need to include it in the normal --help output.  */
+  if (getenv ("IN_HELP2MAN") != NULL)
+    printf ("Report any translation bugs to: <%s>.\n", PACKAGE_L10N_BUGREPORT);
+#endif
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
   printf (_("Report %s bugs to: %s\n"), PACKAGE_PACKAGER,
           PACKAGE_PACKAGER_BUG_REPORTS);
