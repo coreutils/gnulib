@@ -22,4 +22,11 @@ Portability problems not fixed by Gnulib:
 System status macros such as @code{WEXITSTATUS} require an lvalue
 argument on some platforms:
 macOS 11.1.
+
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<signal.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

@@ -32,4 +32,11 @@ Portability problems not fixed by Gnulib:
 @samp{struct timeval} is defined with a @code{tv_sec} type that is
 wider than @code{time_t}:
 OpenBSD 5.1 in 64-bit mode.
+
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<sys/select.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

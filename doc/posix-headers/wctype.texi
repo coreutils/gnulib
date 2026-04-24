@@ -21,4 +21,12 @@ FreeBSD 4.11.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the headers @code{<ctype.h>}, @code{<stdarg.h>},
+@code{<stddef.h>}, @code{<stdlib.h>}, @code{<stdio.h>},
+@code{<string.h>}, @code{<time.h>}, and @code{<wchar.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

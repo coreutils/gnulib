@@ -157,4 +157,11 @@ functions like @samp{openat}.
 Instead, you can use @samp{AT_FDCWD == -1 ? -2 : -1}.
 @samp{AT_FDCWD} is @minus{}1 on some platforms:
 Haiku R1/Beta4.
+
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the headers @code{<sys/stat.h>} and @code{<unistd.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

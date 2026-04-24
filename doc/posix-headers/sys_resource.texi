@@ -27,4 +27,11 @@ Portability problems not fixed by Gnulib:
 On some platforms, this header does not define some or all of the
 symbolic constants required by POSIX@.  For example, OpenVMS and Android do
 not define @code{RLIM_SAVED_CUR} or @code{RLIM_SAVED_MAX}.
+
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<sys/time.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

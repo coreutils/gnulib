@@ -47,4 +47,11 @@ mingw, MSVC 14.
 The macro @code{SIGBUS} is set to the same value as @code{SIGSEGV},
 rather than being a distinct signal, on some platforms:
 Haiku.
+
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<time.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

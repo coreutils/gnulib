@@ -54,4 +54,10 @@ The @code{readutmp} module works around this problem:
 glibc 2.38 on 32-bit platforms like x86 and ARM where @code{time_t}
 was historically 32 bits.
 @xref{Avoiding the year 2038 problem}.
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<sys/time.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

@@ -35,4 +35,11 @@ NetBSD 5.0
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the headers @code{<fcntl.h>}, @code{<stddef.h>},
+@code{<stdint.h>}, and @code{<stdio.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

@@ -19,4 +19,10 @@ macOS 14, FreeBSD 13.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 7.3.1, HP-UX 1
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<stdint.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

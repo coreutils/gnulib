@@ -19,4 +19,11 @@ OpenBSD 4.6.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the headers @code{<arpa/inet.h>}, @code{<inttypes.h>}
+and @code{<sys/socket.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

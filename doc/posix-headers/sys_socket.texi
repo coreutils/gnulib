@@ -91,4 +91,10 @@ glibc 2.42, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.3, Cygwi
 This header file does not define the constant @code{MSG_CMSG_CLOFORK}
 on some platforms:
 glibc 2.42, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Solaris 11.4, Cygwin, mingw, MSVC, Android.
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<sys/uio.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize

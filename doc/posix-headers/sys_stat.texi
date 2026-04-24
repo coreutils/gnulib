@@ -90,6 +90,12 @@ symlinks;
 @mindex areadlink-with-size
 use the Gnulib module @code{areadlink-with-size} for a
 better way to get symlink contents.
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the header @code{<time.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize
 
 @mindex same-inode

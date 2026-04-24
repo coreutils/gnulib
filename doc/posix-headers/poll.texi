@@ -15,4 +15,10 @@ mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX.1-2024 allows, but does not require, this file to make visible
+all symbols from the headers @code{<signal.h>} and @code{<time.h>}.
+Programs should not assume that these other symbols are visible merely
+because this file is included, or that they are invisible because only
+this file is included.
 @end itemize
