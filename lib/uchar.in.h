@@ -53,15 +53,48 @@
  #error "Please include config.h first."
 #endif
 
-/* Get uint_least16_t, uint_least32_t.  */
-#include <stdint.h>
+/* If needed, get uint_least16_t, uint_least32_t.
+   Although POSIX allows <uchar.h> to make all symbols visible from <stdint.h>,
+   our includers should not rely on this.  */
+#if (! (defined __cplusplus \
+        ? @CXX_HAVE_UCHAR_H@ || @CXX_HAS_UCHAR_TYPES@ \
+        : @HAVE_UCHAR_H@) \
+     || @GNULIBHEADERS_OVERRIDE_CHAR16_T@ || @GNULIBHEADERS_OVERRIDE_CHAR32_T@)
+# include <stdint.h>
+#endif
 
-/* Get mbstate_t, size_t.  */
-#include <wchar.h>
+/* If needed, get btowc, mbstate_t, mbszero, size_t, wctob, wint_t, WEOF.
+   Although POSIX allows <uchar.h> to make all symbols visible from <wchar.h>,
+   our includers should not rely on this, except they can rely on wint_t and WEOF
+   when part of the API of a Gnulib module extending <uchar.h> that needs
+   these two symbols.  */
+#if (! (/* The underlying <uchar.h> defines mbstate_t, size_t.  */ \
+        defined __cplusplus ? @CXX_HAVE_UCHAR_H@ : @HAVE_UCHAR_H@) \
+     || (/* These need wint_t and maybe WEOF and a <wchar.h> function.  */ \
+         @GNULIB_BTOC32@ || @GNULIB_C32TOB@) \
+     || (/* These need mbszero.  */ \
+         (@GNULIB_C32STOMBS@ || @GNULIB_MBSTOC32S@)))
+# include <wchar.h>
+#endif
 
-/* For the inline functions.  */
-#include <string.h>
-#include <wctype.h>
+/* If needed, get iswalnum, iswalpha, iswblank, iswcntrl, iswctype,
+   iswdigit, iswgraph, iswlower, iswprint, iswpunct, iswspace,
+   iswupper, iswxdigit, towctrans, towlower, towupper, wctrans,
+   wctrans_t, wctype, wctype_t, wint_t, WEOF.
+   Our includers should not rely on this, except they can rely on wint_t and WEOF
+   when part of the API of a Gnulib module extending <uchar.h> that needs
+   these two symbols.  */
+#if (/* These need wint_t and maybe wctrans_t, wctype_t, WEOF, \
+        and a <wchar.h> function.  */ 0 \
+     || @GNULIB_C32ISALNUM@ || @GNULIB_C32ISALPHA@ || @GNULIB_C32ISBLANK@ \
+     || @GNULIB_C32ISCNTRL@ || @GNULIB_C32ISDIGIT@ || @GNULIB_C32ISGRAPH@ \
+     || @GNULIB_C32ISLOWER@ || @GNULIB_C32ISPRINT@ || @GNULIB_C32ISPUNCT@ \
+     || @GNULIB_C32ISSPACE@ || @GNULIB_C32ISUPPER@ || @GNULIB_C32ISXDIGIT@ \
+     || @GNULIB_C32TOLOWER@ || @GNULIB_C32TOUPPER@ \
+     || @GNULIB_C32_APPLY_MAPPING@ || @GNULIB_C32_APPLY_TYPE_TEST@ \
+     || @GNULIB_C32_GET_MAPPING@ || @GNULIB_C32_GET_TYPE_TEST@)
+# include <wctype.h>
+#endif
 
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The attribute __pure__ was added in gcc 2.96.  */
@@ -86,8 +119,7 @@ _GL_INLINE_HEADER_BEGIN
 #if !(defined __cplusplus ? @CXX_HAVE_UCHAR_H@ || @CXX_HAS_CHAR8_TYPE@ : @HAVE_UCHAR_H@)
 
 /* An 8-bit variant of wchar_t.
-   Note: This type is only mandated by ISO C 23 or newer, and it does
-   denote UTF-8 units.  */
+   Note: This type is mandated by ISO C 23 or newer, and denotes UTF-8 units.  */
 typedef unsigned char char8_t;
 
 #elif @GNULIBHEADERS_OVERRIDE_CHAR8_T@
@@ -100,9 +132,9 @@ typedef unsigned char gl_char8_t;
 #if !(defined __cplusplus ? @CXX_HAVE_UCHAR_H@ || @CXX_HAS_UCHAR_TYPES@ : @HAVE_UCHAR_H@)
 
 /* A 16-bit variant of wchar_t.
-   Note: This type is only mandated by ISO C 11 or newer.  In ISO C 23
+   Note: This type is mandated by ISO C 11 or newer.  In ISO C 23
    and newer, it denotes UTF-16 units; in older versions of ISO C it did
-   so only on platforms on which __STDC_UTF_16__ was defined.  */
+   so on platforms on which __STDC_UTF_16__ was defined.  */
 typedef uint_least16_t char16_t;
 
 #elif @GNULIBHEADERS_OVERRIDE_CHAR16_T@
@@ -115,9 +147,9 @@ typedef uint_least16_t gl_char16_t;
 #if !(defined __cplusplus ? @CXX_HAVE_UCHAR_H@ || @CXX_HAS_UCHAR_TYPES@ : @HAVE_UCHAR_H@)
 
 /* A 32-bit variant of wchar_t.
-   Note: This type is only mandated by ISO C 11 or newer.  In ISO C 23
+   Note: This type is mandated by ISO C 11 or newer.  In ISO C 23
    and newer, it denotes UTF-32 code points; in older versions of ISO C
-   it did so only on platforms on which __STDC_UTF_32__ was defined.
+   it did so on platforms on which __STDC_UTF_32__ was defined.
    In gnulib, we guarantee that it denotes UTF-32 code points if and
    only if the module 'uchar-h-c23' is in use.  */
 typedef uint_least32_t char32_t;
@@ -145,17 +177,15 @@ typedef uint_least32_t gl_char32_t;
      - because GCC >= 4.9 defines these macros on all platforms, even on
        FreeBSD and Solaris.
    We should better not use __STD_UTF_16__, __STD_UTF_32__ either, because
-   these macros are misspellings, only defined by Android's <uchar.h>.  */
+   these macros are misspellings, defined only by Android's <uchar.h>.  */
 #if defined __STDC_ISO_10646__ && !_GL_SMALL_WCHAR_T
 /* glibc, musl libc */
 # define _GL_WCHAR_T_IS_UCS4 1
 #endif
-#if _GL_WCHAR_T_IS_UCS4
-static_assert (sizeof (char32_t) == sizeof (wchar_t));
-#endif
 
 
-/* Convert a single-byte character to a 32-bit wide character.  */
+/* Convert a single-byte character C to a 32-bit wide character,
+   or to WEOF if C is invalid.  */
 #if @GNULIB_BTOC32@
 # if _GL_WCHAR_T_IS_UCS4 && !defined IN_BTOC32
 _GL_BEGIN_C_LINKAGE
@@ -471,7 +501,7 @@ _GL_CXXALIASWARN (c32width);
 #endif
 
 
-/* Converts a 32-bit wide character to a multibyte character.  */
+/* Convert a 32-bit wide character to a multibyte character.  */
 #if @GNULIB_C32RTOMB@
 # if @REPLACE_C32RTOMB@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -599,8 +629,8 @@ _GL_CXXALIASWARN (c32swidth);
 #endif
 
 
-/* Converts a 32-bit wide character to unibyte character.
-   Returns the single-byte representation of WC if it exists,
+/* Convert a 32-bit wide character to unibyte character.
+   Return the single-byte representation of WC if it exists,
    or EOF otherwise.  */
 #if @GNULIB_C32TOB@
 # if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32TOB
@@ -623,7 +653,7 @@ _GL_CXXALIASWARN (c32tob);
 #endif
 
 
-/* Converts a multibyte character to a 32-bit wide character.  */
+/* Convert a multibyte character to a 32-bit wide character.  */
 #if @GNULIB_MBRTOC32@
 # if @REPLACE_MBRTOC32@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -653,7 +683,7 @@ _GL_WARN_ON_USE (mbrtoc32, "mbrtoc32 is not portable - "
 #endif
 
 
-/* Converts a multibyte character and returns the next 16-bit wide
+/* Convert a multibyte character and returns the next 16-bit wide
    character.  */
 #if @GNULIB_MBRTOC16@
 # if @REPLACE_MBRTOC16@

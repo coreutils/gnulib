@@ -20,6 +20,12 @@
 
 #include <uchar.h>
 
+#include <wchar.h>
+
+#if _GL_WCHAR_T_IS_UCS4
+static_assert (sizeof (char32_t) == sizeof (wchar_t));
+#endif
+
 /* Check that the types are defined.  */
 mbstate_t a = { 0 };
 size_t b = 5;

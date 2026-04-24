@@ -13,7 +13,6 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 extern-inline
-assert-h
 stdint-h
 wchar-h
 wctype-h

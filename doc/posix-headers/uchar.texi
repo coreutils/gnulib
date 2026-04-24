@@ -5,7 +5,8 @@ ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/uchar.h.html}
 
-Defines the types @code{char16_t}, @code{char32_t} and declares the
+Defines the types @code{char16_t}, @code{char32_t},
+@code{mbstate_t} and @code{size_t}, and declares the
 functions @code{mbrtoc16}, @code{c16rtomb}, @code{mbrtoc32},
 @code{c32rtomb}.
 
@@ -33,6 +34,28 @@ Portability problems fixed by Gnulib module @code{uchar-h-c23}:
 @code{char32_t} values may not be Unicode code points.
 This is the case in ISO C 11 compliant but not ISO C 23 compliant
 implementations.
+@end itemize
+
+Portability problems fixed by Gnulib modules
+@code{btoc32},
+@code{c32_apply_mapping}, @code{c32_apply_type_test},
+@code{c32_get_mapping}, @code{c32_get_type_test},
+@code{c32isalnum}, @code{c32isalpha}, @code{c32isblank},
+@code{c32iscntrl}, @code{c32isdigit}, @code{c32isgraph},
+@code{c32islower}, @code{c32isprint}, @code{c32ispunct},
+@code{c32isspace}, @code{c32isupper}, @code{c32isxdigit},
+@code{c32rtomb}, @code{c32snrtombs}, @code{c32srtombs},
+@code{c32stombs}, @code{c32swidth}, @code{c32tob},
+@code{c32tolower}, @code{c32toupper}, @code{c32width}:
+@itemize
+@item
+The @code{char32_t} type of ISO C 23 and POSIX @code{<uchar.h>} lacks
+counterparts of several standard @code{wchar_t} functions declared in
+@code{<wchar.h>} and @code{<wctype.h>}.
+This shortcoming is ameliorated by these Gnulib modules,
+each of which arranges for @code{<uchar.h>} to declare a
+Gnulib-specific function and to make visible the symbols @code{wint_t}
+and @code{WEOF} if the symbols are part of that function's API.
 @end itemize
 
 Portability problems not fixed by Gnulib:
