@@ -1,5 +1,5 @@
 /* Test support for locale names in BCP 47 syntax.
-   Copyright (C) 2024-2025 Free Software Foundation, Inc.
+   Copyright (C) 2024-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -145,6 +145,9 @@ main ()
 
   test_correspondence ("ca", "ca");
   test_correspondence ("ca@valencia", "ca-valencia");
+
+  /* Languages with a spelling rules variant.  */
+  test_correspondence ("de@1901", "de-1901");
 
   /* Test xpg_to_bcp47 with an encoding.  */
   {
