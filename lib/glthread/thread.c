@@ -204,6 +204,10 @@ const gl_thread_t gl_null_thread /* = { .p = NULL } */;
 
 /* ========================================================================= */
 
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS \
+      || USE_WINDOWS_THREADS)
+_Noreturn
+#endif
 gl_thread_t
 gl_thread_create (void *(*func) (void *arg), void *arg)
 {
