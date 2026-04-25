@@ -20,21 +20,26 @@ extensions
 ssize_t
 vararrays
 attribute               [test $ac_use_included_regex = yes]
-btowc                   [test $ac_use_included_regex = yes]
+btoc32                  [test $ac_use_included_regex = yes]
 builtin-expect          [test $ac_use_included_regex = yes]
+c32_apply_type_test     [test $ac_use_included_regex = yes]
+c32_get_type_test       [test $ac_use_included_regex = yes]
+c32isalnum              [test $ac_use_included_regex = yes]
+c32rtomb                [test $ac_use_included_regex = yes]
+c32tolower              [test $ac_use_included_regex = yes]
+c32toupper              [test $ac_use_included_regex = yes]
 gettext-h               [test $ac_use_included_regex = yes]
 glibc-internal/dynarray [test $ac_use_included_regex = yes]
 gnulib-i18n             [test $ac_use_included_regex = yes]
 intprops                [test $ac_use_included_regex = yes]
-iswctype                [test $ac_use_included_regex = yes]
 langinfo-h              [test $ac_use_included_regex = yes]
 libc-config             [test $ac_use_included_regex = yes]
 limits-h                [test $ac_use_included_regex = yes]
 lock                    [test $ac_use_included_regex = yes]
 malloc-gnu              [test $ac_use_included_regex = yes]
+mbrtoc32-regular        [test $ac_use_included_regex = yes]
 memcmp                  [test $ac_use_included_regex = yes]
 memmove                 [test $ac_use_included_regex = yes]
-mbrtowc                 [test $ac_use_included_regex = yes]
 mbsinit                 [test $ac_use_included_regex = yes]
 nl_langinfo             [test $ac_use_included_regex = yes]
 bool                    [test $ac_use_included_regex = yes]
@@ -43,10 +48,11 @@ stdcountof-h            [test $ac_use_included_regex = yes]
 stdint-h                [test $ac_use_included_regex = yes]
 strncpy                 [test $ac_use_included_regex = yes]
 verify                  [test $ac_use_included_regex = yes]
-wchar-h                 [test $ac_use_included_regex = yes]
-wcrtomb                 [test $ac_use_included_regex = yes]
-wctype-h                [test $ac_use_included_regex = yes]
-wctype                  [test $ac_use_included_regex = yes]
+uchar-h                 [test $ac_use_included_regex = yes]
+# The lonesome_lower array requires ISO C 23 semantics for char32_t.
+# But uchar-h-c23 has a global effect, therefore leave it to each package
+# to enable it.
+#uchar-h-c23            [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX

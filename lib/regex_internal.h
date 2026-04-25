@@ -27,8 +27,6 @@
 
 #include <langinfo.h>
 #include <locale.h>
-#include <wchar.h>
-#include <wctype.h>
 #include <stdckdint.h>
 #include <stdcountof.h>
 #include <stdint.h>
@@ -121,21 +119,31 @@
 #define NEWLINE_CHAR '\n'
 #define WIDE_NEWLINE_CHAR L'\n'
 
-/* Rename to standard API for using out of glibc.  */
-#ifndef _LIBC
+/* Use Gnulib <uchar.h> when outside of glibc.  */
+#ifdef _LIBC
+# include <wchar.h>
+# include <wctype.h>
+#else
+# include <uchar.h>
 # undef __wctype
 # undef __iswalnum
 # undef __iswctype
 # undef __towlower
 # undef __towupper
-# define __wctype wctype
-# define __iswalnum iswalnum
-# define __iswctype iswctype
-# define __towlower towlower
-# define __towupper towupper
-# define __btowc btowc
-# define __mbrtowc mbrtowc
-# define __wcrtomb wcrtomb
+# undef __btowc
+# undef __mbrtowc
+# undef __wcrtomb
+# undef __regfree
+# define wchar_t char32_t
+# define wctype_t c32_type_test_t
+# define __wctype c32_get_type_test
+# define __iswalnum c32isalnum
+# define __iswctype c32_apply_type_test
+# define __towlower c32tolower
+# define __towupper c32toupper
+# define __btowc btoc32
+# define __mbrtowc mbrtoc32
+# define __wcrtomb c32rtomb
 # define __regfree regfree
 #endif /* not _LIBC */
 
