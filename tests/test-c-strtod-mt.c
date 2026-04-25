@@ -104,6 +104,9 @@ main (int argc, char *argv[])
   if (setlocale (LC_ALL, "") == NULL)
     return 1;
 
+#if (USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS \
+     || USE_WINDOWS_THREADS)
+
   /* Create the threads.  */
   gl_thread_create (thread1_func, NULL);
   gl_thread_create (thread2_func, NULL);
@@ -119,6 +122,13 @@ main (int argc, char *argv[])
   }
 
   return 0;
+
+#else
+
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
+  return 77;
+
+#endif
 }
 
 #else

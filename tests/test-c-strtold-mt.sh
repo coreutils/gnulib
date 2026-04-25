@@ -20,11 +20,11 @@ else
 fi
 
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR      ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit 1
+  LC_ALL=$LOCALE_FR      ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit
 fi
 
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit 1
+  LC_ALL=$LOCALE_FR_UTF8 ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit
 fi
 
 exit 0
