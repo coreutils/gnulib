@@ -14,4 +14,4 @@ AC_CHECK_DECLS_ONCE([alarm])
 Makefile.am:
 TESTS += test-regex
 check_PROGRAMS += test-regex
-test_regex_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB) @LIBINTL@ $(LIBTHREAD)
+test_regex_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) @LIBINTL@ $(LIBC32CONV) $(LIBTHREAD)
