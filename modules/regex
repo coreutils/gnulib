@@ -49,10 +49,6 @@ stdint-h                [test $ac_use_included_regex = yes]
 strncpy                 [test $ac_use_included_regex = yes]
 verify                  [test $ac_use_included_regex = yes]
 uchar-h                 [test $ac_use_included_regex = yes]
-# The lonesome_lower array requires ISO C 23 semantics for char32_t.
-# But uchar-h-c23 has a global effect, therefore leave it to each package
-# to enable it.
-#uchar-h-c23            [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX
