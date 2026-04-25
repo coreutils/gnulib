@@ -1,5 +1,5 @@
 /* Test of xstrtol module.
-   Copyright (C) 1995-1996, 1998-2001, 2003-2025 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 1998-2001, 2003-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 # define __xstrtol xstrtol
 # define __strtol_t long int
 # define __spec "ld"
-# define is_GNULIB_strtol GNULIB_defined_strtol_function
 #endif
 
 /* Don't show the program name in error messages.  */
@@ -70,20 +69,32 @@ main (int argc, char **argv)
 
       /* Test an invalid base (undefined behaviour, as documented in xstrtol.h).
          Reported by Alejandro Colomar.  */
-#if !(defined __CYGWIN__ || defined _MSC_VER)
+#if !defined _MSC_VER
       {
         const char input[] = "k";
         char *endp = NULL;
         __strtol_t val = -17;
         strtol_error s_err = __xstrtol (input, &endp, -1, &val, "k");
-# if !(defined __GLIBC__ || is_GNULIB_strtol)
-        ASSERT (s_err == LONGINT_OK);
-        ASSERT (endp == input + 1);
-        ASSERT (val == 1024);
-# else
-        ASSERT (s_err == LONGINT_INVALID);
-        ASSERT (val == -17);
-# endif
+        if (s_err == LONGINT_INVALID)
+          {
+            /* On glibc or when the gnulib replacement function is used,
+               strtol (input, &endp, -1) returns 0 with errno == EINVAL,
+               *without* changing endp.  xstrtol then returns LONGINT_INVALID.
+             */
+            ASSERT (s_err == LONGINT_INVALID);
+            ASSERT (val == -17);
+          }
+        else
+          {
+            /* On musl libc, macOS, NetBSD, OpenBSD, Solaris, mingw,
+               when the gnulib replacement function is not used,
+               strtol (input, &endp, -1) returns 0 with errno == EINVAL,
+               setting endp = input.  xstrtol then performs the suffix
+               processing and finally returns LONGINT_OK.  */
+            ASSERT (s_err == LONGINT_OK);
+            ASSERT (endp == input + 1);
+            ASSERT (val == 1024);
+          }
       }
 #endif
 
