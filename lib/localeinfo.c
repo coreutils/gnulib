@@ -21,25 +21,16 @@
 
 #include <localeinfo.h>
 
+#include <verify.h>
+
 #include <limits.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
-#if GAWK
-/* Use ISO C 99 API.  */
-# include <wctype.h>
-# define char32_t wchar_t
-# define mbrtoc32 mbrtowc
-# define c32tolower towlower
-# define c32toupper towupper
-# define mbszero(p) memset (p, 0, sizeof (mbstate_t))
-#else
-/* Use ISO C 11 + gnulib API.  */
-# include <uchar.h>
-#endif
+#include <uchar.h>
 
 /* The sbclen implementation relies on this.  */
-static_assert (MB_LEN_MAX <= SCHAR_MAX);
+verify (MB_LEN_MAX <= SCHAR_MAX);
 
 /* Return true if the locale uses UTF-8.  */
 
@@ -130,8 +121,8 @@ static unsigned short int const lonesome_lower[] =
 
 /* Verify that the worst case fits.  This is 1 for towupper, 1 for
    towlower, and 1 for each entry in LONESOME_LOWER.  */
-static_assert (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
-               <= CASE_FOLDED_BUFSIZE);
+verify (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
+        <= CASE_FOLDED_BUFSIZE);
 
 /* Find the characters equal to C after case-folding, other than C
    itself, and store them into FOLDED.  Return the number of characters

@@ -38,7 +38,6 @@ uchar-h
 # to enable it.
 #uchar-h-c23
 verify
-wchar-h
 xalloc
 xalloc-die
 

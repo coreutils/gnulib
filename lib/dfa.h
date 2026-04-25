@@ -19,7 +19,8 @@
 #ifndef DFA_H_
 #define DFA_H_
 
-/* This file uses _Noreturn, _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+/* This file uses _Noreturn, _GL_ATTRIBUTE_DEALLOC,
+   _GL_ATTRIBUTE_DEALLOC_FREE, _GL_ATTRIBUTE_MALLOC,
    _GL_ATTRIBUTE_PURE, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
@@ -48,14 +49,6 @@ struct dfamust
 
 /* The dfa structure. It is completely opaque. */
 struct dfa;
-
-/* Needed when Gnulib is not used.  */
-#ifndef _GL_ATTRIBUTE_MALLOC
-# define _GL_ATTRIBUTE_MALLOC
-# define _GL_ATTRIBUTE_DEALLOC(f, i)
-# define _GL_ATTRIBUTE_DEALLOC_FREE
-# define _GL_ATTRIBUTE_RETURNS_NONNULL
-#endif
 
 /* Entry points. */
 

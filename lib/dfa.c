@@ -33,29 +33,14 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include <wchar.h>
-
-#include "xalloc.h"
-#include "localeinfo.h"
 
 #include "gettext.h"
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 
-#if GAWK
-/* Use ISO C 99 API.  */
-# include <wctype.h>
-# define char32_t wchar_t
-# define mbrtoc32 mbrtowc
-# define c32rtomb wcrtomb
-# define c32tob wctob
-# define c32isprint iswprint
-# define c32isspace iswspace
-# define mbszero(p) memset (p, 0, sizeof (mbstate_t))
-# define streq(a, b) (strcmp (a, b) == 0)
-#else
-/* Use ISO C 11 + gnulib API.  */
-# include <uchar.h>
-#endif
+#include "xalloc.h"
+#include "localeinfo.h"
+
+#include <uchar.h>
 
 /* Pacify gcc -Wanalyzer-null-dereference in areas where GCC
    understandably cannot deduce that the input comes from a
@@ -1099,7 +1084,7 @@ parse_bracket_exp (struct dfa *dfa)
               if (wc != wc2 || wc == WEOF)
                 {
                   if (dfa->localeinfo.simple
-                      || (c_isdigit (c) & c_isdigit (c2)))
+                      || (c_isdigit (c) && c_isdigit (c2)))
                     {
                       for (int ci = c; ci <= c2; ci++)
                         if (dfa->syntax.case_fold && isalpha (ci))

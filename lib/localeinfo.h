@@ -17,15 +17,7 @@
 
 /* Written by Paul Eggert.  */
 
-#include <limits.h>
-#include <wchar.h>
-#if GAWK
-/* Use ISO C 99 API.  */
-# define char32_t wchar_t
-#else
-/* Use ISO C 11 + gnulib API.  */
-# include <uchar.h>
-#endif
+#include <uchar.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,13 +42,13 @@ struct localeinfo
      single-byte character, -1 if B is an encoding error, and -2 if B
      is the leading byte of a multibyte character that contains more
      than one byte.  */
-  signed char sbclen[UCHAR_MAX + 1];
+  signed char sbclen[(unsigned char) -1 + 1];
 
   /* An array indexed by byte values B that contains the corresponding
      32-bit wide character (if any) for B if sbclen[B] == 1.  WEOF means
      the byte is not a valid single-byte character, i.e., sbclen[B] == -1
      or -2.  */
-  wint_t sbctowc[UCHAR_MAX + 1];
+  wint_t sbctowc[(unsigned char) -1 + 1];
 };
 
 extern void init_localeinfo (struct localeinfo *);
