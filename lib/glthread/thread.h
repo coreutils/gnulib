@@ -114,7 +114,11 @@ extern gl_thread_t gl_thread_self (void);
 # define gl_thread_self_pointer() \
     (void *) gl_thread_self ()
 extern _Noreturn void gl_thread_exit (void *return_value);
-# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
+    ((void) (struct { void (*prepare_func) (void); \
+                      void (*parent_func) (void); \
+                      void (*child_func) (void); }) \
+     {PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC}, 0)
 
 # ifdef __cplusplus
 }
@@ -240,7 +244,11 @@ extern const gl_thread_t gl_null_thread;
 #  define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
      (pthread_in_use () ? pthread_atfork (PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) : 0)
 # else
-#  define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
+     ((void) (struct { void (*prepare_func) (void); \
+                       void (*parent_func) (void); \
+                       void (*child_func) (void); }) \
+     {PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC}, 0)
 # endif
 
 # ifdef __cplusplus
@@ -268,7 +276,9 @@ typedef glwthread_thread_t gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) \
     glwthread_thread_create (THREADP, 0, FUNC, ARG)
 # define glthread_sigmask(HOW, SET, OSET) \
-    /* unsupported */ 0
+    /* unsupported */ \
+    ((void) (struct { int how; sigset_t const *set; sigset_t *oset; }) \
+     {HOW, SET, OSET}, 0)
 # define glthread_join(THREAD, RETVALP) \
     glwthread_thread_join (THREAD, RETVALP)
 # define gl_thread_self() \
@@ -277,7 +287,11 @@ typedef glwthread_thread_t gl_thread_t;
     gl_thread_self ()
 # define gl_thread_exit(RETVAL) \
     glwthread_thread_exit (RETVAL)
-# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
+    ((void) (struct { void (*prepare_func) (void); \
+                      void (*parent_func) (void); \
+                      void (*child_func) (void); }) \
+     {PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC}, 0)
 
 # ifdef __cplusplus
 }
@@ -292,14 +306,26 @@ typedef glwthread_thread_t gl_thread_t;
 /* Provide dummy implementation if threads are not supported.  */
 
 typedef int gl_thread_t;
-# define glthread_create(THREADP, FUNC, ARG) ENOSYS
-# define glthread_sigmask(HOW, SET, OSET) 0
-# define glthread_join(THREAD, RETVALP) 0
+# define glthread_create(THREADP, FUNC, ARG) \
+    ((void) (struct { gl_thread_t *threadp; \
+                      void *(*func) (void *); \
+                      void *arg; }) \
+     {THREADP, FUNC, ARG}, ENOSYS)
+# define glthread_sigmask(HOW, SET, OSET) \
+    ((void) (struct { int how; sigset_t const *set; sigset_t *oset; }) \
+     {HOW, SET, OSET}, 0)
+# define glthread_join(THREAD, RETVALP) \
+    ((void) (struct { gl_thread_t thread; void **retvalp; }) \
+     {THREAD, RETVALP}, 0)
 # define gl_thread_self() 0
 # define gl_thread_self_pointer() \
     ((void *) gl_thread_self ())
-# define gl_thread_exit(RETVAL) (void)0
-# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+# define gl_thread_exit(RETVAL) ((int) {RETVAL}, (void) 0)
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
+    ((void) (struct { void (*prepare_func) (void); \
+                      void (*parent_func) (void); \
+                      void (*child_func) (void); }) \
+     {PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC}, 0)
 
 #endif
 
