@@ -53,7 +53,14 @@
 # define WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
-# include "windows-mutex.h"
+/* The option '--disable-threads' explicitly requests no locking.  */
+# if AVOID_ANY_THREADS
+typedef enum { GLWTHREAD_MUTEX_INIT } glwthread_mutex_t;
+static int glwthread_mutex_lock (glwthread_mutex_t *m) { return 0; }
+static int glwthread_mutex_unlock (glwthread_mutex_t *m) { return 0; }
+# else
+#  include "windows-mutex.h"
+# endif
 #endif
 
 #if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
