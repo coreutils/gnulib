@@ -180,7 +180,11 @@
    reindenting a lot of regex code that formerly used 'int'.  */
 typedef regoff_t Idx;
 #ifdef _REGEX_LARGE_OFFSETS
-# define IDX_MAX SSIZE_MAX
+# ifdef SSIZE_MAX
+#  define IDX_MAX SSIZE_MAX
+# else
+#  define IDX_MAX ((Idx) ((size_t) -1 / 2))
+# endif
 #else
 # define IDX_MAX INT_MAX
 #endif
