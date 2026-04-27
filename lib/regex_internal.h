@@ -448,7 +448,11 @@ typedef struct re_dfa_t re_dfa_t;
 # define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif
 
-#define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
+#if defined _LIBC || HAVE_MALLOC_0_NONNULL
+# define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
+#else
+# define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t) + !(n)))
+#endif
 #define re_realloc(p,t,n) ((t *) realloc (p, (n) * sizeof (t)))
 #define re_free(p) free (p)
 
