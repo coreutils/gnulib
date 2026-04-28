@@ -195,7 +195,7 @@ extern "C" {
 
 
 /* Some systems are only missing C2y features in stdbit.h.  */
-#if !@HAVE_STDBIT_H@ || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)
+#if !@HAVE_STDBIT_H@ || defined __cplusplus
 
 /* ISO C 23 § 7.18.1 General  */
 
