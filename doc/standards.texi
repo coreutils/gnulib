@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 5, 2025
+@set lastupdate April 27, 2026
 @c %**end of header
 
 @dircategory GNU organization
@@ -4461,12 +4461,17 @@ other files to get.
 @cindex references to nonfree material
 
 A GNU program should not recommend, promote, or grant legitimacy to
-the use of any nonfree program.  Proprietary software is a social and
-ethical problem, and our aim is to put an end to that problem.  We
-can't stop some people from writing proprietary programs, or stop
-other people from using them, but we can and should refuse to
-advertise them to new potential customers, or to give the public the
-impression that their existence is legitimate.
+the use of any nonfree program.  This principle likewise applies to
+anything operating online that is morally comparable to a proprietary
+program---such as a web site that requires users to run the site's
+nonfree software, or invites them to surrender control of their own
+computing to that site's server.
+
+Proprietary software is a social and ethical problem, and our aim is
+to put an end to that problem.  We can't stop some people from writing
+proprietary programs, or stop other people from using them, but we can
+and should avoid advertising them to new potential customers, or
+suggesting that their existence is morally legitimate.
 
 The GNU definition of free software is found on the GNU web site at
 @url{https://www.gnu.org/@/philosophy/@/free-sw.html}, and the definition
@@ -4474,35 +4479,34 @@ of free documentation is found at
 @url{https://www.gnu.org/@/philosophy/@/free-doc.html}.  The terms ``free''
 and ``nonfree'', used in this document, refer to those definitions.
 
-A list of important licenses and whether they qualify as free is in
-@url{https://www.gnu.org/@/licenses/@/license-list.html}.  If it is not
-clear whether a license qualifies as free, please ask the GNU Project
-by writing to @email{licensing@@gnu.org}.  We will answer, and if the
-license is an important one, we will add it to the list.
+A list of licenses we have judged, and whether they qualify as free,
+is in @url{https://www.gnu.org/@/licenses/@/license-list.html}.  If it
+is not clear whether a license qualifies as free, please ask the GNU
+Project by writing to @email{licensing@@gnu.org}.  We will answer, and
+if the license is significant, we will add it to the list.
 
 When a nonfree program or system is well known, you can mention it in
 passing---that is harmless, since users who might want to use it
 probably already know about it.  For instance, it is fine to explain
-how to build your package on top of some widely used nonfree
-operating system, or how to use it together with some widely used
-nonfree program, after first explaining how to use it on the GNU
-system.
+how to build your package on top of some widely used nonfree operating
+system, or how to use it together with some widely used nonfree
+program or dis-service, preferably after first explaining how to
+achieve the same results on the GNU system with solely free software.
 
 However, you should give only the necessary information to help those
 who already use the nonfree program to use your program with
 it---don't give, or refer to, any further information about the
-proprietary program, and don't imply that the proprietary program
-enhances your program, or that its existence is in any way a good
-thing.  The goal should be that people already using the proprietary
-program will get the advice they need about how to use your free
-program with it, while people who don't already use the proprietary
-program will not see anything likely to lead them to take an interest
-in it.
+proprietary program or dis-service, and don't imply that it enhances
+your program, or that its existence is in any way a good thing.  The
+goal should be that people already using the proprietary program will
+get the advice they need about how to use your free program with it,
+while people who don't already use the unjust program or dis-service
+will not see anything likely to lead them to take an interest in it.
 
 You shouldn't recommend any nonfree add-ons for the nonfree program,
 but it is ok to mention free add-ons that help it to work with your
 program, and how to install the free add-ons even if that requires
-running some nonfree program.
+running some other associated nonfree program.
 
 If a nonfree program or system is obscure in your program's domain,
 your program should not mention or support it at all, since doing so
@@ -4522,8 +4526,8 @@ listing Java programs in the Free Software Directory: we wanted to
 avoid promoting the nonfree Java libraries.
 
 Java no longer has this problem, but the general principle will remain
-the same: don't recommend, promote or legitimize programs that depend
-on nonfree software to run.
+the same: don't recommend, promote or legitimize programs or services
+whose use depends on running some nonfree software or dis-service.
 
 Some free programs strongly encourage the use of nonfree software.  A
 typical example is @command{mplayer}.  It is free software in itself,
@@ -4561,7 +4565,7 @@ What about chains of links?  Following links from nearly any web site
 can lead eventually to promotion of nonfree software; this is
 inherent in the nature of the web.  Here's how we treat that.
 
-You should not refer to AT&T's web site if that recommends AT&T's
+You should not refer to AT&T's web site if that use recommends AT&T's
 nonfree software packages; you should not refer to a page @var{p}
 that links to AT&T's site presenting it as a place to get some
 nonfree program, because that part of the page @var{p} itself
@@ -4573,16 +4577,18 @@ you should not link to @var{p}.
 
 A web page recommends a program in an implicit but particularly strong
 way if it requires users to run that program in order to use the page.
-Many pages contain JavaScript code which they recommend in this way.
-This JavaScript code may be free or nonfree, but nonfree is the usual
-case.
+Many pages contain JavaScript code which they hyper-recommend in this
+way.  This JavaScript code may be free or nonfree, but nonfree is the
+usual case.
 
 If the purpose for which you would refer to the page cannot be carried
 out without running nonfree JavaScript code, then you should not refer
 to it.  Thus, if the purpose of referring to the page is for people to
-view a video, or subscribing to a mailing list, and the viewing or
+view a video, or subscribe to a mailing list, and the viewing or
 subscribing fail to work if the user's browser blocks the nonfree
-JavaScript code, then don't refer to that page.
+JavaScript code, then don't refer to that page.  References to
+@indicateurl{github.com} usually have this problem, since it requires
+the user to run nonfree software even to make an account.
 
 The extreme case is that of web sites which depend on nonfree
 JavaScript code even to @emph{see} the contents of the pages.  Any
@@ -4611,6 +4617,6 @@ Local variables:
 eval: (add-hook 'before-save-hook 'time-stamp)
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
-time-stamp-format: "%:b %:d, %:y"
+time-stamp-format: "%:b %:d, %Y"
 compile-command: "cd work.s && make"
 End:
