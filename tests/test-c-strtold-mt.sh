@@ -19,12 +19,24 @@ else
   exit 77
 fi
 
+no_fail_status=0
+
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR      ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit
+  LC_ALL=$LOCALE_FR      ${CHECKER} ./test-c-strtold-mt${EXEEXT}
+  case $? in
+    0) ;;
+    77) no_fail_status=77 ;;
+    *) exit 1 ;;
+  esac
 fi
 
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ${CHECKER} ./test-c-strtold-mt${EXEEXT} || exit
+  LC_ALL=$LOCALE_FR_UTF8 ${CHECKER} ./test-c-strtold-mt${EXEEXT}
+  case $? in
+    0) ;;
+    77) no_fail_status=77 ;;
+    *) exit 1 ;;
+  esac
 fi
 
 exit 0
