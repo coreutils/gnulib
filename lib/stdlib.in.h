@@ -1,6 +1,6 @@
 /* A GNU-like <stdlib.h>.
 
-   Copyright (C) 1995, 2001-2004, 2006-2025 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2004, 2006-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -1497,7 +1497,7 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 #if @GNULIB_REALLOC_POSIX@
 # if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
-#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2
+#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2 && !_GL_INLINE_RPL_REALLOC
 #   define _GL_INLINE_RPL_REALLOC 1
 #   ifdef __cplusplus
 extern "C" {
