@@ -204,8 +204,13 @@ const gl_thread_t gl_null_thread /* = { .p = NULL } */;
 
 /* ========================================================================= */
 
-#if (USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS \
-     || USE_WINDOWS_THREADS)
+/* Avoid gcc warning "function might be candidate for attribute ‘noreturn’".
+   We don't want to mark gl_thread_create as _Noreturn in some configurations
+   and not in others, because that would cause warnings at the caller sites.  */
+#if _GL_GNUC_PREREQ (4, 6)
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=noreturn"
+#endif
+
 gl_thread_t
 gl_thread_create (void *(*func) (void *arg), void *arg)
 {
@@ -215,4 +220,3 @@ gl_thread_create (void *(*func) (void *arg), void *arg)
     abort ();
   return thread;
 }
-#endif
