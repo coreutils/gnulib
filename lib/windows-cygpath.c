@@ -1,5 +1,5 @@
 /* Convert file names between Cygwin syntax and Windows syntax.
-   Copyright (C) 2024-2025 Free Software Foundation, Inc.
+   Copyright (C) 2024-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -105,9 +105,9 @@ execute_and_read_line (const char *progname,
 char *
 windows_cygpath_w (const char *filename)
 {
-  if (filename[0] == '/')
+  if (filename[0] == '/' && filename[1] != '/')
     {
-      /* It's an absolute POSIX-style file name.  */
+      /* It's an absolute POSIX-style file name, e.g. '/path/to/file'.  */
       const char *argv[4];
 
       argv[0] = "cygpath";
@@ -122,9 +122,14 @@ windows_cygpath_w (const char *filename)
     }
   else
     {
-      /* It's a relative file name, or an absolute native Windows file name.
+      /* It's a relative file name, or either
+         an absolute native Windows file name (e.g. 'C:/path/to/file') or
+         a native Windows UNC file name ('//server/share/path/to/file'), see
+         <https://cygwin.com/cygwin-ug-net/using.html#unc-paths> and
+         <https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file>.
          All we need to do is to convert slashes to backslahes, e.g.
-         'C:/Users' -> 'C:\Users'.  */
+         'C:/Users'                    -> 'C:\Users'
+         '//server/share/path/to/file' -> '\\server\share\path\to\file'.  */
       size_t len = strlen (filename) + 1;
       char *copy = XNMALLOC (len, char);
       for (size_t i = 0; i < len; i++)
