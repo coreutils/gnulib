@@ -1458,7 +1458,7 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 #if @GNULIB_REALLOC_POSIX@
 # if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
-#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2
+#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2 && !_GL_INLINE_RPL_REALLOC
 #   define _GL_INLINE_RPL_REALLOC 1
 #   ifdef __cplusplus
 extern "C" {
