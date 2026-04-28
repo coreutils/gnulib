@@ -115,11 +115,12 @@ _GL_FUNCDECL_SYS (error, void,
 _GL_CXXALIAS_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
-#  ifdef error
+#  if !GNULIB_defined_error
+#   ifdef error
 /* Only gcc ≥ 4.7 has __builtin_va_arg_pack.  */
-#   if _GL_GNUC_PREREQ (4, 7)
-#    pragma GCC diagnostic push
-#    pragma GCC diagnostic ignored "-Wattributes"
+#    if _GL_GNUC_PREREQ (4, 7)
+#     pragma GCC diagnostic push
+#     pragma GCC diagnostic ignored "-Wattributes"
 _GL_ATTRIBUTE_MAYBE_UNUSED
 static void
 _GL_ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_COLD
@@ -128,14 +129,16 @@ _gl_inline_error (int __status, int __errnum, const char *__format, ...)
 {
   return error (__status, __errnum, __format, __builtin_va_arg_pack ());
 }
-#    pragma GCC diagnostic pop
-#    undef error
+#     pragma GCC diagnostic pop
+#     undef error
+#     define error(status, ...) \
+        _gl_error_call (_gl_inline_error, status, __VA_ARGS__)
+#    endif
+#   else
 #    define error(status, ...) \
-       _gl_error_call (_gl_inline_error, status, __VA_ARGS__)
+       _gl_error_call (error, status, __VA_ARGS__)
 #   endif
-#  else
-#   define error(status, ...) \
-      _gl_error_call (error, status, __VA_ARGS__)
+#   define GNULIB_defined_error 1
 #  endif
 # endif
 #endif
@@ -175,11 +178,12 @@ _GL_CXXALIAS_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
-#  ifdef error_at_line
+#  if !GNULIB_defined_error_at_line
+#   ifdef error_at_line
 /* Only gcc ≥ 4.7 has __builtin_va_arg_pack.  */
-#   if _GL_GNUC_PREREQ (4, 7)
-#    pragma GCC diagnostic push
-#    pragma GCC diagnostic ignored "-Wattributes"
+#    if _GL_GNUC_PREREQ (4, 7)
+#     pragma GCC diagnostic push
+#     pragma GCC diagnostic ignored "-Wattributes"
 _GL_ATTRIBUTE_MAYBE_UNUSED
 static void
 _GL_ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_COLD
@@ -190,14 +194,16 @@ _gl_inline_error_at_line (int __status, int __errnum, const char *__filename,
   return error_at_line (__status, __errnum, __filename, __lineno, __format,
                         __builtin_va_arg_pack ());
 }
-#    pragma GCC diagnostic pop
-#    undef error_at_line
+#     pragma GCC diagnostic pop
+#     undef error_at_line
+#     define error_at_line(status, ...) \
+        _gl_error_call (_gl_inline_error_at_line, status, __VA_ARGS__)
+#    endif
+#   else
 #    define error_at_line(status, ...) \
-       _gl_error_call (_gl_inline_error_at_line, status, __VA_ARGS__)
+       _gl_error_call (error_at_line, status, __VA_ARGS__)
 #   endif
-#  else
-#   define error_at_line(status, ...) \
-      _gl_error_call (error_at_line, status, __VA_ARGS__)
+#   define GNULIB_defined_error_at_line 1
 #  endif
 # endif
 #endif
@@ -214,7 +220,7 @@ extern void verror (int __status, int __errnum, const char *__format,
      _GL_ATTRIBUTE_COLD
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
 #ifndef _GL_NO_INLINE_ERROR
-# ifndef verror
+# if !GNULIB_defined_verror
 #  define verror(status, ...) \
      _gl_error_call (verror, status, __VA_ARGS__)
 #  define GNULIB_defined_verror 1
@@ -234,7 +240,7 @@ extern void verror_at_line (int __status, int __errnum, const char *__fname,
      _GL_ATTRIBUTE_COLD
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 5, 0));
 #ifdef _GL_NO_INLINE_ERROR
-# ifndef verror_at_line
+# if !GNULIB_defined_verror_at_line
 #  define verror_at_line(status, ...) \
      _gl_error_call (verror_at_line, status, __VA_ARGS__)
 #  define GNULIB_defined_verror_at_line 1
