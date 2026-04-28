@@ -37,16 +37,16 @@
  #error "Please include config.h first."
 #endif
 
-#if !@HAVE_STDBIT_H@ || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)
+#if (!@HAVE_STDBIT_H@ || @GNULIB_STDC_MEMREVERSE8@ \
+     || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
 /* Get size_t.  */
 # include <stddef.h>
 #endif
 
-#if (!@HAVE_STDBIT_H@ \
-     || (!defined __UINT_FAST64_TYPE__ \
-         && (@GNULIB_STDC_MEMREVERSE8U@ \
-             || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
-             || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)) \
+#if (!(@HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__) \
+     || @GNULIB_STDC_MEMREVERSE8U@ \
+     || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
+     || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@ \
      || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
 /* Get intN_t, uintN_t, int_leastN_t, uint_leastN_t.  */
 # include <stdint.h>
