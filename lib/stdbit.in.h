@@ -233,7 +233,8 @@ extern "C" {
 # endif
 
 /* Count leading 0 bits of N, even if N is 0.  */
-# ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
+# if !GNULIB_defined_clz_functions
+#  ifdef _GL_STDBIT_HAS_BUILTIN_CLZ
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clz (unsigned int n)
 {
@@ -249,16 +250,16 @@ _gl_stdbit_clzll (unsigned long long int n)
 {
   return n ? __builtin_clzll (n) : 8 * sizeof n;
 }
-# elif defined _MSC_VER
+#  elif defined _MSC_VER
 
 /* Declare the few MSVC intrinsics that we need.  We prefer not to include
    <intrin.h> because it would pollute the namespace.  */
 extern unsigned char _BitScanReverse (unsigned long *, unsigned long);
-#  pragma intrinsic (_BitScanReverse)
-#  ifdef _M_X64
+#   pragma intrinsic (_BitScanReverse)
+#   ifdef _M_X64
 extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
-#   pragma intrinsic (_BitScanReverse64)
-#  endif
+#    pragma intrinsic (_BitScanReverse64)
+#   endif
 
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzl (unsigned long int n)
@@ -274,16 +275,16 @@ _gl_stdbit_clz (unsigned int n)
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
 {
-#  ifdef _M_X64
+#   ifdef _M_X64
   unsigned long int r;
   return 8 * sizeof n - (_BitScanReverse64 (&r, n) ? r + 1 : 0);
-#  else
+#   else
   unsigned long int hi = n >> 32;
   return _gl_stdbit_clzl (hi ? hi : n) + (hi ? 0 : 32);
-#  endif
+#   endif
 }
 
-# else /* !_MSC_VER */
+#  else /* !_MSC_VER */
 
 _GL_STDC_LEADING_ZEROS_INLINE int
 _gl_stdbit_clzll (unsigned long long int n)
@@ -309,7 +310,12 @@ _gl_stdbit_clzl (unsigned long int n)
 {
   return _gl_stdbit_clzll (n) - 8 * (sizeof 0ull - sizeof 0ul);
 }
+#  endif
+
+#  define GNULIB_defined_clz_functions 1
 # endif
+
+# if !GNULIB_defined_stdc_leading_zeros_functions
 
 _GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
@@ -341,6 +347,9 @@ stdc_leading_zeros_ull (unsigned long long int n)
   return _gl_stdbit_clzll (n);
 }
 
+#  define GNULIB_defined_stdc_leading_zeros_functions 1
+# endif
+
 # define stdc_leading_zeros(n) \
   (sizeof (n) == 1 ? stdc_leading_zeros_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_leading_zeros_us (n) \
@@ -354,6 +363,8 @@ stdc_leading_zeros_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.4 Count Leading Ones  */
 
 #if @GNULIB_STDC_LEADING_ONES@
+
+# if !GNULIB_defined_stdc_leading_ones_functions
 
 _GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_uc (unsigned char n)
@@ -385,6 +396,9 @@ stdc_leading_ones_ull (unsigned long long int n)
   return stdc_leading_zeros_ull (~n);
 }
 
+#  define GNULIB_defined_stdc_leading_ones_functions 1
+# endif
+
 # define stdc_leading_ones(n) \
   (sizeof (n) == 1 ? stdc_leading_ones_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_leading_ones_us (n) \
@@ -410,7 +424,8 @@ stdc_leading_ones_ull (unsigned long long int n)
 # endif
 
 /* Count trailing 0 bits of N, even if N is 0.  */
-# ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
+# if !GNULIB_defined_ctz_functions
+#  ifdef _GL_STDBIT_HAS_BUILTIN_CTZ
 _GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctz (unsigned int n)
 {
@@ -426,16 +441,16 @@ _gl_stdbit_ctzll (unsigned long long int n)
 {
   return n ? __builtin_ctzll (n) : 8 * sizeof n;
 }
-# elif defined _MSC_VER
+#  elif defined _MSC_VER
 
 /* Declare the few MSVC intrinsics that we need.  We prefer not to include
    <intrin.h> because it would pollute the namespace.  */
 extern unsigned char _BitScanForward (unsigned long *, unsigned long);
-#  pragma intrinsic (_BitScanForward)
-#  ifdef _M_X64
+#   pragma intrinsic (_BitScanForward)
+#   ifdef _M_X64
 extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
-#   pragma intrinsic (_BitScanForward64)
-#  endif
+#    pragma intrinsic (_BitScanForward64)
+#   endif
 
 _GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzl (unsigned long int n)
@@ -451,16 +466,16 @@ _gl_stdbit_ctz (unsigned int n)
 _GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctzll (unsigned long long int n)
 {
-#  ifdef _M_X64
+#   ifdef _M_X64
   unsigned long int r;
   return _BitScanForward64 (&r, n) ? r : 8 * sizeof n;
-#  else
+#   else
   unsigned int lo = n;
   return _gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
-#  endif
+#   endif
 }
 
-# else /* !_MSC_VER */
+#  else /* !_MSC_VER */
 
 _GL_STDC_TRAILING_ZEROS_INLINE int
 _gl_stdbit_ctz (unsigned int n)
@@ -477,7 +492,12 @@ _gl_stdbit_ctzll (unsigned long long int n)
 {
   return 8 * sizeof n - (n ? _gl_stdbit_clzll (n & -n) + 1 : 0);
 }
+#  endif
+
+#  define GNULIB_defined_ctz_functions 1
 # endif
+
+# if !GNULIB_defined_stdc_trailing_zeros_functions
 
 _GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ui (unsigned int n)
@@ -509,6 +529,9 @@ stdc_trailing_zeros_ull (unsigned long long int n)
   return _gl_stdbit_ctzll (n);
 }
 
+#  define GNULIB_defined_stdc_trailing_zeros_functions 1
+# endif
+
 # define stdc_trailing_zeros(n) \
   (sizeof (n) == 1 ? stdc_trailing_zeros_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_trailing_zeros_us (n) \
@@ -522,6 +545,8 @@ stdc_trailing_zeros_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.6 Count Trailing Ones  */
 
 #if @GNULIB_STDC_TRAILING_ONES@
+
+# if !GNULIB_defined_stdc_trailing_ones_functions
 
 _GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_uc (unsigned char n)
@@ -553,6 +578,9 @@ stdc_trailing_ones_ull (unsigned long long int n)
   return stdc_trailing_zeros_ull (~n);
 }
 
+#  define GNULIB_defined_stdc_trailing_ones_functions 1
+# endif
+
 # define stdc_trailing_ones(n) \
   (sizeof (n) == 1 ? stdc_trailing_ones_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_trailing_ones_us (n) \
@@ -566,6 +594,8 @@ stdc_trailing_ones_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.7 First Leading Zero  */
 
 #if @GNULIB_STDC_FIRST_LEADING_ZERO@
+
+# if !GNULIB_defined_stdc_first_leading_zero_functions
 
 _GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_uc (unsigned char n)
@@ -607,6 +637,9 @@ stdc_first_leading_zero_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
+#  define GNULIB_defined_stdc_first_leading_zero_functions 1
+# endif
+
 # define stdc_first_leading_zero(n) \
   (sizeof (n) == 1 ? stdc_first_leading_zero_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_leading_zero_us (n) \
@@ -620,6 +653,8 @@ stdc_first_leading_zero_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.8 First Leading One  */
 
 #if @GNULIB_STDC_FIRST_LEADING_ONE@
+
+# if !GNULIB_defined_stdc_first_leading_one_functions
 
 _GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_uc (unsigned char n)
@@ -661,6 +696,9 @@ stdc_first_leading_one_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
+#  define GNULIB_defined_stdc_first_leading_one_functions 1
+# endif
+
 # define stdc_first_leading_one(n) \
   (sizeof (n) == 1 ? stdc_first_leading_one_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_leading_one_us (n) \
@@ -674,6 +712,8 @@ stdc_first_leading_one_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.9 First Trailing Zero  */
 
 #if @GNULIB_STDC_FIRST_TRAILING_ZERO@
+
+# if !GNULIB_defined_stdc_first_trailing_zero_functions
 
 _GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_uc (unsigned char n)
@@ -715,6 +755,9 @@ stdc_first_trailing_zero_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
+#  define GNULIB_defined_stdc_first_trailing_zero_functions 1
+# endif
+
 # define stdc_first_trailing_zero(n) \
   (sizeof (n) == 1 ? stdc_first_trailing_zero_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_trailing_zero_us (n) \
@@ -728,6 +771,8 @@ stdc_first_trailing_zero_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.10 First Trailing One  */
 
 #if @GNULIB_STDC_FIRST_TRAILING_ONE@
+
+# if !GNULIB_defined_stdc_first_trailing_one_functions
 
 _GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_uc (unsigned char n)
@@ -769,7 +814,10 @@ stdc_first_trailing_one_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
-#define stdc_first_trailing_one(n) \
+#  define GNULIB_defined_stdc_first_trailing_one_functions 1
+# endif
+
+# define stdc_first_trailing_one(n) \
   (sizeof (n) == 1 ? stdc_first_trailing_one_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_trailing_one_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_first_trailing_one_ui (n) \
@@ -794,11 +842,12 @@ stdc_first_trailing_one_ull (unsigned long long int n)
 # endif
 
 /* Count 1 bits in N.  */
-# ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
-#  define _gl_stdbit_popcount __builtin_popcount
-#  define _gl_stdbit_popcountl __builtin_popcountl
-#  define _gl_stdbit_popcountll __builtin_popcountll
-# else
+# if !GNULIB_defined_popcount_functions
+#  ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
+#   define _gl_stdbit_popcount __builtin_popcount
+#   define _gl_stdbit_popcountl __builtin_popcountl
+#   define _gl_stdbit_popcountll __builtin_popcountll
+#  else
 _GL_STDC_COUNT_ONES_INLINE int
 _gl_stdbit_popcount_wide (unsigned long long int n)
 {
@@ -846,25 +895,25 @@ _gl_stdbit_popcount_wide (unsigned long long int n)
     }
 }
 
-#  ifdef _MSC_VER
-#   if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+#   ifdef _MSC_VER
+#    if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
 /* Declare the few MSVC intrinsics that we need.  We prefer not to include
    <intrin.h> because it would pollute the namespace.  */
 extern void __cpuid (int[4], int);
-#    pragma intrinsic (__cpuid)
+#     pragma intrinsic (__cpuid)
 extern unsigned int __popcnt (unsigned int);
-#    pragma intrinsic (__popcnt)
-#    ifdef _M_X64
+#     pragma intrinsic (__popcnt)
+#     ifdef _M_X64
 extern unsigned long long __popcnt64 (unsigned long long);
-#     pragma intrinsic (__popcnt64)
-#    else
+#      pragma intrinsic (__popcnt64)
+#     else
 _GL_STDC_COUNT_ONES_INLINE int
 __popcnt64 (unsigned long long int n)
 {
   return __popcnt (n >> 32) + __popcnt (n);
 }
+#     endif
 #    endif
-#   endif
 
 /* 1 if supported, -1 if not, 0 if unknown.  */
 extern signed char _gl_stdbit_popcount_support;
@@ -905,12 +954,16 @@ _gl_stdbit_popcountll (unsigned long long int n)
           ? __popcnt64 (n)
           : _gl_stdbit_popcount_wide (n));
 }
-#  else /* !_MSC_VER */
-#   define _gl_stdbit_popcount _gl_stdbit_popcount_wide
-#   define _gl_stdbit_popcountl _gl_stdbit_popcount_wide
-#   define _gl_stdbit_popcountll _gl_stdbit_popcount_wide
+#   else /* !_MSC_VER */
+#    define _gl_stdbit_popcount _gl_stdbit_popcount_wide
+#    define _gl_stdbit_popcountl _gl_stdbit_popcount_wide
+#    define _gl_stdbit_popcountll _gl_stdbit_popcount_wide
+#   endif
 #  endif
+#  define GNULIB_defined_popcount_functions 1
 # endif
+
+# if !GNULIB_defined_stdc_count_ones_functions
 
 _GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ui (unsigned int n)
@@ -942,6 +995,9 @@ stdc_count_ones_ull (unsigned long long int n)
   return _gl_stdbit_popcountll (n);
 }
 
+#  define GNULIB_defined_stdc_count_ones_functions 1
+# endif
+
 # define stdc_count_ones(n) \
   (sizeof (n) == 1 ? stdc_count_ones_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_count_ones_us (n) \
@@ -955,6 +1011,8 @@ stdc_count_ones_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.11 Count Zeros  */
 
 #if @GNULIB_STDC_COUNT_ZEROS@
+
+# if !GNULIB_defined_stdc_count_zeros_functions
 
 _GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_uc (unsigned char n)
@@ -986,6 +1044,9 @@ stdc_count_zeros_ull (unsigned long long int n)
   return stdc_count_ones_ull (~n);
 }
 
+#  define GNULIB_defined_stdc_count_zeros_functions 1
+# endif
+
 # define stdc_count_zeros(n) \
   (sizeof (n) == 1 ? stdc_count_zeros_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_count_zeros_us (n) \
@@ -999,6 +1060,8 @@ stdc_count_zeros_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.13 Single-bit Check  */
 
 #if @GNULIB_STDC_HAS_SINGLE_BIT@
+
+# if !GNULIB_defined_stdc_has_single_bit_functions
 
 _GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_uc (unsigned char n)
@@ -1035,6 +1098,9 @@ stdc_has_single_bit_ull (unsigned long long int n)
   return n_1 < nx;
 }
 
+#  define GNULIB_defined_stdc_has_single_bit_functions 1
+# endif
+
 # define stdc_has_single_bit(n) \
   ((bool) \
    (sizeof (n) == 1 ? stdc_has_single_bit_uc (n) \
@@ -1049,6 +1115,8 @@ stdc_has_single_bit_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.14 Bit Width  */
 
 #if @GNULIB_STDC_BIT_WIDTH@
+
+# if !GNULIB_defined_stdc_bit_width_functions
 
 _GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_uc (unsigned char n)
@@ -1080,6 +1148,9 @@ stdc_bit_width_ull (unsigned long long int n)
   return 8 * sizeof n - stdc_leading_zeros_ull (n);
 }
 
+#  define GNULIB_defined_stdc_bit_width_functions 1
+# endif
+
 # define stdc_bit_width(n) \
   (sizeof (n) == 1 ? stdc_bit_width_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_width_us (n) \
@@ -1093,6 +1164,8 @@ stdc_bit_width_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.15 Bit Floor  */
 
 #if @GNULIB_STDC_BIT_FLOOR@
+
+# if !GNULIB_defined_stdc_bit_floor_functions
 
 _GL_STDC_BIT_FLOOR_INLINE unsigned char
 stdc_bit_floor_uc (unsigned char n)
@@ -1124,6 +1197,9 @@ stdc_bit_floor_ull (unsigned long long int n)
   return n ? 1ull << (stdc_bit_width_ull (n) - 1) : 0;
 }
 
+#  define GNULIB_defined_stdc_bit_floor_functions 1
+# endif
+
 # define stdc_bit_floor(n) \
   (_GL_STDBIT_TYPEOF_CAST \
    (n, \
@@ -1139,6 +1215,8 @@ stdc_bit_floor_ull (unsigned long long int n)
 /* ISO C 23 § 7.18.16 Bit Ceiling  */
 
 #if @GNULIB_STDC_BIT_CEIL@
+
+# if !GNULIB_defined_stdc_bit_ceil_functions
 
 _GL_STDC_BIT_CEIL_INLINE unsigned char
 stdc_bit_ceil_uc (unsigned char n)
@@ -1169,6 +1247,9 @@ stdc_bit_ceil_ull (unsigned long long int n)
 {
   return n <= 1 ? 1 : 2ull << (stdc_bit_width_ull (n - 1) - 1);
 }
+
+#  define GNULIB_defined_stdc_bit_ceil_functions 1
+# endif
 
 # define stdc_bit_ceil(n) \
   (_GL_STDBIT_TYPEOF_CAST \
@@ -1201,6 +1282,8 @@ stdc_bit_ceil_ull (unsigned long long int n)
    | ((v) >> (-(c) & (sizeof (v) * 8 - 1))))
 # endif
 
+# if !GNULIB_defined_stdc_rotate_left_functions
+
 _GL_STDC_ROTATE_LEFT_INLINE unsigned char
 stdc_rotate_left_uc (unsigned char v, unsigned int c)
 {
@@ -1230,6 +1313,9 @@ stdc_rotate_left_ull (unsigned long long int v, unsigned int c)
 {
   return _gl_stdc_rotate_left (v, c);
 }
+
+#  define GNULIB_defined_stdc_rotate_left_functions 1
+# endif
 
 # ifndef stdc_rotate_left
 #  define stdc_rotate_left(v, c)                                        \
@@ -1262,6 +1348,8 @@ stdc_rotate_left_ull (unsigned long long int v, unsigned int c)
    | ((v) << (-(c) & (sizeof (v) * 8 - 1))))
 # endif
 
+# if !GNULIB_defined_stdc_rotate_right_functions
+
 _GL_STDC_ROTATE_RIGHT_INLINE unsigned char
 stdc_rotate_right_uc (unsigned char v, unsigned int c)
 {
@@ -1292,6 +1380,9 @@ stdc_rotate_right_ull (unsigned long long int v, unsigned int c)
   return _gl_stdc_rotate_right (v, c);
 }
 
+#  define GNULIB_defined_stdc_rotate_right_functions 1
+# endif
+
 # ifndef stdc_rotate_right
 #  define stdc_rotate_right(v, c)                                       \
   (_GL_STDBIT_TYPEOF_CAST                                               \
@@ -1309,6 +1400,8 @@ stdc_rotate_right_ull (unsigned long long int v, unsigned int c)
 /* ISO C2y § 7.18.19 8-bit Memory Reversal  */
 
 #if @GNULIB_STDC_MEMREVERSE8@
+
+# if !GNULIB_defined_stdc_memreverse8
 
 _GL_STDC_MEMREVERSE8_INLINE void
 stdc_memreverse8 (size_t n, unsigned char *ptr)
@@ -1331,6 +1424,9 @@ stdc_memreverse8 (size_t n, unsigned char *ptr)
     }
 }
 
+#  define GNULIB_defined_stdc_memreverse8 1
+# endif
+
 #endif
 
 
@@ -1343,6 +1439,8 @@ stdc_memreverse8 (size_t n, unsigned char *ptr)
    generalization that does not contradict ISO C: When uintN_t exists, it is
    known that uint_leastN_t is the same type as uintN_t.  */
 
+# if !GNULIB_defined_stdc_memreverse8u_functions
+
 _GL_STDC_MEMREVERSE8U_INLINE uint_least8_t
 stdc_memreverse8u8 (uint_least8_t value)
 {
@@ -1352,35 +1450,35 @@ stdc_memreverse8u8 (uint_least8_t value)
 _GL_STDC_MEMREVERSE8U_INLINE uint_least16_t
 stdc_memreverse8u16 (uint_least16_t value)
 {
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
+#  ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (value);
-# else
+#  else
   _GL_STDBIT_UINT_FAST16 mask = 0xFFU;
   return (  (value & (mask << (8 * 1))) >> (8 * 1)
           | (value & (mask << (8 * 0))) << (8 * 1));
-# endif
+#  endif
 }
 
 _GL_STDC_MEMREVERSE8U_INLINE uint_least32_t
 stdc_memreverse8u32 (uint_least32_t value)
 {
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
+#  ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (value);
-# else
+#  else
   _GL_STDBIT_UINT_FAST32 mask = 0xFFU;
   return (  (value & (mask << (8 * 3))) >> (8 * 3)
           | (value & (mask << (8 * 2))) >> (8 * 1)
           | (value & (mask << (8 * 1))) << (8 * 1)
           | (value & (mask << (8 * 0))) << (8 * 3));
-# endif
+#  endif
 }
 
 _GL_STDC_MEMREVERSE8U_INLINE uint_least64_t
 stdc_memreverse8u64 (uint_least64_t value)
 {
-# ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
+#  ifdef _GL_STDBIT_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (value);
-# else
+#  else
   _GL_STDBIT_UINT_FAST64 mask = 0xFFU;
   return (  (value & (mask << (8 * 7))) >> (8 * 7)
           | (value & (mask << (8 * 6))) >> (8 * 5)
@@ -1390,8 +1488,11 @@ stdc_memreverse8u64 (uint_least64_t value)
           | (value & (mask << (8 * 2))) << (8 * 3)
           | (value & (mask << (8 * 1))) << (8 * 5)
           | (value & (mask << (8 * 0))) << (8 * 7));
-# endif
+#  endif
 }
+
+#  define GNULIB_defined_stdc_memreverse8u_functions 1
+# endif
 
 #endif
 
@@ -1530,6 +1631,8 @@ stdc_memreverse8u64 (uint_least64_t value)
 
 #if @GNULIB_STDC_LOAD8@
 
+# if !GNULIB_defined_stdc_load8_functions
+
 _GL_STDC_LOAD8_INLINE uint_least8_t
 stdc_load8_beu8 (const unsigned char ptr[1])
 {
@@ -1660,9 +1763,14 @@ stdc_load8_les64 (const unsigned char ptr[8])
   return stdc_load8_leu64 (ptr);
 }
 
+#  define GNULIB_defined_stdc_load8_functions 1
+# endif
+
 #endif
 
 #if @GNULIB_STDC_LOAD8_ALIGNED@
+
+# if !GNULIB_defined_stdc_load8_aligned_functions
 
 _GL_STDC_LOAD8_ALIGNED_INLINE uint_least8_t
 stdc_load8_aligned_beu8 (const unsigned char ptr[1])
@@ -1814,12 +1922,17 @@ stdc_load8_aligned_les64 (const unsigned char ptr[8])
   return stdc_load8_aligned_leu64 (ptr);
 }
 
+#  define GNULIB_defined_stdc_load8_aligned_functions 1
+# endif
+
 #endif
 
 
 /* ISO C2y § 7.18.22 Endian-Aware 8-Bit Store  */
 
 #if @GNULIB_STDC_STORE8@
+
+# if !GNULIB_defined_stdc_store8_functions
 
 _GL_STDC_STORE8_INLINE void
 stdc_store8_beu8 (uint_least8_t value, unsigned char ptr[1])
@@ -1939,9 +2052,14 @@ stdc_store8_les64 (int_least64_t value, unsigned char ptr[8])
   stdc_store8_leu64 (value, ptr);
 }
 
+#  define GNULIB_defined_stdc_store8_functions 1
+# endif
+
 #endif
 
 #if @GNULIB_STDC_STORE8_ALIGNED@
+
+# if !GNULIB_defined_stdc_store8_aligned_functions
 
 _GL_STDC_STORE8_ALIGNED_INLINE void
 stdc_store8_aligned_beu8 (uint_least8_t value, unsigned char ptr[1])
@@ -2080,6 +2198,9 @@ stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
 {
   stdc_store8_aligned_leu64 (value, ptr);
 }
+
+#  define GNULIB_defined_stdc_store8_aligned_functions 1
+# endif
 
 #endif
 
