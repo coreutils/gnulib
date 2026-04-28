@@ -73,37 +73,49 @@ _GL_INLINE_HEADER_BEGIN
 /* Host to network byte order. */
 
 #if !@HAVE_DECL_HTONS@
+# if !GNULIB_defined_htons
 _GL_ARPA_INET_INLINE uint16_t
 htons (uint16_t value)
 {
   return htobe16 (value);
 }
+#  define GNULIB_defined_htons 1
+# endif
 #endif
 
 #if !@HAVE_DECL_HTONL@
+# if !GNULIB_defined_htonl
 _GL_ARPA_INET_INLINE uint32_t
 htonl (uint32_t value)
 {
   return htobe32 (value);
 }
+#  define GNULIB_defined_htonl 1
+# endif
 #endif
 
 /* Network to host byte order.  */
 
 #if !@HAVE_DECL_NTOHS@
+# if !GNULIB_defined_ntohs
 _GL_ARPA_INET_INLINE uint16_t
 ntohs (uint16_t value)
 {
   return htobe16 (value);
 }
+#  define GNULIB_defined_ntohs 1
+# endif
 #endif
 
 #if !@HAVE_DECL_NTOHL@
+# if !GNULIB_defined_ntohl
 _GL_ARPA_INET_INLINE uint32_t
 ntohl (uint32_t value)
 {
   return htobe32 (value);
 }
+#  define GNULIB_defined_ntohl 1
+# endif
 #endif
 
 
