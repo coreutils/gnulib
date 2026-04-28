@@ -103,10 +103,10 @@ init_localeinfo (struct localeinfo *localeinfo)
 }
 
 /* The set of char32_t values C such that there's a useful locale
-   somewhere where C != towupper (C) && C != towlower (towupper (C)).
+   somewhere where C != c32toupper (C) && C != c32tolower (c32toupper (C)).
    For example, 0x00B5 (U+00B5 MICRO SIGN) is in this table, because
-   towupper (0x00B5) == 0x039C (U+039C GREEK CAPITAL LETTER MU), and
-   towlower (0x039C) == 0x03BC (U+03BC GREEK SMALL LETTER MU).  */
+   c32toupper (0x00B5) == 0x039C (U+039C GREEK CAPITAL LETTER MU), and
+   c32tolower (0x039C) == 0x03BC (U+03BC GREEK SMALL LETTER MU).  */
 static unsigned short int const lonesome_lower[] =
   {
     0x00B5, 0x0131, 0x017F, 0x01C5, 0x01C8, 0x01CB, 0x01F2, 0x0345,
@@ -119,8 +119,8 @@ static unsigned short int const lonesome_lower[] =
     0x03F5, 0x1E9B, 0x1FBE,
   };
 
-/* Verify that the worst case fits.  This is 1 for towupper, 1 for
-   towlower, and 1 for each entry in LONESOME_LOWER.  */
+/* Verify that the worst case fits.  This is 1 for c32toupper, 1 for
+   c32tolower, and 1 for each entry in LONESOME_LOWER.  */
 verify (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
         <= CASE_FOLDED_BUFSIZE);
 
