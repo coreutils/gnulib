@@ -136,7 +136,7 @@ extern "C" {
 #ifdef __PTRDIFF_TYPE__
 typedef __PTRDIFF_TYPE__ idx_t;
 #else
-# include <stddef.h>
+/* <stddef.h> already included above.  */
 typedef ptrdiff_t idx_t;
 #endif
 
