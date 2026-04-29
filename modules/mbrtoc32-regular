@@ -3,11 +3,13 @@ mbrtoc32() function that maps each multibyte character to exactly one Unicode
 character and thus never returns (size_t)(-3).
 
 Files:
+m4/mbrtoc32-regular.m4
 
 Depends-on:
 mbrtoc32
 
 configure.ac:
+gl_FUNC_MBRTOC32_REGULAR
 gl_MODULE_INDICATOR([mbrtoc32-regular])
 
 Makefile.am:
