@@ -43,24 +43,23 @@
 # include <stddef.h>
 #endif
 
-#if (!(@HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__) \
-     || @GNULIB_STDC_MEMREVERSE8U@ \
+/* If needed for APIs, get intN_t, uintN_t, int_leastN_t,
+   uint_leastN_t, and (for internal use) get equivalents of
+   uint_fast{16,32,64}_t.  Avoid namespace pollution on GNU.  */
+#if (@GNULIB_STDC_MEMREVERSE8U@ \
      || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
-     || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@ \
-     || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
-/* Get intN_t, uintN_t, int_leastN_t, uint_leastN_t.  */
-# include <stdint.h>
-#endif
-
-/* uint_fast{16,32,64}_t equivalents, sans namespace pollution on GNU.  */
-#if @HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__
-# define _GL_STDBIT_UINT_FAST16 __UINT_FAST16_TYPE__
-# define _GL_STDBIT_UINT_FAST32 __UINT_FAST32_TYPE__
-# define _GL_STDBIT_UINT_FAST64 __UINT_FAST64_TYPE__
-#else
-# define _GL_STDBIT_UINT_FAST16 uint_fast16_t
-# define _GL_STDBIT_UINT_FAST32 uint_fast32_t
-# define _GL_STDBIT_UINT_FAST64 uint_fast64_t
+     || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)
+# if (!(@HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__) \
+      || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
+#  include <stdint.h>
+#  define _GL_STDBIT_UINT_FAST16 uint_fast16_t
+#  define _GL_STDBIT_UINT_FAST32 uint_fast32_t
+#  define _GL_STDBIT_UINT_FAST64 uint_fast64_t
+# else
+#  define _GL_STDBIT_UINT_FAST16 __UINT_FAST16_TYPE__
+#  define _GL_STDBIT_UINT_FAST32 __UINT_FAST32_TYPE__
+#  define _GL_STDBIT_UINT_FAST64 __UINT_FAST64_TYPE__
+# endif
 #endif
 
 #if @GNULIB_STDC_MEMREVERSE8U@ || @GNULIB_STDC_LOAD8_ALIGNED@ || @GNULIB_STDC_STORE8_ALIGNED@
