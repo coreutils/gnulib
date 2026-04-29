@@ -37,9 +37,11 @@
  #error "Please include config.h first."
 #endif
 
-#if (!@HAVE_STDBIT_H@ || @GNULIB_STDC_MEMREVERSE8@ \
-     || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
-/* Get size_t.  */
+/* If needed for APIs, get size_t, avoiding namespace pollution on GNU.  */
+#if (@GNULIB_STDC_MEMREVERSE8@ \
+     && (!@HAVE_STDBIT_H@ \
+         || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)))
+# define __need_size_t
 # include <stddef.h>
 #endif
 
