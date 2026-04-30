@@ -28,6 +28,14 @@ SIGNATURE_CHECK (getlocalename_l, const char *, (int, locale_t));
 
 #include "macros.h"
 
+/* On NetBSD, the LC_COLLATE locales are all fake: they all have the
+   name "C".  */
+#ifdef __NetBSD__
+# define FAKE_COLLATE 1
+#else
+# define FAKE_COLLATE 0
+#endif
+
 #ifdef __HAIKU__
 /* Work around Haiku bug <https://dev.haiku-os.org/ticket/18344>.  */
 # define freelocale(loc) ((void) (loc))
@@ -94,7 +102,7 @@ main ()
         const char *ret;
 
         ret = getlocalename_l (LC_COLLATE, locale1);
-        ASSERT (streq (ret, LOCALE1));
+        if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
         ret = getlocalename_l (LC_CTYPE, locale1);
         ASSERT (streq (ret, LOCALE1));
@@ -126,7 +134,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE2));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE2));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE1));
@@ -159,7 +167,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE1));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE2));
@@ -192,7 +200,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE1));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE1));
@@ -225,7 +233,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE1));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE1));
@@ -258,7 +266,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE1));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE1));
@@ -291,7 +299,7 @@ main ()
             const char *ret;
 
             ret = getlocalename_l (LC_COLLATE, locale2);
-            ASSERT (streq (ret, LOCALE1));
+            if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
             ret = getlocalename_l (LC_CTYPE, locale2);
             ASSERT (streq (ret, LOCALE1));
@@ -345,7 +353,7 @@ main ()
       const char *ret;
 
       ret = getlocalename_l (LC_COLLATE, LC_GLOBAL_LOCALE);
-      ASSERT (streq (ret, LOCALE1));
+      if (!FAKE_COLLATE) ASSERT (streq (ret, LOCALE1));
 
       ret = getlocalename_l (LC_CTYPE, LC_GLOBAL_LOCALE);
       ASSERT (streq (ret, LOCALE1));
