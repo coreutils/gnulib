@@ -38,9 +38,7 @@
 #endif
 
 /* If needed for APIs, get size_t, avoiding namespace pollution on GNU.  */
-#if (@GNULIB_STDC_MEMREVERSE8@ \
-     && (!@HAVE_STDBIT_H@ \
-         || (defined __cplusplus && defined __INTEL_CLANG_COMPILER)))
+#if @GNULIB_STDC_MEMREVERSE8@ && !defined __STDC_VERSION_STDBIT_H__
 # define __need_size_t
 # include <stddef.h>
 #endif
@@ -51,8 +49,7 @@
 #if (@GNULIB_STDC_MEMREVERSE8U@ \
      || @GNULIB_STDC_LOAD8@ || @GNULIB_STDC_LOAD8_ALIGNED@ \
      || @GNULIB_STDC_STORE8@ || @GNULIB_STDC_STORE8_ALIGNED@)
-# if (!(@HAVE_STDBIT_H@ && defined __UINT_FAST64_TYPE__) \
-      || (defined __cplusplus && defined __INTEL_CLANG_COMPILER))
+# if !(defined __STDC_VERSION_STDBIT_H__ && defined __UINT_FAST64_TYPE__)
 #  include <stdint.h>
 #  define _GL_STDBIT_UINT_FAST16 uint_fast16_t
 #  define _GL_STDBIT_UINT_FAST32 uint_fast32_t
@@ -196,12 +193,7 @@ extern "C" {
 
 
 /* Some systems are only missing C2y features in stdbit.h.  */
-#if !@HAVE_STDBIT_H@ || defined __cplusplus
-
-/* ISO C 23 § 7.18.1 General  */
-
-#define __STDC_VERSION_STDBIT_H__ 202311L
-
+#ifndef __STDC_VERSION_STDBIT_H__
 
 /* ISO C 23 § 7.18.2 Endian  */
 
@@ -217,7 +209,7 @@ extern "C" {
 
 
 /* Some systems are only missing C2y features in stdbit.h.  */
-#if !@HAVE_STDBIT_H@
+#ifndef __STDC_VERSION_STDBIT_H__
 
 /* ISO C 23 § 7.18.3 Count Leading Zeros  */
 
@@ -1263,7 +1255,7 @@ stdc_bit_ceil_ull (unsigned long long int n)
 
 #endif
 
-#endif /* @HAVE_STDBIT_H@ */
+#endif /* !__STDC_VERSION_STDBIT_H__ */
 
 
 /* ISO C2y § 7.18.17 Rotate Left  */
@@ -2211,6 +2203,11 @@ stdc_store8_aligned_les64 (int_least64_t value, unsigned char ptr[8])
 #endif
 
 _GL_INLINE_HEADER_END
+
+/* ISO C 23 § 7.18.1 General  */
+#ifndef __STDC_VERSION_STDBIT_H__
+# define __STDC_VERSION_STDBIT_H__ 202311L
+#endif
 
 #endif /* _@GUARD_PREFIX@_STDBIT_H */
 #endif /* _@GUARD_PREFIX@_STDBIT_H */
