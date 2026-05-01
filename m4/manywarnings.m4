@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 33
+# serial 34
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,7 +97,8 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   # export LC_ALL=C && comm -3 \
   #  <((sed -n 's/^  *\(-[^ 0-9][^ ]*\).*/\1/p' manywarnings.m4; \
   #     awk '/^[^#]/ {print $1}' ../build-aux/gcc-warning.spec) | sort) \
-  #  <(gcc --help=warnings | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort)
+  #  <((gcc --help=c,warnings && gcc --help=common,warnings) \
+  #    | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort)
 
   $1=
   for gl_manywarn_item in -fanalyzer -fstrict-flex-arrays \
