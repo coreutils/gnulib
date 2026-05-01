@@ -113,9 +113,11 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wextra \
     -Wflex-array-member-not-at-end \
     -Wformat-signedness \
+    -Wfree-labels \
     -Winit-self \
     -Winline \
     -Winvalid-pch \
+    -Wkeyword-macro \
     -Wlogical-op \
     -Wmissing-declarations \
     -Wmissing-include-dirs \
@@ -145,6 +147,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wunknown-pragmas \
     -Wunsafe-loop-optimizations \
     -Wunused-macros \
+    -Wuseless-casts \
     -Wvariadic-macros \
     -Wvector-operation-performance \
     -Wvla \

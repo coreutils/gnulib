@@ -53,6 +53,7 @@
 -Wanalyzer-tainted-divisor		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-offset		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-size			FIXME requires -fanalyzer-checker=taint
+-Wanalyzer-throw-of-unexpected-type	enabled by -fanalyzer
 -Wanalyzer-too-complex			enabled by -fanalyzer
 -Wanalyzer-undefined-behavior-ptrdiff	enabled by -fanalyzer
 -Wanalyzer-undefined-behavior-strtok	enabled by -fanalyzer
@@ -75,6 +76,7 @@
 -Wattribute-alias=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Wattribute-warning			default
 -Wattributes				default
+-Wauto-profile				useful only when profiling
 -Wbidi-chars				handled specially by gl_MANYWARN_ALL_GCC
 -Wbidi-chars=				handled specially by gl_MANYWARN_ALL_GCC
 -Wbool-compare				enabled by -Wall
@@ -112,6 +114,7 @@
 -Wdeprecated				default
 -Wdeprecated-declarations		default
 -Wdeprecated-non-prototype		c compatibility
+-Wdeprecated-openmp			default
 -Wdesignated-init			default
 -Wdisabled-optimization			warns about compiler not about program
 -Wdiscarded-array-qualifiers		default
@@ -142,7 +145,6 @@
 -Wformat=<0,2>				gcc --help=warnings artifact
 -Wframe-address				enabled by -Wall
 -Wframe-larger-than=<byte-size>		FIXME: choose something sane?
--Wfree-labels				c and objc compatibility
 -Wfree-nonheap-object			default
 -Whardened				default
 -Wheader-guard				enabled by -Wall
@@ -185,6 +187,7 @@
 -Wmissing-parameter-type		enabled by -Wextra
 -Wmissing-profile			default
 -Wmultichar				default
+-Wmultiple-parameter-fwd-decl-lists	enabled by -Wextra
 -Wmultistatement-macros			enabled by -Wall
 -Wmusttail-local-addr			default
 -Wnarrowing				enabled by -Wall
@@ -275,7 +278,9 @@
 -Wunterminated-string-initialization	enabled by -Wextra
 -Wunused				enabled by -Wall
 -Wunused-but-set-parameter		enabled by -Wextra -Wunused
+-Wunused-but-set-parameter=<0,3>	enabled by -Wextra -Wunused
 -Wunused-but-set-variable		enabled by -Wunused
+-Wunused-but-set-variable=<0,3>		enabled by -Wall
 -Wunused-const-variable			covered by -Wunused-const-variable=2
 -Wunused-const-variable=<0,2>		gcc --help=warnings artifact
 -Wunused-function			enabled by -Wunused
@@ -286,7 +291,6 @@
 -Wunused-variable			enabled by -Wunused
 -Wuse-after-free			handled specially by gl_MANYWARN_ALL_GCC
 -Wuse-after-free=<0,3>			handled specially by gl_MANYWARN_ALL_GCC
--Wuseless-cast				c++ and objc++
 -Wvarargs				default
 -Wvla-larger-than=<number>		handled specially by gl_MANYWARN_ALL_GCC
 -Wvla-parameter				enabled by -Wall
