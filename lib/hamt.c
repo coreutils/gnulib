@@ -122,7 +122,8 @@ struct bucket
 {
   ref_counter ref_counter;
   size_t elt_count;
-  Hamt_entry *elts[FLEXIBLE_ARRAY_MEMBER];
+  Hamt_entry *elts[FLEXIBLE_ARRAY_MEMBER]
+    _GL_ATTRIBUTE_COUNTED_BY (elt_count);
 };
 
 /* A hamt consists of its function table and the root entry.  */
