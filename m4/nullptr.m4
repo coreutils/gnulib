@@ -1,5 +1,5 @@
 # nullptr.m4
-# serial 2
+# serial 3
 dnl Copyright 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,8 @@ AC_DEFUN([gl_NULLPTR],
        [AC_COMPILE_IFELSE(
           [AC_LANG_SOURCE([[int *p = nullptr;]])],
           [gl_cv_c_nullptr=yes
-           # Work around <https://gcc.gnu.org/PR114780>.
+           # Work around <https://gcc.gnu.org/PR114780>,
+           # that affects gcc 13.1 to 13.2.
            gl_saved_CFLAGS=$CFLAGS
            CFLAGS="$CFLAGS -Wall -Werror"
            AC_COMPILE_IFELSE(
