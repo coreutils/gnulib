@@ -28,8 +28,8 @@
     {                                                           \
       type v = value;                                           \
       type e = expect;                                          \
-      ASSERT (function (v, shift) == expect);                   \
-      ASSERT (stdc_rotate_left (v, shift) == expect);           \
+      ASSERT (function (v, shift) == e);                        \
+      ASSERT (stdc_rotate_left (v, shift) == e);                \
     }                                                           \
   while (false)
 
