@@ -4,6 +4,7 @@ strtod() function: convert string to 'double'.
 Files:
 lib/strtod.c
 m4/strtod.m4
+m4/signbit.m4
 m4/ldexp.m4
 
 Depends-on:
@@ -13,6 +14,8 @@ c-ctype         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 math-h          [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 bool            [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 isinf-no-c++    [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
+isnand-nolibm   [test $REPLACE_STRTOD = 1]
+signbit-no-c++  [test $REPLACE_STRTOD = 1]
 
 configure.ac:
 gl_FUNC_STRTOD

@@ -661,11 +661,8 @@ test_function (float (*my_strtof) (const char *, char **))
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnanf (result1));          /* OpenBSD 4.0, mingw */
     ASSERT (isnanf (result2));          /* OpenBSD 4.0, mingw */
-# if 0
-    /* Sign bits of NaN is a portability sticking point, not worth
-       worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, mingw */
-# endif
+    /* Sign bits of NaN are particularly hairy.  */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.27, mingw, musl libc */
     ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, Solaris 2.5.1, mingw */
     ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11 */

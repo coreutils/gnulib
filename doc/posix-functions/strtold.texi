@@ -45,6 +45,10 @@ the wrong end pointer on some platforms:
 glibc-2.3.2, mingw, Haiku.
 
 @item
+This function returns @samp{NaN} for @samp{-NaN} on some platforms:
+glibc 2.27, musl libc.
+
+@item
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
 mingw.

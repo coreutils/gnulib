@@ -1,5 +1,5 @@
 # strtof.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2002-2003, 2006-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -192,6 +192,48 @@ numeric_equal (float x, float y)
         esac
         ;;
     esac
+    if test $REPLACE_STRTOF = 0; then
+      gl_FLOAT_SIGN_LOCATION
+      AC_CACHE_CHECK([whether strtof works on signed NaNs],
+        [gl_cv_func_strtof_nan_works],
+        [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <stdlib.h>
+]], [[
+  int result = 0;
+  # define NWORDS \
+    ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+  union { float value; unsigned int word[NWORDS]; } m;
+  {
+    /* On glibc <= 2.27 and Alpine Linux, strtof("-nan") returns a NaN with a
+       wrong sign bit.  */
+    const char *string = "-nan";
+    char *term;
+    m.value = strtof (string, &term);
+    if (((m.word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1) == 0)
+      result |= 1;
+  }
+  return result;
+]])],
+           [gl_cv_func_strtof_nan_works=yes],
+           [gl_cv_func_strtof_nan_works=no],
+           [case "$host_os" in
+                                  # Guess no on glibc systems.
+              *-gnu* | gnu*)      gl_cv_func_strtof_nan_works="guessing no" ;;
+                                  # Guess no on musl systems.
+              *-musl* | midipix*) gl_cv_func_strtof_nan_works="guessing no" ;;
+              *)                  gl_cv_func_strtof_nan_works="$gl_cross_guess_normal" ;;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_strtof_nan_works" in
+        *yes) ;;
+        *)
+          REPLACE_STRTOF=1
+          AC_DEFINE([STRTOF_HAS_MINUS_NAN_BUG], [1],
+            [Define to 1 if strtof may return a NaN with a wrong sign bit.])
+          ;;
+      esac
+    fi
   fi
 ])
 

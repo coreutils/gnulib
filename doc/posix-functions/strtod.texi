@@ -50,6 +50,10 @@ This function misparses @samp{nan(} on some platforms:
 macOS 10.6.6.
 
 @item
+This function returns @samp{NaN} for @samp{-NaN} on some platforms:
+glibc 2.27, musl libc.
+
+@item
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
 NetBSD 5.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, Solaris 11.4, mingw, MSVC 14.

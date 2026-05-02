@@ -51,6 +51,10 @@ platforms:
 glibc 2.7, mingw, MSVC 14.
 
 @item
+This function returns @samp{NaN} for @samp{-NaN} on some platforms:
+glibc 2.27, musl libc.
+
+@item
 This function fails to correctly parse very long strings on some
 platforms:
 Mac OS X 10.5, FreeBSD 6.2, NetBSD 5.0, Cygwin, mingw, MSVC 14.

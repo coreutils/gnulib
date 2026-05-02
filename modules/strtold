@@ -6,6 +6,7 @@ lib/strtold.c
 lib/strtod.c
 m4/strtold.m4
 m4/math_h.m4
+m4/signbit.m4
 m4/ldexpl.m4
 
 Depends-on:
@@ -14,6 +15,8 @@ c-ctype         [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
 math-h          [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
 bool            [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
 isinf-no-c++    [test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1]
+isnanl-nolibm   [test $REPLACE_STRTOLD = 1]
+signbit-no-c++  [test $REPLACE_STRTOLD = 1]
 strtod          [{ test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 
 configure.ac:

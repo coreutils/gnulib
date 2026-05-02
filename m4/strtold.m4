@@ -1,5 +1,5 @@
 # strtold.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2002-2003, 2006-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -169,6 +169,48 @@ numeric_equal (long double x, long double y)
         esac
         ;;
     esac
+    if test $REPLACE_STRTOLD = 0; then
+      gl_LONG_DOUBLE_SIGN_LOCATION
+      AC_CACHE_CHECK([whether strtold works on signed NaNs],
+        [gl_cv_func_strtold_nan_works],
+        [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <stdlib.h>
+]], [[
+  int result = 0;
+  # define NWORDS \
+    ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+  union { long double value; unsigned int word[NWORDS]; } m;
+  {
+    /* On glibc <= 2.27 and Alpine Linux, strtold("-nan") returns a NaN with a
+       wrong sign bit.  */
+    const char *string = "-nan";
+    char *term;
+    m.value = strtold (string, &term);
+    if (((m.word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1) == 0)
+      result |= 1;
+  }
+  return result;
+]])],
+           [gl_cv_func_strtold_nan_works=yes],
+           [gl_cv_func_strtold_nan_works=no],
+           [case "$host_os" in
+                                  # Guess no on glibc systems.
+              *-gnu* | gnu*)      gl_cv_func_strtold_nan_works="guessing no" ;;
+                                  # Guess no on musl systems.
+              *-musl* | midipix*) gl_cv_func_strtold_nan_works="guessing no" ;;
+              *)                  gl_cv_func_strtold_nan_works="$gl_cross_guess_normal" ;;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_strtold_nan_works" in
+        *yes) ;;
+        *)
+          REPLACE_STRTOLD=1
+          AC_DEFINE([STRTOLD_HAS_MINUS_NAN_BUG], [1],
+            [Define to 1 if strtold may return a NaN with a wrong sign bit.])
+          ;;
+      esac
+    fi
   fi
 ])
 

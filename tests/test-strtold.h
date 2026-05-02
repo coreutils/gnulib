@@ -669,11 +669,8 @@ test_function (long double (*my_strtold) (const char *, char **))
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnanl (result1));
     ASSERT (isnanl (result2));
-# if 0
-    /* Sign bits of NaN is a portability sticking point, not worth
-       worrying about.  */
-    ASSERT (!!signbit (result1) != !!signbit (result2));
-# endif
+    /* Sign bits of NaN are particularly hairy.  */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.27, mingw, musl libc */
     ASSERT (ptr1 == input + 4);
     ASSERT (ptr2 == input + 4);
     ASSERT (errno == 0);                /* HP-UX 11.31/ia64 */

@@ -1,5 +1,5 @@
 # strtod.m4
-# serial 32
+# serial 33
 dnl Copyright (C) 2002-2003, 2006-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -179,6 +179,48 @@ numeric_equal (double x, double y)
         esac
         ;;
     esac
+    if test $REPLACE_STRTOD = 0; then
+      gl_DOUBLE_SIGN_LOCATION
+      AC_CACHE_CHECK([whether strtod works on signed NaNs],
+        [gl_cv_func_strtod_nan_works],
+        [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <stdlib.h>
+]], [[
+  int result = 0;
+  # define NWORDS \
+    ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+  union { double value; unsigned int word[NWORDS]; } m;
+  {
+    /* On glibc <= 2.27 and Alpine Linux, strtod("-nan") returns a NaN with a
+       wrong sign bit.  */
+    const char *string = "-nan";
+    char *term;
+    m.value = strtod (string, &term);
+    if (((m.word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1) == 0)
+      result |= 1;
+  }
+  return result;
+]])],
+           [gl_cv_func_strtod_nan_works=yes],
+           [gl_cv_func_strtod_nan_works=no],
+           [case "$host_os" in
+                                  # Guess no on glibc systems.
+              *-gnu* | gnu*)      gl_cv_func_strtod_nan_works="guessing no" ;;
+                                  # Guess no on musl systems.
+              *-musl* | midipix*) gl_cv_func_strtod_nan_works="guessing no" ;;
+              *)                  gl_cv_func_strtod_nan_works="$gl_cross_guess_normal" ;;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_strtod_nan_works" in
+        *yes) ;;
+        *)
+          REPLACE_STRTOD=1
+          AC_DEFINE([STRTOD_HAS_MINUS_NAN_BUG], [1],
+            [Define to 1 if strtod may return a NaN with a wrong sign bit.])
+          ;;
+      esac
+    fi
   fi
 ])
 
