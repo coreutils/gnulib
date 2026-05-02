@@ -54,7 +54,7 @@ alg_socket (char const *alg)
   if (cfd < 0)
     return -EAFNOSUPPORT;
   int ofd = (bind (cfd, (struct sockaddr *) &salg, sizeof salg) == 0
-             ? accept4 (cfd, NULL, 0, SOCK_CLOEXEC)
+             ? accept4 (cfd, NULL, NULL, SOCK_CLOEXEC)
              : -1);
   close (cfd);
   return ofd < 0 ? -EAFNOSUPPORT : ofd;
