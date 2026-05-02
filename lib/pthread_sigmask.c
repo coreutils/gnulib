@@ -1,5 +1,5 @@
 /* POSIX compatible signal blocking for threads.
-   Copyright (C) 2011-2025 Free Software Foundation, Inc.
+   Copyright (C) 2011-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -87,6 +87,8 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
   return ret;
 #else
   int ret = sigprocmask (how, new_mask, old_mask);
-  return (ret < 0 ? errno : 0);
+  /* Test for ret != 0, not ret < 0, as a workaround against NetBSD bug
+     <https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57213>.  */
+  return (ret != 0 ? errno : 0);
 #endif
 }
