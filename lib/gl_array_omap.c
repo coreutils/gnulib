@@ -37,10 +37,11 @@ struct pair
 struct gl_omap_impl
 {
   struct gl_omap_impl_base base;
+  size_t count;
   /* An array of ALLOCATED pairs, of which the first COUNT are used.
      0 <= COUNT <= ALLOCATED.  */
-  struct pair *pairs;
-  size_t count;
+  struct pair *pairs
+    _GL_ATTRIBUTE_COUNTED_BY (count);
   size_t allocated;
 };
 
@@ -205,11 +206,11 @@ gl_array_nx_add_at (gl_omap_t map, size_t position,
     if (grow (map) < 0)
       return -1;
   struct pair *pairs = map->pairs;
+  map->count = count + 1;
   for (size_t i = count; i > position; i--)
     pairs[i] = pairs[i - 1];
   pairs[position].key = key;
   pairs[position].value = value;
-  map->count = count + 1;
   return 1;
 }
 
