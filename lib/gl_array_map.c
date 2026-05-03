@@ -38,10 +38,11 @@ struct pair
 struct gl_map_impl
 {
   struct gl_map_impl_base base;
+  size_t count;
   /* An array of ALLOCATED pairs, of which the first COUNT are used.
      0 <= COUNT <= ALLOCATED.  */
-  struct pair *pairs;
-  size_t count;
+  struct pair *pairs
+    _GL_ATTRIBUTE_COUNTED_BY (count);
   size_t allocated;
 };
 
@@ -150,9 +151,9 @@ gl_array_nx_getput (gl_map_t map, const void *key, const void *value,
         if (grow (map) < 0)
           return -1;
       struct pair *pairs = map->pairs;
+      map->count = count + 1;
       pairs[count].key = key;
       pairs[count].value = value;
-      map->count = count + 1;
       return 1;
     }
 }
