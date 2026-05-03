@@ -215,7 +215,8 @@ struct page_pool
      updated in the managed_pages tree so far.  */
   #define UPDATE_QUEUE_SIZE 10
   unsigned int update_queue_count; /* <= UPDATE_QUEUE_SIZE */
-  uintptr_t update_queue[UPDATE_QUEUE_SIZE];
+  uintptr_t update_queue[UPDATE_QUEUE_SIZE]
+    /* COUNTED_BY (update_queue_count) */;
 
   /* A page that could be freed.
      We don't free it immediately, so that on allocation/deallocation
@@ -528,7 +529,8 @@ struct medium_page_header
   /* If n blocks are allocated, there are n+1 gaps before, between, and
      after them.  Keep them in an array, sorted in ascending order.  */
   unsigned int num_gaps; /* > 0 */
-  struct memory_range gaps[FLEXIBLE_ARRAY_MEMBER /* PAGESIZE / SMALL_BLOCK_MAX_SIZE + 1 */];
+  struct memory_range gaps[FLEXIBLE_ARRAY_MEMBER /* PAGESIZE / SMALL_BLOCK_MAX_SIZE + 1 */]
+    _GL_ATTRIBUTE_COUNTED_BY (num_gaps);
 };
 
 #define MEDIUM_BLOCKS_PAGE_MAX_GAPS \
@@ -599,6 +601,7 @@ allocate_medium_block_in_page (size_t size, uintptr_t page)
     abort ();
 
   /* Split the gap, leaving an empty gap and a remaining gap.  */
+  pageptr->num_gaps = num_gaps + 1;
   for (size_t i = num_gaps - 1; ; i--)
     {
       pageptr->gaps[i + 1] = pageptr->gaps[i];
@@ -608,7 +611,6 @@ allocate_medium_block_in_page (size_t size, uintptr_t page)
   size_t result = pageptr->gaps[best_i].start;
   pageptr->gaps[best_i].end = result;
   pageptr->gaps[best_i + 1].start = result + aligned_size;
-  pageptr->num_gaps = num_gaps + 1;
   if (pageptr->num_gaps > PAGESIZE / SMALL_BLOCK_MAX_SIZE + 1)
     /* Invalid state: More gaps than expected.  */
     abort ();
