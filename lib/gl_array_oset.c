@@ -31,10 +31,11 @@
 struct gl_oset_impl
 {
   struct gl_oset_impl_base base;
+  size_t count;
   /* An array of ALLOCATED elements, of which the first COUNT are used.
      0 <= COUNT <= ALLOCATED.  */
-  const void **elements;
-  size_t count;
+  const void **elements
+    _GL_ATTRIBUTE_COUNTED_BY (count);
   size_t allocated;
 };
 
@@ -208,10 +209,10 @@ gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
     if (grow (set) < 0)
       return -1;
   const void **elements = set->elements;
+  set->count = count + 1;
   for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
-  set->count = count + 1;
   return 1;
 }
 
