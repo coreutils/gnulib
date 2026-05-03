@@ -33,7 +33,8 @@ extern "C" {
 struct tokenbuffer
 {
   size_t size;
-  char *buffer;
+  char *buffer
+    _GL_ATTRIBUTE_COUNTED_BY (size);
 };
 typedef struct tokenbuffer token_buffer;
 
