@@ -141,7 +141,8 @@ struct inheritable_handles
   /* The number of allocated entries in the two arrays below.  */
   size_t allocated;
   /* ih[0..count-1] are the occupied entries.  */
-  struct IHANDLE *ih;
+  struct IHANDLE *ih
+    _GL_ATTRIBUTE_COUNTED_BY (count);
 };
 
 /* Initializes a set of inheritable handles, filling in all or part of the
