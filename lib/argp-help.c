@@ -419,11 +419,12 @@ struct hol_cluster
 /* A list of options for help.  */
 struct hol
 {
-  /* An array of hol_entry's.  */
-  struct hol_entry *entries;
   /* The number of entries in this hol.  If this field is zero, entries and
      short_options are undefined.  */
   unsigned num_entries;
+  /* An array of hol_entry's.  */
+  struct hol_entry *entries
+    _GL_ATTRIBUTE_COUNTED_BY (num_entries);
 
   /* A string containing all short options in this HOL.  Each entry contains
      pointers into this string, so the order can't be messed with blindly.  */
