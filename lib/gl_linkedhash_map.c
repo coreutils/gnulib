@@ -46,8 +46,9 @@ struct gl_map_impl
   struct gl_map_impl_base base;
   gl_mapkey_hashcode_fn hashcode_fn;
   /* A hash table: managed as an array of collision lists.  */
-  struct gl_hash_entry **table;
   size_t table_size;
+  struct gl_hash_entry **table
+    _GL_ATTRIBUTE_COUNTED_BY (table_size);
   /* A circular list anchored at root.
      The first node is = root.next, the last node is = root.prev.
      The root's value is unused.  */
