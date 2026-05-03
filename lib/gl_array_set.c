@@ -32,10 +32,11 @@
 struct gl_set_impl
 {
   struct gl_set_impl_base base;
+  size_t count;
   /* An array of ALLOCATED elements, of which the first COUNT are used.
      0 <= COUNT <= ALLOCATED.  */
-  const void **elements;
-  size_t count;
+  const void **elements
+    _GL_ATTRIBUTE_COUNTED_BY (count);
   size_t allocated;
 };
 
@@ -124,8 +125,8 @@ gl_array_nx_add (gl_set_t set, const void *elt)
       if (count == set->allocated)
         if (grow (set) < 0)
           return -1;
-      set->elements[count] = elt;
       set->count = count + 1;
+      set->elements[count] = elt;
       return 1;
     }
 }
