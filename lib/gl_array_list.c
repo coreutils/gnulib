@@ -34,10 +34,11 @@
 struct gl_list_impl
 {
   struct gl_list_impl_base base;
+  size_t count;
   /* An array of ALLOCATED elements, of which the first COUNT are used.
      0 <= COUNT <= ALLOCATED.  */
-  const void **elements;
-  size_t count;
+  const void **elements
+    _GL_ATTRIBUTE_COUNTED_BY (count);
   size_t allocated;
 };
 
@@ -283,10 +284,10 @@ gl_array_nx_add_first (gl_list_t list, const void *elt)
     if (grow (list) < 0)
       return NULL;
   const void **elements = list->elements;
+  list->count = count + 1;
   for (size_t i = count; i > 0; i--)
     elements[i] = elements[i - 1];
   elements[0] = elt;
-  list->count = count + 1;
   return INDEX_TO_NODE (0);
 }
 
@@ -298,8 +299,8 @@ gl_array_nx_add_last (gl_list_t list, const void *elt)
   if (count == list->allocated)
     if (grow (list) < 0)
       return NULL;
-  list->elements[count] = elt;
   list->count = count + 1;
+  list->elements[count] = elt;
   return INDEX_TO_NODE (count);
 }
 
@@ -317,10 +318,10 @@ gl_array_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
     if (grow (list) < 0)
       return NULL;
   const void **elements = list->elements;
+  list->count = count + 1;
   for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
-  list->count = count + 1;
   return INDEX_TO_NODE (position);
 }
 
@@ -338,10 +339,10 @@ gl_array_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
     if (grow (list) < 0)
       return NULL;
   const void **elements = list->elements;
+  list->count = count + 1;
   for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
-  list->count = count + 1;
   return INDEX_TO_NODE (position);
 }
 
@@ -357,10 +358,10 @@ gl_array_nx_add_at (gl_list_t list, size_t position, const void *elt)
     if (grow (list) < 0)
       return NULL;
   const void **elements = list->elements;
+  list->count = count + 1;
   for (size_t i = count; i > position; i--)
     elements[i] = elements[i - 1];
   elements[position] = elt;
-  list->count = count + 1;
   return INDEX_TO_NODE (position);
 }
 
