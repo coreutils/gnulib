@@ -34,14 +34,15 @@
 struct gl_list_impl
 {
   struct gl_list_impl_base base;
+  size_t allocated;
   /* An array of ALLOCATED elements, of which the elements
      OFFSET, (OFFSET + 1) % ALLOCATED, ..., (OFFSET + COUNT - 1) % ALLOCATED
      are used.  0 <= COUNT <= ALLOCATED.  Either OFFSET = ALLOCATED = 0 or
      0 <= OFFSET < ALLOCATED.  */
-  const void **elements;
+  const void **elements
+    _GL_ATTRIBUTE_COUNTED_BY (allocated);
   size_t offset;
   size_t count;
-  size_t allocated;
 };
 
 /* struct gl_list_node_impl doesn't exist here.  The pointers are actually
