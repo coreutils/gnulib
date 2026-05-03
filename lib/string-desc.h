@@ -127,7 +127,8 @@ struct rw_string_desc_t
 {
   /* The fields of this struct should be considered private.  */
   idx_t _nbytes;
-  char *_data;
+  char *_data
+    _GL_ATTRIBUTE_COUNTED_BY (_nbytes);
 };
 #if HAVE_RW_STRING_DESC
 typedef struct string_desc_t string_desc_t;
@@ -135,7 +136,8 @@ struct string_desc_t
 {
   /* The fields of this struct should be considered private.  */
   idx_t _nbytes;
-  const char *_data;
+  const char *_data
+    _GL_ATTRIBUTE_COUNTED_BY (_nbytes);
 };
 #else
 typedef rw_string_desc_t string_desc_t;
