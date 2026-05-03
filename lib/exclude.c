@@ -89,9 +89,10 @@ struct patopts
 
 struct exclude_pattern
   {
-    struct patopts *exclude;
-    idx_t exclude_alloc;
     idx_t exclude_count;
+    struct patopts *exclude
+      _GL_ATTRIBUTE_COUNTED_BY (exclude_count);
+    idx_t exclude_alloc;
   };
 
 enum exclude_type
@@ -261,7 +262,7 @@ new_exclude_segment (struct exclude *ex, enum exclude_type type, int options)
   switch (type)
     {
     case exclude_pattern:
-      sp->v.pat = (struct exclude_pattern) { NULL, 0, 0 };
+      sp->v.pat = (struct exclude_pattern) { 0, NULL, 0 };
       break;
 
     case exclude_hash:
@@ -519,7 +520,8 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
       if (pat->exclude_count == pat->exclude_alloc)
         pat->exclude = xpalloc (pat->exclude, &pat->exclude_alloc, 1, -1,
                                 sizeof *pat->exclude);
-      struct patopts *patopts = &pat->exclude[pat->exclude_count++];
+      idx_t pat_index = pat->exclude_count++;
+      struct patopts *patopts = &pat->exclude[pat_index];
 
       patopts->options = options;
       if (options & EXCLUDE_REGEX)
