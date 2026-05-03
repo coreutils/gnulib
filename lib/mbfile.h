@@ -79,8 +79,8 @@ struct mbfile_multi {
   unsigned int pushback_count; /* <= MBFILE_MAX_PUSHBACK */
   mbstate_t state;
   unsigned int bufcount;
-  char buf[MBCHAR_BUF_SIZE];
-  struct mbchar pushback[MBFILE_MAX_PUSHBACK];
+  char buf[MBCHAR_BUF_SIZE]; /* COUNTED_BY (bufcount) */
+  struct mbchar pushback[MBFILE_MAX_PUSHBACK]; /* COUNTED_BY (pushback_count) */
 };
 
 MBFILE_INLINE void
