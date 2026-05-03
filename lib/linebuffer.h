@@ -33,7 +33,8 @@ struct linebuffer
 {
   idx_t size;                  /* Allocated. */
   idx_t length;                /* Used. */
-  char *buffer;
+  char *buffer
+    _GL_ATTRIBUTE_COUNTED_BY (size);
 };
 
 /* Initialize linebuffer LINEBUFFER for use. */
