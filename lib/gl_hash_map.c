@@ -44,8 +44,9 @@ struct gl_map_impl
   struct gl_map_impl_base base;
   gl_mapkey_hashcode_fn hashcode_fn;
   /* A hash table: managed as an array of collision lists.  */
-  struct gl_hash_entry **table;
   size_t table_size;
+  struct gl_hash_entry **table
+    _GL_ATTRIBUTE_COUNTED_BY (table_size);
   /* Number of hash table entries.  */
   size_t count;
 };
