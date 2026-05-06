@@ -7,6 +7,7 @@ lib/localeinfo.h
 
 Depends-on:
 bool
+btoc32
 c32tolower
 c32toupper
 c99

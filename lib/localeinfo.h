@@ -54,9 +54,9 @@ struct localeinfo
 extern void init_localeinfo (struct localeinfo *);
 
 /* Maximum number of characters that can be the case-folded
-   counterparts of a single character, not counting the character
-   itself.  This is a generous upper bound.  */
-enum { CASE_FOLDED_BUFSIZE = 32 };
+   counterparts of a single character, not counting the character itself.
+   Subtract from 256 one for U+0000.  This is a generous upper bound.  */
+enum { CASE_FOLDED_BUFSIZE = (unsigned char) -1 };
 
 extern int case_folded_counterparts (wint_t, char32_t[CASE_FOLDED_BUFSIZE]);
 
