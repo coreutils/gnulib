@@ -25,6 +25,7 @@
 
 #include <limits.h>
 #include <locale.h>
+#include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
 #include <uchar.h>
@@ -119,10 +120,9 @@ static unsigned short int const lonesome_lower[] =
     0x03F5, 0x1E9B, 0x1FBE,
   };
 
-/* Verify that the worst case fits.  This is 1 for c32toupper, 1 for
+/* Verify that the worst multibyte case fits.  This is 1 for c32toupper, 1 for
    c32tolower, and 1 for each entry in LONESOME_LOWER.  */
-verify (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
-        <= CASE_FOLDED_BUFSIZE);
+verify (1 + 1 + countof (lonesome_lower) <= CASE_FOLDED_BUFSIZE);
 
 /* Find the characters equal to C after case-folding, other than C
    itself, and store them into FOLDED.  Return the number of characters
@@ -138,7 +138,7 @@ case_folded_counterparts (wint_t c, char32_t folded[CASE_FOLDED_BUFSIZE])
     folded[n++] = uc;
   if (lc != uc && lc != c && c32toupper (lc) == uc)
     folded[n++] = lc;
-  for (int i = 0; i < sizeof lonesome_lower / sizeof *lonesome_lower; i++)
+  for (int i = 0; i < countof (lonesome_lower); i++)
     {
       wint_t li = lonesome_lower[i];
       if (li != lc && li != uc && li != c && c32toupper (li) == uc)

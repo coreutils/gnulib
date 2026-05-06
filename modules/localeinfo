@@ -13,6 +13,7 @@ c99
 limits-h
 mbrtoc32-regular
 mbszero
+stdcountof-h
 uchar-h
 # The lonesome_lower array requires ISO C 23 semantics for char32_t.
 # But uchar-h-c23 has a global effect, therefore leave it to each package
