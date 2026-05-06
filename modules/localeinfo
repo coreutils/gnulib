@@ -1,0 +1,41 @@
+Description:
+DFA matcher that was initially used by GNU grep, gawk and diffutils
+
+Files:
+lib/localeinfo.c
+lib/localeinfo.h
+
+Depends-on:
+bool
+c32tolower
+c32toupper
+c99
+limits-h
+mbrtoc32-regular
+mbszero
+uchar-h
+# The lonesome_lower array requires ISO C 23 semantics for char32_t.
+# But uchar-h-c23 has a global effect, therefore leave it to each package
+# to enable it.
+#uchar-h-c23
+verify
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += localeinfo.c
+
+Include:
+"localeinfo.h"
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering, Paul Eggert
