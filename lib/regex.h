@@ -1,6 +1,6 @@
 /* Definitions for data structures and routines for the regular
    expression library.
-   Copyright (C) 1985, 1989-2025 Free Software Foundation, Inc.
+   Copyright (C) 1985, 1989-2026 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -645,15 +645,15 @@ extern int re_exec (const char *);
      array_name[restrict]
    use glibc's __restrict_arr if available.
    Otherwise, GCC 3.1 and clang support this syntax (but not in C++ mode).
-   Other ISO C99 compilers support it as well.  */
+   Other ISO C99 compilers support it as well, except for MSVC.  */
 #ifndef _Restrict_arr_
 # ifdef __restrict_arr
 #  define _Restrict_arr_ __restrict_arr
 # else
-#  if ((199901L <= __STDC_VERSION__ \
-         || 3 < __GNUC__ + (1 <= __GNUC_MINOR__) \
-         || __clang_major__ >= 3) \
-        && !defined __cplusplus)
+#  if (((199901L <= __STDC_VERSION__ && !defined _MSC_VER) \
+        || 3 < __GNUC__ + (1 <= __GNUC_MINOR__) \
+        || __clang_major__ >= 3) \
+       && !defined __cplusplus)
 #   define _Restrict_arr_ _Restrict_
 #  else
 #   define _Restrict_arr_
