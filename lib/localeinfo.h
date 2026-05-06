@@ -44,8 +44,8 @@ struct localeinfo
      than one byte.  */
   signed char sbclen[(unsigned char) -1 + 1];
 
-  /* An array indexed by byte values B that contains the corresponding
-     32-bit wide character (if any) for B if sbclen[B] == 1.  WEOF means
+  /* An array indexed by byte values B.  If sbclen[B] == 1,
+     this is the corresponding char32_t value.  Otherwise it is WEOF, as
      the byte is not a valid single-byte character, i.e., sbclen[B] == -1
      or -2.  */
   wint_t sbctowc[(unsigned char) -1 + 1];
