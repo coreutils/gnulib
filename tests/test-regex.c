@@ -166,7 +166,7 @@ bug_regex11 (void)
 int
 main (void)
 {
-  static struct re_pattern_buffer regex;
+  struct re_pattern_buffer regex;
   unsigned char folded_chars[UCHAR_MAX + 1];
   const char *s;
   struct re_registers regs;
@@ -237,15 +237,12 @@ main (void)
             report_error ("%s: %s", pat, s);
           else
             {
-              memset (&regs, 0, sizeof regs);
               int ret = re_search (&regex, data, sizeof data - 1,
                                    0, sizeof data - 1, NULL);
               if (ret != 0 && ret != 21)
                 report_error ("re_search '%s' on '%s' returned %d",
                               pat, data, ret);
               regfree (&regex);
-              free (regs.start);
-              free (regs.end);
             }
         }
 
@@ -515,8 +512,15 @@ main (void)
   memset (&regex, 0, sizeof regex);
   static char const pat_badback[] = "0|()0|\\1|0";
   s = re_compile_pattern (pat_badback, sizeof pat_badback, &regex);
-  if (!s && re_search (&regex, "x", 1, 0, 1, &regs) != -1)
-    s = "mishandled invalid back reference";
+  if (!s)
+    {
+      memset (&regs, 0, sizeof regs);
+      if (re_search (&regex, "x", 1, 0, 1, &regs) != -1)
+        s = "mishandled invalid back reference";
+      regfree (&regex);
+      free (regs.start);
+      free (regs.end);
+    }
   if (s && !streq (s, "Invalid back reference"))
     report_error ("%s: %s", pat_badback, s);
 
