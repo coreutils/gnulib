@@ -24,6 +24,16 @@ NetBSD 5.0
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+In multibyte locales, @code{wchar_t} values need not be Unicode code points:
+FreeBSD 15, NetBSD 10, AIX, Solaris.
+@item
+In single-byte locales, @code{wchar_t} values need not be Unicode code points:
+FreeBSD 15, NetBSD 10, OpenBSD 7, macOS 26, Solaris, mingw, MSVC.
+@item
+@code{wchar_t} is only 16 bits, and so can represent only a
+UTF-16 subset of Unicode when @code{wchar_t} values are Unicode code points:
+32-bit AIX, mingw, MSVC.
+@item
 This header file leads to link errors and endless recursions or endless loops
 on some platforms:
 glibc version 2.5 or older, together with gcc version 4.3 or newer and the
