@@ -117,7 +117,8 @@ static unsigned short int const lonesome_lower[] =
        counterpart in locales predating Unicode 4.0.0 (April 2003).  */
     0x03F2,
 
-    0x03F5, 0x1E9B, 0x1FBE,
+    0x03F5, 0x1C80, 0x1C81, 0x1C82, 0x1C83, 0x1C84, 0x1C85, 0x1C86,
+    0x1C87, 0x1C88, 0x1E9B, 0x1FBE,
   };
 
 /* Verify that the worst multibyte case fits.  This is 1 for c32toupper, 1 for
