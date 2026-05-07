@@ -147,7 +147,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wunknown-pragmas \
     -Wunsafe-loop-optimizations \
     -Wunused-macros \
-    -Wuseless-casts \
+    -Wuseless-cast \
     -Wvariadic-macros \
     -Wvector-operation-performance \
     -Wvla \
