@@ -191,12 +191,25 @@ do_1_test (test_function test, char const *text,
   return sum;
 }
 
+#ifndef GNULIB_WCHAR_SINGLE_LOCALE
+# define GNULIB_WCHAR_SINGLE_LOCALE 0
+#endif
+
 static void
 do_test (char test, int repeat, char const *locale_name,
          char const *text, size_t text_len)
 {
-  if (setlocale (LC_ALL, locale_name) != NULL)
+  static char const *current_locale_name;
+  if (GNULIB_WCHAR_SINGLE_LOCALE && current_locale_name
+      && !streq (locale_name, current_locale_name))
+    printf ("Skipping test: earlier locale %s != test locale %s\n",
+            current_locale_name, locale_name);
+  else if (!setlocale (LC_ALL, locale_name))
+    printf ("Skipping test: locale %s not installed.\n", locale_name);
+  else
     {
+      current_locale_name = locale_name;
+
       char const *text_end = text + text_len;
 
       static struct
@@ -220,8 +233,6 @@ do_test (char test, int repeat, char const *locale_name,
         testdesc[i].sum =
           do_1_test (testdesc[i].fn, text, text_end, repeat, &testdesc[i].ts);
 
-      setlocale (LC_ALL, "C");
-
       static bool header_printed;
       if (!header_printed)
         {
@@ -240,10 +251,6 @@ do_test (char test, int repeat, char const *locale_name,
           printf (" %8.3f", (user_usec + sys_usec) / 1e6);
         }
       printf ("\n");
-    }
-  else
-    {
-      printf ("Skipping test: locale %s not installed.\n", locale_name);
     }
 }
 

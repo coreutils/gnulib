@@ -11,6 +11,7 @@ mbuiter
 mbuiterf
 mcel
 setlocale
+streq
 striconv
 getrusage
 gettimeofday

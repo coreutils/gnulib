@@ -27,12 +27,26 @@
 
 unsigned long long volatile result;
 
+#ifndef GNULIB_WCHAR_SINGLE_LOCALE
+# define GNULIB_WCHAR_SINGLE_LOCALE 0
+#endif
+
 static void
 do_test (char test, int repeat, const char *locale_name, const char *text)
 {
   printf ("Test %c\n", test);
-  if (setlocale (LC_ALL, locale_name) != NULL)
+
+  static char const *current_locale_name;
+  if (GNULIB_WCHAR_SINGLE_LOCALE && current_locale_name
+      && !streq (locale_name, current_locale_name))
+    printf ("Skipping test: earlier locale %s != test locale %s\n",
+            current_locale_name, locale_name);
+  else if (!setlocale (LC_ALL, locale_name))
+    printf ("Skipping test: locale %s not installed.\n", locale_name);
+  else
     {
+      current_locale_name = locale_name;
+
       struct timings_state ts;
       timing_start (&ts);
 
@@ -52,10 +66,6 @@ do_test (char test, int repeat, const char *locale_name, const char *text)
 
       timing_end (&ts);
       timing_output (&ts);
-    }
-  else
-    {
-      printf ("Skipping test: locale %s not installed.\n", locale_name);
     }
   printf ("\n");
 }
