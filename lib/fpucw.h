@@ -81,15 +81,15 @@ typedef unsigned short fpucw_t; /* glibc calls this fpu_control_t */
      _cw;                                                       \
    })
 # define SET_FPUCW(word) __extension__ \
-  (void)({ fpucw_t _ncw = (word);                               \
-           __asm__ __volatile__ ("fldcw %0" : : "m" (*&_ncw));  \
-         })
+  ({ fpucw_t _ncw = (word);                                     \
+     __asm__ __volatile__ ("fldcw %0" : : "m" (*&_ncw));        \
+   })
 
 # define DECL_LONG_DOUBLE_ROUNDING \
   fpucw_t oldcw;
 # define BEGIN_LONG_DOUBLE_ROUNDING() \
-  (void)(oldcw = GET_FPUCW (),                                  \
-         SET_FPUCW ((oldcw & ~FPU_PC_MASK) | FPU_PC_EXTENDED))
+  (oldcw = GET_FPUCW (),                                        \
+   SET_FPUCW ((oldcw & ~FPU_PC_MASK) | FPU_PC_EXTENDED))
 # define END_LONG_DOUBLE_ROUNDING() \
   SET_FPUCW (oldcw)
 
