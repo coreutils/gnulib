@@ -1,6 +1,10 @@
 Files:
 tests/test-regex.c
+tests/test-regex-el.c
+tests/test-regex-en.c
+tests/test-regex-tr.c
 tests/macros.h
+m4/locale-en.m4
 
 Depends-on:
 gettext-h
@@ -10,8 +14,13 @@ streq
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])
+gt_LOCALE_EN_UTF8
 
 Makefile.am:
-TESTS += test-regex
-check_PROGRAMS += test-regex
+TESTS += test-regex test-regex-el test-regex-en test-regex-tr
+TESTS_ENVIRONMENT += LOCALE_EN_UTF8='@LOCALE_EN_UTF8@'
+check_PROGRAMS += test-regex test-regex-el test-regex-en test-regex-tr
 test_regex_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) @LIBINTL@ $(LIBC32CONV) $(LIBTHREAD)
+test_regex_el_LDADD = $(test_regex_LDADD)
+test_regex_en_LDADD = $(test_regex_LDADD)
+test_regex_tr_LDADD = $(test_regex_LDADD)

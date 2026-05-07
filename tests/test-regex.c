@@ -19,19 +19,15 @@
 #include "regex.h"
 
 #include <ctype.h>
-#include <locale.h>
 #include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wctype.h>
 #if HAVE_DECL_ALARM
 # include <unistd.h>
 # include <signal.h>
 #endif
-
-#include "localcharset.h"
 
 static int exit_status;
 
@@ -45,15 +41,6 @@ report_error (char const *format, ...)
   fprintf (stderr, "\n");
   va_end (args);
   exit_status = 1;
-}
-
-/* Check whether it's really a UTF-8 locale.
-   On mingw, setlocale (LC_ALL, "en_US.UTF-8") succeeds but returns
-   "English_United States.1252", with locale_charset () returning "CP1252".  */
-static int
-really_utf8 (void)
-{
-  return streq (locale_charset (), "UTF-8");
 }
 
 /* Tests supposed to match; copied from glibc posix/bug-regex11.c.  */
@@ -180,175 +167,6 @@ main (void)
 #endif
 
   bug_regex11 ();
-
-  if (setlocale (LC_ALL, "en_US.UTF-8"))
-    {
-      {
-        /* https://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
-           This test needs valgrind to catch the bug on Debian
-           GNU/Linux 3.1 x86, but it might catch the bug better
-           on other platforms and it shouldn't hurt to try the
-           test here.  */
-        static char const pat[] = "insert into";
-        static char const data[] =
-          "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
-        re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
-                       | RE_ICASE);
-        memset (&regex, 0, sizeof regex);
-        s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-        if (s)
-          report_error ("%s: %s", pat, s);
-        else
-          {
-            memset (&regs, 0, sizeof regs);
-            int ret = re_search (&regex, data, sizeof data - 1,
-                                 0, sizeof data - 1, &regs);
-            if (ret != -1)
-              report_error ("re_search '%s' on '%s' returned %d",
-                            pat, data, ret);
-            regfree (&regex);
-            free (regs.start);
-            free (regs.end);
-          }
-      }
-
-      if (really_utf8 ())
-        {
-          /* This test is from glibc bug 15078.
-             The test case is from Andreas Schwab in
-             <https://sourceware.org/ml/libc-alpha/2013-01/msg00967.html>.
-          */
-          static char const pat[] = "[^x]x";
-          static char const data[] =
-            /* <U1000><U103B><U103D><U1014><U103A><U102F><U1015><U103A> */
-            "\xe1\x80\x80"
-            "\xe1\x80\xbb"
-            "\xe1\x80\xbd"
-            "\xe1\x80\x94"
-            "\xe1\x80\xba"
-            "\xe1\x80\xaf"
-            "\xe1\x80\x95"
-            "\xe1\x80\xba"
-            "x";
-          re_set_syntax (0);
-          memset (&regex, 0, sizeof regex);
-          s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-          if (s)
-            report_error ("%s: %s", pat, s);
-          else
-            {
-              int ret = re_search (&regex, data, sizeof data - 1,
-                                   0, sizeof data - 1, NULL);
-              if (ret != 0 && ret != 21)
-                report_error ("re_search '%s' on '%s' returned %d",
-                              pat, data, ret);
-              regfree (&regex);
-            }
-        }
-
-      if (! setlocale (LC_ALL, "C"))
-        {
-          report_error ("setlocale \"C\" failed");
-          return exit_status;
-        }
-    }
-
-  /* Test for glibc bug 20381
-     <https://sourceware.org/bugzilla/show_bug.cgi?id=20381>.  */
-  if (setlocale (LC_ALL, "el_GR.iso88597")
-      || setlocale (LC_ALL, "el_GR.ISO8859-7")
-      || setlocale (LC_ALL, "el_GR.iso8859-7"))
-    {
-      /* Check this only in Greek locales that seem to be working.
-         In macOS 26, for example, setlocale (LC_ALL, "el_GR.ISO8859-7")
-         succeed but acts like the C locale.  */
-      if (toupper (0xf2) == 0xd3 && toupper (0xf3) == 0xd3)
-        for (int i = 0; i < 3; i++)
-          for (int j = 0; j < 3; j++)
-            {
-              static char const str[3][2] = { "\xd3", "\xf2", "\xf3" };
-              re_set_syntax (RE_ICASE);
-              memset (&regex, 0, sizeof regex);
-              s = re_compile_pattern (str[i], 1, &regex);
-              if (s)
-                {
-                  report_error ("re_compile_pattern \\x%02x failed: %s",
-                                (unsigned char) str[i][0], s);
-                  continue;
-                }
-              int without = re_search (&regex, str[j], 1, 0, 1, NULL);
-              regfree (&regex);
-
-              memset (&regex, 0, sizeof regex);
-              regex.fastmap = malloc (UCHAR_MAX + 1);
-              if (!regex.fastmap)
-                {
-                  report_error ("malloc failed");
-                  continue;
-                }
-              s = re_compile_pattern (str[i], 1, &regex);
-              if (s)
-                {
-                  report_error ("re_compile_pattern \\x%02x failed(!): %s",
-                                (unsigned char) str[i][0], s);
-                  continue;
-                }
-              int with = re_search (&regex, str[j], 1, 0, 1, NULL);
-
-              if (with != without)
-                report_error
-                  ("fastmap mismatch: pattern = \\x%02x, string = \\x%02x,"
-                   " with = %d, without = %d",
-                   (unsigned char) str[i][0], (unsigned char) str[j][0],
-                   with, without);
-
-              regfree (&regex);
-            }
-
-      if (! setlocale (LC_ALL, "C"))
-        {
-          report_error ("setlocale \"C\" failed");
-          return exit_status;
-        }
-    }
-
-  if (setlocale (LC_ALL, "tr_TR.UTF-8"))
-    {
-      if (really_utf8 () && towupper (L'i') == 0x0130 /* U+0130; see below.  */)
-        {
-          re_set_syntax (RE_SYNTAX_GREP | RE_ICASE);
-          memset (&regex, 0, sizeof regex);
-          static char const pat[] = "i";
-          s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-          if (s)
-            report_error ("%s: %s", pat, s);
-          else
-            {
-              /* UTF-8 encoding of U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE.
-                 In Turkish, this is the upper-case equivalent of ASCII "i".
-                 Older versions of Gnulib failed to match "i" to U+0130 when
-                 ignoring case in Turkish <https://bugs.gnu.org/43577>.  */
-              static char const data[] = "\xc4\xb0";
-
-              memset (&regs, 0, sizeof regs);
-              int ret =
-                re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
-                           &regs);
-              if (ret != 0)
-                report_error ("re_search '%s' on '%s' returned %d",
-                              pat, data, ret);
-              regfree (&regex);
-              free (regs.start);
-              free (regs.end);
-            }
-        }
-
-      if (! setlocale (LC_ALL, "C"))
-        {
-          report_error ("setlocale \"C\" failed");
-          return exit_status;
-        }
-    }
 
   /* This test is from glibc bug 3957, reported by Andrew Mackey.  */
   re_set_syntax (RE_SYNTAX_EGREP | RE_HAT_LISTS_NOT_NEWLINE);
