@@ -267,22 +267,34 @@ main (void)
           for (int j = 0; j < 3; j++)
             {
               static char const str[3][2] = { "\xd3", "\xf2", "\xf3" };
-              regex_t re;
-              int err = regcomp (&re, str[i], REG_ICASE | REG_NOSUB);
-              if (err)
+              re_set_syntax (RE_ICASE);
+              memset (&regex, 0, sizeof regex);
+              s = re_compile_pattern (str[i], 1, &regex);
+              if (s)
                 {
-                  char buf[500];
-                  regerror (err, &re, buf, sizeof buf);
-                  report_error ("regcomp \\x%02x failed: %s",
-                                (unsigned char) str[i][0], buf);
+                  report_error ("re_compile_pattern \\x%02x failed: %s",
+                                (unsigned char) str[i][0], s);
                   continue;
                 }
+              int without = re_search (&regex, str[j], 1, 0, 1, NULL);
+              regfree (&regex);
 
-              int with = regexec (&re, str[j], 0, NULL, 0);
-              free (re.fastmap);
-              re.fastmap = NULL;
-              re.fastmap_accurate = 0;
-              int without = regexec (&re, str[j], 0, NULL, 0);
+              memset (&regex, 0, sizeof regex);
+              regex.fastmap = malloc (UCHAR_MAX + 1);
+              if (!regex.fastmap)
+                {
+                  report_error ("malloc failed");
+                  continue;
+                }
+              s = re_compile_pattern (str[i], 1, &regex);
+              if (s)
+                {
+                  report_error ("re_compile_pattern \\x%02x failed(!): %s",
+                                (unsigned char) str[i][0], s);
+                  continue;
+                }
+              int with = re_search (&regex, str[j], 1, 0, 1, NULL);
+
               if (with != without)
                 report_error
                   ("fastmap mismatch: pattern = \\x%02x, string = \\x%02x,"
@@ -290,7 +302,7 @@ main (void)
                    (unsigned char) str[i][0], (unsigned char) str[j][0],
                    with, without);
 
-              regfree (&re);
+              regfree (&regex);
             }
 
       if (! setlocale (LC_ALL, "C"))
