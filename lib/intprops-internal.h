@@ -25,8 +25,8 @@
 # pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
 
-/* This file uses many casts that might provoke -Wuseless-cast.  */
-#if 16 <= __GNUC__
+/* This file uses many casts that might provoke -Wuseless-cast warnings.  */
+#if 14 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 

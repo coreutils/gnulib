@@ -69,8 +69,9 @@
 # pragma GCC diagnostic ignored "-Wanalyzer-null-argument"
 #endif
 
-/* This code has a lot of parameterized pointer casts that may be no-ops.  */
-#if _GL_GNUC_PREREQ (16, 0) || 11 <= __clang_major__
+/* This code has a lot of parameterized pointer casts that may be no-ops,
+   depending on DCHAR_T and TCHAR_T.  */
+#if _GL_GNUC_PREREQ (14, 0)
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 
