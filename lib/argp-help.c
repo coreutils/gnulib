@@ -1654,7 +1654,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
                               inp_text, input);
     }
   else
-    text = (const char *) inp_text;
+    text = inp_text;
 
   int anything = 0;
   if (text)
