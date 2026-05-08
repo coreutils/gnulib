@@ -28,6 +28,9 @@
   static_assert ((max) >> ((width) - 1 - ((min) < 0)) == 1)
 
 /* Macros borrowed from intprops.h.  */
+#if 16 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 #define TYPE_WIDTH(t) (sizeof (t) * CHAR_BIT)
 #define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
