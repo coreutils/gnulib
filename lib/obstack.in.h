@@ -487,7 +487,7 @@ extern int obstack_exit_failure;
 # define obstack_free(OBSTACK, OBJ)					      \
   __extension__								      \
     ({ struct obstack *__o = (OBSTACK);					      \
-       void *__obj = (void *) (OBJ);					      \
+       void *__obj = OBJ;						      \
        if ((_OBSTACK_CPTR) __o->chunk < (_OBSTACK_CPTR) __obj		      \
            && (_OBSTACK_CPTR) __obj < (_OBSTACK_CPTR) __o->chunk_limit)	      \
          __o->next_free = __o->object_base = (char *) __obj;		      \
