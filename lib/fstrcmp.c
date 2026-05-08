@@ -214,7 +214,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
       free (buffer);
       buffer = xnmalloc (bufmax, 2 * sizeof *buffer);
       gl_tls_set (buffer_key, buffer);
-      gl_tls_set (bufmax_key, (void *) (uintptr_t) bufmax);
+      gl_tls_set (bufmax_key, (void *) bufmax);
     }
   ctxt.fdiag = buffer + yvec_length + 1;
   ctxt.bdiag = ctxt.fdiag + fdiag_len;
