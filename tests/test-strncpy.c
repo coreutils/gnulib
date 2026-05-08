@@ -88,9 +88,8 @@ check (const char *input, size_t input_length)
         for (size_t n = 0; n <= 2 * length + 2; n++)
           {
             size_t n_to_copy = (n <= length ? n : length + 1);
-            char *copy;
+            char *copy = page_boundary - n_to_copy;
 
-            copy = (char *) page_boundary - n_to_copy;
             for (size_t i = 0; i < n_to_copy; i++)
               copy[i] = input[i];
 

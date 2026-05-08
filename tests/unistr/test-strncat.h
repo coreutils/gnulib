@@ -69,16 +69,15 @@ check (const UNIT *input, size_t input_length)
   /* Check that U_STRNCAT (D, S, N) does not look at more than
      MIN (U_STRLEN (S) + 1, N) units.  */
   {
-    char *page_boundary = (char *) zerosize_ptr ();
+    UNIT *page_boundary = zerosize_ptr ();
 
     if (page_boundary != NULL)
       {
         for (size_t n = 0; n <= 2 * length + 2; n++)
           {
             size_t n_to_copy = (n <= length ? n : length + 1);
-            UNIT *copy;
+            UNIT *copy = page_boundary - n_to_copy;
 
-            copy = (UNIT *) page_boundary - n_to_copy;
             for (size_t i = 0; i < n_to_copy; i++)
               copy[i] = input[i];
 
