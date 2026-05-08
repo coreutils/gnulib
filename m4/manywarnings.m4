@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 34
+# serial 35
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -147,7 +147,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wunknown-pragmas \
     -Wunsafe-loop-optimizations \
     -Wunused-macros \
-    -Wuseless-cast \
     -Wvariadic-macros \
     -Wvector-operation-performance \
     -Wvla \
@@ -182,6 +181,15 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     case $gl_gcc_version in
       gcc*' ('*') '[[0-9]].*)
         AS_VAR_APPEND([$1], [' -fno-common'])
+          ;;
+    esac
+    case $gl_gcc_version in
+      gcc*' ('*') '?.* | gcc*' ('*') '1[[0-3]].*)
+          # In GCC < 14 the option either does not exist,
+          # or is accepted but always warns.
+          ;;
+      *)
+          AS_VAR_APPEND([$1], [' -Wuseless-cast'])
           ;;
     esac
     case $gl_gcc_version in
