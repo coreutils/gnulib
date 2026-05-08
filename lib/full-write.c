@@ -30,12 +30,12 @@
 # include "safe-read.h"
 # define safe_rw safe_read
 # define full_rw full_read
-# undef const
-# define const /* empty */
+# define CONST /* empty */
 #else
 # include "safe-write.h"
 # define safe_rw safe_write
 # define full_rw full_write
+# define CONST const
 #endif
 
 #ifdef FULL_READ
@@ -55,10 +55,10 @@
    When reading, if fewer than COUNT bytes are read, you must examine
    errno to distinguish failure from EOF (errno == 0).  */
 idx_t
-full_rw (int fd, const void *buf, idx_t count)
+full_rw (int fd, void CONST *buf, idx_t count)
 {
   idx_t total = 0;
-  const char *ptr = (const char *) buf;
+  char CONST *ptr = buf;
 
   while (count > 0)
     {
