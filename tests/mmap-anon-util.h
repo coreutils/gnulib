@@ -68,6 +68,12 @@ mprotect (void *addr, size_t len, int prot)
 # include <sys/mman.h>
 # include <fcntl.h>
 
+/* This code uses mmap and has unnecessary casts for compatibility
+   with ancient systems.  */
+# if _GL_GNUC_PREREQ (14, 0)
+#  pragma GCC diagnostic ignored "-Wuseless-cast"
+# endif
+
 # ifndef PROT_NONE
 #  define PROT_NONE 0
 # endif

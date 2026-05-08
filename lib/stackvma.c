@@ -101,6 +101,12 @@ simple_is_near_this (uintptr_t addr, struct vma_struct *vma)
 #  include <limits.h> /* PATH_MAX */
 # endif
 
+/* This code uses mmap and has unnecessary casts for compatibility
+   with ancient systems.  */
+# if _GL_GNUC_PREREQ (14, 0)
+#  pragma GCC diagnostic ignored "-Wuseless-cast"
+# endif
+
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
    call may have been interrupted.

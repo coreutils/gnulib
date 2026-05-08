@@ -136,6 +136,12 @@
        VMAs with nonsensical addresses.
    So use mmap(), and ignore the resulting VMA.  */
 
+/* This code uses mmap and has unnecessary casts for compatibility
+   with ancient systems.  */
+# if _GL_GNUC_PREREQ (14, 0)
+#  pragma GCC diagnostic ignored "-Wuseless-cast"
+# endif
+
 # if defined __linux__ || defined __ANDROID__
   /* On Linux, if the file does not entirely fit into the buffer, the read()
      function stops before the line that would come out truncated.  The
