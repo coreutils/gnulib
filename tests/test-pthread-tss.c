@@ -63,7 +63,7 @@
      pthread_t, though not necessarily representing a pointer.  */
 # define pthread_self_pointer() (*((void **) pthread_self ().__))
 #else
-# define pthread_self_pointer() ((void *) (uintptr_t) pthread_self ())
+# define pthread_self_pointer() ((void *) (intptr_t) pthread_self ())
 #endif
 
 static void
