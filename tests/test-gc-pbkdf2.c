@@ -114,14 +114,13 @@ main (int argc, char *argv[])
                            pkcs5[i].iterations, out, pkcs5[i].dklen);
       if (rc != GC_OK)
         {
-          printf ("PKCS5 entry %ld failed fatally: %d\n",
-                  (unsigned long) i, rc);
+          printf ("PKCS5 entry %zu failed fatally: %d\n", i, rc);
           return 1;
         }
 
       if (!memeq (pkcs5[i].expected, out, pkcs5[i].dklen))
         {
-          printf ("PKCS5 entry %ld failed\n", (unsigned long) i);
+          printf ("PKCS5 entry %zu failed\n", i);
           return 1;
         }
     }

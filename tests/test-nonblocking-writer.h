@@ -78,14 +78,14 @@ main_writer_loop (int test, size_t data_block_size, int fd,
 
         usleep (1000000);
 
-        dbgfprintf (stderr, "%s:1: >> write (%lu)\n", PROG_ROLE,
-                    (unsigned long) (2 * data_block_size));
+        dbgfprintf (stderr, "%s:1: >> write (%zu)\n", PROG_ROLE,
+                    2 * data_block_size);
         START_TIMING
         ret = write (fd, data, 2 * data_block_size);
         saved_errno = errno;
         END_TIMING
         dbgfprintf (stderr, "%s:1: << write -> %ld%s\n", PROG_ROLE,
-                    (long) ret, dbgstrerror (ret < 0, saved_errno));
+                    (long) {ret}, dbgstrerror (ret < 0, saved_errno));
         ASSERT (ret == 2 * data_block_size);
         if (!has_large_buffer)
           {
@@ -113,15 +113,15 @@ main_writer_loop (int test, size_t data_block_size, int fd,
         bytes_written = 0;
         while (bytes_written < 2 * data_block_size)
           {
-            dbgfprintf (stderr, "%s:2: >> write (%lu)\n", PROG_ROLE,
-                        (unsigned long) (2 * data_block_size - bytes_written));
+            dbgfprintf (stderr, "%s:2: >> write (%zu)\n", PROG_ROLE,
+                        2 * data_block_size - bytes_written);
             START_TIMING
             ret = write (fd, data + bytes_written,
                          2 * data_block_size - bytes_written);
             saved_errno = errno;
             END_TIMING
             dbgfprintf (stderr, "%s:2: << write -> %ld%s\n", PROG_ROLE,
-                        (long) ret, dbgstrerror (ret < 0, saved_errno));
+                        (long) {ret}, dbgstrerror (ret < 0, saved_errno));
             if (ret < 0 && bytes_written >= data_block_size)
               {
                 ASSERT (saved_errno == EAGAIN || saved_errno == EWOULDBLOCK);
@@ -153,15 +153,15 @@ main_writer_loop (int test, size_t data_block_size, int fd,
 
         while (bytes_written < 2 * data_block_size)
           {
-            dbgfprintf (stderr, "%s:3: >> write (%lu)\n", PROG_ROLE,
-                        (unsigned long) (2 * data_block_size - bytes_written));
+            dbgfprintf (stderr, "%s:3: >> write (%zu)\n", PROG_ROLE,
+                        2 * data_block_size - bytes_written);
             START_TIMING
             ret = write (fd, data + bytes_written,
                          2 * data_block_size - bytes_written);
             saved_errno = errno;
             END_TIMING
             dbgfprintf (stderr, "%s:3: << write -> %ld%s\n", PROG_ROLE,
-                        (long) ret, dbgstrerror (ret < 0, saved_errno));
+                        (long) {ret}, dbgstrerror (ret < 0, saved_errno));
             ASSERT (spent_time < 0.5);
             if (ret < 0)
               {

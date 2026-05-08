@@ -148,9 +148,9 @@ main (void)
         {
           ok = false;
           printf ("dir_name '%s': got '%s' len %d,"
-                  " expected '%s' len %lu\n",
+                  " expected '%s' len %zu\n",
                   t->name, dir, dirlen,
-                  t->dir, (unsigned long) strlen (t->dir));
+                  t->dir, strlen (t->dir));
         }
       if (!streq (last, t->last))
         {
@@ -165,9 +165,9 @@ main (void)
         {
           ok = false;
           printf ("base_name '%s': got '%s' len %d,"
-                  " expected '%s' len %lu\n",
+                  " expected '%s' len %zu\n",
                   t->name, base, baselen,
-                  t->base, (unsigned long) strlen (t->base));
+                  t->base, strlen (t->base));
         }
       if (!streq (stripped, t->stripped) || modified != t->modified)
         {

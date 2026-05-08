@@ -66,14 +66,14 @@ full_read (size_t fd, void *buf, size_t count)
       ssize_t ret;
       int saved_errno;
 
-      dbgfprintf (stderr, "%s: >> read (%lu)\n", PROG_ROLE,
-                  (unsigned long) (count - bytes_read));
+      dbgfprintf (stderr, "%s: >> read (%zu)\n", PROG_ROLE,
+                  count - bytes_read);
       START_TIMING
       ret = read (fd, (char *) buf + bytes_read, count - bytes_read);
       saved_errno = errno;
       END_TIMING
       dbgfprintf (stderr, "%s: << read -> %ld%s\n", PROG_ROLE,
-                  (long) ret, dbgstrerror (ret < 0, saved_errno));
+                  (long) {ret}, dbgstrerror (ret < 0, saved_errno));
       (void) spent_time;
       if (ret < 0)
         return -1;
@@ -98,14 +98,14 @@ full_read_from_nonblocking_fd (size_t fd, void *buf, size_t count)
       ssize_t ret;
       int saved_errno;
 
-      dbgfprintf (stderr, "%s: >> read (%lu)\n", PROG_ROLE,
-                  (unsigned long) (count - bytes_read));
+      dbgfprintf (stderr, "%s: >> read (%zu)\n", PROG_ROLE,
+                  count - bytes_read);
       START_TIMING
       ret = read (fd, (char *) buf + bytes_read, count - bytes_read);
       saved_errno = errno;
       END_TIMING
       dbgfprintf (stderr, "%s: << read -> %ld%s\n", PROG_ROLE,
-                  (long) ret, dbgstrerror (ret < 0, saved_errno));
+                  (long) {ret}, dbgstrerror (ret < 0, saved_errno));
       /* This assertion fails if the non-blocking flag is effectively not set
          on fd.  */
       ASSERT (spent_time < 0.5);
