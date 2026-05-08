@@ -69,7 +69,6 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #include <unistd.h>
 
 #if ! _LIBC
-# include "attribute.h"
 # include "fcntl--.h"
 # include "flexmember.h"
 # include "openat.h"
@@ -200,14 +199,6 @@ enum Fts_stat
           abort ();             \
       }                         \
     while (false)
-#endif
-
-#ifdef _LIBC
-# if __glibc_has_attribute (__fallthrough__)
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# else
-#  define FALLTHROUGH ((void) 0)
-# endif
 #endif
 
 static FTSENT   *fts_alloc (FTS *, const char *, size_t) internal_function;
@@ -789,21 +780,17 @@ leaf_optimization (FTSENT const *p, int dir_fd)
     {
     case 0:
       /* Leaf optimization is unsafe if the file system type is unknown.  */
-      FALLTHROUGH;
     case S_MAGIC_AFS:
       /* Although AFS mount points are not counted in st_nlink, they
          act like directories.  See <https://bugs.debian.org/143111>.  */
-      FALLTHROUGH;
     case S_MAGIC_CIFS:
       /* Leaf optimization causes 'find' to abort.  See
          <https://lists.gnu.org/r/bug-gnulib/2018-04/msg00015.html>.  */
-      FALLTHROUGH;
     case S_MAGIC_NFS:
       /* NFS provides usable dirent.d_type but not necessarily for all entries
          of large directories, so as per <https://bugzilla.redhat.com/1252549>
          NFS should return true.  However st_nlink values are not accurate on
          all implementations as per <https://bugzilla.redhat.com/1299169>.  */
-      FALLTHROUGH;
     case S_MAGIC_PROC:
       /* Per <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=143111> /proc
          may have bogus stat.st_nlink values.  */
