@@ -1,5 +1,5 @@
 # gnulib-common.m4
-# serial 118
+# serial 120
 dnl Copyright (C) 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1452,6 +1452,7 @@ AC_DEFUN([gl_CC_GNULIB_WARNINGS],
     dnl -Wno-unused-const-variable            >= 6.1          >= 3.9
     dnl -Wno-unused-function                  >= 3            >= 3.9
     dnl -Wno-unused-parameter                 >= 3            >= 3.9
+    dnl -Wno-useless-cast                     >= 14
     dnl
     cat > conftest.c <<\EOF
       #if (__GNUC__ >= 3 && !defined __clang__) || (__clang_major__ + (__clang_minor__ >= 9) > 3)
@@ -1485,6 +1486,9 @@ AC_DEFUN([gl_CC_GNULIB_WARNINGS],
       #endif
       #if (__GNUC__ + (__GNUC_MINOR__ >= 5) > 4 && !defined __clang__)
       -Wno-unsuffixed-float-constants
+      #endif
+      #if (__GNUC__ >= 14 && !defined __clang__)
+      -Wno-useless-cast
       #endif
 EOF
     gl_command="$CC $CFLAGS $CPPFLAGS -E conftest.c > conftest.out"
