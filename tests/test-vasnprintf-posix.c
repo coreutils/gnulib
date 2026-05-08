@@ -3949,7 +3949,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 
   /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     char *result = my_asnprintf (NULL, &length, "%ls %d", input, 99);
     if (result == NULL)
@@ -3958,7 +3958,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     char *result = my_asnprintf (NULL, &length, "%3ls %d", input, 99);
     if (result == NULL)
@@ -3967,7 +3967,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     char *result = my_asnprintf (NULL, &length, "%.1ls %d", input, 99);
     if (result == NULL)
@@ -3976,7 +3976,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     char *result = my_asnprintf (NULL, &length, "%3.1ls %d", input, 99);
     if (result == NULL)
@@ -4051,7 +4051,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-  static wint_t L_x = (wchar_t) 'x';
+  static wint_t L_x = L'x';
 
   { /* Width.  */
     size_t length;
@@ -4117,7 +4117,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-  static wint_t L_invalid = (wchar_t) 0x76543210;
+  static wint_t L_invalid = 0x76543210;
 
   { /* Invalid wide character.
        The conversion may succeed or may fail, but it should not abort.  */
@@ -4598,7 +4598,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hhd %d", (signed char) -42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hhd %d", (signed char) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4607,7 +4607,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hd %d", (short) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hd %d", (short) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4625,7 +4625,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%ld %d", (long int) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%ld %d", -12345L, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4634,7 +4634,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%lld %d", (long long int) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%lld %d", -12345LL, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4643,7 +4643,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w8d %d", (int8_t) -42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w8d %d", (int8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4652,7 +4652,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w16d %d", (int16_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w16d %d", (int16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4661,7 +4661,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w32d %d", (int32_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w32d %d", (int32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4670,7 +4670,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w64d %d", (int64_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w64d %d", (int64_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4679,7 +4679,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf8d %d", (int_fast8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4688,7 +4688,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf16d %d", (int_fast16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4697,7 +4697,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf32d %d", (int_fast32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4706,7 +4706,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf64d %d", (int_fast64_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4718,7 +4718,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hhu %d", (unsigned char) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hhu %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4727,7 +4727,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hu %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hu %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4736,7 +4736,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%u %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%u %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4745,7 +4745,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%lu %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%lu %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4754,7 +4754,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%llu %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4763,7 +4763,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w8u %d", (uint8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w8u %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4772,7 +4772,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w16u %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w16u %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4781,7 +4781,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w32u %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w32u %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4790,7 +4790,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w64u %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w64u %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4799,7 +4799,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf8u %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4808,7 +4808,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf16u %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4817,7 +4817,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf32u %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4826,7 +4826,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf64u %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4838,7 +4838,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hhb %d", (unsigned char) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hhb %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4847,7 +4847,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hb %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hb %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4856,7 +4856,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%b %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%b %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4865,7 +4865,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%lb %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%lb %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4874,7 +4874,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%llb %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4883,7 +4883,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w8b %d", (uint8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w8b %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4892,7 +4892,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w16b %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w16b %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4901,7 +4901,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w32b %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w32b %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4910,7 +4910,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w64b %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w64b %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4919,7 +4919,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf8b %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4928,7 +4928,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf16b %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4937,7 +4937,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf32b %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4946,7 +4946,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf64b %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4958,7 +4958,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hho %d", (unsigned char) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hho %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4967,7 +4967,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%ho %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%ho %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4976,7 +4976,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%o %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%o %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4985,7 +4985,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%lo %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%lo %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -4994,7 +4994,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%llo %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5003,7 +5003,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w8o %d", (uint8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w8o %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5012,7 +5012,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w16o %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w16o %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5021,7 +5021,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w32o %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w32o %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5030,7 +5030,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w64o %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w64o %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5039,7 +5039,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf8o %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5048,7 +5048,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf16o %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5057,7 +5057,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf32o %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5066,7 +5066,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf64o %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5078,7 +5078,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hhX %d", (unsigned char) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hhX %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5087,7 +5087,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%hX %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%hX %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5096,7 +5096,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%X %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%X %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5105,7 +5105,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%lX %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%lX %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5114,7 +5114,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%llX %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5123,7 +5123,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w8X %d", (uint8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w8X %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5132,7 +5132,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w16X %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w16X %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5141,7 +5141,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w32X %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w32X %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5150,7 +5150,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%w64X %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%w64X %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5159,7 +5159,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf8X %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5168,7 +5168,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf16X %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5177,7 +5177,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf32X %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);
@@ -5186,7 +5186,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%wf64X %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (length == strlen (result));
     free (result);

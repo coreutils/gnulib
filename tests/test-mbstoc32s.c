@@ -51,13 +51,13 @@ main (int argc, char *argv[])
     ret = mbstoc32s (NULL, src, 1);
     ASSERT (ret == 0);
 
-    wc = (char32_t) 0xBADFACE;
+    wc = 0xBADFACE;
     src = "";
     ret = mbstoc32s (&wc, src, 0);
     ASSERT (ret == 0);
-    ASSERT (wc == (char32_t) 0xBADFACE);
+    ASSERT (wc == 0xBADFACE);
 
-    wc = (char32_t) 0xBADFACE;
+    wc = 0xBADFACE;
     src = "";
     ret = mbstoc32s (&wc, src, 1);
     ASSERT (ret == 0);
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
           const char *src;
 
           for (size_t i = 0; i < BUFSIZE; i++)
-            buf[i] = (char32_t) 0xBADFACE;
+            buf[i] = 0xBADFACE;
 
           switch (argv[1][0])
             {
@@ -104,10 +104,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[1] == '/');
                     ASSERT (buf[2] == 'a');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[1] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[1] == 0xBADFACE);
               }
               {
                 char input[2];
@@ -123,7 +123,7 @@ main (int argc, char *argv[])
                       ret = mbstoc32s (NULL, src, unlimited ? BUFSIZE : 1);
                       ASSERT (ret == 1);
 
-                      buf[0] = buf[1] = (char32_t) 0xBADFACE;
+                      buf[0] = buf[1] = 0xBADFACE;
                       src = input;
                       ret = mbstoc32s (buf, src, unlimited ? BUFSIZE : 1);
                       /* POSIX:2018 says regarding mbstowcs: "In the POSIX locale an
@@ -147,13 +147,13 @@ main (int argc, char *argv[])
               {
                 char input[] = "B\374\337er"; /* "Büßer" */
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input, 1);
                 ASSERT (ret == 1);
                 ASSERT (wc == 'B');
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input + 1, 1);
                 ASSERT (ret == 1);
                 ASSERT (c32tob (wc) == (unsigned char) '\374');
@@ -172,10 +172,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[1] == 'e');
                     ASSERT (buf[2] == 'r');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[1] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[1] == 0xBADFACE);
               }
               break;
 
@@ -184,13 +184,13 @@ main (int argc, char *argv[])
               {
                 char input[] = "s\303\274\303\237\360\237\230\213!"; /* "süß😋!" */
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input, 1);
                 ASSERT (ret == 1);
                 ASSERT (wc == 's');
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input + 1, 1);
                 ASSERT (ret == 1);
                 ASSERT (wc == 0x00FC); /* expect Unicode encoding */
@@ -210,10 +210,10 @@ main (int argc, char *argv[])
                   {
                     ASSERT (buf[2] == '!');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
               }
               break;
 
@@ -222,13 +222,13 @@ main (int argc, char *argv[])
               {
                 char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input, 1);
                 ASSERT (ret == 1);
                 ASSERT (wc == '<');
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input + 1, 1);
                 ASSERT (ret == 1);
                 ASSERT (c32tob (wc) == EOF);
@@ -248,10 +248,10 @@ main (int argc, char *argv[])
                   {
                     ASSERT (buf[2] == '>');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
               }
               break;
 
@@ -266,13 +266,13 @@ main (int argc, char *argv[])
               {
                 char input[] = "s\250\271\201\060\211\070\224\071\375\067!"; /* "süß😋!" */
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input, 1);
                 ASSERT (ret == 1);
                 ASSERT (wc == 's');
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbstoc32s (&wc, input + 1, 1);
                 ASSERT (ret == 1);
                 ASSERT (c32tob (wc) == EOF);
@@ -291,10 +291,10 @@ main (int argc, char *argv[])
                   {
                     ASSERT (buf[2] == '!');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
               }
               break;
 

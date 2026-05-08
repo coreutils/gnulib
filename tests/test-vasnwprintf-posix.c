@@ -3982,7 +3982,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
 
   /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%ls %d", input, 99);
     if (result == NULL)
@@ -3991,7 +3991,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%3ls %d", input, 99);
     if (result == NULL)
@@ -4000,7 +4000,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%.1ls %d", input, 99);
     if (result == NULL)
@@ -4009,7 +4009,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    static const wchar_t input[] = { 1702057263, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%3.1ls %d", input, 99);
     if (result == NULL)
@@ -4102,7 +4102,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   }
 #endif
 
-  static wint_t L_x = (wchar_t) 'x';
+  static wint_t L_x = L'x';
 
   { /* Width.  */
     size_t length;
@@ -4162,7 +4162,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 
-  static wint_t L_invalid = (wchar_t) 0x76543210;
+  static wint_t L_invalid = 0x76543210;
 
   { /* Invalid wide character.  */
     size_t length;
@@ -4171,7 +4171,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     /* No failure is allowed: ISO C says "the wint_t argument is converted
        to wchar_t and written."  */
     ASSERT (result != NULL);
-    ASSERT (result[0] == (wchar_t) 0x76543210);
+    ASSERT (result[0] == 0x76543210);
     ASSERT (wmemcmp (result + 1, L" 33\0", 3 + 1) == 0);
     ASSERT (length == 4);
     free (result);
@@ -4185,7 +4185,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
        to wchar_t and written."  */
     ASSERT (result != NULL);
     ASSERT (wmemcmp (result, L"         ", 9) == 0);
-    ASSERT (result[9] == (wchar_t) 0x76543210);
+    ASSERT (result[9] == 0x76543210);
     ASSERT (wmemcmp (result + 10, L" 33\0", 3 + 1) == 0);
     ASSERT (length == 13);
     free (result);
@@ -4654,7 +4654,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hhd %d", (signed char) -42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hhd %d", (signed char) {-42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4663,7 +4663,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hd %d", (short) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hd %d", (short) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4681,7 +4681,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%ld %d", (long int) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%ld %d", -12345L, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4690,7 +4690,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%lld %d", (long long int) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%lld %d", -12345LL, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4699,7 +4699,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w8d %d", (int8_t) -42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w8d %d", (int8_t) {-42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4708,7 +4708,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w16d %d", (int16_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w16d %d", (int16_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4717,7 +4717,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w32d %d", (int32_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w32d %d", (int32_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4726,7 +4726,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w64d %d", (int64_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w64d %d", (int64_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4735,7 +4735,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf8d %d", (int_fast8_t) {-42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4744,7 +4744,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf16d %d", (int_fast16_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4753,7 +4753,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf32d %d", (int_fast32_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4762,7 +4762,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf64d %d", (int_fast64_t) {-12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"-12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4774,7 +4774,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hhu %d", (unsigned char) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hhu %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4783,7 +4783,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hu %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hu %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4792,7 +4792,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%u %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%u %d", 12345U, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4801,7 +4801,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%lu %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%lu %d", 12345UL, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4810,7 +4810,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%llu %d", 12345ULL, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4819,7 +4819,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w8u %d", (uint8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w8u %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4828,7 +4828,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w16u %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w16u %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4837,7 +4837,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w32u %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w32u %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4846,7 +4846,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w64u %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w64u %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4855,7 +4855,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf8u %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"42 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4864,7 +4864,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf16u %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4873,7 +4873,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf32u %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4882,7 +4882,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf64u %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"12345 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4894,7 +4894,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hhb %d", (unsigned char) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hhb %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"101010 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4903,7 +4903,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hb %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hb %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4912,7 +4912,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%b %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%b %d", 12345U, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4921,7 +4921,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%lb %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%lb %d", 12345UL, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4930,7 +4930,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%llb %d", 12345ULL, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4939,7 +4939,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w8b %d", (uint8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w8b %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"101010 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4948,7 +4948,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w16b %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w16b %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4957,7 +4957,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w32b %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w32b %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4966,7 +4966,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w64b %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w64b %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4975,7 +4975,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf8b %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"101010 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4984,7 +4984,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf16b %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -4993,7 +4993,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf32b %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5002,7 +5002,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf64b %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"11000000111001 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5014,7 +5014,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hho %d", (unsigned char) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hho %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"52 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5023,7 +5023,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%ho %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%ho %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5032,7 +5032,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%o %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%o %d", 12345U, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5041,7 +5041,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%lo %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%lo %d", 12345UL, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5050,7 +5050,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%llo %d", 12345ULL, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5059,7 +5059,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w8o %d", (uint8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w8o %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"52 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5068,7 +5068,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w16o %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w16o %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5077,7 +5077,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w32o %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w32o %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5086,7 +5086,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w64o %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w64o %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5095,7 +5095,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf8o %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"52 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5104,7 +5104,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf16o %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5113,7 +5113,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf32o %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5122,7 +5122,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf64o %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"30071 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5134,7 +5134,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hhX %d", (unsigned char) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hhX %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"2A 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5143,7 +5143,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%hX %d", (unsigned short) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%hX %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5152,7 +5152,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%X %d", (unsigned int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%X %d", 12345U, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5161,7 +5161,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%lX %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%lX %d", 12345UL, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5170,7 +5170,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%llX %d", 12345ULL, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5179,7 +5179,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w8X %d", (uint8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w8X %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"2A 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5188,7 +5188,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w16X %d", (uint16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w16X %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5197,7 +5197,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w32X %d", (uint32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w32X %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5206,7 +5206,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%w64X %d", (uint64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%w64X %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5215,7 +5215,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf8X %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (wcscmp (result, L"2A 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5224,7 +5224,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf16X %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5233,7 +5233,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf32X %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -5242,7 +5242,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   {
     size_t length;
     wchar_t *result =
-      my_asnwprintf (NULL, &length, L"%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+      my_asnwprintf (NULL, &length, L"%wf64X %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (wcscmp (result, L"3039 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);

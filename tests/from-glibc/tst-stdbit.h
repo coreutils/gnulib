@@ -85,36 +85,36 @@ struct stdbit_test
       TEST_TYPE (FUNC ## SUFFIX (X), TTYPE);				\
       TEST_COMPARE ((FUNC ## SUFFIX) (X), (RES));			\
       TEST_TYPE ((FUNC ## SUFFIX) (X), TTYPE);				\
-      TEST_COMPARE (FUNC ## SUFFIX ((TYPE) (X)), (RES));		\
-      TEST_TYPE (FUNC ## SUFFIX ((TYPE) (X)), TTYPE);			\
-      TEST_COMPARE ((FUNC ## SUFFIX) ((TYPE) (X)), (RES));		\
-      TEST_TYPE ((FUNC ## SUFFIX) ((TYPE) (X)), TTYPE);			\
-      TEST_COMPARE (FUNC ((TYPE) (X)), (RES));				\
-      TEST_TYPE (FUNC ((TYPE) (X)), TTYPE);				\
+      TEST_COMPARE (FUNC ## SUFFIX ((TYPE) {(X)}), (RES));		\
+      TEST_TYPE (FUNC ## SUFFIX ((TYPE) {(X)}), TTYPE);			\
+      TEST_COMPARE ((FUNC ## SUFFIX) ((TYPE) {(X)}), (RES));		\
+      TEST_TYPE ((FUNC ## SUFFIX) ((TYPE) {(X)}), TTYPE);		\
+      TEST_COMPARE (FUNC ((TYPE) {(X)}), (RES));			\
+      TEST_TYPE (FUNC ((TYPE) {(X)}), TTYPE);				\
       if (sizeof (TYPE) <= 2)						\
 	{								\
-	  TEST_COMPARE (FUNC ## SUFFIX ((float) (TYPE) (X)), (RES));	\
-	  TEST_TYPE (FUNC ## SUFFIX ((float) (TYPE) (X)), TTYPE);	\
-	  TEST_COMPARE ((FUNC ## SUFFIX) ((float) (TYPE) (X)), (RES));	\
-	  TEST_TYPE ((FUNC ## SUFFIX) ((float) (TYPE) (X)), TTYPE);	\
+	  TEST_COMPARE (FUNC ## SUFFIX ((float) (TYPE) {(X)}), (RES));	\
+	  TEST_TYPE (FUNC ## SUFFIX ((float) (TYPE) {(X)}), TTYPE);	\
+	  TEST_COMPARE ((FUNC ## SUFFIX) ((float) (TYPE) {(X)}), (RES)); \
+	  TEST_TYPE ((FUNC ## SUFFIX) ((float) (TYPE) {(X)}), TTYPE);	\
 	}								\
       if (sizeof (TYPE) <= 4)						\
 	{								\
-	  TEST_COMPARE (FUNC ## SUFFIX ((double) (TYPE) (X)), (RES));	\
-	  TEST_TYPE (FUNC ## SUFFIX ((double) (TYPE) (X)), TTYPE);	\
-	  TEST_COMPARE ((FUNC ## SUFFIX) ((double) (TYPE) (X)), (RES));	\
-	  TEST_TYPE ((FUNC ## SUFFIX) ((double) (TYPE) (X)), TTYPE);	\
-	  TEST_COMPARE (FUNC ## SUFFIX ((long double) (TYPE) (X)), (RES)); \
-	  TEST_TYPE (FUNC ## SUFFIX ((long double) (TYPE) (X)), TTYPE); \
-	  TEST_COMPARE ((FUNC ## SUFFIX) ((long double) (TYPE) (X)), (RES)); \
-	  TEST_TYPE ((FUNC ## SUFFIX) ((long double) (TYPE) (X)), TTYPE); \
+	  TEST_COMPARE (FUNC ## SUFFIX ((double) (TYPE) {(X)}), (RES));	\
+	  TEST_TYPE (FUNC ## SUFFIX ((double) (TYPE) {(X)}), TTYPE);	\
+	  TEST_COMPARE ((FUNC ## SUFFIX) ((double) (TYPE) {(X)}), (RES)); \
+	  TEST_TYPE ((FUNC ## SUFFIX) ((double) (TYPE) {(X)}), TTYPE);	\
+	  TEST_COMPARE (FUNC ## SUFFIX ((long double) (TYPE) {(X)}), (RES)); \
+	  TEST_TYPE (FUNC ## SUFFIX ((long double) (TYPE) {(X)}), TTYPE); \
+	  TEST_COMPARE ((FUNC ## SUFFIX) ((long double) (TYPE) {(X)}), (RES));\
+	  TEST_TYPE ((FUNC ## SUFFIX) ((long double) (TYPE) {(X)}), TTYPE); \
 	}								\
       TYPE xt = (X);							\
       TEST_COMPARE (FUNC ## SUFFIX (xt++), (RES));			\
-      TEST_COMPARE (xt, (TYPE) ((X) + 1));				\
+      TEST_COMPARE (xt, (TYPE) {(X) + 1});				\
       xt = (X);								\
       TEST_COMPARE (FUNC (xt++), (RES));				\
-      TEST_COMPARE (xt, (TYPE) ((X) + 1));				\
+      TEST_COMPARE (xt, (TYPE) {(X) + 1});				\
     }									\
   while (0)
 

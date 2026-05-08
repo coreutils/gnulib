@@ -56,7 +56,7 @@ main (int argc, char *argv[])
      See <https://sourceware.org/PR30611>.  */
   mbstate_t state;
   memset (&state, '\0', sizeof (mbstate_t));
-  char32_t c32 = (char32_t) 0xBADFACE;
+  char32_t c32 = 0xBADFACE;
   size_t ret = mbrtoc32 (&c32, "\210\142", 2, &state);
   /* It is OK if this conversion fails.  */
   if (ret != (size_t)(-1))

@@ -37,7 +37,7 @@ for_character (const char *s, size_t n)
   size_t ret;
 
   memset (&state, '\0', sizeof (mbstate_t));
-  wc = (char32_t) 0xBADFACE;
+  wc = 0xBADFACE;
   ret = mbrtoc32 (&wc, s, n, &state);
   ASSERT (ret == n);
 

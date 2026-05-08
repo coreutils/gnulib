@@ -48,7 +48,7 @@ static char filename_stamp3[50];
 static void
 initialize_filenames (void)
 {
-  long t = (long) time (NULL);
+  long t = time (NULL);
   sprintf (filename_stamp1,   "t-stt-%ld-stamp1", t);
   sprintf (filename_testfile, "t-stt-%ld-testfile", t);
   sprintf (filename_stamp2,   "t-stt-%ld-stamp2", t);

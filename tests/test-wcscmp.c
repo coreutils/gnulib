@@ -70,9 +70,9 @@ main (int argc, char *argv[])
         subclause order two wide characters the same way as two integers of
         the underlying integer type designated by wchar_t."  */
   {
-    static const wchar_t input1[] = { (wchar_t) 0x76547654, 0 };
-    static const wchar_t input2[] = { (wchar_t) 0x9abc9abc, 0 };
-    if ((wchar_t)-1 < 0)
+    static const wchar_t input1[] = { 0x76547654, 0 };
+    static const wchar_t input2[] = { 0x9abc9abc, 0 };
+    if ((wchar_t) {-1} < 0)
       {
         /* wchar_t is signed.  */
         ASSERT (wcscmp (input1, input2) > 0);
@@ -102,9 +102,9 @@ main (int argc, char *argv[])
      This means that the comparison extends up to and *including* the first
      null wchar_t.  */
   {
-    static const wchar_t input1[] = { (wchar_t) 'x', 0 };
-    static const wchar_t input2[] = { (wchar_t) 'x', (wchar_t) 0x9abc9abc, 0 };
-    if ((wchar_t)-1 < 0)
+    static const wchar_t input1[] = { L'x', 0 };
+    static const wchar_t input2[] = { L'x', 0x9abc9abc, 0 };
+    if ((wchar_t) {-1} < 0)
       {
         /* wchar_t is signed.  */
         ASSERT (wcscmp (input1, input2) > 0);

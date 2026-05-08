@@ -42,7 +42,7 @@ main (int argc, char *argv[])
   ASSERT (towctrans (L'1', desc) == '1');
   ASSERT (towctrans (L'_', desc) == '_');
   ASSERT (towctrans (L'_', desc) == '_');
-  ASSERT (towctrans ((wchar_t) 0, desc) == 0);
+  ASSERT (towctrans (L'\0', desc) == 0);
   ASSERT (towctrans (WEOF, desc) == WEOF);
 
   desc = wctrans ("toupper");
@@ -53,7 +53,7 @@ main (int argc, char *argv[])
   ASSERT (towctrans (L'z', desc) == 'Z');
   ASSERT (towctrans (L'1', desc) == '1');
   ASSERT (towctrans (L'_', desc) == '_');
-  ASSERT (towctrans ((wchar_t) 0, desc) == 0);
+  ASSERT (towctrans (L'\0', desc) == 0);
   ASSERT (towctrans (WEOF, desc) == WEOF);
 
   return test_exit_status;

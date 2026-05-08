@@ -3110,7 +3110,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == 6);
   }
 
-  static wint_t L_x = (wchar_t) 'x';
+  static wint_t L_x = L'x';
 
   { /* Width.  */
     int retval =
@@ -3162,7 +3162,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == 6);
   }
 
-  static wint_t L_invalid = (wchar_t) 0x76543210;
+  static wint_t L_invalid = 0x76543210;
 
   { /* Invalid wide character.
        The conversion may succeed or may fail, but it should not abort.  */
@@ -3514,7 +3514,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hhd %d", (signed char) -42, 33, 44, 55);
+                   "%hhd %d", (signed char) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3522,7 +3522,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hd %d", (short) -12345, 33, 44, 55);
+                   "%hd %d", (short) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3538,7 +3538,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%ld %d", (long int) -12345, 33, 44, 55);
+                   "%ld %d", -12345L, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3546,7 +3546,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%lld %d", (long long int) -12345, 33, 44, 55);
+                   "%lld %d", -12345LL, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3554,7 +3554,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w8d %d", (int8_t) -42, 33, 44, 55);
+                   "%w8d %d", (int8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3562,7 +3562,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w16d %d", (int16_t) -12345, 33, 44, 55);
+                   "%w16d %d", (int16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3570,7 +3570,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w32d %d", (int32_t) -12345, 33, 44, 55);
+                   "%w32d %d", (int32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3578,7 +3578,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w64d %d", (int64_t) -12345, 33, 44, 55);
+                   "%w64d %d", (int64_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3586,7 +3586,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+                   "%wf8d %d", (int_fast8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3594,7 +3594,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+                   "%wf16d %d", (int_fast16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3602,7 +3602,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+                   "%wf32d %d", (int_fast32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3621,7 +3621,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hhu %d", (unsigned char) 42, 33, 44, 55);
+                   "%hhu %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3629,7 +3629,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hu %d", (unsigned short) 12345, 33, 44, 55);
+                   "%hu %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3637,7 +3637,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%u %d", (unsigned int) 12345, 33, 44, 55);
+                   "%u %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3645,7 +3645,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%lu %d", (unsigned long int) 12345, 33, 44, 55);
+                   "%lu %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3653,7 +3653,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+                   "%llu %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3661,7 +3661,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w8u %d", (uint8_t) 42, 33, 44, 55);
+                   "%w8u %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3669,7 +3669,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w16u %d", (uint16_t) 12345, 33, 44, 55);
+                   "%w16u %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3677,7 +3677,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w32u %d", (uint32_t) 12345, 33, 44, 55);
+                   "%w32u %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3685,7 +3685,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w64u %d", (uint64_t) 12345, 33, 44, 55);
+                   "%w64u %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3693,7 +3693,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+                   "%wf8u %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3701,7 +3701,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+                   "%wf16u %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3709,7 +3709,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+                   "%wf32u %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3717,7 +3717,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+                   "%wf64u %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3728,7 +3728,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hhb %d", (unsigned char) 42, 33, 44, 55);
+                   "%hhb %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3736,7 +3736,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hb %d", (unsigned short) 12345, 33, 44, 55);
+                   "%hb %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3744,7 +3744,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%b %d", (unsigned int) 12345, 33, 44, 55);
+                   "%b %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3752,7 +3752,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%lb %d", (unsigned long int) 12345, 33, 44, 55);
+                   "%lb %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3760,7 +3760,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+                   "%llb %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3768,7 +3768,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w8b %d", (uint8_t) 42, 33, 44, 55);
+                   "%w8b %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3776,7 +3776,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w16b %d", (uint16_t) 12345, 33, 44, 55);
+                   "%w16b %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3784,7 +3784,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w32b %d", (uint32_t) 12345, 33, 44, 55);
+                   "%w32b %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3792,7 +3792,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w64b %d", (uint64_t) 12345, 33, 44, 55);
+                   "%w64b %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3800,7 +3800,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+                   "%wf8b %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3808,7 +3808,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+                   "%wf16b %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3816,7 +3816,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+                   "%wf32b %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3824,7 +3824,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+                   "%wf64b %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3835,7 +3835,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hho %d", (unsigned char) 42, 33, 44, 55);
+                   "%hho %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3843,7 +3843,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%ho %d", (unsigned short) 12345, 33, 44, 55);
+                   "%ho %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3851,7 +3851,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%o %d", (unsigned int) 12345, 33, 44, 55);
+                   "%o %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3859,7 +3859,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%lo %d", (unsigned long int) 12345, 33, 44, 55);
+                   "%lo %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3867,7 +3867,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+                   "%llo %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3875,7 +3875,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w8o %d", (uint8_t) 42, 33, 44, 55);
+                   "%w8o %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3883,7 +3883,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w16o %d", (uint16_t) 12345, 33, 44, 55);
+                   "%w16o %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3891,7 +3891,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w32o %d", (uint32_t) 12345, 33, 44, 55);
+                   "%w32o %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3899,7 +3899,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w64o %d", (uint64_t) 12345, 33, 44, 55);
+                   "%w64o %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3907,7 +3907,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+                   "%wf8o %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3915,7 +3915,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+                   "%wf16o %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3923,7 +3923,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+                   "%wf32o %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3931,7 +3931,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+                   "%wf64o %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3942,7 +3942,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hhX %d", (unsigned char) 42, 33, 44, 55);
+                   "%hhX %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3950,7 +3950,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%hX %d", (unsigned short) 12345, 33, 44, 55);
+                   "%hX %d", (unsigned short) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3958,7 +3958,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%X %d", (unsigned int) 12345, 33, 44, 55);
+                   "%X %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3966,7 +3966,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%lX %d", (unsigned long int) 12345, 33, 44, 55);
+                   "%lX %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3974,7 +3974,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+                   "%llX %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3982,7 +3982,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w8X %d", (uint8_t) 42, 33, 44, 55);
+                   "%w8X %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3990,7 +3990,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w16X %d", (uint16_t) 12345, 33, 44, 55);
+                   "%w16X %d", (uint16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -3998,7 +3998,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w32X %d", (uint32_t) 12345, 33, 44, 55);
+                   "%w32X %d", (uint32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -4006,7 +4006,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%w64X %d", (uint64_t) 12345, 33, 44, 55);
+                   "%w64X %d", (uint64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -4014,7 +4014,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+                   "%wf8X %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
   }
@@ -4022,7 +4022,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+                   "%wf16X %d", (uint_fast16_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -4030,7 +4030,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+                   "%wf32X %d", (uint_fast32_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }
@@ -4038,7 +4038,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   {
     int retval =
       my_snprintf (result, sizeof (result),
-                   "%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+                   "%wf64X %d", (uint_fast64_t) {12345}, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
   }

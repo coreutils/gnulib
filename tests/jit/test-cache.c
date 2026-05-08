@@ -318,7 +318,8 @@ main ()
         char filename[100];
         sprintf (filename,
                  "%s/gnulib-test-cache-%u-%d-%ld",
-                 "/tmp", (unsigned int) getuid (), (int) getpid (), random ());
+                 "/tmp", (unsigned int) {getuid ()}, (int) {getpid ()},
+                 random ());
 # ifdef KEEP_TEMP_FILE_VISIBLE
         if (register_temporary_file (filename) < 0)
           return 2;

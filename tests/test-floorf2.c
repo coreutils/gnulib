@@ -156,8 +156,8 @@ main ()
         /* Combine highbits and lowbits into a floating-point number,
            sign-extending the lowbits to 32-NUM_HIGHBITS bits.  */
         union { float f; uint32_t i; } janus;
-        janus.i = ((uint32_t) highbits << (32 - NUM_HIGHBITS))
-                  | ((uint32_t) ((int32_t) ((uint32_t) lowbits << (32 - NUM_LOWBITS))
+        janus.i = ((uint32_t) {highbits} << (32 - NUM_HIGHBITS))
+                  | ((uint32_t) ((int32_t) ((uint32_t) {lowbits} << (32 - NUM_LOWBITS))
                                  >> (32 - NUM_LOWBITS - NUM_HIGHBITS))
                      >> NUM_HIGHBITS);
         error |= check (janus.f);

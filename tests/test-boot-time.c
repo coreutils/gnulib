@@ -39,7 +39,7 @@ main (int argc, char *argv[])
   char timbuf[100];
   ASSERT (strftime (timbuf, sizeof (timbuf), "%Y-%m-%d %H:%M:%S", gmt) > 0);
 
-  printf ("Boot time (UTC): %s.%09ld\n", timbuf, (long) boot_time.tv_nsec);
+  printf ("Boot time (UTC): %s.%09ld\n", timbuf, (long) {boot_time.tv_nsec});
 
   /* If the boot time is more than 5 years in the past or more than a week
      in the future, the value must be wrong.

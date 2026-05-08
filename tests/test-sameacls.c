@@ -110,7 +110,8 @@ main (int argc, char *argv[])
       {
         fprintf (stderr, "files %s and %s have different access modes: %03o and %03o\n",
                  file1, file2,
-                (unsigned int) statbuf1.st_mode, (unsigned int) statbuf2.st_mode);
+                 (unsigned int) {statbuf1.st_mode},
+                 (unsigned int) {statbuf2.st_mode});
         return 1;
       }
   }

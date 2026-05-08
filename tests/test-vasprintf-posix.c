@@ -3991,7 +3991,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     free (result);
   }
 
-  static wint_t L_x = (wchar_t) 'x';
+  static wint_t L_x = L'x';
 
   { /* Width.  */
     char *result;
@@ -4057,7 +4057,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     free (result);
   }
 
-  static wint_t L_invalid = (wchar_t) 0x76543210;
+  static wint_t L_invalid = 0x76543210;
 
   { /* Invalid wide character.
        The conversion may succeed or may fail, but it should not abort.  */
@@ -4540,7 +4540,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hhd %d", (signed char) -42, 33, 44, 55);
+      my_asprintf (&result, "%hhd %d", (signed char) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4549,7 +4549,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hd %d", (short) -12345, 33, 44, 55);
+      my_asprintf (&result, "%hd %d", (short) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4567,7 +4567,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%ld %d", (long int) -12345, 33, 44, 55);
+      my_asprintf (&result, "%ld %d", -12345L, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4576,7 +4576,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%lld %d", (long long int) -12345, 33, 44, 55);
+      my_asprintf (&result, "%lld %d", -12345LL, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4585,7 +4585,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w8d %d", (int8_t) -42, 33, 44, 55);
+      my_asprintf (&result, "%w8d %d", (int8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4594,7 +4594,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w16d %d", (int16_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%w16d %d", (int16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4603,7 +4603,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w32d %d", (int32_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%w32d %d", (int32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4612,7 +4612,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w64d %d", (int64_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%w64d %d", (int64_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4621,7 +4621,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+      my_asprintf (&result, "%wf8d %d", (int_fast8_t) {-42}, 33, 44, 55);
     ASSERT (streq (result, "-42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4630,7 +4630,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%wf16d %d", (int_fast16_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4639,7 +4639,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%wf32d %d", (int_fast32_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4648,7 +4648,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+      my_asprintf (&result, "%wf64d %d", (int_fast64_t) {-12345}, 33, 44, 55);
     ASSERT (streq (result, "-12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4660,7 +4660,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hhu %d", (unsigned char) 42, 33, 44, 55);
+      my_asprintf (&result, "%hhu %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4678,7 +4678,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%u %d", (unsigned int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%u %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4687,7 +4687,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%lu %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%lu %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4696,7 +4696,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%llu %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "12345 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4705,7 +4705,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w8u %d", (uint8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%w8u %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4741,7 +4741,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%wf8u %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "42 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4780,7 +4780,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hhb %d", (unsigned char) 42, 33, 44, 55);
+      my_asprintf (&result, "%hhb %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4798,7 +4798,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%b %d", (unsigned int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%b %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4807,7 +4807,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%lb %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%lb %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4816,7 +4816,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%llb %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "11000000111001 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4825,7 +4825,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w8b %d", (uint8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%w8b %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4861,7 +4861,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%wf8b %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "101010 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4900,7 +4900,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hho %d", (unsigned char) 42, 33, 44, 55);
+      my_asprintf (&result, "%hho %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4918,7 +4918,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%o %d", (unsigned int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%o %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4927,7 +4927,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%lo %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%lo %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4936,7 +4936,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%llo %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "30071 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4945,7 +4945,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w8o %d", (uint8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%w8o %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -4981,7 +4981,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%wf8o %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "52 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5020,7 +5020,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%hhX %d", (unsigned char) 42, 33, 44, 55);
+      my_asprintf (&result, "%hhX %d", (unsigned char) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5038,7 +5038,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%X %d", (unsigned int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%X %d", 12345U, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5047,7 +5047,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%lX %d", (unsigned long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%lX %d", 12345UL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5056,7 +5056,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+      my_asprintf (&result, "%llX %d", 12345ULL, 33, 44, 55);
     ASSERT (streq (result, "3039 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5065,7 +5065,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%w8X %d", (uint8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%w8X %d", (uint8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
     free (result);
@@ -5101,7 +5101,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
-      my_asprintf (&result, "%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+      my_asprintf (&result, "%wf8X %d", (uint_fast8_t) {42}, 33, 44, 55);
     ASSERT (streq (result, "2A 33"));
     ASSERT (retval == strlen (result));
     free (result);

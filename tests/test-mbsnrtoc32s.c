@@ -58,14 +58,14 @@ main (int argc, char *argv[])
     ASSERT (ret == 0);
     ASSERT (mbsinit (&state));
 
-    wc = (char32_t) 0xBADFACE;
+    wc = 0xBADFACE;
     src = "";
     ret = mbsnrtoc32s (&wc, &src, 1, 0, &state);
     ASSERT (ret == 0);
-    ASSERT (wc == (char32_t) 0xBADFACE);
+    ASSERT (wc == 0xBADFACE);
     ASSERT (mbsinit (&state));
 
-    wc = (char32_t) 0xBADFACE;
+    wc = 0xBADFACE;
     src = "";
     ret = mbsnrtoc32s (&wc, &src, 1, 1, &state);
     ASSERT (ret == 0);
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
           mbstate_t temp_state;
 
           for (size_t i = 0; i < BUFSIZE; i++)
-            buf[i] = (char32_t) 0xBADFACE;
+            buf[i] = 0xBADFACE;
 
           switch (argv[1][0])
             {
@@ -119,10 +119,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[1] == '/');
                     ASSERT (buf[2] == 'a');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[1] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[1] == 0xBADFACE);
                 ASSERT (mbsinit (&state));
               }
               {
@@ -142,7 +142,7 @@ main (int argc, char *argv[])
                       ASSERT (src == input);
                       ASSERT (mbsinit (&state));
 
-                      buf[0] = buf[1] = (char32_t) 0xBADFACE;
+                      buf[0] = buf[1] = 0xBADFACE;
                       src = input;
                       ret = mbsnrtoc32s (buf, &src, 2, unlimited ? BUFSIZE : 1, &state);
                       /* POSIX:2018 says regarding mbsnrtowcs: "In the POSIX locale an
@@ -169,14 +169,14 @@ main (int argc, char *argv[])
                 char input[] = "B\374\337er"; /* "Büßer" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
                 ASSERT (wc == 'B');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input + 1, 1, &state);
                 ASSERT (ret == 1);
                 ASSERT (c32tob (wc) == (unsigned char) '\374');
@@ -200,10 +200,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[1] == 'e');
                     ASSERT (buf[2] == 'r');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[1] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[1] == 0xBADFACE);
                 ASSERT (mbsinit (&state));
               }
               break;
@@ -214,17 +214,17 @@ main (int argc, char *argv[])
                 char input[] = "s\303\274\303\237\360\237\230\213!"; /* "süß😋!" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
                 ASSERT (wc == 's');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input + 1, 1, &state);
                 ASSERT (ret == (size_t)(-2));
-                ASSERT (wc == (char32_t) 0xBADFACE);
+                ASSERT (wc == 0xBADFACE);
                 ASSERT (!mbsinit (&state));
                 input[1] = '\0';
 
@@ -246,10 +246,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[2] == 0x1F60B); /* expect Unicode encoding */
                     ASSERT (buf[3] == '!');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[5] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
                 ASSERT (mbsinit (&state));
               }
               break;
@@ -260,14 +260,14 @@ main (int argc, char *argv[])
                 char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
                 ASSERT (wc == '<');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input + 1, 2, &state);
                 ASSERT (ret == 2);
                 ASSERT (c32tob (wc) == EOF);
@@ -275,10 +275,10 @@ main (int argc, char *argv[])
                 input[1] = '\0';
                 input[2] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input + 3, 1, &state);
                 ASSERT (ret == (size_t)(-2));
-                ASSERT (wc == (char32_t) 0xBADFACE);
+                ASSERT (wc == 0xBADFACE);
                 ASSERT (!mbsinit (&state));
                 input[3] = '\0';
 
@@ -299,10 +299,10 @@ main (int argc, char *argv[])
                   {
                     ASSERT (buf[2] == '>');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[4] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
                 ASSERT (mbsinit (&state));
               }
               break;
@@ -319,17 +319,17 @@ main (int argc, char *argv[])
                 char input[] = "s\250\271\201\060\211\070\224\071\375\067!"; /* "süß😋!" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
                 ASSERT (wc == 's');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
-                wc = (char32_t) 0xBADFACE;
+                wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, input + 1, 1, &state);
                 ASSERT (ret == (size_t)(-2));
-                ASSERT (wc == (char32_t) 0xBADFACE);
+                ASSERT (wc == 0xBADFACE);
                 ASSERT (!mbsinit (&state));
                 input[1] = '\0';
 
@@ -351,10 +351,10 @@ main (int argc, char *argv[])
                     ASSERT (c32tob (buf[2]) == EOF);
                     ASSERT (buf[3] == '!');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (char32_t) 0xBADFACE);
+                    ASSERT (buf[5] == 0xBADFACE);
                   }
                 else
-                  ASSERT (buf[2] == (char32_t) 0xBADFACE);
+                  ASSERT (buf[2] == 0xBADFACE);
                 ASSERT (mbsinit (&state));
               }
               break;
