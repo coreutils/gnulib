@@ -108,12 +108,12 @@ xmax (size_t size1, size_t size2)
    The count must be >= 0 and the element size must be > 0.
    Arguments should not have side effects.
    The element size's type should be no wider than size_t.
-   The 'sizeof "" *' widens N's value if necessary, to avoid overflow;
+   The '(size_t) { (N) }' widens N's value to size_t, to avoid overflow;
    unlike a cast to size_t, this pacifies -Wuseless-cast.
    This is a macro, not a function, so that it works correctly even
    when N is of a wider type and N > SIZE_MAX.  */
 #define xtimes(N, ELSIZE) \
-  ((N) <= SIZE_MAX / (ELSIZE) ? sizeof "" * (N) * (ELSIZE) : SIZE_MAX)
+  ((N) <= SIZE_MAX / (ELSIZE) ? (size_t) { (N) } * (ELSIZE) : SIZE_MAX)
 
 /* Check for overflow.  */
 #define size_overflow_p(SIZE) \
