@@ -54,7 +54,8 @@ fd_safer (int fd)
 static void
 test (const char *pwd_prog)
 {
-  char *argv[2] = { (char *) "pwd", NULL };
+  static char const pwd[] = "pwd";
+  char *argv[2] = { (char *) pwd, NULL };
   /* The name of a directory that most likely is accessible.  */
   #if defined __ANDROID__
     #define KNOWNDIR "/proc"

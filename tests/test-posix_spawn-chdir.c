@@ -50,7 +50,8 @@ fd_safer (int fd)
 static void
 test (const char *pwd_prog)
 {
-  char *argv[2] = { (char *) "pwd", NULL };
+  static char const pwd[] = "pwd";
+  char *argv[2] = { (char *) pwd, NULL };
   int ifd[2];
   sigset_t blocked_signals;
   sigset_t fatal_signal_set;

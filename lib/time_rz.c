@@ -118,7 +118,8 @@ save_abbr (timezone_t tz, struct tm *tm)
 {
 # if HAVE_STRUCT_TM_TM_ZONE
   char const *zone = tm->tm_zone;
-  char *zone_copy = (char *) "";
+  static char const mt[] = "";
+  char *zone_copy = (char *) mt;
 
   /* No need to replace null zones, or zones within the struct tm.  */
   if (!zone || ((char *) tm <= zone && zone < (char *) (tm + 1)))

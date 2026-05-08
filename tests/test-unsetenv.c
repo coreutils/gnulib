@@ -36,7 +36,8 @@ main (void)
   static char entry[] = "b=2";
 
   /* Test removal when multiple entries present.  */
-  ASSERT (putenv ((char *) "a=1") == 0);
+  static char const a_equals_1[] = "a=1";
+  ASSERT (putenv ((char *) a_equals_1) == 0);
   ASSERT (putenv (entry) == 0);
   entry[0] = 'a'; /* Unspecified what getenv("a") would be at this point.  */
   ASSERT (unsetenv ("a") == 0); /* Both entries will be removed.  */
