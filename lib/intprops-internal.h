@@ -25,6 +25,11 @@
 # pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
 
+/* This file uses many casts that might provoke -Wuseless-cast.  */
+#if 16 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif
+
 /* Return a value with the common real type of E and V and the value of V.
    Do not evaluate E.  */
 #define _GL_INT_CONVERT(e, v) ((1 ? 0 : (e)) + (v))
