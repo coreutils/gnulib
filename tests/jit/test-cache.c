@@ -116,7 +116,7 @@ struct func
 # else
 #  define CODE(funcptr) ((char *) (funcptr) - clang_ubsan_workaround)
 #  define SET_CODE(funcptr,code_addr) \
-     ((void) ((funcptr) = (void *) ((char *) (code_addr) + clang_ubsan_workaround)))
+     ((void) ((funcptr) = (void *) ((code_addr) + clang_ubsan_workaround)))
 #  define IS(funcptr) ((void) (funcptr), 0)
 #  define SET_IS(funcptr,is) ((void) (funcptr), (void) (is))
 # endif
