@@ -208,10 +208,8 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
            debug output.  Use a fallback in this case.  */
         if (ap->a.a_wide_string == NULL)
           {
-            /* No need for wide character constants, as these are
-               silently converted correctly.  */
             static const wchar_t wide_null_string[] =
-              { '(', 'N', 'U', 'L', 'L', ')', 0 };
+              { L'(', L'N', L'U', L'L', L'L', L')', 0 };
             ap->a.a_wide_string = wide_null_string;
           }
         break;

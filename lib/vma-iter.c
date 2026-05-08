@@ -254,8 +254,8 @@ rof_open (struct rofile *rof, const char *filename)
           if (rof->auxmap != NULL)
             munmap (rof->auxmap, rof->auxmap_length);
         }
-      rof->auxmap = mmap ((void *) 0, size, PROT_READ | PROT_WRITE,
-                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      rof->auxmap = (void *) mmap ((void *) 0, size, PROT_READ | PROT_WRITE,
+                                   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
       if (rof->auxmap == (void *) -1)
         {
           close (fd);
@@ -264,7 +264,7 @@ rof_open (struct rofile *rof, const char *filename)
       rof->auxmap_length = size;
       rof->auxmap_start = (unsigned long) rof->auxmap;
       rof->auxmap_end = rof->auxmap_start + size;
-      rof->buffer = rof->auxmap;
+      rof->buffer = (char *) rof->auxmap;
      retry:
       /* Restart.  */
       if (lseek (fd, 0, SEEK_SET) < 0)
