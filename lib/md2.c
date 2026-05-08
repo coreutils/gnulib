@@ -103,8 +103,8 @@ md2_process_bytes (void const *restrict buffer, size_t len,
 
   while (len > 0)
     {
-      unsigned long n = MIN (len, (16 - ctx->curlen));
-      memcpy (ctx->buf + ctx->curlen, in, (size_t) n);
+      size_t n = MIN (len, (16 - ctx->curlen));
+      memcpy (ctx->buf + ctx->curlen, in, n);
       ctx->curlen += n;
       in += n;
       len -= n;
@@ -149,7 +149,7 @@ md2_update_chksum (struct md2_ctx *ctx)
     {
       /* caution, the RFC says its "C[j] = S[M[i*16+j] xor L]" but the
          reference source code [and test vectors] say otherwise. */
-      L = (ctx->chksum[j] ^= PI_SUBST[(int) (ctx->buf[j] ^ L)] & 255);
+      L = (ctx->chksum[j] ^= PI_SUBST[ctx->buf[j] ^ L] & 255);
     }
 }
 
@@ -170,7 +170,7 @@ md2_compress (struct md2_ctx *ctx)
     {
       for (size_t k = 0; k < 48; k++)
         {
-          t = (ctx->X[k] ^= PI_SUBST[(int) (t & 255)]);
+          t = (ctx->X[k] ^= PI_SUBST[t & 255]);
         }
       t = (t + (unsigned char) j) & 255;
     }
