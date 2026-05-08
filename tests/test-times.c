@@ -38,6 +38,12 @@ doublecmp (const void *p, const void *q)
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
+static long int
+tms2ms (long int tms, clock_t clk_tck)
+{
+  return tms * 1000 / clk_tck;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -58,13 +64,13 @@ main (int argc, char *argv[])
 
   if (argc > 1)
     {
-      printf ("clk_tck %ld\n", (long int) clk_tck);
+      printf ("clk_tck %ld\n", (long int) {clk_tck});
 
-      printf ("t %ld\n", (long int) t);
-      printf ("tms.tms_utime %ldms\n", ((long int) tms.tms_utime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_stime %ldms\n", ((long int) tms.tms_stime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_cutime %ldms\n", ((long int) tms.tms_cutime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_cstime %ldms\n", ((long int) tms.tms_cstime * 1000) / (long int) clk_tck);
+      printf ("t %ld\n", (long int) {t});
+      printf ("tms.tms_utime %ldms\n", tms2ms (tms.tms_utime, clk_tck));
+      printf ("tms.tms_stime %ldms\n", tms2ms (tms.tms_stime, clk_tck));
+      printf ("tms.tms_cutime %ldms\n", tms2ms (tms.tms_cutime, clk_tck));
+      printf ("tms.tms_cstime %ldms\n", tms2ms (tms.tms_cstime, clk_tck));
     }
 
   if (argc > 1)
@@ -91,13 +97,13 @@ main (int argc, char *argv[])
 
   if (argc > 1)
     {
-      printf ("clk_tck %ld\n", (long int) clk_tck);
+      printf ("clk_tck %ld\n", (long int) {clk_tck});
 
-      printf ("t %ld\n", (long int) t);
-      printf ("tms.tms_utime %ldms\n", ((long int) tms.tms_utime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_stime %ldms\n", ((long int) tms.tms_stime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_cutime %ldms\n", ((long int) tms.tms_cutime * 1000) / (long int) clk_tck);
-      printf ("tms.tms_cstime %ldms\n", ((long int) tms.tms_cstime * 1000) / (long int) clk_tck);
+      printf ("t %ld\n", (long int) {t});
+      printf ("tms.tms_utime %ldms\n", tms2ms (tms.tms_utime, clk_tck));
+      printf ("tms.tms_stime %ldms\n", tms2ms (tms.tms_stime, clk_tck));
+      printf ("tms.tms_cutime %ldms\n", tms2ms (tms.tms_cutime, clk_tck));
+      printf ("tms.tms_cstime %ldms\n", tms2ms (tms.tms_cstime, clk_tck));
     }
 
   return 0;
