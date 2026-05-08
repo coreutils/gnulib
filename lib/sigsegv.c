@@ -362,7 +362,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 #if defined __gnu_hurd__ /* Hurd */
 
 # define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, long code, struct sigcontext *scp
-# define SIGSEGV_FAULT_ADDRESS  (unsigned long) code
+# define SIGSEGV_FAULT_ADDRESS  (void *) (unsigned long) code
 # define SIGSEGV_FAULT_CONTEXT  scp
 
 # if defined __x86_64__
@@ -1017,7 +1017,7 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
 static void
 sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
 {
-  void *address = (void *) (SIGSEGV_FAULT_ADDRESS);
+  void *address = SIGSEGV_FAULT_ADDRESS;
 
 # if HAVE_STACK_OVERFLOW_RECOVERY
 #  if !(HAVE_STACKVMA || defined SIGSEGV_FAULT_STACKPOINTER)
@@ -1260,7 +1260,7 @@ install_for (int sig)
   struct sigaction action;
 
 # ifdef SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
-  action.sa_sigaction = (void (*) (int, siginfo_t *, void *)) &sigsegv_handler;
+  action.sa_sigaction = sigsegv_handler;
 # else
   action.sa_handler = (void (*) (int)) &sigsegv_handler;
 # endif
