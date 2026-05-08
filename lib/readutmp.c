@@ -269,10 +269,10 @@ add_utmp (struct utmp_alloc a, int options,
          relative to the end of the allocated storage, so that these
          slots survive realloc.  The slots will be relocated back just
          before read_utmp returns.  */
-      ut->ut_user = (char *) (intptr_t) (ut->ut_user - stringlim);
-      ut->ut_id   = (char *) (intptr_t) (ut->ut_id   - stringlim);
-      ut->ut_line = (char *) (intptr_t) (ut->ut_line - stringlim);
-      ut->ut_host = (char *) (intptr_t) (ut->ut_host - stringlim);
+      ut->ut_user = (char *) (intptr_t) {ut->ut_user - stringlim};
+      ut->ut_id   = (char *) (intptr_t) {ut->ut_id   - stringlim};
+      ut->ut_line = (char *) (intptr_t) {ut->ut_line - stringlim};
+      ut->ut_host = (char *) (intptr_t) {ut->ut_host - stringlim};
       a.filled++;
       a.string_bytes += needed_string_bytes;
     }

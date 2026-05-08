@@ -224,13 +224,15 @@ hash_print_statistics (const Hash_table *table, FILE *stream)
   size_t n_buckets_used = hash_get_n_buckets_used (table);
   size_t max_bucket_length = hash_get_max_bucket_length (table);
 
-  fprintf (stream, "# entries:         %lu\n", (unsigned long int) n_entries);
-  fprintf (stream, "# buckets:         %lu\n", (unsigned long int) n_buckets);
+  fprintf (stream, "# entries:         %lu\n",
+           (unsigned long int) {n_entries});
+  fprintf (stream, "# buckets:         %lu\n",
+           (unsigned long int) {n_buckets});
   fprintf (stream, "# buckets used:    %lu (%.2f%%)\n",
-           (unsigned long int) n_buckets_used,
+           (unsigned long int) {n_buckets_used},
            (100.0 * n_buckets_used) / n_buckets);
   fprintf (stream, "max bucket length: %lu\n",
-           (unsigned long int) max_bucket_length);
+           (unsigned long int) {max_bucket_length});
 }
 
 /* Hash KEY and return a pointer to the selected bucket.
@@ -1016,7 +1018,7 @@ hash_print (const Hash_table *table)
        bucket++)
     {
       if (bucket)
-        printf ("%lu:\n", (unsigned long int) (bucket - table->bucket));
+        printf ("%lu:\n", (unsigned long int) {bucket - table->bucket});
 
       for (struct hash_entry *cursor = bucket; cursor; cursor = cursor->next)
         {

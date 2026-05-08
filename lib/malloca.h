@@ -102,7 +102,7 @@ extern void *mmalloca (size_t n)
    on the stack.  N and S should be nonnegative and free of side effects.
    The array must be freed using freea() before the function returns.  */
 #define nmalloca(n, s) \
-  (xalloc_oversized (n, s) ? NULL : malloca ((n) * (size_t) (s)))
+  (xalloc_oversized (n, s) ? NULL : malloca ((n) * (size_t) {s}))
 
 
 #ifdef __cplusplus

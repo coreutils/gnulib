@@ -41,7 +41,7 @@ static size_t
 AD_hash (void const *x, size_t table_size)
 {
   struct Active_dir const *ax = x;
-  return (uintmax_t) ax->ino % table_size;
+  return (uintmax_t) {ax->ino} % table_size;
 }
 
 /* Set up the cycle-detection machinery.  */
