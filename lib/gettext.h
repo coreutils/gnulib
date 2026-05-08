@@ -119,35 +119,37 @@ dcgettext (const char *domain, const char *msgid, int category)
 #   pragma GCC diagnostic pop
 #  endif
 # else
-/* The casts to 'const char *' serve the purpose of producing warnings
+/* The 'const char *' compound literals produce warnings
    for invalid uses of the value returned from these functions.  */
 #  undef gettext
-#  define gettext(Msgid) ((const char *) (Msgid))
+#  define gettext(Msgid) ((const char *) {(Msgid)})
 #  undef dgettext
-#  define dgettext(Domainname, Msgid) ((void) (Domainname), gettext (Msgid))
+#  define dgettext(Domainname, Msgid) \
+     ((void) (const char *) {(Domainname)}, gettext (Msgid))
 #  undef dcgettext
 #  define dcgettext(Domainname, Msgid, Category) \
-     ((void) (Category), dgettext (Domainname, Msgid))
+     ((void) (const char *) {(Category)}, dgettext (Domainname, Msgid))
 # endif
 # undef ngettext
 # define ngettext(Msgid1, Msgid2, N) \
     ((N) == 1 \
-     ? ((void) (Msgid2), (const char *) (Msgid1)) \
-     : ((void) (Msgid1), (const char *) (Msgid2)))
+     ? ((void) (Msgid2), (const char *) {(Msgid1)}) \
+     : ((void) (Msgid1), (const char *) {(Msgid2)}))
 # undef dngettext
 # define dngettext(Domainname, Msgid1, Msgid2, N) \
-    ((void) (Domainname), ngettext (Msgid1, Msgid2, N))
+    ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
 # undef dcngettext
 # define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-    ((void) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
+    ((void) (const char *) {(Category)}, \
+     dngettext (Domainname, Msgid1, Msgid2, N))
 # undef textdomain
-# define textdomain(Domainname) ((const char *) (Domainname))
+# define textdomain(Domainname) ((const char *) {(Domainname)})
 # undef bindtextdomain
 # define bindtextdomain(Domainname, Dirname) \
-    ((void) (Domainname), (const char *) (Dirname))
+    ((void) (const char *) {(Domainname)}, (const char *) {(Dirname)})
 # undef bind_textdomain_codeset
 # define bind_textdomain_codeset(Domainname, Codeset) \
-    ((void) (Domainname), (const char *) (Codeset))
+    ((void) (const char *) {(Domainname)}, (const char *) {(Codeset)})
 
 #endif
 

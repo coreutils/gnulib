@@ -53,7 +53,7 @@
 
 /* Number of bits stored in each element.  */
 #define TBITSET_ELT_BITS \
-  ((unsigned) (TBITSET_ELT_WORDS * BITSET_WORD_BITS))
+  ((unsigned) {TBITSET_ELT_WORDS * BITSET_WORD_BITS})
 
 /* Tbitset element.  We use an array of bits.  */
 typedef struct tbitset_elt_struct

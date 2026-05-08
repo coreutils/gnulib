@@ -29,7 +29,7 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
     size_t hashcode =
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
-       : (size_t)(uintptr_t) elt);
+       : (size_t) {(uintptr_t) elt});
     size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
 
@@ -63,7 +63,7 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                           const void *nodes_elt;
                           if (gl_oset_search_atleast (nodes,
                                                       compare_position_threshold,
-                                                      (void *)(uintptr_t)start_index,
+                                                      (void *)(uintptr_t) {start_index},
                                                       &nodes_elt))
                             {
                               node = (gl_list_node_t) nodes_elt;

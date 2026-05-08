@@ -289,7 +289,7 @@ add_nodes_to_buckets (gl_list_t list)
       node->h.hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (node->value)
-         : (size_t)(uintptr_t) node->value);
+         : (size_t) {(uintptr_t) node->value});
       if (add_to_bucket (list, node) < 0)
         goto fail;
       /* Descend on right branch.  */

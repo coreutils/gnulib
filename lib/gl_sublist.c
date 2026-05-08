@@ -40,7 +40,7 @@ struct gl_list_impl
    indices + 1.  (We don't use the whole list's gl_list_node_t implementation,
    because gl_sublist_next_node and gl_sublist_previous_node would not be easy
    to implement with this choice.)  */
-#define INDEX_TO_NODE(index) (gl_list_node_t)(uintptr_t)(size_t)((index) + 1)
+#define INDEX_TO_NODE(index) (gl_list_node_t)(uintptr_t) {(index) + 1}
 #define NODE_TO_INDEX(node) ((uintptr_t)(node) - 1)
 
 static gl_list_t

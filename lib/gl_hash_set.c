@@ -98,7 +98,7 @@ gl_hash_search (gl_set_t set, const void *elt)
   size_t hashcode =
     (set->hashcode_fn != NULL
      ? set->hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
+     : (size_t) {(uintptr_t) elt});
   size_t bucket = hashcode % set->table_size;
   gl_setelement_equals_fn equals = set->base.equals_fn;
 
@@ -120,7 +120,7 @@ gl_hash_nx_add (gl_set_t set, const void *elt)
   size_t hashcode =
     (set->hashcode_fn != NULL
      ? set->hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
+     : (size_t) {(uintptr_t) elt});
   size_t bucket = hashcode % set->table_size;
   gl_setelement_equals_fn equals = set->base.equals_fn;
 
@@ -162,7 +162,7 @@ gl_hash_remove (gl_set_t set, const void *elt)
   size_t hashcode =
     (set->hashcode_fn != NULL
      ? set->hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
+     : (size_t) {(uintptr_t) elt});
   size_t bucket = hashcode % set->table_size;
   gl_setelement_equals_fn equals = set->base.equals_fn;
 

@@ -55,7 +55,7 @@ typedef bitset_word lbitset_word;
 
 /* Number of bits stored in each element.  */
 #define LBITSET_ELT_BITS \
-  ((unsigned) (LBITSET_ELT_WORDS * LBITSET_WORD_BITS))
+  ((unsigned) {LBITSET_ELT_WORDS * LBITSET_WORD_BITS})
 
 /* Lbitset element.   We use an array of bits for each element.
    These are linked together in a doubly-linked list.  */
@@ -1272,7 +1272,7 @@ debug_lbitset (bitset bset)
 
   for (lbitset_elt *elt = LBITSET_HEAD (bset); elt; elt = elt->next)
     {
-      fprintf (stderr, "Elt %lu\n", (unsigned long) elt->index);
+      fprintf (stderr, "Elt %lu\n", (unsigned long) {elt->index});
       for (unsigned i = 0; i < LBITSET_ELT_WORDS; i++)
         {
           bitset_word word = elt->words[i];

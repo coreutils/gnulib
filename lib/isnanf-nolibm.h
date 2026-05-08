@@ -26,10 +26,10 @@
    /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.
       GCC >= 4.0 also provides __builtin_isnanf, but clang doesn't.  */
 #  undef isnanf
-#  define isnanf(x) __builtin_isnan ((float)(x))
+#  define isnanf(x) __builtin_isnan ((float) {(x)})
 # elif defined isnan
 #  undef isnanf
-#  define isnanf(x) isnan ((float)(x))
+#  define isnanf(x) isnan ((float) {(x)})
 # endif
 #else
 /* Test whether X is a NaN.  */

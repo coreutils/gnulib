@@ -273,7 +273,7 @@ bitset_print (FILE *file, bitset bset, bool verbose)
   if (verbose)
     fprintf (file, "%s{n_bits = %lu, set = {",
              bitset_type_name_get (bset),
-             (unsigned long) bitset_size (bset));
+             (unsigned long) {bitset_size (bset)});
 
   unsigned pos = 30;
   bitset_bindex i;
@@ -286,7 +286,7 @@ bitset_print (FILE *file, bitset bset, bool verbose)
         pos = 0;
       }
 
-    fprintf (file, "%lu ", (unsigned long) i);
+    fprintf (file, "%lu ", (unsigned long) {i});
     pos += 1 + (i >= 10) + (i >= 100);
   }
 

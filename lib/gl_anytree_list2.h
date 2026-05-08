@@ -75,7 +75,7 @@ gl_tree_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
       size_t new_hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (elt)
-         : (size_t)(uintptr_t) elt);
+         : (size_t) {(uintptr_t) elt});
 
       if (new_hashcode != node->h.hashcode)
         {
@@ -216,7 +216,7 @@ gl_tree_nx_set_at (gl_list_t list, size_t position, const void *elt)
       size_t new_hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (elt)
-         : (size_t)(uintptr_t) elt);
+         : (size_t) {(uintptr_t) elt});
 
       if (new_hashcode != node->h.hashcode)
         {

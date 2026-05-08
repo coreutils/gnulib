@@ -123,7 +123,7 @@ gl_linked_nx_create (gl_list_implementation_t implementation,
       node->h.hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (node->value)
-         : (size_t)(uintptr_t) node->value);
+         : (size_t) {(uintptr_t) node->value});
 
       /* Add node to the hash table.  */
       if (add_to_bucket (list, node) < 0)
@@ -182,7 +182,7 @@ gl_linked_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
       size_t new_hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (elt)
-         : (size_t)(uintptr_t) elt);
+         : (size_t) {(uintptr_t) elt});
 
       if (new_hashcode != node->h.hashcode)
         {
@@ -297,7 +297,7 @@ gl_linked_nx_set_at (gl_list_t list, size_t position, const void *elt)
       size_t new_hashcode =
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (elt)
-         : (size_t)(uintptr_t) elt);
+         : (size_t) {(uintptr_t) elt});
 
       if (new_hashcode != node->h.hashcode)
         {
@@ -341,7 +341,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
     size_t hashcode =
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
-       : (size_t)(uintptr_t) elt);
+       : (size_t) {(uintptr_t) elt});
     size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
 
@@ -495,7 +495,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
     size_t hashcode =
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
-       : (size_t)(uintptr_t) elt);
+       : (size_t) {(uintptr_t) elt});
     size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
 
@@ -616,7 +616,7 @@ gl_linked_nx_add_first (gl_list_t list, const void *elt)
   node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (node->value)
-     : (size_t)(uintptr_t) node->value);
+     : (size_t) {(uintptr_t) node->value});
 
   /* Add node to the hash table.  */
   if (add_to_bucket (list, node) < 0)
@@ -654,7 +654,7 @@ gl_linked_nx_add_last (gl_list_t list, const void *elt)
   node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (node->value)
-     : (size_t)(uintptr_t) node->value);
+     : (size_t) {(uintptr_t) node->value});
 
   /* Add node to the hash table.  */
   if (add_to_bucket (list, node) < 0)
@@ -692,7 +692,7 @@ gl_linked_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 
   /* Add new_node to the hash table.  */
   if (add_to_bucket (list, new_node) < 0)
@@ -730,7 +730,7 @@ gl_linked_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 
   /* Add new_node to the hash table.  */
   if (add_to_bucket (list, new_node) < 0)
@@ -773,7 +773,7 @@ gl_linked_nx_add_at (gl_list_t list, size_t position, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 
   /* Add new_node to the hash table.  */
   if (add_to_bucket (list, new_node) < 0)

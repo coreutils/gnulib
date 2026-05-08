@@ -155,7 +155,7 @@ pagealign_alloc (size_t size)
       if (page_info_map == NULL)
         page_info_map =
           gl_map_create_empty (GL_HASH_MAP, NULL, NULL, NULL, NULL);
-      gl_map_put (page_info_map, ret, (void *) (uintptr_t) size);
+      gl_map_put (page_info_map, ret, (void *) (uintptr_t) {size});
       break;
       #else
       errno = ENOSYS;
@@ -248,7 +248,7 @@ pagealign_free (void *aligned_ptr)
         if (page_info_map == NULL
             || !gl_map_getremove (page_info_map, aligned_ptr, &value))
           abort ();
-        if (munmap (aligned_ptr, (size_t) (uintptr_t) value) < 0)
+        if (munmap (aligned_ptr, (size_t) {(uintptr_t) value}) < 0)
           error (EXIT_FAILURE, errno, "Failed to unmap memory");
       }
       break;

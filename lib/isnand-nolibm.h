@@ -25,10 +25,10 @@
 # if (__GNUC__ >= 4) || (__clang_major__ >= 4)
    /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.  */
 #  undef isnand
-#  define isnand(x) __builtin_isnan ((double)(x))
+#  define isnand(x) __builtin_isnan ((double) {(x)})
 # else
 #  undef isnand
-#  define isnand(x) isnan ((double)(x))
+#  define isnand(x) isnan ((double) {(x)})
 # endif
 #else
 /* Test whether X is a NaN.  */

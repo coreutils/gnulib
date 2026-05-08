@@ -718,7 +718,7 @@ allocate_block_from_pool (size_t size, struct page_pool *pool)
     gl_oset_iterator_t iter =
       gl_oset_iterator_atleast (pool->managed_pages,
                                 page_free_space_is_at_least,
-                                (void *) (uintptr_t) size);
+                                (void *) (uintptr_t) {size});
     const void *elt;
     while (gl_oset_iterator_next (&iter, &elt))
       {

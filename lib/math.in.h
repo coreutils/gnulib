@@ -2588,10 +2588,10 @@ _GL_EXTERN_C int isnand (double x);
 #   if (__GNUC__ >= 4) || (__clang_major__ >= 4)
     /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.  */
 #    undef isnand
-#    define isnand(x) __builtin_isnan ((double)(x))
+#    define isnand(x) __builtin_isnan ((double) {(x)})
 #   elif !defined HAVE_ISNAND_NOLIBM
 #    undef isnand
-#    define isnand(x) isnan ((double)(x))
+#    define isnand(x) isnan ((double) {(x)})
 #   endif
 #  endif
 # else
@@ -2638,7 +2638,7 @@ _GL_EXTERN_C int rpl_isnanf (float x);
 #   define _gl_isnanf(x) rpl_isnanf (x)
 #  endif
 #  if @HAVE_ISNAND@ && (__GNUC__ >= 4) || (__clang_major__ >= 4)
-#   define _gl_isnand(x) __builtin_isnan ((double)(x))
+#   define _gl_isnand(x) __builtin_isnan ((double) {(x)})
 #  else
 _GL_EXTERN_C int rpl_isnand (double x);
 #   define _gl_isnand(x) rpl_isnand (x)
@@ -2672,9 +2672,11 @@ template <> inline int isnan<long double> (long double x) { return __builtin_isn
 #  else
 #   undef isnan
 #   define isnan(x) \
-      (sizeof (x) == sizeof (long double) ? __builtin_isnan ((long double)(x)) : \
-       sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
-       __builtin_isnan ((float)(x)))
+      (sizeof (x) == sizeof (long double) \
+       ? __builtin_isnan ((long double) {(x)}) \
+       : sizeof (x) == sizeof (double) \
+       ? __builtin_isnan ((double) {(x)}) \
+       : __builtin_isnan ((float) {(x)}))
 #  endif
 # endif
 # if @GNULIB_ISNAN@ && defined __cplusplus

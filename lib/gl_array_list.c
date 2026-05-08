@@ -44,7 +44,7 @@ struct gl_list_impl
 
 /* struct gl_list_node_impl doesn't exist here.  The pointers are actually
    indices + 1.  */
-#define INDEX_TO_NODE(index) (gl_list_node_t)(uintptr_t)(size_t)((index) + 1)
+#define INDEX_TO_NODE(index) (gl_list_node_t)(uintptr_t) {(index) + 1}
 #define NODE_TO_INDEX(node) ((uintptr_t)(node) - 1)
 
 static gl_list_t

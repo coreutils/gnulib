@@ -779,7 +779,7 @@ gl_tree_nx_add_first (gl_list_t list, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 #endif
 
   /* Add it to the tree.  */
@@ -840,7 +840,7 @@ gl_tree_nx_add_last (gl_list_t list, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 #endif
 
   /* Add it to the tree.  */
@@ -901,7 +901,7 @@ gl_tree_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 #endif
 
   /* Add it to the tree.  */
@@ -956,7 +956,7 @@ gl_tree_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
      ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
+     : (size_t) {(uintptr_t) new_node->value});
 #endif
 
   /* Add it to the tree.  */

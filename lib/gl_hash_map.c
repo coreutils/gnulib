@@ -101,7 +101,7 @@ gl_hash_search (gl_map_t map, const void *key, const void **valuep)
   size_t hashcode =
     (map->hashcode_fn != NULL
      ? map->hashcode_fn (key)
-     : (size_t)(uintptr_t) key);
+     : (size_t) {(uintptr_t) key});
   size_t bucket = hashcode % map->table_size;
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 
@@ -127,7 +127,7 @@ gl_hash_nx_getput (gl_map_t map, const void *key, const void *value,
   size_t hashcode =
     (map->hashcode_fn != NULL
      ? map->hashcode_fn (key)
-     : (size_t)(uintptr_t) key);
+     : (size_t) {(uintptr_t) key});
   size_t bucket = hashcode % map->table_size;
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 
@@ -174,7 +174,7 @@ gl_hash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
   size_t hashcode =
     (map->hashcode_fn != NULL
      ? map->hashcode_fn (key)
-     : (size_t)(uintptr_t) key);
+     : (size_t) {(uintptr_t) key});
   size_t bucket = hashcode % map->table_size;
   gl_mapkey_equals_fn equals = map->base.equals_fn;
 

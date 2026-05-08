@@ -132,7 +132,7 @@ bitsetv_dump (FILE *file, char const *title, char const *subtitle,
   fprintf (file, "%s\n", title);
   for (bitset_windex i = 0; bsetv[i]; i++)
     {
-      fprintf (file, "%s %lu\n", subtitle, (unsigned long) i);
+      fprintf (file, "%s %lu\n", subtitle, (unsigned long) {i});
       bitset_dump (file, bsetv[i]);
     }
 
@@ -145,7 +145,7 @@ debug_bitsetv (bitsetv bsetv)
 {
   for (bitset_windex i = 0; bsetv[i]; i++)
     {
-      fprintf (stderr, "%lu: ", (unsigned long) i);
+      fprintf (stderr, "%lu: ", (unsigned long) {i});
       debug_bitset (bsetv[i]);
     }
 
@@ -184,7 +184,7 @@ bitsetv_matrix_dump (FILE *out, const char *title, bitsetv bset)
   /* Contents. */
   for (bitset_bindex i = 0; bset[i]; ++i)
     {
-      fprintf (out, "%2lu|", (unsigned long) i);
+      fprintf (out, "%2lu|", (unsigned long) {i});
       for (bitset_bindex j = 0; j < hsize; ++j)
         fputs (bitset_test (bset[i], j) ? "1" : " ", out);
       fputs ("|\n", out);
