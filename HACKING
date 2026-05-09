@@ -119,7 +119,11 @@ Maintaining high quality
 ========================
 
 It is a good idea to occasionally create a testdir of all of Gnulib:
-  $ rm -rf ../testdir-all; ./gnulib-tool --create-testdir --dir=../testdir-all --with-c++-tests --without-privileged-tests `./all-modules`
+
+  $ rm -rf ../testdir-all; \
+    ./gnulib-tool --create-testdir --dir=../testdir-all --with-c++-tests --without-privileged-tests \
+                  `./all-modules`
+
 and test this directory on various platforms:
   - Linux/glibc systems,
   - Linux/musl systems,
@@ -164,6 +168,16 @@ There are two continuous integrations that regularly perform this testing:
   - Haiku
   - Android
   - and other platforms of your choice.
+
+If you want to test changes on a few modules only, say M1 ... Mn, a
+'testdir-all' may be overkill.  For this case, you can create a testdir
+of all potentially affected modules:
+
+  $ rm -rf ../testdir; \
+    ./gnulib-tool --create-testdir --dir=../testdir --with-c++-tests --without-privileged-tests \
+                  `./gnulib-tool --extract-recursive-dependents M1 ... Mn`
+
+and then test this directory on various platforms.
 
 
 Coding Style
