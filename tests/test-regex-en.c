@@ -165,7 +165,6 @@ int
 main (int argc, char *argv[])
 {
   struct re_pattern_buffer regex;
-  unsigned char folded_chars[UCHAR_MAX + 1];
   const char *s;
   struct re_registers regs;
 
@@ -191,27 +190,29 @@ main (int argc, char *argv[])
      GNU/Linux 3.1 x86, but it might catch the bug better
      on other platforms and it shouldn't hurt to try the
      test here.  */
-  static char const pat[] = "insert into";
-  static char const data[] =
-    "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
-  re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
-                 | RE_ICASE);
-  memset (&regex, 0, sizeof regex);
-  s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-  if (s)
-    report_error ("%s: %s", pat, s);
-  else
-    {
-      memset (&regs, 0, sizeof regs);
-      int ret = re_search (&regex, data, sizeof data - 1,
-                           0, sizeof data - 1, &regs);
-      if (ret != -1)
-        report_error ("re_search '%s' on '%s' returned %d",
-                      pat, data, ret);
-      regfree (&regex);
-      free (regs.start);
-      free (regs.end);
-    }
+  {
+    static char const pat[] = "insert into";
+    static char const data[] =
+      "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
+    re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
+                   | RE_ICASE);
+    memset (&regex, 0, sizeof regex);
+    s = re_compile_pattern (pat, sizeof pat - 1, &regex);
+    if (s)
+      report_error ("%s: %s", pat, s);
+    else
+      {
+        memset (&regs, 0, sizeof regs);
+        int ret = re_search (&regex, data, sizeof data - 1,
+                             0, sizeof data - 1, &regs);
+        if (ret != -1)
+          report_error ("re_search '%s' on '%s' returned %d",
+                        pat, data, ret);
+        regfree (&regex);
+        free (regs.start);
+        free (regs.end);
+      }
+  }
 
   if (really_utf8 ())
     {
