@@ -47,7 +47,7 @@ extern "C" {
    these operations do.  */
 typedef uint64_t u64;
 # define u64hilo(hi, lo) ((u64) {((u64) {(hi)} << 32) + (lo)})
-# define u64init(hi, lo) u64hilo (hi, lo)
+# define u64init(hi, lo) (((u64) (hi) << 32) + (lo))
 # define u64lo(x) ((u64) {(x)})
 # define u64getlo(x) ((uint32_t) {(x) & UINT32_MAX})
 # define u64size(x) u64lo (x)
