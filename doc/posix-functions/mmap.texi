@@ -24,6 +24,12 @@ To get anonymous memory, on some platforms, you can use the flags
 @code{MAP_ANONYMOUS | MAP_PRIVATE} and @code{-1} instead of a file descriptor;
 on others you have to use a read-only file descriptor of @file{/dev/zero}.
 @item
+On Solaris 10 this function accepts and returns @code{char *} not @code{void *},
+unless you define feature test macros like @code{_POSIX_C_SOURCE}
+or @code{_XOPEN_SOURCE} that may undesirably hide other symbols.
+To work around this problem, callers can limit themselves to either
+@code{void *} or @code{char *} for both arguments and results.
+@item
 On HP-UX, passing a non-NULL first argument, as a hint for the address (even
 without @code{MAP_FIXED}), often causes @code{mmap} to fail.  Better pass NULL
 in this case.
