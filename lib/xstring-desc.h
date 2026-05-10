@@ -1,5 +1,5 @@
 /* String descriptors, with out-of-memory checking.
-   Copyright (C) 2023-2025 Free Software Foundation, Inc.
+   Copyright (C) 2023-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -117,7 +117,7 @@ _xsd_c (idx_t s_nbytes, const char *s_data)
      _xsd_c (_xs_._nbytes, _xs_._data); \
    })
 #else
-GL_STRING_DESC_INLINE
+GL_XSTRING_DESC_INLINE
 _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_RETURNS_NONNULL
 char *
 xsd_c (string_desc_t s)
