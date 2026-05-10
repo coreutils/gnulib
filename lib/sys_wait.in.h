@@ -1,5 +1,5 @@
 /* A POSIX-like <sys/wait.h>.
-   Copyright (C) 2001-2003, 2005-2025 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -22,9 +22,23 @@
 #endif
 @PRAGMA_COLUMNS@
 
+#if defined _GL_INCLUDING_SYS_WAIT_H
+/* Special invocation convention:
+   - On Solaris 10 we have a sequence of nested includes
+     <sys/wait.h> -> <stdlib.h> -> <sys/wait.h>
+     In this situation, the functions are not yet declared, therefore we cannot
+     provide the C++ aliases.  */
+
+#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_SYS_WAIT_H@
+
+#else
+/* Normal invocation convention.  */
+
 /* The include_next requires a split double-inclusion guard.  */
 #if !(defined _WIN32 && ! defined __CYGWIN__)
+# define _GL_INCLUDING_SYS_WAIT_H
 # @INCLUDE_NEXT@ @NEXT_SYS_WAIT_H@
+# undef _GL_INCLUDING_SYS_WAIT_H
 #endif
 
 #ifndef _@GUARD_PREFIX@_SYS_WAIT_H
@@ -133,4 +147,5 @@ _GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
 
 
 #endif /* _@GUARD_PREFIX@_SYS_WAIT_H */
+#endif /* _GL_INCLUDING_SYS_WAIT_H */
 #endif /* _@GUARD_PREFIX@_SYS_WAIT_H */
