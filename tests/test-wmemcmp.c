@@ -80,8 +80,8 @@ main (int argc, char *argv[])
         subclause order two wide characters the same way as two integers of
         the underlying integer type designated by wchar_t."  */
   {
-    static const wchar_t input1[] = { 0x76547654 };
-    static const wchar_t input2[] = { 0x9abc9abc };
+    const wchar_t input1[] = { (wchar_t) {0x76547654} };
+    const wchar_t input2[] = { (wchar_t) {0x9abc9abc} };
     if ((wchar_t) {-1} < 0)
       {
         /* wchar_t is signed.  */
@@ -96,8 +96,8 @@ main (int argc, char *argv[])
       }
   }
   {
-    static const wchar_t input1[] = { (wchar_t) 0x9abc9abc };
-    static const wchar_t input2[] = { (wchar_t) 0x9bdf9bdf };
+    const wchar_t input1[] = { (wchar_t) {0x9abc9abc} };
+    const wchar_t input2[] = { (wchar_t) {0x9bdf9bdf} };
     ASSERT (wmemcmp (input1, input2, 1) < 0);
     ASSERT (wmemcmp (input2, input1, 1) > 0);
   }

@@ -3982,7 +3982,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
 
   /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
   {
-    static const wchar_t input[] = { 1702057263, 114, 0 };
+    const wchar_t input[] = { (wchar_t) {1702057263}, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%ls %d", input, 99);
     if (result == NULL)
@@ -3991,7 +3991,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { 1702057263, 114, 0 };
+    const wchar_t input[] = { (wchar_t) {1702057263}, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%3ls %d", input, 99);
     if (result == NULL)
@@ -4000,7 +4000,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { 1702057263, 114, 0 };
+    const wchar_t input[] = { (wchar_t) {1702057263}, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%.1ls %d", input, 99);
     if (result == NULL)
@@ -4009,7 +4009,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       free (result);
   }
   {
-    static const wchar_t input[] = { 1702057263, 114, 0 };
+    const wchar_t input[] = { (wchar_t) {1702057263}, 114, 0 };
     size_t length;
     wchar_t *result = my_asnwprintf (NULL, &length, L"%3.1ls %d", input, 99);
     if (result == NULL)
@@ -4162,7 +4162,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 
-  static wint_t L_invalid = 0x76543210;
+  const wint_t L_invalid = (wchar_t) {0x76543210};
 
   { /* Invalid wide character.  */
     size_t length;
@@ -4171,7 +4171,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     /* No failure is allowed: ISO C says "the wint_t argument is converted
        to wchar_t and written."  */
     ASSERT (result != NULL);
-    ASSERT (result[0] == 0x76543210);
+    ASSERT (result[0] == (wchar_t) {0x76543210});
     ASSERT (wmemcmp (result + 1, L" 33\0", 3 + 1) == 0);
     ASSERT (length == 4);
     free (result);
@@ -4185,7 +4185,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
        to wchar_t and written."  */
     ASSERT (result != NULL);
     ASSERT (wmemcmp (result, L"         ", 9) == 0);
-    ASSERT (result[9] == 0x76543210);
+    ASSERT (result[9] == (wchar_t) {0x76543210});
     ASSERT (wmemcmp (result + 10, L" 33\0", 3 + 1) == 0);
     ASSERT (length == 13);
     free (result);

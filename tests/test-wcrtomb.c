@@ -38,7 +38,7 @@ check_character (const char *s, size_t n)
   int iret;
   size_t ret;
 
-  wc = 0xBADFACE;
+  wc = (wchar_t) {0xBADFACE};
   iret = mbtowc (&wc, s, n);
   ASSERT (iret == n);
 

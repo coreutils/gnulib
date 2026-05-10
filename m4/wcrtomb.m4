@@ -1,5 +1,5 @@
 # wcrtomb.m4
-# serial 23
+# serial 24
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -113,7 +113,7 @@ int main ()
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 2;
       {
-        wchar_t wc = 0xBADFACE;
+        wchar_t wc = (wchar_t) {0xBADFACE};
         if (mbtowc (&wc, "\303\274", 2) == 2)
           if (wcrtomb (NULL, wc, NULL) != 1)
             result |= 2;

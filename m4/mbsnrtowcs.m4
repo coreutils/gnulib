@@ -1,5 +1,5 @@
 # mbsnrtowcs.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2008, 2010-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,18 +94,18 @@ int main ()
       {
         size_t i;
         for (i = 0; i < BUFSIZE; i++)
-          buf[i] = 0xBADFACE;
+          buf[i] = (wchar_t) {0xBADFACE};
       }
 
       memset (&state, '\0', sizeof (mbstate_t));
 
-      wc = 0xBADFACE;
+      wc = (wchar_t) {0xBADFACE};
       ret = mbrtowc (&wc, input, 1, &state);
       if (!(ret == 1 && wc == 'B' && mbsinit (&state)))
         return 1;
       input[0] = '\0';
 
-      wc = 0xBADFACE;
+      wc = (wchar_t) {0xBADFACE};
       ret = mbrtowc (&wc, input + 1, 1, &state);
       if (!(ret == 1 && wctob (wc) == (unsigned char) '\374' && mbsinit (&state)))
         return 2;

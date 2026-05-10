@@ -52,13 +52,13 @@ main (int argc, char *argv[])
     ret = mbstowcs (NULL, src, 1);
     ASSERT (ret == 0);
 
-    wc = 0xBADFACE;
+    wc = (wchar_t) {0xBADFACE};
     src = "";
     ret = mbstowcs (&wc, src, 0);
     ASSERT (ret == 0);
-    ASSERT (wc == 0xBADFACE);
+    ASSERT (wc == (wchar_t) {0xBADFACE});
 
-    wc = 0xBADFACE;
+    wc = (wchar_t) {0xBADFACE};
     src = "";
     ret = mbstowcs (&wc, src, 1);
     ASSERT (ret == 0);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
           const char *src;
 
           for (size_t i = 0; i < BUFSIZE; i++)
-            buf[i] = 0xBADFACE;
+            buf[i] = (wchar_t) {0xBADFACE};
 
           switch (argv[1][0])
             {
@@ -105,10 +105,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[1] == '/');
                     ASSERT (buf[2] == 'a');
                     ASSERT (buf[3] == 0);
-                    ASSERT (buf[4] == 0xBADFACE);
+                    ASSERT (buf[4] == (wchar_t) {0xBADFACE});
                   }
                 else
-                  ASSERT (buf[1] == 0xBADFACE);
+                  ASSERT (buf[1] == (wchar_t) {0xBADFACE});
               }
               {
                 char input[2];
@@ -124,7 +124,7 @@ main (int argc, char *argv[])
                       ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
                       ASSERT (ret == 1);
 
-                      buf[0] = buf[1] = 0xBADFACE;
+                      buf[0] = buf[1] = (wchar_t) {0xBADFACE};
                       src = input;
                       ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
                       /* POSIX:2018 says: "In the POSIX locale an [EILSEQ] error
@@ -160,10 +160,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[2] == 'e');
                     ASSERT (buf[3] == 'r');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == 0xBADFACE);
+                    ASSERT (buf[5] == (wchar_t) {0xBADFACE});
                   }
                 else
-                  ASSERT (buf[1] == 0xBADFACE);
+                  ASSERT (buf[1] == (wchar_t) {0xBADFACE});
               }
               break;
 
@@ -186,10 +186,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[2] == 'e');
                     ASSERT (buf[3] == 'r');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == 0xBADFACE);
+                    ASSERT (buf[5] == (wchar_t) {0xBADFACE});
                   }
                 else
-                  ASSERT (buf[2] == 0xBADFACE);
+                  ASSERT (buf[2] == (wchar_t) {0xBADFACE});
               }
               break;
 
@@ -212,10 +212,10 @@ main (int argc, char *argv[])
                   {
                     ASSERT (buf[3] == '>');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == 0xBADFACE);
+                    ASSERT (buf[5] == (wchar_t) {0xBADFACE});
                   }
                 else
-                  ASSERT (buf[3] == 0xBADFACE);
+                  ASSERT (buf[3] == (wchar_t) {0xBADFACE});
               }
               break;
 
@@ -238,10 +238,10 @@ main (int argc, char *argv[])
                     ASSERT (buf[2] == 'e');
                     ASSERT (buf[3] == 'r');
                     ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == 0xBADFACE);
+                    ASSERT (buf[5] == (wchar_t) {0xBADFACE});
                   }
                 else
-                  ASSERT (buf[1] == 0xBADFACE);
+                  ASSERT (buf[1] == (wchar_t) {0xBADFACE});
               }
               break;
 

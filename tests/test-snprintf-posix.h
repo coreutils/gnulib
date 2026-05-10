@@ -3162,7 +3162,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == 6);
   }
 
-  static wint_t L_invalid = 0x76543210;
+  const wint_t L_invalid = (wchar_t) {0x76543210};
 
   { /* Invalid wide character.
        The conversion may succeed or may fail, but it should not abort.  */
