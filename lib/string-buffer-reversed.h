@@ -1,6 +1,6 @@
 /* A buffer that accumulates a string by piecewise concatenation, from the end
    to the start.
-   Copyright (C) 2021-2025 Free Software Foundation, Inc.
+   Copyright (C) 2021-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -59,7 +59,7 @@ struct string_buffer_reversed
 extern "C" {
 #endif
 
-/* ================== Functions in module 'string-buffer' ================== */
+/* ============== Functions in module 'string-buffer-reversed' ============== */
 
 /* Initializes BUFFER to the empty string.  */
 extern void sbr_init (struct string_buffer_reversed *buffer)
@@ -72,12 +72,12 @@ extern int sbr_prepend1 (struct string_buffer_reversed *buffer, char c);
 /* Prepends the contents of the memory area S to BUFFER.
    Returns 0, or -1 in case of out-of-memory error.  */
 extern int sbr_prepend_desc (struct string_buffer_reversed *buffer,
-                            string_desc_t s);
+                             string_desc_t s);
 
 /* Prepends the contents of the C string STR to BUFFER.
    Returns 0, or -1 in case of out-of-memory error.  */
 extern int sbr_prepend_c (struct string_buffer_reversed *buffer,
-                         const char *str);
+                          const char *str);
 
 #ifndef SBR_NO_PREPENDF
 
@@ -141,7 +141,7 @@ extern rw_string_desc_t sbr_dupfree (struct string_buffer_reversed *buffer)
 extern char * sbr_dupfree_c (struct string_buffer_reversed *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
-/* ================== Functions in module 'xstring-buffer' ================== */
+/* ============= Functions in module 'xstring-buffer-reversed' ============= */
 
 #if GNULIB_XSTRING_BUFFER_REVERSED
 
