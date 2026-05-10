@@ -20,13 +20,13 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdckdint.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #include <filename.h>
 #include <idx.h>
-#include <intprops.h>
 #include <scratch_buffer.h>
 
 #include "attribute.h"
@@ -373,9 +373,10 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
               if (0 <= end_extra_offset)
                 end_extra_offset = end - extra_buf;
               size_t len = strlen (end);
-              if (INT_ADD_OVERFLOW (len, n))
+              size_t newlen;
+              if (ckd_add (&newlen, len, n))
                 xalloc_die ();
-              while (bufs->extra.length <= len + n)
+              while (bufs->extra.length <= newlen)
                 {
                   if (!scratch_buffer_grow_preserve (&bufs->extra))
                     xalloc_die ();

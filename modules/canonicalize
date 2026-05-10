@@ -9,6 +9,7 @@ m4/lstat.m4
 
 Depends-on:
 attribute
+bool
 double-slash-root
 errno-h
 extensions
@@ -16,17 +17,16 @@ fcntl-h
 file-set
 filename
 getcwd
+glibc-internal/scratch_buffer
 hashcode-named-file
 idx
-intprops
 memmove
 mempcpy
 nocrash
 rawmemchr
 readlink
-glibc-internal/scratch_buffer
 stat
-bool
+stdckdint-h
 stdlib-h
 sys_stat-h
 unistd-h
