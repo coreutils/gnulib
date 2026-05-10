@@ -50,6 +50,12 @@
 #endif
 static int clang_ubsan_workaround = 0;
 
+/* This file freely casts between the different representations of addresses
+   (void *, char *, function pointers, uintptr_t).  Not worth warning about.  */
+#if _GL_GNUC_PREREQ (14, 0)
+# pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif
+
 /* On most platforms, function pointers are just a pointer to the
    code, i.e. to the first instruction to be executed.  This,
    however, is not universally true, see:
@@ -116,7 +122,7 @@ struct func
 # else
 #  define CODE(funcptr) ((char *) (funcptr) - clang_ubsan_workaround)
 #  define SET_CODE(funcptr,code_addr) \
-     ((void) ((funcptr) = (void *) ((code_addr) + clang_ubsan_workaround)))
+     ((void) ((funcptr) = (void *) ((char *) (code_addr) + clang_ubsan_workaround)))
 #  define IS(funcptr) ((void) (funcptr), 0)
 #  define SET_IS(funcptr,is) ((void) (funcptr), (void) (is))
 # endif

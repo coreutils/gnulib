@@ -27,8 +27,8 @@
 #define verify_width(width, min, max) \
   static_assert ((max) >> ((width) - 1 - ((min) < 0)) == 1)
 
-/* Macros borrowed from intprops.h.  */
-#if 16 <= __GNUC__
+/* Macros borrowed from intprops.h and intprops-internal.h.  */
+#if 14 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))

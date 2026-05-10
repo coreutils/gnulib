@@ -35,6 +35,13 @@
 # include <sys/param.h> /* defines macro OpenBSD */
 #endif
 
+/* The value of SIGSEGV_FAULT_ADDRESS may be any representation of an address
+   (void *, char *, uintptr_t, intptr_t), depending on platform.  The cast is
+   therefore mandatory, to avoid a compilation error or warning.  */
+#if _GL_GNUC_PREREQ (14, 0)
+# pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif
+
 
 /* Version number.  */
 int libsigsegv_version = LIBSIGSEGV_VERSION;
@@ -362,7 +369,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 #if defined __gnu_hurd__ /* Hurd */
 
 # define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, long code, struct sigcontext *scp
-# define SIGSEGV_FAULT_ADDRESS  (void *) (unsigned long) code
+# define SIGSEGV_FAULT_ADDRESS  (unsigned long) code
 # define SIGSEGV_FAULT_CONTEXT  scp
 
 # if defined __x86_64__
@@ -1017,7 +1024,7 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
 static void
 sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
 {
-  void *address = SIGSEGV_FAULT_ADDRESS;
+  void *address = (void *) (SIGSEGV_FAULT_ADDRESS);
 
 # if HAVE_STACK_OVERFLOW_RECOVERY
 #  if !(HAVE_STACKVMA || defined SIGSEGV_FAULT_STACKPOINTER)
@@ -1260,7 +1267,7 @@ install_for (int sig)
   struct sigaction action;
 
 # ifdef SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
-  action.sa_sigaction = sigsegv_handler;
+  action.sa_sigaction = (void (*) (int, siginfo_t *, void *)) &sigsegv_handler;
 # else
   action.sa_handler = (void (*) (int)) &sigsegv_handler;
 # endif

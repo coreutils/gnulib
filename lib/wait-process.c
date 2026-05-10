@@ -383,7 +383,7 @@ wait_subprocess (pid_t child, const char *progname,
       if (exit_on_error || (!null_stderr && termsigp == NULL))
         error (exit_on_error ? EXIT_FAILURE : 0, 0,
                _("%s subprocess got fatal signal %d"),
-               progname, WTERMSIG (status));
+               progname, (int) {WTERMSIG (status)});
       return 127;
     }
   if (!WIFEXITED (status))

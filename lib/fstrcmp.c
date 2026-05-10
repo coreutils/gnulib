@@ -82,7 +82,7 @@ fstrcmp_free_resources (void)
   if (buffer != NULL)
     {
       gl_tls_set (buffer_key, NULL);
-      gl_tls_set (bufmax_key, (void *) (uintptr_t) 0);
+      gl_tls_set (bufmax_key, (void *) (uintptr_t) {0});
       free (buffer);
     }
 }
@@ -214,7 +214,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
       free (buffer);
       buffer = xnmalloc (bufmax, 2 * sizeof *buffer);
       gl_tls_set (buffer_key, buffer);
-      gl_tls_set (bufmax_key, (void *) bufmax);
+      gl_tls_set (bufmax_key, (void *) (uintptr_t) {bufmax});
     }
   ctxt.fdiag = buffer + yvec_length + 1;
   ctxt.bdiag = ctxt.fdiag + fdiag_len;
