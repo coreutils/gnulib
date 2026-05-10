@@ -1272,7 +1272,7 @@ _GL_STRNUL_INLINE const char *_gl_strnul (const char *string)
 }
 #  endif
 #  ifdef __cplusplus
-extern "C++" { /* needed for Solaris 10 */
+extern "C++" { /* needed for AIX and Solaris 10 */
 _GL_BEGIN_NAMESPACE
 template <typename T> T strnul (T);
 template <> inline const char *strnul<const char *> (const char *s)
@@ -1411,7 +1411,7 @@ _GL_EXTERN_C char * mbsstr (const char *haystack, const char *needle)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
-extern "C++" { /* needed for AIX */
+extern "C++" { /* needed for AIX and Solaris 10 */
 template <typename T>
   T * mbsstr_template (T* haystack, const char *needle);
 template <>
@@ -1479,7 +1479,7 @@ _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
-extern "C++" { /* needed for AIX */
+extern "C++" { /* needed for AIX and Solaris 10 */
 template <typename T>
   T * mbspcasecmp_template (T* string, const char *prefix);
 template <>
@@ -1517,7 +1517,7 @@ _GL_EXTERN_C char * mbscasestr (const char *haystack, const char *needle)
 /* Don't silently convert a 'const char *' to a 'char *'.  Programmers want
    compiler warnings for 'const' related mistakes.  */
 #  ifdef __cplusplus
-extern "C++" { /* needed for AIX */
+extern "C++" { /* needed for AIX and Solaris 10 */
 template <typename T>
   T * mbscasestr_template (T* haystack, const char *needle);
 template <>

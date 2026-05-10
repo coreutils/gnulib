@@ -30,11 +30,6 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_STRINGS_H@
-/* AIX 7.3 has a bug: In C++ mode, <string.h> must be included before
-   <strings.h>.  */
-# if defined __cplusplus && defined _AIX
-#  include <string.h>
-# endif
 # @INCLUDE_NEXT@ @NEXT_STRINGS_H@
 #endif
 
