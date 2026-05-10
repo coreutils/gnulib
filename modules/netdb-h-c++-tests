@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-netdb-h-c++
 check_PROGRAMS += test-netdb-h-c++
 test_netdb_h_c___SOURCES = test-netdb-h-c++.cc
-test_netdb_h_c___LDADD = $(LDADD) $(GETADDRINFO_LIB)
+test_netdb_h_c___LDADD = $(LDADD) $(LIBINTL) $(GETADDRINFO_LIB)
 endif
