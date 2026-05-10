@@ -38,6 +38,8 @@
 #define BACKUP_STDERR_FILENO 10
 #define ASSERT_STREAM myerr
 #undef CONTINUE_AFTER_ASSERT
+#undef print_stack_trace
+#define print_stack_trace() /* nothing */
 #include "macros.h"
 
 static FILE *myerr;
