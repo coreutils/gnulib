@@ -1,5 +1,5 @@
 /* Test of calloc function.
-   Copyright (C) 2010-2025 Free Software Foundation, Inc.
+   Copyright (C) 2010-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,6 +42,10 @@ main ()
 
   /* Check that calloc fails when requested to allocate a block of memory
      larger than PTRDIFF_MAX or SIZE_MAX bytes.  */
+  /* Running this test on a Solaris 10 machine (cfarm210.cfarm.net) makes
+     the machine unresponsive for at least several minutes, possibly
+     indefinitely.  */
+#if !defined __sun
   {
     for (size_t n = 2; n != 0; n <<= 1)
       {
@@ -54,6 +58,7 @@ main ()
         ASSERT (errno == ENOMEM);
       }
   }
+#endif
 
   return test_exit_status;
 }

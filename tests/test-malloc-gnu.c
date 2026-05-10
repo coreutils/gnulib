@@ -1,5 +1,5 @@
 /* Test of malloc function.
-   Copyright (C) 2010-2025 Free Software Foundation, Inc.
+   Copyright (C) 2010-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@ main (int argc, _GL_UNUSED char **argv)
   free (p);
 
   /* Check that malloc (n) fails when n exceeds PTRDIFF_MAX.  */
+  /* Note: Running this test on a Solaris 10 machine (cfarm210.cfarm.net) makes
+     the machine unresponsive for 43 seconds.  */
   if (PTRDIFF_MAX < SIZE_MAX)
     {
       size_t one = argc != 12345;
