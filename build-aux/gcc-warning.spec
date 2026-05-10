@@ -291,6 +291,7 @@
 -Wunused-variable			enabled by -Wunused
 -Wuse-after-free			handled specially by gl_MANYWARN_ALL_GCC
 -Wuse-after-free=<0,3>			handled specially by gl_MANYWARN_ALL_GCC
+-Wuseless-cast				handled specially by gl_MANYWARN_ALL_GCC
 -Wvarargs				default
 -Wvla-larger-than=<number>		handled specially by gl_MANYWARN_ALL_GCC
 -Wvla-parameter				enabled by -Wall
