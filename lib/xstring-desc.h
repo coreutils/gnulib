@@ -117,7 +117,7 @@ _xsd_c (idx_t s_nbytes, const char *s_data)
      _xsd_c (_xs_._nbytes, _xs_._data); \
    })
 #else
-GL_STRING_DESC_INLINE
+GL_XSTRING_DESC_INLINE
 _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_RETURNS_NONNULL
 char *
 xsd_c (string_desc_t s)
