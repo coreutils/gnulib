@@ -1272,6 +1272,7 @@ _GL_STRNUL_INLINE const char *_gl_strnul (const char *string)
 }
 #  endif
 #  ifdef __cplusplus
+extern "C++" { /* needed for Solaris 10 */
 _GL_BEGIN_NAMESPACE
 template <typename T> T strnul (T);
 template <> inline const char *strnul<const char *> (const char *s)
@@ -1279,6 +1280,7 @@ template <> inline const char *strnul<const char *> (const char *s)
 template <> inline       char *strnul<      char *> (      char *s)
 { return const_cast<char *>(_gl_strnul (s)); }
 _GL_END_NAMESPACE
+}
 #  else
 #   if (defined __GNUC__ && __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __cplusplus) \
        || (defined __clang__ && __clang_major__ >= 3) \
