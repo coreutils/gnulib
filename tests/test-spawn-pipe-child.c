@@ -1,5 +1,5 @@
 /* Child program invoked by test-spawn-pipe-main.
-   Copyright (C) 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2009-2026 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,6 +38,8 @@
 #define BACKUP_STDERR_FILENO 10
 #define ASSERT_STREAM myerr
 #undef CONTINUE_AFTER_ASSERT
+#undef print_stack_trace
+#define print_stack_trace() /* nothing */
 #include "macros.h"
 
 static FILE *myerr;
