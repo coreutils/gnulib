@@ -1,5 +1,5 @@
 # chown.m4
-# serial 39
+# serial 40
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2026 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -21,7 +21,7 @@ AC_DEFUN([AC_FUNC_CHOWN],
 [
   AC_REQUIRE([AC_TYPE_UID_T])dnl
   AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
-  AC_CHECK_HEADERS([unistd.h])
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([for working chown],
     [ac_cv_func_chown_works],
     [AC_RUN_IFELSE(

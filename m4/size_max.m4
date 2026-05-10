@@ -1,5 +1,5 @@
 # size_max.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2003, 2005-2006, 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_PREREQ([2.61])
 
 AC_DEFUN([gl_SIZE_MAX],
 [
-  AC_CHECK_HEADERS([stdint.h])
+  AC_CHECK_HEADERS_ONCE([stdint.h])
   dnl First test whether the system already has SIZE_MAX.
   AC_CACHE_CHECK([for SIZE_MAX], [gl_cv_size_max], [
     gl_cv_size_max=no
