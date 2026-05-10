@@ -1,6 +1,6 @@
 /* A GNU-like <signal.h>.
 
-   Copyright (C) 2006-2025 Free Software Foundation, Inc.
+   Copyright (C) 2006-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -68,12 +68,13 @@
 
 /* Mac OS X 10.3, FreeBSD < 8.0, OpenBSD < 5.1, OSF/1 4.0, Solaris 2.6, Android,
    OS/2 kLIBC declare pthread_sigmask in <pthread.h>, not in <signal.h>.
-   But avoid namespace pollution on glibc systems.*/
+   But avoid namespace pollution on glibc systems.  */
 #if (@GNULIB_PTHREAD_SIGMASK@ || defined GNULIB_POSIXCHECK) \
     && ((defined __APPLE__ && defined __MACH__) \
         || (defined __FreeBSD__ && __FreeBSD__ < 8) \
         || (defined __OpenBSD__ && OpenBSD < 201205) \
-        || defined __osf__ || defined __sun || defined __ANDROID__ \
+        || (defined __sun && !defined __cplusplus) \
+        || defined __ANDROID__ \
         || defined __KLIBC__) \
     && ! defined __GLIBC__
 # include <pthread.h>
