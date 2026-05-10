@@ -165,6 +165,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   AS_VAR_APPEND([$1], [' -Wformat-truncation=2'])
   AS_VAR_APPEND([$1], [' -Wimplicit-fallthrough=5'])
   AS_VAR_APPEND([$1], [' -Wshift-overflow=2'])
+  AS_VAR_APPEND([$1], [' -Wstringop-overflow=4'])
   AS_VAR_APPEND([$1], [' -Wuse-after-free=3'])
   AS_VAR_APPEND([$1], [' -Wunused-const-variable=2'])
   AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
