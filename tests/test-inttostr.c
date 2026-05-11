@@ -46,16 +46,16 @@
       *buf = '\0';                                                      \
       ASSERT                                                            \
         ((TYPE_SIGNED (T)                                               \
-          ? snprintf (ref, sizeof ref, "%jd", (intmax_t) TYPE_MINIMUM (T)) \
-          : snprintf (ref, sizeof ref, "%ju", (uintmax_t) TYPE_MINIMUM (T))) \
+          ? snprintf (ref, sizeof ref, "%jd", (intmax_t) {TYPE_MINIMUM (T)}) \
+          : snprintf (ref, sizeof ref, "%ju", (uintmax_t) {TYPE_MINIMUM (T)})) \
          < sizeof ref);                                                 \
       ASSERT (streq ((p = Fn (TYPE_MINIMUM (T), buf)), ref));           \
       /* Ensure that INT_BUFSIZE_BOUND is tight for signed types.  */   \
       ASSERT (! TYPE_SIGNED (T) || (p == buf && *p == '-'));            \
       ASSERT                                                            \
         ((TYPE_SIGNED (T)                                               \
-          ? snprintf (ref, sizeof ref, "%jd", (intmax_t) TYPE_MAXIMUM (T)) \
-          : snprintf (ref, sizeof ref, "%ju", (uintmax_t) TYPE_MAXIMUM (T))) \
+          ? snprintf (ref, sizeof ref, "%jd", (intmax_t) {TYPE_MAXIMUM (T)}) \
+          : snprintf (ref, sizeof ref, "%ju", (uintmax_t) {TYPE_MAXIMUM (T)})) \
          < sizeof ref);                                                 \
       ASSERT (streq ((p = Fn (TYPE_MAXIMUM (T), buf)), ref));           \
       /* For unsigned types, the bound is not always tight.  */         \
