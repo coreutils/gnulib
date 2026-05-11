@@ -186,7 +186,7 @@ main (void)
       if (t_out != t_exp)
         {
           printf ("%s mismatch (-: actual; +:expected)\n-%12ld\n+%12ld\n",
-                  T[i].in, (long) t_out, (long) t_exp);
+                  T[i].in, (long) {t_out}, (long) {t_exp});
           test_exit_status = EXIT_FAILURE;
         }
     }
