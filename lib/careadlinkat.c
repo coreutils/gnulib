@@ -43,8 +43,8 @@ enum { STACK_BUF_SIZE = 1024 };
    STACK_BUF that can be used as temporary storage.
 
    Suppress -Wreturn-local-addr false alarms, as follows.
-   If GCC 12+ and -flto is not being used (in which case -DUSING_LTO
-   should also be used), simply use a pragma.
+   If GCC 12+ and -flto is being used (in which case -DUSING_LTO should also
+   be used, at least if -Wreturn-local-addr is active), simply use a pragma.
    Otherwise, in GCC 10+, do not inline this function
    to avoid creating a pointer to the stack that
    -Wreturn-local-addr incorrectly complains about.  See:
