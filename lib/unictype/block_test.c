@@ -32,7 +32,7 @@ bool
 uc_is_block (ucs4_t uc, const uc_block_t *block)
 {
   if (block != NULL)
-    return ((ucs4_t) (uc - block->start) <= block->end - block->start);
+    return ((ucs4_t) {uc - block->start} <= block->end - block->start);
   else
     return false;
 }
