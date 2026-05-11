@@ -12,6 +12,7 @@ errno-h
 extensions
 extern-inline
 stdckdint-h
+stdcountof-h
 
 configure.ac:
 gl_STAT_TIME

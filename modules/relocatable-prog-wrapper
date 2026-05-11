@@ -73,6 +73,7 @@ ssize_t
 bool
 stddef-h
 stdckdint-h
+stdcountof-h
 stdint-h
 stdlib-h
 string-h
