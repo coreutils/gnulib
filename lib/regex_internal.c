@@ -387,7 +387,7 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	      {
 		size_t mbcdlen;
 
-		mbcdlen = __wcrtomb ((char *) buf, wcu, &prev_st);
+		mbcdlen = __wcrtomb (buf, wcu, &prev_st);
 		if (__glibc_likely (mbclen == mbcdlen))
 		  memcpy (pstr->mbs + byte_idx, buf, mbclen);
 		else if (mbcdlen != (size_t) -1)

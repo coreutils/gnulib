@@ -789,8 +789,8 @@ __attribute__ ((pure, unused))
 re_string_wchar_at (const re_string_t *pstr, Idx idx)
 {
   if (pstr->mb_cur_max == 1)
-    return (wint_t) pstr->mbs[idx];
-  return (wint_t) pstr->wcs[idx];
+    return pstr->mbs[idx];
+  return pstr->wcs[idx];
 }
 
 #ifdef _LIBC
