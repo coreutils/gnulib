@@ -42,21 +42,16 @@ enum { STACK_BUF_SIZE = 1024 };
 /* Act like careadlinkat (see below), with an additional argument
    STACK_BUF that can be used as temporary storage.
 
-   Suppress -Wreturn-local-addr false alarms, as follows.
-   If GCC 12+ and -flto is being used (in which case -DUSING_LTO should also
-   be used, at least if -Wreturn-local-addr is active), simply use a pragma.
-   Otherwise, in GCC 10+, do not inline this function
+   In GCC 10+, do not inline this function
    to avoid creating a pointer to the stack that
    -Wreturn-local-addr incorrectly complains about.  See:
    https://gcc.gnu.org/PR93644
    Although the noinline attribute can hurt performance a bit, no better way
    to pacify GCC is known; even an explicit #pragma does not pacify GCC
    10 or 11, or GCC 12+ with -flto.
-   When the GCC bug is fixed this workaround should be limited to the
+   If the GCC bug is fixed this workaround should be limited to the
    broken GCC versions.  */
-#if _GL_GNUC_PREREQ (12, 1) && !USING_LTO
-# pragma GCC diagnostic ignored "-Wreturn-local-addr"
-#elif _GL_GNUC_PREREQ (10, 1)
+#if _GL_GNUC_PREREQ (10, 1)
 __attribute__ ((__noinline__))
 #endif
 static char *
