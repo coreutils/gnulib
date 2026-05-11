@@ -79,8 +79,8 @@ ulc_width_linebreaks_internal (const char *s, size_t n,
 
                   if (m == 0 || memory != NULL)
                     {
-                      char *q = (char *) memory;
-                      char *o8 = (o != NULL ? (char *) (q + m) : NULL);
+                      char *q = memory;
+                      char *o8 = (o != NULL ? q + m : NULL);
 
                       /* Translate the overrides to the UTF-8 string.  */
                       if (o != NULL)
