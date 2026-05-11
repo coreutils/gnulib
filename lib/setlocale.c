@@ -29,6 +29,7 @@
 /* Specification.  */
 #include <locale.h>
 
+#include <stdcountof.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -735,10 +736,7 @@ setlocale_unixlike (int category, const char *locale)
       {
         range_t range;
 
-        search (language_table,
-                sizeof (language_table) / sizeof (language_table[0]),
-                llCC_buf,
-                &range);
+        search (language_table, countof (language_table), llCC_buf, &range);
 
         for (size_t i = range.lo; i < range.hi; i++)
           {
@@ -782,17 +780,13 @@ setlocale_unixlike (int category, const char *locale)
                  and CC_buf in country_table.  */
               range_t language_range;
 
-              search (language_table,
-                      sizeof (language_table) / sizeof (language_table[0]),
-                      ll_buf,
+              search (language_table, countof (language_table), ll_buf,
                       &language_range);
               if (language_range.lo < language_range.hi)
                 {
                   range_t country_range;
 
-                  search (country_table,
-                          sizeof (country_table) / sizeof (country_table[0]),
-                          CC_buf,
+                  search (country_table, countof (country_table), CC_buf,
                           &country_range);
                   if (country_range.lo < country_range.hi)
                     for (size_t i = language_range.lo; i < language_range.hi; i++)
@@ -1162,7 +1156,7 @@ get_main_locale_with_same_language (const char *locale)
 {
 #   define table locales_with_principal_territory
   /* The table is sorted.  Perform a binary search.  */
-  size_t hi = sizeof (table) / sizeof (table[0]);
+  size_t hi = countof (table);
   size_t lo = 0;
   while (lo < hi)
     {
@@ -1391,7 +1385,7 @@ get_main_locale_with_same_territory (const char *locale)
     {
 #   define table locales_with_principal_language
       /* The table is sorted.  Perform a binary search.  */
-      size_t hi = sizeof (table) / sizeof (table[0]);
+      size_t hi = countof (table);
       size_t lo = 0;
       while (lo < hi)
         {
@@ -1483,7 +1477,7 @@ setlocale_improved (int category, const char *locale)
             goto fail;
 #  endif
 
-          for (; i < sizeof (categories) / sizeof (categories[0]); i++)
+          for (; i < countof (categories); i++)
             {
               int cat = categories[i];
               const char *name =
