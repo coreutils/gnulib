@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uchar.h>
+#include <wchar.h>
 
 /* The sbclen implementation relies on this.  */
 verify (MB_LEN_MAX <= SCHAR_MAX);
