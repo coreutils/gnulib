@@ -1351,6 +1351,8 @@ perl_translatable_files_list_ =						\
   -e '	\# Ignore a .c or .h file with a corresponding .l or .y file'	\
   -e '	$$file =~ /(.+)\.[ch]$$/ && (-e "$${1}.l" || -e "$${1}.y")'	\
   -e '	  and next;'							\
+  -e '	\# Ignore gettext.h'						\
+  -e '	$$file =~ /\/gettext\.h$$/ and next;'				\
   -e '	\# Skip unreadable files'					\
   -e '	-r $$file or next;'						\
   -e '	print "$$file ";'						\
