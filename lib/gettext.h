@@ -62,9 +62,10 @@
 /* Disabled NLS.  */
 /* When gcc is used with option -Wformat=2, we need to silence
    "warning: format not a string literal, argument types not checked [-Wformat-nonliteral]"
-   warnings that would occur at every invocation of a *ngettext function
+   warnings that would occur at every invocation of a *gettext function
    in a *printf format string position.
-   Do this with inline functions when possible.
+   Do this with inline functions when possible, namely for gettext, dgettext,
+   dcgettext, which are known to gcc as "external built-ins".
    It is not ideal to ignore the possible side effects done in the
    Domainname and Category arguments, but it's better than to have a
    warning at every invocation in a format string position.  */
