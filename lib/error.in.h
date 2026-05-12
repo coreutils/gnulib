@@ -1,5 +1,5 @@
 /* Declarations for error-reporting functions.
-   Copyright (C) 1995-1997, 2003, 2006, 2008-2025 Free Software Foundation,
+   Copyright (C) 1995-1997, 2003, 2006, 2008-2026 Free Software Foundation,
    Inc.
    This file is part of the GNU C Library.
 
@@ -233,7 +233,7 @@ extern void verror_at_line (int __status, int __errnum, const char *__fname,
                             va_list __args)
      _GL_ATTRIBUTE_COLD
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 5, 0));
-#ifdef _GL_NO_INLINE_ERROR
+#ifndef _GL_NO_INLINE_ERROR
 # ifndef verror_at_line
 #  define verror_at_line(status, ...) \
      __gl_error_call (verror_at_line, status, __VA_ARGS__)
