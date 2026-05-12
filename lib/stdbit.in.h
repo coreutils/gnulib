@@ -205,7 +205,7 @@ extern "C" {
 # define __STDC_ENDIAN_NATIVE__ __STDC_ENDIAN_LITTLE__
 #endif
 
-#endif
+#endif /* !__STDC_VERSION_STDBIT_H__ */
 
 
 /* Some systems are only missing C2y features in stdbit.h.  */
@@ -1153,12 +1153,15 @@ stdc_bit_width_ull (unsigned long long int n)
 
 #endif
 
+#endif /* !__STDC_VERSION_STDBIT_H__ */
+
 
 /* ISO C 23 § 7.18.15 Bit Floor  */
 
 #if @GNULIB_STDC_BIT_FLOOR@
 
-# if !GNULIB_defined_stdc_bit_floor_functions
+# if !defined __STDC_VERSION_STDBIT_H__
+#  if !GNULIB_defined_stdc_bit_floor_functions
 
 _GL_STDC_BIT_FLOOR_INLINE unsigned char
 stdc_bit_floor_uc (unsigned char n)
@@ -1190,17 +1193,22 @@ stdc_bit_floor_ull (unsigned long long int n)
   return n ? 1ull << (stdc_bit_width_ull (n) - 1) : 0;
 }
 
-#  define GNULIB_defined_stdc_bit_floor_functions 1
+#   define GNULIB_defined_stdc_bit_floor_functions 1
+#  endif
 # endif
 
-# define stdc_bit_floor(n) \
-  (_GL_STDBIT_TYPEOF_CAST \
-   (n, \
-    (sizeof (n) == 1 ? stdc_bit_floor_uc (n) \
-     : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_floor_us (n) \
-     : sizeof (n) == sizeof 0u ? stdc_bit_floor_ui (n) \
-     : sizeof (n) == sizeof 0ul ? stdc_bit_floor_ul (n) \
-     : stdc_bit_floor_ull (n))))
+# if !defined __STDC_VERSION_STDBIT_H__ \
+     || (defined __sun && defined _SYS_STDBIT_H)
+#  undef stdc_bit_floor
+#  define stdc_bit_floor(n) \
+     (_GL_STDBIT_TYPEOF_CAST \
+      (n, \
+       (sizeof (n) == 1 ? stdc_bit_floor_uc (n) \
+        : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_floor_us (n) \
+        : sizeof (n) == sizeof 0u ? stdc_bit_floor_ui (n) \
+        : sizeof (n) == sizeof 0ul ? stdc_bit_floor_ul (n) \
+        : stdc_bit_floor_ull (n))))
+# endif
 
 #endif
 
@@ -1209,7 +1217,8 @@ stdc_bit_floor_ull (unsigned long long int n)
 
 #if @GNULIB_STDC_BIT_CEIL@
 
-# if !GNULIB_defined_stdc_bit_ceil_functions
+# if !defined __STDC_VERSION_STDBIT_H__
+#  if !GNULIB_defined_stdc_bit_ceil_functions
 
 _GL_STDC_BIT_CEIL_INLINE unsigned char
 stdc_bit_ceil_uc (unsigned char n)
@@ -1241,21 +1250,24 @@ stdc_bit_ceil_ull (unsigned long long int n)
   return n <= 1 ? 1 : 2ull << (stdc_bit_width_ull (n - 1) - 1);
 }
 
-#  define GNULIB_defined_stdc_bit_ceil_functions 1
+#   define GNULIB_defined_stdc_bit_ceil_functions 1
+#  endif
 # endif
 
-# define stdc_bit_ceil(n) \
-  (_GL_STDBIT_TYPEOF_CAST \
-   (n, \
-    (sizeof (n) == 1 ? stdc_bit_ceil_uc (n) \
-     : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_ceil_us (n) \
-     : sizeof (n) == sizeof 0u ? stdc_bit_ceil_ui (n) \
-     : sizeof (n) == sizeof 0ul ? stdc_bit_ceil_ul (n) \
-     : stdc_bit_ceil_ull (n))))
+# if !defined __STDC_VERSION_STDBIT_H__ \
+     || (defined __sun && defined _SYS_STDBIT_H)
+#  undef stdc_bit_ceil
+#  define stdc_bit_ceil(n) \
+     (_GL_STDBIT_TYPEOF_CAST \
+      (n, \
+       (sizeof (n) == 1 ? stdc_bit_ceil_uc (n) \
+        : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_ceil_us (n) \
+        : sizeof (n) == sizeof 0u ? stdc_bit_ceil_ui (n) \
+        : sizeof (n) == sizeof 0ul ? stdc_bit_ceil_ul (n) \
+        : stdc_bit_ceil_ull (n))))
+# endif
 
 #endif
-
-#endif /* !__STDC_VERSION_STDBIT_H__ */
 
 
 /* ISO C2y § 7.18.17 Rotate Left  */

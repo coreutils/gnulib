@@ -15,6 +15,11 @@ Portability problems fixed by Gnulib:
 @item
 This macro is missing on many platforms:
 glibc 2.38, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 17, Android 15.
+@item
+This macro returns a value of the wrong type
+(e.g.@: @code{unsigned long long} instead of @code{unsigned long})
+on some platforms:
+Solaris 11 OpenIndiana.
 @end itemize
 
 Portability problems not fixed by Gnulib:
