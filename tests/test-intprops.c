@@ -266,6 +266,50 @@ main (void)
   CHECK_BINOP (<<, LEFT_SHIFT, UINT_MAX / 2, 1, unsigned int, false,
                (UINT_MAX / 2) << 1);
 
+  /* INT_<op>_WRAPV at boundaries.  */
+  #define CHECK_BOUNDARIES(t, min, max)                                 \
+    {                                                                   \
+      t result;                                                         \
+      ASSERT ( INT_ADD_WRAPV (min, -1, &result));                       \
+      ASSERT (!INT_ADD_WRAPV (min,  0, &result) && result == (min));    \
+      ASSERT (!INT_ADD_WRAPV (min,  1, &result) && result == (min) + 1); \
+      ASSERT (!INT_ADD_WRAPV (max, -1, &result) && result == (max) - 1); \
+      ASSERT (!INT_ADD_WRAPV (max,  0, &result) && result == (max));    \
+      ASSERT ( INT_ADD_WRAPV (max,  1, &result));                       \
+      ASSERT (!INT_SUBTRACT_WRAPV (min, -1, &result) && result == (min) + 1); \
+      ASSERT (!INT_SUBTRACT_WRAPV (min,  0, &result) && result == (min)); \
+      ASSERT ( INT_SUBTRACT_WRAPV (min,  1, &result));                  \
+      ASSERT ( INT_SUBTRACT_WRAPV (max, -1, &result));                  \
+      ASSERT (!INT_SUBTRACT_WRAPV (max,  0, &result) && result == (max)); \
+      ASSERT (!INT_SUBTRACT_WRAPV (max,  1, &result) && result == (max) - 1); \
+      ASSERT (INT_MULTIPLY_WRAPV (min, -1, &result)                     \
+              ? (min) && (min) < -(max)                                 \
+              : ! (result + (min)));                                    \
+      ASSERT (!INT_MULTIPLY_WRAPV (min,  0, &result) && !result);       \
+      ASSERT (!INT_MULTIPLY_WRAPV (min,  1, &result) && result == (min)); \
+      ASSERT (INT_MULTIPLY_WRAPV (min,  2, &result) ? (min) < 0 : !result); \
+      ASSERT (INT_MULTIPLY_WRAPV (max, -1, &result)                     \
+              ? !(min)                                                  \
+              : ! (result + (max)));                                    \
+      ASSERT (!INT_MULTIPLY_WRAPV (max,  0, &result) && !result);       \
+      ASSERT (!INT_MULTIPLY_WRAPV (max,  1, &result) && result == (max)); \
+      ASSERT ( INT_MULTIPLY_WRAPV (max,  2, &result));                  \
+    }
+  /* CHECK_BOUNDARIES (bool, false, true); // not supported */
+  /* CHECK_BOUNDARIES (char, CHAR_MIN, CHAR_MAX); // not supported */
+  CHECK_BOUNDARIES (signed char, SCHAR_MIN, SCHAR_MAX);
+  CHECK_BOUNDARIES (unsigned char, 0, UCHAR_MAX);
+  CHECK_BOUNDARIES (short int, SHRT_MIN, SHRT_MAX);
+  CHECK_BOUNDARIES (unsigned short int, 0, USHRT_MAX);
+  CHECK_BOUNDARIES (int, INT_MIN, INT_MAX);
+  CHECK_BOUNDARIES (unsigned int, 0, UINT_MAX);
+  CHECK_BOUNDARIES (long int, LONG_MIN, LONG_MAX);
+  CHECK_BOUNDARIES (unsigned long int, 0, ULONG_MAX);
+  #ifdef LLONG_MAX
+    CHECK_BOUNDARIES (long long int, LLONG_MIN, LLONG_MAX);
+    CHECK_BOUNDARIES (unsigned long long int, 0, ULLONG_MAX);
+  #endif
+
   /* INT_<op>_OVERFLOW and INT_<op>_WRAPV with mixed types.  */
   #define CHECK_SUM(a, b, t, v, vres)                                     \
     CHECK_SUM1 (a, b, t, v, vres);                                        \
