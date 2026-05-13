@@ -125,6 +125,7 @@
 # include <wctype.h>
 #else
 # include <uchar.h>
+# undef wctype_t
 # undef __wctype
 # undef __iswalnum
 # undef __iswctype
