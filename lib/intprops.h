@@ -25,7 +25,8 @@
 
 /* True if the arithmetic type T is an integer type.  bool counts as
    an integer.  */
-#if __STDC_VERSION__ < 201112 || _GL__GENERIC_BOGUS
+#if (__STDC_VERSION__ < 201112 || (defined _MSC_VER && _MSC_VER < 1944) \
+     || _GL__GENERIC_BOGUS)
 # define TYPE_IS_INTEGER(t) ((t) 1.5 == 1)
 #else
 /* Pacify -Wuseless-cast and do not default to the simpler expression;
@@ -62,7 +63,8 @@
 #define TYPE_WIDTH(t) _GL_TYPE_WIDTH (t)
 
 /* The maximum and minimum values for the standard integer type T.  */
-#if __STDC_VERSION__ < 201112 || _GL__GENERIC_BOGUS
+#if (__STDC_VERSION__ < 201112 || (defined _MSC_VER && _MSC_VER < 1944) \
+     || _GL__GENERIC_BOGUS)
 # define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
 # define TYPE_MAXIMUM(t)                                                \
    ((t) (! TYPE_SIGNED (t)                                              \

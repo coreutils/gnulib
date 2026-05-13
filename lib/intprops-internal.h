@@ -50,7 +50,8 @@
    e.g., in Cray C 5.0.3.0.  */
 
 /* True if the standard integer or standard real type T is signed.  */
-#if __STDC_VERSION__ < 201112 || _GL__GENERIC_BOGUS
+#if (__STDC_VERSION__ < 201112 || (defined _MSC_VER && _MSC_VER < 1944) \
+     || _GL__GENERIC_BOGUS)
 # define _GL_TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 #else
 /* Pacify -Wuseless-cast, but do not default to the simpler expression;
