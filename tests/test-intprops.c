@@ -106,6 +106,7 @@ main (void)
 
   /* TYPE_SIGNED.  */
   /* VERIFY (! TYPE_SIGNED (bool)); // not guaranteed by gnulib substitute */
+  VERIFY (TYPE_SIGNED (char) == (CHAR_MIN < 0));
   VERIFY (TYPE_SIGNED (signed char));
   VERIFY (! TYPE_SIGNED (unsigned char));
   VERIFY (TYPE_SIGNED (short int));
