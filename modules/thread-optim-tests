@@ -1,0 +1,14 @@
+Files:
+tests/test-thread-optim1.c
+tests/test-thread-optim2.c
+tests/macros.h
+
+Depends-on:
+thread
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-thread-optim1 test-thread-optim2
+check_PROGRAMS += test-thread-optim1 test-thread-optim2
+test_thread_optim2_LDADD = $(LDADD) @LIBMULTITHREAD@
