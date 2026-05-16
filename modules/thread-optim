@@ -3,13 +3,37 @@ Optimization of multithreaded code.
 
 Files:
 lib/thread-optim.h
+lib/thread-optim.c
+lib/thread-creators.gperf
+lib/thread-optim-proto.c
 
 Depends-on:
+gperf
+bool
+stdint-h
 
 configure.ac:
 AC_CHECK_HEADERS([sys/single_threaded.h])
+AC_CHECK_HEADERS([link.h])
+dnl Solaris 10 has dl_iterate_phdr in a separate library libdl.
+dnl Haiku has dl_iterate_phdr in a separate library libbsd.
+dnl We don't want a link dependency here.
+AC_CHECK_FUNCS([dl_iterate_phdr])
 
 Makefile.am:
+lib_SOURCES += thread-optim.c
+
+$(srcdir)/thread-creators.h: $(srcdir)/thread-creators.gperf
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/thread-creators.gperf > $(srcdir)/thread-creators.h-t1 \
+	&& sed -e 's/^const/static const/' \
+	       -e 's|\([ "]\)[^ "]*/thread-creators\.gperf\([ "]\)|\1thread-creators.gperf\2|' \
+	       < $(srcdir)/thread-creators.h-t1 > $(srcdir)/thread-creators.h-t2 \
+	&& rm -f $(srcdir)/thread-creators.h-t1 \
+	&& mv $(srcdir)/thread-creators.h-t2 $(srcdir)/thread-creators.h
+BUILT_SOURCES        += thread-creators.h
+MOSTLYCLEANFILES     += thread-creators.h-t1 thread-creators.h-t2
+MAINTAINERCLEANFILES += thread-creators.h
+EXTRA_DIST           += thread-creators.h
 
 Include:
 "thread-optim.h"

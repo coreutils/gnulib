@@ -55,11 +55,55 @@
  #error "Please include config.h first."
 #endif
 
+#include <stdbool.h>
+
 #if HAVE_SYS_SINGLE_THREADED_H /* glibc >= 2.32 */
+
 # include <sys/single_threaded.h>
 # define gl_multithreaded()  (!__libc_single_threaded)
-#else
+
+#elif defined __APPLE__ && defined __MACH__ /* macOS */
+
+/* One of the most basic libraries on macOS, CoreFoundation,
+   creates new threads without being asked for.  Therefore,
+   assume that the process might be multithreaded.  */
 # define gl_multithreaded()  1
+# define _GL_MULTITHREADED_ALWAYS_TRUE
+
+#elif defined __ELF__ /* Linux, Hurd, FreeBSD, NetBSD, OpenBSD, Solaris, ... */\
+      && HAVE_LINK_H \
+      && HAVE_DL_ITERATE_PHDR /* not Solaris 10, not Haiku */
+
+/* We can detect whether pthread_create() can be invoked, by looking
+   at the contents of the PLT of the executable and of each shared object.  */
+# ifdef __cplusplus
+extern "C" {
+# endif
+extern bool gl_multithreaded (void);
+# define _GL_MULTITHREADED_VIA_ELF
+# ifdef __cplusplus
+}
+# endif
+
+#else
+
+/* On other platforms, such as Windows, threads are created for relatively
+   simple tasks, such as events, alarms, or interruptible sleep.  Therefore,
+   assume that the process might be multithreaded.  */
+# define gl_multithreaded()  1
+# define _GL_MULTITHREADED_ALWAYS_TRUE
+
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Allows programs to override the result of gl_multithreaded().  */
+extern void gl_set_multithreaded (bool mt);
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _THREAD_OPTIM_H */
