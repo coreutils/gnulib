@@ -29,6 +29,7 @@
 #include "glthread/lock.h"
 #include "glthread/once.h"
 #include "thread-optim.h"
+#include "sigdelay.h"
 #include "sig-handler.h"
 
 /* ========================================================================= */
@@ -299,6 +300,8 @@ init_fatal_signal_set (void)
    to occur in different threads and even overlap in time.  */
 gl_lock_define_initialized (static, fatal_signals_block_lock)
 static unsigned int fatal_signals_block_counter = 0;
+/* For correct operation in the face of thread-optim.h.  */
+static bool fatal_signals_block_initially_mt;
 
 /* Temporarily delay the catchable fatal signals.  */
 void
@@ -310,8 +313,22 @@ block_fatal_signals (void)
 
   if (fatal_signals_block_counter++ == 0)
     {
+      fatal_signals_block_initially_mt = mt;
       init_fatal_signal_set ();
-      pthread_sigmask (SIG_BLOCK, &fatal_signal_set, NULL);
+      if (mt)
+        sigdelay (SIG_BLOCK, &fatal_signal_set, NULL);
+      else
+        pthread_sigmask (SIG_BLOCK, &fatal_signal_set, NULL);
+    }
+  else
+    {
+      if (!fatal_signals_block_initially_mt && mt)
+        {
+          /* The process was single-threaded and has become multithreaded
+             before the matching unblock_fatal_signals() call.  This is
+             a constraint violation.  */
+          abort ();
+        }
     }
 
   if (mt) gl_lock_unlock (fatal_signals_block_lock);
@@ -331,8 +348,18 @@ unblock_fatal_signals (void)
     abort ();
   if (--fatal_signals_block_counter == 0)
     {
+      if (!fatal_signals_block_initially_mt && mt)
+        {
+          /* The process was single-threaded and has become multithreaded
+             at the matching unblock_fatal_signals() call.  This is a
+             constraint violation.  */
+          abort ();
+        }
       init_fatal_signal_set ();
-      pthread_sigmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+      if (fatal_signals_block_initially_mt)
+        sigdelay (SIG_UNBLOCK, &fatal_signal_set, NULL);
+      else
+        pthread_sigmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
     }
 
   if (mt) gl_lock_unlock (fatal_signals_block_lock);

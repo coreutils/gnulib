@@ -77,7 +77,11 @@ extern int at_fatal_signal (_GL_ASYNC_SAFE void (*function) (int sig));
 /* Temporarily delay the catchable fatal signals.
    The signals will be blocked (= delayed) until the next call to
    unblock_fatal_signals().  If the signals are already blocked, a further
-   call to block_fatal_signals() has no effect.  */
+   call to block_fatal_signals() has no effect.
+   The program must obey the following constraint: If at the moment of a
+   block_fatal_signals() call the process is single-threaded, it MUST NOT
+   create additional threads until the matching unblock_fatal_signals()
+   call.  */
 extern void block_fatal_signals (void);
 
 /* Stop delaying the catchable fatal signals.  */

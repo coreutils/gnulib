@@ -15,6 +15,7 @@ sigaction
 lock
 once
 thread-optim
+sigdelay
 pthread_sigmask
 raise
 stdcountof-h
