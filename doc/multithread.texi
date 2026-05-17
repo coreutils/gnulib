@@ -279,7 +279,9 @@ threads and must therefore be single-threaded.  This optimization applies
 to all the Gnulib multithreading API (locks, thread-local storage, and more).
 @item
 @mindex thread-optim
-The @code{thread-optim} module, on glibc @geq{} 2.32 systems, allows your code
+The @code{thread-optim} module,
+on ELF systems (glibc, musl libc, FreeBSD, NetBSD, OpenBSD, Solaris, Android),
+allows your code
 to skip locking between threads (regardless which of the three multithreading
 APIs you use).  You need extra code for this: include the
 @code{"thread-optim.h"} header file, and use the macro @code{gl_multithreaded}
