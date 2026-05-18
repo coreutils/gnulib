@@ -441,6 +441,12 @@ static struct term_style_control_data * volatile active_control_data;
       : -1).  */
 static int volatile active_fd = -1;
 
+#if HAVE_POSIX_THREADS
+/* The thread to which the active controller is attached, (pthread_t) 0
+   otherwise.  */
+static pthread_t volatile active_thread;
+#endif
+
 /* The exit handler.  */
 static void
 atexit_handler (void)
@@ -734,7 +740,22 @@ static _GL_ASYNC_SAFE void
 fatal_signal_handler (int sig)
 {
   log_signal_handler_called (sig);
-  fatal_or_stopping_signal_handler (sig);
+  #if HAVE_POSIX_THREADS
+  pthread_t target_thread = active_thread;
+  if (target_thread != pthread_self ())
+    {
+      if (target_thread != (pthread_t) 0)
+        {
+          pthread_kill (target_thread, sig);
+          return;
+        }
+      log_message ("target_thread is NULL. Not calling fatal_or_stopping_signal_handler!\n");
+    }
+  else
+  #endif
+    {
+      fatal_or_stopping_signal_handler (sig);
+    }
 }
 
 #if defined SIGCONT
@@ -747,7 +768,22 @@ stopping_signal_handler (int sig)
   int saved_errno = errno;
 
   log_signal_handler_called (sig);
-  fatal_or_stopping_signal_handler (sig);
+  #if HAVE_POSIX_THREADS
+  pthread_t target_thread = active_thread;
+  if (target_thread != pthread_self ())
+    {
+      if (target_thread != (pthread_t) 0)
+        {
+          pthread_kill (target_thread, sig);
+          return;
+        }
+      log_message ("target_thread is NULL. Not calling fatal_or_stopping_signal_handler!\n");
+    }
+  else
+  #endif
+    {
+      fatal_or_stopping_signal_handler (sig);
+    }
 
   /* Now execute the signal's default action.
      We reinstall the handler later, during the SIGCONT handler.  */
@@ -929,6 +965,9 @@ activate_term_non_default_mode (const struct term_style_controller *controller,
          we set active_controller to a non-NULL value only after the memory
          locations active_user_data, active_control_data, active_fd have been
          filled.  */
+      #if HAVE_POSIX_THREADS
+      active_thread = pthread_self ();
+      #endif
       active_fd = control_data->fd;
       active_control_data = control_data;
       active_user_data = user_data;
@@ -974,6 +1013,9 @@ deactivate_term_non_default_mode (const struct term_style_controller *controller
       active_user_data = NULL;
       active_control_data = NULL;
       active_fd = -1;
+      #if HAVE_POSIX_THREADS
+      active_thread = (pthread_t) 0;
+      #endif
 
       #if BLOCK_SIGNALS_DURING_NON_DEFAULT_STYLE_OUTPUT
       /* Unblock the relevant signals.  */
