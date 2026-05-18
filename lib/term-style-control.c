@@ -760,6 +760,12 @@ fatal_signal_handler (int sig)
 
 #if defined SIGCONT
 
+/* Information from the stopping_signal_handler, for use by the
+   continuing_signal_handler.  */
+static const struct term_style_controller * volatile stopped_controller;
+static struct term_style_user_data * volatile stopped_user_data;
+static bool volatile stopped_signal_handler_needs_reinstall;
+
 /* The signal handler for stopping signals.
    It is reentrant.  */
 static _GL_ASYNC_SAFE void
@@ -785,6 +791,10 @@ stopping_signal_handler (int sig)
       fatal_or_stopping_signal_handler (sig);
     }
 
+  /* Prepare for the invocation of the continuing_signal_handler.  */
+  stopped_controller = active_controller;
+  stopped_user_data = active_user_data;
+
   /* Now execute the signal's default action.
      We reinstall the handler later, during the SIGCONT handler.  */
   {
@@ -792,7 +802,10 @@ stopping_signal_handler (int sig)
     action.sa_handler = SIG_DFL;
     action.sa_flags = SA_NODEFER;
     sigemptyset (&action.sa_mask);
-    sigaction (sig, &action, NULL);
+    struct sigaction old_action;
+    sigaction (sig, &action, &old_action);
+    stopped_signal_handler_needs_reinstall =
+      (old_action.sa_handler == stopping_signal_handler);
   }
   errno = saved_errno;
   raise (sig);
@@ -806,10 +819,15 @@ continuing_signal_handler (int sigcont)
   int saved_errno = errno;
 
   log_signal_handler_called (sigcont);
+
+  /* Using pthread_kill to forward the signal to the active_thread does
+     not produce good results, as this forwarding takes some time and the
+     active_thread is already running during that time.  Therefore,
+     process the SIGGONT signal in whatever thread that received it.  */
+
   update_pgrp_status ();
-  /* Only do something while some output was interrupted.  */
-  if (active_controller != NULL
-      && active_control_data->tty_control != TTYCTL_NONE)
+
+  if (stopped_signal_handler_needs_reinstall)
     {
       /* Reinstall the signals handlers removed in stopping_signal_handler.  */
       for (unsigned int i = 0; i < num_job_control_signals; i++)
@@ -829,26 +847,37 @@ continuing_signal_handler (int sigcont)
               sigaction (sig, &action, NULL);
             }
         }
+    }
 
-      bool mt = active_control_data->multithreaded;
-
-      /* Block the relevant signals.  This is needed, because the output of
-         escape sequences done inside the async_set_attributes_from_default
-         call below is not reentrant.  */
-      block_relevant_signals (mt);
-
-      #if HAVE_TCGETATTR
-      if (active_control_data->tty_control == TTYCTL_FULL)
+  /* Only do something while some output was interrupted.  */
+  const struct term_style_controller *controller = stopped_controller;
+  if (controller != NULL)
+    {
+      struct term_style_user_data *user_data = stopped_user_data;
+      struct term_style_control_data *control_data =
+        controller->get_control_data (user_data);
+      if (control_data != NULL && control_data->tty_control != TTYCTL_NONE)
         {
-          /* Modify the local mode.  */
-          clobber_local_mode ();
-        }
-      #endif
-      /* Set the terminal attributes.  */
-      active_controller->async_set_attributes_from_default (active_user_data);
+          bool mt = control_data->multithreaded;
 
-      /* Unblock the relevant signals.  */
-      unblock_relevant_signals (mt);
+          /* Block the relevant signals.  This is needed, because the output of
+             escape sequences done inside the async_set_attributes_from_default
+             call below is not reentrant.  */
+          block_relevant_signals (mt);
+
+          #if HAVE_TCGETATTR
+          if (control_data->tty_control == TTYCTL_FULL)
+            {
+              /* Modify the local mode.  */
+              clobber_local_mode ();
+            }
+          #endif
+          /* Set the terminal attributes.  */
+          controller->async_set_attributes_from_default (user_data);
+
+          /* Unblock the relevant signals.  */
+          unblock_relevant_signals (mt);
+        }
     }
 
   errno = saved_errno;
@@ -1066,6 +1095,7 @@ activate_term_style_controller (const struct term_style_controller *controller,
   /* Start keeping track of the process group status.  */
   term_fd = fd;
   #if defined SIGCONT
+  stopped_signal_handler_needs_reinstall = false;
   ensure_continuing_signal_handler ();
   #endif
   update_pgrp_status ();
