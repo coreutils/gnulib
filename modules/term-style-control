@@ -5,6 +5,7 @@ Files:
 lib/term-style-control.h
 lib/term-style-control.c
 m4/tcgetattr.m4
+m4/pthread_kill.m4
 
 Depends-on:
 bool
@@ -25,6 +26,7 @@ configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 gl_HAVE_TCGETATTR
 AC_CHECK_HEADERS_ONCE([pthread.h])
+gl_FUNC_PTHREAD_KILL
 
 Makefile.am:
 lib_SOURCES += term-style-control.c
@@ -34,6 +36,8 @@ Include:
 
 Link:
 $(LIBTHREAD)
+$(PTHREAD_SIGMASK_LIB)
+$(PTHREAD_KILL_LIB)
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
