@@ -4,6 +4,7 @@ Work around systems where free clobbers errno.
 Files:
 lib/free.c
 m4/free.m4
+m4/musl.m4
 
 Depends-on:
 stdlib-h
