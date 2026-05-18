@@ -31,6 +31,7 @@
 #include <unistd.h>
 #if DEBUG_SIGNALS
 # include <stdio.h>
+# include <stdint.h>
 #endif
 #if HAVE_TCGETATTR
 # include <termios.h>
@@ -40,6 +41,10 @@
 #endif
 #if HAVE_TCGETATTR
 # include <sys/stat.h>
+#endif
+#if HAVE_PTHREAD_H && !(defined _WIN32 && !defined __CYGWIN__)
+# include <pthread.h>
+# define HAVE_POSIX_THREADS 1
 #endif
 
 #include "fatal-signal.h"
@@ -102,7 +107,9 @@ nonintr_tcsetattr (int fd, int flush_mode, const struct termios *tcp)
 static _GL_ASYNC_SAFE void
 log_message (const char *message)
 {
+  int saved_errno = errno;
   full_write (STDERR_FILENO, message, strlen (message));
+  errno = saved_errno;
 }
 
 #else
@@ -162,6 +169,24 @@ simple_errno_string (char *str, int errnum)
 
 #if DEBUG_SIGNALS
 
+/* Async-safe implementation of sprintf (str, "%jx", n).  */
+static _GL_ASYNC_SAFE void
+sprintf_integer_hex (char *str, uintmax_t x)
+{
+  char buf[40];
+  char *p = buf + sizeof (buf);
+  do
+    {
+      unsigned int r = x % 16;
+      x = x / 16;
+      *--p = (r < 10 ? '0' + r : 'a' - 10 + r);
+    }
+  while (x > 0);
+  size_t n = buf + sizeof (buf) - p;
+  memcpy (str, p, n);
+  str[n] = '\0';
+}
+
 /* Async-safe conversion of signal number to name.  */
 static _GL_ASYNC_SAFE void
 simple_signal_string (char *str, int sig)
@@ -215,7 +240,12 @@ log_signal_handler_called (int sig)
   char message[100];
   strcpy (message, "Signal handler for signal ");
   simple_signal_string (strnul (message), sig);
-  strcat (message, " called.\n");
+  strcat (message, " called");
+  #if HAVE_POSIX_THREADS
+  strcat (message, " in thread 0x");
+  sprintf_integer_hex (strnul (message), (uintptr_t) pthread_self ());
+  #endif
+  strcat (message, ".\n");
   log_message (message);
 }
 
@@ -653,6 +683,8 @@ fatal_or_stopping_signal_handler (int sig)
   if (active_controller != NULL
       && active_control_data->tty_control != TTYCTL_NONE)
     {
+      log_message ("In fatal_or_stopping_signal_handler: active controller.\n");
+
       /* Block the relevant signals.  This is needed, because the output
          of escape sequences below (usually through tputs invocations) is
          not reentrant.  */
@@ -672,6 +704,10 @@ fatal_or_stopping_signal_handler (int sig)
 
       /* Unblock the relevant signals.  */
       unblock_relevant_signals ();
+    }
+  else
+    {
+      log_message ("In fatal_or_stopping_signal_handler: active_controller == NULL.\n");
     }
 
   #if HAVE_TCGETATTR

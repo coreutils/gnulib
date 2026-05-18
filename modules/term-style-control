@@ -15,12 +15,14 @@ full-write
 fstat
 same-inode
 stdcountof-h
+stdint-h
 strnul
 xalloc-die
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 gl_HAVE_TCGETATTR
+AC_CHECK_HEADERS_ONCE([pthread.h])
 
 Makefile.am:
 lib_SOURCES += term-style-control.c
