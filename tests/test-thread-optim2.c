@@ -25,6 +25,8 @@
 
 #include "macros.h"
 
+#if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
+
 static int dummy;
 
 static void *
@@ -50,3 +52,20 @@ main ()
 
   return test_exit_status;
 }
+
+#else
+
+/* No multithreading available.
+   glthread_create is a dummy that just returns ENOSYS.
+   gl_thread_create therefore aborts.  */
+
+#include <stdio.h>
+
+int
+main ()
+{
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
+  return 77;
+}
+
+#endif
