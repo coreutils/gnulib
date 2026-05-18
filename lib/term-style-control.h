@@ -142,7 +142,11 @@ extern "C" {
    The effects of this functions are undone by calling
    deactivate_term_style_controller.
    You cannot have more than one controller activated at the same time.
-   You must not close FD while the controller is active.  */
+   You must not close FD while the controller is active.
+   The program must obey the following constraint: If at the moment of a
+   activate_term_style_controller() call the process is single-threaded, it
+   MUST NOT create additional threads until the matching
+   deactivate_term_style_controller() call.  */
 extern void
        activate_term_style_controller (const struct term_style_controller *controller,
                                        struct term_style_user_data *user_data,
@@ -155,7 +159,10 @@ extern void
    This function is idempotent: When you call it twice in a row, the second
    invocation does nothing.
    The effects of this function are undone by calling
-   deactivate_term_non_default_mode.  */
+   deactivate_term_non_default_mode.
+   After calling this function in some thread, all output to the FD up to and
+   including the next deactivate_term_non_default_mode call must be done in
+   the same thread.  */
 extern void
        activate_term_non_default_mode (const struct term_style_controller *controller,
                                        struct term_style_user_data *user_data);
