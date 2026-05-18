@@ -48,6 +48,8 @@
 #endif
 
 #include "fatal-signal.h"
+#include "thread-optim.h"
+#include "sigdelay.h"
 #include "sig-handler.h"
 #include "full-write.h"
 #include "same-inode.h"
@@ -596,23 +598,31 @@ init_relevant_signal_set ()
     }
 }
 
-/* Temporarily delay the relevant signals.  */
+/* Temporarily delay the relevant signals.
+   This must be called only in the particular thread.  */
 static _GL_ASYNC_SAFE inline void
-block_relevant_signals ()
+block_relevant_signals (bool multithreaded)
 {
   /* The caller must ensure that init_relevant_signal_set () was already
      called.  */
   if (!relevant_signal_set_initialized)
     abort ();
 
-  pthread_sigmask (SIG_BLOCK, &relevant_signal_set, NULL);
+  if (multithreaded)
+    sigdelay (SIG_BLOCK, &relevant_signal_set, NULL);
+  else
+    pthread_sigmask (SIG_BLOCK, &relevant_signal_set, NULL);
 }
 
-/* Stop delaying the relevant signals.  */
+/* Stop delaying the relevant signals.
+   This must be called only in the particular thread.  */
 static _GL_ASYNC_SAFE inline void
-unblock_relevant_signals ()
+unblock_relevant_signals (bool multithreaded)
 {
-  pthread_sigmask (SIG_UNBLOCK, &relevant_signal_set, NULL);
+  if (multithreaded)
+    sigdelay (SIG_UNBLOCK, &relevant_signal_set, NULL);
+  else
+    pthread_sigmask (SIG_UNBLOCK, &relevant_signal_set, NULL);
 }
 
 #if defined SIGCONT
@@ -685,10 +695,12 @@ fatal_or_stopping_signal_handler (int sig)
     {
       log_message ("In fatal_or_stopping_signal_handler: active controller.\n");
 
+      bool mt = active_control_data->multithreaded;
+
       /* Block the relevant signals.  This is needed, because the output
          of escape sequences below (usually through tputs invocations) is
          not reentrant.  */
-      block_relevant_signals ();
+      block_relevant_signals (mt);
 
       /* Restore the terminal to the default state.  */
       for (unsigned int i = 0; i < 2; i++)
@@ -703,7 +715,7 @@ fatal_or_stopping_signal_handler (int sig)
       #endif
 
       /* Unblock the relevant signals.  */
-      unblock_relevant_signals ();
+      unblock_relevant_signals (mt);
     }
   else
     {
@@ -782,10 +794,12 @@ continuing_signal_handler (int sigcont)
             }
         }
 
+      bool mt = active_control_data->multithreaded;
+
       /* Block the relevant signals.  This is needed, because the output of
          escape sequences done inside the async_set_attributes_from_default
          call below is not reentrant.  */
-      block_relevant_signals ();
+      block_relevant_signals (mt);
 
       #if HAVE_TCGETATTR
       if (active_control_data->tty_control == TTYCTL_FULL)
@@ -798,7 +812,7 @@ continuing_signal_handler (int sigcont)
       active_controller->async_set_attributes_from_default (active_user_data);
 
       /* Unblock the relevant signals.  */
-      unblock_relevant_signals ();
+      unblock_relevant_signals (mt);
     }
 
   errno = saved_errno;
@@ -900,7 +914,7 @@ activate_term_non_default_mode (const struct term_style_controller *controller,
       /* Block fatal signals, so that a SIGINT or similar doesn't interrupt
          us without the possibility of restoring the terminal's state.
          Likewise for SIGTSTP etc.  */
-      block_relevant_signals ();
+      block_relevant_signals (control_data->multithreaded);
       #endif
 
       /* Enable the exit handler for restoring the terminal's state,
@@ -963,7 +977,7 @@ deactivate_term_non_default_mode (const struct term_style_controller *controller
 
       #if BLOCK_SIGNALS_DURING_NON_DEFAULT_STYLE_OUTPUT
       /* Unblock the relevant signals.  */
-      unblock_relevant_signals ();
+      unblock_relevant_signals (control_data->multithreaded);
       #endif
 
       control_data->non_default_active = false;
@@ -1003,6 +1017,7 @@ activate_term_style_controller (const struct term_style_controller *controller,
     /* This value is actually not used.  */
     control_data->same_as_stderr = false;
   #endif
+  control_data->multithreaded = gl_multithreaded ();
 
   control_data->non_default_active = false;
 

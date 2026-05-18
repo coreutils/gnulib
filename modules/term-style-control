@@ -9,6 +9,8 @@ m4/tcgetattr.m4
 Depends-on:
 bool
 fatal-signal
+thread-optim
+sigdelay
 pthread_sigmask
 sigaction
 full-write

@@ -57,6 +57,8 @@ struct term_style_control_data
   #if HAVE_TCGETATTR
   bool volatile same_as_stderr;
   #endif
+  bool volatile multithreaded;       /* True if the process is possibly
+                                        multithreaded.  */
   bool non_default_active;           /* True if activate_term_non_default_mode()
                                         is in effect.  */
 };
