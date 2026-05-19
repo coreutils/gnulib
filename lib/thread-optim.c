@@ -22,6 +22,9 @@
 /* Specification.  */
 #include "thread-optim.h"
 
+/* Set to 1 to get debugging output regarding the ELF GOT inspection.  */
+#define DEBUG_ELF 0
+
 static int mt_override = -1;
 
 void
@@ -120,6 +123,13 @@ gl_set_multithreaded (bool mt)
 # define ElfW(type) ElfW_1 (__ELF_NATIVE_CLASS, type)
 # define ElfW_1(class,type) ElfW_2 (class, type)
 # define ElfW_2(class,type) Elf ## class ## _ ## type
+#endif
+
+/* For debugging.  */
+#if DEBUG_ELF
+# define dbg_printf(...) fprintf (stderr, __VA_ARGS__)
+#else
+# define dbg_printf(...) (void)0
 #endif
 
 #include "thread-creators.h"
@@ -291,8 +301,13 @@ inspect_one_GOT (struct dl_phdr_info *info, size_t size, void *data)
               ElfW(Word) symbol_name_offset = symtab_entry->st_name;
               const char *symbol_name = strtab + symbol_name_offset;
               if (thread_creators_lookup (symbol_name, strlen (symbol_name)) != NULL)
-                /* Found a jump relocation to a thread creator symbol.  */
-                return 1;
+                {
+                  /* Found a jump relocation to a thread creator symbol.  */
+                  dbg_printf ("gl_multithreaded() = true, because %s has the dynamic symbol %s.\n",
+                              info->dlpi_name[0] == '\0' ? "the executable" : info->dlpi_name,
+                              symbol_name);
+                  return 1;
+                }
             }
         }
 
@@ -370,8 +385,13 @@ inspect_one_GOT (struct dl_phdr_info *info, size_t size, void *data)
                     abort ();
                   const char *symbol_name = strtab + symbol_name_offset;
                   if (thread_creators_lookup (symbol_name, strlen (symbol_name)) != NULL)
-                    /* Found a jump relocation to a thread creator symbol.  */
-                    return 1;
+                    {
+                      /* Found a jump relocation to a thread creator symbol.  */
+                      dbg_printf ("gl_multithreaded() = true, because %s has the dynamic symbol %s.\n",
+                                  info->dlpi_name[0] == '\0' ? "the executable" : info->dlpi_name,
+                                  symbol_name);
+                      return 1;
+                    }
                 }
             }
         }
@@ -381,8 +401,11 @@ inspect_one_GOT (struct dl_phdr_info *info, size_t size, void *data)
   else
     {
       if (info->dlpi_name[0] == '\0')
-        /* The executable is statically linked.  */
-        return -1;
+        {
+          /* The executable is statically linked.  */
+          dbg_printf ("gl_multithreaded() = true, because the executable is statically linked.\n");
+          return -1;
+        }
     }
 
   return 0;
@@ -406,7 +429,11 @@ gl_multithreaded (void)
 {
   /* Consider the override.  */
   if (mt_override >= 0)
-    return mt_override;
+    {
+      dbg_printf ("gl_multithreaded() = %s, specified through gl_set_multithreaded.\n",
+                  mt_override ? "true" : "false");
+      return mt_override;
+    }
   else
     {
       /* Cache the result from is_multithreaded_uncached.  */
