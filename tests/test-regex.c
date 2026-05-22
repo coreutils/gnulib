@@ -151,7 +151,7 @@ bug_regex11 (void)
 }
 
 int
-main (void)
+main ()
 {
   struct re_pattern_buffer regex;
   unsigned char folded_chars[UCHAR_MAX + 1];

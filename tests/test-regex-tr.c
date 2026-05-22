@@ -55,7 +55,7 @@ really_utf8 (void)
 }
 
 int
-main (int argc, char **argv)
+main ()
 {
   struct re_pattern_buffer regex;
   const char *s;
