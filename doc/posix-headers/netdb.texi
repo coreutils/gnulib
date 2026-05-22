@@ -36,7 +36,7 @@ macOS 10.5, HP-UX 11.11, mingw.
 @item
 @c Defined in RFC 2553.
 This header file incorrectly defines @code{NI_MAXHOST} on some platforms:
-musl libc 1.2.4, OpenBSD 7.5.
+musl libc 1.2.4, OpenBSD 7.9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

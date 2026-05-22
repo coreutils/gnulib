@@ -18,7 +18,7 @@ MSVC 14.
 
 @item
 The type @code{off64_t} is not defined on some platforms:
-macOS 14, FreeBSD 10.4, NetBSD 10.0, OpenBSD 7.5, MSVC 14, Cygwin, Haiku, Minix 3.3.
+macOS 14, FreeBSD 10.4, NetBSD 10.0, OpenBSD 7.9, MSVC 14, Cygwin, Haiku, Minix 3.3.
 
 @item
 @samp{O_CLOEXEC} is not defined on some platforms:
@@ -39,7 +39,7 @@ non-zero value; otherwise, the gnulib replacement is 0.
 
 @item
 @samp{O_EXEC} is not defined on some platforms:
-glibc 2.42, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.5, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.42, macOS 12, FreeBSD 7.4, NetBSD 9.4, OpenBSD 7.9, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
 However, glibc does define @samp{O_EXEC} on GNU/Hurd.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
@@ -53,7 +53,7 @@ descriptor.
 
 @item
 @samp{O_SEARCH} is not defined on some platforms:
-glibc 2.42, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.5, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
+glibc 2.42, macOS 12, FreeBSD 12.4, NetBSD 6.1, OpenBSD 7.9, AIX 6.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android.
 When not otherwise defined,
 Gnulib defines this macro to @samp{O_RDONLY}, which is typically 0.
 
@@ -102,13 +102,13 @@ mingw, MSVC 14.
 
 @item
 @samp{F_DUPFD_CLOEXEC} is not defined on some platforms:
-Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 7.5, AIX 5.1, HP-UX 11, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 14.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 7.9, AIX 5.1, HP-UX 11, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 14.
 
 @item
 @samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
-glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 7.5, AIX 5.1, HP-UX 11, Cygwin 1.5.x, mingw, MSVC 14.
+glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 7.9, AIX 5.1, HP-UX 11, Cygwin 1.5.x, mingw, MSVC 14.
 
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some

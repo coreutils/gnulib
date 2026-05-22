@@ -25,7 +25,7 @@ accommodate all Unicode characters.
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
-glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
+glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.9, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @item
 This function doesn't support the @code{'} flag at all on some platforms:
 mingw without @code{__USE_MINGW_ANSI_STDIO}, MSVC 14,
@@ -47,11 +47,11 @@ NetBSD 10.0, Solaris 11 OpenIndiana.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
-glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5,
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.9,
 AIX 7.3, HP-UX 11, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android 9.0.
 @item
 This function does not support the @samp{B} directive on some platforms:
-glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.9, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @item
 printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
 incorrect result (non-empty) on some platforms:

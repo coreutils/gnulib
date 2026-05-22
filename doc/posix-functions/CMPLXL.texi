@@ -16,5 +16,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This macro is missing on many platforms:
-glibc with GCC 4.9.x or clang 18, Mac OS X 10.5, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.1, HP-UX 11.11, Solaris 11.0, Solaris 11 OpenIndiana, Cygwin, mingw, MSVC 14.
+glibc with GCC 4.9.x or clang 18, Mac OS X 10.5, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.9, Minix 3.3.0, AIX 7.1, HP-UX 11.11, Solaris 11.0, Solaris 11 OpenIndiana, Cygwin, mingw, MSVC 14.
 @end itemize

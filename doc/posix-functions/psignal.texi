@@ -22,5 +22,5 @@ Solaris 11.3.
 @item
 The first parameter is of type @code{unsigned int}, not @code{int},
 on some platforms:
-macOS 13, FreeBSD 10.4, NetBSD 5.1, OpenBSD 7.5.
+macOS 13, FreeBSD 10.4, NetBSD 5.1, OpenBSD 7.9.
 @end itemize
