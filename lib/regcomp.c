@@ -23,7 +23,7 @@
 
 /* The localeinfo-related code fixes glibc bug 20381.
    Someday this fix should be merged into glibc.  */
-#ifndef _LIBC
+#if !defined _LIBC && !defined _REGEX_AVOID_UCHAR_H
 # include "localeinfo.h"
 #endif
 
@@ -285,7 +285,7 @@ re_set_fastmap (char *fastmap, unsigned char ch)
 static void
 re_set_fastmap_icase (char *fastmap, wchar_t wc, mbstate_t *mbs)
 {
-#ifdef _LIBC
+#if defined _LIBC || defined _REGEX_AVOID_UCHAR_H
   wchar_t folded[1] = {__towlower (wc)};
   int nfolded = folded[0] != wc;
 #else

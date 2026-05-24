@@ -119,13 +119,18 @@
 #define NEWLINE_CHAR '\n'
 #define WIDE_NEWLINE_CHAR L'\n'
 
-/* Use Gnulib <uchar.h> when outside of glibc.  */
-#ifdef _LIBC
+/* Use Gnulib <uchar.h> if outside glibc and not avoided by the app.  */
+#if defined _LIBC || defined _REGEX_AVOID_UCHAR_H
 # include <wchar.h>
 # include <wctype.h>
 #else
 # include <uchar.h>
 # undef wctype_t
+# define wchar_t char32_t
+# define wctype_t c32_type_test_t
+#endif
+
+#ifndef _LIBC
 # undef __wctype
 # undef __iswalnum
 # undef __iswctype
@@ -135,17 +140,26 @@
 # undef __mbrtowc
 # undef __wcrtomb
 # undef __regfree
-# define wchar_t char32_t
-# define wctype_t c32_type_test_t
-# define __wctype c32_get_type_test
-# define __iswalnum c32isalnum
-# define __iswctype c32_apply_type_test
-# define __towlower c32tolower
-# define __towupper c32toupper
-# define __btowc btoc32
-# define __mbrtowc mbrtoc32
-# define __wcrtomb c32rtomb
 # define __regfree regfree
+# ifdef _REGEX_AVOID_UCHAR_H
+#  define __wctype wctype
+#  define __iswalnum iswalnum
+#  define __iswctype iswctype
+#  define __towlower towlower
+#  define __towupper towupper
+#  define __btowc btowc
+#  define __mbrtowc mbrtowc
+#  define __wcrtomb wcrtomb
+# else
+#  define __wctype c32_get_type_test
+#  define __iswalnum c32isalnum
+#  define __iswctype c32_apply_type_test
+#  define __towlower c32tolower
+#  define __towupper c32toupper
+#  define __btowc btoc32
+#  define __mbrtowc mbrtoc32
+#  define __wcrtomb c32rtomb
+# endif
 #endif /* not _LIBC */
 
 /* Types related to integers.  Unless protected by #ifdef _LIBC, the
