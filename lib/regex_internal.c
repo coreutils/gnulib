@@ -1285,7 +1285,13 @@ re_node_set_insert (re_node_set *set, Idx elem)
   else
     {
       for (idx = set->nelem; set->elems[idx - 1] > elem; idx--)
-	set->elems[idx] = set->elems[idx - 1];
+        {
+          set->elems[idx] = set->elems[idx - 1];
+          /* Although we already guaranteed that idx is at least 2 here,
+             add an assertion to pacify GCC 16.1.1 -Wanalyzer-out-of-bounds
+             when _REGEX_AVOID_UCHAR_H is defined.  */
+          DEBUG_ASSERT (1 < idx);
+        }
       /* Already in set.  Return early.  */
       if (__glibc_unlikely (set->elems[idx - 1] == elem))
 	return true;
