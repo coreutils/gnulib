@@ -133,6 +133,36 @@ main (int argc, char *argv[])
           ASSERT (streq (result, "\302\267foo"));
           free (result);
         }
+        /* Incomplete characters.  See
+           https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+           page 128 table 3-11.  */
+        /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
+        {
+          char *result = trim ("\342\200\202\341\200\342\200\202");
+          ASSERT (streq (result, "\341\200"));
+          free (result);
+        }
+        {
+          char *result = trim ("\342\200\202\341\342\200\202");
+          ASSERT (streq (result, "\341"));
+          free (result);
+        }
+        /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+        {
+          char *result = trim ("\342\200\202\360\221\222\342\200\202");
+          ASSERT (streq (result, "\360\221\222"));
+          free (result);
+        }
+        {
+          char *result = trim ("\342\200\202\360\221\342\200\202");
+          ASSERT (streq (result, "\360\221"));
+          free (result);
+        }
+        {
+          char *result = trim ("\342\200\202\360\342\200\202");
+          ASSERT (streq (result, "\360"));
+          free (result);
+        }
         return test_exit_status;
 
       case '3':
