@@ -1,4 +1,4 @@
-/* Test of mbs_startswith() function.
+/* Test of mbs_startswith() function in the "C" locale.
    Copyright (C) 2025-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 int
 main ()
 {
-  /* This test is executed in the C locale.  */
+  /* This test is executed in the "C" locale.  */
 
   ASSERT (mbs_startswith ("", ""));
   ASSERT (mbs_startswith ("abc", ""));
