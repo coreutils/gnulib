@@ -1,4 +1,4 @@
-/* Test of mbs_endswith() function.
+/* Test of mbs_endswith() function in a GB18030 locale.
    Copyright (C) 2025-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

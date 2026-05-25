@@ -1,4 +1,4 @@
-/* Test of mbs_endswith() function.
+/* Test of mbs_endswith() function in a UTF-8 locale.
    Copyright (C) 2025-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -65,23 +65,51 @@ main ()
   /* Test cases with invalid or incomplete characters.  */
 
   /* A valid character should not match an invalid character.  */
+  /* "\301\247" = 0xC1 0xA7 is invalid.
+     In fact, "\301" = 0xC1 is already invalid, see
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf page 125 table 3-7.
+   */
   ASSERT (!mbs_endswith ("\303\247", "\301\247"));
   ASSERT (!mbs_endswith ("\301\247", "\303\247"));
 
   /* A valid character should not match an incomplete character.  */
+  /* "\343\247" = 0xE3 0xA7 is incomplete, "\343\247\214" = U+39CC is valid.  */
   ASSERT (!mbs_endswith ("\303\247", "\343\247"));
   ASSERT (!mbs_endswith ("\343\247", "\303\247"));
 
   /* An invalid character should not match an incomplete character.  */
+  /* "\301\247" = 0xC1 0xA7 is invalid.
+     In fact, "\301" = 0xC1 is already invalid, see
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf page 125 table 3-7.
+   */
+  /* "\343\247" = 0xE3 0xA7 is incomplete, "\343\247\214" = U+39CC is valid.  */
   ASSERT (!mbs_endswith ("\301\247", "\343\247"));
   ASSERT (!mbs_endswith ("\343\247", "\301\247"));
 
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+  /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
+  ASSERT (!mbs_endswith ("\341\200\240", "\200\240"));
+  ASSERT (!mbs_endswith ("\341\200\240", "\240"));
+  /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+  ASSERT (!mbs_endswith ("\360\221\222\240", "\221\222\240"));
+  ASSERT (!mbs_endswith ("\360\221\222\240", "\222\240"));
+  ASSERT (!mbs_endswith ("\360\221\222\240", "\240"));
+
   /* Two invalid characters should match only if they are identical.  */
+  /* "\301\246" = 0xC1 0xA6 is invalid.
+     "\301\247" = 0xC1 0xA7 is invalid.
+     In fact, "\301" = 0xC1 is already invalid, see
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf page 125 table 3-7.
+   */
   ASSERT (!mbs_endswith ("\301\246", "\301\247"));
   ASSERT (!mbs_endswith ("\301\247", "\301\246"));
   ASSERT (mbs_endswith ("\301\247", "\301\247"));
 
   /* Two incomplete characters should match only if they are identical.  */
+  /* "\343\246" = 0xE3 0xA6 is incomplete, "\343\246\214" = U+398C is valid.  */
+  /* "\343\247" = 0xE3 0xA7 is incomplete, "\343\247\214" = U+39CC is valid.  */
   ASSERT (!mbs_endswith ("\343\246", "\343\247"));
   ASSERT (!mbs_endswith ("\343\247", "\343\246"));
   ASSERT (mbs_endswith ("\343\247", "\343\247"));
