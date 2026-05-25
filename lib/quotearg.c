@@ -33,17 +33,80 @@
 #include "minmax.h"
 #include "xalloc.h"
 
-#include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <uchar.h>
-#include <wchar.h>
 
-#include "gettext.h"
-#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
+/* If USE_C_LOCALE is set to 1, this file defines a function that uses the
+   "C" locale, regardless of the current locale.  Applications
+   defining this macro might avoid the need for Gnulib's c32isprint,
+   gettext-h, mbrtoc32, mbsinit, mbszero, wchar-h, and uchar-h modules,
+   but they also need the c-ctype module.  */
+#ifndef USE_C_LOCALE
+# define USE_C_LOCALE 0
+#endif
+
+#if USE_C_LOCALE
+# include <c-ctype.h>
+typedef unsigned char wch;
+typedef struct incomplete_mbstate *mbstate;
+# ifndef GNULIB_MBRTOC32_REGULAR
+#  define GNULIB_MBRTOC32_REGULAR 1
+# endif
+#else
+# include <ctype.h>
+# include <wchar.h>
+# include <uchar.h>
+typedef char32_t wch;
+typedef mbstate_t mbstate;
+#endif
+
+static void
+mbs_clear (MAYBE_UNUSED mbstate *ps)
+{
+#if !USE_C_LOCALE
+  mbszero (ps);
+#endif
+}
+
+static size_t
+mbrtowch (wch *pwc, char const *s, size_t n, MAYBE_UNUSED mbstate *ps)
+{
+#if USE_C_LOCALE
+  return n && (*pwc = *s);
+#else
+  return mbrtoc32 (pwc, s, n, ps);
+#endif
+}
+
+static bool
+wchisprint (wch w)
+{
+#if USE_C_LOCALE
+  return c_isprint (w);
+#else
+  return c32isprint (w);
+#endif
+}
+
+static bool
+chisprint (unsigned char c)
+{
+#if USE_C_LOCALE
+  return c_isprint (c);
+#else
+  return isprint (c) != 0;
+#endif
+}
+
+#if USE_C_LOCALE
+# define _(msgid) msgid
+#else
+# include "gettext.h"
+# define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
+#endif
 #define N_(msgid) msgid
 
 #ifndef SIZE_MAX
@@ -225,9 +288,9 @@ gettext_quote (char const *msgid, enum quoting_style s)
      and means we need not use a function like locale_charset that
      has other dependencies.  */
   static char const quote[][4] = { "\xe2\x80\x98", "\xe2\x80\x99" };
-  char32_t w;
-  mbstate_t mbs; mbszero (&mbs);
-  if (mbrtoc32 (&w, quote[0], 3, &mbs) == 3 && w == 0x2018)
+  wch w;
+  mbstate mbs; mbs_clear (&mbs);
+  if (mbrtowch (&w, quote[0], 3, &mbs) == 3 && w == 0x2018)
     return quote[msgid[0] == '\''];
 
   return (s == clocale_quoting_style ? "\"" : "'");
@@ -254,7 +317,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           char const *left_quote,
                           char const *right_quote)
 {
-  bool unibyte_locale = MB_CUR_MAX == 1;
+  bool unibyte_locale = USE_C_LOCALE || MB_CUR_MAX == 1;
 
   size_t len = 0;
   size_t orig_buffersize = 0;
@@ -601,11 +664,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             if (unibyte_locale)
               {
                 m = 1;
-                printable = isprint (c) != 0;
+                printable = chisprint (c);
               }
             else
               {
-                mbstate_t mbs; mbszero (&mbs);
+                mbstate mbs; mbs_clear (&mbs);
 
                 m = 0;
                 printable = true;
@@ -614,8 +677,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
                 for (;;)
                   {
-                    char32_t w;
-                    size_t bytes = mbrtoc32 (&w, &arg[i + m],
+                    wch w;
+                    size_t bytes = mbrtowch (&w, &arg[i + m],
                                              argsize - (i + m), &mbs);
                     if (bytes == 0)
                       break;
@@ -653,7 +716,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                                 }
                           }
 
-                        if (! c32isprint (w))
+                        if (! wchisprint (w))
                           printable = false;
                         m += bytes;
                       }
