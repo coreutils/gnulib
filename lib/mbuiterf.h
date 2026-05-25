@@ -94,6 +94,7 @@
 #include <wchar.h>
 
 #include "mbchar.h"
+#include "mbiter-aux.h"
 #include "strnlen1.h"
 
 _GL_INLINE_HEADER_BEGIN
@@ -118,6 +119,7 @@ struct mbuif_state
                            before and after every mbuiterf_next invocation.
                          */
   unsigned int cur_max; /* A cache of MB_CUR_MAX.  */
+  int is_utf8;          /* A cache of mbiter_is_utf8.  */
 };
 
 MBUITERF_INLINE mbchar_t
@@ -145,18 +147,23 @@ mbuiterf_next (struct mbuif_state *ps, const char *iter)
       ps->in_shift = true;
     with_shift:;
       #endif
+      size_t avail_bytes = strnlen1 (iter, ps->cur_max);
       size_t bytes;
       char32_t wc;
-      bytes = mbrtoc32 (&wc, iter, strnlen1 (iter, ps->cur_max), &ps->state);
+      bytes = mbrtoc32 (&wc, iter, avail_bytes, &ps->state);
       if (bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */
+          size_t ebytes =
+            (mbiter_is_utf8 (&ps->is_utf8)
+             ? mbiter_utf8_maximal_subpart (iter, avail_bytes)
+             : 1);
           /* Allow the next invocation to continue from a sane state.  */
           #if !GNULIB_MBRTOC32_REGULAR
           ps->in_shift = false;
           #endif
           mbszero (&ps->state);
-          return (mbchar_t) { .ptr = iter, .bytes = 1, .wc_valid = false };
+          return (mbchar_t) { .ptr = iter, .bytes = ebytes, .wc_valid = false };
         }
       else if (bytes == (size_t) -2)
         {
@@ -197,12 +204,12 @@ typedef struct mbuif_state mbuif_state_t;
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbuif_init(st) \
   ((st).in_shift = false, mbszero (&(st).state), \
-   (st).cur_max = MB_CUR_MAX)
+   (st).cur_max = MB_CUR_MAX, (st).is_utf8 = -1)
 #else
 /* Optimized: no in_shift.  */
 #define mbuif_init(st) \
   (mbszero (&(st).state), \
-   (st).cur_max = MB_CUR_MAX)
+   (st).cur_max = MB_CUR_MAX, (st).is_utf8 = -1)
 #endif
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbuif_avail(st, iter) ((st).in_shift || (*(iter) != '\0'))

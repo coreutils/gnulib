@@ -1,7 +1,11 @@
 Files:
-tests/test-mbsrchr.sh
-tests/test-mbsrchr.c
+tests/test-mbsrchr1.sh
+tests/test-mbsrchr1.c
+tests/test-mbsrchr2.sh
+tests/test-mbsrchr2.c
 tests/macros.h
+m4/locale-en.m4
+m4/locale-fr.m4
 m4/locale-zh.m4
 m4/codeset.m4
 
@@ -9,10 +13,16 @@ Depends-on:
 setlocale
 
 configure.ac:
+gt_LOCALE_EN_UTF8
+gt_LOCALE_FR_UTF8
 gt_LOCALE_ZH_CN
 
 Makefile.am:
-TESTS += test-mbsrchr.sh
-TESTS_ENVIRONMENT += LOCALE_ZH_CN='@LOCALE_ZH_CN@'
-check_PROGRAMS += test-mbsrchr
-test_mbsrchr_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
+TESTS += test-mbsrchr1.sh test-mbsrchr2.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LOCALE_ZH_CN='@LOCALE_ZH_CN@'
+check_PROGRAMS += test-mbsrchr1 test-mbsrchr2
+test_mbsrchr1_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
+test_mbsrchr2_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)

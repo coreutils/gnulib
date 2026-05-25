@@ -24,6 +24,20 @@
 
 #include "macros.h"
 
+/* The mcel-based implementation of mbsnlen behaves differently than the
+   original one.  Namely, for invalid/incomplete byte sequences:
+   Where we ideally should have multi-byte-per-encoding-error (MEE) behaviour
+   everywhere, mcel implements single-byte-per-encoding-error (SEE) behaviour.
+   See <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00131.html>,
+       <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00145.html>.
+   Therefore, here we have different expected results, depending on the
+   implementation.  */
+#if GNULIB_MCEL_PREFER
+# define OR(a,b) b
+#else
+# define OR(a,b) a
+#endif
+
 int
 main ()
 {
@@ -39,9 +53,17 @@ main ()
   ASSERT (mbslen ("7\342\202\254") == 2); /* "7€" */
   ASSERT (mbslen ("\360\237\220\203") == 1); /* "🐃" */
 
-  ASSERT (mbslen ("\303") == 1); /* invalid multibyte sequence */
-  ASSERT (mbslen ("\342\202") == 2); /* 2x invalid multibyte sequence */
-  ASSERT (mbslen ("\360\237\220") == 3); /* 3x invalid multibyte sequence */
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+  ASSERT (mbslen ("\303") == 1);
+  /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
+  ASSERT (mbslen ("\341\200") == OR(1,2));
+  ASSERT (mbslen ("\341") == 1);
+  /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+  ASSERT (mbslen ("\360\221\222") == OR(1,3));
+  ASSERT (mbslen ("\360\221") == OR(1,2));
+  ASSERT (mbslen ("\360") == 1);
 
   return test_exit_status;
 }

@@ -24,6 +24,20 @@
 
 #include "macros.h"
 
+/* The mcel-based implementation of mbsnlen behaves differently than the
+   original one.  Namely, for invalid/incomplete byte sequences:
+   Where we ideally should have multi-byte-per-encoding-error (MEE) behaviour
+   everywhere, mcel implements single-byte-per-encoding-error (SEE) behaviour.
+   See <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00131.html>,
+       <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00145.html>.
+   Therefore, here we have different expected results, depending on the
+   implementation.  */
+#if GNULIB_MCEL_PREFER
+# define OR(a,b) b
+#else
+# define OR(a,b) a
+#endif
+
 int
 main ()
 {
@@ -51,6 +65,50 @@ main ()
   {
     const char input[] = "\303\266\303\274"; /* "öü" */
     ASSERT (mbsspn (input, "\303") == 0); /* invalid multibyte sequence */
+  }
+
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+
+  /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
+  {
+    const char input[] = "\341\200\341\200\240";
+    ASSERT (mbsspn (input, "\341\200") == 2);
+  }
+  {
+    const char input[] = "\341\200\341\200\240";
+    ASSERT (mbsspn (input, "\341") == OR(0,1));
+  }
+  {
+    const char input[] = "\341\341\200\240";
+    ASSERT (mbsspn (input, "\341") == 1);
+  }
+
+  /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+  {
+    const char input[] = "\360\221\222\360\221\222\240";
+    ASSERT (mbsspn (input, "\360\221\222") == 3);
+  }
+  {
+    const char input[] = "\360\221\222\360\221\222\240";
+    ASSERT (mbsspn (input, "\360\221") == OR(0,2));
+  }
+  {
+    const char input[] = "\360\221\360\221\222\240";
+    ASSERT (mbsspn (input, "\360\221") == 2);
+  }
+  {
+    const char input[] = "\360\221\222\360\221\222\240";
+    ASSERT (mbsspn (input, "\360") == OR(0,1));
+  }
+  {
+    const char input[] = "\360\221\360\221\222\240";
+    ASSERT (mbsspn (input, "\360") == OR(0,1));
+  }
+  {
+    const char input[] = "\360\360\221\222\240";
+    ASSERT (mbsspn (input, "\360") == 1);
   }
 
   return test_exit_status;
