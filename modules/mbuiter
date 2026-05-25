@@ -13,6 +13,7 @@ mbchar
 mbrtoc32
 mbsinit
 mbszero
+mbiter-aux
 uchar-h
 bool
 strnlen1

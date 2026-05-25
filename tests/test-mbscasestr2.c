@@ -1,4 +1,4 @@
-/* Test of searching in a string.
+/* Test of searching in a string in a UTF-8 locale.
    Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,20 @@
 
 #include "macros.h"
 
+/* The mcel-based implementation of mbsnlen behaves differently than the
+   original one.  Namely, for invalid/incomplete byte sequences:
+   Where we ideally should have multi-byte-per-encoding-error (MEE) behaviour
+   everywhere, mcel implements single-byte-per-encoding-error (SEE) behaviour.
+   See <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00131.html>,
+       <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00145.html>.
+   Therefore, here we have different expected results, depending on the
+   implementation.  */
+#if GNULIB_MCEL_PREFER
+# define OR(a,b) b
+#else
+# define OR(a,b) a
+#endif
+
 int
 main ()
 {
@@ -48,6 +62,74 @@ main ()
     const char input[] = "f\303\266\303\266";
     const char *result = mbscasestr (input, "\266\303");
     ASSERT (result == NULL);
+  }
+
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+
+  /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
+  {
+    const char input[] = "f\341\200\341\200";
+    const char *result = mbscasestr (input, "");
+    ASSERT (result == input);
+  }
+  {
+    const char input[] = "f\341\200\341\200";
+    const char *result = mbscasestr (input, "\341\200");
+    ASSERT (result == input + 1);
+  }
+  {
+    const char input[] = "f\341\200\341\200";
+    const char *result = mbscasestr (input, "\200\341");
+    ASSERT (result == OR (NULL, input + 2));
+  }
+
+  /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "");
+    ASSERT (result == input);
+  }
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "\360\221\222");
+    ASSERT (result == input + 1);
+  }
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "\221\222\360\221");
+    ASSERT (result == OR (NULL, input + 2));
+  }
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "\221\222\360");
+    ASSERT (result == OR (NULL, input + 2));
+  }
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "\222\360\221");
+    ASSERT (result == OR (NULL, input + 3));
+  }
+  {
+    const char input[] = "f\360\221\222\360\221\222";
+    const char *result = mbscasestr (input, "\222\360");
+    ASSERT (result == OR (NULL, input + 3));
+  }
+  {
+    const char input[] = "f\360\221\360\221";
+    const char *result = mbscasestr (input, "");
+    ASSERT (result == input);
+  }
+  {
+    const char input[] = "f\360\221\360\221";
+    const char *result = mbscasestr (input, "\360\221");
+    ASSERT (result == input + 1);
+  }
+  {
+    const char input[] = "f\360\221\360\221";
+    const char *result = mbscasestr (input, "\221\360");
+    ASSERT (result == OR (NULL, input + 2));
   }
 
   {

@@ -103,6 +103,7 @@
 #include <wchar.h>
 
 #include "mbchar.h"
+#include "mbiter-aux.h"
 #include "strnlen1.h"
 
 _GL_INLINE_HEADER_BEGIN
@@ -128,6 +129,7 @@ struct mbuiter_multi
                          */
   bool next_done;       /* true if mbui_avail has already filled the following */
   unsigned int cur_max; /* A cache of MB_CUR_MAX.  */
+  int is_utf8;          /* A cache of mbiter_is_utf8.  */
   struct mbchar cur;    /* the current character:
         const char *cur.ptr          pointer to current character
         The following are only valid after mbui_avail.
@@ -164,15 +166,18 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
       assert (mbsinit (&iter->state));
       #if !GNULIB_MBRTOC32_REGULAR
       iter->in_shift = true;
-    with_shift:
+    with_shift:;
       #endif
-      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
-                                  strnlen1 (iter->cur.ptr, iter->cur_max),
+      size_t avail_bytes = strnlen1 (iter->cur.ptr, iter->cur_max);
+      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr, avail_bytes,
                                   &iter->state);
       if (iter->cur.bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */
-          iter->cur.bytes = 1;
+          iter->cur.bytes =
+            (mbiter_is_utf8 (&iter->is_utf8)
+             ? mbiter_utf8_maximal_subpart (iter->cur.ptr, avail_bytes)
+             : 1);
           iter->cur.wc_valid = false;
           /* Allow the next invocation to continue from a sane state.  */
           #if !GNULIB_MBRTOC32_REGULAR
@@ -243,14 +248,14 @@ typedef struct mbuiter_multi mbui_iterator_t;
   ((iter).cur.ptr = (startptr), \
    (iter).in_shift = false, mbszero (&(iter).state), \
    (iter).next_done = false, \
-   (iter).cur_max = MB_CUR_MAX)
+   (iter).cur_max = MB_CUR_MAX, (iter).is_utf8 = -1)
 #else
 /* Optimized: no in_shift.  */
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
    mbszero (&(iter).state), \
    (iter).next_done = false, \
-   (iter).cur_max = MB_CUR_MAX)
+   (iter).cur_max = MB_CUR_MAX, (iter).is_utf8 = -1)
 #endif
 #define mbui_avail(iter) \
   (mbuiter_multi_next (&(iter)), !mb_isnul ((iter).cur))

@@ -1,4 +1,4 @@
-/* Test of searching in a string.
+/* Test of searching in a string in the "C" locale.
    Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
