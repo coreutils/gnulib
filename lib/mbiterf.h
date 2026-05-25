@@ -86,6 +86,7 @@
 #include <wchar.h>
 
 #include "mbchar.h"
+#include "mbiter-aux.h"
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBITERF_INLINE
@@ -108,6 +109,7 @@ struct mbif_state
                         /* If GNULIB_MBRTOC32_REGULAR, it is in an initial state
                            before and after every mbiterf_next invocation.
                          */
+  int is_utf8;          /* A cache of mbiter_is_utf8.  */
 };
 
 MBITERF_INLINE mbchar_t
@@ -135,18 +137,23 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
       ps->in_shift = true;
     with_shift:;
       #endif
+      size_t avail_bytes = endptr - iter;
       size_t bytes;
       char32_t wc;
-      bytes = mbrtoc32 (&wc, iter, endptr - iter, &ps->state);
+      bytes = mbrtoc32 (&wc, iter, avail_bytes, &ps->state);
       if (bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */
+          size_t ebytes =
+            (mbiter_is_utf8 (&ps->is_utf8)
+             ? mbiter_utf8_maximal_subpart (iter, avail_bytes)
+             : 1);
           /* Allow the next invocation to continue from a sane state.  */
           #if !GNULIB_MBRTOC32_REGULAR
           ps->in_shift = false;
           #endif
           mbszero (&ps->state);
-          return (mbchar_t) { .ptr = iter, .bytes = 1, .wc_valid = false };
+          return (mbchar_t) { .ptr = iter, .bytes = ebytes, .wc_valid = false };
         }
       else if (bytes == (size_t) -2)
         {
@@ -156,7 +163,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
           #endif
           /* Whether to reset ps->state or not is not important; the string end
              is reached anyway.  */
-          return (mbchar_t) { .ptr = iter, .bytes = endptr - iter, .wc_valid = false };
+          return (mbchar_t) { .ptr = iter, .bytes = avail_bytes, .wc_valid = false };
         }
       else
         {
@@ -189,11 +196,13 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
 typedef struct mbif_state mbif_state_t;
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbif_init(st) \
-  ((st).in_shift = false, mbszero (&(st).state))
+  ((st).in_shift = false, mbszero (&(st).state), \
+   (st).is_utf8 = -1)
 #else
 /* Optimized: no in_shift.  */
 #define mbif_init(st) \
-  (mbszero (&(st).state))
+  (mbszero (&(st).state), \
+   (st).is_utf8 = -1)
 #endif
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbif_avail(st, iter, endptr) ((st).in_shift || ((iter) < (endptr)))

@@ -82,9 +82,18 @@ main ()
   ASSERT (mbsnlen ("\360\237\220\203", 4) == 1);
   ASSERT (mbsnlen ("\360\237\220\203", 5) == 2);
 
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+
   ASSERT (mbsnlen ("\303", 1) == 1); /* invalid multibyte sequence */
+  ASSERT (mbsnlen ("\303\303", 2) == 2); /* 2x invalid multibyte sequence */
+
   ASSERT (mbsnlen ("\342\202", 2) == OR(1,2)); /* invalid multibyte sequence */
+  ASSERT (mbsnlen ("\342\202\342\202", 4) == 2 * OR(1,2)); /* 2x invalid multibyte sequence */
+
   ASSERT (mbsnlen ("\360\237\220", 3) == OR(1,3)); /* invalid multibyte sequence */
+  ASSERT (mbsnlen ("\360\237\220\360\237\220", 6) == 2 * OR(1,3)); /* 2x invalid multibyte sequence */
 
   return test_exit_status;
 }
