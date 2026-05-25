@@ -9,7 +9,6 @@ m4/quotearg.m4
 
 Depends-on:
 attribute
-c-strcaseeq
 c32isprint
 extensions
 gettext-h
@@ -17,7 +16,6 @@ gnulib-i18n
 mbszero
 mbrtoc32
 mbsinit
-memcmp
 minmax
 quotearg-simple
 bool

@@ -32,7 +32,6 @@
 #include "attribute.h"
 #include "minmax.h"
 #include "xalloc.h"
-#include "c-strcaseeq.h"
 
 #include <ctype.h>
 #include <errno.h>
