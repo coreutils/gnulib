@@ -95,6 +95,7 @@
 #include <wchar.h>
 
 #include "mbchar.h"
+#include "mbiter-aux.h"
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBITER_INLINE
@@ -119,6 +120,7 @@ struct mbiter_multi
                            before and after every mbiter_multi_next invocation.
                          */
   bool next_done;       /* true if mbi_avail has already filled the following */
+  int is_utf8;          /* A cache of mbiter_is_utf8.  */
   struct mbchar cur;    /* the current character:
         const char *cur.ptr          pointer to current character
         The following are only valid after mbi_avail.
@@ -155,14 +157,18 @@ mbiter_multi_next (struct mbiter_multi *iter)
       assert (mbsinit (&iter->state));
       #if !GNULIB_MBRTOC32_REGULAR
       iter->in_shift = true;
-    with_shift:
+    with_shift:;
       #endif
-      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
-                                  iter->limit - iter->cur.ptr, &iter->state);
+      size_t avail_bytes = iter->limit - iter->cur.ptr;
+      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr, avail_bytes,
+                                  &iter->state);
       if (iter->cur.bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */
-          iter->cur.bytes = 1;
+          iter->cur.bytes =
+            (mbiter_is_utf8 (&iter->is_utf8)
+             ? mbiter_utf8_maximal_subpart (iter->cur.ptr, avail_bytes)
+             : 1);
           iter->cur.wc_valid = false;
           /* Allow the next invocation to continue from a sane state.  */
           #if !GNULIB_MBRTOC32_REGULAR
@@ -173,7 +179,7 @@ mbiter_multi_next (struct mbiter_multi *iter)
       else if (iter->cur.bytes == (size_t) -2)
         {
           /* An incomplete multibyte character at the end.  */
-          iter->cur.bytes = iter->limit - iter->cur.ptr;
+          iter->cur.bytes = avail_bytes;
           iter->cur.wc_valid = false;
           #if !GNULIB_MBRTOC32_REGULAR
           /* Cause the next mbi_avail invocation to return false.  */
@@ -237,13 +243,15 @@ typedef struct mbiter_multi mbi_iterator_t;
 #define mbi_init(iter, startptr, length) \
   ((iter).cur.ptr = (startptr), (iter).limit = (iter).cur.ptr + (length), \
    (iter).in_shift = false, mbszero (&(iter).state), \
-   (iter).next_done = false)
+   (iter).next_done = false, \
+   (iter).is_utf8 = -1)
 #else
 /* Optimized: no in_shift.  */
 #define mbi_init(iter, startptr, length) \
   ((iter).cur.ptr = (startptr), (iter).limit = (iter).cur.ptr + (length), \
    mbszero (&(iter).state), \
-   (iter).next_done = false)
+   (iter).next_done = false, \
+   (iter).is_utf8 = -1)
 #endif
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbi_avail(iter) \

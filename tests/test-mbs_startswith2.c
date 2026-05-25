@@ -114,6 +114,7 @@ main ()
   ASSERT (!mbs_startswith ("\341\200\240", "\341\200"));
   ASSERT (!mbs_startswith ("\341\200\240", "\341"));
   ASSERT (mbs_startswith ("\341\200", "\341") == OR(false,true));
+  ASSERT (mbs_startswith ("\341\200\341\200", "\341\200"));
   /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
   ASSERT (!mbs_startswith ("\360\221\222\240", "\360\221\222"));
   ASSERT (!mbs_startswith ("\360\221\222\240", "\360\221"));
@@ -121,6 +122,8 @@ main ()
   ASSERT (mbs_startswith ("\360\221\222", "\360\221") == OR(false,true));
   ASSERT (mbs_startswith ("\360\221\222", "\360") == OR(false,true));
   ASSERT (mbs_startswith ("\360\221", "\360") == OR(false,true));
+  ASSERT (mbs_startswith ("\360\221\222\360\221\222", "\360\221\222"));
+  ASSERT (mbs_startswith ("\360\221\360\221", "\360\221"));
 
   /* "\355\240\200" = 0xED 0xA0 0x80 = U+D800 is invalid.
      In fact, "\355\240" = 0xED 0xA0 is already invalid, see

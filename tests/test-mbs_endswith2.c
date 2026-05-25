@@ -25,6 +25,20 @@
 
 #include "macros.h"
 
+/* The mcel-based implementation of mbsnlen behaves differently than the
+   original one.  Namely, for invalid/incomplete byte sequences:
+   Where we ideally should have multi-byte-per-encoding-error (MEE) behaviour
+   everywhere, mcel implements single-byte-per-encoding-error (SEE) behaviour.
+   See <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00131.html>,
+       <https://lists.gnu.org/archive/html/bug-gnulib/2023-07/msg00145.html>.
+   Therefore, here we have different expected results, depending on the
+   implementation.  */
+#if GNULIB_MCEL_PREFER
+# define OR(a,b) b
+#else
+# define OR(a,b) a
+#endif
+
 int
 main ()
 {
@@ -92,10 +106,13 @@ main ()
   /* "\341\200\240" = 0xE1 0x80 0xA0 = U+1020.  */
   ASSERT (!mbs_endswith ("\341\200\240", "\200\240"));
   ASSERT (!mbs_endswith ("\341\200\240", "\240"));
+  ASSERT (mbs_endswith ("\341\200X", "\200X") == OR(false,true));
   /* "\360\221\222\240" = 0xF0 0x91 0x92 0xA0 = U+114A0.  */
   ASSERT (!mbs_endswith ("\360\221\222\240", "\221\222\240"));
   ASSERT (!mbs_endswith ("\360\221\222\240", "\222\240"));
   ASSERT (!mbs_endswith ("\360\221\222\240", "\240"));
+  ASSERT (mbs_endswith ("\360\221\222X", "\222X") == OR(false,true));
+  ASSERT (mbs_endswith ("\360\221X", "\221X") == OR(false,true));
 
   /* Two invalid characters should match only if they are identical.  */
   /* "\301\246" = 0xC1 0xA6 is invalid.
