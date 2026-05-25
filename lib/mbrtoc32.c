@@ -97,7 +97,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 #  include <locale.h>
 # endif
 
-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
+# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
 
 /* Returns 1 if the current locale is an UTF-8 locale, 0 otherwise.  */
 static inline int
@@ -134,7 +134,8 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
       n = 1;
     }
 
-# if MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
+# if (MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T \
+      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
   if (n == 0)
     return (size_t) -2;
 # endif
@@ -142,7 +143,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   if (ps == NULL)
     ps = &internal_state;
 
-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
+# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
   /* Optimize the frequent case of an UTF-8 locale.
      Since here we are in the !GNULIB_defined_mbstate_t case, i.e. we use
      the system's mbstate_t type and have to provide interoperability with
