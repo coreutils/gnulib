@@ -1,0 +1,31 @@
+Description:
+Auxiliary functions for iterating through multibyte strings.
+
+Files:
+lib/mbiter-aux.h
+lib/mbiter-aux.c
+
+Depends-on:
+mbrtoc32
+mbsinit
+mbszero
+bool
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += mbiter-aux.h mbiter-aux.c
+
+Include:
+"mbiter-aux.h"
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+all
