@@ -395,4 +395,40 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     ASSERT (my_casecmp (input, countof (input), casefolded_decomposed, countof (casefolded_decomposed)) == 0);
   }
   #endif
+
+  /* Incomplete characters.  See
+     https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf
+     page 128 table 3-11.  */
+  /* 0xE1 0x80 0xA0 = U+1020.  */
+  {
+    static const char input1[] = { 0xE1, 0x80, 'x', 0xE1, 0x80 };
+    static const char input2[] = { 0xE1, 0x80, 'X', 0xE1, 0x80 };
+
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
+  }
+  {
+    static const char input1[] = { 0xE1, 'x', 0xE1 };
+    static const char input2[] = { 0xE1, 'X', 0xE1 };
+
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
+  }
+  /* 0xF0 0x91 0x92 0xA0 = U+114A0.  */
+  {
+    static const char input1[] = { 0xF0, 0x91, 0x92, 'x', 0xF0, 0x91, 0x92 };
+    static const char input2[] = { 0xF0, 0x91, 0x92, 'X', 0xF0, 0x91, 0x92 };
+
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
+  }
+  {
+    static const char input1[] = { 0xF0, 0x91, 'x', 0xF0, 0x91 };
+    static const char input2[] = { 0xF0, 0x91, 'X', 0xF0, 0x91 };
+
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
+  }
+  {
+    static const char input1[] = { 0xF0, 'x', 0xF0 };
+    static const char input2[] = { 0xF0, 'X', 0xF0 };
+
+    ASSERT (my_casecmp (input1, countof (input1), input2, countof (input2)) == 0);
+  }
 }
