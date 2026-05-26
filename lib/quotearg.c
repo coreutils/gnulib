@@ -49,10 +49,16 @@
 # define USE_C_LOCALE 0
 #endif
 
-/* On recent-enough Android, Darwin/iOS/macOS and musl,
-   the "C" locale uses UTF-8, contrary to POSIX.  */
-#if (defined __ANDROID__ || (defined __APPLE__ && defined __MACH__) \
-     || defined MUSL_LIBC)
+/* On several platforms, the default locale uses UTF-8, contrary to POSIX:
+   - musl libc has no unibyte locales; the "C" locale uses UTF-8.
+   - On macOS, all modern locales use the UTF-8 encoding.
+   - BeOS and Haiku have a single locale, and it has UTF-8 encoding.
+   - On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+#if (defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) \
+     || defined __BEOS__ || defined __HAIKU__ || defined __ANDROID__)
 # define C_LOCALE_MIGHT_BE_MULTIBYTE true
 #else
 # define C_LOCALE_MIGHT_BE_MULTIBYTE false
