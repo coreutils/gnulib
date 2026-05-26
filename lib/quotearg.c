@@ -39,16 +39,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* If USE_C_LOCALE is set to 1, this file defines a function that uses the
+/* If USE_C_LOCALE is nonzero, this file defines a function that uses the
    "C" locale, regardless of the current locale.  Applications
    defining this macro might avoid the need for Gnulib's c32isprint,
-   gettext-h, mbrtoc32, mbsinit, mbszero, wchar-h, and uchar-h modules,
-   but they also need the c-ctype module.  */
+   gettext-h, mbrtoc32, mbsinit, wchar-h, and uchar-h modules,
+   but they also need the c-ctype module, and they rely on
+   the mbszero module defining MUSL_LIBC as needed.  */
 #ifndef USE_C_LOCALE
 # define USE_C_LOCALE 0
 #endif
 
-#if USE_C_LOCALE
+/* On recent-enough Android, Darwin/iOS/macOS and musl,
+   the "C" locale uses UTF-8, contrary to POSIX.  */
+#if (defined __ANDROID__ || (defined __APPLE__ && defined __MACH__) \
+     || defined MUSL_LIBC)
+# define C_LOCALE_MIGHT_BE_MULTIBYTE true
+#else
+# define C_LOCALE_MIGHT_BE_MULTIBYTE false
+#endif
+
+#if USE_C_LOCALE && !C_LOCALE_MIGHT_BE_MULTIBYTE
 # include <c-ctype.h>
 typedef unsigned char wch;
 typedef struct incomplete_mbstate *mbstate;
@@ -58,15 +68,20 @@ typedef struct incomplete_mbstate *mbstate;
 #else
 # include <ctype.h>
 # include <wchar.h>
-# include <uchar.h>
-typedef char32_t wch;
 typedef mbstate_t mbstate;
+# if USE_C_LOCALE
+# include <wctype.h>
+typedef wchar_t wch;
+# else
+#  include <uchar.h>
+typedef char32_t wch;
+# endif
 #endif
 
 static void
 mbs_clear (MAYBE_UNUSED mbstate *ps)
 {
-#if !USE_C_LOCALE
+#if !USE_C_LOCALE || C_LOCALE_MIGHT_BE_MULTIBYTE
   mbszero (ps);
 #endif
 }
@@ -74,20 +89,12 @@ mbs_clear (MAYBE_UNUSED mbstate *ps)
 static size_t
 mbrtowch (wch *pwc, char const *s, size_t n, MAYBE_UNUSED mbstate *ps)
 {
-#if USE_C_LOCALE
-  return n && (*pwc = *s);
-#else
+#if !USE_C_LOCALE
   return mbrtoc32 (pwc, s, n, ps);
-#endif
-}
-
-static bool
-wchisprint (wch w)
-{
-#if USE_C_LOCALE
-  return c_isprint (w);
+#elif C_LOCALE_MIGHT_BE_MULTIBYTE
+  return mbrtowc (pwc, s, n, ps);
 #else
-  return c32isprint (w);
+  return n && (*pwc = *s);
 #endif
 }
 
@@ -98,6 +105,18 @@ chisprint (unsigned char c)
   return c_isprint (c);
 #else
   return isprint (c) != 0;
+#endif
+}
+
+static bool
+wchisprint (wch w)
+{
+#if !USE_C_LOCALE
+  return c32isprint (w);
+#elif C_LOCALE_MIGHT_BE_MULTIBYTE
+  return iswprint (w);
+#else
+  return chisprint (w);
 #endif
 }
 
@@ -317,7 +336,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           char const *left_quote,
                           char const *right_quote)
 {
-  bool unibyte_locale = USE_C_LOCALE || MB_CUR_MAX == 1;
+  bool unibyte_locale = ((USE_C_LOCALE && !C_LOCALE_MIGHT_BE_MULTIBYTE)
+                         || MB_CUR_MAX == 1);
 
   size_t len = 0;
   size_t orig_buffersize = 0;
