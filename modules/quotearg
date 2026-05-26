@@ -10,6 +10,7 @@ m4/musl.m4
 
 Depends-on:
 attribute
+c-ctype
 c32isprint
 extensions
 gettext-h

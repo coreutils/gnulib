@@ -72,13 +72,14 @@ typedef struct incomplete_mbstate *mbstate;
 #  define GNULIB_MBRTOC32_REGULAR 1
 # endif
 #else
-# include <ctype.h>
 # include <wchar.h>
 typedef mbstate_t mbstate;
 # if USE_C_LOCALE
-# include <wctype.h>
+#  include <c-ctype.h>
+#  include <wctype.h>
 typedef wchar_t wch;
 # else
+#  include <ctype.h>
 #  include <uchar.h>
 typedef char32_t wch;
 # endif
