@@ -43,10 +43,12 @@
    : malloc (N * (size_t) S)).
 
    This is a macro, not a function, so that it works even if an
-   argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
+   argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  The 1u pacifies
+   -Wuseless-cast, and unlike a compound literal can appear in an
+   integer constant expression.  */
 #if 7 <= __GNUC__ && !defined __clang__ && PTRDIFF_MAX < SIZE_MAX
 # define xalloc_oversized(n, s) \
-   __builtin_mul_overflow_p (n, s, (ptrdiff_t) 1)
+   __builtin_mul_overflow_p (n, s, (ptrdiff_t) 1u)
 #elif 5 <= __GNUC__ && !defined __clang__ && !defined __ICC \
       && PTRDIFF_MAX < SIZE_MAX
 # define xalloc_oversized(n, s) \
