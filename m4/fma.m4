@@ -1,5 +1,5 @@
 # fma.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2011-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,7 +52,8 @@ AC_DEFUN([gl_FUNC_FMA],
   AC_SUBST([FMA_LIBM])
 ])
 
-dnl Test whether fma() has any of the 7 known bugs of glibc 2.11.3 on x86_64.
+dnl Test whether fma() has any of the 7 known bugs of glibc 2.11.3 on x86_64
+dnl and the 1 known bug of glibc 2.43 on x86_64.
 AC_DEFUN([gl_FUNC_FMA_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -133,6 +134,21 @@ int main()
        Lies between (2^53 - 2^0) and 2^53 and is closer to (2^53 - 2^0),
        therefore the rounding must round down and produce (2^53 - 2^0).  */
     volatile double expected = ldexp (1.0, DBL_MANT_DIG) - 1.0;
+    volatile double result = my_fma (x, y, z);
+    if (result != expected)
+      failed_tests |= 8;
+  }
+  /* This test fails on glibc 2.43 on x86_64.
+     <https://sourceware.org/bugzilla/show_bug.cgi?id=34183>  */
+  {
+    volatile double x = 1.0 + 1.0 / (double) (1U << 21); /* 2^0 + 2^-21 */
+    volatile double y = x; /* 2^0 + 2^-21 */
+    volatile double z = (double) (1U << 11); /* 2^11 */
+    /* x * y + z with infinite precision: 2^11 + 2^0 + 2^-20 + 2^-42.
+       Lies between (2^11 + 2^0 + 2^-20) and (2^11 + 2^0 + 2^-20 + 2^-41).
+       By the round-to-even rule, the rounding must round down and produce
+       (2^11 + 2^0 + 2^-20).  */
+    volatile double expected = 2049.00000095367431640625;
     volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 16;
