@@ -15,7 +15,9 @@ This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 9.
 @item
 This function produces wrong results on some platforms:
-glibc 2.11, Mac OS X 10.5, FreeBSD 6.4/x86, NetBSD 8.0, OpenBSD 7.4/arm64, Cygwin 1.5, mingw.
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=34183
+glibc 2.43,
+Mac OS X 10.5, FreeBSD 6.4/x86, NetBSD 8.0, OpenBSD 7.4/arm64, Cygwin 1.5, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
