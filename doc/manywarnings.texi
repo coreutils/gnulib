@@ -23,7 +23,6 @@ AS_IF([test "$enable_gcc_warnings" != no],
                                 # dangerous than casting any other value.
    nw="$nw -Winline"            # It's OK to not inline.
    nw="$nw -Wsign-compare"      # Too many false alarms.
-   nw="$nw -Wstrict-overflow"   # It's OK to optimize strictly.
    nw="$nw -Wsystem-headers"    # Don't warn in system headers.
 
    # Setup the list of meaningful warning options for the C compiler.
@@ -64,7 +63,7 @@ follows:
 @item
 Start with the newest major release of GCC.
 This will save you time, because some warning options produce many false
-alarms with older versions of GCC (such as @code{-Wstrict-overflow} or
+alarms with older versions of GCC (such as
 @code{-Wunsafe-loop-optimizations}).
 @item
 Consider the platforms commonly used when enabling GCC warnings.

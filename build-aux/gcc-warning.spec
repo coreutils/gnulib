@@ -246,7 +246,8 @@
 -Wstack-usage=<byte-size>		FIXME: choose something sane?
 -Wstrict-aliasing			enabled by -Wall
 -Wstrict-aliasing=<0,3>			FIXME: choose something sane?
--Wstrict-overflow=<0,5>			FIXME: choose something sane?
+-Wstrict-overflow			deprecated and slated for removal
+-Wstrict-overflow=<0,5>			deprecated and slated for removal
 -Wstring-compare			enabled by -Wextra
 -Wstringop-overflow			covered by -Wstringop-overflow=2
 -Wstringop-overflow=<0,4>		defaults to 2

@@ -78,7 +78,7 @@
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wstack-usage=				FIXME: choose something sane?
 -Wstrict-aliasing=			FIXME: choose something sane?
--Wstrict-overflow=			FIXME: choose something sane?
+-Wstrict-overflow=			deprecated and slated for removal
 -Wstrict-prototypes			c
 -Wstrict-selector-match			objc and objc++
 -Wsurprising				fortran

@@ -169,7 +169,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     -Wstack-protector \
     -Wstrict-aliasing \
     -Wstrict-null-sentinel \
-    -Wstrict-overflow \
     -Wsuggest-attribute=const \
     -Wsuggest-attribute=format \
     -Wsuggest-attribute=noreturn \

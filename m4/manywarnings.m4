@@ -133,7 +133,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wshadow \
     -Wstack-protector \
     -Wstrict-flex-arrays \
-    -Wstrict-overflow \
     -Wstrict-prototypes \
     -Wsuggest-attribute=cold \
     -Wsuggest-attribute=const \

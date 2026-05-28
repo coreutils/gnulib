@@ -315,7 +315,6 @@ there are three possible approaches:
       -Woverlength-strings
       -Wpacked
       -Wpointer-arith
-      -Wstrict-overflow
       -Wsuggest-final-methods
       -Wsuggest-final-types
       -Wsync-nand
@@ -399,7 +398,6 @@ there are three possible approaches:
       -Woverlength-strings
       -Wpacked
       -Wpointer-arith
-      -Wstrict-overflow
       -Wsuggest-attribute=format
       -Wsuggest-final-methods
       -Wsuggest-final-types
