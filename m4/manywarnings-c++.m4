@@ -72,11 +72,11 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
   # List all gcc warning categories.
   # To compare this list to your installed GCC's, run this Bash command:
   #
-  # comm -3 \
-  #  <(sed -n 's/^  *\(-[^ ]*\) .*/\1/p' manywarnings-c++.m4 | sort) \
-  #  <(gcc --help=warnings | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort |
-  #      grep -v -x -f <(
-  #         awk '/^[^#]/ {print $1}' ../build-aux/g++-warning.spec))
+  # export LC_ALL=C && comm -3 \
+  #  <((sed -n 's/^  *\(-[^ 0-9][^ ]*\).*/\1/p' manywarnings-c++.m4; \
+  #     awk '/^[^#]/ {print $1}' ../build-aux/gcc-warning.spec) | sort) \
+  #  <((gcc -Q --help=c++,warnings && gcc -Q --help=common,warnings) \
+  #    | sed -n '/\[ignored]$/d;s/^  \(-[^ ]*\) .*/\1/p' | sort)
 
   gl_manywarn_set=
   for gl_manywarn_item in \
@@ -184,7 +184,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     -Wtype-limits \
     -Wuninitialized \
     -Wunknown-pragmas \
-    -Wunsafe-loop-optimizations \
     -Wunused \
     -Wunused-but-set-parameter \
     -Wunused-but-set-variable \

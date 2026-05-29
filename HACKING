@@ -322,7 +322,6 @@ there are three possible approaches:
       -Wtrampolines
       -Wuninitialized
       -Wunknown-pragmas
-      -Wunsafe-loop-optimizations
       -Wvariadic-macros
       -Wvector-operation-performance
       -Wwrite-strings
@@ -406,7 +405,6 @@ there are three possible approaches:
       -Wtrampolines
       -Wuninitialized
       -Wunknown-pragmas
-      -Wunsafe-loop-optimizations
       -Wvariadic-macros
       -Wvector-operation-performance
       -Wwrite-strings

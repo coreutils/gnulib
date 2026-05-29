@@ -63,8 +63,7 @@ follows:
 @item
 Start with the newest major release of GCC.
 This will save you time, because some warning options produce many false
-alarms with older versions of GCC (such as
-@code{-Wunsafe-loop-optimizations}).
+alarms with older versions of GCC.
 @item
 Consider the platforms commonly used when enabling GCC warnings.
 This includes not only target architectures and operating systems, but also

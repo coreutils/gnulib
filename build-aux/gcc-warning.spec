@@ -148,7 +148,6 @@
 -Wfree-nonheap-object			default
 -Whardened				default
 -Wheader-guard				enabled by -Wall
--Whsa					default
 -Wif-not-aligned			default
 -Wignored-attributes			default
 -Wignored-qualifiers			enabled by -Wextra
@@ -274,7 +273,6 @@
 -Wtype-limits				enabled by -Wextra
 -Wundef					FIXME maybe? too many false positives
 -Wunicode				default
--Wunreachable-code			obsolescent no-op
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
 -Wunterminated-string-initialization	enabled by -Wextra
 -Wunused				enabled by -Wall
