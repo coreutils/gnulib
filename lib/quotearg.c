@@ -39,12 +39,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* If USE_C_LOCALE is nonzero, this file defines a function that uses the
-   "C" locale, regardless of the current locale.  Applications
-   defining this macro might avoid the need for Gnulib's c32isprint,
-   gettext-h, mbrtoc32, mbsinit, wchar-h, and uchar-h modules,
-   but they also need the c-ctype module, and they rely on
-   the mbszero module defining MUSL_LIBC as needed.  */
+/* If USE_C_LOCALE is nonzero, this file defines functions that
+   use the "C" locale, regardless of the current locale.
+   The functions also treat unassigned characters as printable.
+   Applications defining this macro might avoid the need for Gnulib's
+   c32isprint, gettext-h, mbrtoc32, mbsinit, and uchar-h modules,
+   but they also need the c-ctype module.  */
 #ifndef USE_C_LOCALE
 # define USE_C_LOCALE 0
 #endif
@@ -109,7 +109,7 @@ static bool
 chisprint (unsigned char c)
 {
 #if USE_C_LOCALE
-  return c_isprint (c);
+  return !c_iscntrl (c);
 #else
   return isprint (c) != 0;
 #endif
@@ -121,7 +121,7 @@ wchisprint (wch w)
 #if !USE_C_LOCALE
   return c32isprint (w);
 #elif C_LOCALE_MIGHT_BE_MULTIBYTE
-  return iswprint (w);
+  return iswcntrl (w) == 0;
 #else
   return chisprint (w);
 #endif
