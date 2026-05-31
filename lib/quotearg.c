@@ -73,12 +73,6 @@
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 #define N_(msgid) msgid
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-
-#define INT_BITS (sizeof (int) * CHAR_BIT)
-
 struct quoting_options
 {
   /* Basic quoting style.  */
@@ -89,7 +83,7 @@ struct quoting_options
 
   /* Quote the characters indicated by this bit vector even if the
      quoting style would not normally require them to be quoted.  */
-  unsigned int quote_these_too[(UCHAR_MAX / INT_BITS) + 1];
+  unsigned int quote_these_too[(UCHAR_MAX / UINT_WIDTH) + 1];
 
   /* The left quote for custom_quoting_style.  */
   char const *left_quote;
@@ -170,8 +164,8 @@ set_char_quoting (struct quoting_options *o, char c, int i)
 {
   unsigned char uc = c;
   unsigned int *p =
-    (o ? o : &default_quoting_options)->quote_these_too + uc / INT_BITS;
-  int shift = uc % INT_BITS;
+    (o ? o : &default_quoting_options)->quote_these_too + uc / UINT_WIDTH;
+  int shift = uc % UINT_WIDTH;
   unsigned int r = (*p >> shift) & 1;
   *p ^= ((i & 1U) ^ r) << shift;
   return r;
@@ -728,7 +722,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
       if (! (((backslash_escapes && quoting_style != shell_always_quoting_style)
               || elide_outer_quotes)
              && quote_these_too
-             && quote_these_too[c / INT_BITS] >> (c % INT_BITS) & 1)
+             && quote_these_too[c / UINT_WIDTH] >> (c % UINT_WIDTH) & 1)
           && !is_right_quote)
         goto store_c;
 

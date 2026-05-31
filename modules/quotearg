@@ -13,6 +13,7 @@ c32isprint
 extensions
 gettext-h
 gnulib-i18n
+limits-h
 mbszero
 mbrtoc32
 mbsinit
