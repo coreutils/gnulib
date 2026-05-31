@@ -52,9 +52,9 @@ static const char *const day_table[] =
 #if ! HAVE_STRUCT_TM_TM_GMTOFF
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
-   effects, and B should be in the range 0 <= B <= INT_BITS - 2, where
-   INT_BITS is the number of useful bits in an int.  GNU code can
-   assume that INT_BITS is at least 32.
+   effects, and B should be in the range 0 <= B <= INT_WIDTH - 2, where
+   INT_WIDTH is the number of useful bits in an int.  GNU code can
+   assume that INT_WIDTH is at least 32.
 
    ISO C99 says that A >> B is implementation-defined if A < 0.  Some
    implementations (e.g., UNICOS 9.0 on a Cray Y-MP EL) don't shift
