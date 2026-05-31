@@ -6,11 +6,9 @@ lib/quotearg.h
 lib/quotearg.c
 lib/quote.h
 m4/quotearg.m4
-m4/musl.m4
 
 Depends-on:
 attribute
-c-ctype
 c32isprint
 extensions
 gettext-h

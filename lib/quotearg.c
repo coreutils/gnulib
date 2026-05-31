@@ -33,106 +33,44 @@
 #include "minmax.h"
 #include "xalloc.h"
 
+#include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-/* If USE_C_LOCALE is nonzero, this file defines functions that
-   use the "C" locale, regardless of the current locale.
-   The functions also treat unassigned characters as printable.
-   Applications defining this macro might avoid the need for Gnulib's
-   c32isprint, gettext-h, mbrtoc32, mbsinit, and uchar-h modules,
-   but they also need the c-ctype module.  */
-#ifndef USE_C_LOCALE
-# define USE_C_LOCALE 0
-#endif
+/* Use Gnulib <uchar.h> if not avoided by the app.  Applications
+   defining _QUOTEARG_AVOID_UCHAR_H might avoid the need for Gnulib's
+   c32isprint, mbrtoc32, mbsinit, mbszero, and uchar-h modules.  */
 
-/* On several platforms, the default locale uses UTF-8, contrary to POSIX:
-   - musl libc has no unibyte locales; the "C" locale uses UTF-8.
-   - On macOS, all modern locales use the UTF-8 encoding.
-   - BeOS and Haiku have a single locale, and it has UTF-8 encoding.
-   - On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
-     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
-     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
-     that is, effectively the "C.UTF-8" locale.  */
-#if (defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) \
-     || defined __BEOS__ || defined __HAIKU__ || defined __ANDROID__)
-# define C_LOCALE_MIGHT_BE_MULTIBYTE true
+#ifndef _QUOTEARG_AVOID_UCHAR_H
+# include <uchar.h>
+# include <wchar.h>
 #else
-# define C_LOCALE_MIGHT_BE_MULTIBYTE false
-#endif
-
-#if USE_C_LOCALE && !C_LOCALE_MIGHT_BE_MULTIBYTE
-# include <c-ctype.h>
-typedef unsigned char wch;
-typedef struct incomplete_mbstate *mbstate;
+# if !defined __UCLIBC__ || defined __UCLIBC_HAS_WCHAR__
+#  include <wchar.h>
+#  include <wctype.h>
+#  define char32_t wchar_t
+#  define c32isprint iswprint
+# else
+#  define mbrtowc(pwc, s, n, ps) ((size_t) ((*(pwc) = *(s)) ? 1 : 0))
+#  define char32_t unsigned char
+#  define mbstate_t signed char /* Any complete type will do.  */
+#  define c32isprint isprint
+# endif
+# define mbrtoc32 mbrtowc
 # ifndef GNULIB_MBRTOC32_REGULAR
 #  define GNULIB_MBRTOC32_REGULAR 1
 # endif
-#else
-# include <wchar.h>
-typedef mbstate_t mbstate;
-# if USE_C_LOCALE
-#  include <c-ctype.h>
-#  include <wctype.h>
-typedef wchar_t wch;
-# else
-#  include <ctype.h>
-#  include <uchar.h>
-typedef char32_t wch;
-# endif
 #endif
 
-static void
-mbs_clear (MAYBE_UNUSED mbstate *ps)
-{
-#if !USE_C_LOCALE || C_LOCALE_MIGHT_BE_MULTIBYTE
-  mbszero (ps);
+#if !GNULIB_defined_mbszero
+# define mbszero(ps) (*(mbstate_t *) {(ps)} = (mbstate_t) {0})
 #endif
-}
 
-static size_t
-mbrtowch (wch *pwc, char const *s, size_t n, MAYBE_UNUSED mbstate *ps)
-{
-#if !USE_C_LOCALE
-  return mbrtoc32 (pwc, s, n, ps);
-#elif C_LOCALE_MIGHT_BE_MULTIBYTE
-  return mbrtowc (pwc, s, n, ps);
-#else
-  return n && (*pwc = *s);
-#endif
-}
-
-static bool
-chisprint (unsigned char c)
-{
-#if USE_C_LOCALE
-  return !c_iscntrl (c);
-#else
-  return isprint (c) != 0;
-#endif
-}
-
-static bool
-wchisprint (wch w)
-{
-#if !USE_C_LOCALE
-  return c32isprint (w);
-#elif C_LOCALE_MIGHT_BE_MULTIBYTE
-  return iswcntrl (w) == 0;
-#else
-  return chisprint (w);
-#endif
-}
-
-#if USE_C_LOCALE
-# define _(msgid) msgid
-#else
-# include "gettext.h"
-# define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
-#endif
+#include "gettext.h"
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 #define N_(msgid) msgid
 
 #ifndef SIZE_MAX
@@ -314,9 +252,9 @@ gettext_quote (char const *msgid, enum quoting_style s)
      and means we need not use a function like locale_charset that
      has other dependencies.  */
   static char const quote[][4] = { "\xe2\x80\x98", "\xe2\x80\x99" };
-  wch w;
-  mbstate mbs; mbs_clear (&mbs);
-  if (mbrtowch (&w, quote[0], 3, &mbs) == 3 && w == 0x2018)
+  char32_t w;
+  mbstate_t mbs; mbszero (&mbs);
+  if (mbrtoc32 (&w, quote[0], 3, &mbs) == 3 && w == 0x2018)
     return quote[msgid[0] == '\''];
 
   return (s == clocale_quoting_style ? "\"" : "'");
@@ -343,8 +281,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           char const *left_quote,
                           char const *right_quote)
 {
-  bool unibyte_locale = ((USE_C_LOCALE && !C_LOCALE_MIGHT_BE_MULTIBYTE)
-                         || MB_CUR_MAX == 1);
+  bool unibyte_locale = MB_CUR_MAX == 1;
 
   size_t len = 0;
   size_t orig_buffersize = 0;
@@ -691,11 +628,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             if (unibyte_locale)
               {
                 m = 1;
-                printable = chisprint (c);
+                printable = isprint (c) != 0;
               }
             else
               {
-                mbstate mbs; mbs_clear (&mbs);
+                mbstate_t mbs; mbszero (&mbs);
 
                 m = 0;
                 printable = true;
@@ -704,8 +641,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
                 for (;;)
                   {
-                    wch w;
-                    size_t bytes = mbrtowch (&w, &arg[i + m],
+                    char32_t w;
+                    size_t bytes = mbrtoc32 (&w, &arg[i + m],
                                              argsize - (i + m), &mbs);
                     if (bytes == 0)
                       break;
@@ -743,7 +680,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                                 }
                           }
 
-                        if (! wchisprint (w))
+                        if (! c32isprint (w))
                           printable = false;
                         m += bytes;
                       }

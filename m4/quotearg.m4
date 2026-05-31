@@ -1,5 +1,5 @@
 # quotearg.m4
-# serial 11
+# serial 10
 dnl Copyright (C) 2002, 2004-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,5 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_QUOTEARG],
 [
   AC_REQUIRE([AC_C_RESTRICT])
-  AC_REQUIRE([gl_MUSL_LIBC])
   :
 ])
