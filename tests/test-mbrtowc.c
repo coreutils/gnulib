@@ -297,6 +297,19 @@ main (int argc, char *argv[])
             ASSERT (wctob (wc) == EOF);
             ASSERT (mbsinit (&state));
           }
+        /* Test recognition of invalid byte sequences.  */
+        {
+          memset (&state, 0, sizeof (mbstate_t));
+          wc = (wchar_t) {0xBADFACE};
+          ret = mbrtowc (&wc, "\340x", 2, &state);
+          ASSERT (ret == (size_t)(-1));
+        }
+        {
+          memset (&state, 0, sizeof (mbstate_t));
+          wc = (wchar_t) {0xBADFACE};
+          ret = mbrtowc (&wc, "\360x\360", 3, &state);
+          ASSERT (ret == (size_t)(-1));
+        }
         return test_exit_status;
 
       case '4':

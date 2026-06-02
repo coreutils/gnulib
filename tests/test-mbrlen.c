@@ -209,6 +209,17 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
         }
+        /* Test recognition of invalid byte sequences.  */
+        {
+          memset (&state, 0, sizeof (mbstate_t));
+          ret = mbrlen ("\340x", 2, &state);
+          ASSERT (ret == (size_t)(-1));
+        }
+        {
+          memset (&state, 0, sizeof (mbstate_t));
+          ret = mbrlen ("\360x\360", 3, &state);
+          ASSERT (ret == (size_t)(-1));
+        }
         return test_exit_status;
 
       case '4':
