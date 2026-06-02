@@ -120,7 +120,7 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     }
 # endif
 
-# if (MBRTOC32_EMPTY_INPUT_BUG || MBRTOWC_INVALID_UTF8_BUG || _GL_SMALL_WCHAR_T \
+# if (MBRTOWC_EMPTY_INPUT_BUG || MBRTOWC_INVALID_UTF8_BUG \
       || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
   if (n == 0)
     return (size_t) -2;
