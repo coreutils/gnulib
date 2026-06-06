@@ -81,14 +81,14 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if MBRTOWC_RETVAL_BUG || MBRTOWC_EMPTY_INPUT_BUG
+  /* It's simpler to handle the case s == NULL upfront, than to worry about
+     this case later, before every test of pwc and n.  */
   if (s == NULL)
     {
       pwc = NULL;
       s = "";
       n = 1;
     }
-# endif
 
 # if MBRTOWC_EMPTY_INPUT_BUG
   if (n == 0)
