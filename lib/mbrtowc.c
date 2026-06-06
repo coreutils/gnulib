@@ -110,15 +110,14 @@ is_locale_utf8_cached (void)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if (MBRTOWC_RETVAL_BUG || MBRTOWC_EMPTY_INPUT_BUG || MBRTOWC_INVALID_UTF8_BUG \
-      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2))
+  /* It's simpler to handle the case s == NULL upfront, than to worry about
+     this case later, before every test of pwc and n.  */
   if (s == NULL)
     {
       pwc = NULL;
       s = "";
       n = 1;
     }
-# endif
 
 # if (MBRTOWC_EMPTY_INPUT_BUG || MBRTOWC_INVALID_UTF8_BUG \
       || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
