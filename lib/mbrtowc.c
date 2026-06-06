@@ -1,5 +1,5 @@
 /* Convert multibyte character to wide character.
-   Copyright (C) 1999-2002, 2005-2025 Free Software Foundation, Inc.
+   Copyright (C) 1999-2002, 2005-2026 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This file is free software: you can redistribute it and/or modify
@@ -84,14 +84,14 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
   size_t ret;
   wchar_t wc;
 
-# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG || MBRTOWC_EMPTY_INPUT_BUG
+  /* It's simpler to handle the case s == NULL upfront, than to worry about
+     this case later, before every test of pwc and n.  */
   if (s == NULL)
     {
       pwc = NULL;
       s = "";
       n = 1;
     }
-# endif
 
 # if MBRTOWC_EMPTY_INPUT_BUG
   if (n == 0)
