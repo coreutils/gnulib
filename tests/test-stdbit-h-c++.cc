@@ -21,9 +21,11 @@
 
 #include <stdbit.h>
 
+#if !(defined __MINGW32__ && USE_WINDOWS_THREADS)
 /* Check against conflicts between <stdbit.h> and the C++ header files.  */
-#include <stddef.h>
-#include <iostream>
+# include <stddef.h>
+# include <iostream>
+#endif
 
 
 int

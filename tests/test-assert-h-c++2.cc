@@ -19,9 +19,11 @@
 
 #include <cassert>
 
+#if !(defined __MINGW32__ && USE_WINDOWS_THREADS)
 /* Check against conflicts between <cassert> and other C++ header files.  */
-#include <stddef.h>
-#include <iostream>
+# include <stddef.h>
+# include <iostream>
+#endif
 
 
 static_assert (2 + 2 == 4, "arithmetic does not work");

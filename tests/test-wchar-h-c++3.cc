@@ -18,5 +18,7 @@
 #include <config.h>
 
 #include <wchar.h>
-#include <cstring>
-#include <sstream>
+#if !(defined __MINGW32__ && USE_WINDOWS_THREADS)
+# include <cstring>
+# include <sstream>
+#endif

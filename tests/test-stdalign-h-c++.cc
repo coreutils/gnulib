@@ -21,9 +21,11 @@
 
 #include <stdalign.h>
 
+#if !(defined __MINGW32__ && USE_WINDOWS_THREADS)
 /* Check against conflicts between <stdalign.h> and the C++ header files.  */
-#include <stddef.h>
-#include <iostream>
+# include <stddef.h>
+# include <iostream>
+#endif
 
 
 int

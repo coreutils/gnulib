@@ -21,9 +21,11 @@
 /* Check that nullptr is defined.  */
 int *my_null = nullptr;
 
+#if !(defined __MINGW32__ && USE_WINDOWS_THREADS)
 /* Check against conflicts between <config.h> and the C++ header files.  */
-#include <iostream>
-#include <vector>
+# include <iostream>
+# include <vector>
+#endif
 
 #include <stdarg.h>
 

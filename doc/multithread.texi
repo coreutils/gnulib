@@ -244,6 +244,8 @@ on mingw with the @code{winpthreads} library, but is not recommended there.
 @item
 @code{--enable-threads=windows} is supported and is the best choice on
 native Windows platforms (mingw and MSVC).
+Except that on mingw, in C++ mode, use of the standard C++ library
+(@code{<iostream>} etc.) is incompatible with this choice.
 @item
 @code{--enable-threads=isoc} is supported on all platforms that have the
 ISO C multithreading API.  However, @code{--enable-threads=posix} is always
