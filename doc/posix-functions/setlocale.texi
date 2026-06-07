@@ -65,6 +65,13 @@ the @code{"C"} or @code{"POSIX"} locale actually sets an equivalent of the
 @code{"C.UTF-8"} locale.
 @end itemize
 
+Note: The return type of the @code{setlocale} function
+is @code{char *} in POSIX, with the constraint that
+``The application shall not modify the string returned.''
+The Gnulib-overridden @code{setlocale} function
+has a return type of @code{const char *}.
+This helps detecting code that attempts to write into that string.
+
 Note: The names of locales with UTF-8 encoding are platform dependent:
 @itemize
 @item

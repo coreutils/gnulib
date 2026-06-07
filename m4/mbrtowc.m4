@@ -1,5 +1,5 @@
 # mbrtowc.m4
-# serial 50
+# serial 51
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2026 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -683,7 +683,7 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
             #include <wchar.h>
           ]], [[
             int i;
-            char *locale = setlocale (LC_ALL, "C");
+            const char *locale = setlocale (LC_ALL, "C");
             if (! locale)
               return 2;
             for (i = CHAR_MIN; i <= CHAR_MAX; i++)

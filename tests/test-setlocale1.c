@@ -19,7 +19,11 @@
 #include <locale.h>
 
 #include "signature.h"
+#if GNULIB_defined_setlocale
+SIGNATURE_CHECK (setlocale, const char *, (int, const char *));
+#else
 SIGNATURE_CHECK (setlocale, char *, (int, const char *));
+#endif
 
 #include <stdlib.h>
 #include <string.h>

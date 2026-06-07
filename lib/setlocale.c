@@ -73,11 +73,11 @@ extern void gl_locale_name_canonicalize (char *name);
 #  if NEED_SETLOCALE_IMPROVED
 static
 #  endif
-char *
+const char *
 setlocale_mtsafe (int category, const char *locale)
 {
   if (locale == NULL)
-    return (char *) setlocale_null (category);
+    return setlocale_null (category);
   else
     return setlocale (category, locale);
 }
@@ -668,7 +668,7 @@ search (const struct table_entry *table, size_t table_size, const char *string,
 
 /* Like setlocale, but accept also locale names in the form ll or ll_CC,
    where ll is an ISO 639 language code and CC is an ISO 3166 country code.  */
-static char *
+static const char *
 setlocale_unixlike (int category, const char *locale)
 {
   int is_utf8 = (GetACP () == 65001);
@@ -688,7 +688,7 @@ setlocale_unixlike (int category, const char *locale)
     locale = "English_United States.65001";
 
   /* First, try setlocale with the original argument unchanged.  */
-  char *result = setlocale_mtsafe (category, locale);
+  const char *result = setlocale_mtsafe (category, locale);
   if (result != NULL)
     return result;
 
@@ -845,10 +845,10 @@ setlocale_unixlike (int category, const char *locale)
 #  elif defined __ANDROID__
 
 /* Like setlocale, but accept also the locale names "C" and "POSIX".  */
-static char *
+static const char *
 setlocale_unixlike (int category, const char *locale)
 {
-  char *result = setlocale_fixed (category, locale);
+  const char *result = setlocale_fixed (category, locale);
   if (result == NULL)
     switch (category)
       {
@@ -866,7 +866,7 @@ setlocale_unixlike (int category, const char *locale)
       case LC_MEASUREMENT:
         if (locale == NULL
             || streq (locale, "C") || streq (locale, "POSIX"))
-          result = (char *) "C";
+          result = "C";
         break;
       default:
         break;
@@ -882,7 +882,7 @@ setlocale_unixlike (int category, const char *locale)
 #  if LC_MESSAGES == 1729
 
 /* Like setlocale, but support also LC_MESSAGES.  */
-static char *
+static const char *
 setlocale_single (int category, const char *locale)
 {
   if (category == LC_MESSAGES)
@@ -1417,7 +1417,7 @@ get_main_locale_with_same_territory (const char *locale)
 
 #  endif
 
-char *
+const char *
 setlocale_improved (int category, const char *locale)
 {
   if (locale != NULL && locale[0] == '\0')
@@ -1437,10 +1437,10 @@ setlocale_improved (int category, const char *locale)
             };
 
           /* Back up the old locale, in case one of the steps fails.  */
-          char *saved_locale = setlocale (LC_ALL, NULL);
-          if (saved_locale == NULL)
+          const char *old_locale = setlocale (LC_ALL, NULL);
+          if (old_locale == NULL)
             return NULL;
-          saved_locale = strdup (saved_locale);
+          char *saved_locale = strdup (old_locale);
           if (saved_locale == NULL)
             return NULL;
 
@@ -1672,18 +1672,16 @@ setlocale_improved (int category, const char *locale)
               /* In the underlying implementation, LC_ALL does not contain
                  LC_MESSAGES.  Therefore we need to handle LC_MESSAGES
                  separately.  */
-              char *result;
+              const char *result;
 
 #   if defined _WIN32 && ! defined __CYGWIN__
               if (strchr (native_locale, '.') != NULL)
                 {
-                  char *saved_locale;
-
                   /* Back up the old locale.  */
-                  saved_locale = setlocale (LC_ALL, NULL);
-                  if (saved_locale == NULL)
+                  const char *old_locale = setlocale (LC_ALL, NULL);
+                  if (old_locale == NULL)
                     return NULL;
-                  saved_locale = strdup (saved_locale);
+                  char *saved_locale = strdup (old_locale);
                   if (saved_locale == NULL)
                     return NULL;
 
@@ -1747,8 +1745,8 @@ setlocale_improved (int category, const char *locale)
      "LC_COLLATE=...;LC_CTYPE=...;LC_MONETARY=...;LC_NUMERIC=...;LC_TIME=..."
      If necessary, add ";LC_MESSAGES=..." at the end.  */
   {
-    char *name1 = setlocale (LC_ALL, NULL);
-    char *name2 = setlocale_single (LC_MESSAGES, NULL);
+    const char *name1 = setlocale (LC_ALL, NULL);
+    const char *name2 = setlocale_single (LC_MESSAGES, NULL);
     if (streq (name1, name2))
       /* Not a mixed locale.  */
       return name1;

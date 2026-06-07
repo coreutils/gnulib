@@ -1,5 +1,5 @@
 # mbrtoc16.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2014-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -288,7 +288,7 @@ AC_DEFUN([gl_MBRTOC16_C_LOCALE],
             #include <uchar.h>
           ]], [[
             int i;
-            char *locale = setlocale (LC_ALL, "C");
+            const char *locale = setlocale (LC_ALL, "C");
             if (! locale)
               return 2;
             for (i = CHAR_MIN; i <= CHAR_MAX; i++)

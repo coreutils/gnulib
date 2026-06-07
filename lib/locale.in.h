@@ -272,16 +272,21 @@ _GL_WARN_ON_USE (localeconv,
 #endif
 
 #if @GNULIB_SETLOCALE@
+/* The return type 'const char *' serves the purpose of producing warnings
+   for invalid uses of the value returned from this function.  */
 # if @REPLACE_SETLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef setlocale
 #   define setlocale rpl_setlocale
 #   define GNULIB_defined_setlocale 1
 #  endif
-_GL_FUNCDECL_RPL (setlocale, char *, (int category, const char *locale), );
-_GL_CXXALIAS_RPL (setlocale, char *, (int category, const char *locale));
+_GL_FUNCDECL_RPL (setlocale, const char *,
+                  (int category, const char *locale), );
+_GL_CXXALIAS_RPL (setlocale, const char *,
+                  (int category, const char *locale));
 # else
-_GL_CXXALIAS_SYS (setlocale, char *, (int category, const char *locale));
+_GL_CXXALIAS_SYS_CAST (setlocale, const char *,
+                       (int category, const char *locale));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (setlocale);

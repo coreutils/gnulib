@@ -30,7 +30,7 @@ main (void)
 {
 #ifdef _UCRT
   /* Test that setlocale() works as expected in a UTF-8 locale.  */
-  char *name;
+  const char *name;
 
   /* This looks at all LC_*, LANG environment variables, which are all unset
      at this point.  */
