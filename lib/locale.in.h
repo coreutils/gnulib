@@ -245,15 +245,21 @@ struct lconv
 #endif
 
 #if @GNULIB_LOCALECONV@
+/* The return type 'const struct lconv *' serves the purpose of producing
+   warnings for invalid uses of the value returned from this function.  */
 # if @REPLACE_LOCALECONV@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef localeconv
 #   define localeconv rpl_localeconv
+#   define GNULIB_defined_localeconv
 #  endif
-_GL_FUNCDECL_RPL (localeconv, struct lconv *, (void), );
-_GL_CXXALIAS_RPL (localeconv, struct lconv *, (void));
+_GL_FUNCDECL_RPL (localeconv, const struct lconv *, (void), );
+_GL_CXXALIAS_RPL (localeconv, const struct lconv *, (void));
 # else
-_GL_CXXALIAS_SYS (localeconv, struct lconv *, (void));
+_GL_CXXALIAS_SYS_CAST (localeconv, const struct lconv *, (void));
+#  if !defined localeconv && !defined __cplusplus
+#   define localeconv() ((const struct lconv *) localeconv ())
+#  endif
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (localeconv);

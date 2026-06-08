@@ -27,3 +27,11 @@ mingw.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: The return type of the @code{localeconv} function
+is @code{struct lconv *} in POSIX, with the constraint that
+``The application shall not modify the structure to which the return value
+points.''
+The Gnulib-overridden @code{localeconv} function
+has a return type of @code{const struct lconv *}.
+This helps detecting code that attempts to write into that structure.

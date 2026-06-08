@@ -21,7 +21,11 @@
 #include <locale.h>
 
 #include "signature.h"
+#if GNULIB_defined_localeconv
+SIGNATURE_CHECK (localeconv, const struct lconv *, (void));
+#else
 SIGNATURE_CHECK (localeconv, struct lconv *, (void));
+#endif
 
 #include <limits.h>
 #include <string.h>
@@ -33,7 +37,7 @@ main ()
 {
   /* Test localeconv() result in the "C" locale.  */
   {
-    struct lconv *l = localeconv ();
+    const struct lconv *l = localeconv ();
 
     ASSERT (streq (l->decimal_point, "."));
     ASSERT (streq (l->thousands_sep, ""));

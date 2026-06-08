@@ -78,6 +78,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-06-08  localeconv      The return type of the strerror function is now
+                            'const struct lconv *' on most platforms.  You may
+                            need to adjust assignments of the form
+                              struct lconv *l = localeconv ();
+                            to
+                              const struct lconv *l = localeconv ();
+
 2026-06-07  setlocale       The return type of the setlocale function is now
                             'const char *' on most platforms.  You may need to
                             adjust assignments of the form

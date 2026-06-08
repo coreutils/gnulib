@@ -28,13 +28,13 @@
 /* Override for platforms where 'struct lconv' lacks the int_p_*, int_n_*
    members or where fields of type 'char' are set to -1 instead of CHAR_MAX.  */
 
-struct lconv *
+const struct lconv *
 localeconv (void)
 {
   static struct lconv result;
 # undef lconv
 # undef localeconv
-  struct lconv *sys_result = localeconv ();
+  const struct lconv *sys_result = localeconv ();
 
   result.decimal_point = sys_result->decimal_point;
   result.thousands_sep = sys_result->thousands_sep;
@@ -77,7 +77,7 @@ localeconv (void)
 
 /* Override for platforms where 'struct lconv' is a dummy.  */
 
-struct lconv *
+const struct lconv *
 localeconv (void)
 {
   static /*const*/ struct lconv result =

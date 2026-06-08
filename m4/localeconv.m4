@@ -1,5 +1,5 @@
 # localeconv.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2012-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,7 +26,7 @@ AC_DEFUN([gl_FUNC_LOCALECONV],
             #include <limits.h>
             int main ()
             {
-              struct lconv *l = localeconv ();
+              const struct lconv *l = localeconv ();
               return l->frac_digits != CHAR_MAX && l->frac_digits < 0;
             }
          ]])],

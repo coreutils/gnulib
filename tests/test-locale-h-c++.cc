@@ -25,7 +25,7 @@
 
 
 #if GNULIB_TEST_LOCALECONV
-SIGNATURE_CHECK (GNULIB_NAMESPACE::localeconv, struct lconv *, (void));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::localeconv, const struct lconv *, (void));
 #endif
 
 #if GNULIB_TEST_SETLOCALE
