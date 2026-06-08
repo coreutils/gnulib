@@ -287,6 +287,9 @@ _GL_CXXALIAS_RPL (setlocale, const char *,
 # else
 _GL_CXXALIAS_SYS_CAST (setlocale, const char *,
                        (int category, const char *locale));
+#  if !defined setlocale && !defined __cplusplus
+#   define setlocale(...) ((const char *) setlocale (__VA_ARGS__))
+#  endif
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (setlocale);

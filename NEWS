@@ -79,7 +79,7 @@ User visible incompatible changes
 Date        Modules         Changes
 
 2026-06-07  setlocale       The return type of the setlocale function is now
-                            'const char *' on some platforms.  You may need to
+                            'const char *' on most platforms.  You may need to
                             adjust assignments of the form
                               char *l = setlocale (...);
                             to
