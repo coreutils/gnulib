@@ -78,6 +78,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-06-08  strerror        The return type of the strerror function is now
+                            'const char *' on most platforms.  You may need to
+                            adjust assignments of the form
+                              char *s = strerror (...);
+                            to
+                              const char *s = strerror (...);
+
 2026-06-08  localeconv      The return type of the strerror function is now
                             'const struct lconv *' on most platforms.  You may
                             need to adjust assignments of the form

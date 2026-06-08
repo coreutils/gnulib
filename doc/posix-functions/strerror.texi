@@ -28,3 +28,10 @@ HP-UX 11.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: The return type of the @code{strerror} function
+is @code{char *} in POSIX, with the constraint that
+``The application shall not modify the string returned.''
+The Gnulib-overridden @code{strerror} function
+has a return type of @code{const char *}.
+This helps detecting code that attempts to write into that string.

@@ -1,5 +1,5 @@
 # strerror.m4
-# serial 25
+# serial 26
 dnl Copyright (C) 2002, 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,7 +71,7 @@ AC_DEFUN([gl_FUNC_STRERROR_0],
            #include <errno.h>
          ]],
          [[int result = 0;
-           char *str;
+           const char *str;
            errno = 0;
            str = strerror (0);
            if (!*str) result |= 1;

@@ -1,5 +1,5 @@
 # strerror_r.m4
-# serial 29
+# serial 30
 dnl Copyright (C) 2002, 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -153,7 +153,7 @@ changequote([,])dnl
                   [[int result = 0;
                     char buf[256] = "^";
                     char copy[256];
-                    char *str = strerror (-1);
+                    const char *str = strerror (-1);
                     strcpy (copy, str);
                     if (__xpg_strerror_r (-2, buf, 1) == 0)
                       result |= 1;

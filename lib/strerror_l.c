@@ -62,7 +62,7 @@ errno_minmax_callback (void *data, int err)
 static int
 errno_string_callback (void *data, int err)
 {
-  char *s = strerror (err);
+  const char *s = strerror (err);
   if (s != NULL && *s != '\0')
     c_error_strings[err - errno_min] = strdup (s);
   return 0;

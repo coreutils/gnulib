@@ -37,7 +37,7 @@
 # pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-char *
+const char *
 strerror (int n)
 #undef strerror
 {

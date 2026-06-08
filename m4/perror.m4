@@ -1,5 +1,5 @@
 # perror.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_PERROR],
                 #include <stdlib.h>
                 #include <string.h>
               ]],
-              [[char *str = strerror (-1);
+              [[const char *str = strerror (-1);
                 if (!getenv("CONFTEST_OUTPUT")) return 0;
                 if (!str) str = "";
                 puts (str);

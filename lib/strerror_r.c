@@ -296,7 +296,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
        a pointer to a not copied string, not to a buffer.  */
     if (errnum >= 0 && errnum < sys_nerr)
       {
-        char *errmsg = strerror (errnum);
+        const char *errmsg = strerror (errnum);
 
         if (errmsg == NULL || *errmsg == '\0')
           ret = EINVAL;
@@ -311,7 +311,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
     gl_lock_lock (strerror_lock);
 
     {
-      char *errmsg = strerror (errnum);
+      const char *errmsg = strerror (errnum);
 
       /* For invalid error numbers, strerror() on HP-UX 11 returns an empty
          string.  */

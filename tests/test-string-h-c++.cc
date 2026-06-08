@@ -136,7 +136,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mbspbrk, char *,
 #endif
 
 #if GNULIB_TEST_STRERROR
-SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror, char *, (int));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror, const char *, (int));
 #endif
 
 #if GNULIB_TEST_STRERROR_R
