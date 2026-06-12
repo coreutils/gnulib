@@ -24,6 +24,7 @@
 #include <error.h>
 #include "exitfail.h"
 #include "gettext.h"
+#include "quote.h"
 
 #define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
 #define N_(msgid) msgid
@@ -57,16 +58,16 @@ xstrtol_error (enum strtol_error err,
       abort ();
 
     case LONGINT_INVALID:
-      msgid = N_("invalid %s%s argument '%s'");
+      msgid = N_("invalid %s%s argument %s");
       break;
 
     case LONGINT_INVALID_SUFFIX_CHAR:
     case LONGINT_INVALID_SUFFIX_CHAR_WITH_OVERFLOW:
-      msgid = N_("invalid suffix in %s%s argument '%s'");
+      msgid = N_("invalid suffix in %s%s argument %s");
       break;
 
     case LONGINT_OVERFLOW:
-      msgid = N_("%s%s argument '%s' too large");
+      msgid = N_("%s%s argument %s too large");
       break;
     }
 
@@ -84,7 +85,7 @@ xstrtol_error (enum strtol_error err,
     option = long_options[opt_idx].name;
 
   error (exit_status, 0, dgettext (GNULIB_TEXT_DOMAIN, msgid),
-         hyphens, option, arg);
+         hyphens, option, quote (arg));
 }
 
 /* Like xstrtol_error, except exit with a failure status.  */

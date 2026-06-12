@@ -12,6 +12,7 @@ exitfail
 getopt-gnu
 gettext-h
 gnulib-i18n
+quote
 
 configure.ac:
 
