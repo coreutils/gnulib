@@ -251,7 +251,7 @@ struct lconv
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef localeconv
 #   define localeconv rpl_localeconv
-#   define GNULIB_defined_localeconv
+#   define GNULIB_defined_localeconv 1
 #  endif
 _GL_FUNCDECL_RPL (localeconv, const struct lconv *, (void), );
 _GL_CXXALIAS_RPL (localeconv, const struct lconv *, (void));
