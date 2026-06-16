@@ -129,8 +129,9 @@ and similarly for @samp{HAVE_WORKING_O_NOFOLLOW} and @samp{O_NOFOLLOW}:
 Mac OS X 10.3.
 
 @item
-@samp{O_PATH} is not defined on some platforms:
-glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
+@samp{O_PATH} and @samp{AT_EMPTY_PATH} are not defined on some platforms:
+glibc 2.13, macOS 26, FreeBSD 13.0, NetBSD 10.1, OpenBSD 7.9, Minix 3.3.0,
+AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin 3.0, mingw, MSVC 14.
 
 @item
 Although POSIX.1-2024 standardized @code{O_CLOFORK},

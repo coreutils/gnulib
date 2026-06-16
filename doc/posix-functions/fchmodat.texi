@@ -33,6 +33,15 @@ Some platforms do not allow changing the access bits on symbolic
 links.
 
 @item
+This function does not support @code{AT_EMPTY_PATH}:
+Linux kernel 2.6.38.
+
+@item
+When @code{AT_EMPTY_PATH} is used,
+this function does not allow the file name to be a null pointer:
+Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
+
+@item
 If the @code{AT_SYMLINK_NOFOLLOW} flag is specified,
 this function can fail with @code{errno} set to @code{EMFILE} or @code{ENFILE},
 and it fails with @code{errno} set to @code{EOPNOTSUPP} if the

@@ -51,6 +51,10 @@ On file systems mounted with the @code{noatime} attribute,
 this function might not modify the access time as requested:
 Linux kernel 6.9.
 @item
+When @code{AT_EMPTY_PATH} is used,
+this function does not allow the file name to be a null pointer:
+Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
+@item
 This function ignores the flag @code{AT_SYMLINK_NOFOLLOW}:
 Linux kernel 6.8 on a CIFS file system.
 @item

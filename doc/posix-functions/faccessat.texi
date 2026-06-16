@@ -34,6 +34,13 @@ On some platforms, @code{faccessat} can mishandle @code{AT_EACCESS}
 after a process starts as root and then becomes non-root:
 @c https://sourceware.org/PR18683
 GNU/Linux with glibc 2.32.
+@item
+This function does not support @code{AT_EMPTY_PATH}:
+Linux kernel 2.6.38.
+@item
+When @code{AT_EMPTY_PATH} is used,
+this function does not allow the file name to be a null pointer:
+glibc 2.41, Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
 @end itemize
 
 Other problems of this function:

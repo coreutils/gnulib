@@ -41,6 +41,10 @@ Linux with glibc < 2.11.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+When @code{AT_EMPTY_PATH} is used,
+this function does not allow the file name to be a null pointer:
+Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
+@item
 This function sometimes fails with @code{EACCES} when the failure is
 due to lack of appropriate privileges (@code{EPERM}), not to
 search permission denied on the file name prefix (@code{EACCES}):
