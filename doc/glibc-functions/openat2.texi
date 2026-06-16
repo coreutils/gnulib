@@ -1,0 +1,21 @@
+@node openat2
+@subsection @code{openat2}
+@findex openat2
+
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/openat2.2.html,,man openat2}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on most platforms:
+glibc 2.42 on Linux, glibc on non-Linux, all non-glibc platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On platforms that do not natively support @code{openat2} functionality,
+the Gnulib emulation might not act atomically.
+@end itemize

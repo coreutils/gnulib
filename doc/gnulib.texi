@@ -5723,6 +5723,7 @@ This list of functions is sorted according to the header that declares them.
 * name_to_handle_at::
 * readahead::
 * open_by_handle_at::
+* openat2::
 * sync_file_range::
 @end menu
 
@@ -5730,6 +5731,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/name_to_handle_at.texi
 @include glibc-functions/readahead.texi
 @include glibc-functions/open_by_handle_at.texi
+@include glibc-functions/openat2.texi
 @include glibc-functions/sync_file_range.texi
 
 @node Glibc fenv.h
