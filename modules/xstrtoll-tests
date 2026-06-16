@@ -14,5 +14,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-xstrtoll.sh
 check_PROGRAMS += test-xstrtoll test-xstrtoull
-test_xstrtoll_LDADD = $(LDADD) $(LIBINTL)
-test_xstrtoull_LDADD = $(LDADD) $(LIBINTL)
+test_xstrtoll_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBC32CONV)
+test_xstrtoull_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBC32CONV)

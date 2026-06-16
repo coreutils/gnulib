@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-xstrtoumax.sh
 check_PROGRAMS += test-xstrtoumax
-test_xstrtoumax_LDADD = $(LDADD) @LIBINTL@
+test_xstrtoumax_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBC32CONV)
