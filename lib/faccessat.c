@@ -50,10 +50,6 @@ orig_faccessat (int fd, char const *name, int mode, int flag)
 # define access euidaccess
 #endif
 
-#ifndef LSTAT_FOLLOWS_SLASHED_SYMLINK
-# define LSTAT_FOLLOWS_SLASHED_SYMLINK 0
-#endif
-
 #if HAVE_FACCESSAT
 
 int
@@ -61,7 +57,7 @@ rpl_faccessat (int fd, char const *file, int mode, int flags)
 {
   int result = orig_faccessat (fd, file, mode, flags);
 
-  if (!LSTAT_FOLLOWS_SLASHED_SYMLINK && file)
+  if (file)
     {
       size_t len = strlen (file);
       if (len && file[len - 1] == '/')
