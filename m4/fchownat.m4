@@ -1,5 +1,5 @@
 # fchownat.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2004-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,11 +27,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
                    perform lchown tasks.])
        ])
      gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG(
-       [REPLACE_FCHOWNAT=1
-        AC_DEFINE([FCHOWNAT_EMPTY_FILENAME_BUG], [1],
-                  [Define to 1 if your platform has fchownat, but it does
-                   not reject an empty file name.])
-       ])
+       [REPLACE_FCHOWNAT=1])
      if test $REPLACE_CHOWN = 1; then
        REPLACE_FCHOWNAT=1
      fi],
