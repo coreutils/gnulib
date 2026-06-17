@@ -320,8 +320,9 @@ do_openat2 (int *fd, char const *filename,
             {
               /* This is empty or the last component, and acts like ".".
                  Use "." regardless of whether it was "" or "." or "..".  */
-              f = sizeof ".";
+              f = g = sizeof ".";
               e[-f] = '.';
+              h = 1;
             }
 
           /* Open the current component, as either an internal directory or

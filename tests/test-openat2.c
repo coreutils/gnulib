@@ -514,6 +514,17 @@ do_test_resolve (void)
     ASSERT (errno == EXDEV);
     ASSERT (fd == -1);
 
+    /* Check that RESOLVE_BENEATH works with trailing "/./".  */
+    fd = openat2 (dfd,
+                  "subdir/./",
+                  (&(struct open_how)
+                   {
+                     .flags = O_RDONLY,
+                     .resolve = RESOLVE_BENEATH,
+                   }),
+                  sizeof (struct open_how));
+    ASSERT (close (fd) == 0);
+
     ASSERT (close (subdfd) == 0);
   }
 }
