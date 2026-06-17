@@ -1,5 +1,5 @@
 # openat2.m4
-# serial 1
+# serial 2
 
 dnl Copyright 2025-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_OPENAT2],
   AC_REQUIRE([gl_FCNTL_O_FLAGS])
   AC_CHECK_FUNCS_ONCE([openat2])
   AS_CASE([$ac_cv_func_openat2],
-    [yes], [HAVE_OPENAT2=1])
+    [no], [HAVE_OPENAT2=0])
 ])
 
 # Prerequisites of lib/openat2.c.
