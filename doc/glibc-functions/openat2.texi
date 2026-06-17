@@ -4,7 +4,8 @@
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/openat2.2.html,,man openat2}
 
-Gnulib module: ---
+Gnulib module: openat2
+@mindex openat2
 
 Portability problems fixed by Gnulib:
 @itemize
