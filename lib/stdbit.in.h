@@ -26,6 +26,10 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_STDBIT_H@
+/* The FreeBSD 15.1 <stdbit.h> uses the _Bool type.  */
+# if defined __FreeBSD__ && defined __cplusplus
+#  define _Bool bool
+# endif
 # @INCLUDE_NEXT@ @NEXT_STDBIT_H@
 #endif
 
