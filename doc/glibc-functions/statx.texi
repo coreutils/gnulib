@@ -18,7 +18,7 @@ glibc 2.27, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.9, Minix 3.1.8, AIX 7
 @item
 When @code{AT_EMPTY_PATH} is used,
 this function does not allow the file name to be a null pointer:
-Linux kernel 6.10.
+glibc 2.40, Linux kernel 6.10.
 @item
 There is an incompatible function of the same name on some platforms:
 AIX 5.2 or newer.

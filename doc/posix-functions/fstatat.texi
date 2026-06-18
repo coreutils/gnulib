@@ -13,8 +13,14 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
 AIX 5.1, HP-UX 11, Cygwin 1.5.x, mingw, MSVC 14.
-But the replacement function is not safe to be used in libraries and is not
+But when the function is missing, its Gnulib substitute
+is not safe to be used in libraries and is not
 thread-safe.
+@item
+On platforms with @code{AT_EMPTY_PATH},
+this function does not work when @code{AT_EMPTY_PATH}
+is used with a null pointer file name:
+glibc 2.40, Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{fstatat} may
 not correctly report the size of files or block devices larger than 2
@@ -40,11 +46,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function does not fail when the second argument is an empty string
 on some platforms, even when @code{AT_EMPTY_PATH} is not used:
-glibc 2.7, Linux 2.6.38.
-@item
-When @code{AT_EMPTY_PATH} is used,
-this function does not allow the file name to be a null pointer:
-Linux kernel 6.10, Cygwin 3.6, FreeBSD 15.1.
+glibc 2.7, Linux kernel 2.6.38.
 @item
 This function sets @code{st_ino} only to the low-order 32 bits of
 the inode number of a socket or pipe, which thus can disagree

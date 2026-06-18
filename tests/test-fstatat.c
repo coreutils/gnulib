@@ -101,6 +101,18 @@ main (_GL_UNUSED int argc, _GL_UNUSED char *argv[])
   ASSERT (0 <= dfd);
   ASSERT (test_stat_func (do_stat, false) == result);
   ASSERT (test_lstat_func (do_lstat, false) == result);
+#ifdef AT_EMPTY_PATH
+  struct stat dotst;
+  ASSERT (stat (".", &dotst) == 0);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 2; j++)
+      {
+        struct stat st;
+        ASSERT (fstatat (i ? AT_FDCWD : dfd, j ? "" : NULL, &st, AT_EMPTY_PATH)
+                == 0);
+        ASSERT (st.st_dev == dotst.st_dev && st.st_ino == dotst.st_ino);
+      }
+#endif
   ASSERT (close (dfd) == 0);
 
   /* FIXME - add additional tests of dfd not at current directory.  */
