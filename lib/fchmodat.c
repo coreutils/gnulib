@@ -71,7 +71,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
       errno = ENOENT;
       return -1;
     }
-  else if (! (flags & AT_SYMLINK_NOFOLLOW))
+  else if (! (flags & AT_SYMLINK_NOFOLLOW) && 0 <= dir)
     return fchmod (dir, mode);
 
 # if HAVE_NEARLY_WORKING_FCHMODAT
