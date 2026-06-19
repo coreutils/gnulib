@@ -44,6 +44,7 @@
 #endif
 
 /* FSTAT_O_PATH_BUG is true if fstat fails on O_PATH file descriptors.
+   On these platforms fstatat with AT_EMPTY_PATH and "" similarly fails.
    Although it can be dicey to use static checks for Linux kernel versions,
    due to the dubious practice of building on newer kernels for older ones,
    do it here anyway as the buggy kernels are rare (all EOLed by 2016)
@@ -54,6 +55,10 @@
                            && LINUX_VERSION_CODE < KERNEL_VERSION (3, 6, 0))
 #else
 # define FSTAT_O_PATH_BUG false
+#endif
+
+#ifndef GNULIB_FSTATAT
+# define GNULIB_FSTATAT 0
 #endif
 
 #ifndef E2BIG
@@ -150,14 +155,29 @@ maybe_grow (char **buf, idx_t bufsize, char *stackbuf,
 static int
 dirstat (int dirfd, struct stat *st)
 {
-  /* Use fstatat only if fstat is buggy.  fstatat is a bit slower,
-     and using it only on buggy hosts means openat2 need not depend on
-     Gnulib's fstatat module, as all systems with the fstat bug have
-     an fstatat that works well enough. */
 #if FSTAT_O_PATH_BUG
-  return fstatat (dirfd, ".", st);
+  /* Use fstatat with "." to work around a bug in fstat (and in
+     fstatat with "" and AT_EMPTY_PATH) in Linux kernels 2.6.39 (2011)
+     through 3.5.7 (2012).  This workaround does not depend on
+     Gnulib's fstatat module, as all systems with the fstat bug have
+     an fstatat that works well enough here.  */
+  return fstatat (dirfd, ".", st, 0);
+
 #else
-  return dirfd < 0 ? stat (".", st) : fstat (dirfd, st);
+
+  if (0 <= dirfd)
+    return fstat (dirfd, st);
+
+# if AT_EMPTY_PATH
+  /* Prefer fstatat with AT_EMPTY_PATH if available, as this avoids
+     admittedly-unlikely problems when the working directory is not
+     searchable.  This workaround does not depend on Gnulib's fstatat
+     module, as all systems with AT_EMPTY_PATH and without
+     FSTAT_O_PATH_BUG should work well enough here.  */
+  return fstatat (dirfd, GNULIB_FSTATAT ? NULL : "", st, AT_EMPTY_PATH);
+# else
+  return stat (".", st);
+# endif
 #endif
 }
 
