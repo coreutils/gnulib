@@ -549,6 +549,7 @@ do_test_basic ()
     ASSERT (fd2 == -1);
   }
 
+  ASSERT (close (fd) == 0);
   ASSERT (unlinkat (dfd, "some-file", 0) == 0);
 
   ASSERT (unlinkat (dfd, "dirlink", 0) == 0);
