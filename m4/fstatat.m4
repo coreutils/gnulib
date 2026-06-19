@@ -1,5 +1,5 @@
 # fstatat.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2004-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,9 +70,7 @@ AC_DEFUN([gl_FUNC_FSTATAT],
       [0],
         [AC_CACHE_CHECK([whether fstatat+AT_EMPTY_PATH allows null file],
            [gl_cv_func_fstatat_null_file],
-           [gl_saved_CFLAGS=$CFLAGS
-            CFLAGS="$CFLAGS -Wno-nonnull"
-            AC_RUN_IFELSE(
+           [AC_RUN_IFELSE(
               [AC_LANG_PROGRAM(
                  [[#include <stddef.h>
                    #include <fcntl.h>
@@ -80,6 +78,8 @@ AC_DEFUN([gl_FUNC_FSTATAT],
                    #ifndef AT_EMPTY_PATH
                     #define AT_EMPTY_PATH 0
                    #endif
+                   /* Don't check via -Wnonnull, as the problem could in
+                      theory exist with compilers lacking -Wnonnull.  */
                    #if __GLIBC__ && ! (2 < __GLIBC__ + (41 <= __GLIBC_MINOR__))
                     #error "glibc 2.40 and earlier can fail with null file"
                    #endif
