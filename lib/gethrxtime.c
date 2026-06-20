@@ -34,39 +34,17 @@
 xtime_t
 gethrxtime (void)
 {
-# if HAVE_NANOUPTIME
-  {
-    struct timespec ts;
-    nanouptime (&ts);
-    return xtime_make (ts.tv_sec, ts.tv_nsec);
-  }
+  struct timespec ts;
+# if defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME
+  /* If available, use a monotonically increasing clock.
+     Otherwise fall back on CLOCK_REALTIME as that is
+     what current_timespec would do anyway.  */
+  if (clock_gettime (CLOCK_MONOTONIC, &ts) < 0)
+    clock_gettime (CLOCK_REALTIME, &ts);
 # else
-
-#  if defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME
-  {
-    struct timespec ts;
-    if (clock_gettime (CLOCK_MONOTONIC, &ts) == 0)
-      return xtime_make (ts.tv_sec, ts.tv_nsec);
-  }
-#  endif
-
-#  if HAVE_MICROUPTIME
-  {
-    struct timeval tv;
-    microuptime (&tv);
-    return xtime_make (tv.tv_sec, 1000 * tv.tv_usec);
-  }
-
-#  else
-  /* No monotonically increasing clocks are available; fall back on a
-     clock that might jump backwards, since it's the best we can do.  */
-  {
-    struct timespec ts;
-    gettime (&ts);
-    return xtime_make (ts.tv_sec, ts.tv_nsec);
-  }
-#  endif
+  ts = current_timespec ();
 # endif
+  return xtime_make (ts.tv_sec, ts.tv_nsec);
 }
 
 #endif
