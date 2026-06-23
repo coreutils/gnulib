@@ -5,7 +5,6 @@ Files:
 lib/sha1-stream.c
 
 Depends-on:
-crypto/af_alg
 crypto/sha1-buffer
 
 configure.ac:

@@ -5,7 +5,6 @@ Files:
 lib/sha256-stream.c
 
 Depends-on:
-crypto/af_alg
 crypto/sha256-buffer
 
 configure.ac:

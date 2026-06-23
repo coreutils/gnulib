@@ -27,7 +27,9 @@
 # include "unlocked-io.h"
 #endif
 
-#include "af_alg.h"
+#if GNULIB_AF_ALG
+# include "af_alg.h"
+#endif
 
 #define BLOCKSIZE 31824
 #if (BLOCKSIZE % 144 != 0 && BLOCKSIZE % 136 != 0 && BLOCKSIZE % 104 != 0 \
@@ -44,11 +46,13 @@ sha3_xxx_stream (FILE *restrict stream, char const *restrict alg,
                  void *restrict resblock,
                  ssize_t hashlen, bool (*init_ctx) (struct sha3_ctx *))
 {
+#if GNULIB_AF_ALG
   switch (afalg_stream (stream, alg, resblock, hashlen))
     {
     case 0: return 0;
     case -EIO: return 1;
     }
+#endif
 
   char *buffer = malloc (BLOCKSIZE);
   if (!buffer)

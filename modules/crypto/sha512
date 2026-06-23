@@ -5,7 +5,6 @@ Files:
 lib/sha512-stream.c
 
 Depends-on:
-crypto/af_alg
 crypto/sha512-buffer
 
 configure.ac:

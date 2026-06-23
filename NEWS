@@ -78,6 +78,14 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-06-22  crypto/af_alg   This module has been deprecated following the
+                            deprecation of the AF_ALG API in Linux 7.2.  If your
+                            package requires optimized hash algorithms, place
+                            gl_SET_CRYPTO_CHECK_DEFAULT([auto-gpl-compat]) in
+                            your configure.ac to use OpenSSL when
+                            possible.  Alternatively, use 'crypto/gc'
+                            which uses libgcrypt when possible.
+
 2026-06-08  strerror        The return type of the strerror function is now
                             'const char *' on most platforms.  You may need to
                             adjust assignments of the form

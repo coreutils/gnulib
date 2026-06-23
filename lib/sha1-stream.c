@@ -32,7 +32,9 @@
 # include "unlocked-io.h"
 #endif
 
-#include "af_alg.h"
+#if GNULIB_AF_ALG
+# include "af_alg.h"
+#endif
 
 #define BLOCKSIZE 32768
 #if BLOCKSIZE % 64 != 0
@@ -45,11 +47,13 @@
 int
 sha1_stream (FILE *restrict stream, void *restrict resblock)
 {
+#if GNULIB_AF_ALG
   switch (afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE))
     {
     case 0: return 0;
     case -EIO: return 1;
     }
+#endif
 
   char *buffer = malloc (BLOCKSIZE);
   if (!buffer)

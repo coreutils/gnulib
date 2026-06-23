@@ -5,7 +5,6 @@ Files:
 lib/sha3-stream.c
 
 Depends-on:
-crypto/af_alg
 crypto/sha3-buffer
 free-posix
 

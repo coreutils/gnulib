@@ -1,6 +1,12 @@
 Description:
 Compute message digest using kernel-supported cryptography algorithms.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated because AF_ALG was deprecated in Linux 7.2.
+
 Files:
 lib/af_alg.h
 lib/af_alg.c
@@ -18,6 +24,7 @@ sys_stat-h
 
 configure.ac:
 gl_AF_ALG
+gl_MODULE_INDICATOR([af_alg])
 
 Makefile.am:
 lib_SOURCES += af_alg.c
