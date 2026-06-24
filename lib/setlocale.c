@@ -288,7 +288,7 @@ category_to_name (int category)
 /* Table from ISO 639 language code, optionally with country or script suffix,
    to English name.
    Keep in sync with the gl_locale_name_from_win32_LANGID function in
-   localename.c!  */
+   localename-unsafe.c!  */
 struct table_entry
 {
   const char *code;
