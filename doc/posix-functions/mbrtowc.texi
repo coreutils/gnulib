@@ -44,6 +44,7 @@ HP-UX 11.11, Solaris 11 2010-11, mingw, MSVC 14.
 @item
 This function returns @code{(size_t) -2} instead of @code{(size_t) -1}
 for some invalid byte sequences on some platforms:
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=60369
 NetBSD 10.
 @item
 This function may not return 0 when parsing the NUL character on some platforms:
