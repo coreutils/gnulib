@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 29
+# serial 29.1
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -169,19 +169,20 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   AS_VAR_APPEND([$1], [' -Wunused-const-variable=2'])
   AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
 
-  # These are needed for older GCC versions.
-  if test -n "$GCC" && gl_gcc_version=`($CC --version) 2>/dev/null`; then
+  # These depend on the GCC version.
+  if test -n "$GCC" \
+     && gl_gcc_version=`($CC --version) 2>/dev/null | sed 1q`; then
     case $gl_gcc_version in
-      'gcc (GCC) '[[0-3]].* | \
-      'gcc (GCC) '4.[[0-7]].*)
+      *gcc*' ('*') '[[0-3]].* | \
+      *gcc*' ('*') '4.[[0-7]].*)
         AS_VAR_APPEND([$1], [' -fdiagnostics-show-option'])
         AS_VAR_APPEND([$1], [' -funit-at-a-time'])
-          ;;
+        ;;
     esac
     case $gl_gcc_version in
-      'gcc (GCC) '[[0-9]].*)
+      *gcc*' ('*') '[[0-9]].*)
         AS_VAR_APPEND([$1], [' -fno-common'])
-          ;;
+        ;;
     esac
   fi
 
