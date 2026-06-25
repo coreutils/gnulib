@@ -1,5 +1,5 @@
 # fstatat.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2004-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,7 +68,7 @@ AC_DEFUN([gl_FUNC_FSTATAT],
     dnl is not present, and it is not worth the trouble to tune this.
     AS_CASE([$REPLACE_FSTATAT],
       [0],
-        [AC_CACHE_CHECK([whether fstatat+AT_EMPTY_PATH allows null file],
+        [AC_CACHE_CHECK([for no AT_EMPTY_PATH or fstatat with null file],
            [gl_cv_func_fstatat_null_file],
            [AC_RUN_IFELSE(
               [AC_LANG_PROGRAM(
@@ -85,9 +85,14 @@ AC_DEFUN([gl_FUNC_FSTATAT],
                    #endif
                  ]],
                  [[struct stat st;
-                   return
-                     (AT_EMPTY_PATH
-                      && fstatat (AT_FDCWD, NULL, &st, AT_EMPTY_PATH) < 0);
+                   if (!AT_EMPTY_PATH)
+                     return 0; /* No need to replace fstatat.  */
+                   if (fstatat (AT_FDCWD, NULL, &st, AT_EMPTY_PATH) < 0)
+                     return 1;
+                   int fd = open (".", O_RDONLY);
+                   if (fd < 0)
+                     return 1; /* Play it safe.  */
+                   return fstatat (fd, NULL, &st, AT_EMPTY_PATH) < 0;
                  ]])],
               [gl_cv_func_fstatat_null_file=yes],
               [gl_cv_func_fstatat_null_file=no],
