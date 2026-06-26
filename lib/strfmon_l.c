@@ -41,7 +41,7 @@ directive_t;
 /* A parsed format string.  */
 typedef struct
 {
-  size_t count;
+  unsigned int count;
   directive_t dir[MAX_ARGS];
 }
 directives_t;
@@ -52,7 +52,7 @@ directives_t;
 static int
 fmon_parse (const char *format, directives_t *directivesp)
 {
-  size_t count = 0;
+  unsigned int count = 0;
   const char *cp = format;
 
   while (*cp != '\0')
