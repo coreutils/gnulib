@@ -22,7 +22,7 @@
 
 #if USE_DIFF_HASH
 
-# include "bitrotate.h"
+# include <stdbit.h>
 
 /* About hashings, Paul Eggert writes to me (FP), on 1994-01-01: "Please see
    B. J. McKenzie, R. Harries & T. Bell, Selecting a hashing algorithm,
@@ -37,7 +37,7 @@ hash_string (const char *string, size_t tablesize)
   unsigned char ch;
 
   for (; (ch = *string); string++)
-    value = ch + rotl_sz (value, 7);
+    value = ch + stdc_rotate_left (value, 7);
   return value % tablesize;
 }
 

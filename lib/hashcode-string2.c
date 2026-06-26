@@ -21,8 +21,7 @@
 #include "hashcode-string2.h"
 
 #include <limits.h>
-
-#define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
+#include <stdbit.h>
 
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
@@ -34,7 +33,7 @@ hash_pjw (const void *x, size_t tablesize)
   size_t h = 0;
 
   for (const char *s = x; *s; s++)
-    h = *s + ((h << 9) | (h >> (SIZE_BITS - 9)));
+    h = *s + stdc_rotate_left (h, 9);
 
   return h % tablesize;
 }

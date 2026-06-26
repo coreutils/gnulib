@@ -7,6 +7,7 @@ lib/hashcode-string2.c
 lib/hash-pjw.h
 
 Depends-on:
+stdc_rotate_left
 
 configure.ac:
 

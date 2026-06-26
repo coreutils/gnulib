@@ -21,8 +21,7 @@
 #include "hashcode-mem.h"
 
 #include <limits.h>
-
-#define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
+#include <stdbit.h>
 
 /* Return a hash of the N bytes of X using the method described by
    Bruno Haible in https://www.haible.de/bruno/hashfunc.html.
@@ -36,7 +35,7 @@ hash_pjw_bare (const void *x, size_t n)
   size_t h = 0;
 
   for (unsigned int i = 0; i < n; i++)
-    h = s[i] + ((h << 9) | (h >> (SIZE_BITS - 9)));
+    h = s[i] + stdc_rotate_left (h, 9);
 
   return h;
 }

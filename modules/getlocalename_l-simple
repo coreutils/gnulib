@@ -13,6 +13,7 @@ getlocalename_l-unsafe [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCAL
 flexmember             [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 lock                   [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 streq                  [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
+stdc_rotate_left       [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 bool                   [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 thread-optim           [test $HAVE_GETLOCALENAME_L = 0 || test $REPLACE_GETLOCALENAME_L = 1]
 

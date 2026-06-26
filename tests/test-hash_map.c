@@ -20,6 +20,7 @@
 #include "gl_hash_map.h"
 
 #include <limits.h>
+#include <stdbit.h>
 #include <stdcountof.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,8 +34,6 @@ static const char *objects[30] =
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
     "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "<", ">", "[", "]"
   };
-
-#define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
 
 static bool
 string_equals (const void *x1, const void *x2)
@@ -54,7 +53,7 @@ string_hash (const void *x)
   size_t h = 0;
 
   for (; *s; s++)
-    h = *s + ((h << 9) | (h >> (SIZE_BITS - 9)));
+    h = *s + stdc_rotate_left (h, 9);
 
   return h;
 }

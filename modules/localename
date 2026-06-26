@@ -11,6 +11,7 @@ locale-h
 localename-unsafe
 flexmember
 lock
+stdc_rotate_left
 streq
 bool
 thread-optim

@@ -78,6 +78,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-06-26  bitrotate       This module is deprecated.  Use stdc_rotate_left
+                            or stdc_rotate_right instead.
+
 2026-06-22  crypto/af_alg   This module has been deprecated following the
                             deprecation of the AF_ALG API in Linux 7.2.  If your
                             package requires optimized hash algorithms, place

@@ -26,11 +26,11 @@
 
 #include "hash.h"
 
-#include "bitrotate.h"
 #include "next-prime.h"
 #include "xalloc-oversized.h"
 
 #include <errno.h>
+#include <stdbit.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -360,7 +360,7 @@ raw_hasher (const void *data, size_t n)
      bits are 0.  As this tends to give poorer performance with small
      tables, we rotate the pointer value before performing division,
      in an attempt to improve hash quality.  */
-  size_t val = rotr_sz ((size_t) data, 3);
+  size_t val = stdc_rotate_right ((size_t) data, 3);
   return val % n;
 }
 

@@ -20,6 +20,7 @@
 /* This file needs the following includes:
 
      #include <limits.h>
+     #include <stdbit.h>
      #include <stdlib.h>
      #include <string.h>
      #include "flexmember.h"
@@ -31,14 +32,13 @@
      flexmember
      lock
      bool
+     stdc_rotate_left
      thread-optim
  */
 
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
-
-#define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
 
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
@@ -50,7 +50,7 @@ string_hash (const void *x)
   size_t h = 0;
 
   for (; *s; s++)
-    h = *s + ((h << 9) | (h >> (SIZE_BITS - 9)));
+    h = *s + stdc_rotate_left (h, 9);
 
   return h;
 }

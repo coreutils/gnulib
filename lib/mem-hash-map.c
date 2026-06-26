@@ -20,6 +20,7 @@
 /* Specification.  */
 #include "mem-hash-map.h"
 
+#include <stdbit.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -95,7 +96,7 @@ compute_hashval (const void *key, size_t keylen)
   size_t hval = keylen;
   while (cnt < keylen)
     {
-      hval = (hval << 9) | (hval >> (sizeof (size_t) * CHAR_BIT - 9));
+      hval = stdc_rotate_left (hval, 9);
       hval += (size_t) *(((const char *) key) + cnt++);
     }
   return hval != 0 ? hval : ~((size_t) 0);

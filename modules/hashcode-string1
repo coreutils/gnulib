@@ -6,7 +6,7 @@ lib/hashcode-string1.h
 lib/hashcode-string1.c
 
 Depends-on:
-bitrotate
+stdc_rotate_left
 
 configure.ac:
 gl_MODULE_INDICATOR([hashcode-string1])

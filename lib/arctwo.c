@@ -29,7 +29,7 @@
 
 #include "arctwo.h"
 
-#include "bitrotate.h"
+#include <stdbit.h>
 
 static const uint8_t arctwo_sbox[] = {
   217, 120, 249, 196, 25, 221, 181, 237,
@@ -96,16 +96,16 @@ arctwo_encrypt (arctwo_context *restrict context, char const *restrict inbuf,
           size_t j = i * 4;
           /* For some reason I cannot combine those steps. */
           word0 += (word1 & ~word3) + (word2 & word3) + context->S[j];
-          word0 = rotl16 (word0, 1);
+          word0 = stdc_rotate_left (word0, 1);
 
           word1 += (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
-          word1 = rotl16 (word1, 2);
+          word1 = stdc_rotate_left (word1, 2);
 
           word2 += (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
-          word2 = rotl16 (word2, 3);
+          word2 = stdc_rotate_left (word2, 3);
 
           word3 += (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
-          word3 = rotl16 (word3, 5);
+          word3 = stdc_rotate_left (word3, 5);
 
           if (i == 4 || i == 10)
             {
@@ -149,16 +149,16 @@ arctwo_decrypt (arctwo_context *restrict context, char const *restrict inbuf,
         {
           size_t j = (i - 1) * 4;
 
-          word3 = rotr16 (word3, 5);
+          word3 = stdc_rotate_right (word3, 5);
           word3 -= (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
 
-          word2 = rotr16 (word2, 3);
+          word2 = stdc_rotate_right (word2, 3);
           word2 -= (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
 
-          word1 = rotr16 (word1, 2);
+          word1 = stdc_rotate_right (word1, 2);
           word1 -= (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
 
-          word0 = rotr16 (word0, 1);
+          word0 = stdc_rotate_right (word0, 1);
           word0 -= (word1 & ~word3) + (word2 & word3) + context->S[j];
 
           if (i == 6 || i == 12)

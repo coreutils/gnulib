@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 array-list
 stdcountof-h
+stdc_rotate_left
 streq
 
 configure.ac:
@@ -12,4 +13,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-avltreehash_list
 check_PROGRAMS += test-avltreehash_list
-

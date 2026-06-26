@@ -6,6 +6,7 @@ Depends-on:
 array-map
 xalloc
 stdcountof-h
+stdc_rotate_left
 streq
 
 configure.ac:

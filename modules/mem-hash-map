@@ -9,6 +9,7 @@ Depends-on:
 next-prime
 obstack
 memeq
+stdc_rotate_left
 xalloc
 
 configure.ac:
