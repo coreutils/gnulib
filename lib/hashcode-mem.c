@@ -1,6 +1,6 @@
 /* hashcode-mem.c -- compute a hash value from a provided buffer.
 
-   Copyright (C) 2012-2025 Free Software Foundation, Inc.
+   Copyright (C) 2012-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -34,7 +34,7 @@ hash_pjw_bare (const void *x, size_t n)
 {
   const unsigned char *s = x;
   size_t h = 0;
-  unsigned i;
+  size_t i;
 
   for (i = 0; i < n; i++)
     h = s[i] + ((h << 9) | (h >> (SIZE_BITS - 9)));
