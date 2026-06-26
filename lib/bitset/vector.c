@@ -320,7 +320,7 @@ vbitset_empty_p (bitset dst)
 {
   bitset_word *dstp = VBITSET_WORDS (dst);
 
-  for (unsigned i = 0; i < VBITSET_SIZE (dst); i++)
+  for (bitset_windex i = 0; i < VBITSET_SIZE (dst); i++)
     if (dstp[i])
       return false;
   return true;
@@ -357,7 +357,7 @@ vbitset_not (bitset dst, bitset src)
   bitset_windex ssize = VBITSET_SIZE (src);
   bitset_windex dsize = VBITSET_SIZE (dst);
 
-  for (unsigned i = 0; i < ssize; i++)
+  for (bitset_windex i = 0; i < ssize; i++)
     *dstp++ = ~(*srcp++);
 
   vbitset_unused_clear (dst);
@@ -426,7 +426,7 @@ vbitset_disjoint_p (bitset dst, bitset src)
   bitset_windex ssize = VBITSET_SIZE (src);
   bitset_windex dsize = VBITSET_SIZE (dst);
 
-  for (unsigned i = 0; i < min (ssize, dsize); i++)
+  for (bitset_windex i = 0; i < min (ssize, dsize); i++)
     if (*srcp++ & *dstp++)
       return false;
 
@@ -446,7 +446,7 @@ vbitset_and (bitset dst, bitset src1, bitset src2)
   bitset_word *src1p = VBITSET_WORDS (src1);
   bitset_word *src2p = VBITSET_WORDS (src2);
 
-  for (unsigned i = 0; i < min (ssize1, ssize2); i++)
+  for (bitset_windex i = 0; i < min (ssize1, ssize2); i++)
     *dstp++ = *src1p++ & *src2p++;
 
   memset (dstp, 0, sizeof (bitset_word) * (dsize - min (ssize1, ssize2)));
@@ -765,7 +765,7 @@ vbitset_and_or (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_word *dstp = VBITSET_WORDS (dst);
   bitset_windex size = VBITSET_SIZE (dst);
 
-  for (unsigned i = 0; i < size; i++)
+  for (bitset_windex i = 0; i < size; i++)
     *dstp++ = (*src1p++ & *src2p++) | *src3p++;
 }
 
@@ -786,7 +786,7 @@ vbitset_and_or_cmp (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_windex size = VBITSET_SIZE (dst);
 
   bool changed = false;
-  for (unsigned i = 0; i < size; i++, dstp++)
+  for (bitset_windex i = 0; i < size; i++, dstp++)
     {
       bitset_word tmp = (*src1p++ & *src2p++) | *src3p++;
 
@@ -818,7 +818,7 @@ vbitset_andn_or (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_word *dstp = VBITSET_WORDS (dst);
   bitset_windex size = VBITSET_SIZE (dst);
 
-  for (unsigned i = 0; i < size; i++)
+  for (bitset_windex i = 0; i < size; i++)
     *dstp++ = (*src1p++ & ~(*src2p++)) | *src3p++;
 }
 
@@ -839,7 +839,7 @@ vbitset_andn_or_cmp (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_windex size = VBITSET_SIZE (dst);
 
   bool changed = false;
-  for (unsigned i = 0; i < size; i++, dstp++)
+  for (bitset_windex i = 0; i < size; i++, dstp++)
     {
       bitset_word tmp = (*src1p++ & ~(*src2p++)) | *src3p++;
 
@@ -871,7 +871,7 @@ vbitset_or_and (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_word *dstp = VBITSET_WORDS (dst);
   bitset_windex size = VBITSET_SIZE (dst);
 
-  for (unsigned i = 0; i < size; i++)
+  for (bitset_windex i = 0; i < size; i++)
     *dstp++ = (*src1p++ | *src2p++) & *src3p++;
 }
 
@@ -892,7 +892,7 @@ vbitset_or_and_cmp (bitset dst, bitset src1, bitset src2, bitset src3)
   bitset_windex size = VBITSET_SIZE (dst);
 
   bool changed = false;
-  for (unsigned int i = 0; i < size; i++)
+  for (bitset_windex i = 0; i < size; i++)
     {
       bitset_word tmp = (*src1p++ | *src2p++) & *src3p++;
 
