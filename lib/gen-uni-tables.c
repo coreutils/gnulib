@@ -837,7 +837,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level1_size > 1)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 1) == 0)
         fprintf (stream, "\n   ");
@@ -856,7 +856,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 1)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 1) == 0)
         fprintf (stream, "\n   ");
@@ -875,7 +875,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 4) == 0)
         fprintf (stream, "\n   ");
@@ -1157,7 +1157,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1176,7 +1176,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1199,7 +1199,7 @@ output_category (const char *filename, const char *version)
   uint16_t *level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 5 / 16 + 1, sizeof (uint16_t));
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 5) / 16;
       unsigned int k = (i * 5) % 16;
@@ -1211,7 +1211,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1309,7 +1309,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1328,7 +1328,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1347,7 +1347,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1678,7 +1678,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1697,7 +1697,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1718,7 +1718,7 @@ output_bidi_category (const char *filename, const char *version)
   uint16_t *level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 5 / 16 + 1, sizeof (uint16_t));
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 5) / 16;
       unsigned int k = (i * 5) % 16;
@@ -1730,7 +1730,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1885,7 +1885,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1904,7 +1904,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -1924,7 +1924,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << (t.p - 1); i++)
+  for (size_t i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2072,7 +2072,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2091,7 +2091,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2111,7 +2111,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << (t.p - 1); i++)
+  for (size_t i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2328,7 +2328,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2347,7 +2347,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2368,7 +2368,7 @@ output_numeric (const char *filename, const char *version)
   uint16_t *level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 8 / 16 + 1, sizeof (uint16_t));
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 8) / 16;
       unsigned int k = (i * 8) % 16;
@@ -2380,7 +2380,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 8 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 8 / 16 + 1; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 8 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2662,7 +2662,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2681,7 +2681,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -2700,7 +2700,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4162,7 +4162,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4181,7 +4181,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4201,7 +4201,7 @@ output_indic_conjunct_break (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 2 / 16 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4682,7 +4682,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4701,7 +4701,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4720,7 +4720,7 @@ output_joining_type (const char *filename, const char *version)
   /* Pack the level3 array.  Each entry needs 4 bits only.  */
   uint8_t *level3_packed =
     (uint8_t *) calloc ((t.level3_size << t.p) * 4 / 8, sizeof (uint8_t));
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 4) / 8;
       unsigned int k = (i * 4) % 8;
@@ -4730,7 +4730,7 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 4 / 8 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 4 / 8; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 4 / 8; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -4982,7 +4982,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5001,7 +5001,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5022,7 +5022,7 @@ output_joining_group (const char *filename, const char *version)
   uint16_t *level3_packed =
     (uint16_t *)
     calloc ((t.level3_size << t.p) * 7 / 16 + 1, sizeof (uint16_t));
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned int j = (i * 7) / 16;
       unsigned int k = (i * 7) % 16;
@@ -5034,7 +5034,7 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5263,7 +5263,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5282,7 +5282,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5303,7 +5303,7 @@ output_scripts (const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5949,7 +5949,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5968,7 +5968,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -5988,7 +5988,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "  {");
   if ((t.level3_size << t.p) * 2 / 16 > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
+  for (size_t i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -8959,7 +8959,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level1_size > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream2, "\n   ");
@@ -8978,7 +8978,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream2, "\n   ");
@@ -8997,7 +8997,7 @@ output_lbpea (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       if (i > 0 && (i % 4) == 0)
@@ -9871,7 +9871,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -9890,7 +9890,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -9909,7 +9909,7 @@ output_wbp (FILE *stream)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
@@ -10146,7 +10146,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -10165,7 +10165,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -10184,7 +10184,7 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
@@ -10493,7 +10493,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level1_size > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream2, "\n   ");
@@ -10512,7 +10512,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream2, "\n   ");
@@ -10531,7 +10531,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
   fprintf (stream2, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       uint16_t value = ((uint16_t *) (t.result + level3_offset))[i];
       if (i > 0 && (i % 8) == 0)
@@ -10954,7 +10954,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level1_size > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level1_size; i++)
+  for (size_t i = 0; i < t.level1_size; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -10973,7 +10973,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level2_size << t.q; i++)
+  for (size_t i = 0; i < t.level2_size << t.q; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
@@ -10992,7 +10992,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "  {");
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n   ");
-  for (unsigned int i = 0; i < t.level3_size << t.p; i++)
+  for (size_t i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
