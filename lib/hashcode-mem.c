@@ -35,7 +35,7 @@ hash_pjw_bare (const void *x, size_t n)
   const unsigned char *s = x;
   size_t h = 0;
 
-  for (unsigned int i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     h = s[i] + ((h << 9) | (h >> (SIZE_BITS - 9)));
 
   return h;
