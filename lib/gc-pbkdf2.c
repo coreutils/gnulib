@@ -56,11 +56,11 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
   char U[GC_MAX_DIGEST_SIZE];
   char T[GC_MAX_DIGEST_SIZE];
   int rc;
-  for (unsigned int i = 1; i <= l; i++)
+  for (unsigned int i = 0; i++ < l; )
     {
       memset (T, 0, hLen);
 
-      for (unsigned int u = 1; u <= c; u++)
+      for (unsigned int u = 0; u++ < c; )
         {
           if (u == 1)
             {
