@@ -81,6 +81,14 @@
 /* Match NAME against the file name pattern PATTERN,
    returning zero if it matches, FNM_NOMATCH if not.  */
 # if @REPLACE_FNMATCH@
+/* Because we haven't included the system's <fnmatch.h> (see above),
+   we need to state the system's 'fnmatch' declaration.  This is necessary
+   for the _GL_CXXALIASWARN invocation below.  */
+#  if @HAVE_FNMATCH@
+_GL_FUNCDECL_SYS (fnmatch, int,
+                  (const char *pattern, const char *name, int flags),
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define fnmatch rpl_fnmatch
 #  endif
