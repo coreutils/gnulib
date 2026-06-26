@@ -1,5 +1,5 @@
 /* gc-pbkdf2.c --- Password-Based Key Derivation Function a'la PKCS#5
-   Copyright (C) 2002-2006, 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2002-2006, 2009-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -62,11 +62,11 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
 
   memcpy (tmp, S, Slen);
 
-  for (i = 1; i <= l; i++)
+  for (i = 0; i++ < l; )
     {
       memset (T, 0, hLen);
 
-      for (u = 1; u <= c; u++)
+      for (u = 0; u++ < c; )
         {
           if (u == 1)
             {
