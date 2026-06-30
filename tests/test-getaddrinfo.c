@@ -120,6 +120,16 @@ simple (int pass, char const *host, char const *service)
           fprintf (stderr, "skipping getaddrinfo test: no network?\n");
           return 77;
         }
+
+      /* EAI_NONAME can be returned in sandboxed build environments where
+         DNS resolution is unavailable. Treat it like EAI_AGAIN and skip.  */
+      if (res == EAI_NONAME)
+        {
+          skip++;
+          fprintf (stderr, "skipping getaddrinfo test: no DNS resolver?\n");
+          return 77;
+        }
+
       /* Solaris reports EAI_SERVICE for "http" and "https".  Don't
          fail the test merely because of this.  */
       if (res == EAI_SERVICE)
