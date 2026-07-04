@@ -1,7 +1,7 @@
 @node Gnulib Git Bundle
 @section Gnulib Git Bundle
 
-@set LATEST_GNULIB_BUNDLE 20260109
+@set LATEST_GNULIB_BUNDLE 20260704
 
 To provide a serialized archival copy of the Gnulib Git repository we
 publish Git Bundles (@url{https://git-scm.com/docs/git-bundle}) of
@@ -29,10 +29,12 @@ Below are SHA-256 and SHA3-256 checksums of known releases:
 9dae009ef9dd7cff17b74c0cda5d7a423e2ed98b4f5b7aa29a970565b0591c06  gnulib-20250303.bundle
 f01e423a7ef6b48e947fabd24bb11744204f4549342416e15dc64f427caa32e2  gnulib-20250729.bundle
 ae7f76abdf11d70f87170363b8f5807ec377a3ebf231499ab8278270c7a19f1a  gnulib-20260109.bundle
+db1a06921b418af1ca77edae2a8246e303b46430c008c17c3f836b430989053a  gnulib-20260704.bundle
 
 XMv72pyPrDiGrukOrQ9UwgLh+bbekQhQWuyaEmEf3Co=  gnulib-20250303.bundle
 c3X/89WHMIRVqGpOHHQPZfw2bcxnZEIkgOam7WwRUyw=  gnulib-20250729.bundle
 6kYv60oHv7kXpkJM2vUlADWNmh62nus1xA80bJJiJEs=  gnulib-20260109.bundle
+5yd+vVi5oa+UhNaL01RmdanZy14j7Wzw4GEHEIfZi7w=  gnulib-20260704.bundle
 @end example
 
 Verify the SHA256 checksum
@@ -73,9 +75,9 @@ supply-chain security related improvements.
 
 @example
 cd $(mktemp -d)
-REV=2961ed7a687c11aebdf5951d5267dec85d9e59cb   # master branch commit to package
-S1REV=e93789db7e86c51d6cb9683ea508e676a55cdefa # stable-202601 branch commit
-S2REV=b6d56475ad6d8bc59e85cdf7fa8dd60fbddc6ffc # stable-202507 branch commit
+REV=3c8246fd7836b85b546850027e24cc25d643fd38   # master branch commit to package
+S1REV=491f1bb7d3049f3ab7825f3ee665c209658e9965 # stable-202607 branch commit
+S2REV=4fdde994518e7b948296c7f642be8825d043f676 # stable-202601 branch commit
 git clone https://git.savannah.gnu.org/git/gnulib.git
 cd gnulib
 git fsck # attempt to validate input
@@ -83,8 +85,8 @@ git fsck # attempt to validate input
 git checkout -B master $REV # put $REV at master
 # Add all stable-* branches locally:
 for b in $(git branch -r | grep origin/stable- | sort --version-sort); do git checkout $@{b#origin/@}; done
-git checkout -B stable-202501 $S1REV
-git checkout -B stable-202507 $S2REV
+git checkout -B stable-202601 $S2REV
+git checkout -B stable-202607 $S1REV
 git remote remove origin # drop some unrelated branches
 git gc --prune=now # drop any unrelated commits, not clear this helps
 git -c pack.threads=1 repack -adF
