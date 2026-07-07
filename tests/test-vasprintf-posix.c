@@ -20,7 +20,9 @@
 
 #include <stdio.h>
 
+#include <errno.h>
 #include <float.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stdcountof.h>
 #include <stddef.h>
@@ -144,6 +146,25 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     ASSERT (streq (result, "1.5 33"));
     ASSERT (retval == strlen (result));
     free (result);
+  }
+
+  {
+    char *expensive = getenv ("RUN_EXPENSIVE_TESTS");
+    if (expensive && streq (expensive, "yes"))
+      { /* Large width given as argument.  */
+        char *result;
+        int retval =
+          my_asprintf (&result, "%*d", INT_MAX, INT_MIN);
+        if (retval < 0)
+          ASSERT (errno == ENOMEM);
+        else
+          {
+            ASSERT (atoi (result) == INT_MIN);
+            ASSERT (retval == INT_MAX);
+            ASSERT (retval == strlen (result));
+            free (result);
+          }
+      }
   }
 
   /* Test the support of the 'a' and 'A' conversion specifier for hexadecimal

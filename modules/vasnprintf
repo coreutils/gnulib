@@ -18,6 +18,7 @@ m4/vasnprintf.m4
 m4/printf.m4
 m4/math_h.m4
 m4/exponentd.m4
+m4/musl.m4
 
 Depends-on:
 stdio-h
@@ -35,6 +36,7 @@ assert-h
 wchar-h
 mbszero
 mbsnlen
+minmax
 streq
 
 configure.ac:

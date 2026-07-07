@@ -24,6 +24,8 @@
 
 #include <stdio.h>
 
+#include <errno.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -211,6 +213,26 @@ test_function (ptrdiff_t (*my_aszprintf) (char **, const char *, ...))
     ASSERT (streq (result + 4000 - 7, "1234567 99"));
     ASSERT (retval == strlen (result));
     free (result);
+  }
+
+  {
+    char *expensive = getenv ("RUN_EXPENSIVE_TESTS");
+    if (expensive && streq (expensive, "yes"))
+      { /* Large width given as argument.  */
+        char *result;
+        ptrdiff_t retval =
+          my_aszprintf (&result, "%.*d %d", INT_MAX, 1234567, 99);
+        if (retval < 0)
+          ASSERT (errno == ENOMEM);
+        else
+          {
+            for (int i = 0; i < INT_MAX - 7; i++)
+              ASSERT (result[i] == '0');
+            ASSERT (streq (result + INT_MAX - 7, "1234567 99"));
+            ASSERT (retval == strlen (result));
+            free (result);
+          }
+      }
   }
 
   /* Test the support of the 'b' conversion specifier for binary output of

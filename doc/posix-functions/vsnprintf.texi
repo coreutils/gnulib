@@ -136,6 +136,14 @@ macOS 14, OpenBSD, HP-UX 11, mingw, MSVC 14, Android.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function fails if the buffer size exceeds @code{INT_MAX},
+even if the resulting string length would fit in @code{int}:
+Solaris, z/OS.
+@item
+This function fails if the buffer size exceeds @code{INT_MAX + 1u},
+even if the resulting string length would fit in @code{int}:
+FreeBSD, OpenBSD, NetBSD, macOS.
+@item
 The @code{%m} directive is not portable, use @code{%s} mapped to an
 argument of @code{strerror(errno)} (or a version of @code{strerror_r})
 instead.

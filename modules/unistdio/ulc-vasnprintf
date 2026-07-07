@@ -12,6 +12,7 @@ m4/intmax_t.m4
 m4/stdint_h.m4
 m4/inttypes_h.m4
 m4/exponentd.m4
+m4/musl.m4
 
 Depends-on:
 unistdio/base
@@ -42,6 +43,7 @@ memchr
 multiarch
 assert-h
 mbszero
+minmax
 streq
 
 configure.ac:

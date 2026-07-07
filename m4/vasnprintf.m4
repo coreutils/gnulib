@@ -1,5 +1,5 @@
 # vasnprintf.m4
-# serial 56
+# serial 57
 dnl Copyright (C) 2002-2004, 2006-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -208,7 +208,6 @@ int main()
          the 'lc' directive.])
       ;;
   esac
-  gl_MUSL_LIBC
   gl_PREREQ_VASNXPRINTF
 ])
 
@@ -217,6 +216,7 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNXPRINTF],
 [
   AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_REQUIRE([gt_TYPE_WINT_T])
+  gl_MUSL_LIBC
   AC_CHECK_FUNCS([wcslen])
   dnl Knowing DBL_EXPBIT0_WORD and DBL_EXPBIT0_BIT enables an optimization
   dnl in the code for NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE.

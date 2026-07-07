@@ -41,6 +41,7 @@ mbszero
 mbrtowc
 wmemcpy
 wmemset
+minmax
 streq
 
 configure.ac:
