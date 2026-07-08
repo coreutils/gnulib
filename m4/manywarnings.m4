@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 36
+# serial 37
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -186,7 +186,8 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
         ;;
     esac
     case $gl_gcc_version in
-      *gcc*' ('*') '?.* | gcc*' ('*') '1[[0-3]].*)
+      *gcc*' ('*') '[[0-9]].* | \
+      *gcc*' ('*') '1[[0-3]].*)
         # In GCC < 14 the option either does not exist,
         # or is accepted but always warns.
         ;;
@@ -195,7 +196,8 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
         ;;
     esac
     case $gl_gcc_version in
-      *gcc*' ('*') '?.* | gcc*' ('*') '1[[0-4]].*)
+      *gcc*' ('*') '[[0-9]].* | \
+      *gcc*' ('*') '1[[0-4]].*)
         # In GCC < 15 the option either does not exist,
         # or is accepted but always warns.
         ;;
