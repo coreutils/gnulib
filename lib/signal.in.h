@@ -20,6 +20,12 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* Deactivate the mingw <pthread_signal.h>, that provides an unusable definition
+   of pthread_sigmask().  We need to do this before including <signal.h>.  */
+#ifndef WIN_PTHREADS_SIGNAL_H
+#define WIN_PTHREADS_SIGNAL_H
+#endif
+
 #if defined __need_sig_atomic_t || defined __need_sigset_t || defined _@GUARD_PREFIX@_ALREADY_INCLUDING_SIGNAL_H || (defined _SIGNAL_H && !defined __SIZEOF_PTHREAD_MUTEX_T)
 /* Special invocation convention:
    - Inside glibc header files.
@@ -194,7 +200,7 @@ _GL_CXXALIAS_RPL (pthread_sigmask, int,
                    const sigset_t *restrict new_mask,
                    sigset_t *restrict old_mask));
 # else
-#  if !(@HAVE_PTHREAD_SIGMASK@ || defined pthread_sigmask)
+#  if !@HAVE_PTHREAD_SIGMASK@
 _GL_FUNCDECL_SYS (pthread_sigmask, int,
                   (int how,
                    const sigset_t *restrict new_mask,
