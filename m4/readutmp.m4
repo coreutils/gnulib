@@ -1,5 +1,5 @@
 # readutmp.m4
-# serial 32
+# serial 34
 dnl Copyright (C) 2002-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,11 +9,10 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_READUTMP],
 [
   AC_REQUIRE([gl_SYSTEMD_CHOICE])
+  AC_REQUIRE([gl_LIBDL])
 
-  dnl Set READUTMP_LIB to '-lsystemd' or '', depending on whether use of
-  dnl systemd APIs is possible and desired (only the systemd login API, here).
-  dnl AC_LIB_LINKFLAGS_BODY would be overkill here, since few people install
-  dnl libsystemd in non-system directories.
+  dnl Set READUTMP_LIB to LIBDL or '', depending on whether use of systemd
+  dnl APIs is possible and desired (only the systemd login API, here).
   READUTMP_LIB=
   if test "$SYSTEMD_CHOICE" = yes; then
     AC_CHECK_HEADER([systemd/sd-login.h])
@@ -38,7 +37,8 @@ AC_DEFUN([gl_READUTMP],
       if test $gl_cv_lib_readutmp_systemd = yes; then
         AC_DEFINE([READUTMP_USE_SYSTEMD], [1],
           [Define if the readutmp module should use the systemd login API.])
-        READUTMP_LIB='-lsystemd'
+        AC_CHECK_HEADERS([systemd/sd-dlopen.h])
+        READUTMP_LIB=$LIBDL
       fi
     fi
   fi

@@ -5,6 +5,7 @@ Files:
 lib/readutmp.h
 lib/readutmp.c
 lib/boot-time-aux.h
+m4/libdl.m4
 m4/readutmp.m4
 m4/systemd.m4
 
@@ -14,6 +15,8 @@ idx
 stat-time
 gettimeofday
 bool
+gettext-h
+gnulib-i18n
 stdcountof-h
 stdint-h
 memeq
