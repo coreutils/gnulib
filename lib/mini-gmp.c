@@ -3342,12 +3342,23 @@ mpz_sqrt (mpz_t s, const mpz_t u)
 }
 
 int
-mpz_perfect_square_p (const mpz_t u)
+mpz_perfect_square_root (mpz_t r, const mpz_t u)
 {
   if (u->_mp_size <= 0)
-    return (u->_mp_size == 0);
+    {
+      int ret = u->_mp_size == 0;
+      if (r != NULL)
+	r->_mp_size = 0;
+      return ret;
+    }
   else
-    return mpz_root (NULL, u, 2);
+    return mpz_root (r, u, 2);
+}
+
+int
+mpz_perfect_square_p (const mpz_t u)
+{
+  return mpz_perfect_square_root (NULL, u);
 }
 
 int

@@ -212,6 +212,7 @@ int mpz_invert (mpz_t, const mpz_t, const mpz_t);
 
 void mpz_sqrtrem (mpz_t, mpz_t, const mpz_t);
 void mpz_sqrt (mpz_t, const mpz_t);
+int mpz_perfect_square_root (mpz_t, const mpz_t);
 int mpz_perfect_square_p (const mpz_t);
 
 void mpz_pow_ui (mpz_t, const mpz_t, unsigned long);
