@@ -691,7 +691,7 @@ sc_prohibit_long_options_without_use:
 
 # Don't include this header unless you use one of its functions.
 sc_prohibit_inttostr_without_use:
-	@h='inttostr.h' re='\<(off|[iu]max|uint)tostr *\(' \
+	@h='inttostr.h' re='\<(off|[iu]max|u?int)tostr *\(' \
 	  $(_sc_header_without_use)
 
 # Don't include this header unless you use one of its functions.
