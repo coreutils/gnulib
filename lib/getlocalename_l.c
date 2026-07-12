@@ -19,7 +19,6 @@
 /* Specification.  */
 #include <locale.h>
 
-#include <limits.h>
 #include <stdbit.h>
 #include <stdlib.h>
 #include <string.h>

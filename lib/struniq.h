@@ -19,7 +19,6 @@
 
 /* This file needs the following includes:
 
-     #include <limits.h>
      #include <stdbit.h>
      #include <stdlib.h>
      #include <string.h>

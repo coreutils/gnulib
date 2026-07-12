@@ -19,7 +19,6 @@
 
 #include "gl_linkedhash_map.h"
 
-#include <limits.h>
 #include <stdbit.h>
 #include <stdcountof.h>
 #include <stdlib.h>

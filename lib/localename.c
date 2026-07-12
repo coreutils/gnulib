@@ -25,7 +25,6 @@
 /* Specification.  */
 #include "localename.h"
 
-#include <limits.h>
 #include <stdbit.h>
 #include <stdlib.h>
 #include <locale.h>

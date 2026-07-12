@@ -20,7 +20,6 @@
 /* Specification.  */
 #include "hashcode-mem.h"
 
-#include <limits.h>
 #include <stdbit.h>
 
 /* Return a hash of the N bytes of X using the method described by

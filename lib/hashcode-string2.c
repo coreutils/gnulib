@@ -20,7 +20,6 @@
 /* Specification.  */
 #include "hashcode-string2.h"
 
-#include <limits.h>
 #include <stdbit.h>
 
 /* A hash function for NUL-terminated char* strings using

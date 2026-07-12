@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <limits.h>
 #include <sys/types.h>
 
 #include "next-prime.h"

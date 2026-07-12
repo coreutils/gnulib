@@ -19,7 +19,6 @@
 /* Specification.  */
 #include "hashkey-string.h"
 
-#include <limits.h>
 #include <stdbit.h>
 #include <string.h>
 
