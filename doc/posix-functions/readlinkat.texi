@@ -46,7 +46,7 @@ Portability problems not fixed by Gnulib:
 @item
 Behaviors differ when this function is called on an empty file name.
 On most platforms, the function fails with error @code{ENOENT}.
-On Cygnus 3.4.6, the function fails with error @code{EBADF} instead.
+On Cygwin 3.4.6, the function fails with error @code{EBADF} instead.
 @c https://cygwin.com/pipermail/cygwin/2023-April/253510.html
 On GNU/Linux (kernel version 2.6.39 or later), when @var{dirfd} is
 nonnegative the function instead reads directly from @var{dirfd},
