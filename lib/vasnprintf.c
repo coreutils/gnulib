@@ -219,16 +219,19 @@
   /* TCHAR_T is char.  */
   /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
      But don't use it if it has problems.  For example,
-     Solaris, QNX and z/OS sprintf fail if size == INT_MAX + 1u,
-     BeOS produces no output if 0x3000000 <= size,
-     and Linux libc5 with size = 1 writes without bounds, like sprintf.
+     Solaris, QNX and z/OS snprintf fail if size == INT_MAX + 1u,
+     BeOS snprintf produces no output if size >= 0x3000000,
+     and Linux libc5 with size == 1 writes without bounds, like sprintf.
      BSD snprintf, which fails if size == INT_MAX + 2u, is OK for us.
      Use snprintf only on known-safe platforms:
-     glibc 2, Android, musl, the BSDs, macOS, Microsoft UCRT.  */
+     glibc 2, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Android,
+     Microsoft UCRT.  */
 # if ((HAVE_SNPRINTF || HAVE_DECL__SNPRINTF) \
-      && (2 <= __GLIBC__ || __ANDROID__ || MUSL_LIBC \
-          || __FreeBSD__ || __DragonFly__ || __NetBSD__ || __OpenBSD__ \
-          || (__APPLE__ && __MACH__) || _UCRT))
+      && (2 <= __GLIBC__ || MUSL_LIBC \
+          || (defined __APPLE__ && defined __MACH__) \
+          || (defined __FreeBSD__ || defined __DragonFly__) \
+          || defined __NetBSD__ || defined __OpenBSD__ \
+          || defined __ANDROID__ || defined _UCRT))
 #  define USE_SNPRINTF 1
 # else
 #  define USE_SNPRINTF 0
@@ -6868,17 +6871,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                     /* Keep size (in bytes) in ptrdiff_t and size_t range.
                        Also, generate at most INT_MAX + 1 characters
-                       counting the trailing null, as that is the
+                       counting the trailing NUL, as that is the
                        maximum the API allows.  */
-                    size_t
-                      bytes_max = MIN (PTRDIFF_MAX, SIZE_MAX),
-                      tchars_max = bytes_max / sizeof (TCHAR_T),
-                      API_max = MIN (tchars_max - 1, INT_MAX),
-                      maxlen_max = (API_max + 1
-                                    - (API_max + 1) % TCHARS_PER_DCHAR),
-                      maxlen = (MIN (allocated - length,
-                                     maxlen_max / TCHARS_PER_DCHAR)
-                                * TCHARS_PER_DCHAR);
+                    size_t bytes_max = MIN (PTRDIFF_MAX, SIZE_MAX);
+                    size_t tchars_max = bytes_max / sizeof (TCHAR_T);
+                    size_t API_max = MIN (tchars_max - 1, INT_MAX);
+                    size_t maxlen_max =
+                      (API_max + 1) - (API_max + 1) % TCHARS_PER_DCHAR;
+                    size_t maxlen =
+                      MIN (allocated - length, maxlen_max / TCHARS_PER_DCHAR)
+                      * TCHARS_PER_DCHAR;
 # define SNPRINTF_BUF(arg) \
                     switch (prefix_count)                                   \
                       {                                                     \
