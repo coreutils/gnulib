@@ -44,6 +44,25 @@
 int
 main ()
 {
+  /* Large width given as argument.  */
+  {
+    size_t length;
+    char *result =
+      asnprintf (NULL, &length, "%*d", INT_MAX, INT_MIN);
+    if (!result)
+      ASSERT (errno == ENOMEM);
+    else
+      {
+        ASSERT (atoi (result) == INT_MIN);
+        ASSERT (length == INT_MAX);
+        ASSERT (length == strlen (result));
+        free (result);
+      }
+  }
+
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
+
 #if PTRDIFF_MAX == INT_MAX
   fputs ("Skipping test: ptrdiff_t is not 64-bits wide\n", stderr);
   return 77;
