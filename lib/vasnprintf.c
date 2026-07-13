@@ -1855,6 +1855,29 @@ is_borderline (const char *digits, size_t precision)
 
 #endif
 
+/* Maximum number of units needed for a thousands separator,
+   in the code that creates a temporary unit sequence of length
+   MAX_ROOM_NEEDED (...).
+   The tight bound is
+     (!USE_SNPRINTF && !group_ourselves
+      ? THOUSEP_CHAR_MAXLEN
+      : (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
+         ? THOUSEP_WCHAR_MAXLEN
+         : THOUSEP_CHAR_MAXLEN))
+   But since group_ourselves is not known until runtime, we can only use this
+   upper bound:
+     (!USE_SNPRINTF
+      ? THOUSEP_CHAR_MAXLEN
+      : (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
+         ? THOUSEP_WCHAR_MAXLEN
+         : THOUSEP_CHAR_MAXLEN))
+ */
+#if USE_SNPRINTF && (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)
+# define THOUSEP_MAXLEN THOUSEP_WCHAR_MAXLEN
+#else
+# define THOUSEP_MAXLEN THOUSEP_CHAR_MAXLEN
+#endif
+
 #if !USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
 
 /* Use a different function name, to make it possible that the 'wchar_t'
@@ -2035,11 +2058,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         {
           /* A thousands separator needs to be inserted at most every 2 digits.
              This is the case in the ta_IN locale.  */
-# if WIDE_CHAR_VERSION
-          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
-# else
-          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
-# endif
+          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_MAXLEN);
         }
       /* Add 1, to account for a leading sign.  */
       tmp_length = xsum (tmp_length, 1);
@@ -2299,7 +2318,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (LDBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 0.5 * 3 /* estimate for FLAG_GROUP */
+                          /* estimate for FLAG_GROUP */
+                          * (1.0 + 0.5 * THOUSEP_MAXLEN)
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2307,7 +2327,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (DBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 0.5 * 3 /* estimate for FLAG_GROUP */
+                          /* estimate for FLAG_GROUP */
+                          * (1.0 + 0.5 * THOUSEP_MAXLEN)
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2319,7 +2340,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         12; /* sign, decimal point, exponent etc. */
       tmp_length = xsum (tmp_length,
                          precision
-                         * 0.5 * 3 /* estimate for FLAG_GROUP */
+                         /* estimate for FLAG_GROUP */
+                         * (1.0 + 0.5 * THOUSEP_MAXLEN)
                         );
       break;
 
