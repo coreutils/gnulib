@@ -1,0 +1,8 @@
+Files:
+
+Depends-on:
+vaszprintf-extra-tests
+
+configure.ac:
+
+Makefile.am:

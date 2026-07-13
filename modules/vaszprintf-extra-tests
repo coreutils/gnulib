@@ -1,0 +1,14 @@
+Status:
+longrunning-test
+
+Files:
+tests/test-vaszprintf-big.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vaszprintf-big
+check_PROGRAMS += test-vaszprintf-big
