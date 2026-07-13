@@ -228,7 +228,7 @@
 # if ((HAVE_SNPRINTF || HAVE_DECL__SNPRINTF) \
       && (2 <= __GLIBC__ || __ANDROID__ || MUSL_LIBC \
           || __FreeBSD__ || __DragonFly__ || __NetBSD__ || __OpenBSD__ \
-          || (__APPLE__ && __MACH__) || _UCRT))
+          || (__APPLE__ && __MACH__) || defined(_UCRT)))
 #  define USE_SNPRINTF 1
 # else
 #  define USE_SNPRINTF 0
