@@ -576,6 +576,13 @@ thousands_separator_wchar (wchar_t stackbuf[10])
    separator.  */
 #define THOUSEP_WCHAR_MAXLEN 1
 
+/* Maximum number of units needed for a thousands separator.  */
+#if WIDE_CHAR_VERSION
+# define THOUSEP_MAXLEN THOUSEP_WCHAR_MAXLEN
+#else
+# define THOUSEP_MAXLEN THOUSEP_CHAR_MAXLEN
+#endif
+
 #if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) || (NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION || NEED_PRINTF_FLAG_GROUPING || NEED_PRINTF_FLAG_GROUPING_INT)
 # ifndef grouping_rule_defined
 #  define grouping_rule_defined 1
@@ -1889,13 +1896,6 @@ is_borderline (const char *digits, size_t precision)
 #  define MAX_ROOM_NEEDED wmax_room_needed
 # else
 #  define MAX_ROOM_NEEDED max_room_needed
-# endif
-
-/* Maximum number of units needed for a thousands separator.  */
-# if WIDE_CHAR_VERSION
-#  define THOUSEP_MAXLEN THOUSEP_WCHAR_MAXLEN
-# else
-#  define THOUSEP_MAXLEN THOUSEP_CHAR_MAXLEN
 # endif
 
 /* Returns the number of TCHAR_T units needed as temporary space for the result
