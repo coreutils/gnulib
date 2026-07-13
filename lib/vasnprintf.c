@@ -219,18 +219,17 @@
   /* TCHAR_T is char.  */
   /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
      But don't use it if it has problems.  For example,
-     Solaris, QNX and z/OS snprintf fail if size == INT_MAX + 1u,
+     NetBSD, Solaris, QNX and z/OS snprintf fail if size == INT_MAX + 1u,
      BeOS snprintf produces no output if size >= 0x3000000,
      and Linux libc5 with size == 1 writes without bounds, like sprintf.
      BSD snprintf, which fails if size == INT_MAX + 2u, is OK for us.
      Use snprintf only on known-safe platforms:
-     glibc 2, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Android,
-     Microsoft UCRT.  */
+     glibc 2, musl libc, macOS, FreeBSD, OpenBSD, Android, Microsoft UCRT.  */
 # if ((HAVE_SNPRINTF || HAVE_DECL__SNPRINTF) \
       && (2 <= __GLIBC__ || MUSL_LIBC \
           || (defined __APPLE__ && defined __MACH__) \
           || (defined __FreeBSD__ || defined __DragonFly__) \
-          || defined __NetBSD__ || defined __OpenBSD__ \
+          || defined __OpenBSD__ \
           || defined __ANDROID__ || defined _UCRT))
 #  define USE_SNPRINTF 1
 # else
