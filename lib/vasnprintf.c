@@ -1892,6 +1892,13 @@ is_borderline (const char *digits, size_t precision)
 #  define MAX_ROOM_NEEDED max_room_needed
 # endif
 
+/* Maximum number of units needed for a thousands separator.  */
+# if WIDE_CHAR_VERSION
+#  define THOUSEP_MAXLEN THOUSEP_WCHAR_MAXLEN
+# else
+#  define THOUSEP_MAXLEN THOUSEP_CHAR_MAXLEN
+# endif
+
 /* Returns the number of TCHAR_T units needed as temporary space for the result
    of sprintf or SNPRINTF of a single conversion directive.  */
 static size_t
@@ -2061,11 +2068,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         {
           /* A thousands separator needs to be inserted at most every 2 digits.
              This is the case in the ta_IN locale.  */
-# if WIDE_CHAR_VERSION
-          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
-# else
-          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
-# endif
+          tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_MAXLEN);
         }
       /* Add 1, to account for a leading sign.  */
       tmp_length = xsum (tmp_length, 1);
@@ -2325,7 +2328,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (LDBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 0.5 * 3 /* estimate for FLAG_GROUP */
+                          /* estimate for FLAG_GROUP */
+                          * (1.0 + 0.5 * THOUSEP_MAXLEN)
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2333,7 +2337,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         tmp_length =
           (unsigned int) (DBL_MAX_EXP
                           * 0.30103 /* binary -> decimal */
-                          * 0.5 * 3 /* estimate for FLAG_GROUP */
+                          /* estimate for FLAG_GROUP */
+                          * (1.0 + 0.5 * THOUSEP_MAXLEN)
                          )
           + 1 /* turn floor into ceil */
           + 10; /* sign, decimal point etc. */
@@ -2345,7 +2350,8 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         12; /* sign, decimal point, exponent etc. */
       tmp_length = xsum (tmp_length,
                          precision
-                         * 0.5 * 3 /* estimate for FLAG_GROUP */
+                         /* estimate for FLAG_GROUP */
+                         * (1.0 + 0.5 * THOUSEP_MAXLEN)
                         );
       break;
 
@@ -5005,11 +5011,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     /* A thousands separator needs to be inserted at most every 2 digits.
                        This is the case in the ta_IN locale.  */
-# if WIDE_CHAR_VERSION
-                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
-# else
-                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
-# endif
+                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_MAXLEN);
                   }
                 /* Account for sign, decimal point etc. */
                 tmp_length = xsum (tmp_length, 12);
