@@ -1882,7 +1882,21 @@ is_borderline (const char *digits, size_t precision)
 
 /* Maximum number of units needed for a thousands separator,
    in the code that creates a temporary unit sequence of length
-   MAX_ROOM_NEEDED (...).  */
+   MAX_ROOM_NEEDED (...).
+   The tight bound is
+     (!USE_SNPRINTF && !group_ourselves
+      ? THOUSEP_CHAR_MAXLEN
+      : (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
+         ? THOUSEP_WCHAR_MAXLEN
+         : THOUSEP_CHAR_MAXLEN))
+   But since group_ourselves is not known until runtime, we can only use this
+   upper bound:
+     (!USE_SNPRINTF
+      ? THOUSEP_CHAR_MAXLEN
+      : (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
+         ? THOUSEP_WCHAR_MAXLEN
+         : THOUSEP_CHAR_MAXLEN))
+ */
 #if USE_SNPRINTF && (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)
 # define THOUSEP_MAXLEN THOUSEP_WCHAR_MAXLEN
 #else
@@ -5012,7 +5026,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     /* A thousands separator needs to be inserted at most every 2 digits.
                        This is the case in the ta_IN locale.  */
-                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_MAXLEN);
+# if WIDE_CHAR_VERSION
+                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_WCHAR_MAXLEN);
+# else
+                    tmp_length = xsum (tmp_length, tmp_length / 2 * THOUSEP_CHAR_MAXLEN);
+# endif
                   }
                 /* Account for sign, decimal point etc. */
                 tmp_length = xsum (tmp_length, 12);
