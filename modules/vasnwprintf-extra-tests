@@ -2,7 +2,7 @@ Status:
 longrunning-test
 
 Files:
-tests/test-vasnwprintf-big.c
+tests/test-vasnwprintf-big2.c
 tests/macros.h
 
 Depends-on:
@@ -14,5 +14,5 @@ configure.ac:
 AC_CHECK_FUNCS_ONCE([setrlimit])
 
 Makefile.am:
-TESTS += test-vasnwprintf-big
-check_PROGRAMS += test-vasnwprintf-big
+TESTS += test-vasnwprintf-big2
+check_PROGRAMS += test-vasnwprintf-big2
