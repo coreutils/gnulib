@@ -2,7 +2,7 @@ Status:
 longrunning-test
 
 Files:
-tests/test-vaszprintf-big.c
+tests/test-vaszprintf-big1.c
 tests/macros.h
 
 Depends-on:
@@ -10,5 +10,5 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-vaszprintf-big
-check_PROGRAMS += test-vaszprintf-big
+TESTS += test-vaszprintf-big1
+check_PROGRAMS += test-vaszprintf-big1
