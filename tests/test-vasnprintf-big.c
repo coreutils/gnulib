@@ -110,7 +110,7 @@ main ()
             if (s2 != NULL)
               {
                 memset (s2, 'b', n2);
-                s1[n1] = '\0';
+                s2[n2] = '\0';
 
                 size_t len;
                 char *s = asnprintf (NULL, &len, "x%sy%sz", s1, s2);
