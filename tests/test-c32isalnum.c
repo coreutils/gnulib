@@ -234,7 +234,7 @@ main (int argc, char *argv[])
           is = for_character ("\243\261", 2);
           ASSERT (is != 0);
         #endif
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+FF4D FULLWIDTH LATIN SMALL LETTER M */
           is = for_character ("\243\355", 2);
           ASSERT (is != 0);

@@ -395,7 +395,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\071\256\062", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memeq (mb.buf, "\201\071\256\062", 4));
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+FF27 FULLWIDTH LATIN CAPITAL LETTER G */
           mb = for_character ("\243\307", 2);
           ASSERT (mb.nbytes == 2);
