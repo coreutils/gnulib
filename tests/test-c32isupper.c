@@ -307,7 +307,7 @@ main (int argc, char *argv[])
           /* U+3162 HANGUL LETTER YI */
           is = for_character ("\201\071\256\062", 4);
           ASSERT (is == 0);
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+FF27 FULLWIDTH LATIN CAPITAL LETTER G */
           is = for_character ("\243\307", 2);
           ASSERT (is != 0);
