@@ -286,7 +286,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\060\211\070", 4);
           ASSERT (is != 0);
         #endif
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+00E9 LATIN SMALL LETTER E WITH ACUTE */
           is = for_character ("\250\246", 2);
           ASSERT (is != 0);
@@ -321,7 +321,7 @@ main (int argc, char *argv[])
           /* U+3162 HANGUL LETTER YI */
           is = for_character ("\201\071\256\062", 4);
           ASSERT (is == 0);
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+FF47 FULLWIDTH LATIN SMALL LETTER G */
           is = for_character ("\243\347", 2);
           ASSERT (is != 0);

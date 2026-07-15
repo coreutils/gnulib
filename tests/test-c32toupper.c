@@ -413,7 +413,7 @@ main (int argc, char *argv[])
           mb = for_character ("\243\307", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\243\307", 2) == 0);
-        #if !defined __DragonFly__
+        #if !(defined __FreeBSD__ || defined __DragonFly__)
           /* U+FF47 FULLWIDTH LATIN SMALL LETTER G */
           mb = for_character ("\243\347", 2);
           ASSERT (mb.nbytes == 2);
