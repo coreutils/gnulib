@@ -277,6 +277,27 @@ physmem_claimable (double aggressivity)
   }
 #endif
 
+#if HAVE_SYSCTLBYNAME && defined __FreeBSD__
+  { /* This works on FreeBSD.  */
+    unsigned int free_pages;
+    size_t len = sizeof free_pages;
+    if (sysctlbyname ("vm.stats.vm.v_free_count", &free_pages,
+                      &len, NULL, 0) == 0
+        && len == sizeof free_pages)
+      {
+        unsigned int inactive_pages;
+        len = sizeof inactive_pages;
+        if (sysctlbyname ("vm.stats.vm.v_inactive_count", &inactive_pages,
+                          &len, NULL, 0) == 0
+            && len == sizeof inactive_pages)
+          {
+            double pagesize = getpagesize ();
+            return (free_pages + inactive_pages) * pagesize;
+          }
+      }
+  }
+#endif
+
 #if HAVE_SYSCTL && !(defined __GLIBC__ && defined __linux__) && defined HW_USERMEM
   { /* This works on *bsd, kfreebsd-gnu, and darwin.  */
     unsigned int usermem;
