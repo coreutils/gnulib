@@ -51,6 +51,11 @@
 # include <sys/systemcfg.h>
 #endif
 
+#if HAVE_UVM_UVM_EXTERN_H
+/* NetBSD.  */
+# include <uvm/uvm_extern.h>
+#endif
+
 #include "full-read.h"
 
 #ifdef _WIN32
@@ -293,6 +298,21 @@ physmem_claimable (double aggressivity)
             double pagesize = getpagesize ();
             return (free_pages + inactive_pages) * pagesize;
           }
+      }
+  }
+#endif
+
+#if HAVE_SYSCTL && defined VM_UVMEXP2
+  { /* This works on NetBSD.  */
+    struct uvmexp_sysctl uvmexp;
+    size_t len = sizeof uvmexp;
+    static int mib[2] = { CTL_VM, VM_UVMEXP2 };
+
+    if (sysctl (mib, countof (mib), &uvmexp, &len, NULL, 0) == 0
+        && len == sizeof uvmexp)
+      {
+        double pagesize = getpagesize ();
+        return (uvmexp.free + uvmexp.inactive) * pagesize;
       }
   }
 #endif
