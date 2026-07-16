@@ -23,6 +23,7 @@
 #include "physmem.h"
 
 #include <fcntl.h>
+#include <stdcountof.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -83,8 +84,6 @@ typedef BOOL (WINAPI *PFN_MS_EX) (lMEMORYSTATUSEX*);
 
 #endif
 
-#define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
-
 /* Return the total amount of physical memory.  */
 double
 physmem_total (void)
@@ -125,7 +124,7 @@ physmem_total (void)
     size_t len = sizeof physmem;
     static int mib[2] = { CTL_HW, HW_PHYSMEM };
 
-    if (sysctl (mib, ARRAY_SIZE (mib), &physmem, &len, NULL, 0) == 0
+    if (sysctl (mib, countof (mib), &physmem, &len, NULL, 0) == 0
         && len == sizeof (physmem))
       return (double) physmem;
   }
@@ -304,7 +303,7 @@ physmem_claimable (double aggressivity)
     size_t len = sizeof usermem;
     static int mib[2] = { CTL_HW, HW_USERMEM };
 
-    if (sysctl (mib, ARRAY_SIZE (mib), &usermem, &len, NULL, 0) == 0
+    if (sysctl (mib, countof (mib), &usermem, &len, NULL, 0) == 0
         && len == sizeof (usermem))
       return (double) usermem;
   }
