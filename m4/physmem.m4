@@ -32,7 +32,7 @@ AC_DEFUN([gl_PHYSMEM],
 [
   # Prerequisites of lib/physmem.c.
   AC_CHECK_HEADERS([sys/pstat.h sys/sysinfo.h \
-    machine/hal_sysinfo.h sys/table.h sys/param.h sys/systemcfg.h
+    machine/hal_sysinfo.h sys/table.h sys/param.h sys/systemcfg.h \
     uvm/uvm_extern.h],,,
     [AC_INCLUDES_DEFAULT])
   dnl <sys/sysctl.h> requires <sys/param.h> on OpenBSD 4.0.
