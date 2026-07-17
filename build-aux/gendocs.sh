@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2026-07-17.13
+scriptversion=2026-07-17.17
 
 # Copyright 2003-2026 Free Software Foundation, Inc.
 #
@@ -229,25 +229,13 @@ if test ! -r $GENDOCS_TEMPLATE_DIR/gendocs_template; then
   exit 1
 fi
 
-# Function to return size of $1 in something resembling kilobytes.
-# We don't use `ls -s` because that can be longer or shorter than
-# the real length of the data (because the file system compresses
-# the file, for example).  We don't use `du -k --apparent-size`
-# because we do not want to assume `du` supports that option.
-#
-# Here's an example of different `ls -s` results on different file
-# systems:
-#
-# $ cp /var/tmp/findutils-manual/find.html find.html
-# $ ls -lsh /var/tmp/findutils-manual/find.html find.html
-# 221K -rw-rw-r-- 1 james james 582K Jul 17 13:01 find.html
-# 584K -rw-rw-r-- 1 james james 582K Jul 17 12:54 /var/tmp/findutils-manual/find.html
+# Output $1's size like "7.1 MiB" if du is GNU, "7425707 bytes" otherwise.
 calcsize()
 {
-  # Determine size in bytes
-  set `env LC_ALL=C wc -c < "$1"`
-  # Emit the size in KiB, rounding up.
-  expr '(' "$1" + 1023 ')' / 1024
+  duout=`LC_ALL=C du -h --apparent-size -- "$1" 2>/dev/null` ||
+    duout=`LC_ALL=C wc -c <"$1"`
+  set x $duout
+  printf '%s\n' "$2" | sed 's/[^0-9.].*/ &iB/; s/[0-9]$/& bytes/'
 }
 
 # copy_images OUTDIR HTML-FILE...
@@ -364,7 +352,8 @@ html_split()
       ln -s ${PACKAGE}.html index.html
     tar -czf "$abs_outdir/${PACKAGE}.html_$1.tar.gz" -- *.html
   )
-  eval html_$1_tgz_size=`calcsize "$outdir/${PACKAGE}.html_$1.tar.gz"`
+  size=`calcsize "$outdir/${PACKAGE}.html_$1.tar.gz"`
+  eval html_$1_tgz_size=\$size
   rm -f "$outdir"/html_$1/*.html
   mkdir -p "$outdir/html_$1/"
   mv ${split_html_dir}/*.html "$outdir/html_$1/"
@@ -403,8 +392,8 @@ if test -z "$use_texi2html"; then
     cd $split_html_dir || exit 1
     tar -czf "$abs_outdir/$PACKAGE.html_$split.tar.gz" -- *
   )
-  eval \
-    html_${split}_tgz_size=`calcsize "$outdir/$PACKAGE.html_$split.tar.gz"`
+  size=`calcsize "$outdir/$PACKAGE.html_$split.tar.gz"`
+  eval html_${split}_tgz_size=\$size
   rm -rf "$outdir/html_$split/"
   mv $split_html_dir "$outdir/html_$split/"
   du -s "$outdir/html_$split/"
@@ -573,5 +562,6 @@ echo "Done, see $outdir/ subdirectory for new files."
 # eval: (add-hook 'before-save-hook 'time-stamp nil t)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%Y-%02m-%02d.%02H"
+# time-stamp-time-zone: "UTC0"
 # time-stamp-end: "$"
 # End:
