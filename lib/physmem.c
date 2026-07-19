@@ -313,7 +313,18 @@ physmem_claimable (double aggressivity)
         && len == sizeof uvmexp)
       {
         double pagesize = getpagesize ();
-        return (uvmexp.free + uvmexp.inactive) * pagesize;
+        /* On NetBSD, a process needs a number of memory pages and a comparable
+           number of swap pages.  When not enough swap pages are available, the
+           process might be killed with "killed: out of swap", or the machine
+           might become unresponsive.  */
+        double available_memory_pages = uvmexp.free + uvmexp.inactive;
+        double available_swap_pages =
+          (unsigned long long) ((uvmexp.swpages - uvmexp.swpginuse) * 0.85);
+        double available_pages =
+          (available_memory_pages < available_swap_pages
+           ? available_memory_pages
+           : available_swap_pages);
+        return available_pages * pagesize;
       }
   }
 #endif
