@@ -29,7 +29,7 @@ mbiter_is_utf8 (int *cache)
   if (*cache < 0)
     {
       /* UTF-8 is the only encoding in use which maps the bytes 0xC4 0x80
-         to U+0100.  (See libiconv/tests/*.TXT for all the mapping tables.)
+         to U+0100.  (See libiconv/tests/?*.TXT for all the mapping tables.)
          We can assume that in this case, the char32_t encoding is Unicode
          (not platform-dependent like for other locale encodings).  */
       mbstate_t state; mbszero (&state);
