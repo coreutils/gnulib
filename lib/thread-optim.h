@@ -72,7 +72,8 @@
 
 #elif defined __ELF__ /* Linux, Hurd, FreeBSD, NetBSD, OpenBSD, Solaris, ... */\
       && HAVE_LINK_H \
-      && HAVE_DL_ITERATE_PHDR /* not Solaris 10, not Haiku */
+      && (HAVE_DL_ITERATE_PHDR /* not Solaris 10, not Haiku */ \
+          && !defined __FILC__ /* not Fil-C */)
 
 /* We can detect whether pthread_create() can be invoked, by looking
    at the contents of the PLT of the executable and of each shared object.  */
