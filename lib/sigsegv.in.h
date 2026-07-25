@@ -77,13 +77,14 @@
 
 /* HAVE_STACK_OVERFLOW_RECOVERY
    is defined if stack overflow can be caught.  */
-#if defined __linux__ || defined __ANDROID__ || defined __gnu_hurd__ \
-    || defined __FreeBSD_kernel__ || (defined __FreeBSD__ && !(defined __sparc__ || defined __sparc64__)) || defined __DragonFly__ \
-    || (defined __NetBSD__ && !(defined __sparc__ || defined __sparc64__)) \
-    || defined __OpenBSD__ \
-    || (defined __APPLE__ && defined __MACH__) \
-    || defined _AIX || defined __sun \
-    || defined __CYGWIN__ || defined __HAIKU__
+#if (defined __linux__ || defined __ANDROID__ || defined __gnu_hurd__ \
+     || defined __FreeBSD_kernel__ || (defined __FreeBSD__ && !(defined __sparc__ || defined __sparc64__)) || defined __DragonFly__ \
+     || (defined __NetBSD__ && !(defined __sparc__ || defined __sparc64__)) \
+     || defined __OpenBSD__ \
+     || (defined __APPLE__ && defined __MACH__) \
+     || defined _AIX || defined __sun \
+     || defined __CYGWIN__ || defined __HAIKU__) \
+    && !defined __FILC__
 /* Linux, Hurd, GNU/kFreeBSD, FreeBSD, NetBSD, OpenBSD, macOS, AIX, Solaris, Cygwin, Haiku */
 # define HAVE_STACK_OVERFLOW_RECOVERY 1
 #endif
