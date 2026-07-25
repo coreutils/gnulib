@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 #include <errno.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -38,6 +39,10 @@ szprintf (char *str, const char *format, ...)
   size_t lenbuf = SIZE_MAX;
   if (lenbuf >= ~ (uintptr_t) str)
     lenbuf = ~ (uintptr_t) str;
+#if defined __FILC__
+  if (lenbuf > INT_MAX)
+    lenbuf = INT_MAX;
+#endif
 
   char *output = vasnprintf (str, &lenbuf, format, args);
   size_t len = lenbuf;

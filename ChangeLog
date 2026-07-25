@@ -1,5 +1,11 @@
 2026-07-25  Bruno Haible  <bruno@clisp.org>
 
+	[v]szprintf: Port to Fil-C.
+	* lib/szprintf.c (szprintf): Ensure lenbuf is at most INT_MAX.
+	* lib/vszprintf.c (vszprintf): Likewise.
+	* lib/unistdio/u-vsprintf.h (VSPRINTF): Ensure lenbuf is at most
+	INT_MAX / sizeof (DCHAR_T).
+
 	fpucw: Avoid runtime error with Fil-C.
 	* lib/fpucw.h: Use no-op definitions with Fil-C.
 
