@@ -1,5 +1,8 @@
 2026-07-25  Bruno Haible  <bruno@clisp.org>
 
+	fpucw: Avoid runtime error with Fil-C.
+	* lib/fpucw.h: Use no-op definitions with Fil-C.
+
 	thread-optim: Avoid runtime error with Fil-C.
 	* lib/thread-optim.h (_GL_MULTITHREADED_VIA_ELF): Don't define with Fil-C.
 
