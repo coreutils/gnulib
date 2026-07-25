@@ -1,3 +1,14 @@
+2026-07-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: port to Solaris 10 + gcc 3.4.3 + assert-h
+	I ran into this problem when building GNU m4 (Savannah commit
+	7d5125b78d56dfa08b6bb4205428eb9962ad9244) on Solaris 10 sparc.
+	It has GCC 3.4.3 (csl-sol210-3_4-branch+sol_rpath),
+	which lacks _Static_assert.  GNU m4 both uses assert-h and
+	includes <verify.h>, and without this patch the latter mistakenly
+	#undefs the _Static_assert that the former defined.
+	* lib/verify.h (_Static_assert) [_GL_STATIC_ASSERT]: Do not undef.
+
 2026-07-19  Bruno Haible  <bruno@clisp.org>
 
 	physmem: On NetBSD, consider the available swap space.
