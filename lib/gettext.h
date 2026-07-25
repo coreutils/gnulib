@@ -82,7 +82,11 @@ const
 char *
 gettext (const char *msgid)
 {
-  return msgid;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    msgid;
 }
 #  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4
 __attribute__ ((__always_inline__, __gnu_inline__))
@@ -97,7 +101,11 @@ char *
 dgettext (const char *domain, const char *msgid)
 {
   (void) domain;
-  return msgid;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    msgid;
 }
 #  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4
 __attribute__ ((__always_inline__, __gnu_inline__))
@@ -113,7 +121,11 @@ dcgettext (const char *domain, const char *msgid, int category)
 {
   (void) domain;
   (void) category;
-  return msgid;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    msgid;
 }
 #  if __GNUC__ >= 9
 #   pragma GCC diagnostic pop

@@ -1,5 +1,16 @@
 2026-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gettext-h: conform to C on Solaris
+	On Solaris, gettext.h was sometimes converting char const * to char *
+	without a cast, which violates a constraint of the C standard.
+	GCC 3.4.3 complained about this.  Though the compile succeeded
+	it’s better to not violate constraints when it’s easy.
+	* lib/gettext.h (gettext, dgettext, dcgettext)
+	[__sun && __GNUC__ && !__clang__ && !__cplusplus && !ENABLE_NLS]:
+	Cast msgid to char * before returning.
+
+2026-07-25  Paul Eggert  <eggert@cs.ucla.edu>
+
 	verify: port to Solaris 10 + gcc 3.4.3 + assert-h
 	I ran into this problem when building GNU m4 (Savannah commit
 	7d5125b78d56dfa08b6bb4205428eb9962ad9244) on Solaris 10 sparc.
