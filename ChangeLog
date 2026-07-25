@@ -1,3 +1,8 @@
+2026-07-25  Bruno Haible  <bruno@clisp.org>
+
+	isinf: Avoid compilation error with Fil-C.
+	* lib/math.in.h (isinf): In C++ mode, don't define as a macro.
+
 2026-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gettext-h: conform to C on Solaris
