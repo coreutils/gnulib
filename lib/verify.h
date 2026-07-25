@@ -46,8 +46,9 @@
 
 /* FreeBSD 9.1 <sys/cdefs.h>, included by <stddef.h> and lots of other
    system headers, defines a conflicting _Static_assert that is no
-   better than ours; override it.  */
-#ifndef _GL_HAVE__STATIC_ASSERT
+   better than ours; override it unless Gnulib's replacement <assert.h>
+   (included from config.h) already overrode it.  */
+#if ! (defined _GL_HAVE__STATIC_ASSERT || defined _GL_STATIC_ASSERT)
 # include <stddef.h>
 # undef _Static_assert
 #endif
