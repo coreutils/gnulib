@@ -53,6 +53,9 @@ main (int argc, _GL_UNUSED char **argv)
   ASSERT (p != NULL);
 #endif
 
+#if defined __FILC__
+  /* Avoid a "filc safety error: attempt to allocate object that is too big" */
+#else
   /* Check that realloc (p, n) fails when p is non-null and n exceeds
      PTRDIFF_MAX.  */
   if (PTRDIFF_MAX < SIZE_MAX)
@@ -83,6 +86,7 @@ main (int argc, _GL_UNUSED char **argv)
       ASSERT (r == NULL);
       ASSERT (errno == ENOMEM);
     }
+#endif
 
   free (p);
   return test_exit_status;

@@ -34,6 +34,11 @@ void *(*volatile my_calloc) (size_t, size_t) = calloc;
 int
 main ()
 {
+#if defined __FILC__
+  /* Avoid a "filc safety error: attempt to allocate object that is too big" */
+  fputs ("Skipping test: large allocations are unsupported\n", stderr);
+  return 77;
+#else
   /* Check that calloc sets errno when it fails.
      Do this only in 64-bit processes, because there are many bi-arch systems
      nowadays where a 32-bit process can actually allocate 2 GiB of RAM.  */
@@ -58,4 +63,5 @@ main ()
       fputs ("Skipping test: size_t is not 64-bits wide\n", stderr);
       return 77;
     }
+#endif
 }

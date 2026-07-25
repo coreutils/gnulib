@@ -1,5 +1,17 @@
 2026-07-25  Bruno Haible  <bruno@clisp.org>
 
+	tests: Avoid some runtime errors with Fil-C.
+	* tests/test-alignalloc.c (MAX_ALIGNMENT): New macro. Use it instead
+	of 16 MiB.
+	* tests/test-calloc-posix.c (main): Skip big allocations on Fil-C.
+	* tests/test-calloc-gnu.c (main): Likewise.
+	* tests/test-malloc-posix.c (main): Likewise.
+	* tests/test-malloc-gnu.c (main): Likewise.
+	* tests/test-realloc-posix.c (main): Likewise.
+	* tests/test-reallocarray.c (main): Likewise.
+	* tests/test-fprintf-posix2.c: Likewise.
+	* tests/test-printf-posix2.c: Likewise.
+
 	sigsegv: Port to Fil-C.
 	* lib/sigsegv.in.h (HAVE_STACK_OVERFLOW_RECOVERY): Don't define with Fil-C.
 

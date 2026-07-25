@@ -40,12 +40,15 @@ main ()
     free (p);
   }
 
+#if defined __FILC__
+  /* Avoid a "filc safety error: attempt to allocate object that is too big" */
+#else
   /* Check that calloc fails when requested to allocate a block of memory
      larger than PTRDIFF_MAX or SIZE_MAX bytes.  */
   /* Running this test on a Solaris 10 machine (cfarm210.cfarm.net) makes
      the machine unresponsive for at least several minutes, possibly
      indefinitely.  */
-#if !defined __sun
+# if !defined __sun
   {
     for (size_t n = 2; n != 0; n <<= 1)
       {
@@ -58,6 +61,7 @@ main ()
         ASSERT (errno == ENOMEM);
       }
   }
+# endif
 #endif
 
   return test_exit_status;

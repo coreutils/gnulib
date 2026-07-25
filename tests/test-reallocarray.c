@@ -20,6 +20,7 @@
 #include <stdlib.h>
 
 #include <errno.h>
+#include <stdio.h>
 #include <stdint.h>
 
 #include "signature.h"
@@ -36,6 +37,11 @@ void *(*volatile my_reallocarray) (void *, size_t, size_t) = reallocarray;
 int
 main ()
 {
+#if defined __FILC__
+  /* Avoid a "filc safety error: attempt to allocate object that is too big" */
+  fputs ("Skipping test: large allocations are unsupported\n", stderr);
+  return 77;
+#else
   /* Check that reallocarray fails when requested to allocate a block
      of memory larger than PTRDIFF_MAX or SIZE_MAX bytes.  */
   for (size_t n = 2; n != 0; n <<= 1)
@@ -61,4 +67,5 @@ main ()
     }
 
   return test_exit_status;
+#endif
 }

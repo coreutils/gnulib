@@ -48,7 +48,12 @@ main ()
      Stop at 16 MiB alignments because circa-2022 AddressSanitizer goes
      catatonic with large alignments in posix_memalign,
      and there seems to be little point to testing them.  */
-  for (idx_t alignment = 1; alignment <= 16 * 1024 * 1024; alignment *= 2)
+#if defined __FILC__
+# define MAX_ALIGNMENT (256 * 1024)
+#else
+# define MAX_ALIGNMENT (16 * 1024 * 1024)
+#endif
+  for (idx_t alignment = 1; alignment <= MAX_ALIGNMENT; alignment *= 2)
     for (idx_t size = 1; size <= 1024; size *= 2)
       {
         test_alignalloc (alignment, size - 1);

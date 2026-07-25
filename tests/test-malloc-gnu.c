@@ -38,6 +38,9 @@ main (int argc, _GL_UNUSED char **argv)
   ASSERT (p != NULL);
   free (p);
 
+#if defined __FILC__
+  /* Avoid a "filc safety error: attempt to allocate object that is too big" */
+#else
   /* Check that malloc (n) fails when n exceeds PTRDIFF_MAX.  */
   /* Note: Running this test on a Solaris 10 machine (cfarm210.cfarm.net) makes
      the machine unresponsive for 43 seconds.  */
@@ -48,6 +51,7 @@ main (int argc, _GL_UNUSED char **argv)
       ASSERT (p == NULL);
       ASSERT (errno == ENOMEM);
     }
+#endif
 
   return test_exit_status;
 }
