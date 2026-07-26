@@ -138,7 +138,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function fails if the buffer size exceeds @code{INT_MAX},
 even if the resulting string length would fit in @code{int}:
-NetBSD, Solaris, z/OS.
+NetBSD, Solaris, z/OS, Fil-C.
 @item
 This function fails if the buffer size exceeds @code{INT_MAX + 1u},
 even if the resulting string length would fit in @code{int}:

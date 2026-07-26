@@ -1,3 +1,13 @@
+2026-07-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	snprintf, vsnprintf: update doc
+	* doc/gnulib-intro.texi (Supported Platforms):
+	Also mention z/OS, Fil-C.  Not sure where they should be listed
+	but I gave it a guess.
+	* doc/posix-functions/snprintf.texi (snprintf):
+	* doc/posix-functions/vsnprintf.texi (vsnprintf):
+	Also mention Fil-C bug.
+
 2026-07-25  Bruno Haible  <bruno@clisp.org>
 
 	tests: Avoid some runtime errors with Fil-C.
