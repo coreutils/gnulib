@@ -1,5 +1,12 @@
 2026-07-26  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Pacify -fsanitize=address in rawmemchr, strchrnul
+	Problem reported by Lasse Collin in:
+	https://lists.gnu.org/r/bug-gnulib/2026-07/msg00174.html
+	* lib/memchr.c (__memchr), lib/memchr2.c (memchr2):
+	* lib/rawmemchr.c (rawmemchr), lib/strchrnul.c (strchrnul):
+	Omit the longword optimization if __SANITIZE_ADDRESS__.
+
 	Fix strict aliasing violations in memchr etc
 	Problem and fix reported by Lasse Collin in:
 	https://lists.gnu.org/r/bug-gnulib/2026-07/msg00172.html

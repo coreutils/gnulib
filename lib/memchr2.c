@@ -35,15 +35,23 @@
 void *
 memchr2 (void const *s, int c1_in, int c2_in, size_t n)
 {
+  unsigned char c1 = c1_in;
+  unsigned char c2 = c2_in;
+
+  /* Examine the memory an aligned longword at a time, when possible.
+     Doing so can go past the end of a lesser-aligned object,
+     which is harmless on most platforms but violates the rules of C,
+     so suppress this optimization on platforms where it is known to be
+     dangerous, namely, those using address sanitization.  */
+
+#if ! (defined __SANITIZE_ADDRESS__ || defined __CHERI_PURE_CAPABILITY__)
+
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
      long instead of a 64-bit uintmax_t tends to give better
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
   typedef unsigned long int longword _GL_ATTRIBUTE_MAY_ALIAS;
-
-  unsigned char c1 = (unsigned char) c1_in;
-  unsigned char c2 = (unsigned char) c2_in;
 
   if (c1 == c2)
     return (void *) memchr (s, c1, n);
@@ -137,10 +145,6 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
         longword_ptr++;
         n -= sizeof (longword);
       }
-  }
-
-  {
-    const unsigned char *char_ptr = (const unsigned char *) longword_ptr;
 
     /* At this point, we know that either n < sizeof (longword), or one of the
        sizeof (longword) bytes starting at char_ptr is == c1 or == c2.  On
@@ -148,6 +152,14 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
        any further memory accesses, just by looking at the (tmp1 | tmp2) result
        from the last loop iteration.  But this does not work on big-endian
        machines.  Choose code that works in both cases.  */
+
+    s = longword_ptr;
+  }
+
+#endif
+
+  {
+    unsigned char const *char_ptr = s;
 
     for (; n > 0; --n, ++char_ptr)
       {

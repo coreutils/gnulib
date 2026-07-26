@@ -23,16 +23,24 @@
 char *
 strchrnul (const char *s, int c_in)
 {
+  unsigned char c = c_in;
+  if (!c)
+    return rawmemchr (s, 0);
+
+  /* Examine the memory an aligned longword at a time, when possible.
+     Doing so can go past the end of a lesser-aligned object,
+     which is harmless on most platforms but violates the rules of C,
+     so suppress this optimization on platforms where it is known to be
+     dangerous, namely, those using address sanitization.  */
+
+#if ! (defined __SANITIZE_ADDRESS__ || defined __CHERI_PURE_CAPABILITY__)
+
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
      long instead of a 64-bit uintmax_t tends to give better
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
   typedef unsigned long int longword _GL_ATTRIBUTE_MAY_ALIAS;
-
-  unsigned char c = (unsigned char) c_in;
-  if (!c)
-    return rawmemchr (s, 0);
 
   const longword *longword_ptr;
 
@@ -121,10 +129,6 @@ strchrnul (const char *s, int c_in)
           break;
         longword_ptr++;
       }
-  }
-
-  {
-    const unsigned char *char_ptr = (const unsigned char *) longword_ptr;
 
     /* At this point, we know that one of the sizeof (longword) bytes
        starting at char_ptr is == 0 or == c.  On little-endian machines,
@@ -133,6 +137,13 @@ strchrnul (const char *s, int c_in)
        iteration.  But this does not work on big-endian machines.
        Choose code that works in both cases.  */
 
+    s = (char const *) longword_ptr;
+  }
+
+#endif
+
+  {
+    unsigned char const *char_ptr = (unsigned char const *) s;
     while (*char_ptr && (*char_ptr != c))
       char_ptr++;
     return (char *) char_ptr;
