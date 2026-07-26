@@ -230,7 +230,8 @@
           || (defined __APPLE__ && defined __MACH__) \
           || (defined __FreeBSD__ || defined __DragonFly__) \
           || defined __OpenBSD__ \
-          || defined __ANDROID__ || defined _UCRT))
+          || defined __ANDROID__ || defined _UCRT) \
+      && !defined __FILC__)
 #  define USE_SNPRINTF 1
 # else
 #  define USE_SNPRINTF 0

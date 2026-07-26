@@ -39,10 +39,6 @@ VSPRINTF (DCHAR_T *buf, const FCHAR_T *format, va_list args)
   size_t length = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
   if (length > (~ (uintptr_t) buf) / sizeof (DCHAR_T))
     length = (~ (uintptr_t) buf) / sizeof (DCHAR_T);
-#if defined __FILC__
-  if (length > INT_MAX / sizeof (DCHAR_T))
-    length = INT_MAX / sizeof (DCHAR_T);
-#endif
 
   DCHAR_T *result = VASNPRINTF (buf, &length, format, args);
   if (result == NULL)
