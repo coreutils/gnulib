@@ -1,5 +1,11 @@
 2026-07-26  Bruno Haible  <bruno@clisp.org>
 
+	doc: Update for glibc 2.44.
+	* doc/posix-headers/*.texi: Update.
+	* doc/posix-functions/*.texi: Likewise.
+
+2026-07-26  Bruno Haible  <bruno@clisp.org>
+
 	doc: Update for glibc 2.43.
 	* doc/glibc-functions/mseal.texi: New file.
 	* doc/gnulib.texi (Glibc sys/mman.h): Include it.

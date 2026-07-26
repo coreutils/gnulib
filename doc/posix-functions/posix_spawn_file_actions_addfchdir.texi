@@ -15,4 +15,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on many platforms:
 glibc 2.43, macOS 14, FreeBSD 14.0, NetBSD 9.3, OpenBSD 7.9, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android 9.0.
+@item
+This function is not defined at the linker level, only through @code{<spawn.h>},
+on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=34437
+glibc 2.44.
 @end itemize
