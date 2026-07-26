@@ -29,6 +29,10 @@
 #include <stdint.h>
 #include <string.h>
 
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+
 /* Return the first address of either C1 or C2 (treated as unsigned
    char) that occurs within N bytes of the memory region S.  If
    neither byte appears, return NULL.  */
@@ -44,7 +48,8 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
      so suppress this optimization on platforms where it is known to be
      dangerous, namely, those using address sanitization.  */
 
-#if ! (defined __SANITIZE_ADDRESS__ || defined __CHERI_PURE_CAPABILITY__)
+#if ! (defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer) \
+       || defined __CHERI_PURE_CAPABILITY__)
 
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
      long instead of a 64-bit uintmax_t tends to give better

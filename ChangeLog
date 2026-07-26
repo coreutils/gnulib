@@ -1,5 +1,17 @@
 2026-07-26  Bruno Haible  <bruno@clisp.org>
 
+	Pacify -fsanitize=address in rawmemchr, strchrnul also with clang < 22.
+	* lib/memchr.c (__has_feature): New macro.
+	(__memchr): Test the feature 'address_sanitizer'.
+	* lib/memchr2.c (__has_feature): New macro.
+	(memchr2): Test the feature 'address_sanitizer'.
+	* lib/rawmemchr.c (__has_feature): New macro.
+	(rawmemchr): Test the feature 'address_sanitizer'.
+	* lib/strchrnul.c (__has_feature): New macro.
+	(strchrnul): Test the feature 'address_sanitizer'.
+
+2026-07-26  Bruno Haible  <bruno@clisp.org>
+
 	doc: Update for glibc 2.44.
 	* doc/posix-headers/*.texi: Update.
 	* doc/posix-functions/*.texi: Likewise.
