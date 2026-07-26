@@ -28,7 +28,7 @@ strchrnul (const char *s, int c_in)
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
-  typedef unsigned long int longword;
+  typedef unsigned long int longword _GL_ATTRIBUTE_MAY_ALIAS;
 
   unsigned char c = (unsigned char) c_in;
   if (!c)
