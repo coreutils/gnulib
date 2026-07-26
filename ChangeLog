@@ -1,3 +1,11 @@
+2026-07-26  Bruno Haible  <bruno@clisp.org>
+
+	doc: Update for glibc 2.43.
+	* doc/glibc-functions/mseal.texi: New file.
+	* doc/gnulib.texi (Glibc sys/mman.h): Include it.
+	* doc/posix-headers/*.texi: Update.
+	* doc/posix-functions/*.texi: Likewise.
+
 2026-07-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Pacify -fsanitize=address in rawmemchr, strchrnul
@@ -11254,7 +11262,7 @@
 	* lib/mbchar.h (mb_setascii): Define as an extern inline function
 	instead of a macro.
 
-2024-08-19  Bruno Haible  <bruno@clisp.org>
+2025-08-19  Bruno Haible  <bruno@clisp.org>
 
 	doc: Update for glibc 2.42.
 	* doc/glibc-functions/uabs.texi: New file.
@@ -11270,7 +11278,7 @@
 	* doc/posix-headers/*.texi: Update.
 	* doc/posix-functions/*.texi: Likewise.
 
-2024-08-19  Bruno Haible  <bruno@clisp.org>
+2025-08-19  Bruno Haible  <bruno@clisp.org>
 
 	doc: Update for glibc 2.41.
 	* doc/glibc-functions/sched_getattr.texi: New file.

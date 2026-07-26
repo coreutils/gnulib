@@ -7522,6 +7522,7 @@ This list of functions is sorted according to the header that declares them.
 * mincore::
 * mlock2::
 * mremap::
+* mseal::
 * pkey_alloc::
 * pkey_free::
 * pkey_get::
@@ -7537,6 +7538,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/mincore.texi
 @include glibc-functions/mlock2.texi
 @include glibc-functions/mremap.texi
+@include glibc-functions/mseal.texi
 @include glibc-functions/pkey_alloc.texi
 @include glibc-functions/pkey_free.texi
 @include glibc-functions/pkey_get.texi
