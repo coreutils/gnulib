@@ -40,7 +40,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
-  typedef unsigned long int longword;
+  typedef unsigned long int longword _GL_ATTRIBUTE_MAY_ALIAS;
 
   unsigned char c1 = (unsigned char) c1_in;
   unsigned char c2 = (unsigned char) c2_in;

@@ -1,5 +1,13 @@
 2026-07-26  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Fix strict aliasing violations in memchr etc
+	Problem and fix reported by Lasse Collin in:
+	https://lists.gnu.org/r/bug-gnulib/2026-07/msg00172.html
+	* lib/memchr.c (__memchr), lib/memchr2.c (memchr2):
+	* lib/memrchr.c (__memrchr), lib/rawmemchr.c (rawmemchr):
+	* lib/strchrnul.c (strchrnul):
+	Add _GL_ATTRIBUTE_MAY_ALIAS to the longword typedef.
+
 	snprintf, vsnprintf: update doc
 	* doc/gnulib-intro.texi (Supported Platforms):
 	Also mention z/OS, Fil-C.  Not sure where they should be listed
