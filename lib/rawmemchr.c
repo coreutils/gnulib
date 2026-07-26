@@ -42,7 +42,7 @@ rawmemchr (const void *s, int c_in)
 # else
 
   /* You can change this typedef to experiment with performance.  */
-  typedef uintptr_t longword;
+  typedef uintptr_t longword _GL_ATTRIBUTE_MAY_ALIAS;
   /* Verify that the longword type lacks padding bits.  */
   static_assert (UINTPTR_WIDTH == UCHAR_WIDTH * sizeof (uintptr_t));
 
