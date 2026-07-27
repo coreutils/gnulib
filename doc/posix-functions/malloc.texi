@@ -21,8 +21,12 @@ which also conforms to POSIX and is GNU-compatible:
 Solaris 11.4.
 
 @item
-On some platforms, @code{malloc (n)} can succeed even if @code{n}
-exceeds @code{PTRDIFF_MAX}.  Although this behavior is arguably
+On some 32-bit platforms, @code{malloc (n)} can succeed even if @code{n}
+exceeds @code{PTRDIFF_MAX}, which can lead to undefined behavior later:
+AddressSanitizer of gcc 16.1 or clang 22.1, glibc 2.29, FreeBSD 10.4,
+NetBSD 7.2, OpenBSD 5.5, macOS 10.14, AIX 7.3, Solaris 11.4.
+
+Although this behavior is arguably
 allowed by POSIX it can lead to behavior not defined by POSIX later,
 so @code{malloc-posix} does not allow going over the limit.
 @end itemize

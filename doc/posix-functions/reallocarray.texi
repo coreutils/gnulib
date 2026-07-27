@@ -34,10 +34,15 @@ which also conforms to POSIX and is GNU-compatible:
 Solaris 11.4.
 
 @item
-On some platforms, @code{reallocarray (p, n, s)} can succeed even if
+On some 32-bit platforms, @code{reallocarray (p, n, s)} can succeed even if
 multiplying @code{n} by @code{s} would exceed @code{PTRDIFF_MAX},
 which can lead to undefined behavior later:
-FreeBSD 13, NetBSD 9, OpenBSD 6, musl 1.2.
+AddressSanitizer of gcc 16.1 or clang 22.1, glibc 2.29, Solaris 11.4.
+
+Although this behavior is arguably
+allowed by POSIX it is not compatible with GNU and
+can lead to behavior not defined by POSIX later,
+so @code{realloc-posix} does not allow going over the limit.
 
 @item
 It is not portable to call

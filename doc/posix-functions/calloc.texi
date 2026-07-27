@@ -21,9 +21,13 @@ which also conforms to POSIX and is GNU-compatible:
 Solaris 11.4.
 
 @item
-On some platforms, @code{calloc (n, s)} can succeed even if
+On some 32-bit platforms, @code{calloc (n, s)} can succeed even if
 multiplying @code{n} by @code{s} would exceed @code{PTRDIFF_MAX} or
-@code{SIZE_MAX}.  Although failing to check for exceeding
+@code{SIZE_MAX}, which can lead to undefined behavior later:
+AddressSanitizer of gcc 16.1 or clang 22.1, glibc 2.29, FreeBSD 10.4,
+NetBSD 7.2, OpenBSD 5.5, macOS 10.14, AIX 7.3, Solaris 11.4.
+
+Although failing to check for exceeding
 @code{PTRDIFF_MAX} is arguably allowed by POSIX it can lead to
 undefined behavior later, so @code{calloc-posix} does not allow
 going over the limit.
