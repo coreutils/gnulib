@@ -1,3 +1,15 @@
+2026-07-28  Bruno Haible  <bruno@clisp.org>
+
+	tests: Avoid some more runtime errors with Fil-C.
+	* tests/test-c32ispunct.c (main): Skip a test case that fails on Fil-C.
+	* tests/test-free.c (main): Avoid converting from a pointer to uintptr_t
+	and back.
+	* tests/test-explicit_bzero.c (test_heap): Skip this test on Fil-C.
+	* tests/test-memset_explicit.c (test_heap): Likewise.
+	* tests/test-sigsegv-catch-segv1.c: Skip the entire test on Fil-C, since
+	it relies on converting an uintptr_t value to a pointer.
+	* tests/test-sigsegv-catch-segv2.c: Likewise.
+
 2026-07-28  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 

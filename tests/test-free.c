@@ -131,7 +131,7 @@ main ()
           /* Do a large memory allocation.  */
           size_t big_size = 0x1000000;
           void *ptr = malloc (big_size - 0x100);
-          char *ptr_aligned = (char *) ((uintptr_t) ptr & ~(pagesize - 1));
+          char *ptr_aligned = (char *) ptr - ((uintptr_t) ptr & (pagesize - 1));
           /* This large memory allocation allocated a memory area
              from ptr_aligned to ptr_aligned + big_size.
              Enlarge this memory area by adding a page before and a page

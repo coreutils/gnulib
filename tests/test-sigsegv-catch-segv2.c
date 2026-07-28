@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#if HAVE_SIGSEGV_RECOVERY
+#if HAVE_SIGSEGV_RECOVERY && !defined __FILC__
 
 # if defined _WIN32 && !defined __CYGWIN__
   /* Windows doesn't have sigset_t.  */

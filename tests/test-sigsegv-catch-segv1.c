@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#if HAVE_SIGSEGV_RECOVERY
+#if HAVE_SIGSEGV_RECOVERY && !defined __FILC__
 
 # include "mmap-anon-util.h"
 # include <stdlib.h>

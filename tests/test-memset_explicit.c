@@ -87,11 +87,14 @@ test_static (void)
 /* =============== Verify operation on heap-allocated memory =============== */
 
 /* Skip this part when an address sanitizer is in use, because it would report
-   a "heap use after free".  */
+   a "heap use after free".
+   Skip it also with Fil-C, because that environment does not support the
+   conversion of uintptr_t to a pointer or the re-use of a freed pointer.  */
 #ifndef __has_feature
 # define __has_feature(a) 0
 #endif
-#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer) \
+    || defined __FILC__
 
 static void
 test_heap (void)
@@ -167,7 +170,7 @@ test_heap (void)
     printf ("test_heap: address range is unmapped after free().\n");
 }
 
-#endif /* ! address sanitizer enabled */
+#endif /* ! (address sanitizer enabled || Fil-C) */
 
 /* =============== Verify operation on stack-allocated memory =============== */
 
