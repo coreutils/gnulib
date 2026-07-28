@@ -62,13 +62,13 @@ GCD (WORD_T a, WORD_T b)
 
   for (;;)
     {
-    odd_odd: /* a/c and b/c both odd */
+    odd_odd: /* a/p and b/p both odd */
       if (a == b)
         break;
       if (a > b)
         {
           a = a - b;
-        even_odd: /* a/c even, b/c odd */
+        even_odd: /* a/p even, b/p odd */
           do
             a = a >> 1;
           while ((a & c) == 0);
@@ -76,7 +76,7 @@ GCD (WORD_T a, WORD_T b)
       else
         {
           b = b - a;
-        odd_even: /* a/c odd, b/c even */
+        odd_even: /* a/p odd, b/p even */
           do
             b = b >> 1;
           while ((b & c) == 0);

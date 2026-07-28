@@ -1,3 +1,9 @@
+2026-07-28  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	gcd: Fix comments.
+	* lib/gcd.c (GCD): Fix comments.
+
 2026-07-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	malloc: port to current -m32 AddressSanitizer
