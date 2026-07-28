@@ -42,7 +42,8 @@ GCD (WORD_T a, WORD_T b)
 
   WORD_T c = a | b;
   c = c ^ (c - 1);
-  /* c = largest power of 2 that divides a and b.  */
+  /* c = p + (p - 1), where p is the largest power of 2 that
+     divides both a and b.  */
 
   if (a & c)
     {
