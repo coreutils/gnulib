@@ -1,3 +1,8 @@
+2026-07-29  Bruno Haible  <bruno@clisp.org>
+
+	tests: Avoid some more runtime errors with Fil-C.
+	* tests/test-vma-prot.c (main): Skip assertions that fail on Fil-C.
+
 2026-07-28  Bruno Haible  <bruno@clisp.org>
 
 	tests: Avoid some more runtime errors with Fil-C.

@@ -73,7 +73,9 @@ main (void)
           {
             prot = get_vma_prot (mem, 1024*1024);
             ASSERT (prot != -1);
+# if !defined __FILC__ /* <https://github.com/pizlonator/fil-c/issues/285> */
             ASSERT (prot == 0);
+# endif
           }
       }
   }
@@ -96,7 +98,9 @@ main (void)
 #else
   /* On these platforms, a function pointer is a pointer to or into some
      machine instruction.  */
+# if !defined __FILC__
   ASSERT ((VMA_PROT_EXECUTE & ~prot) == 0);
+# endif
 #endif
 #if !defined __OpenBSD__
   /* Except on OpenBSD/arm64, the machine instructions are also readable.  */
