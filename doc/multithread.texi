@@ -269,7 +269,7 @@ in the Linux kernel, to lock elision
 -- single-threaded programs can still profit performance-wise from the
 assertion that they are single-threaded.
 
-Gnulib defines four facilities that help optimizing for the single-threaded
+Gnulib defines several facilities that help optimizing for the single-threaded
 case.
 
 @itemize @bullet
@@ -344,4 +344,9 @@ and the other functions' Gnulib implementations use Gnulib
 You may define the C macro @code{GNULIB_EXCLUDE_SINGLE_THREAD}, if all the
 programs in your package invoke the functions of the @code{exclude} module
 only from a single thread.
+@item
+You may define the C macro @code{GNULIB_LOCALENAME_SINGLE_THREAD},
+if all the programs in your package invoke the functions of the
+@code{getlocalename_l-simple}, @code{getlocalename_l-unsafe} and
+@code{localename} modules only from a single thread.
 @end itemize

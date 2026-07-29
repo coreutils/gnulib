@@ -1,3 +1,14 @@
+2026-07-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	localename: add GNULIB_LOCALENAME_SINGLE_THREAD
+	If GNULIB_LOCALENAME_SINGLE_THREAD is defined,
+	omit locks in localename and getlocalename-related functions.
+	Useful for GNU grep; see <https://bugs.gnu.org/81515>.
+	* lib/getlocalename_l-unsafe.c, lib/getlocalename_l.c:
+	* lib/localename.c (USE_ISOC_AND_POSIX_THREADS, USE_ISOC_THREADS)
+	(USE_POSIX_THREADS, USE_WINDOWS_THREADS)
+	[GNULIB_LOCALENAME_SINGLE_THREAD]: Undef.
+
 2026-07-29  Bruno Haible  <bruno@clisp.org>
 
 	tests: Avoid some more runtime errors with Fil-C.

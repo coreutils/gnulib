@@ -22,6 +22,13 @@
 
 #include <config.h>
 
+#if GNULIB_LOCALENAME_SINGLE_THREAD
+# undef USE_ISOC_AND_POSIX_THREADS
+# undef USE_ISOC_THREADS
+# undef USE_POSIX_THREADS
+# undef USE_WINDOWS_THREADS
+#endif
+
 /* Specification.  */
 #include "localename.h"
 
