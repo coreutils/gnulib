@@ -7,6 +7,14 @@
 	format in "git init" command.
 	* build-aux/bootstrap: Regenerated.
 
+2026-07-31  Bruno Haible  <bruno@clisp.org>
+
+	strndup: Fix configure test for "ibm-clang -O2".
+	Reported by Lasse Collin <lasse.collin@tukaani.org> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-07/msg00221.html>.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Do the strndup (NULL, 0) test
+	through a volatile function pointer.
+
 2026-07-30  Collin Funk  <collin.funk1@gmail.com>
 
 	posix_spawn_faction_add{chdir,fchdir}: Fix checks on glibc-2.44.
