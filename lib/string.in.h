@@ -850,7 +850,8 @@ _GL_WARN_ON_USE (strncat, "strncat is unportable - "
 _GL_FUNCDECL_RPL (strncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3));
 _GL_CXXALIAS_RPL (strncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
