@@ -1466,7 +1466,8 @@ _GL_EXTERN_C int mbscasecmp (const char *s1, const char *s2)
    But beware that N is not a byte count but a character count!  */
 _GL_EXTERN_C int mbsncasecmp (const char *s1, const char *s2, size_t n)
      _GL_ATTRIBUTE_PURE
-     _GL_ARG_NONNULL ((1, 2));
+     _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+     _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3);
 #endif
 
 #if @GNULIB_MBSPCASECMP@
