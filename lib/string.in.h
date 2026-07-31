@@ -312,7 +312,8 @@ _GL_EXTERN_C void *memset_explicit (void *__s, int __c, size_t __n)
 #if @GNULIB_EXPLICIT_BZERO@
 # if ! @HAVE_EXPLICIT_BZERO@
 _GL_FUNCDECL_SYS (explicit_bzero, void,
-                  (void *__dest, size_t __n), _GL_ARG_NONNULL ((1)));
+                  (void *__dest, size_t __n),
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 2));
 # endif
 _GL_CXXALIAS_SYS (explicit_bzero, void, (void *__dest, size_t __n));
 _GL_CXXALIASWARN (explicit_bzero);
