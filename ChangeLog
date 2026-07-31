@@ -1,5 +1,13 @@
 2026-08-11  Lasse Collin  <lasse.collin@tukaani.org>
 
+	string-h: Use _GL_ATTRIBUTE_NONNULL_IF_NONZERO in mbsnlen.
+	* lib/string.in.h: Use _GL_ATTRIBUTE_NONNULL_IF_NONZERO instead of
+	_GL_ARG_NONNULL in mbsnlen. This matches the spirit of N3322.
+	mbsnlen(NULL, 0) results in NULL < NULL comparison in lib/mbsnlen.c,
+	which is valid after N3322.
+
+2026-08-11  Lasse Collin  <lasse.collin@tukaani.org>
+
 	string-h: Use _GL_ATTRIBUTE_NONNULL_IF_NONZERO in explicit_bzero.
 	In OpenBSD and FreeBSD, bzero is documented to do nothing if the
 	length is zero, and explicit_bzero is documented to behave the same

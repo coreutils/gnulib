@@ -1358,7 +1358,7 @@ _GL_CXXALIASWARN (mbslen);
    at STRING and ending at STRING + LEN.  */
 _GL_EXTERN_C size_t mbsnlen (const char *string, size_t len)
      _GL_ATTRIBUTE_PURE
-     _GL_ARG_NONNULL ((1));
+     _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 2);
 #endif
 
 #if @GNULIB_MBSCHR@
