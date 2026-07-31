@@ -22,7 +22,9 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-Some file systems do not support symbolic links.
+On file systems that do not support symbolic links,
+this function can fail with any of @code{EINVAL}, @code{ENOSYS},
+@code{ENOTSUP}, @code{EOPNOTSUPP}, and @code{EPERM}.
 @item
 If the target is the empty string, this function can create an empty
 symbolic link instead of failing with @code{ENOENT} as GNU/Linux does:

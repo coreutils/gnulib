@@ -1,3 +1,13 @@
+2026-07-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	link, symlink: more errno portability issues
+	* doc/posix-functions/link.texi:
+	* doc/posix-functions/linkat.texi:
+	* doc/posix-functions/symlink.texi:
+	* doc/posix-functions/symlinkat.texi:
+	Document TZDB’s recent odyssey with hard and symlinks.  See:
+	https://lists.iana.org/hyperkitty/list/tz@iana.org/thread/O5Q2I3GLZIF6GEFZ3MDWRZKG4ENPJVFQ/
+
 2026-07-31  Bruno Haible  <bruno@clisp.org>
 
 	strndup: Fix configure test for "ibm-clang -O2".

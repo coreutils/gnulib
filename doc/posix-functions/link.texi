@@ -23,6 +23,10 @@ FreeBSD 7.2, Solaris 11.3, Cygwin 1.5.x.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On file systems that do not support hard links,
+this function can fail with any of @code{EINVAL}, @code{ENOSYS},
+@code{ENOTSUP}, @code{EOPNOTSUPP}, and @code{EPERM}.
+@item
 When the first argument is a symlink, some platforms create a
 hard-link to what the symlink referenced, rather than to the symlink
 itself.  Use @samp{linkat} to force a particular behavior.

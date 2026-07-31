@@ -29,6 +29,10 @@ Linux kernel 2.6.17.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On file systems that do not support hard links,
+this function can fail with any of @code{EINVAL}, @code{ENOSYS},
+@code{ENOTSUP}, @code{EOPNOTSUPP}, and @code{EPERM}.
+@item
 @code{linkat (fd, "directory", fd, "symlink/" ...)} sets @code{errno}
 to @code{EINVAL} instead of @code{EEXIST} or @code{ENOTDIR} on some
 platforms:
