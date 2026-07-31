@@ -45,6 +45,8 @@ main ()
   if (setlocale (LC_ALL, "") == NULL)
     return 1;
 
+  ASSERT (mbsnlen (NULL, 0) == 0);
+
   ASSERT (mbsnlen ("", 0) == 0);
   ASSERT (mbsnlen ("", 1) == 1);
   ASSERT (mbsnlen ("\0", 2) == 2);
