@@ -27,6 +27,10 @@
 static void
 test_ascii (void)
 {
+  ASSERT (mbsncasecmp (NULL, NULL, 0) == 0);
+  ASSERT (mbsncasecmp ("x", NULL, 0) == 0);
+  ASSERT (mbsncasecmp (NULL, "x", 0) == 0);
+
   ASSERT (mbsncasecmp ("paragraph", "Paragraph", 1000000) == 0);
   ASSERT (mbsncasecmp ("paragraph", "Paragraph", 9) == 0);
 
