@@ -1,5 +1,5 @@
 # strndup.m4
-# serial 24
+# serial 25
 dnl Copyright (C) 2002-2003, 2005-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,8 +25,12 @@ AC_DEFUN([gl_FUNC_STRNDUP],
     dnl AIX 7.3 has a function that does not support a zero length.
     AC_CACHE_CHECK([for working strndup], [gl_cv_func_strndup_works],
       [AC_RUN_IFELSE([
-         AC_LANG_PROGRAM([[#include <string.h>
-                           #include <stdlib.h>]], [[
+         AC_LANG_SOURCE([[
+#include <string.h>
+#include <stdlib.h>
+static char *dummy (const char *x, size_t y) { return NULL; }
+int main (int argc, char *argv[])
+{
 #if !HAVE_DECL_STRNDUP
   extern
   #ifdef __cplusplus
@@ -34,6 +38,7 @@ AC_DEFUN([gl_FUNC_STRNDUP],
   #endif
   char *strndup (const char *, size_t);
 #endif
+  char * (* volatile my_strndup) (const char *, size_t) = argc ? strndup : dummy;
   int result = 0;
   {
     char *s = strndup ("some longer string", 15);
@@ -43,9 +48,10 @@ AC_DEFUN([gl_FUNC_STRNDUP],
       result |= 1;
     free (s);
   }
-  if (strndup (NULL, 0) == NULL)
+  if (my_strndup (NULL, 0) == NULL)
     result |= 2;
-  return result;]])],
+  return result;
+}]])],
          [gl_cv_func_strndup_works=yes],
          [gl_cv_func_strndup_works=no],
          [case $host_os in
