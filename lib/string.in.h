@@ -482,7 +482,8 @@ _GL_WARN_ON_USE (memmem, "memmem is unportable and often quadratic - "
 _GL_FUNCDECL_RPL (mempcpy, void *,
                   (void *restrict __dest, void const *restrict __src,
                    size_t __n),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3));
 _GL_CXXALIAS_RPL (mempcpy, void *,
                   (void *restrict __dest, void const *restrict __src,
                    size_t __n));
@@ -491,7 +492,8 @@ _GL_CXXALIAS_RPL (mempcpy, void *,
 _GL_FUNCDECL_SYS (mempcpy, void *,
                   (void *restrict __dest, void const *restrict __src,
                    size_t __n),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3));
 #  endif
 _GL_CXXALIAS_SYS (mempcpy, void *,
                   (void *restrict __dest, void const *restrict __src,
