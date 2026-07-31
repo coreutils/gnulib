@@ -645,7 +645,8 @@ _GL_WARN_ON_USE (stpcpy, "stpcpy is unportable - "
 _GL_FUNCDECL_RPL (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3));
 _GL_CXXALIAS_RPL (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
@@ -654,7 +655,8 @@ _GL_CXXALIAS_RPL (stpncpy, char *,
 _GL_FUNCDECL_SYS (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 3)
+                  _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 3));
 #  endif
 _GL_CXXALIAS_SYS (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
