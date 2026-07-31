@@ -949,13 +949,13 @@ _GL_WARN_ON_USE (strndup, "strndup is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (strnlen, size_t, (char const *__s, size_t __maxlen),
                                    _GL_ATTRIBUTE_PURE
-                                   _GL_ARG_NONNULL ((1)));
+                                   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 2));
 _GL_CXXALIAS_RPL (strnlen, size_t, (char const *__s, size_t __maxlen));
 # else
 #  if ! @HAVE_DECL_STRNLEN@
 _GL_FUNCDECL_SYS (strnlen, size_t, (char const *__s, size_t __maxlen),
                                    _GL_ATTRIBUTE_PURE
-                                   _GL_ARG_NONNULL ((1)));
+                                   _GL_ATTRIBUTE_NONNULL_IF_NONZERO (1, 2));
 #  endif
 _GL_CXXALIAS_SYS (strnlen, size_t, (char const *__s, size_t __maxlen));
 # endif
