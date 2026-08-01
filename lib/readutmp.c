@@ -38,7 +38,16 @@
 #endif
 #if READUTMP_USE_SYSTEMD
 # include <dirent.h>
+# include <dlfcn.h>
 # include <systemd/sd-login.h>
+# if HAVE_SYSTEMD_SD_DLOPEN_H
+#  include <systemd/sd-dlopen.h>
+
+SD_ELF_NOTE_DLOPEN ("systemd",
+                    "Support for systemd sessions",
+                    SD_ELF_NOTE_DLOPEN_PRIORITY_RECOMMENDED,
+                    "libsystemd.so.0");
+# endif
 #endif
 
 #if HAVE_SYS_SYSCTL_H && !(defined __GLIBC__ && defined __linux__) && !defined __minix
@@ -61,11 +70,149 @@
 #include "stat-time.h"
 #include "xalloc.h"
 
+#include "gettext.h"
+#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
+
 /* Each of the FILE streams in this file is only used in a single thread.  */
 #include "unlocked-io.h"
 
 /* Some helper functions.  */
 #include "boot-time-aux.h"
+
+#if READUTMP_USE_SYSTEMD
+
+struct systemd_operations
+{
+  __typeof__ (&sd_get_sessions) sd_get_sessions;
+  __typeof__ (&sd_session_get_start_time) sd_session_get_start_time;
+  __typeof__ (&sd_session_get_seat) sd_session_get_seat;
+  __typeof__ (&sd_session_get_tty) sd_session_get_tty;
+  __typeof__ (&sd_session_get_type) sd_session_get_type;
+  __typeof__ (&sd_session_get_service) sd_session_get_service;
+  __typeof__ (&sd_session_get_uid) sd_session_get_uid;
+  __typeof__ (&sd_session_get_username) sd_session_get_username;
+  __typeof__ (&sd_session_get_leader) sd_session_get_leader;
+  __typeof__ (&sd_session_get_class) sd_session_get_class;
+  __typeof__ (&sd_session_get_remote_host) sd_session_get_remote_host;
+  __typeof__ (&sd_session_get_display) sd_session_get_display;
+  __typeof__ (&sd_session_get_remote_user) sd_session_get_remote_user;
+};
+
+static struct systemd_operations systemd_ops;
+
+/* Return a function pointer in HANDLE for SYMBOL.  */
+static void *
+systemd_symbol_address (void *handle, char const *symbol)
+{
+  void *address = dlsym (handle, symbol);
+  if (!address)
+    errno = ENOSYS;
+  return address;
+}
+
+/* Load libsystemd and resolve all required symbols.  Cache the result.
+   Return 0 on success.  Return -1 with errno set to ENOSYS on failure.  */
+static int
+load_libsystemd (void)
+{
+  static int status = 0;
+  static void *handle = NULL;
+  int flags = RTLD_LAZY | RTLD_LOCAL;
+
+  if (status)
+    {
+      if (status < 0)
+        errno = ENOSYS;
+      return status < 0 ? -1 : 0;
+    }
+
+# ifdef RTLD_NODELETE
+  flags |= RTLD_NODELETE;
+# endif
+  handle = dlopen ("libsystemd.so.0", flags);
+  if (!handle)
+    goto fail;
+
+  systemd_ops.sd_get_sessions =
+    systemd_symbol_address (handle, "sd_get_sessions");
+  if (!systemd_ops.sd_get_sessions)
+    goto fail;
+  systemd_ops.sd_session_get_start_time =
+    systemd_symbol_address (handle, "sd_session_get_start_time");
+  if (!systemd_ops.sd_session_get_start_time)
+    goto fail;
+  systemd_ops.sd_session_get_seat =
+    systemd_symbol_address (handle, "sd_session_get_seat");
+  if (!systemd_ops.sd_session_get_seat)
+    goto fail;
+  systemd_ops.sd_session_get_tty =
+    systemd_symbol_address (handle, "sd_session_get_tty");
+  if (!systemd_ops.sd_session_get_tty)
+    goto fail;
+  systemd_ops.sd_session_get_type =
+    systemd_symbol_address (handle, "sd_session_get_type");
+  if (!systemd_ops.sd_session_get_type)
+    goto fail;
+  systemd_ops.sd_session_get_service =
+    systemd_symbol_address (handle, "sd_session_get_service");
+  if (!systemd_ops.sd_session_get_service)
+    goto fail;
+  systemd_ops.sd_session_get_uid =
+    systemd_symbol_address (handle, "sd_session_get_uid");
+  if (!systemd_ops.sd_session_get_uid)
+    goto fail;
+  systemd_ops.sd_session_get_username =
+    systemd_symbol_address (handle, "sd_session_get_username");
+  if (!systemd_ops.sd_session_get_username)
+    goto fail;
+  systemd_ops.sd_session_get_leader =
+    systemd_symbol_address (handle, "sd_session_get_leader");
+  if (!systemd_ops.sd_session_get_leader)
+    goto fail;
+  systemd_ops.sd_session_get_class =
+    systemd_symbol_address (handle, "sd_session_get_class");
+  if (!systemd_ops.sd_session_get_class)
+    goto fail;
+  systemd_ops.sd_session_get_remote_host =
+    systemd_symbol_address (handle, "sd_session_get_remote_host");
+  if (!systemd_ops.sd_session_get_remote_host)
+    goto fail;
+  systemd_ops.sd_session_get_display =
+    systemd_symbol_address (handle, "sd_session_get_display");
+  if (!systemd_ops.sd_session_get_display)
+    goto fail;
+  systemd_ops.sd_session_get_remote_user =
+    systemd_symbol_address (handle, "sd_session_get_remote_user");
+  if (!systemd_ops.sd_session_get_remote_user)
+    goto fail;
+
+  status = 1;
+  return 0;
+
+ fail:
+  if (handle)
+    dlclose (handle);
+  handle = NULL;
+  status = -1;
+  errno = ENOSYS;
+  return -1;
+}
+
+# define sd_get_sessions systemd_ops.sd_get_sessions
+# define sd_session_get_start_time systemd_ops.sd_session_get_start_time
+# define sd_session_get_seat systemd_ops.sd_session_get_seat
+# define sd_session_get_tty systemd_ops.sd_session_get_tty
+# define sd_session_get_type systemd_ops.sd_session_get_type
+# define sd_session_get_service systemd_ops.sd_session_get_service
+# define sd_session_get_uid systemd_ops.sd_session_get_uid
+# define sd_session_get_username systemd_ops.sd_session_get_username
+# define sd_session_get_leader systemd_ops.sd_session_get_leader
+# define sd_session_get_class systemd_ops.sd_session_get_class
+# define sd_session_get_remote_host systemd_ops.sd_session_get_remote_host
+# define sd_session_get_display systemd_ops.sd_session_get_display
+# define sd_session_get_remote_user systemd_ops.sd_session_get_remote_user
+
+#endif
 
 /* The following macros describe the 'struct UTMP_STRUCT_NAME',
    *not* 'struct gl_utmp'.  */
@@ -797,6 +944,14 @@ guess_pty_name (uid_t uid, const struct timespec at)
 static int
 read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
 {
+  if (load_libsystemd () < 0)
+    {
+      fprintf (stderr, "%s\n",
+               _("error: functionality provided by libsystemd is not "
+                 "available, as libsystemd could not be dynamically loaded"));
+      return -1;
+    }
+
   /* Fill entries, simulating what a utmp file would contain.  */
   struct utmp_alloc a = { NULL, 0, 0, 0 };
 
