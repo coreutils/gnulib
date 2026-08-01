@@ -1,3 +1,8 @@
+2026-08-01  Bruno Haible  <bruno@clisp.org>
+
+	free-posix tests: Avoid failure on Ubuntu 24.04 (regression 2026-07-28).
+	* tests/test-free.c (main): Restore previous code for !__FILC__.
+
 2026-07-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: N3322 cautions
