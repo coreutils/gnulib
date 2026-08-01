@@ -1,5 +1,9 @@
 2026-07-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: N3322 cautions
+	* doc/gnulib-readme.texi (Other portability assumptions):
+	Add cautions about other parts of N3322.
+
 	link, symlink: more errno portability issues
 	* doc/posix-functions/link.texi:
 	* doc/posix-functions/linkat.texi:

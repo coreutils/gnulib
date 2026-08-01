@@ -574,10 +574,20 @@ Adding zero to a null pointer does not change the pointer.
 For example, @code{0 + (char *) NULL == (char *) NULL}.
 Similarly, subtracting zero does not change a null pointer,
 and subtracting two null pointers results in zero.
-C23 was the first C standard to require this behavior; see
+C2y is planned to be the first C standard to require this behavior; see
 ``@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf,
-Allow zero length operations on null pointers}'', WG14 N3322 (2024-08-28);
-which was adopted retroactively for C23.
+Allow zero length operations on null pointers}'', WG14 N3322 (2024-08-28).
+
+However, portable code should not assume the other parts of N3322.
+For example, although N3322 requires that functions like @code{memcpy}
+succeed on null pointers when the size is zero,
+many C23-and-earlier platforms do not conform to this requirement
+because their compilers or library declarations
+assume that arguments to @code{memcpy} must be non-null.
+Although Gnulib has some tests for N3322 conformance,
+these tests are incomplete and it is doubtful that they could be made
+complete enough to be trustworthy for all plausible applications and
+C23-and-earlier compilers, so caution is advised in this area.
 @end itemize
 @end itemize
 
