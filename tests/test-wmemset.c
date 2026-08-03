@@ -23,6 +23,15 @@
 
 #include "macros.h"
 
+/* Test the prototype in <wchar.h> + compiler.  */
+static wchar_t *
+null_wmemset (wchar_t *ws, wchar_t wc, size_t n)
+{
+  wchar_t *p = wmemset (ws, wc, n);
+  ASSERT (ws == NULL);
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static wchar_t *
 lib_wmemset (wchar_t *ws, wchar_t wc, size_t n)
@@ -39,6 +48,9 @@ main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  ASSERT (wmemset (NULL, L'?', 0) == NULL);
+
+  volatile_wmemset = null_wmemset;
   ASSERT (wmemset (NULL, L'?', 0) == NULL);
 
   return test_exit_status;

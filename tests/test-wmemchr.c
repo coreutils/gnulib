@@ -23,6 +23,15 @@
 
 #include "macros.h"
 
+/* Test the prototype in <wchar.h> + compiler.  */
+static wchar_t *
+null_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
+{
+  wchar_t const *p = wmemchr (s, wc, n);
+  ASSERT (s == NULL);
+  return (wchar_t *) p;
+}
+
 /* Test the library, not the compiler+library.  */
 static wchar_t *
 lib_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
@@ -39,6 +48,9 @@ main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  ASSERT (wmemchr (NULL, L'?', 0) == NULL);
+
+  volatile_wmemchr = null_wmemchr;
   ASSERT (wmemchr (NULL, L'?', 0) == NULL);
 
   return test_exit_status;

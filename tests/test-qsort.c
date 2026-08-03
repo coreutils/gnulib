@@ -19,6 +19,20 @@
 /* Specification.  */
 #include <stdlib.h>
 
+#include "macros.h"
+
+/* Test the prototype in <stdlib.h> + compiler.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static void
+null_qsort (void *base, size_t nel, size_t width,
+            int (*compar) (void const *, void const *))
+{
+  qsort (base, nel, width, compar);
+#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
+  ASSERT (base == NULL);
+#endif
+}
+
 /* Test the library, not the compiler+library.  */
 static void
 lib_qsort (void *base, size_t nel, size_t width,
@@ -44,6 +58,9 @@ main (void)
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
+  qsort (NULL, 0, 1, cmp);
+
+  volatile_qsort = null_qsort;
   qsort (NULL, 0, 1, cmp);
 
   return 0;

@@ -27,6 +27,20 @@ SIGNATURE_CHECK (memchr, void *, (void const *, int, size_t));
 #include "zerosize-ptr.h"
 #include "macros.h"
 
+/* Test the prototype in <string.h> + compiler.
+   In GCC < 15 this is a builtin that has the nonnull attribute.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static void *
+null_memchr (void const *s, int c, size_t n)
+{
+  const void *p = memchr (s, c, n);
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
+  ASSERT (s == NULL);
+#endif
+  return (void *) p;
+}
+
 /* Test the library, not the compiler+library.  */
 static void *
 lib_memchr (void const *s, int c, size_t n)
@@ -136,6 +150,9 @@ main (void)
 
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  ASSERT (memchr (NULL, '?', 0) == NULL);
+
+  volatile_memchr = null_memchr;
   ASSERT (memchr (NULL, '?', 0) == NULL);
 
   return test_exit_status;

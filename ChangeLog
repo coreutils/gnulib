@@ -1,5 +1,37 @@
 2026-08-11  Lasse Collin  <lasse.collin@tukaani.org>
 
+	tests: Verify N3322 compatibility of the function prototypes.
+	Test that the compiler doesn't optimize a NULL check away when it sees
+	the prototypes in the headers <string.h>, <wchar.h>, and <stdlib.h>.
+	The existing tests explicitly avoided the effects of the attributes
+	in the function prototypes.
+	Exclude GCC < 15 and glibc which are known to be problematic.
+	Use 2.99 as a placeholder for a fixed glibc version. It should
+	be updated once the glibc headers have been changed.
+	* tests/test-bsearch.c: Add the test null_bsearch.
+	* tests/test-memccpy.c: Add the test null_memccpy.
+	* tests/test-memchr.c: Add the test null_memchr.
+	* tests/test-memcmp.c: Add the test null_memcmp.
+	* tests/test-memcpy.c: Add the test null_memcpy.
+	* tests/test-memmove.c: Add the test null_memmove.
+	* tests/test-memset.c: Add the test null_memset.
+	* tests/test-memset_explicit.c: Add the test null_memset_explicit.
+	* tests/test-qsort.c: Add the test null_qsort.
+	* tests/test-strncat.c: Add the test null_strncat.
+	* tests/test-strncmp.c: Add the test null_strncmp.
+	* tests/test-strncpy.c: Add the test null_strncpy.
+	* tests/test-strndup.c: Add the test null_strndup.
+	* tests/test-wcsncat.c: Add the test null_wcsncat.
+	* tests/test-wcsncmp.c: Add the test null_wcsncmp.
+	* tests/test-wcsncpy.c: Add the test null_wcsncpy.
+	* tests/test-wmemchr.c: Add the test null_wmemchr.
+	* tests/test-wmemcmp.c: Add the test null_wmemcmp.
+	* tests/test-wmemcpy.c: Add the test null_wmemcpy.
+	* tests/test-wmemmove.c: Add the test null_wmemmove.
+	* tests/test-wmemset.c: Add the test null_wmemset.
+
+2026-08-11  Lasse Collin  <lasse.collin@tukaani.org>
+
 	mbsncasecmp-tests: Test mbsncasecmp with NULL arguments.
 	* tests/test-mbsncasecmp.c (test_ascii): Add the tests.
 

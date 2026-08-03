@@ -23,6 +23,15 @@
 
 #include "macros.h"
 
+/* Test the prototype in <wchar.h> + compiler.  */
+static wchar_t *
+null_wmemcpy (wchar_t *s1, wchar_t const *s2, size_t n)
+{
+  wchar_t *p = wmemcpy (s1, s2, n);
+  ASSERT (s1 == NULL);
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static wchar_t *
 lib_wmemcpy (wchar_t *s1, wchar_t const *s2, size_t n)
@@ -47,6 +56,9 @@ main (void)
     wchar_t y[1];
     ASSERT (wmemcpy (y, NULL, 0) == y);
   }
+
+  volatile_wmemcpy = null_wmemcpy;
+  ASSERT (wmemcpy (NULL, L"x", 0) == NULL);
 
   return test_exit_status;
 }

@@ -23,6 +23,20 @@
 
 #include "macros.h"
 
+/* Test the prototype in <string.h> + compiler.
+   In GCC < 15 this is a builtin that has the nonnull attribute.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static void *
+null_memmove (void *dest, const void *src, size_t n)
+{
+  void * p = memmove (dest, src, n);
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
+  ASSERT (dest == NULL);
+#endif
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static void *
 lib_memmove (void *s1, void const *s2, size_t n)
@@ -46,6 +60,9 @@ main (void)
     char y[1];
     ASSERT (memmove (y, NULL, 0) == y);
   }
+
+  volatile_memmove = null_memmove;
+  ASSERT (memmove (NULL, "x", 0) == NULL);
 
   return test_exit_status;
 }

@@ -23,6 +23,18 @@
 
 #include "macros.h"
 
+/* Test the prototype in <string.h> + compiler.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static void *
+null_memccpy (void *dest, const void *src, int c, size_t n)
+{
+  void *p = memccpy (dest, src, c, n);
+#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
+  ASSERT (dest == NULL);
+#endif
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static void *
 lib_memccpy (void *dest, void const *src, int c, size_t n)
@@ -46,6 +58,9 @@ main (void)
     char y[1];
     ASSERT (memccpy (y, NULL, '?', 0) == NULL);
   }
+
+  volatile_memccpy = null_memccpy;
+  ASSERT (memccpy (NULL, "x", '?', 0) == NULL);
 
   return test_exit_status;
 }

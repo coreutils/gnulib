@@ -25,6 +25,20 @@
 #include "zerosize-ptr.h"
 #include "macros.h"
 
+/* Test the prototype in <string.h> + compiler.
+   In GCC < 15 this is a builtin that has the nonnull attribute.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static char *
+null_strncpy (char *s1, char const *s2, size_t n)
+{
+  char *p = strncpy (s1, s2, n);
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
+  ASSERT (s2 == NULL);
+#endif
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static char *
 lib_strncpy (char *s1, char const *s2, size_t n)
@@ -115,6 +129,9 @@ main (void)
 
   {
     char y[1];
+    ASSERT (strncpy (y, NULL, 0) == y);
+
+    volatile_strncpy = null_strncpy;
     ASSERT (strncpy (y, NULL, 0) == y);
   }
 

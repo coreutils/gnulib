@@ -23,6 +23,20 @@
 
 #include "macros.h"
 
+/* Test the prototype in <string.h> + compiler.
+   In GCC < 15 this is a builtin that has the nonnull attribute.
+   Some glibc versions use the nonnull attribute, which breaks this test.  */
+static void *
+null_memset (void *s, int c, size_t n)
+{
+  void *p = memset (s, c, n);
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
+  ASSERT (s == NULL);
+#endif
+  return p;
+}
+
 /* Test the library, not the compiler+library.  */
 static void *
 lib_memset (void *s, int c, size_t n)
@@ -39,6 +53,9 @@ main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  ASSERT (memset (NULL, '?', 0) == NULL);
+
+  volatile_memset = null_memset;
   ASSERT (memset (NULL, '?', 0) == NULL);
 
   return test_exit_status;

@@ -25,6 +25,15 @@ SIGNATURE_CHECK (wmemcmp, int, (const wchar_t *, const wchar_t *, size_t));
 
 #include "macros.h"
 
+/* Test the prototype in <wchar.h> + compiler.  */
+static int
+null_wmemcmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
+{
+  int r = wmemcmp (ws1, ws2, n);
+  ASSERT (ws1 == NULL);
+  return r;
+}
+
 /* Test the library, not the compiler+library.  */
 static int
 lib_wmemcmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
@@ -107,6 +116,9 @@ main (int argc, char *argv[])
   ASSERT (wmemcmp (NULL, L"x", 0) == 0);
   ASSERT (wmemcmp (L"x", NULL, 0) == 0);
   ASSERT (wmemcmp (NULL, NULL, 0) == 0);
+
+  volatile_wmemcmp = null_wmemcmp;
+  ASSERT (wmemcmp (NULL, L"x", 0) == 0);
 
   return test_exit_status;
 }
