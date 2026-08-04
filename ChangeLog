@@ -1,3 +1,9 @@
+2026-08-04  Bruno Haible  <bruno@clisp.org>
+
+	readutmp: Fix naming of configure option.
+	* m4/systemd.m4 (gl_SYSTEMD_CHOICE): Invoke AC_ARG_WITH. Mark
+	--enable-systemd as deprecated.
+
 2026-07-31  Bruno Haible  <bruno@clisp.org>
 
 	strndup: Fix configure test for "ibm-clang -O2".
