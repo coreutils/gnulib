@@ -1,3 +1,9 @@
+2026-08-04  Bruno Haible  <bruno@clisp.org>
+
+	readutmp: Fix naming of configure option.
+	* m4/systemd.m4 (gl_SYSTEMD_CHOICE): Invoke AC_ARG_WITH. Mark
+	--enable-systemd as deprecated.
+
 2026-08-01  Bruno Haible  <bruno@clisp.org>
 
 	free-posix tests: Avoid failure on Ubuntu 24.04 (regression 2026-07-28).
