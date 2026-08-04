@@ -416,6 +416,16 @@ For modules 'readutmp' and 'boot-time':
        - On Debian and Debian-based systems: libsystemd-dev,
        - On Red Hat distributions: systemd-devel.
        - Other: https://repology.org/project/systemd/versions
+  * wtmpdb libraries
+    + Recommended if wtmpdb is present on the system.
+      Needed for fetching login, logout, and boot times from
+      /var/log/wtmp.db instead of from the file /var/run/wtmp.
+    + Homepage:
+      https://github.com/thkukuk/wtmpdb
+    + Pre-built package name:
+       - On Debian and Debian-based systems: libwtmpdb-dev,
+       - On Red Hat distributions: --.
+       - Other: https://repology.org/project/wtmpdb/versions
 
 For modules 'terminfo' and 'termcap':
   * GNU ncurses (preferred)

@@ -1,5 +1,21 @@
 2026-08-04  Bruno Haible  <bruno@clisp.org>
 
+	readutmp: Add option to make use of wtmpdb.
+	* m4/wtmpdb.m4: New file.
+	* m4/readutmp.m4 (gl_READUTMP): Invoke gl_WTMPDB_CHOICE. Define
+	READUTMP_USE_WTMPDB. Take it into account for READUTMP_LIB.
+	* lib/readutmp.h (WTMPDB_FILE): New macro.
+	* lib/readutmp.c: Include <wtmpdb.h>.
+	(wtmpdb_time_to_timespec): New function.
+	(struct wtmpdb_locals): New type.
+	(wtmpdb_callback, read_utmp_from_wtmpdb): New functions.
+	(read_utmp): For WTMP_FILE, conditionally use read_utmp_from_wtmpdb.
+	* modules/readutmp (Files): Add m4/wtmpdb.m4.
+	(Depends-on): Add str_endswith.
+	* DEPENDENCIES: Mention libwtmpdb.
+
+2026-08-04  Bruno Haible  <bruno@clisp.org>
+
 	readutmp: Fix naming of configure option.
 	* m4/systemd.m4 (gl_SYSTEMD_CHOICE): Invoke AC_ARG_WITH. Mark
 	--enable-systemd as deprecated.

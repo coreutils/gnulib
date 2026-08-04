@@ -19,6 +19,15 @@
 
 #include <config.h>
 
+#if READUTMP_USE_WTMPDB
+# include <wtmpdb.h>
+/* Kill macro definitions that conflict with <utmp.h> and <utmpx.h>.  */
+# undef EMPTY
+# undef BOOT_TIME
+# undef RUNLEVEL
+# undef USER_PROCESS
+#endif
+
 #include "readutmp.h"
 
 #include <errno.h>
@@ -972,6 +981,166 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
 
 # endif
 
+# if READUTMP_USE_WTMPDB
+
+static int
+wtmpdb_time_to_timespec (const char *value, struct timespec *ts)
+{
+  if (value != NULL)
+    {
+      char *endptr;
+      unsigned long long login_usec = strtoull (value, &endptr, 10);
+      if (endptr != value && *endptr == '\0')
+        {
+          ts->tv_sec = login_usec / 1000000;
+          ts->tv_nsec = (login_usec % 1000000) * 1000;
+          return 0;
+        }
+    }
+  return -1;
+}
+
+struct wtmpdb_locals
+{
+  int options;
+  struct utmp_alloc a;
+};
+
+static int
+wtmpdb_callback (void *data, int argc, char **argv, char **column_names)
+{
+  struct wtmpdb_locals *l = (struct wtmpdb_locals *) data;
+
+  /* column_names  is typically
+     [ "ID", "Type", "User", "Login", "Logout", "TTY", "RemoteHost", "Service" ]
+   */
+
+  int id_index = -1;
+  int type_index = -1;
+  int user_index = -1;
+  int login_index = -1;
+  int logout_index = -1;
+  int tty_index = -1;
+  int remote_host_index = -1;
+  int service_index = -1;
+
+  for (int i = 0; i < argc; i++)
+    {
+      if (streq (column_names[i], "ID"))
+        id_index = i;
+      if (streq (column_names[i], "Type"))
+        type_index = i;
+      if (streq (column_names[i], "User"))
+        user_index = i;
+      if (streq (column_names[i], "Login"))
+        login_index = i;
+      if (streq (column_names[i], "Logout"))
+        logout_index = i;
+      if (streq (column_names[i], "TTY"))
+        tty_index = i;
+      if (streq (column_names[i], "RemoteHost"))
+        remote_host_index = i;
+      if (streq (column_names[i], "Service"))
+        service_index = i;
+    }
+
+  const char *id      = (id_index >= 0 ? argv[id_index] : NULL);
+  const char *type    = (type_index >= 0 ? argv[type_index] : NULL);
+  const char *user    = (user_index >= 0 ? argv[user_index] : NULL);
+  const char *login   = (login_index >= 0 ? argv[login_index] : NULL);
+  const char *logout  = (logout_index >= 0 ? argv[logout_index] : NULL);
+  const char *tty     = (tty_index >= 0 ? argv[tty_index] : NULL);
+  const char *host    = (remote_host_index >= 0 ? argv[remote_host_index] : NULL);
+  const char *service = (service_index >= 0 ? argv[service_index] : NULL);
+
+  if (type != NULL && streq (type, "1" /* BOOT_TIME */))
+    {
+      struct timespec login_ts;
+      if (wtmpdb_time_to_timespec (login, &login_ts) == 0)
+        {
+          l->a = add_utmp (l->a, l->options,
+                           "reboot", strlen ("reboot"),
+                           id, strlen (id),
+                           tty, strlen (tty),
+                           host, strlen (host),
+                           0, BOOT_TIME,
+                           login_ts, 0, 0, 0);
+
+          struct timespec logout_ts;
+          if (wtmpdb_time_to_timespec (logout, &logout_ts) == 0)
+            {
+              l->a = add_utmp (l->a, l->options,
+                               "shutdown", strlen ("shutdown"),
+                               id, strlen (id),
+                               tty, strlen (tty),
+                               host, strlen (host),
+                               0, EMPTY,
+                               logout_ts, 0, 0, 0);
+            }
+        }
+    }
+
+  if (type != NULL && streq (type, "3" /* USER_PROCESS */)
+      && login != NULL)
+    {
+      struct timespec login_ts;
+      if (wtmpdb_time_to_timespec (login, &login_ts) == 0)
+        {
+          short ctype =
+            (service != NULL && str_endswith (service, "-greeter")
+             ? LOGIN_PROCESS
+             : USER_PROCESS);
+          l->a = add_utmp (l->a, l->options,
+                           user, strlen (user),
+                           id, strlen (id),
+                           tty, strlen (tty),
+                           host, strlen (host),
+                           0, ctype,
+                           login_ts, 0, 0, 0);
+
+          struct timespec logout_ts;
+          if (wtmpdb_time_to_timespec (logout, &logout_ts) == 0)
+            {
+              l->a = add_utmp (l->a, l->options,
+                               "", 0,
+                               id, strlen (id),
+                               tty, strlen (tty),
+                               host, strlen (host),
+                               0, DEAD_PROCESS,
+                               logout_ts, 0, 0, 0);
+            }
+        }
+    }
+
+  return 0;
+}
+
+static int
+read_utmp_from_wtmpdb (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
+{
+  /* Fill entries, simulating what a utmp file would contain.  */
+  struct wtmpdb_locals locals = { options, { NULL, 0, 0, 0 } };
+
+  char *err = NULL;
+  int ret = wtmpdb_read_all_v2 (WTMPDB_FILE, wtmpdb_callback, &locals, &err);
+  free (err);
+  if (ret >= 0)
+    {
+      locals.a = finish_utmp (locals.a);
+      if (locals.a.filled > 0)
+        {
+          *n_entries = locals.a.filled;
+          *utmp_buf = locals.a.utmp;
+          return 0;
+        }
+      free (locals.a.utmp);
+    }
+
+  return -1;
+}
+
+# endif
+
 int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
@@ -980,6 +1149,17 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
   if (streq (file, UTMP_FILE))
     /* Imitate reading UTMP_FILE, using systemd and Linux APIs.  */
     return read_utmp_from_systemd (n_entries, utmp_buf, options);
+# endif
+
+# if READUTMP_USE_WTMPDB
+  if (streq (file, WTMP_FILE))
+    {
+      /* Imitate reading WTMP_FILE, using wtmpdb APIs.  */
+      int ret = read_utmp_from_wtmpdb (n_entries, utmp_buf, options);
+      if (ret >= 0)
+        return ret;
+      /* Could not read /var/log/wtmp.db.  Fall back to /var/log/wtmp.  */
+    }
 # endif
 
   return read_utmp_from_file (file, n_entries, utmp_buf, options);

@@ -7,6 +7,7 @@ lib/readutmp.c
 lib/boot-time-aux.h
 m4/readutmp.m4
 m4/systemd.m4
+m4/wtmpdb.m4
 
 Depends-on:
 extensions
@@ -19,6 +20,7 @@ stdint-h
 memeq
 streq
 strnlen
+str_endswith
 time-h
 unlocked-io-internal
 xalloc
