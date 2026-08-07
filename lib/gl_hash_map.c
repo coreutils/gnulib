@@ -95,7 +95,7 @@ gl_hash_size (gl_map_t map)
   return map->count;
 }
 
-static bool _GL_ATTRIBUTE_PURE
+_GL_ATTRIBUTE_REPRODUCIBLE static bool
 gl_hash_search (gl_map_t map, const void *key, const void **valuep)
 {
   size_t hashcode =

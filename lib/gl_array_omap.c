@@ -110,7 +110,7 @@ gl_array_indexof (gl_omap_t map, const void *key)
   return (size_t)(-1);
 }
 
-static bool _GL_ATTRIBUTE_PURE
+_GL_ATTRIBUTE_REPRODUCIBLE static bool
 gl_array_search (gl_omap_t map, const void *key, const void **valuep)
 {
   size_t index = gl_array_indexof (map, key);
@@ -123,7 +123,7 @@ gl_array_search (gl_omap_t map, const void *key, const void **valuep)
     return false;
 }
 
-static bool _GL_ATTRIBUTE_PURE
+_GL_ATTRIBUTE_REPRODUCIBLE static bool
 gl_array_search_atleast (gl_omap_t map,
                          gl_mapkey_threshold_fn threshold_fn,
                          const void *threshold,
