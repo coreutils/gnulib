@@ -1,5 +1,14 @@
 2026-08-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix position of _GL_ATTRIBUTE_REPRODUCIBLE in last commit.
+	Reported by Paul Eggert in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00136.html>.
+	* lib/gl_array_omap.c (gl_array_search, gl_array_search_atleast): Put
+	_GL_ATTRIBUTE_REPRODUCIBLE before 'static'.
+	* lib/gl_array_oset.c (gl_array_search_atleast): Likewise.
+	* lib/gl_hash_map.c (gl_hash_search): Likewise.
+	* lib/gl_linkedhash_map.c (gl_linkedhash_search): Likewise.
+
 	Fix incorrect use of _GL_ATTRIBUTE_PURE.
 	Reported by Arsen Arsenović <arsen@aarsen.me> in
 	<https://lists.gnu.org/archive/html/bug-gettext/2026-08/msg00000.html>.
