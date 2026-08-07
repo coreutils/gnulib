@@ -161,7 +161,7 @@ gl_array_indexof_atleast (gl_oset_t set,
   return count;
 }
 
-static bool _GL_ATTRIBUTE_PURE
+static bool _GL_ATTRIBUTE_REPRODUCIBLE
 gl_array_search_atleast (gl_oset_t set,
                          gl_setelement_threshold_fn threshold_fn,
                          const void *threshold,
