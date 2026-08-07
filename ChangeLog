@@ -1,3 +1,20 @@
+2026-08-07  Bruno Haible  <bruno@clisp.org>
+
+	Clarify that "pure" functions don't have out parameters.
+	* lib/acl-internal.h (acl_nontrivial, acl_ace_nontrivial,
+	aclv_nontrivial): Make the 'entries' parameter a const pointer.
+	* lib/acl-internal.c (acl_nontrivial, acl_ace_nontrivial,
+	aclv_nontrivial): Likewise.
+	* lib/dfa.c (state_separate_contexts): Make the 'd' parameter a const
+	pointer.
+	* lib/dirent.in.h (alphasort): Clarify prototype.
+	* lib/fpending.h (__fpending): Likewise.
+	* lib/freadable.h (freadable): Likewise.
+	* lib/freadahead.h (freadahead): Likewise.
+	* lib/freading.h (freading): Likewise.
+	* lib/fwritable.h (fwritable): Likewise.
+	* lib/fwriting.h (fwriting): Likewise.
+
 2026-08-04  Bruno Haible  <bruno@clisp.org>
 
 	readutmp: Add option to make use of wtmpdb.

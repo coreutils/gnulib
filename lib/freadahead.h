@@ -43,7 +43,7 @@
 extern "C" {
 # endif
 
-extern size_t freadahead (FILE *stream) _GL_ATTRIBUTE_PURE;
+extern size_t freadahead (FILE /*const*/ *stream) _GL_ATTRIBUTE_PURE;
 
 # ifdef __cplusplus
 }

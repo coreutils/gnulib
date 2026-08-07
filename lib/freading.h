@@ -50,7 +50,7 @@
 extern "C" {
 # endif
 
-extern bool freading (FILE *stream) _GL_ATTRIBUTE_PURE;
+extern bool freading (FILE /*const*/ *stream) _GL_ATTRIBUTE_PURE;
 
 # ifdef __cplusplus
 }

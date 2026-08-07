@@ -40,7 +40,7 @@
 extern "C" {
 # endif
 
-extern bool fwritable (FILE *stream) _GL_ATTRIBUTE_PURE;
+extern bool fwritable (FILE /*const*/ *stream) _GL_ATTRIBUTE_PURE;
 
 # ifdef __cplusplus
 }

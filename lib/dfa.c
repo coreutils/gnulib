@@ -2402,7 +2402,7 @@ charclass_context (struct dfa const *dfa, charclass const *c)
    in the complement set will have the same follow set.  */
 
 static int _GL_ATTRIBUTE_PURE
-state_separate_contexts (struct dfa *d, position_set const *s)
+state_separate_contexts (struct dfa const *d, position_set const *s)
 {
   int separate_contexts = 0;
 

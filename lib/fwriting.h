@@ -51,7 +51,7 @@
 extern "C" {
 # endif
 
-extern bool fwriting (FILE *stream) _GL_ATTRIBUTE_PURE;
+extern bool fwriting (FILE /*const*/ *stream) _GL_ATTRIBUTE_PURE;
 
 # ifdef __cplusplus
 }
