@@ -1,3 +1,16 @@
+2026-08-07  Bruno Haible  <bruno@clisp.org>
+
+	Fix incorrect use of _GL_ATTRIBUTE_PURE.
+	Reported by Arsen Arsenović <arsen@aarsen.me> in
+	<https://lists.gnu.org/archive/html/bug-gettext/2026-08/msg00000.html>.
+	* lib/gl_array_omap.c (gl_array_search, gl_array_search_atleast): Use
+	attribute _GL_ATTRIBUTE_REPRODUCIBLE instead of attribute
+	_GL_ATTRIBUTE_PURE.
+	* lib/gl_array_oset.c (gl_array_search_atleast): Likewise.
+	* lib/gl_hash_map.c (gl_hash_search): Likewise.
+	* lib/gl_linkedhash_map.c (gl_linkedhash_search): Likewise.
+	* lib/modechange.h (mode_adjust): Likewise.
+
 2026-08-04  Bruno Haible  <bruno@clisp.org>
 
 	readutmp: Fix naming of configure option.
