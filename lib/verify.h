@@ -23,6 +23,8 @@
 
 /* Define _GL_HAVE__STATIC_ASSERT to 1 if _Static_assert (R, DIAGNOSTIC)
    works as per C11.  This is supported by GCC 4.6.0+ and by clang 4+.
+   Check for __clang_major__ >= 5 instead of >= 4 because clang on Mac OS 10.7.5
+   sets __clang_major__ to 4 even though it was derived from clang 3.2.
 
    Define _GL_HAVE__STATIC_ASSERT1 to 1 if _Static_assert (R) works as
    per C23.  This is supported by GCC 9.1+.

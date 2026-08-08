@@ -1,3 +1,11 @@
+2026-08-08  Lasse Collin  <lasse.collin@tukaani.org>
+
+	verify: Add a comment about Clang on Mac OS 10.7.5.
+	* lib/verify.h: The existing comment says "clang 4+" but the #if
+	checks for 5 <= __clang_major__. The mismatch looked like a bug.
+	Add a comment based on the commit 0cda5beb7962 ("verify: port to
+	Mac OS 10.7.5") to explain why the condition checks for 5 <=.
+
 2026-08-07  Bruno Haible  <bruno@clisp.org>
 
 	Fix position of _GL_ATTRIBUTE_REPRODUCIBLE in last commit.
