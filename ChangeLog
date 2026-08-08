@@ -1,5 +1,14 @@
 2026-08-08  Lasse Collin  <lasse.collin@tukaani.org>
 
+	verify: Fix single-argument static_assert with glibc in C89 & C99 modes.
+	* lib/verify.h: glibc's <sys/cdefs.h> may define _Static_assert
+	with two arguments when the compiler is in C89 or C99 mode.
+	Undefine it so that Gnulib's own version is used instead.
+	Reported by G. Branden Robinson in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00125.html>.
+
+2026-08-08  Lasse Collin  <lasse.collin@tukaani.org>
+
 	verify: Add a comment about Clang on Mac OS 10.7.5.
 	* lib/verify.h: The existing comment says "clang 4+" but the #if
 	checks for 5 <= __clang_major__. The mismatch looked like a bug.

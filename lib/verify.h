@@ -46,6 +46,17 @@
 # endif
 #endif
 
+/* <sys/cdefs.h> in glibc may define _Static_assert with two arguments if the
+   compiler is in C89 or C99 mode.  This matters especially with Clang:
+   (1) glibc < 2.34, before the commit c8ba52ab3350 ("misc: Sync cdefs.h
+       with gnulib"), doesn't check for __clang_major__ >= 4.
+   (2) The above condition for _GL_HAVE__STATIC_ASSERT checks for
+       __clang_major__ >= 5, so it's not in sync with glibc.  */
+#if defined __GLIBC__ \
+    && !defined __cplusplus && __STDC_VERSION__ < 201112
+# undef _Static_assert
+#endif
+
 /* FreeBSD 9.1 <sys/cdefs.h>, included by <stddef.h> and lots of other
    system headers, defines a conflicting _Static_assert that is no
    better than ours; override it unless Gnulib's replacement <assert.h>
