@@ -32,25 +32,12 @@
 #endif
 
 #include "getugroups.h"
-#include "xalloc-oversized.h"
 
 /* Work around an incompatibility of OS X 10.11: getgrouplist
    accepts int *, not gid_t *, and int and gid_t differ in sign.  */
 #if 4 < __GNUC__ + (3 <= __GNUC_MINOR__) || defined __clang__
 # pragma GCC diagnostic ignored "-Wpointer-sign"
 #endif
-
-static gid_t *
-realloc_groupbuf (gid_t *g, size_t num)
-{
-  if (xalloc_oversized (num, sizeof *g))
-    {
-      errno = ENOMEM;
-      return NULL;
-    }
-
-  return realloc (g, num * sizeof *g);
-}
 
 /* Like getugroups, but store the result in malloc'd storage.
    Set *GROUPS to the malloc'd list of all group IDs of which USERNAME
@@ -80,7 +67,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
       enum { N_GROUPS_INIT = 10 };
       int max_n_groups = N_GROUPS_INIT;
 
-      gid_t *g = realloc_groupbuf (NULL, max_n_groups);
+      gid_t *g = reallocarray (NULL, max_n_groups, sizeof *g);
       if (g == NULL)
         return -1;
 
@@ -101,7 +88,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
               return -1;
             }
 
-          gid_t *h = realloc_groupbuf (g, max_n_groups);
+          gid_t *h = reallocarray (g, max_n_groups, sizeof *g);
           if (h == NULL)
             {
               free (g);
@@ -132,7 +119,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
     {
       if (errno == ENOSYS)
         {
-          gid_t *g = realloc_groupbuf (NULL, 1);
+          gid_t *g = reallocarray (NULL, 1, sizeof *g);
           if (g)
             {
               *groups = g;
@@ -145,7 +132,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   if (max_n_groups == 0 || (!username && gid != (gid_t) -1))
     max_n_groups++;
-  gid_t *g = realloc_groupbuf (NULL, max_n_groups);
+  gid_t *g = reallocarray (NULL, max_n_groups, sizeof *g);
   if (g == NULL)
     return -1;
 

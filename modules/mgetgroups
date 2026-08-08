@@ -10,9 +10,8 @@ Depends-on:
 free-posix
 getgroups
 getugroups
-realloc-posix
+reallocarray
 stdckdint-h
-xalloc-oversized
 
 configure.ac:
 gl_MGETGROUPS

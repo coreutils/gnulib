@@ -1,5 +1,12 @@
 2026-08-08  Collin Funk  <collin.funk1@gmail.com>
 
+	mgetgroups: Prefer reallocarray to xalloc-oversized.
+	* lib/mgetgroups.c: Don't include xalloc-oversized.h.
+	(realloc_groupbuf): Remove function.
+	(mgetgroups): Use reallocarray instead of realloc_groupbuf.
+	* modules/mgetgroups (Depends-on): Add reallocarray. Remove
+	realloc-posix and xalloc-oversized.
+
 	mgetgroups: Avoid an unlikely signed integer overflow on macOS.
 	Problem found by Coverity (CID 1638872).
 	* lib/mgetgroups.c: Include stdckdint.h.
