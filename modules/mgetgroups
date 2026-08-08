@@ -11,6 +11,7 @@ free-posix
 getgroups
 getugroups
 realloc-posix
+stdckdint-h
 xalloc-oversized
 
 configure.ac:

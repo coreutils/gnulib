@@ -1,3 +1,12 @@
+2026-08-08  Collin Funk  <collin.funk1@gmail.com>
+
+	mgetgroups: Avoid an unlikely signed integer overflow on macOS.
+	Problem found by Coverity (CID 1638872).
+	* lib/mgetgroups.c: Include stdckdint.h.
+	(mgetgroups): Check for a signed integer overflow when increasing the
+	size of the array for reallocation.
+	* modules/mgetgroups (Depends-on): Add stdckdint-h.
+
 2026-08-08  Lasse Collin  <lasse.collin@tukaani.org>
 
 	verify: Fix single-argument static_assert with glibc in C89 & C99 modes.

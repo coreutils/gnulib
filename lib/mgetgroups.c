@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdckdint.h>
 #include <stdint.h>
 #include <string.h>
 #include <errno.h>
@@ -92,8 +93,13 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
           /* Some systems (like Darwin) have a bug where they
              never increase max_n_groups.  */
-          if (ng < 0 && last_n_groups == max_n_groups)
-            max_n_groups *= 2;
+          if (ng < 0 && last_n_groups == max_n_groups
+              && ckd_mul (&max_n_groups, max_n_groups, 2))
+            {
+              free (g);
+              errno = ENOMEM;
+              return -1;
+            }
 
           gid_t *h = realloc_groupbuf (g, max_n_groups);
           if (h == NULL)
