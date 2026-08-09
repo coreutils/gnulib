@@ -1,3 +1,9 @@
+2026-08-09  Collin Funk  <collin.funk1@gmail.com>
+
+	fts: Pacify -Wuseless-cast warnings when GNULIB_FTS_DEBUG is defined.
+	* lib/fts.c (find_matching_ancestor): Pacify -Wuseless-cast via compound
+	literals.
+
 2026-08-09  Bruno Haible  <bruno@clisp.org>
 
 	bootstrap: Fix error "client sha256; server sha1" seen by some users.

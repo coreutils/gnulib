@@ -1662,11 +1662,11 @@ find_matching_ancestor (FTSENT const *e_curr, struct Active_dir const *ad)
        ent = ent->fts_parent)
     printf ("  %s(%"PRIuMAX"/%"PRIuMAX") to %s(%"PRIuMAX"/%"PRIuMAX")...\n",
             ad->fts_ent->fts_accpath,
-            (uintmax_t) ad->dev,
-            (uintmax_t) ad->ino,
+            (uintmax_t) {ad->dev},
+            (uintmax_t) {ad->ino},
             ent->fts_accpath,
-            (uintmax_t) ent->fts_statp->st_dev,
-            (uintmax_t) ent->fts_statp->st_ino);
+            (uintmax_t) {ent->fts_statp->st_dev},
+            (uintmax_t) {ent->fts_statp->st_ino});
 }
 
 void
