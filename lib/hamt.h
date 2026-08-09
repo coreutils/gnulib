@@ -65,7 +65,7 @@ _GL_INLINE_HEADER_BEGIN
 
 #if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __clang \
      || __clang_major__ >= 4) \
-    && __STDC_VERSION__ >= 201112L && !defined __STD_NO_ATOMICS__ \
+    && __STDC_VERSION__ >= 201112L && !defined __STDC_NO_ATOMICS__ \
     && !defined __cplusplus
 # define GL_HAMT_THREAD_SAFE 1
 #else
