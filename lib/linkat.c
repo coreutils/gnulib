@@ -29,8 +29,8 @@
 
 #include "areadlink.h"
 #include "dirname.h"
-#include "eloop-threshold.h"
 #include "filenamecat.h"
+#include "min-eloop-threshold.h"
 #include "openat-priv.h"
 
 #if !HAVE_LINKAT || LINKAT_SYMLINK_NOTSUP
@@ -92,7 +92,7 @@ link_follow (char const *file1, char const *file2)
 {
   char *name = (char *) file1;
   char *target;
-  int i = __eloop_threshold ();
+  int i = MIN_ELOOP_THRESHOLD;
 
   /* Using realpath or canonicalize_file_name is too heavy-handed: we
      don't need an absolute name, and we don't need to resolve
@@ -209,7 +209,7 @@ linkat_follow (int fd1, char const *file1, int fd2, char const *file2)
 {
   char *name = (char *) file1;
   char *target;
-  int i = __eloop_threshold ();
+  int i = MIN_ELOOP_THRESHOLD;
 
   /* There is no realpathat.  */
   while (i-- && (target = areadlinkat (fd1, name)))

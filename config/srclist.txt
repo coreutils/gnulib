@@ -89,7 +89,7 @@ $LIBCSRC stdlib/tst-stdc_leading_ones.c		tests/from-glibc
 $LIBCSRC stdlib/tst-stdc_leading_zeros.c	tests/from-glibc
 $LIBCSRC stdlib/tst-stdc_trailing_ones.c	tests/from-glibc
 $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
-#$LIBCSRC sysdeps/generic/eloop-threshold.h	lib
+$LIBCSRC sysdeps/generic/min-eloop-threshold.h	lib
 #$LIBCSRC time/timegm.c			lib
 #$LIBCSRC time/mktime.c			lib
 #$LIBCSRC time/mktime-internal.h	lib

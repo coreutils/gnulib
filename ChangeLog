@@ -1,3 +1,44 @@
+2026-08-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	canonicalize-lgpl: sync from glibc
+	Merge into lib/canonicalize-lgpl.c the changes of glibc
+	stdlib/canonicalize.c through glibc commit
+	b589bd672c529cf264dc6dfdfa11f73c7e4e1666 dated today.
+	The result should be copiable back to glibc byte-for-byte.
+	The original motivation for this merge was to make
+	eloop-threshold.h thread-safe on all platforms.
+	It turned out that glibc has already done this, trivially,
+	by having the include file define a constant 40 rather than a function.
+	This conforms to POSIX on all glibc targets, and it should also
+	work on all Gnulib targets that I know of,
+	as sysconf (_SC_SYMLOOP_MAX) <= 40 on all known platforms.
+	POSIX allows us to follow more symlink expansions than
+	any nonnegative number returned by sysconf (_SC_SYMLOOP_MAX),
+	and if that number is negative POSIX requires only to expand
+	at least 8 symlinks so the glibc value of 40 is good then too.
+	* NEWS: Mention the incompatible change.
+	* config/srclist.txt: Add lib/min-eloop-threshold.h.
+	* lib/canonicalize-lgpl.c [_LIBC]: Include <stdbool.h>.
+	(__rawmemchr): Remove.  Replace its use with strchr.
+	* lib/min-eloop-threshold.h: Sync byte-for-byte from gnulibc,
+	renaming the file from lib/eloop-threshold.h.  All uses changed.
+	This entails the following changes:
+	(_MIN_ELOOP_THRESHOLD_H): Rename from _ELOOP_THRESHOLD_H.
+	All uses changed.
+	Don’t #error out if config.h is not already included.
+	Don’t include <limits.h>.
+	[_LIBC]: Don’t include <sys/param.h>.
+	(_GL_ATTRIBUTE_CONST) [_LIBC]: Remove.
+	[!_LIBC]: Don’t include <unistd.h>, "minmax.h".
+	(__sysconf, SYMLOOP_MAX) [!_LIBC]: Remove.
+	(MIN_ELOOP_THRESHOLD): Define unconditionally.
+	(__eloop_threshold): Remove.  All uses replaced by MIN_ELOOP_THRESHOLD.
+	The new expression is of type int not unsigned, but that’s better
+	for callers anyway.
+	* lib/openat2.c (do_openat2): Symlink count is now int, not long int.
+	* modules/eloop-threshold (Files, Include): Adjust to file name change.
+	(Depends-on): Remove minmax, unistd-h.
+
 2026-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	hamt: port to non-_Atomic C platforms

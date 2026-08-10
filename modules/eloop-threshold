@@ -2,18 +2,16 @@ Description:
 Threshold for symbolic link loops and ELOOP
 
 Files:
-lib/eloop-threshold.h
+lib/min-eloop-threshold.h
 
 Depends-on:
-minmax
-unistd-h
 
 configure.ac:
 
 Makefile.am:
 
 Include:
-<eloop-threshold.h>
+<min-eloop-threshold.h>
 
 License:
 LGPLv2+

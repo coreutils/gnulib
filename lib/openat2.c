@@ -20,10 +20,10 @@
 
 #include <fcntl.h>
 
-#include "eloop-threshold.h"
 #include "filename.h"
 #include "ialloc.h"
 #include "idx.h"
+#include "min-eloop-threshold.h"
 #include "verify.h"
 
 #include <errno.h>
@@ -228,7 +228,7 @@ do_openat2 (int *fd, char const *filename,
   dev_t const UNKNOWN_DEV = -1;
   dev_t ddev = UNKNOWN_DEV;
 
-  long int maxlinks = resolve & RESOLVE_NO_SYMLINKS ? 0 : __eloop_threshold ();
+  int maxlinks = resolve & RESOLVE_NO_SYMLINKS ? 0 : MIN_ELOOP_THRESHOLD;
 
   int dfd = *fd;
 

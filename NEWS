@@ -78,6 +78,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-08-10  eloop-threshold Now include <min-eloop-threshold.h> and use
+                            MIN_ELOOP_THRESHOLD rather than including
+                            <eloop-threshold.h> and using __eloop_threshold ().
+
 2026-06-26  bitrotate       This module is deprecated.  Use stdc_rotate_left
                             or stdc_rotate_right instead.
 
