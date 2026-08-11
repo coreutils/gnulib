@@ -1,5 +1,13 @@
 2026-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
+	hamt: improve _Atomic port
+	* lib/hamt.h (HAVE_C11__ATOMIC): New macro.  It improves on the
+	old GL_HAMT_THREAD_SAFE, by dealing with Apple’s renumbering of
+	Clang versions, and by adding support for MSVC 19.35+, nvc 21.3+,
+	and IBM XL C 17.1+.
+	(GL_HAMT_THREAD_SAFE): Remove.  All uses replaced by ...
+	(GL_HAMT_ATOMIC): ... this new macro.
+
 	canonicalize-lgpl: sync from glibc
 	Merge into lib/canonicalize-lgpl.c the changes of glibc
 	stdlib/canonicalize.c through glibc commit

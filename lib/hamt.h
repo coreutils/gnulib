@@ -56,20 +56,39 @@ _GL_INLINE_HEADER_BEGIN
 # define _GL_HAMT_INLINE _GL_INLINE
 #endif
 
-/* The GL_HAMT_THREAD_SAFE flag is set if the implementation of hamts
-   is thread-safe as long as two threads do not simultaneously access
-   the same hamt.  This is non-trivial as different hamts may share
-   some structure.
-   We can define it only when the compiler supports _Atomic.  For GCC,
-   it is supported starting with GCC 4.9.  For clang, with clang 4.  */
+/* Whether the _Atomic type specifier (e.g., '_Atomic (int)') conforms to C11.
+   Unless __STDC_NO_ATOMICS__ is defined, it reportedly works for C
+   in Xcode 8+, Clang 4+, MSVC 19.35+, nvc 21.3+, GCC 4.9+, and IBM XL C 17.1+,
+   all regardless of which -std option is used; although earlier
+   versions of these compilers may pretend to support C11 atomics,
+   there are bugs.  There are also bugs in pgcc.  Check for the
+   compilers in that order, as some compilers pretend to be others and
+   this order prevents false matches.  If it is not one of these
+   compilers, fall back on checking the version of the C standard.  */
+#ifndef HAVE_C11__ATOMIC
+# if (!defined __STDC_NO_ATOMICS__ && !defined __cplusplus \
+      && (defined __apple_build_version__ ? 8000000 <= __apple_build_version__ \
+          : defined __clang__ ? 4 <= __clang_major__ \
+          : defined _MSC_VER ? 1935 <= _MSC_VER \
+          : defined __NVCOMPILER \
+          ? 21 < __NVCOMPILER_MAJOR__ + (3 <= __NVCOMPILER_MINOR__) \
+          : defined __GNUC__ ? 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
+          : (!defined __xlC__ && !defined __PGI \
+             && defined __STDC_VERSION__ && 201112 <= __STDC_VERSION__)))
+#  define HAVE_C11__ATOMIC 1
+# else
+#  define HAVE_C11__ATOMIC 0
+# endif
+#endif
 
-#if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __clang \
-     || __clang_major__ >= 4) \
-    && __STDC_VERSION__ >= 201112L && !defined __STDC_NO_ATOMICS__ \
-    && !defined __cplusplus
-# define GL_HAMT_THREAD_SAFE 1
+/* The atomic type corresponding to T, if available; otherwise, just T.  */
+#if HAVE_C11__ATOMIC
+# define GL_HAMT_ATOMIC(t) _Atomic (t)
+#elif defined __cplusplus && 201103 <= __cplusplus
+# include <atomic>
+# define GL_HAMT_ATOMIC(t) ::std::atomic<t>
 #else
-# define GL_HAMT_THREAD_SAFE 0
+# define GL_HAMT_ATOMIC(t) t
 #endif
 
 #include <stddef.h>
@@ -98,10 +117,7 @@ extern "C" {
    containing it is freed.  */
 typedef struct
 {
-#if GL_HAMT_THREAD_SAFE
-  _Atomic
-#endif
-  size_t ref_count;
+  GL_HAMT_ATOMIC (size_t) ref_count;
 } Hamt_entry;
 
 /* Initialize *ELT, which has to point to a structure as described
