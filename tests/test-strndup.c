@@ -36,6 +36,8 @@ null_strndup (char const *s, size_t size)
 #endif
   return p;
 }
+static char *(*volatile volatile_null_strndup) (char const *, size_t)
+  = null_strndup;
 
 /* Test the library, not the compiler+library.  */
 static char *
@@ -43,10 +45,10 @@ lib_strndup (char const *s, size_t size)
 {
   return strndup (s, size);
 }
-static char *(*volatile volatile_strndup) (char const *, size_t)
+static char *(*volatile volatile_lib_strndup) (char const *, size_t)
   = lib_strndup;
 #undef strndup
-#define strndup volatile_strndup
+#define strndup volatile_lib_strndup
 
 int
 main (void)
@@ -55,8 +57,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (strndup (NULL, 0) != NULL);
 
-  volatile_strndup = null_strndup;
-  ASSERT (strndup (NULL, 0) != NULL);
+  ASSERT (volatile_null_strndup (NULL, 0) != NULL);
 
   return test_exit_status;
 }

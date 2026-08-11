@@ -31,6 +31,9 @@ null_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
   ASSERT (s == NULL);
   return (wchar_t *) p;
 }
+static wchar_t *(*volatile volatile_null_wmemchr) (wchar_t const *, wchar_t,
+                                                   size_t)
+  = null_wmemchr;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -38,10 +41,11 @@ lib_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
 {
   return (wchar_t *) wmemchr (s, wc, n);
 }
-static wchar_t *(*volatile volatile_wmemchr) (wchar_t const *, wchar_t, size_t)
+static wchar_t *(*volatile volatile_lib_wmemchr) (wchar_t const *, wchar_t,
+                                                  size_t)
   = lib_wmemchr;
 #undef wmemchr
-#define wmemchr volatile_wmemchr
+#define wmemchr volatile_lib_wmemchr
 
 int
 main (void)
@@ -50,8 +54,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (wmemchr (NULL, L'?', 0) == NULL);
 
-  volatile_wmemchr = null_wmemchr;
-  ASSERT (wmemchr (NULL, L'?', 0) == NULL);
+  ASSERT (volatile_null_wmemchr (NULL, L'?', 0) == NULL);
 
   return test_exit_status;
 }

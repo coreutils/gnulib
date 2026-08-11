@@ -34,6 +34,10 @@ null_bsearch (void const *key, void const *base, size_t nel, size_t width,
 #endif
   return (void *) p;
 }
+static void *(*volatile volatile_null_bsearch) (void const *, void const *,
+                                                size_t, size_t,
+                                                int (*) (void const *, void const *))
+  = null_bsearch;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -42,12 +46,12 @@ lib_bsearch (void const *key, void const *base, size_t nel, size_t width,
 {
   return (void *) bsearch (key, base, nel, width, compar);
 }
-static void *(*volatile volatile_bsearch) (void const *, void const *, size_t,
-                                           size_t,
-                                           int (*) (void const *, void const *))
+static void *(*volatile volatile_lib_bsearch) (void const *, void const *,
+                                               size_t, size_t,
+                                               int (*) (void const *, void const *))
   = lib_bsearch;
 #undef bsearch
-#define bsearch volatile_bsearch
+#define bsearch volatile_lib_bsearch
 
 static int
 cmp (const void *a, const void *b)
@@ -62,8 +66,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (bsearch ("x", NULL, 0, 1, cmp) == NULL);
 
-  volatile_bsearch = null_bsearch;
-  ASSERT (bsearch ("x", NULL, 0, 1, cmp) == NULL);
+  ASSERT (volatile_null_bsearch ("x", NULL, 0, 1, cmp) == NULL);
 
   return test_exit_status;
 }

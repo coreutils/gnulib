@@ -34,6 +34,9 @@ null_memccpy (void *dest, const void *src, int c, size_t n)
 #endif
   return p;
 }
+static void *(*volatile volatile_null_memccpy) (void *, void const *, int,
+                                                size_t)
+  = null_memccpy;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -41,10 +44,11 @@ lib_memccpy (void *dest, void const *src, int c, size_t n)
 {
   return memccpy (dest, src, c, n);
 }
-static void *(*volatile volatile_memccpy) (void *, void const *, int, size_t)
+static void *(*volatile volatile_lib_memccpy) (void *, void const *, int,
+                                               size_t)
   = lib_memccpy;
 #undef memccpy
-#define memccpy volatile_memccpy
+#define memccpy volatile_lib_memccpy
 
 int
 main (void)
@@ -59,8 +63,7 @@ main (void)
     ASSERT (memccpy (y, NULL, '?', 0) == NULL);
   }
 
-  volatile_memccpy = null_memccpy;
-  ASSERT (memccpy (NULL, "x", '?', 0) == NULL);
+  ASSERT (volatile_null_memccpy (NULL, "x", '?', 0) == NULL);
 
   return test_exit_status;
 }

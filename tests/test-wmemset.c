@@ -31,6 +31,8 @@ null_wmemset (wchar_t *ws, wchar_t wc, size_t n)
   ASSERT (ws == NULL);
   return p;
 }
+static wchar_t *(*volatile volatile_null_wmemset) (wchar_t *, wchar_t, size_t)
+  = null_wmemset;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -38,10 +40,10 @@ lib_wmemset (wchar_t *ws, wchar_t wc, size_t n)
 {
   return wmemset (ws, wc, n);
 }
-static wchar_t *(*volatile volatile_wmemset) (wchar_t *, wchar_t, size_t)
+static wchar_t *(*volatile volatile_lib_wmemset) (wchar_t *, wchar_t, size_t)
   = lib_wmemset;
 #undef wmemset
-#define wmemset volatile_wmemset
+#define wmemset volatile_lib_wmemset
 
 int
 main (void)
@@ -50,8 +52,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (wmemset (NULL, L'?', 0) == NULL);
 
-  volatile_wmemset = null_wmemset;
-  ASSERT (wmemset (NULL, L'?', 0) == NULL);
+  ASSERT (volatile_null_wmemset (NULL, L'?', 0) == NULL);
 
   return test_exit_status;
 }

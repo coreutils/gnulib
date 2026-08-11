@@ -40,6 +40,8 @@ null_memchr (void const *s, int c, size_t n)
 #endif
   return (void *) p;
 }
+static void *(*volatile volatile_null_memchr) (void const *, int, size_t)
+  = null_memchr;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -47,10 +49,10 @@ lib_memchr (void const *s, int c, size_t n)
 {
   return (void *) memchr (s, c, n);
 }
-static void *(*volatile volatile_memchr) (void const *, int, size_t)
+static void *(*volatile volatile_lib_memchr) (void const *, int, size_t)
   = lib_memchr;
 #undef memchr
-#define memchr volatile_memchr
+#define memchr volatile_lib_memchr
 
 int
 main (void)
@@ -152,8 +154,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (memchr (NULL, '?', 0) == NULL);
 
-  volatile_memchr = null_memchr;
-  ASSERT (memchr (NULL, '?', 0) == NULL);
+  ASSERT (volatile_null_memchr (NULL, '?', 0) == NULL);
 
   return test_exit_status;
 }

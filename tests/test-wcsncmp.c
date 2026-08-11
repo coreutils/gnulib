@@ -36,6 +36,9 @@ null_wcsncmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
 #endif
   return r;
 }
+static int (*volatile volatile_null_wcsncmp) (wchar_t const *,
+                                              wchar_t const *, size_t)
+  = null_wcsncmp;
 
 /* Test the library, not the compiler+library.  */
 static int
@@ -43,11 +46,11 @@ lib_wcsncmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
 {
   return wcsncmp (ws1, ws2, n);
 }
-static int (*volatile volatile_wcsncmp) (wchar_t const *,
-                                         wchar_t const *, size_t)
+static int (*volatile volatile_lib_wcsncmp) (wchar_t const *,
+                                             wchar_t const *, size_t)
   = lib_wcsncmp;
 #undef wcsncmp
-#define wcsncmp volatile_wcsncmp
+#define wcsncmp volatile_lib_wcsncmp
 
 int
 main (int argc, char *argv[])
@@ -208,8 +211,7 @@ main (int argc, char *argv[])
   ASSERT (wcsncmp (L"x", NULL, 0) == 0);
   ASSERT (wcsncmp (NULL, NULL, 0) == 0);
 
-  volatile_wcsncmp = null_wcsncmp;
-  ASSERT (wcsncmp (NULL, L"x", 0) == 0);
+  ASSERT (volatile_null_wcsncmp (NULL, L"x", 0) == 0);
 
   return test_exit_status;
 }

@@ -36,6 +36,8 @@ null_memcpy (void *dest, const void *src, size_t n)
 #endif
   return p;
 }
+void *(*volatile volatile_null_memcpy) (void *, void const *, size_t)
+  = null_memcpy;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -43,10 +45,10 @@ lib_memcpy (void *s1, void const *s2, size_t n)
 {
   return memcpy (s1, s2, n);
 }
-void *(*volatile volatile_memcpy) (void *, void const *, size_t)
+void *(*volatile volatile_lib_memcpy) (void *, void const *, size_t)
   = lib_memcpy;
 #undef memcpy
-#define memcpy volatile_memcpy
+#define memcpy volatile_lib_memcpy
 
 int
 main (void)
@@ -63,8 +65,7 @@ main (void)
 
   /* Redirect via the volatile function pointer to ensure that that the ASSERT
      in null_memcpy won't be optimized away by GCC 6.3.0.  */
-  volatile_memcpy = null_memcpy;
-  ASSERT (memcpy (NULL, "x", 0) == NULL);
+  ASSERT (volatile_null_memcpy (NULL, "x", 0) == NULL);
 
   return test_exit_status;
 }

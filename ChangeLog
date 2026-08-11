@@ -1,3 +1,28 @@
+2026-08-11  Bruno Haible  <bruno@clisp.org>
+
+	tests: Make last patch side-effect free.
+	* tests/test-bsearch.c: Use another volatile function pointer variable.
+	* tests/test-memccpy.c: Likewise.
+	* tests/test-memchr.c: Likewise.
+	* tests/test-memcmp.c: Likewise.
+	* tests/test-memcpy.c: Likewise.
+	* tests/test-memmove.c: Likewise.
+	* tests/test-memset.c: Likewise.
+	* tests/test-memset_explicit.c: Likewise.
+	* tests/test-qsort.c: Likewise.
+	* tests/test-strncat.c: Likewise.
+	* tests/test-strncmp.c: Likewise.
+	* tests/test-strncpy.c: Likewise.
+	* tests/test-strndup.c: Likewise.
+	* tests/test-wcsncat.c: Likewise.
+	* tests/test-wcsncmp.c: Likewise.
+	* tests/test-wcsncpy.c: Likewise.
+	* tests/test-wmemchr.c: Likewise.
+	* tests/test-wmemcmp.c: Likewise.
+	* tests/test-wmemcpy.c: Likewise.
+	* tests/test-wmemmove.c: Likewise.
+	* tests/test-wmemset.c: Likewise.
+
 2026-08-11  Lasse Collin  <lasse.collin@tukaani.org>
 
 	tests: Verify N3322 compatibility of the function prototypes.

@@ -42,6 +42,8 @@ null_strncat (char *s1, char const *s2, size_t n)
 #endif
   return p;
 }
+static char *(*volatile volatile_null_strncat) (char *, char const *, size_t)
+  = null_strncat;
 
 /* Test the library, not the compiler+library.  */
 static char *
@@ -49,10 +51,10 @@ lib_strncat (char *s1, char const *s2, size_t n)
 {
   return strncat (s1, s2, n);
 }
-static char *(*volatile volatile_strncat) (char *, char const *, size_t)
+static char *(*volatile volatile_lib_strncat) (char *, char const *, size_t)
   = lib_strncat;
 #undef strncat
-#define strncat volatile_strncat
+#define strncat volatile_lib_strncat
 
 #define UNIT char
 #define U_STRNCAT strncat
@@ -95,8 +97,7 @@ main ()
     char y[2] = { 'x', '\0' };
     ASSERT (strncat (y, NULL, 0) == y);
 
-    volatile_strncat = null_strncat;
-    ASSERT (strncat (y, NULL, 0) == y);
+    ASSERT (volatile_null_strncat (y, NULL, 0) == y);
   }
 
   return test_exit_status;

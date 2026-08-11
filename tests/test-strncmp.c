@@ -36,6 +36,9 @@ null_strncmp (char const *s1, char const *s2, size_t n)
 #endif
   return r;
 }
+static int (*volatile volatile_null_strncmp) (char const *, char const *,
+                                              size_t)
+  = null_strncmp;
 
 /* Test the library, not the compiler+library.  */
 static int
@@ -43,10 +46,11 @@ lib_strncmp (char const *s1, char const *s2, size_t n)
 {
   return strncmp (s1, s2, n);
 }
-static int (*volatile volatile_strncmp) (char const *, char const *, size_t)
+static int (*volatile volatile_lib_strncmp) (char const *, char const *,
+                                             size_t)
   = lib_strncmp;
 #undef strncmp
-#define strncmp volatile_strncmp
+#define strncmp volatile_lib_strncmp
 
 int
 main (void)
@@ -57,8 +61,7 @@ main (void)
   ASSERT (strncmp ("x", NULL, 0) == 0);
   ASSERT (strncmp (NULL, NULL, 0) == 0);
 
-  volatile_strncmp = null_strncmp;
-  ASSERT (strncmp (NULL, "x", 0) == 0);
+  ASSERT (volatile_null_strncmp (NULL, "x", 0) == 0);
 
   return test_exit_status;
 }

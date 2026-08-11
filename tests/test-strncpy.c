@@ -38,6 +38,8 @@ null_strncpy (char *s1, char const *s2, size_t n)
 #endif
   return p;
 }
+static char *(*volatile volatile_null_strncpy) (char *, char const *, size_t)
+  = null_strncpy;
 
 /* Test the library, not the compiler+library.  */
 static char *
@@ -45,10 +47,10 @@ lib_strncpy (char *s1, char const *s2, size_t n)
 {
   return strncpy (s1, s2, n);
 }
-static char *(*volatile volatile_strncpy) (char *, char const *, size_t)
+static char *(*volatile volatile_lib_strncpy) (char *, char const *, size_t)
   = lib_strncpy;
 #undef strncpy
-#define strncpy volatile_strncpy
+#define strncpy volatile_lib_strncpy
 
 #define MAGIC (char)0xBA
 
@@ -131,8 +133,7 @@ main (void)
     char y[1];
     ASSERT (strncpy (y, NULL, 0) == y);
 
-    volatile_strncpy = null_strncpy;
-    ASSERT (strncpy (y, NULL, 0) == y);
+    ASSERT (volatile_null_strncpy (y, NULL, 0) == y);
   }
 
   return test_exit_status;

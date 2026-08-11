@@ -36,6 +36,8 @@ null_memmove (void *dest, const void *src, size_t n)
 #endif
   return p;
 }
+static void *(*volatile volatile_null_memmove) (void *, void const *, size_t)
+  = null_memmove;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -43,10 +45,10 @@ lib_memmove (void *s1, void const *s2, size_t n)
 {
   return memmove (s1, s2, n);
 }
-static void *(*volatile volatile_memmove) (void *, void const *, size_t)
+static void *(*volatile volatile_lib_memmove) (void *, void const *, size_t)
   = lib_memmove;
 #undef memmove
-#define memmove volatile_memmove
+#define memmove volatile_lib_memmove
 
 int
 main (void)
@@ -61,8 +63,7 @@ main (void)
     ASSERT (memmove (y, NULL, 0) == y);
   }
 
-  volatile_memmove = null_memmove;
-  ASSERT (memmove (NULL, "x", 0) == NULL);
+  ASSERT (volatile_null_memmove (NULL, "x", 0) == NULL);
 
   return test_exit_status;
 }

@@ -31,6 +31,9 @@ null_wmemcpy (wchar_t *s1, wchar_t const *s2, size_t n)
   ASSERT (s1 == NULL);
   return p;
 }
+static wchar_t *(*volatile volatile_null_wmemcpy) (wchar_t *, wchar_t const *,
+                                                   size_t)
+  = null_wmemcpy;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -38,11 +41,11 @@ lib_wmemcpy (wchar_t *s1, wchar_t const *s2, size_t n)
 {
   return wmemcpy (s1, s2, n);
 }
-static wchar_t *(*volatile volatile_wmemcpy) (wchar_t *, wchar_t const *,
-                                              size_t)
+static wchar_t *(*volatile volatile_lib_wmemcpy) (wchar_t *, wchar_t const *,
+                                                  size_t)
   = lib_wmemcpy;
 #undef wmemcpy
-#define wmemcpy volatile_wmemcpy
+#define wmemcpy volatile_lib_wmemcpy
 
 int
 main (void)
@@ -57,8 +60,7 @@ main (void)
     ASSERT (wmemcpy (y, NULL, 0) == y);
   }
 
-  volatile_wmemcpy = null_wmemcpy;
-  ASSERT (wmemcpy (NULL, L"x", 0) == NULL);
+  ASSERT (volatile_null_wmemcpy (NULL, L"x", 0) == NULL);
 
   return test_exit_status;
 }

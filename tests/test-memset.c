@@ -36,6 +36,8 @@ null_memset (void *s, int c, size_t n)
 #endif
   return p;
 }
+static void *(*volatile volatile_null_memset) (void *, int, size_t)
+  = null_memset;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -43,10 +45,10 @@ lib_memset (void *s, int c, size_t n)
 {
   return memset (s, c, n);
 }
-static void *(*volatile volatile_memset) (void *, int, size_t)
+static void *(*volatile volatile_lib_memset) (void *, int, size_t)
   = lib_memset;
 #undef memset
-#define memset volatile_memset
+#define memset volatile_lib_memset
 
 int
 main (void)
@@ -55,8 +57,7 @@ main (void)
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (memset (NULL, '?', 0) == NULL);
 
-  volatile_memset = null_memset;
-  ASSERT (memset (NULL, '?', 0) == NULL);
+  ASSERT (volatile_null_memset (NULL, '?', 0) == NULL);
 
   return test_exit_status;
 }

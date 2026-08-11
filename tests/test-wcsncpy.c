@@ -34,6 +34,9 @@ null_wcsncpy (wchar_t *ws1, wchar_t const *ws2, size_t n)
 #endif
   return p;
 }
+static wchar_t *(*volatile volatile_null_wcsncpy) (wchar_t *, wchar_t const *,
+                                                   size_t)
+  = null_wcsncpy;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -41,11 +44,11 @@ lib_wcsncpy (wchar_t *ws1, wchar_t const *ws2, size_t n)
 {
   return wcsncpy (ws1, ws2, n);
 }
-static wchar_t *(*volatile volatile_wcsncpy) (wchar_t *, wchar_t const *,
-                                              size_t)
+static wchar_t *(*volatile volatile_lib_wcsncpy) (wchar_t *, wchar_t const *,
+                                                  size_t)
   = lib_wcsncpy;
 #undef wcsncpy
-#define wcsncpy volatile_wcsncpy
+#define wcsncpy volatile_lib_wcsncpy
 
 int
 main (void)
@@ -59,8 +62,7 @@ main (void)
     wchar_t y[1];
     ASSERT (wcsncpy (y, NULL, 0) == y);
 
-    volatile_wcsncpy = null_wcsncpy;
-    ASSERT (wcsncpy (y, NULL, 0) == y);
+    ASSERT (volatile_null_wcsncpy (y, NULL, 0) == y);
   }
 
   return test_exit_status;

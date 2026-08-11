@@ -59,6 +59,8 @@ null_memset_explicit (void *s, int c, size_t n)
 #endif
   return p;
 }
+static void *(*volatile volatile_null_memset_explicit) (void *, int, size_t)
+  = null_memset_explicit;
 
 /* Test the library, not the compiler+library.  */
 static void *
@@ -66,10 +68,10 @@ lib_memset_explicit (void *s, int c, size_t n)
 {
   return memset_explicit (s, c, n);
 }
-static void *(*volatile volatile_memset_explicit) (void *, int, size_t)
+static void *(*volatile volatile_lib_memset_explicit) (void *, int, size_t)
   = lib_memset_explicit;
 #undef memset_explicit
-#define memset_explicit volatile_memset_explicit
+#define memset_explicit volatile_lib_memset_explicit
 
 /* Suppress GCC 13.2.1 false alarm, as this test needs a dangling pointer.  */
 #if _GL_GNUC_PREREQ (12, 0)
@@ -280,8 +282,7 @@ main ()
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
   ASSERT (memset_explicit (NULL, '?', 0) == NULL);
 
-  volatile_memset_explicit = null_memset_explicit;
-  ASSERT (memset_explicit (NULL, '?', 0) == NULL);
+  ASSERT (volatile_null_memset_explicit (NULL, '?', 0) == NULL);
 
   return test_exit_status;
 }

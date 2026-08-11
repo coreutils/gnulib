@@ -36,6 +36,9 @@ null_wcsncat (wchar_t *ws1, wchar_t const *ws2, size_t n)
 #endif
   return p;
 }
+static wchar_t *(*volatile volatile_null_wcsncat) (wchar_t *, wchar_t const *,
+                                                   size_t)
+  = null_wcsncat;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -43,11 +46,11 @@ lib_wcsncat (wchar_t *ws1, wchar_t const *ws2, size_t n)
 {
   return wcsncat (ws1, ws2, n);
 }
-static wchar_t *(*volatile volatile_wcsncat) (wchar_t *, wchar_t const *,
-                                              size_t)
+static wchar_t *(*volatile volatile_lib_wcsncat) (wchar_t *, wchar_t const *,
+                                                  size_t)
   = lib_wcsncat;
 #undef wcsncat
-#define wcsncat volatile_wcsncat
+#define wcsncat volatile_lib_wcsncat
 
 int
 main ()
@@ -63,8 +66,7 @@ main ()
     wchar_t y[2] = { L'x', 0 };
     ASSERT (wcsncat (y, NULL, 0) == y);
 
-    volatile_wcsncat = null_wcsncat;
-    ASSERT (wcsncat (y, NULL, 0) == y);
+    ASSERT (volatile_null_wcsncat (y, NULL, 0) == y);
   }
 
   return test_exit_status;

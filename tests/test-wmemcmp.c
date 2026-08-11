@@ -33,6 +33,8 @@ null_wmemcmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
   ASSERT (ws1 == NULL);
   return r;
 }
+int (*volatile volatile_null_wmemcmp) (wchar_t const *, wchar_t const *, size_t)
+  = null_wmemcmp;
 
 /* Test the library, not the compiler+library.  */
 static int
@@ -40,10 +42,10 @@ lib_wmemcmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
 {
   return wmemcmp (ws1, ws2, n);
 }
-int (*volatile volatile_wmemcmp) (wchar_t const *, wchar_t const *, size_t)
+int (*volatile volatile_lib_wmemcmp) (wchar_t const *, wchar_t const *, size_t)
   = lib_wmemcmp;
 #undef wmemcmp
-#define wmemcmp volatile_wmemcmp
+#define wmemcmp volatile_lib_wmemcmp
 
 int
 main (int argc, char *argv[])
@@ -117,8 +119,7 @@ main (int argc, char *argv[])
   ASSERT (wmemcmp (L"x", NULL, 0) == 0);
   ASSERT (wmemcmp (NULL, NULL, 0) == 0);
 
-  volatile_wmemcmp = null_wmemcmp;
-  ASSERT (wmemcmp (NULL, L"x", 0) == 0);
+  ASSERT (volatile_null_wmemcmp (NULL, L"x", 0) == 0);
 
   return test_exit_status;
 }

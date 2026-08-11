@@ -31,6 +31,9 @@ null_wmemmove (wchar_t *s1, wchar_t const *s2, size_t n)
   ASSERT (s1 == NULL);
   return p;
 }
+static wchar_t *(*volatile volatile_null_wmemmove) (wchar_t *, wchar_t const *,
+                                                    size_t)
+  = null_wmemmove;
 
 /* Test the library, not the compiler+library.  */
 static wchar_t *
@@ -38,11 +41,11 @@ lib_wmemmove (wchar_t *s1, wchar_t const *s2, size_t n)
 {
   return wmemmove (s1, s2, n);
 }
-static wchar_t *(*volatile volatile_wmemmove) (wchar_t *, wchar_t const *,
-                                               size_t)
+static wchar_t *(*volatile volatile_lib_wmemmove) (wchar_t *, wchar_t const *,
+                                                   size_t)
   = lib_wmemmove;
 #undef wmemmove
-#define wmemmove volatile_wmemmove
+#define wmemmove volatile_lib_wmemmove
 
 int
 main (void)
@@ -57,8 +60,7 @@ main (void)
     ASSERT (wmemmove (y, NULL, 0) == y);
   }
 
-  volatile_wmemmove = null_wmemmove;
-  ASSERT (wmemmove (NULL, L"x", 0) == NULL);
+  ASSERT (volatile_null_wmemmove (NULL, L"x", 0) == NULL);
 
   return test_exit_status;
 }
