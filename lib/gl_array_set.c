@@ -70,6 +70,7 @@ gl_array_size (gl_set_t set)
 
 static bool
 gl_array_search (gl_set_t set, const void *elt)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t count = set->count;
 
@@ -135,6 +136,7 @@ gl_array_nx_add (gl_set_t set, const void *elt)
    0 <= position < gl_set_size (set).  */
 static void
 gl_array_remove_at (gl_set_t set, size_t position)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t count = set->count;
   const void **elements = set->elements;
@@ -148,6 +150,7 @@ gl_array_remove_at (gl_set_t set, size_t position)
 
 static bool
 gl_array_remove (gl_set_t set, const void *elt)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t count = set->count;
 
@@ -180,6 +183,7 @@ gl_array_remove (gl_set_t set, const void *elt)
 
 static void
 gl_array_free (gl_set_t set)
+  _GL_SET_INVOKES_FN_PTR
 {
   if (set->elements != NULL)
     {

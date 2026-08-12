@@ -8,6 +8,8 @@ Depends-on:
 xset
 
 configure.ac:
+AC_DEFINE([_GL_HAVE_SET_HH], [1],
+  [Define if the gnulib module set-c++ is present.])
 
 Makefile.am:
 

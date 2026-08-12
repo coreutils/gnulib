@@ -274,6 +274,14 @@ gl_set_iterator_free (gl_set_iterator_t *iterator)
   iterator->vtable->iterator_free (iterator);
 }
 
+/* Avoid that the reinterpret_cast<>s in gl_set.hh cause runtime errors
+   "call to function ... through pointer to incorrect function type".  */
+#if _GL_HAVE_SET_HH && defined __clang__ && __clang_major__ >= 4
+# define _GL_SET_INVOKES_FN_PTR __attribute__ ((no_sanitize ("function")))
+#else
+# define _GL_SET_INVOKES_FN_PTR
+#endif
+
 #ifdef __cplusplus
 }
 #endif

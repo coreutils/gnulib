@@ -94,6 +94,7 @@ gl_hash_size (gl_set_t set)
 
 static bool _GL_ATTRIBUTE_PURE
 gl_hash_search (gl_set_t set, const void *elt)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t hashcode =
     (set->hashcode_fn != NULL
@@ -116,6 +117,7 @@ gl_hash_search (gl_set_t set, const void *elt)
 
 static int
 gl_hash_nx_add (gl_set_t set, const void *elt)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t hashcode =
     (set->hashcode_fn != NULL
@@ -158,6 +160,7 @@ gl_hash_nx_add (gl_set_t set, const void *elt)
 
 static bool
 gl_hash_remove (gl_set_t set, const void *elt)
+  _GL_SET_INVOKES_FN_PTR
 {
   size_t hashcode =
     (set->hashcode_fn != NULL
@@ -195,6 +198,7 @@ gl_hash_remove (gl_set_t set, const void *elt)
 
 static void
 gl_hash_free (gl_set_t set)
+  _GL_SET_INVOKES_FN_PTR
 {
   if (set->count > 0)
     {
