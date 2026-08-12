@@ -1,5 +1,13 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	unictype: Fix undefined behaviour.
+	Reported by clang's UBSAN.
+	* lib/unictype/categ_Cs.c (uc_is_category_Cs): Add a bitmask argument.
+	* lib/unictype/categ_Zl.c (uc_is_category_Zl): Likewise.
+	* lib/unictype/categ_Zp.c (uc_is_category_Zp): Likewise.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	hamt: Fix compilation error on MSVC (regression 2026-08-10).
 	* lib/hamt.h (HAVE_C11__ATOMIC): Add parentheses to #if expression.
 

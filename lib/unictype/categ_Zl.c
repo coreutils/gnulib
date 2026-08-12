@@ -29,7 +29,7 @@
 #include "unictype.h"
 
 static bool
-uc_is_category_Zl (ucs4_t uc)
+uc_is_category_Zl (ucs4_t uc, _GL_UNUSED uint32_t bitmask)
 {
   return (uc == 0x2028);
 }
