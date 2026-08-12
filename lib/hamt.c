@@ -35,11 +35,7 @@
    A thread must not modify an entry or its children (!) if its
    reference count implies that the entry is shared by at least two
    hamts.  */
-typedef
-#if GL_HAMT_THREAD_SAFE
-_Atomic
-#endif
-size_t ref_counter;
+typedef GL_HAMT_ATOMIC (size_t) ref_counter;
 
 /***************/
 /* Entry Types */
