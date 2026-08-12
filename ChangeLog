@@ -1,5 +1,10 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	hamt: Fix compilation error on MSVC (regression 2026-08-10).
+	* lib/hamt.h (HAVE_C11__ATOMIC): Add parentheses to #if expression.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	hamt: Fix compilation error (regression 2026-08-10).
 	* lib/hamt.c (ref_counter): Use GL_HAMT_ATOMIC instead of
 	GL_HAMT_THREAD_SAFE.

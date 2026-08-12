@@ -68,13 +68,14 @@ _GL_INLINE_HEADER_BEGIN
 #ifndef HAVE_C11__ATOMIC
 # if (!defined __STDC_NO_ATOMICS__ && !defined __cplusplus \
       && (defined __apple_build_version__ ? 8000000 <= __apple_build_version__ \
-          : defined __clang__ ? 4 <= __clang_major__ \
-          : defined _MSC_VER ? 1935 <= _MSC_VER \
-          : defined __NVCOMPILER \
-          ? 21 < __NVCOMPILER_MAJOR__ + (3 <= __NVCOMPILER_MINOR__) \
-          : defined __GNUC__ ? 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
-          : (!defined __xlC__ && !defined __PGI \
-             && defined __STDC_VERSION__ && 201112 <= __STDC_VERSION__)))
+          : (defined __clang__ ? 4 <= __clang_major__ \
+             : (defined _MSC_VER ? 1935 <= _MSC_VER \
+                : (defined __NVCOMPILER \
+                   ? 21 < __NVCOMPILER_MAJOR__ + (3 <= __NVCOMPILER_MINOR__) \
+                   : (defined __GNUC__ ? 4 < __GNUC__ + (9 <= __GNUC_MINOR__) \
+                      : (!defined __xlC__ && !defined __PGI \
+                         && defined __STDC_VERSION__ \
+                         && 201112 <= __STDC_VERSION__)))))))
 #  define HAVE_C11__ATOMIC 1
 # else
 #  define HAVE_C11__ATOMIC 0
