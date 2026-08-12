@@ -57,6 +57,7 @@ gl_tree_size (gl_omap_t map)
 
 static bool
 gl_tree_search (gl_omap_t map, const void *key, const void **valuep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   gl_mapkey_compar_fn compar = map->base.compar_fn;
 
@@ -86,6 +87,7 @@ gl_tree_search_atleast (gl_omap_t map,
                         gl_mapkey_threshold_fn threshold_fn,
                         const void *threshold,
                         const void **keyp, const void **valuep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   for (gl_omap_node_t node = map->root; node != NULL; )
     {
@@ -118,6 +120,7 @@ gl_tree_search_atleast (gl_omap_t map,
 static int
 gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
                    const void **oldvaluep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   gl_omap_node_t node = map->root;
 
@@ -168,6 +171,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
 
 static bool
 gl_tree_getremove (gl_omap_t map, const void *key, const void **oldvaluep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   gl_mapkey_compar_fn compar = map->base.compar_fn;
 
@@ -195,6 +199,7 @@ gl_tree_getremove (gl_omap_t map, const void *key, const void **oldvaluep)
 
 static void
 gl_tree_omap_free (gl_omap_t map)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   /* Iterate across all elements in post-order.  */
   gl_omap_node_t node = map->root;

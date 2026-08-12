@@ -76,6 +76,7 @@ gl_array_size (gl_omap_t map)
 
 static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof (gl_omap_t map, const void *key)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
 
@@ -128,6 +129,7 @@ gl_array_search_atleast (gl_omap_t map,
                          gl_mapkey_threshold_fn threshold_fn,
                          const void *threshold,
                          const void **keyp, const void **valuep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
 
@@ -217,6 +219,7 @@ gl_array_nx_add_at (gl_omap_t map, size_t position,
 static int
 gl_array_nx_getput (gl_omap_t map, const void *key, const void *value,
                     const void **oldvaluep)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
   size_t low = 0;
@@ -258,6 +261,7 @@ gl_array_nx_getput (gl_omap_t map, const void *key, const void *value,
    0 <= position < gl_omap_size (map).  */
 static void
 gl_array_remove_at (gl_omap_t map, size_t position)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
   struct pair *pairs = map->pairs;
@@ -284,6 +288,7 @@ gl_array_getremove (gl_omap_t map, const void *key, const void **oldvaluep)
 
 static void
 gl_array_free (gl_omap_t map)
+  _GL_OMAP_INVOKES_FN_PTR
 {
   if (map->pairs != NULL)
     {

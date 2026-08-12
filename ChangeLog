@@ -1,5 +1,16 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	omap-c++: Avoid clang UBSAN runtime errors.
+	* modules/omap-c++ (configure.ac): Define _GL_HAVE_OMAP_HH.
+	* lib/gl_omap.h (_GL_OMAP_INVOKES_FN_PTR): New macro.
+	(gl_omap_nx_put, gl_omap_remove): Mark as _GL_OMAP_INVOKES_FN_PTR.
+	* lib/gl_array_omap.c (gl_array_indexof, gl_array_search_atleast,
+	gl_array_nx_getput, gl_array_remove_at, gl_array_free): Likewise.
+	* lib/gl_anytree_omap.h (gl_tree_search, gl_tree_search_atleast,
+	gl_tree_nx_getput, gl_tree_getremove, gl_tree_omap_free): Likewise.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	map-c++: Avoid clang UBSAN runtime errors.
 	* modules/map-c++ (configure.ac): Define _GL_HAVE_MAP_HH.
 	* lib/gl_map.h (_GL_MAP_INVOKES_FN_PTR): New macro.
