@@ -917,6 +917,14 @@ gl_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar, const voi
          ->sortedlist_remove (list, compar, elt);
 }
 
+/* Avoid that the reinterpret_cast<>s in gl_list.hh cause runtime errors
+   "call to function ... through pointer to incorrect function type".  */
+#if _GL_HAVE_LIST_HH && defined __clang__ && __clang_major__ >= 4
+# define _GL_LIST_INVOKES_FN_PTR __attribute__ ((no_sanitize ("function")))
+#else
+# define _GL_LIST_INVOKES_FN_PTR
+#endif
+
 #ifdef __cplusplus
 }
 #endif

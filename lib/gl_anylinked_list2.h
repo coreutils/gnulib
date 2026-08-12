@@ -81,6 +81,7 @@ gl_linked_nx_create (gl_list_implementation_t implementation,
                      gl_listelement_dispose_fn dispose_fn,
                      bool allow_duplicates,
                      size_t count, const void **contents)
+  _GL_LIST_INVOKES_FN_PTR
 {
   struct gl_list_impl *list =
     (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
@@ -175,6 +176,7 @@ static int
 gl_linked_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
                              gl_list_node_t node,
                              const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
 #if WITH_HASHTABLE
   if (elt != node->value)
@@ -270,6 +272,7 @@ gl_linked_get_at (gl_list_t list, size_t position)
 
 static gl_list_node_t
 gl_linked_nx_set_at (gl_list_t list, size_t position, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -330,6 +333,7 @@ gl_linked_nx_set_at (gl_list_t list, size_t position, const void *elt)
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                           const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -481,6 +485,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 static size_t _GL_ATTRIBUTE_PURE
 gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
                            const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -604,6 +609,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 
 static gl_list_node_t
 gl_linked_nx_add_first (gl_list_t list, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node =
     (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
@@ -642,6 +648,7 @@ gl_linked_nx_add_first (gl_list_t list, const void *elt)
 
 static gl_list_node_t
 gl_linked_nx_add_last (gl_list_t list, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node =
     (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
@@ -680,6 +687,7 @@ gl_linked_nx_add_last (gl_list_t list, const void *elt)
 
 static gl_list_node_t
 gl_linked_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t new_node =
     (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
@@ -718,6 +726,7 @@ gl_linked_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 
 static gl_list_node_t
 gl_linked_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t new_node =
     (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
@@ -756,6 +765,7 @@ gl_linked_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 
 static gl_list_node_t
 gl_linked_nx_add_at (gl_list_t list, size_t position, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
   gl_list_node_t new_node;
@@ -819,6 +829,7 @@ gl_linked_nx_add_at (gl_list_t list, size_t position, const void *elt)
 
 static bool
 gl_linked_remove_node (gl_list_t list, gl_list_node_t node)
+  _GL_LIST_INVOKES_FN_PTR
 {
 #if WITH_HASHTABLE
   /* Remove node from the hash table.  */
@@ -841,6 +852,7 @@ gl_linked_remove_node (gl_list_t list, gl_list_node_t node)
 
 static bool
 gl_linked_remove_at (gl_list_t list, size_t position)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -897,6 +909,7 @@ gl_linked_remove (gl_list_t list, const void *elt)
 
 static void
 gl_linked_list_free (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_listelement_dispose_fn dispose = list->base.dispose_fn;
 
@@ -1025,6 +1038,7 @@ gl_linked_iterator_free (gl_list_iterator_t *_GL_UNNAMED (iterator))
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_linked_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     {
@@ -1043,6 +1057,7 @@ gl_linked_sortedlist_search_from_to (gl_list_t list,
                                      gl_listelement_compar_fn compar,
                                      size_t low, size_t high,
                                      const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -1089,6 +1104,7 @@ gl_linked_sortedlist_search_from_to (gl_list_t list,
 static size_t _GL_ATTRIBUTE_PURE
 gl_linked_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
                               const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node;
   size_t index;
@@ -1112,6 +1128,7 @@ gl_linked_sortedlist_indexof_from_to (gl_list_t list,
                                       gl_listelement_compar_fn compar,
                                       size_t low, size_t high,
                                       const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -1160,6 +1177,7 @@ gl_linked_sortedlist_indexof_from_to (gl_list_t list,
 static gl_list_node_t
 gl_linked_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     if (compar (node->value, elt) >= 0)
@@ -1170,6 +1188,7 @@ gl_linked_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
 static bool
 gl_linked_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   for (gl_list_node_t node = list->root.next; node != &list->root; node = node->next)
     {

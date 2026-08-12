@@ -68,6 +68,7 @@ gl_tree_node_value (gl_list_t _GL_UNNAMED (list), gl_list_node_t node)
 static int
 gl_tree_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
                            gl_list_node_t node, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
 #if WITH_HASHTABLE
   if (elt != node->value)
@@ -203,6 +204,7 @@ gl_tree_get_at (gl_list_t list, size_t position)
 
 static gl_list_node_t
 gl_tree_nx_set_at (gl_list_t list, size_t position, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node = list->root;
 
@@ -247,6 +249,7 @@ gl_tree_nx_set_at (gl_list_t list, size_t position, const void *elt)
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                         const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(start_index <= end_index
         && end_index <= (list->root != NULL ? list->root->branch_size : 0)))
@@ -358,6 +361,7 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 static size_t _GL_ATTRIBUTE_PURE
 gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
                          const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(start_index <= end_index
         && end_index <= (list->root != NULL ? list->root->branch_size : 0)))
@@ -484,6 +488,7 @@ gl_tree_nx_add_at (gl_list_t list, size_t position, const void *elt)
 
 static bool
 gl_tree_remove_node (gl_list_t list, gl_list_node_t node)
+  _GL_LIST_INVOKES_FN_PTR
 {
 #if WITH_HASHTABLE
   /* Remove node from the hash table.
@@ -530,6 +535,7 @@ gl_tree_remove (gl_list_t list, const void *elt)
 
 static void
 gl_tree_list_free (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Iterate across all elements in post-order.  */
   gl_list_node_t node = list->root;
@@ -665,6 +671,7 @@ gl_tree_iterator_free (gl_list_iterator_t *_GL_UNNAMED (iterator))
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
                            const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   for (gl_list_node_t node = list->root; node != NULL; )
     {
@@ -706,6 +713,7 @@ gl_tree_sortedlist_search_from_to (gl_list_t list,
                                    gl_listelement_compar_fn compar,
                                    size_t low, size_t high,
                                    const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(low <= high
         && high <= (list->root != NULL ? list->root->branch_size : 0)))
@@ -784,6 +792,7 @@ gl_tree_sortedlist_search_from_to (gl_list_t list,
 static size_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
                             const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node;
   size_t position;
@@ -841,6 +850,7 @@ gl_tree_sortedlist_indexof_from_to (gl_list_t list,
                                     gl_listelement_compar_fn compar,
                                     size_t low, size_t high,
                                     const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(low <= high
         && high <= (list->root != NULL ? list->root->branch_size : 0)))
@@ -925,6 +935,7 @@ gl_tree_sortedlist_indexof_from_to (gl_list_t list,
 static gl_list_node_t
 gl_tree_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
                            const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   gl_list_node_t node = list->root;
 

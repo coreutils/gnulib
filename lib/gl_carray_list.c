@@ -78,11 +78,11 @@ gl_carray_nx_create_empty (gl_list_implementation_t implementation,
 
 static gl_list_t
 gl_carray_nx_create (gl_list_implementation_t implementation,
-                  gl_listelement_equals_fn equals_fn,
-                  gl_listelement_hashcode_fn hashcode_fn,
-                  gl_listelement_dispose_fn dispose_fn,
-                  bool allow_duplicates,
-                  size_t count, const void **contents)
+                     gl_listelement_equals_fn equals_fn,
+                     gl_listelement_hashcode_fn hashcode_fn,
+                     gl_listelement_dispose_fn dispose_fn,
+                     bool allow_duplicates,
+                     size_t count, const void **contents)
 {
   struct gl_list_impl *list =
     (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
@@ -230,6 +230,7 @@ gl_carray_nx_set_at (gl_list_t list, size_t position, const void *elt)
 static size_t _GL_ATTRIBUTE_PURE
 gl_carray_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
                            const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -468,6 +469,7 @@ gl_carray_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 
 static bool
 gl_carray_remove_at (gl_list_t list, size_t position)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -568,6 +570,7 @@ gl_carray_remove (gl_list_t list, const void *elt)
 
 static void
 gl_carray_list_free (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (list->elements != NULL)
     {
@@ -689,6 +692,7 @@ gl_carray_sortedlist_indexof_from_to (gl_list_t list,
                                       gl_listelement_compar_fn compar,
                                       size_t low, size_t high,
                                       const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(low <= high && high <= list->count))
     /* Invalid arguments.  */
@@ -784,6 +788,7 @@ gl_carray_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
 static gl_list_node_t
 gl_carray_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
                              const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
   size_t low = 0;

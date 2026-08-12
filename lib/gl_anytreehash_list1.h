@@ -98,6 +98,7 @@ gl_oset_first (gl_oset_t set)
    Return 0 upon success, -1 upon out-of-memory.  */
 static int
 add_to_bucket (gl_list_t list, gl_list_node_t new_node)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t bucket = new_node->h.hashcode % list->table_size;
 
@@ -184,6 +185,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
    If duplicates are forbidden, this function is O(1) on average.  */
 static void
 remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t bucket = old_node->h.hashcode % list->table_size;
 
@@ -257,6 +259,7 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
    Returns 0 upon success, -1 upon out-of-memory.  */
 static int
 add_nodes_to_buckets (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Iterate across all nodes.  */
   gl_list_node_t node = list->root;

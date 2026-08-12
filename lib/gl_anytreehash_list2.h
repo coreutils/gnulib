@@ -20,6 +20,7 @@
 static gl_list_node_t
 gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                         const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(start_index <= end_index
         && end_index <= (list->root != NULL ? list->root->branch_size : 0)))
@@ -141,6 +142,7 @@ gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 
 static void
 gl_tree_list_free (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (list->base.allow_duplicates)
     {

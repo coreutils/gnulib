@@ -9,6 +9,8 @@ xlist
 xsublist
 
 configure.ac:
+AC_DEFINE([_GL_HAVE_LIST_HH], [1],
+  [Define if the gnulib module list-c++ is present.])
 
 Makefile.am:
 

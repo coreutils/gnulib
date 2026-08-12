@@ -211,6 +211,7 @@ gl_array_nx_set_at (gl_list_t list, size_t position, const void *elt)
 static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
                           const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -367,6 +368,7 @@ gl_array_nx_add_at (gl_list_t list, size_t position, const void *elt)
 
 static bool
 gl_array_remove_node (gl_list_t list, gl_list_node_t node)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
   uintptr_t index = NODE_TO_INDEX (node);
@@ -386,6 +388,7 @@ gl_array_remove_node (gl_list_t list, gl_list_node_t node)
 
 static bool
 gl_array_remove_at (gl_list_t list, size_t position)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
 
@@ -413,6 +416,7 @@ gl_array_remove (gl_list_t list, const void *elt)
 
 static void
 gl_array_list_free (gl_list_t list)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (list->elements != NULL)
     {
@@ -516,6 +520,7 @@ gl_array_sortedlist_indexof_from_to (gl_list_t list,
                                      gl_listelement_compar_fn compar,
                                      size_t low, size_t high,
                                      const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   if (!(low <= high && high <= list->count))
     /* Invalid arguments.  */
@@ -601,6 +606,7 @@ gl_array_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
 static gl_list_node_t
 gl_array_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
                             const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   size_t count = list->count;
   size_t low = 0;

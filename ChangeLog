@@ -1,5 +1,40 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	list-c++: Avoid clang UBSAN runtime errors.
+	* modules/list-c++ (configure.ac): Define _GL_HAVE_LIST_HH.
+	* lib/gl_list.h (_GL_LIST_INVOKES_FN_PTR): New macro.
+	* lib/gl_array_list.c (gl_array_indexof_from_to, gl_array_remove_node,
+	gl_array_remove_at, gl_array_list_free,
+	gl_array_sortedlist_indexof_from_to, gl_array_sortedlist_search): Mark
+	as _GL_LIST_INVOKES_FN_PTR.
+	* lib/gl_carray_list.c (gl_carray_indexof_from_to, gl_carray_remove_at,
+	gl_carray_list_free, gl_carray_sortedlist_nx_add): Likewise.
+	* lib/gl_anylinked_list2.h (gl_linked_nx_create,
+	gl_linked_node_nx_set_value, gl_linked_get_at, gl_linked_nx_set_at,
+	gl_linked_search_from_to, gl_linked_indexof_from_to,
+	gl_linked_nx_add_last, gl_linked_nx_add_before, gl_linked_nx_add_after,
+	gl_linked_nx_add_at, gl_linked_remove_node, gl_linked_remove_at,
+	gl_linked_list_free, gl_linked_sortedlist_search,
+	gl_linked_sortedlist_search_from_to, gl_linked_sortedlist_indexof,
+	gl_linked_sortedlist_indexof_from_to, gl_linked_sortedlist_nx_add,
+	gl_linked_sortedlist_remove): Likewise.
+	* lib/gl_anyavltree_list2.h (gl_tree_nx_add_first, gl_tree_nx_add_last,
+	gl_tree_nx_add_before, gl_tree_nx_add_after): Likewise.
+	* lib/gl_anyrbtree_list2.h (gl_tree_nx_add_first, gl_tree_nx_add_last,
+	gl_tree_nx_add_before, gl_tree_nx_add_after): Likewise.
+	* lib/gl_anytree_list2.h (gl_tree_node_nx_set_value, gl_tree_nx_set_at,
+	gl_tree_search_from_to, gl_tree_indexof_from_to, gl_tree_remove_node,
+	gl_tree_list_free, gl_tree_sortedlist_search,
+	gl_tree_sortedlist_search_from_to, gl_tree_sortedlist_indexof,
+	gl_tree_sortedlist_indexof_from_to, gl_tree_sortedlist_nx_add):
+	Likewise.
+	* lib/gl_anytreehash_list1.h (add_to_bucket, remove_from_bucket,
+	add_nodes_to_buckets): Likewise.
+	* lib/gl_anytreehash_list2.h (gl_tree_search_from_to,
+	gl_tree_list_free): Likewise.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	unictype: Fix undefined behaviour.
 	Reported by clang's UBSAN.
 	* lib/unictype/categ_Cs.c (uc_is_category_Cs): Add a bitmask argument.

@@ -517,6 +517,7 @@ gl_tree_remove_node_from_tree (gl_list_t list, gl_list_node_t node)
 
 static gl_list_node_t
 gl_tree_nx_add_first (gl_list_t list, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Create new node.  */
   gl_list_node_t new_node =
@@ -580,6 +581,7 @@ gl_tree_nx_add_first (gl_list_t list, const void *elt)
 
 static gl_list_node_t
 gl_tree_nx_add_last (gl_list_t list, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Create new node.  */
   gl_list_node_t new_node =
@@ -643,6 +645,7 @@ gl_tree_nx_add_last (gl_list_t list, const void *elt)
 
 static gl_list_node_t
 gl_tree_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Create new node.  */
   gl_list_node_t new_node;
@@ -708,6 +711,7 @@ gl_tree_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 
 static gl_list_node_t
 gl_tree_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
+  _GL_LIST_INVOKES_FN_PTR
 {
   /* Create new node.  */
   gl_list_node_t new_node;
