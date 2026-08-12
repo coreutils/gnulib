@@ -93,6 +93,7 @@ gl_tree_prev_node (gl_oset_node_t node)
 
 static bool
 gl_tree_search (gl_oset_t set, const void *elt)
+  _GL_OSET_INVOKES_FN_PTR
 {
   gl_setelement_compar_fn compar = set->base.compar_fn;
 
@@ -119,6 +120,7 @@ gl_tree_search_atleast (gl_oset_t set,
                         gl_setelement_threshold_fn threshold_fn,
                         const void *threshold,
                         const void **eltp)
+  _GL_OSET_INVOKES_FN_PTR
 {
   for (gl_oset_node_t node = set->root; node != NULL; )
     {
@@ -149,6 +151,7 @@ gl_tree_search_atleast (gl_oset_t set,
 
 static gl_oset_node_t
 gl_tree_search_node (gl_oset_t set, const void *elt)
+  _GL_OSET_INVOKES_FN_PTR
 {
   gl_setelement_compar_fn compar = set->base.compar_fn;
 
@@ -172,6 +175,7 @@ gl_tree_search_node (gl_oset_t set, const void *elt)
 
 static int
 gl_tree_nx_add (gl_oset_t set, const void *elt)
+  _GL_OSET_INVOKES_FN_PTR
 {
   gl_oset_node_t node = set->root;
 
@@ -231,6 +235,7 @@ static int
 gl_tree_update (gl_oset_t set, const void *elt,
                 void (*action) (const void * /*elt*/, void * /*action_data*/),
                 void *action_data)
+  _GL_OSET_INVOKES_FN_PTR
 {
   /* Like gl_tree_remove, action (...), gl_tree_nx_add, except that we don't
      actually remove ELT.  */
@@ -301,6 +306,7 @@ gl_tree_update (gl_oset_t set, const void *elt,
 
 static void
 gl_tree_oset_free (gl_oset_t set)
+  _GL_OSET_INVOKES_FN_PTR
 {
   /* Iterate across all elements in post-order.  */
   gl_oset_node_t node = set->root;
@@ -374,6 +380,7 @@ static gl_oset_iterator_t
 gl_tree_iterator_atleast (gl_oset_t set,
                           gl_setelement_threshold_fn threshold_fn,
                           const void *threshold)
+  _GL_OSET_INVOKES_FN_PTR
 {
   gl_oset_iterator_t result;
 

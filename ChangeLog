@@ -1,5 +1,17 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	oset-c++: Avoid clang UBSAN runtime errors.
+	* modules/oset-c++ (configure.ac): Define _GL_HAVE_OSET_HH.
+	* lib/gl_oset.h (_GL_OSET_INVOKES_FN_PTR): New macro.
+	* lib/gl_array_oset.c (gl_array_indexof, gl_array_indexof_atleast,
+	gl_array_search_atleast, gl_array_remove_at, gl_array_nx_add,
+	gl_array_update, gl_array_free(: Mark as _GL_OSET_INVOKES_FN_PTR.
+	* lib/gl_anytree_oset.h (gl_tree_search, gl_tree_search_atleast,
+	gl_tree_search_node, gl_tree_nx_add, gl_tree_update, gl_tree_oset_free,
+	gl_tree_iterator_atleast): Likewise.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	set-c++: Avoid clang UBSAN runtime errors.
 	* modules/set-c++ (configure.ac): Define _GL_HAVE_SET_HH.
 	* lib/gl_set.h (_GL_SET_INVOKES_FN_PTR): New macro.

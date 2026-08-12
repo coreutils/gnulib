@@ -8,6 +8,8 @@ Depends-on:
 xoset
 
 configure.ac:
+AC_DEFINE([_GL_HAVE_OSET_HH], [1],
+  [Define if the gnulib module oset-c++ is present.])
 
 Makefile.am:
 

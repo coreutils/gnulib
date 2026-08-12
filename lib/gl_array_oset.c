@@ -68,6 +68,7 @@ gl_array_size (gl_oset_t set)
 
 static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof (gl_oset_t set, const void *elt)
+  _GL_OSET_INVOKES_FN_PTR
 {
   size_t count = set->count;
 
@@ -117,6 +118,7 @@ static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof_atleast (gl_oset_t set,
                           gl_setelement_threshold_fn threshold_fn,
                           const void *threshold)
+  _GL_OSET_INVOKES_FN_PTR
 {
   size_t count = set->count;
 
@@ -166,6 +168,7 @@ gl_array_search_atleast (gl_oset_t set,
                          gl_setelement_threshold_fn threshold_fn,
                          const void *threshold,
                          const void **eltp)
+  _GL_OSET_INVOKES_FN_PTR
 {
   size_t index = gl_array_indexof_atleast (set, threshold_fn, threshold);
 
@@ -220,6 +223,7 @@ gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
    0 <= position < gl_oset_size (set).  */
 static void
 gl_array_remove_at (gl_oset_t set, size_t position)
+  _GL_OSET_INVOKES_FN_PTR
 {
   size_t count = set->count;
   const void **elements = set->elements;
@@ -232,6 +236,7 @@ gl_array_remove_at (gl_oset_t set, size_t position)
 
 static int
 gl_array_nx_add (gl_oset_t set, const void *elt)
+  _GL_OSET_INVOKES_FN_PTR
 {
   size_t count = set->count;
   size_t low = 0;
@@ -282,6 +287,7 @@ static int
 gl_array_update (gl_oset_t set, const void *elt,
                  void (*action) (const void * /*elt*/, void * /*action_data*/),
                  void *action_data)
+  _GL_OSET_INVOKES_FN_PTR
 {
   /* Like gl_array_remove, action (...), gl_array_nx_add, except that we don't
      actually remove ELT.  */
@@ -388,6 +394,7 @@ gl_array_update (gl_oset_t set, const void *elt,
 
 static void
 gl_array_free (gl_oset_t set)
+  _GL_OSET_INVOKES_FN_PTR
 {
   if (set->elements != NULL)
     {
