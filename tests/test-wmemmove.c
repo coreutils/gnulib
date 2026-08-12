@@ -23,12 +23,17 @@
 
 #include "macros.h"
 
-/* Test the prototype in <wchar.h> + compiler.  */
+/* Test the prototype in <wchar.h> + compiler.
+   In mingw-w64 14.0.0, wmemmove is an inline function that calls memmove.
+   In GCC < 15, memmove is a builtin that has the nonnull attribute.  */
 static wchar_t *
 null_wmemmove (wchar_t *s1, wchar_t const *s2, size_t n)
 {
   wchar_t *p = wmemmove (s1, s2, n);
+#if ! (defined __MINGW32__ \
+       && defined __GNUC__ && !defined __clang__ && __GNUC__ < 15)
   ASSERT (s1 == NULL);
+#endif
   return p;
 }
 static wchar_t *(*volatile volatile_null_wmemmove) (wchar_t *, wchar_t const *,

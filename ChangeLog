@@ -1,3 +1,10 @@
+2026-08-13  Lasse Collin  <lasse.collin@tukaani.org>
+
+	tests: Fix test-wmemcpy and test-wmemmove on mingw-w64 + GCC < 15.
+	* tests/test-wmemcpy.c (null_wmemcpy): Exclude the N3322 test on
+	mingw-w64 && GCC < 15.
+	* tests/test-wmemmove.c (null_wmemmove): Likewise.
+
 2026-08-13  Bruno Haible  <bruno@clisp.org>
 
 	term-style-control: Avoid clang UBSAN runtime errors.
