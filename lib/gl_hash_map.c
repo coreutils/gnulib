@@ -97,6 +97,7 @@ gl_hash_size (gl_map_t map)
 
 _GL_ATTRIBUTE_REPRODUCIBLE static bool
 gl_hash_search (gl_map_t map, const void *key, const void **valuep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -123,6 +124,7 @@ gl_hash_search (gl_map_t map, const void *key, const void **valuep)
 static int
 gl_hash_nx_getput (gl_map_t map, const void *key, const void *value,
                    const void **oldvaluep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -170,6 +172,7 @@ gl_hash_nx_getput (gl_map_t map, const void *key, const void *value,
 
 static bool
 gl_hash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -209,6 +212,7 @@ gl_hash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
 
 static void
 gl_hash_free (gl_map_t map)
+  _GL_MAP_INVOKES_FN_PTR
 {
   if (map->count > 0)
     {

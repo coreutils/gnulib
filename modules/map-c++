@@ -8,6 +8,8 @@ Depends-on:
 xmap
 
 configure.ac:
+AC_DEFINE([_GL_HAVE_MAP_HH], [1],
+  [Define if the gnulib module map-c++ is present.])
 
 Makefile.am:
 

@@ -78,6 +78,7 @@ gl_array_size (gl_map_t map)
 
 static size_t
 gl_array_indexof (gl_map_t map, const void *key)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
 
@@ -162,6 +163,7 @@ gl_array_nx_getput (gl_map_t map, const void *key, const void *value,
    0 <= position < gl_map_size (map).  */
 static void
 gl_array_remove_at (gl_map_t map, size_t position)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t count = map->count;
   struct pair *pairs = map->pairs;
@@ -188,6 +190,7 @@ gl_array_getremove (gl_map_t map, const void *key, const void **oldvaluep)
 
 static void
 gl_array_free (gl_map_t map)
+  _GL_MAP_INVOKES_FN_PTR
 {
   if (map->pairs != NULL)
     {

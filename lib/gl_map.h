@@ -327,6 +327,14 @@ gl_map_iterator_free (gl_map_iterator_t *iterator)
   iterator->vtable->iterator_free (iterator);
 }
 
+/* Avoid that the reinterpret_cast<>s in gl_map.hh cause runtime errors
+   "call to function ... through pointer to incorrect function type".  */
+#if _GL_HAVE_MAP_HH && defined __clang__ && __clang_major__ >= 4
+# define _GL_MAP_INVOKES_FN_PTR __attribute__ ((no_sanitize ("function")))
+#else
+# define _GL_MAP_INVOKES_FN_PTR
+#endif
+
 /* Define the convenience functions, that is, the functions that are independent
    of the implementation.  */
 
@@ -340,6 +348,7 @@ gl_map_get (gl_map_t map, const void *key)
 
 _GL_ATTRIBUTE_NODISCARD GL_MAP_INLINE int
 gl_map_nx_put (gl_map_t map, const void *key, const void *value)
+  _GL_MAP_INVOKES_FN_PTR
 {
   const void *oldvalue;
   int result = gl_map_nx_getput (map, key, value, &oldvalue);
@@ -355,6 +364,7 @@ gl_map_nx_put (gl_map_t map, const void *key, const void *value)
 
 GL_MAP_INLINE bool
 gl_map_remove (gl_map_t map, const void *key)
+  _GL_MAP_INVOKES_FN_PTR
 {
   const void *oldvalue;
   bool result = gl_map_getremove (map, key, &oldvalue);

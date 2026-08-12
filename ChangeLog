@@ -1,5 +1,19 @@
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
+	map-c++: Avoid clang UBSAN runtime errors.
+	* modules/map-c++ (configure.ac): Define _GL_HAVE_MAP_HH.
+	* lib/gl_map.h (_GL_MAP_INVOKES_FN_PTR): New macro.
+	(gl_map_nx_put, gl_map_remove): Mark as _GL_MAP_INVOKES_FN_PTR.
+	* lib/gl_array_map.c (gl_array_indexof, gl_array_remove_at,
+	gl_array_free): Likewise.
+	* lib/gl_hash_map.c (gl_hash_search, gl_hash_nx_getput,
+	gl_hash_getremove, gl_hash_free): Likewise.
+	* lib/gl_linkedhash_map.c (gl_linkedhash_search,
+	gl_linkedhash_nx_getput, gl_linkedhash_getremove, gl_linkedhash_free):
+	Likewise.
+
+2026-08-12  Bruno Haible  <bruno@clisp.org>
+
 	oset-c++: Avoid clang UBSAN runtime errors.
 	* modules/oset-c++ (configure.ac): Define _GL_HAVE_OSET_HH.
 	* lib/gl_oset.h (_GL_OSET_INVOKES_FN_PTR): New macro.

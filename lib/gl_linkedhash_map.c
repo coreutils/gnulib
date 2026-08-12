@@ -122,6 +122,7 @@ gl_linkedhash_size (gl_map_t map)
 
 _GL_ATTRIBUTE_REPRODUCIBLE static bool
 gl_linkedhash_search (gl_map_t map, const void *key, const void **valuep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -148,6 +149,7 @@ gl_linkedhash_search (gl_map_t map, const void *key, const void **valuep)
 static int
 gl_linkedhash_nx_getput (gl_map_t map, const void *key, const void *value,
                          const void **oldvaluep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -199,6 +201,7 @@ gl_linkedhash_nx_getput (gl_map_t map, const void *key, const void *value,
 
 static bool
 gl_linkedhash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
+  _GL_MAP_INVOKES_FN_PTR
 {
   size_t hashcode =
     (map->hashcode_fn != NULL
@@ -245,6 +248,7 @@ gl_linkedhash_getremove (gl_map_t map, const void *key, const void **oldvaluep)
 
 static void
 gl_linkedhash_free (gl_map_t map)
+  _GL_MAP_INVOKES_FN_PTR
 {
   gl_mapkey_dispose_fn kdispose = map->base.kdispose_fn;
   gl_mapvalue_dispose_fn vdispose = map->base.vdispose_fn;
