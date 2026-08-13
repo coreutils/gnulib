@@ -1,3 +1,13 @@
+2026-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdc_rotate_left-tests: pacify -Woverflow
+	Problem found with gcc 16.1.1 20260515 (Red Hat 16.1.1-2) on i686.
+	* tests/test-stdc_rotate_left.c (test_stdc_rotate_left_ul):
+	* tests/test-stdc_rotate_right.c (test_stdc_rotate_right_ul): Use
+	preprocessor-time check, not a potentially runtime check, to see
+	whether to use 32- or 64-bit tests.  This pacifies gcc -Woverflow.
+	Include <limits.h> to get ULONG_MAX.
+
 2026-08-12  Bruno Haible  <bruno@clisp.org>
 
 	omap-c++: Avoid clang UBSAN runtime errors.

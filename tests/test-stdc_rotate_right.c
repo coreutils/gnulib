@@ -21,6 +21,8 @@
 /* Specification.  */
 #include <stdbit.h>
 
+#include <limits.h>
+
 #include "macros.h"
 
 #define TEST_CASE(type, function, value, shift, expect)         \
@@ -437,10 +439,11 @@ test_stdc_rotate_right_ui (void)
 static void
 test_stdc_rotate_right_ul (void)
 {
-  if (sizeof 0ul < sizeof 0ull)
-    TEST_CASES_32 (unsigned long int, stdc_rotate_right_ul);
-  else
-    TEST_CASES_64 (unsigned long int, stdc_rotate_right_ul);
+#if ULONG_MAX >> 31 == 1
+  TEST_CASES_32 (unsigned long int, stdc_rotate_right_ul);
+#else
+  TEST_CASES_64 (unsigned long int, stdc_rotate_right_ul);
+#endif
 }
 
 static void
