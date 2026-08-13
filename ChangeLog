@@ -1,3 +1,19 @@
+2026-08-12  Collin Funk  <collin.funk1@gmail.com>
+
+	stdc_rotate_{left,right}-tests: adjust to share with glibc
+	* tests/from-glibc/tst-stdc_rotate_left.c: New file, based on
+	tests/test-stdc_rotate_left.c with changes to also work with the glibc
+	test framework. Relicense to LGPLv2.1+.
+	* tests/from-glibc/tst-stdc_rotate_right.c: New file, based on
+	tests/test-stdc_rotate_right.c with changes to also work with the glibc
+	test framework. Relicense to LGPLv2.1+.
+	* modules/stdc_rotate_left-tests (Files): List the new file.
+	(Depends-on): Add the new file as a source for the test program. Define
+	GNULIB_TEST_STDBIT when compiling.
+	* modules/stdc_rotate_right-tests (Files): List the new file.
+	(Depends-on): Add the new file as a source for the test program. Define
+	GNULIB_TEST_STDBIT when compiling.
+
 2026-08-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdc_rotate_left-tests: pacify -Woverflow

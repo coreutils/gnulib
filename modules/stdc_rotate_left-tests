@@ -1,5 +1,5 @@
 Files:
-tests/test-stdc_rotate_left.c
+tests/from-glibc/tst-stdc_rotate_left.c
 tests/macros.h
 
 Depends-on:
@@ -9,3 +9,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-stdc_rotate_left
 check_PROGRAMS += test-stdc_rotate_left
+test_stdc_rotate_left_SOURCES = from-glibc/tst-stdc_rotate_left.c
+test_stdc_rotate_left_CPPFLAGS = $(AM_CPPFLAGS) -DGNULIB_TEST_STDBIT

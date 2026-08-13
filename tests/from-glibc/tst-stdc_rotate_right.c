@@ -1,37 +1,48 @@
 /* Test the stdc_rotate_right_* functions and macro.
    Copyright (C) 2026 Free Software Foundation, Inc.
 
-   This file is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published
-   by the Free Software Foundation, either version 3 of the License,
-   or (at your option) any later version.
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
 
-   This file is distributed in the hope that it will be useful,
+   The GNU C Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, see
+   <https://www.gnu.org/licenses/>.  */
 
-/* Written by Collin Funk <collin.funk1@gmail.com>, 2026.  */
-
-#include <config.h>
+#ifdef GNULIB_TEST_STDBIT
+# include <config.h>
+#endif
 
 /* Specification.  */
 #include <stdbit.h>
 
 #include <limits.h>
 
-#include "macros.h"
+#ifdef GNULIB_TEST_STDBIT
+# include "macros.h"
+# define MAIN_STATIC
+# define MAIN main
+# define TEST_COMPARE(a, b) ASSERT ((a) == (b))
+# define TEST_EXIT_STATUS test_exit_status
+#else
+# include <support/check.h>
+# define MAIN_STATIC static
+# define MAIN do_test
+# define TEST_EXIT_STATUS 0
+#endif
 
 #define TEST_CASE(type, function, value, shift, expect)         \
   do                                                            \
     {                                                           \
       type v = value;                                           \
-      type e = expect;                                          \
-      ASSERT (function (v, shift) == e);                        \
-      ASSERT (stdc_rotate_right (v, shift) == e);               \
+      TEST_COMPARE (function (v, shift), expect);               \
+      TEST_COMPARE (stdc_rotate_right (v, shift), expect);      \
     }                                                           \
   while (false)
 
@@ -452,13 +463,17 @@ test_stdc_rotate_right_ull (void)
   TEST_CASES_64 (unsigned long long int, stdc_rotate_right_ull);
 }
 
-int
-main (void)
+MAIN_STATIC int
+MAIN (void)
 {
   test_stdc_rotate_right_uc ();
   test_stdc_rotate_right_us ();
   test_stdc_rotate_right_ui ();
   test_stdc_rotate_right_ul ();
   test_stdc_rotate_right_ull ();
-  return test_exit_status;
+  return TEST_EXIT_STATUS;
 }
+
+#ifndef GNULIB_TEST_STDBIT
+# include <support/test-driver.c>
+#endif
