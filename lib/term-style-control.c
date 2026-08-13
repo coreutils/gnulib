@@ -55,6 +55,16 @@
 #include "same-inode.h"
 #include "xalloc.h"
 
+/* Avoid that the macro definition
+     #define term_style_user_data ...
+   done in specific compilation units of some packages causes runtime errors
+   "call to function ... through pointer to incorrect function type".  */
+#if defined __clang__ && __clang_major__ >= 4
+# define INVOKES_FN_PTR __attribute__ ((no_sanitize ("function")))
+#else
+# define INVOKES_FN_PTR
+#endif
+
 
 /* ============================ EINTR handling ============================ */
 
@@ -450,6 +460,7 @@ static pthread_t volatile active_thread;
 /* The exit handler.  */
 static void
 atexit_handler (void)
+  INVOKES_FN_PTR
 {
   /* Only do something while some output was started but not completed.  */
   if (active_controller != NULL)
@@ -691,6 +702,7 @@ show_signal_marker (int sig)
    It is reentrant.  */
 static _GL_ASYNC_SAFE void
 fatal_or_stopping_signal_handler (int sig)
+  INVOKES_FN_PTR
 {
   #if HAVE_TCGETATTR
   bool echo_was_off = false;
@@ -815,6 +827,7 @@ stopping_signal_handler (int sig)
    It is reentrant.  */
 static _GL_ASYNC_SAFE void
 continuing_signal_handler (int sigcont)
+  INVOKES_FN_PTR
 {
   int saved_errno = errno;
 
@@ -966,6 +979,7 @@ ensure_other_signal_handlers (void)
 void
 activate_term_non_default_mode (const struct term_style_controller *controller,
                                 struct term_style_user_data *user_data)
+  INVOKES_FN_PTR
 {
   struct term_style_control_data *control_data =
     controller->get_control_data (user_data);
@@ -1018,6 +1032,7 @@ activate_term_non_default_mode (const struct term_style_controller *controller,
 void
 deactivate_term_non_default_mode (const struct term_style_controller *controller,
                                   struct term_style_user_data *user_data)
+  INVOKES_FN_PTR
 {
   struct term_style_control_data *control_data =
     controller->get_control_data (user_data);
@@ -1059,6 +1074,7 @@ void
 activate_term_style_controller (const struct term_style_controller *controller,
                                 struct term_style_user_data *user_data,
                                 int fd, ttyctl_t tty_control)
+  INVOKES_FN_PTR
 {
   struct term_style_control_data *control_data =
     controller->get_control_data (user_data);
@@ -1114,6 +1130,7 @@ activate_term_style_controller (const struct term_style_controller *controller,
 void
 deactivate_term_style_controller (const struct term_style_controller *controller,
                                   struct term_style_user_data *user_data)
+  INVOKES_FN_PTR
 {
   struct term_style_control_data *control_data =
     controller->get_control_data (user_data);

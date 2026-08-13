@@ -1,3 +1,12 @@
+2026-08-13  Bruno Haible  <bruno@clisp.org>
+
+	term-style-control: Avoid clang UBSAN runtime errors.
+	* lib/term-style-control.c (INVOKES_FN_PTR): New macro.
+	(atexit_handler, fatal_or_stopping_signal_handler,
+	continuing_signal_handler, activate_term_non_default_mode,
+	deactivate_term_non_default_mode, activate_term_style_controller,
+	deactivate_term_style_controller): Mark as INVOKES_FN_PTR.
+
 2026-08-12  Collin Funk  <collin.funk1@gmail.com>
 
 	stdc_rotate_{left,right}-tests: adjust to share with glibc
