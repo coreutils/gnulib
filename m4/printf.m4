@@ -1,5 +1,5 @@
 # printf.m4
-# serial 98
+# serial 99
 dnl Copyright (C) 2003, 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1437,6 +1437,8 @@ dnl than 510 in floating-point output crash the program. On Solaris 10/SPARC,
 dnl precisions larger than 510 in floating-point output yield wrong results.
 dnl On AIX 7.1, precisions larger than 998 in floating-point output yield
 dnl wrong results. On BeOS, precisions larger than 1044 crash the program.
+dnl On Solaris 11, large precisions with a 'long double' argument and the
+dnl 'f' directive can mistakenly produce exponential notation.
 dnl Result is gl_cv_func_printf_precision.
 
 AC_DEFUN([gl_PRINTF_PRECISION],
@@ -1450,7 +1452,7 @@ AC_DEFUN([gl_PRINTF_PRECISION],
         [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
-static char buf[5000];
+static char buf[10000];
 int main ()
 {
   int result = 0;
@@ -1468,6 +1470,11 @@ int main ()
   if (sprintf (buf, "%.999f %d", 1.0, 33, 44) < 999 + 5
       || buf[0] != '1')
     result |= 4;
+  if (sprintf (buf, "%.5119Lf", 1.0L) != 5121
+      || buf[0] != '1'
+      || buf[1] != '.'
+      || strcmp (buf + 5117, "0000") != 0)
+    result |= 8;
   return result;
 }]])],
         [gl_cv_func_printf_precision=yes],
@@ -2316,9 +2323,9 @@ dnl   OpenBSD 3.9, 4.0               .  #  .  #  #  #  #  #  #  .  #  .  .  #  ?
 dnl   Cygwin 1.7.0 (2009)            .  #  .  .  #  .  #  #  .  .  ?  ?  .  .  ?  ?  .  .  ?  .  ?  .  .  .  .  .  .  ?  ?  ?
 dnl   Cygwin 1.5.25 (2008)           .  #  .  .  #  #  #  #  .  .  #  ?  .  .  ?  ?  .  .  ?  .  #  .  .  .  .  .  .  ?  ?  ?
 dnl   Cygwin 1.5.19 (2006)           #  #  .  .  #  #  #  #  #  .  #  ?  .  #  ?  ?  .  #  ?  #  #  .  .  .  .  .  .  ?  ?  ?
-dnl   Solaris 11.4                   .  #  .  #  #  #  #  #  .  .  #  .  .  .  #  #  .  #  .  .  .  .  .  .  .  .  .  .  #  .
-dnl   Solaris 11.3                   .  #  .  .  .  #  #  #  .  .  #  .  .  .  ?  ?  .  .  .  .  .  .  .  .  .  .  .  .  #  .
-dnl   Solaris 11.0                   .  #  .  #  #  #  #  #  .  .  #  .  .  .  ?  ?  .  #  .  .  .  .  .  .  .  .  .  ?  ?  ?
+dnl   Solaris 11.4                   .  #  .  #  #  #  #  #  .  .  #  .  .  .  #  #  .  #  .  #  .  .  .  .  .  .  .  .  #  .
+dnl   Solaris 11.3                   .  #  .  .  .  #  #  #  .  .  #  .  .  .  ?  ?  .  .  .  ?  .  .  .  .  .  .  .  .  #  .
+dnl   Solaris 11.0                   .  #  .  #  #  #  #  #  .  .  #  .  .  .  ?  ?  .  #  .  ?  .  .  .  .  .  .  .  ?  ?  ?
 dnl   Solaris 10                     .  #  .  #  #  #  #  #  .  .  #  .  .  .  #  #  .  #  .  #  .  .  .  .  .  .  .  .  #  .
 dnl   Solaris 2.6 ... 9              #  #  .  #  #  #  #  #  #  .  #  .  .  .  ?  ?  .  #  ?  #  .  .  .  #  .  .  .  ?  ?  ?
 dnl   Solaris 2.5.1                  #  #  .  #  #  #  #  #  #  .  #  .  .  .  ?  ?  .  #  ?  .  .  #  #  #  #  #  #  ?  ?  ?
