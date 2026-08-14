@@ -104,7 +104,7 @@ main (int argc, char *argv[])
       ret = printf ("%.10000000d", -1);
       return !(ret == 10000001 || (ret < 0 && errno == ENOMEM));
     case 6:
-      ret = printf ("%.10000000u", 1);
+      ret = printf ("%.10000000u", 1u);
       return !(ret == 10000000 || (ret < 0 && errno == ENOMEM));
     }
   return 0;

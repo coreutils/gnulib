@@ -1,5 +1,11 @@
 2026-08-14  Pádraig Brady  <P@draigBrady.com>
 
+	tests: avoid -Wformat= warning re unsigned mismatch
+	* tests/test-printf-posix2.c: Specify unsigned int.
+	* tests/test-fprintf-posix2.c: Likewise.
+
+2026-08-14  Pádraig Brady  <P@draigBrady.com>
+
 	*printf: Detect %Lf large precision issue on Solaris
 	* m4/printf.m4 (gl_PRINTF_PRECISION): Detect extraneous e+00
 	output when the output exceeds 5120 bytes, seen on Solaris 11.4.
