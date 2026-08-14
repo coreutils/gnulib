@@ -1,3 +1,14 @@
+2026-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Add unit tests and doc for the %Lf large precision issue on Solaris.
+	* tests/test-vasnprintf-posix.c (test_function): Add a testcase for
+	"%.5119Lf".
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasnwprintf-posix.c (test_function): Likewise.
+	* doc/posix-functions/*printf.texi: Document the Solaris 11.4 bug.
+
 2026-08-14  Pádraig Brady  <P@draigBrady.com>
 
 	tests: avoid -Wformat= warning re unsigned mismatch

@@ -99,7 +99,7 @@ AIX 7.1, Solaris 10/x86, mingw, MSVC/clang.
 This function mishandles large floating point precisions
 (for example, formatting 1.0 with @samp{"%.511f"})
 on some platforms:
-Solaris 10.
+Solaris 11.4.
 @item
 This function produces wrong output for the @samp{lc} directive with a NUL
 wide character argument on some platforms:
