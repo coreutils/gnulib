@@ -3813,6 +3813,20 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   }
 
   {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%.5119Lf %d", 1.0L, 99);
+    ASSERT (result != NULL);
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (size_t i = 0; i < 5119; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (wcscmp (result + 2 + 5119, L" 99") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
     char input[5000];
     size_t length;
     wchar_t *result;

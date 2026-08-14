@@ -78,7 +78,7 @@ strisnan (const char *string, size_t start_index, size_t end_index, int uppercas
 static void
 test_function (int (*my_sprintf) (char *, const char *, ...))
 {
-  char result[5000];
+  char result[10000];
   char buf[8];
 
   /* Test return value convention.  */
@@ -2943,6 +2943,17 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     for (size_t i = 0; i < 511; i++)
       ASSERT (result[2 + i] == '0');
     ASSERT (strcmp (result + 2 + 511, " 99") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%.5119Lf %d", 1.0L, 99);
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (size_t i = 0; i < 5119; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (streq (result + 2 + 5119, " 99"));
     ASSERT (retval == strlen (result));
   }
 

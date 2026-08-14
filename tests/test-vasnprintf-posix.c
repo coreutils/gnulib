@@ -3813,6 +3813,20 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   }
 
   {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.5119Lf %d", 1.0L, 99);
+    ASSERT (result != NULL);
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (size_t i = 0; i < 5119; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (streq (result + 2 + 5119, " 99"));
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
     char input[5000];
     size_t length;
     char *result;
