@@ -7646,33 +7646,41 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     if (pad_ourselves && has_width)
                       {
                         size_t w;
-# if ENABLE_UNISTDIO
-                        /* Outside POSIX, it's preferable to compare the width
-                           against the number of _characters_ of the converted
-                           value.  */
-                        w = DCHAR_MBSNLEN (result + length, count);
-# elif __GLIBC__ >= 2
-                        /* glibc prefers to compare the width against the number
-                           of characters as well, but only for numeric conversion
-                           specifiers.  See
-                           <https://sourceware.org/PR28943>
-                           <https://sourceware.org/PR30883>
-                           <https://sourceware.org/PR31542>  */
-                        switch (dp->conversion)
-                          {
-                          case 'd': case 'i': case 'u':
-                          case 'f': case 'F': case 'g': case 'G':
-                            w = DCHAR_MBSNLEN (result + length, count);
-                            break;
-                          default:
-                            w = count;
-                            break;
-                          }
+                        {
+# if !DCHAR_IS_TCHAR || USE_SNPRINTF
+                          DCHAR_T * const rp = result + length;
 # else
-                        /* The width is compared against the number of _bytes_
-                           of the converted value, says POSIX.  */
-                        w = count;
+                          DCHAR_T * const rp = tmp;
 # endif
+# if ENABLE_UNISTDIO
+                          /* Outside POSIX, it's preferable to compare the width
+                             against the number of _characters_ of the converted
+                             value.  */
+                          w = DCHAR_MBSNLEN (rp, count);
+# elif __GLIBC__ >= 2
+                          /* glibc prefers to compare the width against the
+                             number of characters as well, but only for numeric
+                             conversion specifiers.  See
+                             <https://sourceware.org/PR28943>
+                             <https://sourceware.org/PR30883>
+                             <https://sourceware.org/PR31542>  */
+                          switch (dp->conversion)
+                            {
+                            case 'd': case 'i': case 'u':
+                            case 'f': case 'F': case 'g': case 'G':
+                              w = DCHAR_MBSNLEN (rp, count);
+                              break;
+                            default:
+                              w = count;
+                              break;
+                            }
+# else
+                          /* The width is compared against the number of _bytes_
+                             of the converted value, says POSIX.  */
+                          (void) rp;
+                          w = count;
+# endif
+                        }
                         if (w < width)
                           {
                             size_t pad = width - w;
