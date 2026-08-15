@@ -1,5 +1,12 @@
 2026-08-15  Bruno Haible  <bruno@clisp.org>
 
+	memmove: Avoid undefined behaviour upon memmove (NULL, ptr, 0).
+	Reported by Lasse Collin in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00096.html>.
+	* lib/memmove.c (memmove): Test for length==0 case early.
+
+2026-08-15  Bruno Haible  <bruno@clisp.org>
+
 	unistdio/ulc-*printf: Fix padding on 32-bit Cygwin (regr. 2026-07-06).
 	* lib/vasnprintf.c (VASNPRINTF): In the 32-bit handling of the %s
 	directive, if DCHAR_IS_TCHAR && !USE_SNPRINTF, pass the correct address
