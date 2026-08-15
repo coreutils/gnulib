@@ -87,6 +87,14 @@ check_all (gl_set_t set1, gl_oset_t set2)
   check_equals (set1, set2);
 }
 
+static int
+string_compare (const void *elt1, const void *elt2)
+{
+  const char *s1 = elt1;
+  const char *s2 = elt2;
+  return strcmp (s1, s2);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -105,7 +113,7 @@ main (int argc, char *argv[])
     ASSERT (set1 != NULL);
 
     /* Create set2.  */
-    set2 = gl_oset_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    set2 = gl_oset_create_empty (GL_ARRAY_OSET, string_compare, NULL);
 
     check_all (set1, set2);
 

@@ -25,8 +25,6 @@
 #include "gl_array_oset.h"
 #include "macros.h"
 
-#include "test-oset-update.h"
-
 extern void gl_avltree_oset_check_invariants (gl_oset_t set);
 
 static const char *objects[30] =
@@ -67,11 +65,21 @@ check_all (gl_oset_t set1, gl_oset_t set2)
   check_equals (set1, set2);
 }
 
+static int
+string_compare (const void *elt1, const void *elt2)
+{
+  const char *s1 = elt1;
+  const char *s2 = elt2;
+  return strcmp (s1, s2);
+}
+
 static bool
 is_at_least (const void *elt, const void *threshold)
 {
   return strcmp ((const char *) elt, (const char *) threshold) >= 0;
 }
+
+#include "test-oset-update.h"
 
 int
 main (int argc, char *argv[])
@@ -86,11 +94,11 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (20);
 
     /* Create set1.  */
-    set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, string_compare, NULL);
     ASSERT (set1 != NULL);
 
     /* Create set2.  */
-    set2 = gl_oset_nx_create_empty (GL_AVLTREE_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    set2 = gl_oset_nx_create_empty (GL_AVLTREE_OSET, string_compare, NULL);
     ASSERT (set2 != NULL);
 
     check_all (set1, set2);

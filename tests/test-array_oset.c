@@ -26,8 +26,6 @@
 #include "gl_array_list.h"
 #include "macros.h"
 
-#include "test-oset-update.h"
-
 static const char *objects[30] =
   {
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
@@ -67,6 +65,14 @@ check_all (gl_oset_t set1, gl_list_t set2)
   check_equals (set1, set2);
 }
 
+static int
+string_compare (const void *elt1, const void *elt2)
+{
+  const char *s1 = elt1;
+  const char *s2 = elt2;
+  return strcmp (s1, s2);
+}
+
 static bool
 is_at_least (const void *elt, const void *threshold)
 {
@@ -87,6 +93,8 @@ gl_sortedlist_indexof_atleast (gl_list_t set,
   return (size_t)(-1);
 }
 
+#include "test-oset-update.h"
+
 int
 main (int argc, char *argv[])
 {
@@ -101,7 +109,7 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (20);
 
     /* Create set1.  */
-    set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, string_compare, NULL);
     ASSERT (set1 != NULL);
 
     /* Create set2.  */
@@ -114,9 +122,9 @@ main (int argc, char *argv[])
       {
         const char *obj = RANDOM_OBJECT ();
         ASSERT (gl_oset_nx_add (set1, obj)
-                == (gl_sortedlist_search (set2, (gl_listelement_compar_fn)strcmp, obj) != NULL
+                == (gl_sortedlist_search (set2, string_compare, obj) != NULL
                     ? false
-                    : (gl_sortedlist_add (set2, (gl_listelement_compar_fn)strcmp, obj), true)));
+                    : (gl_sortedlist_add (set2, string_compare, obj), true)));
         check_all (set1, set2);
       }
 
@@ -129,23 +137,23 @@ main (int argc, char *argv[])
             {
               const char *obj = RANDOM_OBJECT ();
               ASSERT (gl_oset_search (set1, obj)
-                      == (gl_sortedlist_search (set2, (gl_listelement_compar_fn)strcmp, obj) != NULL));
+                      == (gl_sortedlist_search (set2, string_compare, obj) != NULL));
             }
             break;
           case 1:
             {
               const char *obj = RANDOM_OBJECT ();
               ASSERT (gl_oset_nx_add (set1, obj)
-                      == (gl_sortedlist_search (set2, (gl_listelement_compar_fn)strcmp, obj) != NULL
+                      == (gl_sortedlist_search (set2, string_compare, obj) != NULL
                           ? false
-                          : (gl_sortedlist_add (set2, (gl_listelement_compar_fn)strcmp, obj), true)));
+                          : (gl_sortedlist_add (set2, string_compare, obj), true)));
             }
             break;
           case 2:
             {
               const char *obj = RANDOM_OBJECT ();
               ASSERT (gl_oset_remove (set1, obj)
-                      == gl_sortedlist_remove (set2, (gl_listelement_compar_fn)strcmp, obj));
+                      == gl_sortedlist_remove (set2, string_compare, obj));
             }
             break;
           case 3:

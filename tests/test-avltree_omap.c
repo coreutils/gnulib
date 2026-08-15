@@ -68,6 +68,14 @@ check_all (gl_omap_t map1, gl_omap_t map2)
   check_equals (map1, map2);
 }
 
+static int
+string_compare (const void *key1, const void *key2)
+{
+  const char *s1 = key1;
+  const char *s2 = key2;
+  return strcmp (s1, s2);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -81,11 +89,11 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (20);
 
     /* Create map1.  */
-    map1 = gl_omap_nx_create_empty (GL_ARRAY_OMAP, (gl_mapkey_compar_fn) strcmp, NULL, NULL);
+    map1 = gl_omap_nx_create_empty (GL_ARRAY_OMAP, string_compare, NULL, NULL);
     ASSERT (map1 != NULL);
 
     /* Create map2.  */
-    map2 = gl_omap_nx_create_empty (GL_AVLTREE_OMAP, (gl_mapkey_compar_fn) strcmp, NULL, NULL);
+    map2 = gl_omap_nx_create_empty (GL_AVLTREE_OMAP, string_compare, NULL, NULL);
     ASSERT (map2 != NULL);
 
     check_all (map1, map2);
