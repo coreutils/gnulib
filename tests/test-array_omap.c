@@ -73,6 +73,14 @@ check_all (gl_omap_t map1, gl_list_t keys, gl_list_t values)
   check_equals (map1, keys, values);
 }
 
+static int
+string_compare (const void *elt1, const void *elt2)
+{
+  const char *s1 = elt1;
+  const char *s2 = elt2;
+  return strcmp (s1, s2);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -88,7 +96,7 @@ main (int argc, char *argv[])
     size_t initial_size = RANDOM (20);
 
     /* Create map1.  */
-    map1 = gl_omap_nx_create_empty (GL_ARRAY_OMAP, (gl_mapkey_compar_fn) strcmp, NULL, NULL);
+    map1 = gl_omap_nx_create_empty (GL_ARRAY_OMAP, string_compare, NULL, NULL);
     ASSERT (map1 != NULL);
 
     /* Create keys and values.  */
@@ -103,12 +111,12 @@ main (int argc, char *argv[])
         const char *key = RANDOM_OBJECT ();
         const char *value = RANDOM_OBJECT ();
         bool added = gl_omap_nx_put (map1, key, value);
-        size_t index = gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+        size_t index = gl_sortedlist_indexof (keys, string_compare, key);
         ASSERT (added == (index == (size_t)(-1)));
         if (added)
           {
-            gl_sortedlist_add (keys, (gl_listelement_compar_fn)strcmp, key);
-            index = gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+            gl_sortedlist_add (keys, string_compare, key);
+            index = gl_sortedlist_indexof (keys, string_compare, key);
             gl_list_add_at (values, index, value);
           }
         else
@@ -126,7 +134,7 @@ main (int argc, char *argv[])
               const char *key = RANDOM_OBJECT ();
               const void *ret = gl_omap_get (map1, key);
               size_t index =
-                gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+                gl_sortedlist_indexof (keys, string_compare, key);
               ASSERT (ret
                       == (index != (size_t)(-1) ? gl_list_get_at (values, index) : NULL));
             }
@@ -137,12 +145,12 @@ main (int argc, char *argv[])
               const char *value = RANDOM_OBJECT ();
               bool added = gl_omap_nx_put (map1, key, value);
               size_t index =
-                gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+                gl_sortedlist_indexof (keys, string_compare, key);
               ASSERT (added == (index == (size_t)(-1)));
               if (added)
                 {
-                  gl_sortedlist_add (keys, (gl_listelement_compar_fn)strcmp, key);
-                  index = gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+                  gl_sortedlist_add (keys, string_compare, key);
+                  index = gl_sortedlist_indexof (keys, string_compare, key);
                   gl_list_add_at (values, index, value);
                 }
               else
@@ -154,7 +162,7 @@ main (int argc, char *argv[])
               const char *key = RANDOM_OBJECT ();
               bool removed = gl_omap_remove (map1, key);
               size_t index =
-                gl_sortedlist_indexof (keys, (gl_listelement_compar_fn)strcmp, key);
+                gl_sortedlist_indexof (keys, string_compare, key);
               ASSERT (removed == (index != (size_t)(-1)));
               if (removed)
                 {
