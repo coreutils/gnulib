@@ -12,17 +12,26 @@
 void *
 memmove (void *dest0, void const *source0, size_t length)
 {
-  char *dest = dest0;
-  char const *source = source0;
-  if (source < dest)
-    /* Moving from low mem to hi mem; start at end.  */
-    for (source += length, dest += length; length; --length)
-      *--dest = *--source;
-  else if (source != dest)
+  if (length > 0)
     {
-      /* Moving from hi mem to low mem; start at beginning.  */
-      for (; length; --length)
-        *dest++ = *source++;
+      char *dest = dest0;
+      char const *source = source0;
+      if (source < dest)
+        {
+          /* Moving from low mem to hi mem; start at end.  */
+          source += length;
+          dest += length;
+          do
+            *--dest = *--source;
+          while (--length > 0);
+        }
+      else if (source != dest)
+        {
+          /* Moving from hi mem to low mem; start at beginning.  */
+          do
+            *dest++ = *source++;
+          while (--length > 0);
+        }
     }
   return dest0;
 }
