@@ -1,5 +1,28 @@
 2026-08-15  Bruno Haible  <bruno@clisp.org>
 
+	tests: Support CC="clang -flto -fsanitize=cfi -fvisibility=hidden".
+	Reported by Lasse Collin in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00190.html>.
+	* tests/test-array_map.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-array_omap.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-avltree_omap.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-rbtree_omap.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-array_set.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-array_oset.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-avltree_oset.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-rbtree_oset.c (string_compare): New function.
+	(main): Use instead of casting strcmp to a different function prototype.
+	* tests/test-oset-update.h (test_update): Likewise.
+
+2026-08-15  Bruno Haible  <bruno@clisp.org>
+
 	memmove: Avoid undefined behaviour upon memmove (NULL, ptr, 0).
 	Reported by Lasse Collin in
 	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00096.html>.

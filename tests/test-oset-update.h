@@ -30,7 +30,7 @@ test_update (gl_oset_implementation_t implementation)
   char D[2] = "D";
 
   gl_oset_t set1 =
-    gl_oset_nx_create_empty (implementation, (gl_setelement_compar_fn) strcmp, NULL);
+    gl_oset_nx_create_empty (implementation, string_compare, NULL);
   ASSERT (set1 != NULL);
 
   /* Fill the set.  */
