@@ -57,11 +57,14 @@ main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (strncmp (NULL, "x", 0) == 0);
   ASSERT (strncmp ("x", NULL, 0) == 0);
   ASSERT (strncmp (NULL, NULL, 0) == 0);
 
   ASSERT (volatile_null_strncmp (NULL, "x", 0) == 0);
+#endif
 
   return test_exit_status;
 }

@@ -1,3 +1,23 @@
+2026-08-16  Bruno Haible  <bruno@clisp.org>
+
+	tests: Avoid some test failures with the clang UBSAN.
+	* tests/test-bsearch.c (main): Disable the N3322 test on glibc systems.
+	* tests/test-memccpy.c (main): Likewise.
+	* tests/test-memchr.c (main): Likewise.
+	* tests/test-memcmp.c (main): Likewise.
+	* tests/test-memcpy.c (main): Likewise.
+	* tests/test-memmove.c (main): Likewise.
+	* tests/test-memset.c (main): Likewise.
+	* tests/test-memset_explicit.c (main): Likewise.
+	* tests/test-qsort.c (main): Likewise.
+	* tests/test-strncat.c (main): Likewise.
+	* tests/test-strncmp.c (main): Likewise.
+	* tests/test-strncpy.c (main): Likewise.
+	* tests/test-strndup.c (main): Likewise.
+	* tests/test-wcsncat.c (main): Likewise.
+	* tests/test-wcsncmp.c (main): Likewise.
+	* tests/test-wcsncpy.c (main): Likewise.
+
 2026-08-16  Collin Funk  <collin.funk1@gmail.com>
 
 	nproc: Verify the cgroup path isn't truncated.

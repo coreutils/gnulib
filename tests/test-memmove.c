@@ -56,6 +56,8 @@ main (void)
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (memmove (NULL, "x", 0) == NULL);
 
   {
@@ -64,6 +66,7 @@ main (void)
   }
 
   ASSERT (volatile_null_memmove (NULL, "x", 0) == NULL);
+#endif
 
   return test_exit_status;
 }

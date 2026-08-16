@@ -89,9 +89,11 @@ main ()
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
-#if 0 /* I think this is invalid, per ISO C 23 § 7.26.3.2.  */
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
+# if 0 /* I think this is invalid, per ISO C 23 § 7.26.3.2.  */
   ASSERT (strncat (NULL, "x", 0) == NULL);
-#endif
+# endif
 
   {
     char y[2] = { 'x', '\0' };
@@ -99,6 +101,7 @@ main ()
 
     ASSERT (volatile_null_strncat (y, NULL, 0) == y);
   }
+#endif
 
   return test_exit_status;
 }

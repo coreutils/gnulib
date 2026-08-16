@@ -58,9 +58,10 @@ main ()
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
-#if 0 /* I think this is invalid, per ISO C 23 § 7.31.4.3.2.  */
+#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
+# if 0 /* I think this is invalid, per ISO C 23 § 7.31.4.3.2.  */
   ASSERT (wcsncat (NULL, L"x", 0) == NULL);
-#endif
+# endif
 
   {
     wchar_t y[2] = { L'x', 0 };
@@ -68,6 +69,7 @@ main ()
 
     ASSERT (volatile_null_wcsncat (y, NULL, 0) == y);
   }
+#endif
 
   return test_exit_status;
 }

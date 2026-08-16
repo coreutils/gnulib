@@ -56,6 +56,8 @@ main (void)
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
+#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
+    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (memcpy (NULL, "x", 0) == NULL);
 
   {
@@ -66,6 +68,7 @@ main (void)
   /* Redirect via the volatile function pointer to ensure that that the ASSERT
      in null_memcpy won't be optimized away by GCC 6.3.0.  */
   ASSERT (volatile_null_memcpy (NULL, "x", 0) == NULL);
+#endif
 
   return test_exit_status;
 }

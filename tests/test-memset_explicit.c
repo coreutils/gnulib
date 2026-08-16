@@ -280,9 +280,11 @@ main ()
 
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (memset_explicit (NULL, '?', 0) == NULL);
 
   ASSERT (volatile_null_memset_explicit (NULL, '?', 0) == NULL);
+#endif
 
   return test_exit_status;
 }
