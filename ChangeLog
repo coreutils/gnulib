@@ -1,3 +1,10 @@
+2026-08-16  Collin Funk  <collin.funk1@gmail.com>
+
+	nproc: Verify the cgroup path isn't truncated.
+	Reported by Lasse Collin.
+	* lib/nproc.c (get_cgroup2_cpu_quota): Check the return value of
+	snprintf to make sure the path isn't truncated.
+
 2026-08-16  Bruno Haible  <bruno@clisp.org>
 
 	doc: Mention a wcsncat bug.
