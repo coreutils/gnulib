@@ -1367,6 +1367,89 @@ main ()
         }
     }
 
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
+  /* Test conversion from ISO-2022-JP-2 to UTF-8 with no errors,
+     but a trailing shift sequence.  */
+  {
+    static const char input[] = "Sch" "\033$(D+S\033(B" "ner Gru" "\033$(D)N\033(B"; /* "Schöner Gruß" */
+    static const char expected[] = "Sch\303\266ner Gru\303\237";
+    size_t *offsets = new_offsets (strlen (input));
+    char *result = NULL;
+    size_t length = 0;
+    int retval = mem_iconveh (input, strlen (input),
+                              "ISO-2022-JP-2", "UTF-8",
+                              iconveh_question_mark,
+                              offsets,
+                              &result, &length);
+    ASSERT (retval == 0);
+    ASSERT (length == strlen (expected));
+    ASSERT (result != NULL && memeq (result, expected, strlen (expected)));
+    for (size_t i = 0; i < 28; i++)
+      ASSERT (offsets[i] == (i <= 3 ? i :
+                             i == 9 ? 5 :
+                             i >= 13 && i <= 19 ? i - 7 :
+                             i == 25 ? 14 :
+                             (size_t)(-1)));
+    ASSERT (offsets[28] == MAGIC);
+    free (offsets);
+    free (result);
+  }
+
+  /* Test conversion from UTF-8 to ISO-2022-JP-2 with no errors,
+     but a trailing shift sequence.  */
+  {
+    static const char input[] = "Sch\303\266ner Gru\303\237"; /* "Schöner Gruß" */
+    static const char expected[] = "Sch" "\033$(D+S\033(B" "ner Gru" "\033$(D)N\033(B";
+    size_t *offsets = new_offsets (strlen (input));
+    char *result = NULL;
+    size_t length = 0;
+    int retval = mem_iconveh (input, strlen (input),
+                              "UTF-8", "ISO-2022-JP-2",
+                              iconveh_question_mark,
+                              offsets,
+                              &result, &length);
+    ASSERT (retval == 0);
+    ASSERT (length == strlen (expected));
+    ASSERT (result != NULL && memeq (result, expected, strlen (expected)));
+    for (size_t i = 0; i < 14; i++)
+      ASSERT (offsets[i] == (i <= 3 ? i :
+                             i == 5 ? 9 :
+                             i >= 6 && i <= 12 ? i + 7 :
+                             (size_t)(-1)));
+    ASSERT (offsets[14] == MAGIC);
+    free (offsets);
+    free (result);
+  }
+# endif
+
+# if (defined __GLIBC__ && !defined __UCLIBC__)
+  /* Test conversion from UTF-8 to ASCII with no errors,
+     but some discarded characters.  */
+  {
+    static const char input[] = "a\363\240\201\270bc\363\240\201\246\363\240\201\262"; /* "a<U+E0078>bc<U+E0066><U+E0072>" */
+    static const char expected[] = "abc";
+    size_t *offsets = new_offsets (strlen (input));
+    char *result = NULL;
+    size_t length = 0;
+    int retval = mem_iconveh (input, strlen (input),
+                              "UTF-8", "ASCII",
+                              iconveh_question_mark,
+                              offsets,
+                              &result, &length);
+    ASSERT (retval == 0);
+    ASSERT (length == strlen (expected));
+    ASSERT (result != NULL && memeq (result, expected, strlen (expected)));
+    for (size_t i = 0; i < 15; i++)
+      ASSERT (offsets[i] == (i <= 1 ? i :
+                             i == 6 ? 2 :
+                             i == 7 ? 3 :
+                             (size_t)(-1)));
+    ASSERT (offsets[15] == MAGIC);
+    free (offsets);
+    free (result);
+  }
+# endif
+
   /* ------------------------- Test str_iconveh() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */

@@ -1,5 +1,11 @@
 2026-08-16  Bruno Haible  <bruno@clisp.org>
 
+	striconveh tests: Add some more test cases.
+	* tests/test-striconveh.c (main): Add some more test cases for
+	mem_iconveh() with offsets.
+
+2026-08-16  Bruno Haible  <bruno@clisp.org>
+
 	malloc-posix: Fix file list (regression 2026-07-27).
 	Reported by Basil L. Contovounesios <basil@contovou.net> in
 	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00208.html>.
