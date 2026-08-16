@@ -1,5 +1,12 @@
 2026-08-16  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention a wcsncat bug.
+	Reported by Lasse Collin in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00213.html>.
+	* doc/posix-functions/wcsncat.texi: Mention a wcsncat bug.
+
+2026-08-16  Bruno Haible  <bruno@clisp.org>
+
 	striconveh: Ensure that none of the offsets[] are out-of-range.
 	Reported by AISLE via Mike Fabian <mfabian@redhat.com>.
 	* lib/striconveh.c (mem_cd_iconveh_internal): Ensure that no offsets[i]
