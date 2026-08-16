@@ -13,6 +13,7 @@ lib/eealloc.h
 lib/eealloc.c
 m4/eealloc.m4
 m4/malloc.m4
+m4/musl.m4
 
 Depends-on:
 extern-inline

@@ -6,6 +6,7 @@ lib/reallocarray.c
 m4/malloc.m4
 m4/realloc.m4
 m4/reallocarray.m4
+m4/musl.m4
 
 Depends-on:
 extensions

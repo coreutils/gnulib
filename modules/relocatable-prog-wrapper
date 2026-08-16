@@ -43,6 +43,7 @@ m4/lstat.m4
 m4/environ.m4
 m4/free.m4
 m4/malloc.m4
+m4/musl.m4
 m4/mempcpy.m4
 m4/rawmemchr.m4
 m4/readlink.m4

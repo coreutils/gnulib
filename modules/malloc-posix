@@ -4,6 +4,7 @@ malloc() function: allocate memory with indefinite extent.
 Files:
 lib/malloc.c
 m4/malloc.m4
+m4/musl.m4
 
 Depends-on:
 stdckdint-h          [test $REPLACE_CALLOC_FOR_MALLOC_POSIX = 1]

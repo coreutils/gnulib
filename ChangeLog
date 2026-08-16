@@ -1,3 +1,16 @@
+2026-08-16  Bruno Haible  <bruno@clisp.org>
+
+	malloc-posix: Fix file list (regression 2026-07-27).
+	Reported by Basil L. Contovounesios <basil@contovou.net> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00208.html>.
+	* modules/malloc-posix (Files): Add m4/musl.m4.
+	* modules/calloc-posix (Files): Likewise.
+	* modules/realloc-posix (Files): Likewise.
+	* modules/reallocarray (Files): Likewise.
+	* modules/eealloc (Files): Likewise.
+	* modules/malloca (Files): Likewise.
+	* modules/relocatable-prog-wrapper (Files): Likewise.
+
 2026-08-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl-tests: fix AIX 7.3 aclx_* constness

@@ -5,6 +5,7 @@ Files:
 lib/calloc.c
 m4/calloc.m4
 m4/malloc.m4
+m4/musl.m4
 
 Depends-on:
 stdckdint-h          [test $REPLACE_CALLOC_FOR_CALLOC_POSIX = 1]

@@ -5,6 +5,7 @@ Files:
 lib/realloc.c
 m4/realloc.m4
 m4/malloc.m4
+m4/musl.m4
 
 Depends-on:
 extensions-aix
