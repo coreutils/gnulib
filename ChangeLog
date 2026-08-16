@@ -1,3 +1,12 @@
+2026-08-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl-tests: fix AIX 7.3 aclx_* constness
+	* tests/test-sameacls.c (main): AIX 7.3’s aclx_* APIs want char *
+	parameters, not char const *.  Change arguments accordingly.  This
+	pacifies IBM Open XL C/C++ for AIX 17.1.1 (5725-C72, 5765-J18),
+	version 17.1.1.2, clang version 15.0.0 (build 3948f09) with
+	-Wincompatible-pointer-types-discards-qualifiers.
+
 2026-08-15  Bruno Haible  <bruno@clisp.org>
 
 	tests: Support CC="clang -flto -fsanitize=cfi -fvisibility=hidden".

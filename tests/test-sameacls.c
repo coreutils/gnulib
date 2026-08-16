@@ -543,7 +543,7 @@ main (int argc, char *argv[])
   /* The docs say that type1 being 0 is equivalent to ACL_ANY, but it is not
      true, in AIX 5.3.  */
   type1.u64 = ACL_ANY;
-  if (aclx_get (file1, 0, &type1, acl1, &aclsize1, &mode1) < 0)
+  if (aclx_get (argv[1], 0, &type1, acl1, &aclsize1, &mode1) < 0)
     {
       if (errno == ENOSYS)
         text1[0] = '\0';
@@ -555,7 +555,7 @@ main (int argc, char *argv[])
         }
     }
   else
-    if (aclx_printStr (text1, &textsize1, acl1, aclsize1, type1, file1, 0) < 0)
+    if (aclx_printStr (text1, &textsize1, acl1, aclsize1, type1, argv[1], 0) < 0)
       {
         fprintf (stderr, "cannot convert the ACLs of file %s to text\n", file1);
         fflush (stderr);
@@ -565,7 +565,7 @@ main (int argc, char *argv[])
   /* The docs say that type2 being 0 is equivalent to ACL_ANY, but it is not
      true, in AIX 5.3.  */
   type2.u64 = ACL_ANY;
-  if (aclx_get (file2, 0, &type2, acl2, &aclsize2, &mode2) < 0)
+  if (aclx_get (argv[2], 0, &type2, acl2, &aclsize2, &mode2) < 0)
     {
       if (errno == ENOSYS)
         text2[0] = '\0';
@@ -577,7 +577,7 @@ main (int argc, char *argv[])
         }
     }
   else
-    if (aclx_printStr (text2, &textsize2, acl2, aclsize2, type2, file2, 0) < 0)
+    if (aclx_printStr (text2, &textsize2, acl2, aclsize2, type2, argv[2], 0) < 0)
       {
         fprintf (stderr, "cannot convert the ACLs of file %s to text\n", file2);
         fflush (stderr);
