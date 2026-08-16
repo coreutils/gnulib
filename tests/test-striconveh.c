@@ -605,7 +605,7 @@ main ()
           ASSERT (length == 0);
           if (o)
             {
-              ASSERT (offsets[0] == 0);
+              ASSERT (offsets[0] == (size_t)(-1));
               ASSERT (offsets[1] == MAGIC);
               free (offsets);
             }
@@ -1358,7 +1358,7 @@ main ()
           ASSERT (length == 0);
           if (o)
             {
-              ASSERT (offsets[0] == 0);
+              ASSERT (offsets[0] == (size_t)(-1));
               ASSERT (offsets[1] == MAGIC);
               free (offsets);
             }

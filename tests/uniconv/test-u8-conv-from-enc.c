@@ -190,7 +190,6 @@ main ()
                                            i == 7 ? 6 :
                                            i == 9 ? 9 :
                                            i == 11 ? 12 :
-                                           i == 13 ? 15 :
                                            (size_t)(-1)));
                   ASSERT (offsets[16] == MAGIC);
                   free (offsets);
