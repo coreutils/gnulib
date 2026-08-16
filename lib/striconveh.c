@@ -976,6 +976,23 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   }
 
  done:
+  if (offsets != NULL)
+    {
+      /* Ensure that the last assigned offsets[i] is < length.
+         (We know that the sequence of assigned offsets[i] is strictly
+         monotonically increasing.)  */
+      for (size_t i = srclen; i > 0; )
+        {
+          i--;
+          if (offsets[i] != (size_t)(-1))
+            {
+              if (offsets[i] == length)
+                offsets[i] = (size_t)(-1);
+              break;
+            }
+        }
+    }
+
   /* Now the final memory allocation.  */
   if (result == tmpbuf)
     {

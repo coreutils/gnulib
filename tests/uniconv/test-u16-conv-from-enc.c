@@ -205,7 +205,6 @@ main ()
                                            i == 7 ? 2 :
                                            i == 9 ? 3 :
                                            i == 11 ? 4 :
-                                           i == 13 ? 5 :
                                            (size_t)(-1)));
                   ASSERT (offsets[16] == MAGIC);
                   free (offsets);

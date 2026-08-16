@@ -606,7 +606,7 @@ main ()
           ASSERT (length == 0);
           if (o)
             {
-              ASSERT (offsets[0] == 0);
+              ASSERT (offsets[0] == (size_t)(-1));
               ASSERT (offsets[1] == MAGIC);
               free (offsets);
             }
@@ -1359,7 +1359,7 @@ main ()
           ASSERT (length == 0);
           if (o)
             {
-              ASSERT (offsets[0] == 0);
+              ASSERT (offsets[0] == (size_t)(-1));
               ASSERT (offsets[1] == MAGIC);
               free (offsets);
             }
@@ -1388,7 +1388,6 @@ main ()
       ASSERT (offsets[i] == (i <= 3 ? i :
                              i == 9 ? 5 :
                              i >= 13 && i <= 19 ? i - 7 :
-                             i == 25 ? 14 :
                              (size_t)(-1)));
     ASSERT (offsets[28] == MAGIC);
     free (offsets);
@@ -1442,7 +1441,6 @@ main ()
     for (size_t i = 0; i < 15; i++)
       ASSERT (offsets[i] == (i <= 1 ? i :
                              i == 6 ? 2 :
-                             i == 7 ? 3 :
                              (size_t)(-1)));
     ASSERT (offsets[15] == MAGIC);
     free (offsets);
