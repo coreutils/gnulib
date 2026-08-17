@@ -10,6 +10,7 @@ mbuiterf            [test "$GNULIB_MCEL_PREFER" != yes]
 stdlib-h
 string-h
 uchar-h
+bool
 
 configure.ac:
 gl_STRING_MODULE_INDICATOR([mbscasecmp])

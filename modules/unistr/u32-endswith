@@ -9,6 +9,7 @@ Depends-on:
 unistr/base
 unistr/u32-strlen
 unistr/u32-cmp
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [unistr/u32-endswith])

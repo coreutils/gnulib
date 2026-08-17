@@ -8,6 +8,7 @@ m4/wcsstr.m4
 
 Depends-on:
 wchar-h
+bool            [test $HAVE_WCSSTR = 0]
 wcschr          [test $HAVE_WCSSTR = 0]
 
 configure.ac:

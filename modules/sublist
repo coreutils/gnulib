@@ -8,6 +8,7 @@ lib/gl_sublist.c
 Depends-on:
 list
 stdint-h
+bool
 
 configure.ac:
 

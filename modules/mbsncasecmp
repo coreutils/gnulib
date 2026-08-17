@@ -8,6 +8,7 @@ Depends-on:
 c32tolower
 mbuiterf
 string-h
+bool
 
 configure.ac:
 gl_STRING_MODULE_INDICATOR([mbsncasecmp])

@@ -12,6 +12,7 @@ uniconv/u8-conv-from-enc
 unistr/u8-to-u16
 unistr/u8-mblen
 unistr/u16-mblen
+bool
 
 configure.ac:
 AC_REQUIRE([gl_BIGENDIAN])

@@ -13,6 +13,7 @@ map
 stdint-h
 xsize
 c99
+bool
 
 configure.ac:
 

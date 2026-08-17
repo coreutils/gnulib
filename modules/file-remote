@@ -8,6 +8,7 @@ lib/file-remote.c
 Depends-on:
 cygpath
 streq
+bool
 
 configure.ac:
 

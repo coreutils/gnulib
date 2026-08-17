@@ -11,6 +11,7 @@ wait-process
 getline
 xalloc
 free-posix
+bool
 gettext-h
 gnulib-i18n
 

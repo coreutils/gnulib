@@ -6,6 +6,7 @@ lib/strstr.c
 
 Depends-on:
 strstr-simple
+bool
 
 configure.ac:
 gl_FUNC_STRSTR

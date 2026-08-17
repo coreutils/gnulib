@@ -7,6 +7,7 @@ lib/unigbrk/uc-is-grapheme-break.c
 Depends-on:
 unigbrk/base
 unigbrk/uc-gbrk-prop
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unigbrk/uc-is-grapheme-break])

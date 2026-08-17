@@ -9,6 +9,7 @@ m4/wcsstr.m4
 
 Depends-on:
 wcsstr-simple
+bool            [test $HAVE_WCSSTR = 0 || test $REPLACE_WCSSTR = 1]
 builtin-expect  [test $HAVE_WCSSTR = 0 || test $REPLACE_WCSSTR = 1]
 wcschr          [test $HAVE_WCSSTR = 0 || test $REPLACE_WCSSTR = 1]
 wmemchr         [test $HAVE_WCSSTR = 0 || test $REPLACE_WCSSTR = 1]

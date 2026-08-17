@@ -8,6 +8,7 @@ m4/getumask.m4
 Depends-on:
 sys_stat-h
 extensions
+bool            [test $HAVE_GETUMASK = 0]
 c99             [test $HAVE_GETUMASK = 0]
 memeq           [test $HAVE_GETUMASK = 0]
 unistd-h        [test $HAVE_GETUMASK = 0]

@@ -8,6 +8,7 @@ lib/unictype/categ_of.h
 Depends-on:
 unictype/base
 unictype/category-none
+bool
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

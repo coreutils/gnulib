@@ -1,5 +1,75 @@
 2026-08-17  Bruno Haible  <bruno@clisp.org>
 
+	Depend on 'bool' for use of 'false' or 'true'.
+	* modules/array-list (Depends-on): Add bool.
+	* modules/array-map (Depends-on): Likewise.
+	* modules/array-omap (Depends-on): Likewise.
+	* modules/array-oset (Depends-on): Likewise.
+	* modules/array-set (Depends-on): Likewise.
+	* modules/avltree-list (Depends-on): Likewise.
+	* modules/avltree-omap (Depends-on): Likewise.
+	* modules/avltree-oset (Depends-on): Likewise.
+	* modules/avltreehash-list (Depends-on): Likewise.
+	* modules/carray-list (Depends-on): Likewise.
+	* modules/copy-file (Depends-on): Likewise.
+	* modules/crc (Depends-on): Likewise.
+	* modules/cygpath (Depends-on): Likewise.
+	* modules/file-remote (Depends-on): Likewise.
+	* modules/fprintftime (Depends-on): Likewise.
+	* modules/fstrcmp (Depends-on): Likewise.
+	* modules/getpass-gnu (Depends-on): Likewise.
+	* modules/getumask (Depends-on): Likewise.
+	* modules/hash-map (Depends-on): Likewise.
+	* modules/hash-set (Depends-on): Likewise.
+	* modules/kwset (Depends-on): Likewise.
+	* modules/linked-list (Depends-on): Likewise.
+	* modules/linkedhash-list (Depends-on): Likewise.
+	* modules/linkedhash-map (Depends-on): Likewise.
+	* modules/linkedhash-set (Depends-on): Likewise.
+	* modules/mbscasecmp (Depends-on): Likewise.
+	* modules/mbsncasecmp (Depends-on): Likewise.
+	* modules/mkancesdirs (Depends-on): Likewise.
+	* modules/mktime-internal (Depends-on): Likewise.
+	* modules/newlocale (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/openat2 (Depends-on): Likewise.
+	* modules/options (Depends-on): Likewise.
+	* modules/passfd (Depends-on): Likewise.
+	* modules/pipe2 (Depends-on): Likewise.
+	* modules/rbtree-list (Depends-on): Likewise.
+	* modules/rbtree-omap (Depends-on): Likewise.
+	* modules/rbtree-oset (Depends-on): Likewise.
+	* modules/rbtreehash-list (Depends-on): Likewise.
+	* modules/setlocale-fixes (Depends-on): Likewise.
+	* modules/spin (Depends-on): Likewise.
+	* modules/strstr (Depends-on): Likewise.
+	* modules/sublist (Depends-on): Likewise.
+	* modules/timegm (Depends-on): Likewise.
+	* modules/unicase/u8-is-cased (Depends-on): Likewise.
+	* modules/unicase/u16-is-cased (Depends-on): Likewise.
+	* modules/unicase/u32-is-cased (Depends-on): Likewise.
+	* modules/uniconv/u8-conv-from-enc (Depends-on): Likewise.
+	* modules/uniconv/u16-conv-from-enc (Depends-on): Likewise.
+	* modules/uniconv/u32-conv-from-enc (Depends-on): Likewise.
+	* modules/unictype/block-test (Depends-on): Likewise.
+	* modules/unictype/category-none (Depends-on): Likewise.
+	* modules/unictype/category-of (Depends-on): Likewise.
+	* modules/unictype/mirror (Depends-on): Likewise.
+	* modules/unigbrk/uc-is-grapheme-break (Depends-on): Likewise.
+	* modules/unilbrk/u8-possible-linebreaks (Depends-on): Likewise.
+	* modules/unilbrk/u16-possible-linebreaks (Depends-on): Likewise.
+	* modules/unilbrk/u32-possible-linebreaks (Depends-on): Likewise.
+	* modules/unistr/u8-endswith (Depends-on): Likewise.
+	* modules/unistr/u8-startswith (Depends-on): Likewise.
+	* modules/unistr/u8-strchr (Depends-on): Likewise.
+	* modules/unistr/u16-endswith (Depends-on): Likewise.
+	* modules/unistr/u16-startswith (Depends-on): Likewise.
+	* modules/unistr/u32-endswith (Depends-on): Likewise.
+	* modules/unistr/u32-startswith (Depends-on): Likewise.
+	* modules/wcsstr (Depends-on): Likewise.
+	* modules/wcsstr-simple (Depends-on): Likewise.
+	* modules/windows-cygpath (Depends-on): Likewise.
+
 	tests: Depend on 'bool' for use of 'false' or 'true'.
 	* modules/array-list-tests (Depends-on): Add bool.
 	* modules/array-map-tests (Depends-on): Likewise.

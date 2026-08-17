@@ -9,6 +9,7 @@ lib/gl_anytree_omap.h
 
 Depends-on:
 omap
+bool
 
 configure.ac:
 

@@ -8,6 +8,7 @@ lib/mktime.c
 Depends-on:
 c99
 mktime
+bool
 
 configure.ac:
 gl_FUNC_MKTIME_INTERNAL

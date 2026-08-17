@@ -6,6 +6,7 @@ lib/unictype/block_test.c
 
 Depends-on:
 unictype/base
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unictype/block-test])

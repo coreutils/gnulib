@@ -10,6 +10,7 @@ Depends-on:
 cloexec
 sys_socket-h
 socketlib
+bool
 
 configure.ac:
 gl_PASSFD

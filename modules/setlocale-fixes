@@ -8,6 +8,7 @@ lib/setlocale-fixes.c
 Depends-on:
 streq
 strncpy
+bool
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])

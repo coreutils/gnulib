@@ -13,6 +13,7 @@ unicase/u8-totitle
 uninorm/u8-normalize
 uninorm/nfd
 unistr/u8-cmp
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unicase/u8-is-cased])

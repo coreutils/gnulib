@@ -8,6 +8,7 @@ lib/gl_array_omap.c
 Depends-on:
 omap
 xsize
+bool
 
 configure.ac:
 

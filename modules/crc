@@ -11,6 +11,7 @@ m4/build-cc.m4
 Depends-on:
 stdint-h
 endian
+bool
 
 configure.ac:
 AC_REQUIRE([gl_CRC_SLICE_BY_8])

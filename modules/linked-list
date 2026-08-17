@@ -9,6 +9,7 @@ lib/gl_anylinked_list2.h
 
 Depends-on:
 list
+bool
 
 configure.ac:
 

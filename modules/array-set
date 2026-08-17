@@ -9,6 +9,7 @@ Depends-on:
 set
 stdint-h
 xsize
+bool
 
 configure.ac:
 

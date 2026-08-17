@@ -13,6 +13,7 @@ unicase/u32-totitle
 uninorm/u32-normalize
 uninorm/nfd
 unistr/u32-cmp
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unicase/u32-is-cased])

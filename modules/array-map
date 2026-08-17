@@ -9,6 +9,7 @@ Depends-on:
 map
 stdint-h
 xsize
+bool
 
 configure.ac:
 

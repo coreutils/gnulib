@@ -10,6 +10,7 @@ Depends-on:
 unilbrk/base
 unilbrk/tables
 streq-opt
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unilbrk/u32-possible-linebreaks])

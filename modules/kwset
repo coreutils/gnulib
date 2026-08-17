@@ -6,6 +6,7 @@ lib/kwset.h
 lib/kwset.c
 
 Depends-on:
+bool
 idx
 memchr2
 minmax

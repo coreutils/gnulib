@@ -13,6 +13,7 @@ tls
 minmax
 stdint-h
 xalloc
+bool
 
 configure.ac:
 

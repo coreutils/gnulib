@@ -8,6 +8,7 @@ lib/options.c
 Depends-on:
 getopt-gnu
 stdcountof-h
+bool
 
 configure.ac:
 

@@ -9,6 +9,7 @@ lib/gl_anytree_oset.h
 
 Depends-on:
 oset
+bool
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

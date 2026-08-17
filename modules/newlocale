@@ -9,6 +9,7 @@ Depends-on:
 locale-h
 localename-environ
 streq
+bool
 
 configure.ac:
 gl_FUNC_NEWLOCALE

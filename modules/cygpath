@@ -8,6 +8,7 @@ lib/cygpath.c
 Depends-on:
 xalloc
 free-posix
+bool
 gettext-h
 gnulib-i18n
 

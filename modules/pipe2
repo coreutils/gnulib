@@ -11,6 +11,7 @@ fcntl-h
 binary-io
 extensions
 assert-h
+bool
 
 configure.ac:
 gl_FUNC_PIPE2

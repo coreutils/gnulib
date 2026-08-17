@@ -9,6 +9,7 @@ m4/atomic-cas.m4
 Depends-on:
 windows-spin
 sparcv8+
+bool
 
 configure.ac:
 AC_REQUIRE([gl_ATOMIC_COMPARE_AND_SWAP])

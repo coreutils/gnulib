@@ -11,6 +11,7 @@ unilbrk/base
 unilbrk/tables
 unistr/u8-mbtouc-unsafe
 streq-opt
+bool
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([1.4], [unilbrk/u8-possible-linebreaks])

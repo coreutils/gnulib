@@ -8,6 +8,7 @@ m4/openat2.m4
 Depends-on:
 fcntl-h
 extensions
+bool            [test $HAVE_OPENAT2 = 0]
 close           [test $HAVE_OPENAT2 = 0]
 eloop-threshold [test $HAVE_OPENAT2 = 0]
 errno-h         [test $HAVE_OPENAT2 = 0]

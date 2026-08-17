@@ -6,6 +6,7 @@ lib/unictype/categ_none.c
 
 Depends-on:
 unictype/base
+bool
 
 configure.ac:
 dnl Since _UC_CATEGORY_NONE is not exported from an installed libunistring,
