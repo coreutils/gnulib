@@ -10,6 +10,7 @@ sleep
 test-xfail
 streq
 memeq
+bool
 
 configure.ac:
 

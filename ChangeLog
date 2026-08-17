@@ -1,3 +1,91 @@
+2026-08-17  Bruno Haible  <bruno@clisp.org>
+
+	tests: Depend on 'bool' for use of 'false' or 'true'.
+	* modules/array-list-tests (Depends-on): Add bool.
+	* modules/array-map-tests (Depends-on): Likewise.
+	* modules/array-omap-tests (Depends-on): Likewise.
+	* modules/array-oset-tests (Depends-on): Likewise.
+	* modules/asyncsafe-spin-tests (Depends-on): Likewise.
+	* modules/avltree-list-tests (Depends-on): Likewise.
+	* modules/avltreehash-list-tests (Depends-on): Likewise.
+	* modules/bitset-tests (Depends-on): Likewise.
+	* modules/canonicalize-lgpl-tests (Depends-on): Likewise.
+	* modules/canonicalize-tests (Depends-on): Likewise.
+	* modules/carray-list-tests (Depends-on): Likewise.
+	* modules/cloexec-tests (Depends-on): Likewise.
+	* modules/cnd-tests (Depends-on): Likewise.
+	* modules/cond-tests (Depends-on): Likewise.
+	* modules/dirname-tests (Depends-on): Likewise.
+	* modules/explicit_bzero-tests (Depends-on): Likewise.
+	* modules/fchownat-tests (Depends-on): Likewise.
+	* modules/fdutimensat-tests (Depends-on): Likewise.
+	* modules/fstatat-tests (Depends-on): Likewise.
+	* modules/futimens-tests (Depends-on): Likewise.
+	* modules/hamt-tests (Depends-on): Likewise.
+	* modules/hard-locale-tests (Depends-on): Likewise.
+	* modules/kwset-tests (Depends-on): Likewise.
+	* modules/linkat-tests (Depends-on): Likewise.
+	* modules/linked-list-tests (Depends-on): Likewise.
+	* modules/linked-list-unportable-tests (Depends-on): Likewise.
+	* modules/linkedhash-list-tests (Depends-on): Likewise.
+	* modules/mbs_endswith-tests (Depends-on): Likewise.
+	* modules/mbs_startswith-tests (Depends-on): Likewise.
+	* modules/mbscasecmp-tests (Depends-on): Likewise.
+	* modules/mbsncasecmp-tests (Depends-on): Likewise.
+	* modules/mbspcasecmp-tests (Depends-on): Likewise.
+	* modules/mcel-bench-tests (Depends-on): Likewise.
+	* modules/memset_explicit-tests (Depends-on): Likewise.
+	* modules/mkdirat-tests (Depends-on): Likewise.
+	* modules/mkfifoat-tests (Depends-on): Likewise.
+	* modules/mountlist-tests (Depends-on): Likewise.
+	* modules/nonblocking-tests (Depends-on): Likewise.
+	* modules/obstack-zprintf-extra-tests (Depends-on): Likewise.
+	* modules/openat-tests (Depends-on): Likewise.
+	* modules/openat2-tests (Depends-on): Likewise.
+	* modules/pipe-filter-gi-tests (Depends-on): Likewise.
+	* modules/pipe-filter-ii-tests (Depends-on): Likewise.
+	* modules/posix_spawn_file_actions_addchdir-tests (Depends-on):
+	Likewise.
+	* modules/printf-posix-tests (Depends-on): Likewise.
+	* modules/pthread-cond-tests (Depends-on): Likewise.
+	* modules/pthread_sigmask-tests (Depends-on): Likewise.
+	* modules/quotearg-tests (Depends-on): Likewise.
+	* modules/rbtree-list-tests (Depends-on): Likewise.
+	* modules/rbtreehash-list-tests (Depends-on): Likewise.
+	* modules/readlinkat-tests (Depends-on): Likewise.
+	* modules/regex-quote-tests (Depends-on): Likewise.
+	* modules/renameat-tests (Depends-on): Likewise.
+	* modules/renameatu-tests (Depends-on): Likewise.
+	* modules/sigdelay-tests (Depends-on): Likewise.
+	* modules/sigprocmask-tests (Depends-on): Likewise.
+	* modules/stat-time-tests (Depends-on): Likewise.
+	* modules/stdc_rotate_left-tests (Depends-on): Likewise.
+	* modules/stdc_rotate_right-tests (Depends-on): Likewise.
+	* modules/striconveha-tests (Depends-on): Likewise.
+	* modules/supersede-tests (Depends-on): Likewise.
+	* modules/symlinkat-tests (Depends-on): Likewise.
+	* modules/unicase/u8-is-cased-tests (Depends-on): Likewise.
+	* modules/unicase/u8-is-casefolded-tests (Depends-on): Likewise.
+	* modules/unicase/u8-is-lowercase-tests (Depends-on): Likewise.
+	* modules/unicase/u8-is-titlecase-tests (Depends-on): Likewise.
+	* modules/unicase/u8-is-uppercase-tests (Depends-on): Likewise.
+	* modules/unicase/u16-is-cased-tests (Depends-on): Likewise.
+	* modules/unicase/u16-is-casefolded-tests (Depends-on): Likewise.
+	* modules/unicase/u16-is-lowercase-tests (Depends-on): Likewise.
+	* modules/unicase/u16-is-titlecase-tests (Depends-on): Likewise.
+	* modules/unicase/u16-is-uppercase-tests (Depends-on): Likewise.
+	* modules/unicase/u32-is-cased-tests (Depends-on): Likewise.
+	* modules/unicase/u32-is-casefolded-tests (Depends-on): Likewise.
+	* modules/unicase/u32-is-lowercase-tests (Depends-on): Likewise.
+	* modules/unicase/u32-is-titlecase-tests (Depends-on): Likewise.
+	* modules/unicase/u32-is-uppercase-tests (Depends-on): Likewise.
+	* modules/unictype/scripts-tests (Depends-on): Likewise.
+	* modules/unlinkat-tests (Depends-on): Likewise.
+	* modules/userspec-tests (Depends-on): Likewise.
+	* modules/utime-tests (Depends-on): Likewise.
+	* modules/utimens-tests (Depends-on): Likewise.
+	* modules/utimensat-tests (Depends-on): Likewise.
+
 2026-08-16  Collin Funk  <collin.funk1@gmail.com>
 
 	nproc: Don't call fclose twice (regr. today).

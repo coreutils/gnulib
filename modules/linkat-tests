@@ -12,6 +12,7 @@ getcwd-lgpl
 same-inode
 unlinkat
 streq
+bool
 
 configure.ac:
 

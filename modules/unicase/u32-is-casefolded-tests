@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 stdcountof-h
+bool
 
 configure.ac:
 

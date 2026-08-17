@@ -5,6 +5,7 @@ tests/test-utimens-common.h
 tests/macros.h
 
 Depends-on:
+bool
 dup
 gettext-h
 ignore-value

@@ -6,6 +6,7 @@ Depends-on:
 xlist
 array-list
 stdcountof-h
+bool
 
 configure.ac:
 

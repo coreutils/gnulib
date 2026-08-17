@@ -5,6 +5,7 @@ Depends-on:
 xalloc
 stdcountof-h
 streq
+bool
 
 configure.ac:
 

@@ -12,6 +12,7 @@ opendir
 readdir
 closedir
 streq
+bool
 
 configure.ac:
 

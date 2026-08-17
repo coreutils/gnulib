@@ -7,6 +7,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+bool
 errno-h
 ignore-value
 mgetgroups

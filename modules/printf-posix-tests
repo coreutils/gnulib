@@ -12,6 +12,7 @@ tests/macros.h
 
 Depends-on:
 stdint-h
+bool
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])

@@ -4,6 +4,7 @@ tests/test-dirname.c
 Depends-on:
 strdup
 streq
+bool
 
 configure.ac:
 

@@ -10,6 +10,7 @@ sleep
 pthread-thread
 streq
 memeq
+bool
 
 configure.ac:
 

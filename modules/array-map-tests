@@ -9,6 +9,7 @@ xalloc
 stdcountof-h
 stdc_rotate_left
 streq
+bool
 
 configure.ac:
 

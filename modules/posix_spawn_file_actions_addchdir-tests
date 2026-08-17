@@ -10,6 +10,7 @@ posix_spawn_file_actions_destroy
 posix_spawnp-tests
 findprog
 memeq
+bool
 
 configure.ac:
 

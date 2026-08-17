@@ -7,6 +7,7 @@ Depends-on:
 stdint-h
 vma-iter
 memeq
+bool
 
 configure.ac:
 

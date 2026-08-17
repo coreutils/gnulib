@@ -6,6 +6,7 @@ m4/musl.m4
 Depends-on:
 setlocale
 streq
+bool
 
 configure.ac:
 gl_MUSL_LIBC

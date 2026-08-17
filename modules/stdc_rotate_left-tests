@@ -3,6 +3,7 @@ tests/from-glibc/tst-stdc_rotate_left.c
 tests/macros.h
 
 Depends-on:
+bool
 
 configure.ac:
 

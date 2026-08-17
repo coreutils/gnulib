@@ -18,6 +18,7 @@ usleep
 stdcountof-h
 streq
 memeq
+bool
 
 configure.ac:
 

@@ -6,6 +6,7 @@ Depends-on:
 array-list
 linked-list-unportable-tests
 stdcountof-h
+bool
 
 configure.ac:
 

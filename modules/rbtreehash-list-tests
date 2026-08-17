@@ -6,6 +6,7 @@ Depends-on:
 array-list
 stdcountof-h
 streq
+bool
 
 configure.ac:
 

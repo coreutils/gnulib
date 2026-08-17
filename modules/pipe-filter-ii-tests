@@ -17,6 +17,7 @@ full-write
 stdcountof-h
 streq
 memeq
+bool
 
 configure.ac:
 

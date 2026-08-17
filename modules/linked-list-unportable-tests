@@ -15,6 +15,7 @@ yield
 nanosleep
 sigaction
 sigprocmask
+bool
 
 configure.ac:
 

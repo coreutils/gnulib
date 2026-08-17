@@ -3,6 +3,7 @@ tests/test-hamt.c
 tests/macros.h
 
 Depends-on:
+bool
 
 configure.ac:
 

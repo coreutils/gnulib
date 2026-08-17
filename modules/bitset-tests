@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 c99
+bool
 
 configure.ac:
 

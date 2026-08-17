@@ -6,6 +6,7 @@ Depends-on:
 regex
 xalloc
 streq
+bool
 
 configure.ac:
 

@@ -9,6 +9,7 @@ thrd
 gettimeofday
 streq
 memeq
+bool
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

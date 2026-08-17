@@ -15,6 +15,7 @@ streq
 striconv
 getrusage
 gettimeofday
+bool
 
 configure.ac:
 

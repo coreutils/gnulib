@@ -4,6 +4,7 @@ tests/null-ptr.h
 tests/macros.h
 
 Depends-on:
+bool
 ignore-value
 same-inode
 symlink

@@ -17,6 +17,7 @@ dup
 utimecmp
 xconcat-filename
 xgetcwd-lgpl
+bool
 
 configure.ac:
 

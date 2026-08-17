@@ -9,6 +9,7 @@ thread
 lock
 yield
 random
+bool
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])

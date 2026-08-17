@@ -8,6 +8,7 @@ getdtablesize
 pipe-posix
 nonblocking-pipe-tests
 nonblocking-socket-tests
+bool
 
 configure.ac:
 

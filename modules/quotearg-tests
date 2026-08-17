@@ -20,6 +20,7 @@ setlocale
 localcharset
 streq
 memeq
+bool
 
 configure.ac:
 gt_LOCALE_FR
