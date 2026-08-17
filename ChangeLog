@@ -1,3 +1,10 @@
+2026-08-16  Collin Funk  <collin.funk1@gmail.com>
+
+	nproc: Don't call fclose twice (regr. today).
+	Problem found by Coverity (CID 1700233).
+	* lib/nproc.c (get_cgroup2_cpu_quota): Set FP to NULL if fopen does not
+	get called.
+
 2026-08-16  Bruno Haible  <bruno@clisp.org>
 
 	tests: Avoid some test failures with the clang UBSAN.
