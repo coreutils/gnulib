@@ -23,15 +23,12 @@
 
 #include "macros.h"
 
-/* Test the prototype in <string.h> + compiler.
-   Some glibc versions use the nonnull attribute, which breaks this test.  */
+/* Test the prototype in <string.h> + compiler.  */
 static void *
 null_memccpy (void *dest, const void *src, int c, size_t n)
 {
   void *p = memccpy (dest, src, c, n);
-#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (dest == NULL);
-#endif
   return p;
 }
 static void *(*volatile volatile_null_memccpy) (void *, void const *, int,
@@ -54,7 +51,8 @@ int
 main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     Some glibc versions use the nonnull attribute, which breaks this test.  */
 
 #if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (memccpy (NULL, "x", '?', 0) == NULL);

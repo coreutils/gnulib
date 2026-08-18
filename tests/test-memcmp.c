@@ -25,17 +25,12 @@ SIGNATURE_CHECK (memcmp, int, (void const *, void const *, size_t));
 #include "zerosize-ptr.h"
 #include "macros.h"
 
-/* Test the prototype in <string.h> + compiler.
-   In GCC < 15 this is a builtin that has the nonnull attribute.
-   Some glibc versions use the nonnull attribute, which breaks this test.  */
+/* Test the prototype in <string.h> + compiler.  */
 static int
 null_memcmp (void const *s1, void const *s2, size_t n)
 {
   int r = memcmp (s1, s2, n);
-#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
-    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (s1 == NULL);
-#endif
   return r;
 }
 int (*volatile volatile_null_memcmp) (void const *, void const *, size_t)
@@ -97,7 +92,9 @@ main (void)
   }
 
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     In GCC < 15 this is a builtin that has the nonnull attribute.
+     Some glibc versions use the nonnull attribute, which breaks this test.  */
 #if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
     && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (memcmp (NULL, "x", 0) == 0);

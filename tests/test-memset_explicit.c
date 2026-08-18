@@ -48,15 +48,12 @@ static char zero[SECRET_SIZE] = { 0 };
 # define memset_explicit memset
 #endif
 
-/* Test the prototype in <string.h> + compiler.
-   Some glibc versions use the nonnull attribute, which breaks this test.  */
+/* Test the prototype in <string.h> + compiler.  */
 static void *
 null_memset_explicit (void *s, int c, size_t n)
 {
   void *p = memset_explicit (s, c, n);
-#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (s == NULL);
-#endif
   return p;
 }
 static void *(*volatile volatile_null_memset_explicit) (void *, int, size_t)
@@ -279,7 +276,8 @@ main ()
   test_stack ();
 
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     Some glibc versions use the nonnull attribute, which breaks this test.  */
 #if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (memset_explicit (NULL, '?', 0) == NULL);
 

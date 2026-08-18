@@ -25,17 +25,12 @@
 #include "zerosize-ptr.h"
 #include "macros.h"
 
-/* Test the prototype in <string.h> + compiler.
-   In GCC < 15 this is a builtin that has the nonnull attribute.
-   Some glibc versions use the nonnull attribute, which breaks this test.  */
+/* Test the prototype in <string.h> + compiler.  */
 static char *
 null_strncpy (char *s1, char const *s2, size_t n)
 {
   char *p = strncpy (s1, s2, n);
-#if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
-    && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))
   ASSERT (s2 == NULL);
-#endif
   return p;
 }
 static char *(*volatile volatile_null_strncpy) (char *, char const *, size_t)
@@ -125,7 +120,9 @@ main (void)
   }
 
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     In GCC < 15 this is a builtin that has the nonnull attribute.
+     Some glibc versions use the nonnull attribute, which breaks this test.  */
 
 #if (! defined __GNUC__ || __GNUC__ >= 15 || defined __clang__) \
     && (! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__))

@@ -1,3 +1,25 @@
+2026-08-18  Lasse Collin  <lasse.collin@tukaani.org>
+
+	tests: Remove redundant #ifs from N3322 tests.
+	* tests/test-bsearch.c (null_bsearch, main): Remove the #if from
+	null_bsearch because having the same condition in main is enough.
+	Move the comment explaining the #if from null_bsearch to main.
+	* tests/test-memccpy.c (null_memccpy, main): Likewise.
+	* tests/test-memchr.c (null_memchr, main): Likewise.
+	* tests/test-memcmp.c (null_memcmp, main): Likewise.
+	* tests/test-memcpy.c (null_memcpy, main): Likewise.
+	* tests/test-memmove.c (null_memmove, main): Likewise.
+	* tests/test-memset.c (null_memset, main): Likewise.
+	* tests/test-memset_explicit.c (null_memset_explicit, main): Likewise.
+	* tests/test-qsort.c (null_qsort, main): Likewise.
+	* tests/test-strncat.c (null_strncat, main): Likewise.
+	* tests/test-strncmp.c (null_strncmp, main): Likewise.
+	* tests/test-strncpy.c (null_strncpy, main): Likewise.
+	* tests/test-strndup.c (null_strndup, main): Likewise.
+	* tests/test-wcsncat.c (null_wcsncat, main): Likewise.
+	* tests/test-wcsncmp.c (null_wcsncmp, main): Likewise.
+	* tests/test-wcsncpy.c (null_wcsncpy, main): Likewise.
+
 2026-08-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	exclude: new function excluded_file_name_status

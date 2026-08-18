@@ -25,15 +25,12 @@ SIGNATURE_CHECK (wcsncmp, int, (const wchar_t *, const wchar_t *, size_t));
 
 #include "macros.h"
 
-/* Test the prototype in <wchar.h> + compiler.
-   Some glibc versions use the nonnull attribute, which breaks this test.  */
+/* Test the prototype in <wchar.h> + compiler.  */
 static int
 null_wcsncmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
 {
   int r = wcsncmp (ws1, ws2, n);
-#if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (ws1 == NULL);
-#endif
   return r;
 }
 static int (*volatile volatile_null_wcsncmp) (wchar_t const *,
@@ -206,7 +203,8 @@ main (int argc, char *argv[])
   }
 
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     Some glibc versions use the nonnull attribute, which breaks this test.  */
 #if ! defined __GLIBC__ || 2 < __GLIBC__ + (99 <= __GLIBC_MINOR__)
   ASSERT (wcsncmp (NULL, L"x", 0) == 0);
   ASSERT (wcsncmp (L"x", NULL, 0) == 0);
