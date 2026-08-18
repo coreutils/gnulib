@@ -136,7 +136,10 @@ FUNC (const char *tocode,
          incomplete sequence of units at the end.  */
       if (iunit < srclen)
         {
-          offsets[iunit] = *lengthp;
+          /* NOT
+               offsets[iunit] = *lengthp;
+             because the caller expects that all assigned offsets[i]
+             are < *lengthp.  */
           if (!(U_MBLEN (src + iunit, srclen - iunit) < 0))
             abort ();
         }
