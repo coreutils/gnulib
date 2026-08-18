@@ -21,6 +21,7 @@
    Thanks to Phil Proudman <phil@proudman51.freeserve.co.uk>
    for improvement suggestions. */
 
+#define EXCLUDE_INLINE _GL_EXTERN_INLINE
 #include <config.h>
 
 #include <ctype.h>
@@ -455,17 +456,18 @@ file_name_matches (struct exclude_segment const *seg, char const *f,
   return false;
 }
 
-/* Return true if EX excludes F.  */
+/* Return the status of whether EX excludes F.  */
 
-bool
-excluded_file_name (struct exclude const *ex, char const *f)
+int
+excluded_file_name_status (struct exclude const *ex, char const *f)
 {
   /* If no patterns are given, the default is to include.  */
   if (!ex->head)
-    return false;
+    return 0;
 
   bool invert = false;
   char *filename = nullptr;
+  bool found = false;
 
   /* Scan through the segments, reporting the status of the first match.
      The segments are in reverse order, so this reports the status of
@@ -477,14 +479,13 @@ excluded_file_name (struct exclude const *ex, char const *f)
         {
           if (!filename)
             filename = xmalloc (strlen (f) + 1);
-          if (file_name_matches (seg, f, filename))
-            break;
+          found = file_name_matches (seg, f, filename);
         }
       else
-        {
-          if (file_pattern_matches (seg, f))
-            break;
-        }
+        found = file_pattern_matches (seg, f);
+
+      if (found)
+        break;
 
       if (! seg->next)
         {
@@ -500,7 +501,8 @@ excluded_file_name (struct exclude const *ex, char const *f)
     }
 
   free (filename);
-  return invert ^ ! (seg->options & EXCLUDE_INCLUDE);
+  return ((invert ^ ! (seg->options & EXCLUDE_INCLUDE) ? EXCLUDED_EXCLUDED : 0)
+          | (found ? EXCLUDED_MATCHED : 0));
 }
 
 /* Append to EX the exclusion PATTERN with OPTIONS.  */

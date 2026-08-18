@@ -30,6 +30,11 @@
 
 #include <stdio.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef EXCLUDE_INLINE
+# define EXCLUDE_INLINE _GL_INLINE
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,6 +59,12 @@ extern "C" {
 /* Allocate storage for the pattern */
 #define EXCLUDE_ALLOC     (1 << 26)
 
+
+/* Return status flags for excluded_file_name_status.  */
+#define EXCLUDED_EXCLUDED (1 << 0) /* The file name was excluded.  */
+#define EXCLUDED_MATCHED  (1 << 1) /* The file name was matched.  */
+
+
 struct exclude;
 
 bool fnmatch_pattern_has_wildcards (const char *, int) _GL_ATTRIBUTE_PURE;
@@ -68,13 +79,22 @@ int add_exclude_file (void (*) (struct exclude *, char const *, int),
                       struct exclude *, char const *, int, char);
 int add_exclude_fp (void (*) (struct exclude *, char const *, int, void *),
                     struct exclude *, FILE *, int, char, void *);
-bool excluded_file_name (struct exclude const *, char const *);
+int excluded_file_name_status (struct exclude const *, char const *);
 void exclude_add_pattern_buffer (struct exclude *ex, char *buf);
 bool exclude_fnmatch (char const *, char const *, int);
+
+/* Return true if EX excludes F.  */
+EXCLUDE_INLINE bool
+excluded_file_name (struct exclude const *ex, char const *f)
+{
+  return excluded_file_name_status (ex, f) & EXCLUDED_EXCLUDED;
+}
 
 
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GL_EXCLUDE_H */

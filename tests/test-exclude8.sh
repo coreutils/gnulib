@@ -27,9 +27,9 @@ b[a\*]r
 EOT
 
 cat > expected <<'EOT'
-f*e: 1
-file: 0
-bar: 1
+f*e: 1 1
+file: 0 0
+bar: 1 1
 EOT
 
 ${CHECKER} test-exclude -wildcards in -- 'f*e' 'file' 'bar' > out || exit $?

@@ -28,7 +28,7 @@ Baz
 EOT
 
 cat > expected <<EOT
-foobar: 1
+foobar: 1 1
 EOT
 
 ${CHECKER} test-exclude -wildcards in -- foobar > out || exit $?

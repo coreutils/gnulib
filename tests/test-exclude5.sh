@@ -28,10 +28,10 @@ Baz
 EOT
 
 cat > expected <<EOT
-bar: 1
-bar/qux: 1
-barz: 0
-foo/bar: 1
+bar: 1 1
+bar/qux: 1 1
+barz: 0 0
+foo/bar: 1 1
 EOT
 
 ${CHECKER} test-exclude -leading_dir in -- bar bar/qux barz foo/bar > out || exit $?

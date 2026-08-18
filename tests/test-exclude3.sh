@@ -28,12 +28,12 @@ Baz
 EOT
 
 cat > expected <<EOT
-foo: 1
-foo*: 0
-bar: 0
-foobar: 1
-baz: 1
-bar/qux: 1
+foo: 1 0
+foo*: 0 1
+bar: 0 1
+foobar: 1 0
+baz: 1 0
+bar/qux: 1 0
 EOT
 
 ${CHECKER} test-exclude -include in -- foo 'foo*' bar foobar baz bar/qux > out || exit $?

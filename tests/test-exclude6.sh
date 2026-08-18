@@ -28,8 +28,8 @@ Baz
 EOT
 
 cat > expected <<EOT
-bar: 1
-foo/bar: 0
+bar: 1 1
+foo/bar: 0 0
 EOT
 
 ${CHECKER} test-exclude -anchored in -- bar foo/bar > out || exit $?

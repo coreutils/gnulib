@@ -1,3 +1,17 @@
+2026-08-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	exclude: new function excluded_file_name_status
+	From a suggestion by Sergey Poznyakoff in:
+	https://lists.gnu.org/r/bug-gnulib/2026-08/msg00217.html
+	* lib/exclude.c (EXCLUDE_INLINE): New macro.
+	(excluded_file_name_status): New function, extending
+	excluded_file_name which is now in exclude.h.
+	* lib/exclude.h (EXCLUDE_INLINE, EXCLUDED_EXCLUDED, EXCLUDED_MATCHED):
+	New macros.
+	(excluded_file_name): New function.
+	* tests/test-exclude.c (main): Test new function too.
+	All test scripts changed.
+
 2026-08-17  Bruno Haible  <bruno@clisp.org>
 
 	Depend on 'bool' for use of 'false' or 'true'.

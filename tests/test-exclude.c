@@ -118,8 +118,10 @@ main (int argc, char **argv)
   for (; argc; --argc)
     {
       char *word = *++argv;
-
-      printf ("%s: %d\n", word, excluded_file_name (exclude, word));
+      bool excluded = excluded_file_name (exclude, word);
+      int status = excluded_file_name_status (exclude, word);
+      printf ("%s: %d %d%s\n", word, excluded, !!(status & EXCLUDED_MATCHED),
+              excluded != !!(status & EXCLUDED_EXCLUDED) ? " !" : "");
     }
 
   free_exclude (exclude);
