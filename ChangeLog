@@ -1,5 +1,12 @@
 2026-08-18  Lasse Collin  <lasse.collin@tukaani.org>
 
+	tests: Avoid undefined behavior on mingw-w64.
+	* tests/test-wmemcpy.c (null_wmemcpy, main): Move the #if and comment
+	from null_wmemcpy to main to avoid invoking undefined behavior.
+	* tests/test-wmemmove.c (null_wmemmove, main): Likewise.
+
+2026-08-18  Lasse Collin  <lasse.collin@tukaani.org>
+
 	tests: Remove redundant #ifs from N3322 tests.
 	* tests/test-bsearch.c (null_bsearch, main): Remove the #if from
 	null_bsearch because having the same condition in main is enough.

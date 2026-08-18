@@ -23,17 +23,12 @@
 
 #include "macros.h"
 
-/* Test the prototype in <wchar.h> + compiler.
-   In mingw-w64 14.0.0, wmemcpy is an inline function that calls memcpy.
-   In GCC < 15, memcpy is a builtin that has the nonnull attribute.  */
+/* Test the prototype in <wchar.h> + compiler.  */
 static wchar_t *
 null_wmemcpy (wchar_t *s1, wchar_t const *s2, size_t n)
 {
   wchar_t *p = wmemcpy (s1, s2, n);
-#if ! (defined __MINGW32__ \
-       && defined __GNUC__ && !defined __clang__ && __GNUC__ < 15)
   ASSERT (s1 == NULL);
-#endif
   return p;
 }
 static wchar_t *(*volatile volatile_null_wmemcpy) (wchar_t *, wchar_t const *,
@@ -56,8 +51,12 @@ int
 main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
-     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.
+     In mingw-w64 14.0.0, wmemcpy is an inline function that calls memcpy.
+     In GCC < 15, memcpy is a builtin that has the nonnull attribute.  */
 
+#if ! (defined __MINGW32__ \
+       && defined __GNUC__ && !defined __clang__ && __GNUC__ < 15)
   ASSERT (wmemcpy (NULL, L"x", 0) == NULL);
 
   {
@@ -66,6 +65,7 @@ main (void)
   }
 
   ASSERT (volatile_null_wmemcpy (NULL, L"x", 0) == NULL);
+#endif
 
   return test_exit_status;
 }
