@@ -1,3 +1,9 @@
+2026-08-18  Bruno Haible  <bruno@clisp.org>
+
+	u16-conv-to-enc: Ensure that none of the offsets[] are out-of-range.
+	* lib/uniconv/u-conv-to-enc.h (FUNC): Don't assign an offsets[i] at the
+	incomplete sequence at the end.
+
 2026-08-18  Lasse Collin  <lasse.collin@tukaani.org>
 
 	tests: Avoid undefined behavior on mingw-w64.
