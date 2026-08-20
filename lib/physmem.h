@@ -25,6 +25,11 @@ extern "C" {
 #endif
 
 
+/* Note: These functions do not consider the configurable resource limits
+   (RLIMIT_DATA, RLIMIT_AS, RLIMIT_RSS).  If you want to consider them,
+   you need to do so separately, via getrlimit().  */
+
+
 /* Returns the total amount of physical memory.
    This value is more or less a hard limit for the working set.  */
 double physmem_total (void);
