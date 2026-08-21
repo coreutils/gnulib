@@ -46,9 +46,6 @@
 #endif
 
 #include <stdlib.h>
-#if defined __CHERI_PURE_CAPABILITY__
-# include <cheri.h>
-#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef EEALLOC_INLINE
@@ -69,16 +66,15 @@ EEALLOC_INLINE void *eemalloc (size_t n)
 EEALLOC_INLINE void *
 eemalloc (size_t n)
 {
-  /* If n is zero, allocate a 1-byte block.  */
-  size_t nx = n;
-  if (n == 0)
-    nx = 1;
-  void *ptr = malloc (nx);
-# if defined __CHERI_PURE_CAPABILITY__
-  if (ptr != NULL)
-    ptr = cheri_bounds_set (ptr, n);
+  /* Work around POSIX allocator glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  Skip this workaround
+     on CHERI, though, as it yields non-NULL anyway and adding 1 would
+     cause it to yield a too-generous (dereferencable) pointer.  */
+# ifndef __CHERI_PURE_CAPABILITY__
+  n |= !n;
 # endif
-  return ptr;
+
+  return malloc (n);
 }
 #endif
 
@@ -90,15 +86,15 @@ EEALLOC_INLINE void *eerealloc (void *p, size_t n)
 EEALLOC_INLINE void *
 eerealloc (void *p, size_t n)
 {
-  /* Work around realloc glitch by treating a 0 size as if it were 1,
-     to avoid undefined behavior in strict C23 platforms,
-     and so that returning NULL is equivalent to failing.  */
-  void *ptr = realloc (p, n ? n : 1);
-# if defined __CHERI_PURE_CAPABILITY__
-  if (ptr != NULL)
-    ptr = cheri_bounds_set (ptr, n);
+  /* Work around POSIX allocator glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  Skip this workaround
+     on CHERI, though, as it yields non-NULL anyway and adding 1 would
+     cause it to yield a too-generous (dereferencable) pointer.  */
+# ifndef __CHERI_PURE_CAPABILITY__
+  n |= !n;
 # endif
-  return ptr;
+
+  return realloc (p, n);
 }
 #endif
 

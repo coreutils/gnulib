@@ -29,9 +29,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include "idx.h"
-#if defined __CHERI_PURE_CAPABILITY__
-# include <cheri.h>
-#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef ALIGNALLOC_INLINE
@@ -100,13 +97,16 @@ alignalloc (idx_t alignment, idx_t size)
   if (alignment < sizeof (void *))
     alignment = sizeof (void *);
   void *ptr = NULL;
-  /* Work around posix_memalign glitch by treating a 0 size as if it were 1,
-     so that returning NULL is equivalent to failing.  */
-  errno = posix_memalign (&ptr, alignment, size ? size : 1);
-#  if defined __CHERI_PURE_CAPABILITY__
-  if (ptr != NULL)
-    ptr = cheri_bounds_set (ptr, size);
+
+  /* Work around POSIX allocator glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  Skip this workaround
+     on CHERI, though, as it yields non-NULL anyway and adding 1 would
+     cause it to yield a too-generous (dereferencable) pointer.  */
+#  ifndef __CHERI_PURE_CAPABILITY__
+  size |= !size;
 #  endif
+
+  errno = posix_memalign (&ptr, alignment, size);
   return ptr;
 # endif
 }
