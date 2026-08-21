@@ -9,6 +9,7 @@ m4/getugroups.m4
 Depends-on:
 errno-h
 streq
+bool
 
 configure.ac:
 gl_GETUGROUPS

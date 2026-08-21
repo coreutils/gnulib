@@ -1,3 +1,10 @@
+2026-08-21  Bruno Haible  <bruno@clisp.org>
+
+	getugroups: Clarify and optimize.
+	* lib/getugroups.c (getugroups): Fix specification of return value.
+	Move grouplist != NULL test out of the inner loop.
+	* modules/getugroups (Depends-on): Add bool.
+
 2026-08-21  Sergey Zhidkih  <rx1513@altlinux.org>  (tiny change)
 
 	getugroups: Improve diagnostics when passing NULL to getugroups.

@@ -52,8 +52,12 @@ getugroups (_GL_UNUSED int maxcount,
    process.  Store at most MAXCOUNT group IDs in the GROUPLIST array.
    If GID is not -1, store it first (if possible).  GID should be the
    group ID (pw_gid) obtained from getpwuid, in case USERNAME is not
-   listed in /etc/groups.  Upon failure, set errno and return -1.
-   Otherwise, return the number of IDs we've written into GROUPLIST.  */
+   listed in /etc/groups.
+   Upon failure, set errno and return -1.  Otherwise:
+   If MAXCOUNT is positive, return the number of IDs we've written into
+   GROUPLIST (necessarily <= MAXCOUNT).
+   If MAXCOUNT is zero, return the number of IDs we would have written
+   if GROUPLIST were non-NULL and MAXCOUNT were large enough.  */
 
 int
 getugroups (int maxcount, gid_t *grouplist, char const *username,
@@ -81,13 +85,19 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
           if (streq (username, *cp))
             {
               /* See if this group number is already on the list.  */
-              int n;
-              for (n = 0; n < count; ++n)
-                if (grouplist && grouplist[n] == grp->gr_gid)
-                  break;
+              bool already_in_grouplist = false;
+              if (maxcount != 0)
+                {
+                  for (int n = 0; n < count; ++n)
+                    if (grouplist[n] == grp->gr_gid)
+                      {
+                        already_in_grouplist = true;
+                        break;
+                      }
+                }
 
               /* If it's a new group number, then try to add it to the list.  */
-              if (n == count)
+              if (!already_in_grouplist)
                 {
                   if (maxcount != 0)
                     {
