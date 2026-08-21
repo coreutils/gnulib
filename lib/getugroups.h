@@ -14,6 +14,11 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* This file uses _GL_ATTRIBUTE_NONNULL_IF_NONZERO. */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <sys/types.h>
 
 #ifdef __cplusplus
@@ -22,7 +27,8 @@ extern "C" {
 
 
 int getugroups (int maxcount, gid_t *grouplist, char const *username,
-                gid_t gid);
+                gid_t gid)
+               _GL_ATTRIBUTE_NONNULL_IF_NONZERO (2, 1);
 
 
 #ifdef __cplusplus
