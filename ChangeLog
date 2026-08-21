@@ -1,3 +1,20 @@
+2026-08-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	alignalloc: work around CHERI ‘free’ bug
+	Problem discovered on cfarm240 (CheriBSD 15.0) when building
+	GNU Tar with ‘./configure 'CC=cc -march=morello -mabi=purecap'’.
+	The problem is that using cheri_bounds_set on a pointer derived
+	from posix_memalign, and later passing that pointer to ‘free’,
+	corrupts the heap and can cause a later ‘free (NULL)’ to crash.
+	Work around this CHERI bug via simplifying the workaround
+	for the size-zero allocation glitch.  The following changes take
+	effect only if __CHERI_PURE_CAPABILITY__ is defined.
+	* lib/alignalloc.h (alignalloc):
+	* lib/eealloc.h (eemalloc):
+	* lib/realloc.c (rpl_realloc):
+	Do not add 1 to size if the size is zero, and do not call
+	cheri_bounds_set on the result.  Do not include <cheri.h>.
+
 2026-08-18  Bruno Haible  <bruno@clisp.org>
 
 	u16-conv-to-enc: Ensure that none of the offsets[] are out-of-range.
