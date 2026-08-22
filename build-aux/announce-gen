@@ -652,7 +652,7 @@ Use a .sig file to verify that the corresponding file (without the
 .sig suffix) is intact.  First, be sure to download both the .sig file
 and the corresponding tarball.  Then, run a command like this:
 
-  gpg --verify $tarballs[0].sig
+  gpg --verify $tarballs[0].sig $tarballs[0]
 
 EOF
   my $gpg_fingerprint = `LC_ALL=C gpg --fingerprint $gpg_key_id | grep -v ^sub`;
@@ -695,7 +695,7 @@ As a last resort to find the key, you can try the official GNU
 keyring:
 
   wget -q https://ftp.gnu.org/gnu/gnu-keyring.gpg
-  gpg --keyring gnu-keyring.gpg --verify $tarballs[0].sig
+  gpg --keyring gnu-keyring.gpg --verify $tarballs[0].sig $tarballs[0]
 EOF
 
   print <<EOF;
