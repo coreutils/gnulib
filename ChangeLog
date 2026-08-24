@@ -1,3 +1,12 @@
+2026-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gettext: more-consistent no-op macros
+	* lib/gettext.h (gettext, dgettext, dcgettext): When defining
+	no-op macros, be more consistent about always "using" the
+	arguments; this pacifies clang -Wunused-parameter when
+	--disable-nls is used.  Also, be more consistent about using
+	compound literals rather than casts, for better type checking.
+
 2026-08-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	announce-gen: decrease clutter in output of advice

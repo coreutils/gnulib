@@ -162,11 +162,13 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  endif
 # elif defined __clang__
 #  undef gettext
-#  define gettext(Msgid) ((const char *) (Msgid))
+#  define gettext(Msgid) ((const char *) {(Msgid)})
 #  undef dgettext
-#  define dgettext(Domainname, Msgid) gettext (Msgid)
+#  define dgettext(Domainname, Msgid) \
+     ((void) (const char *) {(Domainname)}, gettext (Msgid))
 #  undef dcgettext
-#  define dcgettext(Domainname, Msgid, Category) dgettext (Domainname, Msgid)
+#  define dcgettext(Domainname, Msgid, Category) \
+     ((void) (int) {(Category)}, dgettext (Domainname, Msgid))
 # else
 /* The conversions to 'const char *' via compound literals serve the purpose
    of producing warnings for invalid uses of the value returned from these
@@ -186,13 +188,13 @@ dcgettext (const char *domain, const char *msgid, int category)
 # if (defined __GNUC__ && defined __cplusplus) || defined __clang__
 #  undef ngettext
 #  define ngettext(Msgid1, Msgid2, N) \
-     ((N) == 1 ? (const char *) (Msgid1) : (const char *) (Msgid2))
+     ((N) == 1 ? (const char *) {(Msgid1)} : (const char *) {(Msgid2)})
 #  undef dngettext
 #  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ngettext (Msgid1, Msgid2, N)
+     ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
 #  undef dcngettext
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     dngettext (Domainname, Msgid1, Msgid2, N)
+     ((void) (int) {(Category)}, dngettext (Domainname, Msgid1, Msgid2, N))
 # elif defined __GNUC__ && !defined __cplusplus
 /* Silence -Wuseless-cast warnings.  */
 #  if __GNUC__ >= 14
@@ -200,13 +202,13 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  endif
 #  undef ngettext
 #  define ngettext(Msgid1, Msgid2, N) \
-     ((N) == 1 ? (const char *) (Msgid1) : (const char *) (Msgid2))
+     ((N) == 1 ? (const char *) {(Msgid1)} : (const char *) {(Msgid2)})
 #  undef dngettext
 #  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ((void) (const char *) (Domainname), ngettext (Msgid1, Msgid2, N))
+     ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
 #  undef dcngettext
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     ((void) (int) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
+     ((void) (int) {(Category)}, dngettext (Domainname, Msgid1, Msgid2, N))
 # else
 /* The conversions to 'const char *' via compound literals serve the purpose
    of producing warnings for invalid uses of the value returned from these
