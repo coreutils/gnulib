@@ -65,17 +65,11 @@
    warnings that would occur at every invocation of a *gettext function
    in a *printf format string position.
    Do this with inline functions when possible, namely for gettext, dgettext,
-   dcgettext, which are known to gcc as "external built-ins".
-   It is not ideal to ignore the possible side effects done in the
-   Domainname and Category arguments, but it's better than to have a
-   warning at every invocation in a format string position.  */
+   dcgettext, which are known to gcc as "external built-ins".  */
 /* When clang is used with option -Wformat=2, we need to silence
    "warning: format string is not a string literal [-Wformat-nonliteral]"
    warnings that would occur at every invocation of a *gettext function
-   in a *printf format string position.
-   It is not ideal to ignore the possible side effects done in the
-   Domainname and Category arguments, but it's better than to have a
-   warning at every invocation in a format string position.  */
+   in a *printf format string position.  */
 /* These warnings would not occur with enabled NLS.  */
 /* A test case:
    ================================ foo.c ================================
@@ -160,83 +154,70 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  if __GNUC__ >= 9
 #   pragma GCC diagnostic pop
 #  endif
-# elif defined __clang__
-#  undef gettext
-#  define gettext(Msgid) ((const char *) {(Msgid)})
-#  undef dgettext
-#  define dgettext(Domainname, Msgid) \
-     ((void) (const char *) {(Domainname)}, gettext (Msgid))
-#  undef dcgettext
-#  define dcgettext(Domainname, Msgid, Category) \
-     ((void) (int) {(Category)}, dgettext (Domainname, Msgid))
-# else
-/* The conversions to 'const char *' via compound literals serve the purpose
-   of producing warnings for invalid uses of the value returned from these
-   functions and for invalid-typed Msgid arguments.  */
-#  undef gettext
-#  define gettext(Msgid) ((const char *) {(Msgid)})
-/* The conversions via compound literals serve the purpose of producing warnings
-   for invalid-typed arguments.  */
-#  undef dgettext
-#  define dgettext(Domainname, Msgid) \
-     ((void) (const char *) {(Domainname)}, gettext (Msgid))
-#  undef dcgettext
-#  define dcgettext(Domainname, Msgid, Category) \
-     ((void) (int) {(Category)}, dgettext (Domainname, Msgid))
-# endif
-
-# if (defined __GNUC__ && defined __cplusplus) || defined __clang__
-#  undef ngettext
-#  define ngettext(Msgid1, Msgid2, N) \
-     ((N) == 1 ? (const char *) {(Msgid1)} : (const char *) {(Msgid2)})
-#  undef dngettext
-#  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
-#  undef dcngettext
-#  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     ((void) (int) {(Category)}, dngettext (Domainname, Msgid1, Msgid2, N))
-# elif defined __GNUC__ && !defined __cplusplus
 /* Silence -Wuseless-cast warnings.  */
 #  if __GNUC__ >= 14
 #   pragma GCC diagnostic ignored "-Wuseless-cast"
 #  endif
+/* Use plain casts to pacify -Wformat-nonliteral.
+   This ngettext implementation does not evaluate all arguments,
+   as doing so would trigger -Wformat-nonliteral false positives.  */
 #  undef ngettext
 #  define ngettext(Msgid1, Msgid2, N) \
-     ((N) == 1 ? (const char *) {(Msgid1)} : (const char *) {(Msgid2)})
+     ((N) == 1 ? (const char *) (Msgid1) : (const char *) (Msgid2))
 #  undef dngettext
 #  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
+     ((void) (const char *) (Domainname), ngettext (Msgid1, Msgid2, N))
 #  undef dcngettext
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     ((void) (int) {(Category)}, dngettext (Domainname, Msgid1, Msgid2, N))
+     ((void) (int) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
+
 # else
-/* The conversions to 'const char *' via compound literals serve the purpose
-   of producing warnings for invalid uses of the value returned from these
-   functions and for invalid-typed Msgid1 and Msgid2 arguments.  */
+
+/* Like the C cast ((type) (expr)), but do only conversions that an
+   ordinary assignment would do.  This can diagnose invalid arguments
+   better than a cast would.  */
+#   ifdef __cplusplus
+#    define _LIBGETTEXT_FUNCAST(type, expr) static_cast <type> (expr)
+#   else
+#    define _LIBGETTEXT_FUNCAST(type, expr) (type) {(expr)}
+#   endif
+
+#  undef gettext
+#  define gettext(Msgid) _LIBGETTEXT_FUNCAST (const char *, Msgid)
+#  undef dgettext
+#  define dgettext(Domainname, Msgid) \
+     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), gettext (Msgid))
+#  undef dcgettext
+#  define dcgettext(Domainname, Msgid, Category) \
+      ((void) _LIBGETTEXT_FUNCAST (int, Category), \
+       dgettext (Domainname, Msgid))
 #  undef ngettext
 #  define ngettext(Msgid1, Msgid2, N) \
      ((N) == 1 \
-      ? ((void) (Msgid2), (const char *) {(Msgid1)}) \
-      : ((void) (Msgid1), (const char *) {(Msgid2)}))
-/* The conversions via compound literals serve the purpose of producing warnings
-   for invalid-typed arguments.  */
+      ? ((void) _LIBGETTEXT_FUNCAST (const char *, Msgid2), \
+         _LIBGETTEXT_FUNCAST (const char *, Msgid1)) \
+      : ((void) _LIBGETTEXT_FUNCAST (const char *, Msgid1), \
+         _LIBGETTEXT_FUNCAST (const char *, Msgid2)))
 #  undef dngettext
 #  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ((void) (const char *) {(Domainname)}, ngettext (Msgid1, Msgid2, N))
+     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
+      ngettext (Msgid1, Msgid2, N))
 #  undef dcngettext
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     ((void) (int) {(Category)}, dngettext (Domainname, Msgid1, Msgid2, N))
+     ((void) _LIBGETTEXT_FUNCAST (int, Category), \
+      dngettext (Domainname, Msgid1, Msgid2, N))
+#  undef textdomain
+#  define textdomain(Domainname) _LIBGETTEXT_FUNCAST (const char *, Domainname)
+#  undef bindtextdomain
+#  define bindtextdomain(Domainname, Dirname) \
+     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
+      _LIBGETTEXT_FUNCAST (const char *, Dirname))
+#  undef bind_textdomain_codeset
+#  define bind_textdomain_codeset(Domainname, Codeset) \
+     ((void) _LIBGETTEXT_FUNCAT (const char *, Domainname), \
+      _LIBGETTEXT_FUNCAT (const char *, Codeset))
+
 # endif
-
-# undef textdomain
-# define textdomain(Domainname) ((const char *) {(Domainname)})
-# undef bindtextdomain
-# define bindtextdomain(Domainname, Dirname) \
-    ((void) (const char *) {(Domainname)}, (const char *) {(Dirname)})
-# undef bind_textdomain_codeset
-# define bind_textdomain_codeset(Domainname, Codeset) \
-    ((void) (const char *) {(Domainname)}, (const char *) {(Codeset)})
-
 #endif
 
 
