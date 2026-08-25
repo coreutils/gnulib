@@ -1,3 +1,9 @@
+2026-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gettext-h-tests: don’t assume ENABLE_NLS
+	* tests/test-gettext-h.c (main) [!ENABLE_NLS]:
+	Do not call textdomain, as it is not in scope.
+
 2026-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gettext: more-consistent no-op macros

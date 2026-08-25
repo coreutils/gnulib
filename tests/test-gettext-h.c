@@ -27,7 +27,9 @@ main (void)
 {
   const char *s;
 
+#if ENABLE_NLS
   textdomain ("tzlof");
+#endif
 
   s = gettext ("some text");
   if (!streq (s, "some text"))
