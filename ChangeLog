@@ -1,5 +1,9 @@
 2026-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getaddrinfo: getaddrinfo.c doesn’t need gettext.h
+	* lib/getaddrinfo.c: Don’t include gettext.h.
+	(_, N_): Remove; unused.
+
 	gettext-h-tests: don’t assume ENABLE_NLS
 	* tests/test-gettext-h.c (main) [!ENABLE_NLS]:
 	Do not call textdomain, as it is not in scope.

@@ -39,10 +39,6 @@
 /* Get snprintf. */
 #include <stdio.h>
 
-#include "gettext.h"
-#define _(msgid) dgettext (GNULIB_TEXT_DOMAIN, msgid)
-#define N_(msgid) msgid
-
 /* BeOS has AF_INET, but not PF_INET.  */
 #ifndef PF_INET
 # define PF_INET AF_INET
