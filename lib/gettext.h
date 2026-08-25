@@ -59,6 +59,15 @@
 #  endif
 # endif
 
+/* Like the C cast ((type) (expr)), but do only conversions that an
+   ordinary assignment would do.  This can diagnose invalid arguments
+   better than a cast would.  */
+#  ifdef __cplusplus
+#   define _LIBGETTEXT_FUNCAST(type, expr) static_cast <type> (expr)
+#  else
+#   define _LIBGETTEXT_FUNCAST(type, expr) (type) {(expr)}
+#  endif
+
 /* Disabled NLS.  */
 /* When gcc is used with option -Wformat=2, we need to silence
    "warning: format not a string literal, argument types not checked [-Wformat-nonliteral]"
@@ -173,15 +182,6 @@ dcgettext (const char *domain, const char *msgid, int category)
 
 # else
 
-/* Like the C cast ((type) (expr)), but do only conversions that an
-   ordinary assignment would do.  This can diagnose invalid arguments
-   better than a cast would.  */
-#   ifdef __cplusplus
-#    define _LIBGETTEXT_FUNCAST(type, expr) static_cast <type> (expr)
-#   else
-#    define _LIBGETTEXT_FUNCAST(type, expr) (type) {(expr)}
-#   endif
-
 #  undef gettext
 #  define gettext(Msgid) _LIBGETTEXT_FUNCAST (const char *, Msgid)
 #  undef dgettext
@@ -206,18 +206,18 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
      ((void) _LIBGETTEXT_FUNCAST (int, Category), \
       dngettext (Domainname, Msgid1, Msgid2, N))
-#  undef textdomain
-#  define textdomain(Domainname) _LIBGETTEXT_FUNCAST (const char *, Domainname)
-#  undef bindtextdomain
-#  define bindtextdomain(Domainname, Dirname) \
-     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
-      _LIBGETTEXT_FUNCAST (const char *, Dirname))
-#  undef bind_textdomain_codeset
-#  define bind_textdomain_codeset(Domainname, Codeset) \
-     ((void) _LIBGETTEXT_FUNCAT (const char *, Domainname), \
-      _LIBGETTEXT_FUNCAT (const char *, Codeset))
-
 # endif
+
+# undef textdomain
+# define textdomain(Domainname) _LIBGETTEXT_FUNCAST (const char *, Domainname)
+# undef bindtextdomain
+# define bindtextdomain(Domainname, Dirname) \
+    ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
+     _LIBGETTEXT_FUNCAST (const char *, Dirname))
+# undef bind_textdomain_codeset
+# define bind_textdomain_codeset(Domainname, Codeset) \
+    ((void) _LIBGETTEXT_FUNCAT (const char *, Domainname), \
+     _LIBGETTEXT_FUNCAT (const char *, Codeset))
 #endif
 
 
