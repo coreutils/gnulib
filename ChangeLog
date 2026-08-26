@@ -1,5 +1,8 @@
 2026-08-26  Bruno Haible  <bruno@clisp.org>
 
+	gettext-h: Get rid of gcc -Wunused-value warnings for textdomain.
+	* lib/gettext.h (textdomain): Define as inline function.
+
 	gettext-h: Get rid of -Wformat warnings also for ngettext, d[c]ngettext.
 	* lib/gettext.h (ngettext, dngettext, dcngettext): Define as inline
 	functions, like gettext, dgettext, dcgettext.

@@ -208,6 +208,12 @@ dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned
 #  endif
     (n == 1 ? msgid1 : msgid2);
 }
+__attribute__ ((_LIBGETTEXT_INLINE))
+extern inline const char *
+textdomain (const char *domainname)
+{
+  return domainname;
+}
 #  if defined __GNUC__ && __GNUC__ >= 9 && !defined __clang__
 #   pragma GCC diagnostic pop
 #  endif
@@ -238,11 +244,11 @@ dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
      ((void) _LIBGETTEXT_FUNCAST (int, Category), \
       dngettext (Domainname, Msgid1, Msgid2, N))
+#  undef textdomain
+#  define textdomain(Domainname) _LIBGETTEXT_FUNCAST (const char *, Domainname)
 
 # endif
 
-# undef textdomain
-# define textdomain(Domainname) _LIBGETTEXT_FUNCAST (const char *, Domainname)
 # undef bindtextdomain
 # define bindtextdomain(Domainname, Dirname) \
     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
