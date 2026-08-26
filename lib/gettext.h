@@ -67,16 +67,13 @@
 # endif
 
 /* Disabled NLS.  */
-/* When gcc is used with option -Wformat=2, we need to silence
-   "warning: format not a string literal, argument types not checked [-Wformat-nonliteral]"
+/* When gcc or clang is used with option -Wformat=2, we need to silence
+   gcc: "warning: format not a string literal, argument types not checked [-Wformat-nonliteral]"
+   clang: "warning: format string is not a string literal [-Wformat-nonliteral]",
+          "warning: format string is not a string literal (potentially insecure) [-Wformat-security]"
    warnings that would occur at every invocation of a *gettext function
    in a *printf format string position.
-   Do this with inline functions when possible, namely for gettext, dgettext,
-   dcgettext, which are known to gcc as "external built-ins".  */
-/* When clang is used with option -Wformat=2, we need to silence
-   "warning: format string is not a string literal [-Wformat-nonliteral]"
-   warnings that would occur at every invocation of a *gettext function
-   in a *printf format string position.  */
+   Do this with inline functions when possible.  */
 /* These warnings would not occur with enabled NLS.  */
 /* A test case:
    ================================ foo.c ================================
@@ -106,21 +103,22 @@
      printf (dcgettext ("toto", some_computed_string (), LC_MESSAGES));
    }
    =======================================================================
-   $CC -Wformat=2 -S foo.c
-   $CC -Wformat=2 -S -x c++ foo.c
+   $CC -Wall -Wformat=2 -S foo.c
+   $CC -Wall -Wformat=2 -S -x c++ foo.c
  */
-# if defined __GNUC__ && !defined __clang__ && !defined __cplusplus
+# if (defined __GNUC__ || defined __clang__) && !defined __cplusplus
+#  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4 || defined __clang__
+#   define _LIBGETTEXT_INLINE __always_inline__, __gnu_inline__
+#  else
+#   define _LIBGETTEXT_INLINE __always_inline__
+#  endif
 /* The return type 'const char *' serves the purpose of producing warnings
    for invalid uses of the value returned from these functions.  */
-#  if __GNUC__ >= 9
+#  if defined __GNUC__ && __GNUC__ >= 9 && !defined __clang__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wbuiltin-declaration-mismatch"
 #  endif
-#  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4
-__attribute__ ((__always_inline__, __gnu_inline__))
-#  else
-__attribute__ ((__always_inline__))
-#  endif
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (1)))
 extern inline
 #  if !defined(__sun)
 const
@@ -134,11 +132,7 @@ gettext (const char *msgid)
 #  endif
     msgid;
 }
-#  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4
-__attribute__ ((__always_inline__, __gnu_inline__))
-#  else
-__attribute__ ((__always_inline__))
-#  endif
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (2)))
 extern inline
 #  if !defined(__sun)
 const
@@ -153,11 +147,7 @@ dgettext (const char *domain, const char *msgid)
 #  endif
     msgid;
 }
-#  if __GNUC__ + (__GNUC_MINOR__ >= 2) > 4
-__attribute__ ((__always_inline__, __gnu_inline__))
-#  else
-__attribute__ ((__always_inline__))
-#  endif
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (2)))
 extern inline
 #  if !defined(__sun)
 const
@@ -173,7 +163,7 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  endif
     msgid;
 }
-#  if __GNUC__ >= 9
+#  if defined __GNUC__ && __GNUC__ >= 9 && !defined __clang__
 #   pragma GCC diagnostic pop
 #  endif
 /* Silence -Wuseless-cast warnings.  */
@@ -219,6 +209,7 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
      ((void) _LIBGETTEXT_FUNCAST (int, Category), \
       dngettext (Domainname, Msgid1, Msgid2, N))
+
 # endif
 
 # undef textdomain
@@ -231,6 +222,7 @@ dcgettext (const char *domain, const char *msgid, int category)
 # define bind_textdomain_codeset(Domainname, Codeset) \
     ((void) _LIBGETTEXT_FUNCAST (const char *, Domainname), \
      _LIBGETTEXT_FUNCAST (const char *, Codeset))
+
 #endif
 
 

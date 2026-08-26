@@ -1,5 +1,14 @@
 2026-08-26  Bruno Haible  <bruno@clisp.org>
 
+	gettext-h: Get rid of -Wformat-security warnings with clang.
+	Idea by Collin Funk in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00292.html>.
+	* lib/gettext.h (_LIBGETTEXT_INLINE): New macro.
+	(gettext, dgettext, dcgettext): Use it. Declare as inline functions also
+	with clang. Declare with __format_arg__ attribute.
+
+2026-08-26  Bruno Haible  <bruno@clisp.org>
+
 	gettext-h: Fix compilation error (regression 2026-08-24).
 	* lib/gettext.h: Update old comments.
 	(_LIBGETTEXT_FUNCAST): Correct indentation.
