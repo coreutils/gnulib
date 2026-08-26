@@ -1,3 +1,10 @@
+2026-08-26  Bruno Haible  <bruno@clisp.org>
+
+	gettext-h: Fix compilation error (regression 2026-08-24).
+	* lib/gettext.h: Update old comments.
+	(_LIBGETTEXT_FUNCAST): Correct indentation.
+	(bind_textdomain_codeset): Fix typo.
+
 2026-08-25  Collin Funk  <collin.funk1@gmail.com>
 
 	maintainer-makefile: Fix false sc_po_check failure with bison sources.
