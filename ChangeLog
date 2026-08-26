@@ -1,3 +1,9 @@
+2026-08-25  Collin Funk  <collin.funk1@gmail.com>
+
+	maintainer-makefile: Fix false sc_po_check failure with bison sources.
+	* top/maint.mk (generated_files): Also match files ending with the '.y'
+	extension.
+
 2026-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gettext-h: always define textdomain
