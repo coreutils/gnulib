@@ -1,5 +1,10 @@
 2026-08-26  Bruno Haible  <bruno@clisp.org>
 
+	gettext-h: Get rid of gcc and clang warnings also in C++ mode.
+	* lib/gettext.h (gettext, dgettext, dcgettext, ngettext, dngettext,
+	dcngettext, textdomain): In C++ mode, define them as aliases to inline
+	functions.
+
 	gettext-h: Get rid of gcc -Wunused-value warnings for textdomain.
 	* lib/gettext.h (textdomain): Define as inline function.
 

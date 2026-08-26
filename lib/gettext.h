@@ -218,6 +218,70 @@ textdomain (const char *domainname)
 #   pragma GCC diagnostic pop
 #  endif
 
+# elif (defined __GNUC__ || defined __clang__) && defined __cplusplus
+
+__attribute__ ((__format_arg__ (1)))
+static inline const char *
+_libgettext_gettext (const char *msgid)
+{
+  return msgid;
+}
+#  undef gettext
+#  define gettext _libgettext_gettext
+__attribute__ ((__format_arg__ (2)))
+static inline const char *
+_libgettext_dgettext (const char *domain, const char *msgid)
+{
+  (void) domain;
+  return msgid;
+}
+#  undef dgettext
+#  define dgettext _libgettext_dgettext
+__attribute__ ((__format_arg__ (2)))
+static inline const char *
+_libgettext_dcgettext (const char *domain, const char *msgid, int category)
+{
+  (void) domain;
+  (void) category;
+  return msgid;
+}
+#  undef dcgettext
+#  define dcgettext _libgettext_dcgettext
+__attribute__ ((__format_arg__ (1), __format_arg__ (2)))
+static inline const char *
+_libgettext_ngettext (const char *msgid1, const char *msgid2, unsigned long n)
+{
+  return (n == 1 ? msgid1 : msgid2);
+}
+#  undef ngettext
+#  define ngettext _libgettext_ngettext
+__attribute__ ((__format_arg__ (2), __format_arg__ (3)))
+static inline const char *
+_libgettext_dngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long n)
+{
+  (void) domain;
+  return (n == 1 ? msgid1 : msgid2);
+}
+#  undef dngettext
+#  define dngettext _libgettext_dngettext
+__attribute__ ((__format_arg__ (2), __format_arg__ (3)))
+static inline const char *
+_libgettext_dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long n, int category)
+{
+  (void) domain;
+  (void) category;
+  return (n == 1 ? msgid1 : msgid2);
+}
+#  undef dcngettext
+#  define dcngettext _libgettext_dcngettext
+static inline const char *
+_libgettext_textdomain (const char *domainname)
+{
+  return domainname;
+}
+#  undef textdomain
+#  define textdomain _libgettext_textdomain
+
 # else
 
 #  undef gettext
