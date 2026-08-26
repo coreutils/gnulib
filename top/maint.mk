@@ -1359,7 +1359,7 @@ perl_translatable_files_list_ =						\
 # Verify that all source files using _() (more specifically, files that
 # match $(_gl_translatable_string_re)) are listed in po/POTFILES.in.
 po_file ?= $(srcdir)/po/POTFILES.in
-generated_files ?= $(srcdir)/lib/*.[ch]
+generated_files ?= $(srcdir)/lib/*.[chy]
 _gl_translatable_string_re ?= \b(N?_|gettext *)\([^)"]*("|$$)
 sc_po_check:
 	@if test -f $(po_file); then					\
