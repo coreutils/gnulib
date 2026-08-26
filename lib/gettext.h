@@ -163,25 +163,54 @@ dcgettext (const char *domain, const char *msgid, int category)
 #  endif
     msgid;
 }
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (1), __format_arg__ (2)))
+extern inline
+#  if !defined(__sun)
+const
+#  endif
+char *
+ngettext (const char *msgid1, const char *msgid2, unsigned long n)
+{
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    (n == 1 ? msgid1 : msgid2);
+}
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (2), __format_arg__ (3)))
+extern inline
+#  if !defined(__sun)
+const
+#  endif
+char *
+dngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long n)
+{
+  (void) domain;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    (n == 1 ? msgid1 : msgid2);
+}
+__attribute__ ((_LIBGETTEXT_INLINE, __format_arg__ (2), __format_arg__ (3)))
+extern inline
+#  if !defined(__sun)
+const
+#  endif
+char *
+dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long n, int category)
+{
+  (void) domain;
+  (void) category;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    (n == 1 ? msgid1 : msgid2);
+}
 #  if defined __GNUC__ && __GNUC__ >= 9 && !defined __clang__
 #   pragma GCC diagnostic pop
 #  endif
-/* Silence -Wuseless-cast warnings.  */
-#  if __GNUC__ >= 14
-#   pragma GCC diagnostic ignored "-Wuseless-cast"
-#  endif
-/* Use plain casts to pacify -Wformat-nonliteral.
-   This ngettext implementation does not evaluate all arguments,
-   as doing so would trigger -Wformat-nonliteral false positives.  */
-#  undef ngettext
-#  define ngettext(Msgid1, Msgid2, N) \
-     ((N) == 1 ? (const char *) (Msgid1) : (const char *) (Msgid2))
-#  undef dngettext
-#  define dngettext(Domainname, Msgid1, Msgid2, N) \
-     ((void) (const char *) (Domainname), ngettext (Msgid1, Msgid2, N))
-#  undef dcngettext
-#  define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-     ((void) (int) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
 
 # else
 
