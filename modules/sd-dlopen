@@ -1,0 +1,27 @@
+Description:
+Emit ELF notes for package dependencies loaded with dlopen.
+
+Files:
+lib/sd-dlopen.h
+m4/sd-dlopen.m4
+m4/libdl.m4
+
+Depends-on:
+stdint-h
+
+configure.ac:
+gl_SD_DLOPEN
+
+Makefile.am:
+
+Include:
+"sd-dlopen.h"
+
+Link:
+$(LIBDL)
+
+License:
+LGPLv2+
+
+Maintainer:
+all
