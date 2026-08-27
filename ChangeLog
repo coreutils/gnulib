@@ -1,5 +1,21 @@
 2026-08-27  Bruno Haible  <bruno@clisp.org>
 
+	getlogin: Fix link error with option --with-systemd (regr. 2025-03-09).
+	Reported by Helmut Grohne <helmut@subdivi.de> in
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1129960>.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Inline the gl_LIB_GETLOGIN
+	macro, assigning to GETLOGIN_R_LIB instead of GETLOGIN_LIB.
+	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Inline the gl_LIB_GETLOGIN macro.
+	Consider $READUTMP_LIB for $GETLOGIN_LIB.
+	(gl_LIB_GETLOGIN): Remove macro.
+	* modules/getlogin (configure.ac): Don't require gl_LIB_GETLOGIN.
+	* modules/getlogin_r (configure.ac): Likewise.
+	* modules/getlogin_r-tests (Makefile.am): Update link requirements for
+	test-getlogin_r.
+	* NEWS: Mention the change in the getlogin_r module.
+
+2026-08-27  Bruno Haible  <bruno@clisp.org>
+
 	sd-dlopen: Fix test compilation error on Solaris 11.4.
 	* lib/sd-dlopen.h: Disable the asm macros on Solaris.
 

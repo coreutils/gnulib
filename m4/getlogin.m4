@@ -1,5 +1,5 @@
 # getlogin.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2010-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,8 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_FUNC_GETLOGIN],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_REQUIRE([gl_READUTMP])
   AC_CHECK_DECLS_ONCE([getlogin])
   if test $ac_cv_have_decl_getlogin = no; then
     HAVE_DECL_GETLOGIN=0
@@ -18,7 +20,6 @@ AC_DEFUN([gl_FUNC_GETLOGIN],
     HAVE_GETLOGIN=0
   else
     dnl On musl libc, getlogin returns getenv ("LOGNAME").
-    AC_REQUIRE([AC_CANONICAL_HOST])
     AC_CACHE_CHECK([whether getlogin works],
       [gl_cv_func_getlogin_works],
       [
@@ -64,19 +65,16 @@ main (void)
       *) REPLACE_GETLOGIN=1 ;;
     esac
   fi
-])
 
-dnl Determines the library needed by the implementation of the
-dnl getlogin and getlogin_r functions.
-AC_DEFUN([gl_LIB_GETLOGIN],
-[
-  AC_REQUIRE([AC_CANONICAL_HOST])
   case $host_os in
     mingw* | windows*)
       GETLOGIN_LIB='-ladvapi32' ;;
     *)
       GETLOGIN_LIB= ;;
   esac
+  if test $HAVE_GETLOGIN = 0 || test $REPLACE_GETLOGIN = 1; then
+    GETLOGIN_LIB="${GETLOGIN_LIB} ${READUTMP_LIB}"
+  fi
   AC_SUBST([GETLOGIN_LIB])
   dnl For backward compatibility.
   LIB_GETLOGIN="$GETLOGIN_LIB"

@@ -78,6 +78,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2026-08-27  getlogin_r      The link requirements are changed from
+                            $(GETLOGIN_LIB) to $(GETLOGIN_R_LIB).
+
 2026-08-10  eloop-threshold Now include <min-eloop-threshold.h> and use
                             MIN_ELOOP_THRESHOLD rather than including
                             <eloop-threshold.h> and using __eloop_threshold ().

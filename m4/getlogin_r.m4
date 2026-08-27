@@ -1,5 +1,5 @@
 # getlogin_r.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2005-2007, 2009-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,7 @@ dnl
 AC_DEFUN([gl_FUNC_GETLOGIN_R],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl Persuade glibc <unistd.h> to declare getlogin_r().
   dnl Persuade Solaris <unistd.h> to provide the POSIX compliant declaration of
@@ -36,7 +37,6 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
     dnl On Mac OS X 10.13, getlogin_r returns a truncated result
     dnl if the buffer is not large enough.
     dnl On musl libc, getlogin_r returns getenv ("LOGNAME").
-    AC_REQUIRE([AC_CANONICAL_HOST])
     AC_CACHE_CHECK([whether getlogin_r works],
       [gl_cv_func_getlogin_r_works],
       [
@@ -95,6 +95,14 @@ main (void)
       *) REPLACE_GETLOGIN_R=1 ;;
     esac
   fi
+
+  case $host_os in
+    mingw* | windows*)
+      GETLOGIN_R_LIB='-ladvapi32' ;;
+    *)
+      GETLOGIN_R_LIB= ;;
+  esac
+  AC_SUBST([GETLOGIN_R_LIB])
 ])
 
 AC_DEFUN([gl_PREREQ_GETLOGIN_R],
