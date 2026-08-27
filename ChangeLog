@@ -1,3 +1,9 @@
+2026-08-27  Bruno Haible  <bruno@clisp.org>
+
+	sd-dlopen: Reference the specification.
+	* modules/sd-dlopen (Description): Add reference to the specification.
+	* lib/sd-dlopen.h: Improve comments.
+
 2026-08-27  Luca Boccassi  <luca.boccassi@gmail.com>
 
 	sd-dlopen: Add tests.

@@ -1,5 +1,6 @@
 Description:
-Emit ELF notes for package dependencies loaded with dlopen.
+Emit ELF notes for package dependencies loaded with dlopen, according to
+https://uapi-group.org/specifications/specs/elf_dlopen_metadata/
 
 Files:
 lib/sd-dlopen.h

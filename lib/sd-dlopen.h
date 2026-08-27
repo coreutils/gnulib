@@ -27,7 +27,8 @@
 extern "C" {
 #endif
 
-/* ELF note macros implementing the FDO .note.dlopen standard.
+/* ELF note macros implementing the UAPI Group's .note.dlopen specification
+ * https://uapi-group.org/specifications/specs/elf_dlopen_metadata/
  *
  * These macros embed metadata in an ELF binary's .note.dlopen section,
  * declaring optional shared library dependencies that are loaded via
@@ -44,7 +45,7 @@ extern "C" {
  * See SD_ELF_NOTE_DLOPEN(3) for details.
  */
 
-#define SD_ELF_NOTE_DLOPEN_VENDOR "FDO"
+#define SD_ELF_NOTE_DLOPEN_VENDOR "FDO" /* freedesktop.org */
 #define SD_ELF_NOTE_DLOPEN_TYPE 0x407c0c0a
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_REQUIRED    "required"
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_RECOMMENDED "recommended"
