@@ -52,7 +52,8 @@ extern "C" {
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_SUGGESTED   "suggested"
 
 #if defined __ELF__ && (defined __GNUC__ || defined __clang__) \
-        && defined HAVE_ASM_IFNDEF_ENDIF_BALIGN && HAVE_ASM_IFNDEF_ENDIF_BALIGN
+        && defined HAVE_ASM_IFNDEF_ENDIF_BALIGN && HAVE_ASM_IFNDEF_ENDIF_BALIGN \
+        && !defined __sun /* Avoid linker error "wrong ELF OSABI: ELFOSABI_GNU" */
 
 /* The "R" (SHF_GNU_RETAIN) flag is only understood by binutils >= 2.36, so it can be disabled by defining
  * _SD_ELF_NOTE_DLOPEN_SECTION_FLAGS as 'aG' manually, but note that if --gc-sections is used when linking,
