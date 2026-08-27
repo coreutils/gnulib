@@ -1,0 +1,19 @@
+Files:
+tests/test-sd-dlopen.c
+tests/test-sd-dlopen-disabled.c
+tests/test-sd-dlopen.sh
+
+Depends-on:
+test-framework-sh
+
+configure.ac:
+AC_CHECK_TOOL([OBJDUMP], [objdump], [false])
+SD_DLOPEN_SUPPORTED=$gl_cv_asm_ifndef_endif_balign
+AC_SUBST([SD_DLOPEN_SUPPORTED])
+
+Makefile.am:
+TESTS_ENVIRONMENT += \
+	OBJDUMP='$(OBJDUMP)' \
+	SD_DLOPEN_SUPPORTED='$(SD_DLOPEN_SUPPORTED)'
+TESTS += test-sd-dlopen test-sd-dlopen-disabled test-sd-dlopen.sh
+check_PROGRAMS += test-sd-dlopen test-sd-dlopen-disabled
