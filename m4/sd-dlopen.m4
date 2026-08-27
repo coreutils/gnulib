@@ -1,5 +1,5 @@
 # sd-dlopen.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,6 +26,20 @@ __asm__ (".ifndef \"gl_sd_dlopen_test\"\n"
   if test $gl_cv_asm_ifndef_endif_balign = yes; then
     AC_DEFINE([HAVE_ASM_IFNDEF_ENDIF_BALIGN], [1],
       [Define to 1 if the assembler supports .ifndef, .endif, and .balign.])
+
+    AC_CACHE_CHECK([whether the assembler supports the section flag o],
+      [gl_cv_asm_section_o],
+      [dnl This flag is only supported by binutils >= 2.35 or clang >= 5.
+       AC_COMPILE_IFELSE(
+         [AC_LANG_SOURCE([[
+          __asm__ (".section .def; foobar:; .section .foo,\"ao\",%note,foobar");
+         ]])],
+         [gl_cv_asm_section_o=yes],
+         [gl_cv_asm_section_o=no])])
+    if test $gl_cv_asm_section_o = yes; then
+      AC_DEFINE([_SD_ELF_NOTE_SUPPORTS_REFERENCES], [1],
+        [Define to 1 if the ELF .section command supports the o flag.])
+    fi
 
     AC_CACHE_CHECK([whether the assembler supports the section flag R],
       [gl_cv_asm_section_R],

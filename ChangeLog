@@ -1,5 +1,11 @@
 2026-08-27  Bruno Haible  <bruno@clisp.org>
 
+	sd-dlopen: Fix test compilation error on NetBSD 10.
+	* m4/sd-dlopen.m4 (gl_SD_DLOPEN): Test whether the assembler supports
+	the section flag o. Define _SD_ELF_NOTE_SUPPORTS_REFERENCES.
+	* lib/sd-dlopen.h (SD_ELF_NOTE_DLOPEN_ANCHORED) [!__clang__]: Use
+	_SD_ELF_NOTE_SUPPORTS_REFERENCES from the autoconfiguration.
+
 	sd-dlopen: Fix test compilation error on AlmaLinux 9 and CentOS 7.
 	* m4/sd-dlopen.m4 (gl_SD_DLOPEN): Test whether the assembler supports
 	the section flag R. Define _SD_ELF_NOTE_DLOPEN_SECTION_FLAGS.

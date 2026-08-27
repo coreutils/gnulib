@@ -182,12 +182,12 @@ extern "C" {
         _SD_ELF_NOTE_DLOPEN(_SD_DLOPEN_JSON(feature, description, priority, __VA_ARGS__))
 
 /* The anchored note requires LLVM >= 18 (see above). Fall back to the non-anchored note on older clang. */
-#if defined(__clang__) && !defined(__apple_build_version__) && __clang_major__ < 18
-#  define SD_ELF_NOTE_DLOPEN_ANCHORED(tag, feature, description, priority, ...) \
-        SD_ELF_NOTE_DLOPEN(feature, description, priority, __VA_ARGS__)
-#else
+#if (defined(__clang__) ? defined(__apple_build_version__) || __clang_major__ >= 18 : _SD_ELF_NOTE_SUPPORTS_REFERENCES)
 #  define SD_ELF_NOTE_DLOPEN_ANCHORED(tag, feature, description, priority, ...) \
         _SD_ELF_NOTE_DLOPEN_ANCHORED(tag, _SD_DLOPEN_JSON(feature, description, priority, __VA_ARGS__))
+#else
+#  define SD_ELF_NOTE_DLOPEN_ANCHORED(tag, feature, description, priority, ...) \
+        SD_ELF_NOTE_DLOPEN(feature, description, priority, __VA_ARGS__)
 #endif
 
 #else
