@@ -21,6 +21,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (c32isprint, int, (wint_t));
 
+#include <ctype.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
@@ -106,6 +107,20 @@ main (int argc, char *argv[])
       {
       case '0':
         /* C locale; tested above.  */
+#if !defined __ANDROID__
+        /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+           "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+           locale via setlocale(), what you get is a "C" locale with UTF-8
+           encoding, that is, effectively the "C.UTF-8" locale.  */
+        /* Check that c32isprint is consistent with isprint.  */
+        for (int c = 0x80; c < 0x100; c++)
+          {
+            ASSERT (!isprint ((unsigned char) c));
+            buf[0] = (unsigned char) c;
+            is = for_character (buf, 1);
+            ASSERT (is == 0);
+          }
+#endif
         return test_exit_status;
 
       case '1':
