@@ -26,6 +26,11 @@
 #include <string.h>
 #include <wchar.h>
 
+#if !GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T
+# include "hard-locale.h"
+# include <locale.h>
+#endif
+
 #if GL_CHAR32_T_IS_UNICODE
 # include "lc-charset-unicode.h"
 #endif
@@ -51,6 +56,18 @@ btoc32 (int c)
     }
   return WEOF;
 #else
+# if !GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T /* Cygwin, mingw, MSVC */
+  if (!hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
+         the c32is* functions return false on them, for consistency with the
+         <ctype.h> is* functions.  */
+      if (c != EOF)
+        return (c < 0x80 ? c : 0xDF00 + c);
+      else
+        return WEOF;
+    }
+# endif
   /* In all known locale encodings, unibyte characters correspond only to
      characters in the BMP.  */
   wint_t wc = btowc (c);

@@ -1,5 +1,18 @@
 2026-08-27  Bruno Haible  <bruno@clisp.org>
 
+	mbrtoc32: Make c32isprint compatible with isprint in the C locale.
+	Reported by Paul Eggert in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-08/msg00222.html>.
+	* lib/mbrtoc32.c (mbrtoc32)
+	[!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T]: On Cygwin and native
+	Windows, in the C locale, map 0x80..0xFF differently.
+	* lib/btoc32.c: Include hard-locale.h.
+	(btoc32): [!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T]: On Cygwin
+	and native Windows, in the C locale, map 0x80..0xFF differently.
+	* modules/btoc32 (Depends-on): Add hard-locale.
+
+2026-08-27  Bruno Haible  <bruno@clisp.org>
+
 	getlogin: Fix link error with option --with-systemd (regr. 2025-03-09).
 	Reported by Helmut Grohne <helmut@subdivi.de> in
 	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1129960>.
@@ -1862,7 +1875,7 @@
 	go back to the old way of doing things, without the recently-added
 	USE_C_LOCALE stuff.  Then make the following changes instead:
 	* lib/quotearg.c [_QUOTEARG_AVOID_UCHAR_H]: Don’t include <uchar.h>.
-	(mbrto2c, mbstate_t) [_QUOTEARG_AVOID_UCHAR_H && defined __UCLIBC__
+	(mbrtowc, mbstate_t) [_QUOTEARG_AVOID_UCHAR_H && defined __UCLIBC__
 	&& !defined __UCLIBC_HAS_WCHAR__]: New macros.
 	Also, don’t include <wchar.h> or <wctype.h>.
 	(char32_t, c32isprint, mbrtoc32, GNULIB_MBRTOC32_REGULAR)

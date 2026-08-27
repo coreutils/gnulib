@@ -92,7 +92,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # include "localcharset.h"
 # include "streq-opt.h"
 
-# if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
+# if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ || _GL_SMALL_WCHAR_T
 #  include "hard-locale.h"
 #  include <locale.h>
 # endif
@@ -291,7 +291,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
   return ret;
 
-# elif _GL_SMALL_WCHAR_T
+# elif _GL_SMALL_WCHAR_T /* Cygwin, mingw, MSVC */
 
   /* Special-case all encodings that may produce wide character values
      > WCHAR_MAX.  */
@@ -385,6 +385,16 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
       errno = EILSEQ;
       /* The conversion state is undefined, says POSIX.  */
       return (size_t)(-1);
+    }
+  else if (!hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
+         the c32is* functions return false on them, for consistency with the
+         <ctype.h> is* functions.  */
+      unsigned char c = (unsigned char) s[0];
+      if (pwc != NULL)
+        *pwc = (c < 0x80 ? c : 0xDF00 + c);
+      return (c == 0 ? 0 : 1);
     }
   else
     {
