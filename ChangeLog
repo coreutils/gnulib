@@ -55,10 +55,10 @@
 
 2026-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
-	gettext: more-consistent no-op macros
+	gettext-h: more-consistent no-op macros
 	Idea for fix reported by Bruno Haible in:
 	https://lists.gnu.org/r/bug-gnulib/2026-08/msg00282.html
-	Update comments about side effects.
+	* lib/gettext.h: Update comments about side effects.
 	The following changes occur only if !ENABLE_NLS && ! (defined
 	__GNUC__ && !defined __clang__ && !defined __cplusplus).
 	(_LIBGETTEXT_FUNCAST): New macro, so that code is more consistent,
