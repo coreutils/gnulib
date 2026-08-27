@@ -92,7 +92,9 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # include "localcharset.h"
 # include "streq-opt.h"
 
-# if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ || _GL_SMALL_WCHAR_T
+# if (MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
+      || MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ \
+      || _GL_SMALL_WCHAR_T)
 #  include "hard-locale.h"
 #  include <locale.h>
 # endif
@@ -134,8 +136,10 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
       n = 1;
     }
 
-# if (MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T \
-      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
+# if (MBRTOC32_EMPTY_INPUT_BUG \
+      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__) \
+      || MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
+      || _GL_SMALL_WCHAR_T)
   if (n == 0)
     return (size_t) -2;
 # endif
@@ -261,6 +265,19 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # if HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !MBRTOC32_MULTIBYTE_LOCALE_BUG
   /* mbrtoc32() may produce different values for wc than mbrtowc().  Therefore
      use mbrtoc32().  */
+
+#  if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */
+  if (!hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
+         the c32is* functions return false on them, for consistency with the
+         <ctype.h> is* functions.  */
+      unsigned char c = (unsigned char) s[0];
+      if (pwc != NULL)
+        *pwc = (c < 0x80 ? c : 0xDF00 + c);
+      return (c == 0 ? 0 : 1);
+    }
+#  endif
 
 #  if defined _WIN32 && !defined __CYGWIN__
   char32_t wc;

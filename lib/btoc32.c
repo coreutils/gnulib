@@ -26,7 +26,8 @@
 #include <string.h>
 #include <wchar.h>
 
-#if !GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T
+#if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
+    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T)
 # include "hard-locale.h"
 # include <locale.h>
 #endif
@@ -41,6 +42,19 @@ _GL_EXTERN_INLINE
 wint_t
 btoc32 (int c)
 {
+#if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */ \
+    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) /* Cygwin, mingw, MSVC */
+  if (!hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
+         the c32is* functions return false on them, for consistency with the
+         <ctype.h> is* functions.  */
+      if (c != EOF)
+        return (c < 0x80 ? c : 0xDF00 + c);
+      else
+        return WEOF;
+    }
+#endif
 #if HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4
   /* The char32_t encoding of a multibyte character may be different than its
      wchar_t encoding.  */
@@ -56,18 +70,6 @@ btoc32 (int c)
     }
   return WEOF;
 #else
-# if !GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T /* Cygwin, mingw, MSVC */
-  if (!hard_locale (LC_CTYPE))
-    {
-      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
-         the c32is* functions return false on them, for consistency with the
-         <ctype.h> is* functions.  */
-      if (c != EOF)
-        return (c < 0x80 ? c : 0xDF00 + c);
-      else
-        return WEOF;
-    }
-# endif
   /* In all known locale encodings, unibyte characters correspond only to
      characters in the BMP.  */
   wint_t wc = btowc (c);

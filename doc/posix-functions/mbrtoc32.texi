@@ -22,6 +22,11 @@ and set @code{errno} to @code{EILSEQ}:
 @c https://sourceware.org/PR29511
 glibc 2.35.
 @item
+In the C or POSIX locales,
+this function returns values like in ISO-8859-1 locales,
+which leads to @code{c32isprint} etc.@: being inconsistent with @code{isprint}:
+OpenBSD 7.9.
+@item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
 @c https://sourceware.org/PR16950
