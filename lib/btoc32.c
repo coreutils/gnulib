@@ -27,7 +27,9 @@
 #include <wchar.h>
 
 #if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
-    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T)
+    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) \
+    || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
+        && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION)
 # include "hard-locale.h"
 # include <locale.h>
 #endif
@@ -43,7 +45,9 @@ wint_t
 btoc32 (int c)
 {
 #if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */ \
-    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) /* Cygwin, mingw, MSVC */
+    || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) /* Cygwin, mingw, MSVC */ \
+    || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
+        && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION)
   if (!hard_locale (LC_CTYPE))
     {
       /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that

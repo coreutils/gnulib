@@ -1,5 +1,18 @@
 2026-08-31  Bruno Haible  <bruno@clisp.org>
 
+	mbrtoc32: Fix test-c32isprint failure with uchar-h-c23.
+	* m4/uchar_h-c23.m4: New file, extracted from modules/uchar-h-c23.
+	* modules/uchar-h-c23 (Files): Add it.
+	(configure.ac): Just invoke gl_UCHAR_H_C23.
+	* m4/mbrtoc32.m4 (gl_FUNC_MBRTOC32): Require gl_UCHAR_H_C23. If
+	GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION is defined, set REPLACE_MBRTOC32
+	to 1.
+	* lib/mbrtoc32.c (mbrtoc32): Enable special handling of the C locale
+	also when GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION.
+	* lib/btoc32.c (btoc32): Likewise.
+
+2026-08-31  Bruno Haible  <bruno@clisp.org>
+
 	mbrtoc32: Don't enable the OpenBSD workaround on Solaris 11 OpenIndiana.
 	* m4/mbrtoc32.m4 (gl_FUNC_MBRTOC32): Ignore
 	$gl_cv_func_mbrtoc32_C_locale_like_iso_8859 on Solaris.

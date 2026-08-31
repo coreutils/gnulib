@@ -94,7 +94,9 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
 # if (MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
       || MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ \
-      || _GL_SMALL_WCHAR_T)
+      || _GL_SMALL_WCHAR_T \
+      || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
+          && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION))
 #  include "hard-locale.h"
 #  include <locale.h>
 # endif
@@ -139,7 +141,9 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # if (MBRTOC32_EMPTY_INPUT_BUG \
       || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__) \
       || MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
-      || _GL_SMALL_WCHAR_T)
+      || _GL_SMALL_WCHAR_T \
+      || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
+          && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION))
   if (n == 0)
     return (size_t) -2;
 # endif
@@ -425,6 +429,21 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # else
 
   /* char32_t and wchar_t are equivalent.  Use mbrtowc().  */
+
+#  if (!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
+      && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if (!hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that
+         the c32is* functions return false on them, for consistency with the
+         <ctype.h> is* functions.  */
+      unsigned char c = (unsigned char) s[0];
+      if (pwc != NULL)
+        *pwc = (c < 0x80 ? c : 0xDF00 + c);
+      return (c == 0 ? 0 : 1);
+    }
+#  endif
+
   wchar_t wc;
   size_t ret = mbrtowc (&wc, s, n, ps);
 

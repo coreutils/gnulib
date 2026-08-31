@@ -1,5 +1,5 @@
 # mbrtoc32.m4
-# serial 27
+# serial 28
 dnl Copyright (C) 2014-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,6 +104,12 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
       case "$gl_cv_func_mbrtoc32_regular" in
         *no) REPLACE_MBRTOC32=1 ;;
       esac
+      m4_ifdef([gl_UCHAR_H_C23], [
+        AC_REQUIRE([gl_UCHAR_H_C23])
+        if test $gl_char32_t_vs_wchar_t_needs_conversion = yes; then
+          REPLACE_MBRTOC32=1
+        fi
+      ])
     fi
     if test $HAVE_WORKING_MBRTOC32 = 0; then
       REPLACE_MBRTOC32=1
