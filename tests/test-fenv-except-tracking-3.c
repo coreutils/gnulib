@@ -34,6 +34,9 @@
 
 /* Check that feraiseexcept() can trigger a trap.  */
 
+static volatile double a, b;
+static volatile long double al, bl;
+
 int
 main (int argc, char *argv[])
 {
@@ -63,6 +66,12 @@ main (int argc, char *argv[])
         }
 
       feraiseexcept (exception);
+
+      /* Do a harmless floating-point operation (since on some CPUs,
+         floating-point exceptions trigger a trap only at the next
+         floating-point operation).  */
+      a = 1.0; b = a + a;
+      al = 1.0L; bl = al + al;
     }
 
   return test_exit_status;
