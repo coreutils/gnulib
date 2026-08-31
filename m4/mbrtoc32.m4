@@ -1,5 +1,5 @@
 # mbrtoc32.m4
-# serial 26
+# serial 27
 dnl Copyright (C) 2014-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,9 +49,18 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
         *yes)
           case "$gl_cv_func_mbrtoc32_C_locale_like_iso_8859" in
             *yes)
-              AC_DEFINE([MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859], [1],
-                [Define if the mbrtoc32 function in the C locale may work like in an ISO-8859-1 locale.])
-              REPLACE_MBRTOC32=1
+              case "$host_os" in
+                solaris*)
+                  dnl Solaris 11 OpenIndiana has a well-working mbrtoc32. No
+                  dnl need to apply the MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859
+                  dnl workaround.
+                  ;;
+                *)
+                  AC_DEFINE([MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859], [1],
+                    [Define if the mbrtoc32 function in the C locale may work like in an ISO-8859-1 locale.])
+                  REPLACE_MBRTOC32=1
+                  ;;
+              esac
               ;;
           esac
           ;;

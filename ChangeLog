@@ -1,3 +1,9 @@
+2026-08-31  Bruno Haible  <bruno@clisp.org>
+
+	mbrtoc32: Don't enable the OpenBSD workaround on Solaris 11 OpenIndiana.
+	* m4/mbrtoc32.m4 (gl_FUNC_MBRTOC32): Ignore
+	$gl_cv_func_mbrtoc32_C_locale_like_iso_8859 on Solaris.
+
 2026-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	thread-optim: port to CheriBSD purecap
