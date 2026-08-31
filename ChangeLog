@@ -1,3 +1,12 @@
+2026-08-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	thread-optim: port to CheriBSD purecap
+	Without this patch, the compiler complains “warning: cast from
+	provenance-free integer type to pointer type will give pointer
+	that can not be dereferenced” and some tests fail.
+	* lib/thread-optim.h (_GL_MULTITHREADED_VIA_ELF)
+	[__CHERI_PURE_CAPABILITY__]: Don’t define.
+
 2026-08-31  Bruno Haible  <bruno@clisp.org>
 
 	fenv-exceptions-tracking-c99 tests: Fix test on Solaris 11 OpenIndiana.
