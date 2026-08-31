@@ -1,5 +1,11 @@
 2026-08-31  Bruno Haible  <bruno@clisp.org>
 
+	sd-dlopen: Document the priorities better.
+	* lib/sd-dlopen.h: Add comments about the SD_ELF_NOTE_DLOPEN_PRIORITY_*
+	macros.
+
+2026-08-31  Bruno Haible  <bruno@clisp.org>
+
 	sd-dlopen: Fix test failure on Solaris 11 OpenIndiana.
 	* m4/sd-dlopen.m4 (gl_SD_DLOPEN): On Solaris, avoid the section flag R,
 	even if the assembler supports it.

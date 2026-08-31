@@ -47,8 +47,30 @@ extern "C" {
 
 #define SD_ELF_NOTE_DLOPEN_VENDOR "FDO" /* freedesktop.org */
 #define SD_ELF_NOTE_DLOPEN_TYPE 0x407c0c0a
+
+/* Declares a dependency for "core functionality".
+   This priority usually maps to a package dependency of type "Requires"
+   (called "Depends" on systems with .deb package format).
+   For the package manager, a dependency "A requires B" implies that when
+   A gets installed, B must get installed as well.  */
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_REQUIRED    "required"
+
+/* Declares a dependency for "important functionality".
+   This priority usually maps to a package dependency of type "Recommends".
+   For the package manager, a dependency "A recommends B" implies that when
+   A gets installed, B gets installed by default.  But the the package manager
+   can be instructed to ignore such dependencies:
+     * Debian/Ubuntu: 'apt --no-install-recommends' or 'debootstrap',
+     * Fedora: 'dnf --setopt=install_weak_deps=False',
+     * openSUSE: 'zypper --no-recommends'.
+   The typical use of such commands is to create "small" environments (e.g.
+   for use in containers).  */
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_RECOMMENDED "recommended"
+
+/* Declares a dependency for "secondary functionality".
+   This priority usually maps to a package dependency of type "Suggests".
+   For the package manager, a dependency "A suggests B" does not imply that
+   B gets installed.  Typically B is only shown as suggestion to the user.  */
 #define SD_ELF_NOTE_DLOPEN_PRIORITY_SUGGESTED   "suggested"
 
 #if defined __ELF__ && (defined __GNUC__ || defined __clang__) \
