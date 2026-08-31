@@ -1,3 +1,9 @@
+2026-08-31  Bruno Haible  <bruno@clisp.org>
+
+	fenv-exceptions-tracking-c99 tests: Fix test on Solaris 11 OpenIndiana.
+	* tests/test-fenv-except-tracking-3.c (a, b, al, bl): New variables.
+	(main): Do a harmless floating-point operation after feraiseexcept.
+
 2026-08-25  Collin Funk  <collin.funk1@gmail.com>
 
 	maintainer-makefile: Fix false sc_po_check failure with bison sources.
