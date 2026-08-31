@@ -1,3 +1,13 @@
+2026-08-31  Pádraig Brady  <P@draigBrady.com>
+
+	strftime: more consistent flag handling in compound date formats
+	* lib/strftime.c: Only propagate flags to %F as that has the
+	year at the start so our current "yearish" based flag propagation
+	produces consistent results.  Specifically this avoids glibc
+	'_' and '-' flags propagating to year sub specifiers of %D,
+	producing inconsistent year and month/date formatting.
+	* tests/test-nstrftime.h: Add test cases.
+
 2026-08-27  Bruno Haible  <bruno@clisp.org>
 
 	tests: Check that c32isprint is consistent with isprint in the C locale.
