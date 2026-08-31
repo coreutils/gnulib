@@ -209,10 +209,18 @@ dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned
     (n == 1 ? msgid1 : msgid2);
 }
 __attribute__ ((_LIBGETTEXT_INLINE))
-extern inline const char *
+extern inline
+#  if !defined(__sun)
+const
+#  endif
+char *
 textdomain (const char *domainname)
 {
-  return domainname;
+  return
+#  ifdef __sun
+    (char *)
+#  endif
+    domainname;
 }
 #  if defined __GNUC__ && __GNUC__ >= 9 && !defined __clang__
 #   pragma GCC diagnostic pop

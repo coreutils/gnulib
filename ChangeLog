@@ -1,3 +1,8 @@
+2026-08-31  Bruno Haible  <bruno@clisp.org>
+
+	gettext-h: Fix compilation error on Solaris (regression 2026-08-26).
+	* lib/gettext.h (textdomain): Change return type to 'char *' on Solaris.
+
 2026-08-31  Pádraig Brady  <P@draigBrady.com>
 
 	strftime: more consistent flag handling in compound date formats
