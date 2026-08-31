@@ -1,5 +1,5 @@
 # sd-dlopen.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_SD_DLOPEN],
 [
   AC_REQUIRE([gl_LIBDL])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CACHE_CHECK([whether the assembler supports .ifndef, .endif, and .balign],
     [gl_cv_asm_ifndef_endif_balign],
@@ -50,7 +51,15 @@ __asm__ (".ifndef \"gl_sd_dlopen_test\"\n"
          ]])],
          [gl_cv_asm_section_R=yes],
          [gl_cv_asm_section_R=no])])
-    if test $gl_cv_asm_section_R = yes; then
+    dnl On Solaris 11.4 (machines cfarm215.cfarm.net, cfarm216.cfarm.net),
+    dnl the use of the section flag R causes the assembler to mark the object
+    dnl file with ELF OS/ABI "UNIX - GNU" rather than "UNIX - System V",
+    dnl which then leads to an error
+    dnl   ld: fatal: file test-sd-dlopen.o: wrong ELF OSABI: ELFOSABI_GNU
+    dnl Therefore, on Solaris, avoid the section flag R, even if the assembler
+    dnl supports it.
+    if test $gl_cv_asm_section_R = yes \
+       && case "$host_os" in solaris*) false;; *) true;; esac; then
       gl_sd_dlopen_section_flags='"aGR"'
     else
       gl_sd_dlopen_section_flags='"aG"'
