@@ -507,8 +507,6 @@
 	is == length.
 	* tests/test-striconveh.c (main): Adjust expected contents of the
 	offsets[] array.
-	* lib/striconveh.c (main): Likewise.
-	* tests/test-striconveh.c (main): Likewise.
 	* tests/test-striconveha.c (main): Likewise.
 	* tests/uniconv/test-u8-conv-from-enc.c (main): Likewise.
 	* tests/uniconv/test-u16-conv-from-enc.c (main): Likewise.
