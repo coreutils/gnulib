@@ -1,3 +1,11 @@
+2026-09-01  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid confusing failures with warn_ on NetBSD
+	On NetBSD 10.0 at least, since commit e4c911bb4, warn_() would
+	issue a warning like "local: set-up: bad variable name".
+	This is due to how its shell handles local with initialization.
+	* tests/init.sh: Avoid initializing on the same line as "local".
+
 2026-08-31  Bruno Haible  <bruno@clisp.org>
 
 	mbrtoc32: Fix test-c32isprint failure with uchar-h-c23.

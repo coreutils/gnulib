@@ -103,8 +103,9 @@ warn_ ()
   case $IFS in
     ' '*) printf '%s\n' "$*" >&2
           test $stderr_fileno_ = 2 \
-            || { local args=$*
-                 local firstline=${args%%"$gl_init_sh_nl_"*}
+            || { local args firstline
+                 args=$*
+                 firstline=${args%%"$gl_init_sh_nl_"*}
                  printf '%s\n' "$firstline" >&$stderr_fileno_
                }
           ;;
