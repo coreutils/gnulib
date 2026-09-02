@@ -26,7 +26,7 @@
 ptrdiff_t b2 = 1;
 size_t c2 = 2;
 
-#if !(defined __cplusplus && defined _MSC_VER)
+#if !(defined __cplusplus && defined _WIN32 && (defined __clang__ || defined _MSC_VER))
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
 static_assert (sizeof NULL == sizeof (void *));
