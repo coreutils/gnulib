@@ -104,4 +104,8 @@ musl libc 1.2.4, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2.
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:
 NetBSD 5.1.
+@item
+This function is not thread-safe (simultaneous formatting of floating-point
+numbers in different threads may crash the program) on some platforms:
+mingw 13.
 @end itemize

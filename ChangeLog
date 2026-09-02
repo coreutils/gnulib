@@ -1,5 +1,11 @@
 2026-09-02  Bruno Haible  <bruno@clisp.org>
 
+	Document possible *printf crash on mingw.
+	* doc/posix-functions/*printf.texi: Document the mingw multithreading
+	bug.
+
+2026-09-02  Bruno Haible  <bruno@clisp.org>
+
 	stddef-h C++ tests: Avoid compilation error with clang+mingw toolchain.
 	* tests/test-stddef-h.c: Skip the 'sizeof NULL' test with clang on
 	Windows.

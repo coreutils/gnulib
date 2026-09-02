@@ -157,4 +157,8 @@ glibc and others, on x86, x86_64, IA-64 CPUs.
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:
 NetBSD 5.1.
+@item
+This function is not thread-safe (simultaneous formatting of floating-point
+numbers in different threads may crash the program) on some platforms:
+mingw 13.
 @end itemize
