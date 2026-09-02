@@ -1,3 +1,10 @@
+2026-09-02  Bruno Haible  <bruno@clisp.org>
+
+	stddef-h C++ tests: Avoid compilation error with clang+mingw toolchain.
+	* tests/test-stddef-h.c: Skip the 'sizeof NULL' test with clang on
+	Windows.
+	* tests/test-stddef-h-c++2.cc: Likewise.
+
 2026-09-01  Pádraig Brady  <P@draigBrady.com>
 
 	tests: avoid confusing failures with warn_ on NetBSD
