@@ -1,3 +1,11 @@
+2026-09-04  Oleg Tolmatcev  <oleg.tolmatcev@gmail.com>
+
+	fts: don't use FTS_CWDFD where openat is emulated via fchdir
+	* lib/fts.c (fts_open): Revert to FTS_NOCHDIR mode whenever the
+	openat emulation has to save and restore the working directory,
+	not merely when "." cannot be opened.
+	Copyright-paperwork-exempt: Yes
+
 2026-09-04  Bruno Haible  <bruno@clisp.org>
 
 	time-h: Fix compilation error in dfa.c on mingw.
