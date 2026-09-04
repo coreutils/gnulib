@@ -381,36 +381,11 @@ fts_open (char * const *argv,
 
         /* Initialize fts_cwd_fd.  */
         sp->fts_cwd_fd = AT_FDCWD;
-        if ( ISSET(FTS_CWDFD) && ! HAVE_OPENAT_SUPPORT)
+        if ( ISSET(FTS_CWDFD) && ! HAVE_OPENAT_SUPPORT
+             && openat_needs_fchdir ())
           {
-            /* While it isn't technically necessary to open "." this
-               early, doing it here saves us the trouble of ensuring
-               later (where it'd be messier) that "." can in fact
-               be opened.  If not, revert to FTS_NOCHDIR mode.  */
-            int fd = open (".", O_SEARCH | O_CLOEXEC);
-            if (fd < 0)
-              {
-                /* Even if "." is unreadable, don't revert to FTS_NOCHDIR mode
-                   on systems like Linux+PROC_FS, where our openat emulation
-                   is good enough.  Note: on a system that emulates
-                   openat via /proc, this technique can still fail, but
-                   only in extreme conditions, e.g., when the working
-                   directory cannot be saved (i.e. save_cwd fails) --
-                   and that happens on Linux only when "." is unreadable
-                   and the CWD would be longer than PATH_MAX.
-                   FIXME: once Linux kernel openat support is well established,
-                   replace the above open call and this entire if/else block
-                   with the body of the if-block below.  */
-                if ( openat_needs_fchdir ())
-                  {
-                    SET(FTS_NOCHDIR);
-                    CLR(FTS_CWDFD);
-                  }
-              }
-            else
-              {
-                close (fd);
-              }
+            SET(FTS_NOCHDIR);
+            CLR(FTS_CWDFD);
           }
 
         /*
