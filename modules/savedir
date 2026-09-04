@@ -10,7 +10,6 @@ Depends-on:
 attribute
 closedir
 dirent-h
-fdopendir
 free-posix
 opendir
 qsort_r

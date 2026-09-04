@@ -1,3 +1,11 @@
+2026-09-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: remove fdopendir dependency
+	* modules/savedir (Depends-on): Remove fdopendir.
+	This was a stray dependency, not needed since commit
+	be7d73709d2b3bceb987f1be00a049bb7021bf87
+	dated 2014-02-13 22:01:39 +0200.
+
 2026-09-02  Bruno Haible  <bruno@clisp.org>
 
 	Document possible *printf crash on mingw.
