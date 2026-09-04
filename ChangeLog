@@ -1,3 +1,9 @@
+2026-09-04  Bruno Haible  <bruno@clisp.org>
+
+	time-h: Fix compilation error in dfa.c on mingw.
+	* lib/time.in.h: Instead of including <unistd.h>, define
+	_POSIX_THREAD_SAFE_FUNCTIONS.
+
 2026-09-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	savedir: remove fdopendir dependency
