@@ -1,3 +1,10 @@
+2026-09-05  Oleg Tolmatcev  <oleg.tolmatcev@gmail.com>
+
+	stat: Fix handling of symbolic links on native Windows.
+	* lib/stat-w32.c (_gl_fstat_by_handle): Call GetFinalPathNameByHandle
+	even if path==NULL, because it will resolve symbolic links, something
+	that fstat() does and that stat() is expected to do as well.
+
 2026-09-04  Oleg Tolmatcev  <oleg.tolmatcev@gmail.com>
 
 	fts: don't use FTS_CWDFD where openat is emulated via fchdir
