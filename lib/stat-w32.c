@@ -282,11 +282,22 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
           if (info.nFileSizeHigh > 0 || info.nFileSizeLow > 0)
             {
               char fpath[PATH_MAX];
-              if (path != NULL
-                  || (GetFinalPathNameByHandleFunc != NULL
-                      && GetFinalPathNameByHandleFunc (h, fpath, sizeof (fpath), VOLUME_NAME_NONE)
-                         < sizeof (fpath)
-                      && (path = fpath, 1)))
+              if (GetFinalPathNameByHandleFunc != NULL
+                  && GetFinalPathNameByHandleFunc (h, fpath, sizeof (fpath), VOLUME_NAME_NONE)
+                     < sizeof (fpath))
+                {
+                  size_t length = strlen (fpath);
+                  if (length >= 4 && fpath[length - 4] == '.')
+                    {
+                      const char *suffix = fpath + length - 3;
+                      if (_stricmp (suffix, "exe", 3) == 0
+                          || _stricmp (suffix, "bat", 3) == 0
+                          || _stricmp (suffix, "cmd", 3) == 0
+                          || _stricmp (suffix, "com", 3) == 0)
+                        mode |= S_IEXEC_UGO;
+                    }
+                }
+              else if (path != NULL)
                 {
                   const char *last_dot = NULL;
                   for (const char *p = path; *p != '\0'; p++)
