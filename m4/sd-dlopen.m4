@@ -1,5 +1,5 @@
 # sd-dlopen.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,8 +38,55 @@ __asm__ (".ifndef \"gl_sd_dlopen_test\"\n"
          [gl_cv_asm_section_o=yes],
          [gl_cv_asm_section_o=no])])
     if test $gl_cv_asm_section_o = yes; then
+      AC_CACHE_CHECK(
+        [whether ordered and unordered ELF sections can be linked],
+        [gl_cv_elf_mixed_ordered_sections],
+        [AC_LINK_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[
+extern volatile const unsigned char gl_sd_dlopen_unordered;
+extern volatile const unsigned char gl_sd_dlopen_anchor;
+
+__asm__ (
+  ".pushsection .note.dlopen, \"aG\", %note,"
+  " gl_sd_dlopen_unordered_group, comdat\n"
+  ".globl gl_sd_dlopen_unordered\n"
+  ".hidden gl_sd_dlopen_unordered\n"
+  ".type gl_sd_dlopen_unordered, %object\n"
+  "gl_sd_dlopen_unordered:\n"
+  ".balign 4\n"
+  ".long 0, 0, 0\n"
+  ".popsection\n"
+
+  ".pushsection .data.gl_sd_dlopen_anchor, \"awG\", %progbits,"
+  " gl_sd_dlopen_ordered_group, comdat\n"
+  ".globl gl_sd_dlopen_anchor\n"
+  ".hidden gl_sd_dlopen_anchor\n"
+  ".type gl_sd_dlopen_anchor, %object\n"
+  "gl_sd_dlopen_anchor:\n"
+  ".byte 0\n"
+  ".popsection\n"
+
+  ".pushsection .note.dlopen, \"aGo\", %note,"
+  " gl_sd_dlopen_anchor, gl_sd_dlopen_ordered_group, comdat\n"
+  ".balign 4\n"
+  ".long 0, 0, 0\n"
+  ".popsection\n");
+              ]],
+              [[
+volatile unsigned int gl_sink =
+  gl_sd_dlopen_unordered + gl_sd_dlopen_anchor;
+(void) gl_sink;
+              ]])],
+           [gl_cv_elf_mixed_ordered_sections=yes],
+           [gl_cv_elf_mixed_ordered_sections=no])])
+    else
+      gl_cv_elf_mixed_ordered_sections=no
+    fi
+    if test $gl_cv_elf_mixed_ordered_sections = yes; then
       AC_DEFINE([_SD_ELF_NOTE_SUPPORTS_REFERENCES], [1],
-        [Define to 1 if the ELF .section command supports the o flag.])
+        [Define to 1 if SHF_LINK_ORDER notes can be linked alongside
+         ordinary notes of the same name.])
     fi
 
     AC_CACHE_CHECK([whether the assembler supports the section flag R],
