@@ -1,3 +1,11 @@
+2026-09-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	file-has-acl: scontext + --disable-acl fix
+	* m4/acl.m4 (gl_FILE_HAS_ACL): Do not skip -lsmack or -lselinux
+	merely because --disable-acl was used.  Needed due to my
+	2024-11-11 commit “file-has-acl: scontext even if --disable-acl”.
+	Problem discovered when configuring Emacs with --disable-acl.
+
 2026-09-07  Pádraig Brady  <P@draigBrady.com>
 
 	sd-dlopen: fix build failure with binutils-2.35
