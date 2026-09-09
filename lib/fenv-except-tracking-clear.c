@@ -76,6 +76,8 @@ feclearexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
+  exceptions = exceptions_to_hardware (exceptions);
+
   unsigned long fpsr, orig_fpsr;
   _FPU_GETFPSR (orig_fpsr);
   fpsr = orig_fpsr & ~exceptions;

@@ -160,6 +160,27 @@ x86_387_fenv_t;
    __asm__ __volatile__ ("msr fpsr, %0" : : "r" (fpsr))
 # endif
 
+# if defined _MSC_VER || (defined __MINGW32__ && FE_INVALID != 0x01)
+/* The MSVC and mingw ≥ 13 header files have different values for the
+   floating-point exceptions than all the other platforms.  Define some
+   handy macros for conversion.  */
+#  define exceptions_to_hardware(exceptions) \
+     (  ((exceptions) & FE_INVALID   ? 0x01 : 0) \
+      | ((exceptions) & FE_DIVBYZERO ? 0x02 : 0) \
+      | ((exceptions) & FE_OVERFLOW  ? 0x04 : 0) \
+      | ((exceptions) & FE_UNDERFLOW ? 0x08 : 0) \
+      | ((exceptions) & FE_INEXACT   ? 0x10 : 0))
+#  define hardware_to_exceptions(fpsr) \
+     (  ((fpsr) & 0x01 ? FE_INVALID   : 0) \
+      | ((fpsr) & 0x02 ? FE_DIVBYZERO : 0) \
+      | ((fpsr) & 0x04 ? FE_OVERFLOW  : 0) \
+      | ((fpsr) & 0x08 ? FE_UNDERFLOW : 0) \
+      | ((fpsr) & 0x10 ? FE_INEXACT   : 0))
+# else
+#  define exceptions_to_hardware(exceptions) (exceptions)
+#  define hardware_to_exceptions(fpsr) (fpsr)
+# endif
+
 #elif defined __arm__
 
 /* fpscr bits 23..22 indicate the rounding direction.  */

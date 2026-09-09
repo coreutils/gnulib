@@ -141,6 +141,8 @@ feenableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
+  exceptions = exceptions_to_hardware (exceptions);
+
   unsigned long fpcr, orig_fpcr;
   _FPU_GETCW (orig_fpcr);
   fpcr = orig_fpcr | (exceptions << 8);
@@ -154,13 +156,16 @@ feenableexcept (int exceptions)
         return -1;
     }
 
-  return FE_ALL_EXCEPT & (orig_fpcr >> 8);
+  unsigned int trapbits = orig_fpcr >> 8;
+  return FE_ALL_EXCEPT & hardware_to_exceptions (trapbits);
 }
 
 int
 fedisableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
+
+  exceptions = exceptions_to_hardware (exceptions);
 
   unsigned long fpcr, orig_fpcr;
   _FPU_GETCW (orig_fpcr);
@@ -172,7 +177,8 @@ fedisableexcept (int exceptions)
          here, since we only cleared some bits.  */
     }
 
-  return FE_ALL_EXCEPT & (orig_fpcr >> 8);
+  unsigned int trapbits = orig_fpcr >> 8;
+  return FE_ALL_EXCEPT & hardware_to_exceptions (trapbits);
 }
 
 int
@@ -180,7 +186,8 @@ fegetexcept (void)
 {
   unsigned long fpcr;
   _FPU_GETCW (fpcr);
-  return FE_ALL_EXCEPT & (fpcr >> 8);
+  unsigned int trapbits = fpcr >> 8;
+  return FE_ALL_EXCEPT & hardware_to_exceptions (trapbits);
 }
 
 # elif defined __arm__
