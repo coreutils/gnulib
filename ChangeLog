@@ -1,3 +1,10 @@
+2026-09-07  Ineiev  <ineiev@gnu.org>
+
+	Update copyright notice, per bug-standards@gnu.org.
+	* doc/maintain.texi:
+	* doc/standards.texi: Update copyright years.
+	Copyright-paperwork-exempt: Yes
+
 2026-09-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-has-acl: scontext + --disable-acl fix
