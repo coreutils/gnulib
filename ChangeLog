@@ -1,5 +1,21 @@
 2026-09-09  Bruno Haible  <bruno@clisp.org>
 
+	fenv-*: Add support for Windows/arm64.
+	* lib/fenv-private.h (exceptions_to_hardware, hardware_to_exceptions):
+	Define also for arm64.
+	* lib/fenv-except-tracking-clear.c (feclearexcept): Use them also for
+	arm64.
+	* lib/fenv-except-tracking-set.c (fesetexcept): Likewise.
+	* lib/fenv-except-tracking-test.c (fetestexcept): Likewise.
+	* lib/fenv-except-state-get.c (fegetexceptflag): Likewise.
+	* lib/fenv-except-state-set.c (fesetexceptflag): Likewise.
+	* lib/fenv-except-trapping.c (feenableexcept, fedisableexcept,
+	fegetexcept): Likewise.
+	* lib/fenv-env.c (fegetenv, fesetenv): Likewise.
+	* lib/fenv.in.h: Update comments.
+
+2026-09-09  Bruno Haible  <bruno@clisp.org>
+
 	fenv-*: Refactor.
 	* lib/fenv-private.h (exceptions_to_hardware): Renamed from
 	exceptions_to_x86hardware.

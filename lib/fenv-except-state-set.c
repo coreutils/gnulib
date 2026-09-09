@@ -114,10 +114,16 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 int
 fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 {
+  exceptions &= FE_ALL_EXCEPT;
+
   unsigned long desired_flags = (unsigned long) *saved_flags;
+
+  exceptions = exceptions_to_hardware (exceptions);
+  desired_flags = exceptions_to_hardware (desired_flags);
+
   unsigned long fpsr, orig_fpsr;
   _FPU_GETFPSR (orig_fpsr);
-  fpsr = orig_fpsr ^ ((orig_fpsr ^ desired_flags) & FE_ALL_EXCEPT & exceptions);
+  fpsr = orig_fpsr ^ ((orig_fpsr ^ desired_flags) & exceptions);
   if (fpsr != orig_fpsr)
     _FPU_SETFPSR (fpsr);
   /* Possibly some new exception flags have been set.  But just storing them

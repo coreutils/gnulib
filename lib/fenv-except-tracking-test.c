@@ -81,7 +81,7 @@ fetestexcept (int exceptions)
 {
   unsigned long fpsr;
   _FPU_GETFPSR (fpsr);
-  return fpsr & FE_ALL_EXCEPT & exceptions;
+  return hardware_to_exceptions (fpsr) & FE_ALL_EXCEPT & exceptions;
 }
 
 # elif defined __arm__

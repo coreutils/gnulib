@@ -76,7 +76,7 @@ fegetexceptflag (fexcept_t *saved_flags, int exceptions)
   /* Just like fetestexcept.  */
   unsigned long fpsr;
   _FPU_GETFPSR (fpsr);
-  *saved_flags = fpsr & FE_ALL_EXCEPT & exceptions;
+  *saved_flags = hardware_to_exceptions (fpsr) & FE_ALL_EXCEPT & exceptions;
   return 0;
 }
 

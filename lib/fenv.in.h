@@ -424,7 +424,7 @@ _GL_CXXALIASWARN (fesetround);
 
 # if (defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)
 
-/* Attention: MSVC has different values for these macros!  */
+/* Attention: MSVC and mingw >= 13 have different values for these macros!  */
 #  define FE_INVALID    (1 << 0)
 #  if 0 /* non-standard */
 #   define FE_DENORMAL  (1 << 1)
@@ -436,6 +436,7 @@ _GL_CXXALIASWARN (fesetround);
 
 # elif defined __aarch64__ /* arm64 */ || defined __arm__
 
+/* Attention: MSVC and mingw >= 13 have different values for these macros!  */
 #  define FE_INVALID    (1U << 0)
 #  define FE_DIVBYZERO  (1U << 1)
 #  define FE_OVERFLOW   (1U << 2)
