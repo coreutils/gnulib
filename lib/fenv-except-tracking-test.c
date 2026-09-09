@@ -55,7 +55,7 @@ fetestexcept (int exceptions)
   /* Look at the flags in the SSE unit.  */
   unsigned int mxcsr;
   _FPU_GETSSECW (mxcsr);
-  return x86hardware_to_exceptions (mxcsr) & FE_ALL_EXCEPT & exceptions;
+  return hardware_to_exceptions (mxcsr) & FE_ALL_EXCEPT & exceptions;
 
 #  else
 
@@ -69,7 +69,7 @@ fetestexcept (int exceptions)
       _FPU_GETSSECW (mxcsr);
     }
 
-  return x86hardware_to_exceptions (fstat | mxcsr) & FE_ALL_EXCEPT & exceptions;
+  return hardware_to_exceptions (fstat | mxcsr) & FE_ALL_EXCEPT & exceptions;
 
 #  endif
 }

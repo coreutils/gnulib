@@ -177,9 +177,9 @@ fegetenv (fenv_t *envp)
   /* rounding direction */
   unsigned int round_387 = (env387.__control_word & 0x0C00) >> 2;
   /* exception trap bits (inverted) */
-  unsigned int trapbits_387 = x86hardware_to_exceptions (env387.__control_word);
+  unsigned int trapbits_387 = hardware_to_exceptions (env387.__control_word);
   /* exception flags */
-  unsigned int excflags_387 = x86hardware_to_exceptions (env387.__status_word);
+  unsigned int excflags_387 = hardware_to_exceptions (env387.__status_word);
 
   unsigned int mxcsr;
   _FPU_GETSSECW (mxcsr);
@@ -187,9 +187,9 @@ fegetenv (fenv_t *envp)
   /* rounding direction */
   unsigned int round_sse = (mxcsr & 0x6000) >> 5;
   /* exception trap bits (inverted) */
-  unsigned int trapbits_sse = x86hardware_to_exceptions (mxcsr >> 7);
+  unsigned int trapbits_sse = hardware_to_exceptions (mxcsr >> 7);
   /* exception flags */
-  unsigned int excflags_sse = x86hardware_to_exceptions (mxcsr);
+  unsigned int excflags_sse = hardware_to_exceptions (mxcsr);
 
   envp->_Fe_ctl =
       (round_sse << 22) | (round_387 << 14) | round_sse | round_387
@@ -304,11 +304,11 @@ fesetenv (fenv_t const *envp)
       unsigned int excflags_387 = (envp->_Fe_stat >> 16) & 0x1F;
       unsigned int excflags_sse = (envp->_Fe_stat >> 24) & 0x1F;
 
-      env_fctrl = (round_387 << 2) | exceptions_to_x86hardware (trapbits_387);
-      env_fstat = exceptions_to_x86hardware (excflags_387);
+      env_fctrl = (round_387 << 2) | exceptions_to_hardware (trapbits_387);
+      env_fstat = exceptions_to_hardware (excflags_387);
       env_mxcsr = (round_sse << 5)
-                  | (exceptions_to_x86hardware (trapbits_sse) << 7)
-                  | exceptions_to_x86hardware (excflags_sse);
+                  | (exceptions_to_hardware (trapbits_sse) << 7)
+                  | exceptions_to_hardware (excflags_sse);
     }
 
   /* In the SSE unit.  */

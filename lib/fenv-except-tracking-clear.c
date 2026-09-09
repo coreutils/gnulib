@@ -33,7 +33,7 @@ feclearexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-  exceptions = exceptions_to_x86hardware (exceptions);
+  exceptions = exceptions_to_hardware (exceptions);
 
 #  if defined _MSC_VER
 
