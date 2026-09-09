@@ -1,3 +1,18 @@
+2026-09-09  Bruno Haible  <bruno@clisp.org>
+
+	fenv-*: Refactor.
+	* lib/fenv-private.h (exceptions_to_hardware): Renamed from
+	exceptions_to_x86hardware.
+	(hardware_to_exceptions): Renamed from x86hardware_to_exceptions.
+	* lib/fenv-except-tracking-clear.c (feclearexcept): Update.
+	* lib/fenv-except-tracking-set.c (fesetexcept): Update.
+	* lib/fenv-except-tracking-test.c (fetestexcept): Update.
+	* lib/fenv-except-state-get.c (fegetexceptflag): Update.
+	* lib/fenv-except-state-set.c (fesetexceptflag): Update.
+	* lib/fenv-except-trapping.c (feenableexcept, fedisableexcept,
+	fegetexcept): Update.
+	* lib/fenv-env.c (fegetenv, fesetenv): Update.
+
 2026-09-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-has-acl: scontext + --disable-acl fix

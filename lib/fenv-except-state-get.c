@@ -41,7 +41,7 @@ fegetexceptflag (fexcept_t *saved_flags, int exceptions)
 
   unsigned int mxcsr;
   _FPU_GETSSECW (mxcsr);
-  *saved_flags = x86hardware_to_exceptions (mxcsr) & FE_ALL_EXCEPT & exceptions;
+  *saved_flags = hardware_to_exceptions (mxcsr) & FE_ALL_EXCEPT & exceptions;
 
 #  else
 
@@ -55,7 +55,7 @@ fegetexceptflag (fexcept_t *saved_flags, int exceptions)
       _FPU_GETSSECW (mxcsr);
     }
 
-  *saved_flags = x86hardware_to_exceptions (fstat | mxcsr)
+  *saved_flags = hardware_to_exceptions (fstat | mxcsr)
                  & FE_ALL_EXCEPT & exceptions;
 #  endif
 
