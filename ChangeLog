@@ -1,3 +1,9 @@
+2026-09-09  Bruno Haible  <bruno@clisp.org>
+
+	fenv-exceptions-state-c99: Fix configure test (regression 2026-01-16).
+	* m4/fenv-exceptions-state.m4 (gl_FENV_EXCEPTIONS_STATE): Fix syntax
+	error in test program.
+
 2026-09-07  Ineiev  <ineiev@gnu.org>
 
 	Update copyright notice, per bug-standards@gnu.org.

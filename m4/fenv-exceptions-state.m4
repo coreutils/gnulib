@@ -1,5 +1,5 @@
 # fenv-exceptions-state.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,7 +74,7 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
                 #include <fenv.h>
-                #if !(defined _WIN32 && !defined __CYGWIN__
+                #if !(defined _WIN32 && !defined __CYGWIN__)
                 /* Avoid a crash on POSIX systems.  */
                 #include <signal.h>
                 #include <unistd.h>
