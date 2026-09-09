@@ -1,5 +1,11 @@
 2026-09-09  Bruno Haible  <bruno@clisp.org>
 
+	fenv-*: Comments on Windows/arm64.
+	* m4/fenv-exceptions-trapping.m4 (gl_FENV_EXCEPTIONS_TRAPPING): Update
+	comment.
+
+2026-09-09  Bruno Haible  <bruno@clisp.org>
+
 	fenv-*: Add support for Windows/arm64.
 	* lib/fenv-private.h (exceptions_to_hardware, hardware_to_exceptions):
 	Define also for arm64.
