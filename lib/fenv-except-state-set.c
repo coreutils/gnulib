@@ -40,8 +40,8 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 
   unsigned int desired_flags = (unsigned int) *saved_flags;
 
-  exceptions = exceptions_to_x86hardware (exceptions);
-  desired_flags = exceptions_to_x86hardware (desired_flags);
+  exceptions = exceptions_to_hardware (exceptions);
+  desired_flags = exceptions_to_hardware (desired_flags);
 
 #  if defined _MSC_VER
 

@@ -33,7 +33,7 @@ feenableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-  exceptions = exceptions_to_x86hardware (exceptions);
+  exceptions = exceptions_to_hardware (exceptions);
 
 #  if defined _MSC_VER
 
@@ -69,7 +69,7 @@ feenableexcept (int exceptions)
 
 #  endif
 
-  return x86hardware_to_exceptions (trapbits);
+  return hardware_to_exceptions (trapbits);
 }
 
 int
@@ -77,7 +77,7 @@ fedisableexcept (int exceptions)
 {
   exceptions &= FE_ALL_EXCEPT;
 
-  exceptions = exceptions_to_x86hardware (exceptions);
+  exceptions = exceptions_to_hardware (exceptions);
 
 #  if defined _MSC_VER
 
@@ -113,7 +113,7 @@ fedisableexcept (int exceptions)
 
 #  endif
 
-  return x86hardware_to_exceptions (trapbits);
+  return hardware_to_exceptions (trapbits);
 }
 
 int
@@ -131,7 +131,7 @@ fegetexcept (void)
   unsigned int trapbits = 0x3f & ~fctrl;
 #  endif
 
-  return x86hardware_to_exceptions (trapbits);
+  return hardware_to_exceptions (trapbits);
 }
 
 # elif defined __aarch64__ /* arm64 */

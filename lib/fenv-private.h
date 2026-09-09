@@ -99,21 +99,21 @@ x86_387_fenv_t;
 /* The MSVC and mingw ≥ 13 header files have different values for the
    floating-point exceptions than all the other platforms.  Define some
    handy macros for conversion.  */
-#  define exceptions_to_x86hardware(exceptions) \
+#  define exceptions_to_hardware(exceptions) \
      (  ((exceptions) & FE_INVALID   ? 0x01 : 0) \
       | ((exceptions) & FE_DIVBYZERO ? 0x04 : 0) \
       | ((exceptions) & FE_OVERFLOW  ? 0x08 : 0) \
       | ((exceptions) & FE_UNDERFLOW ? 0x10 : 0) \
       | ((exceptions) & FE_INEXACT   ? 0x20 : 0))
-#  define x86hardware_to_exceptions(fstat) \
+#  define hardware_to_exceptions(fstat) \
      (  ((fstat) & 0x01 ? FE_INVALID   : 0) \
       | ((fstat) & 0x04 ? FE_DIVBYZERO : 0) \
       | ((fstat) & 0x08 ? FE_OVERFLOW  : 0) \
       | ((fstat) & 0x10 ? FE_UNDERFLOW : 0) \
       | ((fstat) & 0x20 ? FE_INEXACT   : 0))
 # else
-#  define exceptions_to_x86hardware(exceptions) (exceptions)
-#  define x86hardware_to_exceptions(fstat) (fstat)
+#  define exceptions_to_hardware(exceptions) (exceptions)
+#  define hardware_to_exceptions(fstat) (fstat)
 # endif
 
 /* When _MSC_VER is defined, the 387 compatible floating-point unit is *not*
@@ -124,7 +124,7 @@ x86_387_fenv_t;
      - After fegetenv (&env), the value of env._Fe_stat is *not* the fstat
        register of the 387 unit.  Rather, it is a artificial value.  In
        particular, (env._Fe_stat & 0x3f) is
-       == x86hardware_to_exceptions (_FPU_GETSSECW () & 0x3f).  */
+       == hardware_to_exceptions (_FPU_GETSSECW () & 0x3f).  */
 
 #elif defined __aarch64__ /* arm64 */
 
