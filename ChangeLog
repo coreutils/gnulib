@@ -1,3 +1,10 @@
+2026-09-10  Bruno Haible  <bruno@clisp.org>
+
+	fenv-exceptions-state-c99: Fix for mingw 14 (regression yesterday).
+	* m4/fenv-exceptions-state.m4 (gl_FENV_EXCEPTIONS_STATE): On mingw, set
+	REPLACE_FESETEXCEPTFLAG to 1, despite l_cv_func_fesetexceptflag_works1
+	and l_cv_func_fesetexceptflag_works2 being both 'yes'.
+
 2026-09-09  Bruno Haible  <bruno@clisp.org>
 
 	fenv-*: Comments on Windows/arm64.

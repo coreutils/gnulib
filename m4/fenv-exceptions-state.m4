@@ -1,5 +1,5 @@
 # fenv-exceptions-state.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -213,6 +213,19 @@ changequote([,])dnl
       case "$gl_cv_func_fesetexceptflag_works2" in
         *yes) ;;
         *) REPLACE_FESETEXCEPTFLAG=1 ;;
+      esac
+      dnl Additionally, on mingw 14.0.0, the unit test test-fenv-except-state-3
+      dnl fails if we don't override fesetexceptflag.
+      case "$host_os" in
+        mingw* | windows*)
+          AC_EGREP_CPP([Problem], [
+#ifdef __MINGW32__
+ Problem
+#endif
+            ],
+            [REPLACE_FESETEXCEPTFLAG=1],
+            [])
+          ;;
       esac
       dnl Additionally, on FreeBSD/powerpc64 and NetBSD/powerpc, the unit test
       dnl test-fenv-except-state-2 fails if we don't override fesetexceptflag.
