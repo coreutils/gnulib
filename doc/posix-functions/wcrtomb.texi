@@ -36,4 +36,9 @@ therefore cannot accommodate all Unicode characters.
 However, the ISO C11 function @code{c32rtomb}, provided by Gnulib module
 @code{c32rtomb}, operates on 32-bit wide characters and therefore does not have
 this limitation.
+@item
+On some platforms, when using a multibyte encoding other than UTF-8,
+this function may incorrectly convert an invalid character
+to an invalid byte sequence instead of returning @code{(size_t) -1}:
+FreeBSD 15, NetBSD 11, DragonFly BSD 6, OS X 10.9.
 @end itemize

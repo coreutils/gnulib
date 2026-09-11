@@ -47,4 +47,9 @@ Solaris 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms, when using a multibyte encoding other than UTF-8,
+this function may incorrectly return the length of an invalid byte sequence
+instead of returning @code{(size_t) -1}:
+FreeBSD 15, NetBSD 11, DragonFly BSD 6, OS X 10.9.
 @end itemize

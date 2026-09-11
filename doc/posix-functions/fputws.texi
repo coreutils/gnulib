@@ -19,6 +19,11 @@ Minix 3.1.8, Cygwin 1.5.x.
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
+On some platforms, when using a multibyte encoding other than UTF-8,
+this function may incorrectly convert an invalid character
+to an invalid byte sequence instead of returning @code{-1}:
+FreeBSD 15, NetBSD 11, DragonFly BSD 6, OS X 10.9.
+@item
 On some platforms, this function does not set @code{errno} or the
 stream error indicator on attempts to write to a read-only stream:
 Cygwin 1.7.9.

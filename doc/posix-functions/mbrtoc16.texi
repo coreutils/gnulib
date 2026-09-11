@@ -61,4 +61,9 @@ cannot be used to determine whether the function is ready to return
 another @code{char16_t} value.  To do so, instead call @code{mbrtoc16}
 again, with an appropriately incremented @code{const char *} argument
 and an appropriately decremented @code{size_t} argument.
+@item
+On some platforms, when using a multibyte encoding other than UTF-8,
+this function may incorrectly convert an invalid byte sequence
+instead of returning @code{(size_t) -1}:
+FreeBSD 15, NetBSD 11, DragonFly BSD 6.
 @end itemize
