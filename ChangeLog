@@ -1,3 +1,8 @@
+2026-09-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	GCC 16.2 fixed counted_by bug (GCC bug 125072)
+	* m4/gnulib-common.m4 (_GL_ATTRIBUTE_COUNTED_BY): Enable for GCC 16.2+.
+
 2026-09-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: document FreeBSD etc issues with EUC
