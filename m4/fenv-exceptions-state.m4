@@ -1,5 +1,5 @@
 # fenv-exceptions-state.m4
-# serial 8
+# serial 9
 dnl Copyright (C) 2023-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -246,8 +246,8 @@ changequote([,])dnl
       dnl Additionally, on MSVC, we want the bits in the saved state to be
       dnl identified by the FE_* macros, so that the fetestexceptflag function
       dnl can be implemented like on other platforms. This requires conversions
-      dnl (exceptions_to_x86hardware, x86hardware_to_exceptions) in both
-      dnl of the fegetexceptflag, fesetexceptflag functions.
+      dnl (exceptions_to_hardware, hardware_to_exceptions) in both of the
+      dnl fegetexceptflag, fesetexceptflag functions.
       case "$host_os" in
         mingw* | windows*)
           AC_EGREP_CPP([Problem], [

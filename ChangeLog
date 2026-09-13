@@ -1,3 +1,9 @@
+2026-09-13  Bruno Haible  <bruno@clisp.org>
+
+	fenv-exceptions-state-c99: Update comments after 2026-09-09 change.
+	* m4/fenv-exceptions-state.m4 (gl_FENV_EXCEPTIONS_STATE): Update
+	comments.
+
 2026-09-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	GCC 16.2 fixed counted_by bug (GCC bug 125072)
@@ -13,8 +19,8 @@
 
 	fenv-exceptions-state-c99: Fix for mingw 14 (regression yesterday).
 	* m4/fenv-exceptions-state.m4 (gl_FENV_EXCEPTIONS_STATE): On mingw, set
-	REPLACE_FESETEXCEPTFLAG to 1, despite l_cv_func_fesetexceptflag_works1
-	and l_cv_func_fesetexceptflag_works2 being both 'yes'.
+	REPLACE_FESETEXCEPTFLAG to 1, despite gl_cv_func_fesetexceptflag_works1
+	and gl_cv_func_fesetexceptflag_works2 being both 'yes'.
 
 2026-09-09  Bruno Haible  <bruno@clisp.org>
 
