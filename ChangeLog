@@ -1,3 +1,10 @@
+2026-09-13  Bruno Haible  <bruno@clisp.org>
+
+	setlocale: Use bool.
+	* lib/setlocale.c (setlocale_improved): Change type of local variable
+	'warn' to bool.
+	* modules/setlocale (Depends-on): Add bool.
+
 2026-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup3, pipe2: Prepare for macOS 27.
