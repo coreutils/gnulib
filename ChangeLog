@@ -1,5 +1,12 @@
 2026-09-13  Bruno Haible  <bruno@clisp.org>
 
+	dup3, pipe2: Prepare for macOS 27.
+	* m4/dup3.m4 (gl_FUNC_DUP3): Invoke gl_CHECK_FUNCS_ANDROID_MACOS instead
+	of gl_CHECK_FUNCS_ANDROID.
+	* m4/pipe2.m4 (gl_FUNC_PIPE2): Likewise.
+
+2026-09-13  Bruno Haible  <bruno@clisp.org>
+
 	fenv-exceptions-state-c99: Update comments after 2026-09-09 change.
 	* m4/fenv-exceptions-state.m4 (gl_FENV_EXCEPTIONS_STATE): Update
 	comments.

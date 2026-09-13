@@ -1,5 +1,5 @@
 # dup3.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2009-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_DUP3],
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([setdtablesize])
-  gl_CHECK_FUNCS_ANDROID([dup3], [[#include <unistd.h>]])
+  gl_CHECK_FUNCS_ANDROID_MACOS([dup3], [[#include <unistd.h>]])
   if test $ac_cv_func_dup3 != yes; then
     HAVE_DUP3=0
     case "$gl_cv_onwards_func_dup3" in
