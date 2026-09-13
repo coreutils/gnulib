@@ -12,8 +12,8 @@ Gnulib module: pipe2
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on many non-glibc platforms:
-glibc 2.8, macOS 14, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.7.1, mingw, MSVC 14, Android 2.2.
+This function is missing on many platforms:
+glibc 2.8, macOS 26, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.3, HP-UX 11, Solaris 11.3, Cygwin 1.7.1, mingw, MSVC 14, Android 2.2.
 But the replacement function is not atomic; this matters in multi-threaded
 processes that spawn child processes.
 @end itemize
@@ -24,8 +24,18 @@ Portability problems not fixed by Gnulib:
 This function crashes rather than failing with @code{EMFILE} if no
 resources are left on some platforms:
 Cygwin 1.7.9.
+@item
+On many platforms, this function does not support the @code{O_CLOFORK} flag:
+glibc 2.44, musl libc, macOS 27, FreeBSD 14, NetBSD 10, OpenBSD 7.0, DragonFly BSD 6.4.
+@item
+The @code{O_DIRECT} flag is supported only in Linux kernel 3.4
+and later, and in z/OS 2.2 and later.
+@item
+The @code{O_NOTIFICATION_PIPE} flag is supported only in Linux kernel
+5.8 and later.
 @end itemize
 
 @mindex nonblocking
-Note: This function portably supports the @code{O_NONBLOCK} flag only if the
+Note: When this function is missing, its Gnulib replacement
+portably supports the @code{O_NONBLOCK} flag only if the
 gnulib module @code{nonblocking} is also used.

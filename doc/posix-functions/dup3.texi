@@ -12,8 +12,10 @@ Gnulib module: dup3
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on many non-glibc platforms:
-glibc 2.8, macOS 14, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.7.1, mingw, MSVC 14, Android 4.4.
+This function is missing on many platforms:
+glibc 2.8, macOS 27, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.7.1, mingw, MSVC 14, Android 4.4.
+But the replacement function is not atomic; this matters in multi-threaded
+processes that spawn child processes.
 
 @item
 This function can crash on some platforms:
@@ -28,4 +30,7 @@ NetBSD 10.0, Haiku.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On many platforms, this function does not support the @code{O_CLOFORK} flag:
+glibc 2.44, musl libc, FreeBSD 14, NetBSD 10, OpenBSD 7.0, DragonFly BSD 6.4.
 @end itemize
