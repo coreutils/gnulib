@@ -305,7 +305,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
     {
       if (pwc != NULL)
-        *pwc = (*s & 0x80 ? 0xDF00 : 0) + (unsigned char) {*s};
+        *pwc = (unsigned char) *s;
       return 1;
     }
 #  endif

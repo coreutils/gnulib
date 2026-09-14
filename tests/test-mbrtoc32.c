@@ -151,15 +151,18 @@ main (int argc, char *argv[])
 
                 wc = 0xBADFACE;
                 ret = mbrtoc32 (&wc, buf, 1, &state);
-                /* POSIX:2024 says: "In the POSIX locale an [EILSEQ]
-                   error cannot occur since all byte values are valid
-                   characters."  */
+                /* POSIX:2018 says regarding mbrtowc: "In the POSIX locale an
+                   [EILSEQ] error cannot occur since all byte values are valid
+                   characters."  It is reasonable to expect mbrtoc32 to behave
+                   in the same way.  */
                 ASSERT (ret == 1);
                 if (c < 0x80)
                   /* c is an ASCII character.  */
                   ASSERT (wc == c);
                 else
-                  ASSERT (wc == (0xDF00 | c));
+                  /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+                     But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+                  ASSERT (wc == (btoc32 (c) == 0xDF00 + c ? btoc32 (c) : c));
                 ASSERT (mbsinit (&state));
 
                 ret = mbrtoc32 (NULL, buf, 1, &state);

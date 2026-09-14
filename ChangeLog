@@ -1,20 +1,3 @@
-2026-09-13  Paul Eggert  <eggert@cs.ucla.edu>
-
-	mbrtoc32: also protect high-bit bytes when EILSEQ
-	I ran into some problems with GNU sed on NetBSD and
-	endeavored to fix some of them by altering the mbrtoc32 replacement,
-	so that in the C locale it always converts bytes with the top
-	bit set to 0xDFxx, instead of doing it only sometimes.
-	This patch also updates commentary to match current POSIX standards
-	and some newer OS releases.
-	* lib/mbrtoc32.c (mbrtoc32): Also convert (e.g.) 0xED to 0xDFED
-	when !GNULIB_defined_mbstate_t && HAVE_WORKING_MBRTOC32 &&
-	HAVE_WORKING_C32RTOMB && !MBRTOC32_MULTIBYTE_LOCALE_BUG &&
-	MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ.
-	* tests/test-mbrtoc16.c (main):
-	* tests/test-mbrtoc32.c (main):
-	Simplify, now that we always do that conversion.
-
 2026-09-13  Bruno Haible  <bruno@clisp.org>
 
 	setlocale: Use bool.
