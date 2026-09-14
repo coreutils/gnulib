@@ -20,7 +20,7 @@ In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
 @c https://sourceware.org/PR19932
 @c https://sourceware.org/PR29511
-glibc 2.35.
+glibc 2.44, NetBSD 11.1.
 @item
 In the C or POSIX locales,
 this function returns values like in ISO-8859-1 locales,
@@ -40,7 +40,7 @@ Haiku.
 This function does not recognize multibyte sequences that @code{mbrtowc}
 recognizes on some platforms:
 @c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=272293
-FreeBSD 13.2,
+FreeBSD 15.1,
 Solaris 11.4, mingw, MSVC 14.
 @c For MSVC this is because it assumes that the input is always UTF-8 encoded.
 @c See https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/mbrtoc16-mbrtoc323

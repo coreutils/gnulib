@@ -1,5 +1,5 @@
 # mbrtoc16.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2014-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -268,10 +268,9 @@ AC_DEFUN([gl_MBRTOC16_EMPTY_INPUT],
     ])
 ])
 
-dnl <https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbrtowc.html>
-dnl POSIX:2018 says regarding mbrtowc: "In the POSIX locale an [EILSEQ] error
-dnl cannot occur since all byte values are valid characters."  It is reasonable
-dnl to expect mbrtoc16 to behave in the same way.
+dnl <https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbrtoc16.html>
+dnl POSIX:2024 says: "In the POSIX locale an [EILSEQ] error cannot occur
+dnl since all byte values are valid characters."
 
 AC_DEFUN([gl_MBRTOC16_C_LOCALE],
 [
