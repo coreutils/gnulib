@@ -27,6 +27,8 @@
 #include <wchar.h>
 
 #if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
+    || (!GNULIB_defined_mbstate_t && HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB \
+        && !_GL_WCHAR_T_IS_UCS4) \
     || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) \
     || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
         && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION)
@@ -45,6 +47,8 @@ wint_t
 btoc32 (int c)
 {
 #if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */ \
+    || (!GNULIB_defined_mbstate_t && HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB \
+        && !_GL_WCHAR_T_IS_UCS4) /* NetBSD ≥ 11 */ \
     || (!GNULIB_defined_mbstate_t && _GL_SMALL_WCHAR_T) /* Cygwin, mingw, MSVC */ \
     || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
         && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION)

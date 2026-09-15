@@ -94,6 +94,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
 # if (MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
       || MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ \
+      || (HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4) \
       || _GL_SMALL_WCHAR_T \
       || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
           && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION))
@@ -141,6 +142,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # if (MBRTOC32_EMPTY_INPUT_BUG \
       || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__) \
       || MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
+      || (HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4) \
       || _GL_SMALL_WCHAR_T \
       || ((!(HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB) && !_GL_SMALL_WCHAR_T) \
           && GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION))
@@ -270,7 +272,8 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   /* mbrtoc32() may produce different values for wc than mbrtowc().  Therefore
      use mbrtoc32().  */
 
-#  if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */
+#  if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */ \
+      || !_GL_WCHAR_T_IS_UCS4 /* NetBSD ≥ 11 */
   if (!hard_locale (LC_CTYPE))
     {
       /* In the "C" locale, map the bytes 0x80..0xFF to U+DF80..U+DFFF, so that

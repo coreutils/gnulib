@@ -1,3 +1,17 @@
+2026-09-15  Bruno Haible  <bruno@clisp.org>
+
+	mbrtoc32: Fix test-c32isprint failure on NetBSD 11.
+	* lib/mbrtoc32.c (mbrtoc32)
+	[HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4]:
+	In the C locale, map 0x80..0xFF differently.
+	* lib/btoc32.c (btoc32)
+	[HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4]:
+	Likewise.
+	* lib/c32is-impl.h (FUNC): Update comments.
+	* lib/c32to-impl.h (FUNC): Likewise.
+	* lib/c32width.c (c32width): Likewise.
+	* doc/posix-functions/mbrtoc32.texi: Mention the NetBSD problem.
+
 2026-09-13  Bruno Haible  <bruno@clisp.org>
 
 	setlocale: Use bool.

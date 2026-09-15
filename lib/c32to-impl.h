@@ -74,7 +74,7 @@ FUNC (wint_t wc)
     return UCS_FUNC (wc);
 # endif
 
-#elif HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB /* glibc, Android */
+#elif HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB /* glibc, NetBSD ≥ 11, Android */
   /* mbrtoc32() is essentially defined by the system libc.  */
 
 # if _GL_WCHAR_T_IS_UCS4
@@ -90,7 +90,7 @@ FUNC (wint_t wc)
     return wc;
 # endif
 
-#else /* macOS, FreeBSD, NetBSD, OpenBSD, HP-UX, Solaris, Minix, Android */
+#else /* macOS, FreeBSD, NetBSD < 11, OpenBSD, HP-UX, Solaris, Minix, Android */
   /* char32_t and wchar_t are equivalent.  */
   static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
