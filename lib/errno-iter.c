@@ -486,7 +486,7 @@ errno_iterate (errno_iterate_callback_fn callback, void *data)
   #if defined EFRAGS
   if (callback (data, EFRAGS)) return;
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
   #if defined EFTYPE
   if (callback (data, EFTYPE)) return;
   #endif

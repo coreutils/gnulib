@@ -1,5 +1,15 @@
 2026-09-16  Bruno Haible  <bruno@clisp.org>
 
+	strerrorname_np: Ensure it handles EFTYPE.
+	Suggested by Pádraig Brady.
+	* m4/strerrorname_np.m4 (gl_CHECK_STRERRORNAME_NP): Test whether
+	strerrorname_np handles EFTYPE.
+	* lib/strerrorname_np.c: Update comment.
+	* lib/errno-iter.c: Likewise.
+	* tests/test-strerrorname_np.c: Likewise.
+
+2026-09-16  Bruno Haible  <bruno@clisp.org>
+
 	Avoid spurious 'configure' output with MSVC.
 	* m4/stdckdint_h.m4 (gl_STDCKDINT_H): Send the C++ compiler's standard
 	output to /dev/null.

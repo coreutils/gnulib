@@ -485,7 +485,7 @@ main (void)
   #if defined EFRAGS
   ASSERT (streq (strerrorname_np (EFRAGS), "EFRAGS"));
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
+  /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
   #if defined EFTYPE
   ASSERT (streq (strerrorname_np (EFTYPE), "EFTYPE"));
   #endif
