@@ -1,5 +1,5 @@
 # uchar_h.m4
-# serial 33
+# serial 34
 dnl Copyright (C) 2019-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,7 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
        cat > conftest.cpp <<\EOF
 #include <uchar.h>
 EOF
-       gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
+       gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp > /dev/null"
        if AC_TRY_EVAL([gl_command]); then
          gl_cv_cxx_have_uchar_h=yes
        else
@@ -71,7 +71,7 @@ EOF
 char16_t a;
 char32_t b;
 EOF
-         gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
+         gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp > /dev/null"
          if AC_TRY_EVAL([gl_command]); then
            gl_cv_cxx_has_uchar_types=yes
          else

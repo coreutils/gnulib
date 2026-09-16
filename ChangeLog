@@ -1,3 +1,11 @@
+2026-09-16  Bruno Haible  <bruno@clisp.org>
+
+	Avoid spurious 'configure' output with MSVC.
+	* m4/stdckdint_h.m4 (gl_STDCKDINT_H): Send the C++ compiler's standard
+	output to /dev/null.
+	* m4/stdcountof_h.m4 (gl_STDCOUNTOF_H): Likewise.
+	* m4/uchar_h.m4 (gl_UCHAR_H): Likewise.
+
 2026-09-15  Bruno Haible  <bruno@clisp.org>
 
 	mbrtoc32: Fix test-c32isprint failure on NetBSD 11.
