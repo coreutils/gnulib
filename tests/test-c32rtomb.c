@@ -116,6 +116,23 @@ main (int argc, char *argv[])
       {
       case '1':
         /* C locale; tested above.  */
+#if !defined __ANDROID__
+        /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+           "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+           locale via setlocale(), what you get is a "C" locale with UTF-8
+           encoding, that is, effectively the "C.UTF-8" locale.  */
+        /* Check that c32rtomb does the inverse of mbrtoc32, in the C locale.
+           Recall that POSIX:2024 says about mbrtoc32:
+             "In the POSIX locale an [EILSEQ] error cannot occur since all
+              byte values are valid characters."
+           Above we have only tested the ISO C "basic character set".  */
+        for (int c = 0; c < 0x100; c++)
+          {
+            ret = c32rtomb (buf, btoc32 (c), NULL);
+            ASSERT (ret == 1);
+            ASSERT (buf[0] == (char) c);
+          }
+#endif
         return test_exit_status;
 
       case '2':

@@ -1,5 +1,19 @@
 2026-09-16  Bruno Haible  <bruno@clisp.org>
 
+	c32rtomb: Make consistent with mbrtoc32 in the C locale.
+	Suggested by Paul Eggert.
+	* m4/c32rtomb.m4 (gl_FUNC_C32RTOMB): Require gl_MBRTOC32_C_LOCALE,
+	gl_MBRTOC32_C_LOCALE_LIKE_ISO_8859. When mbrtoc32 gets overridden due to
+	the C locale, set also REPLACE_C32RTOMB to 1.
+	* lib/c32rtomb.c: Include hard-locale.h, <locale.h>.
+	(c32rtomb): On OpenBSD, NetBSD ≥ 11, glibc, Cygwin, mingw, MSVC, do
+	special handling of non-ASCII characters in the C locale.
+	* modules/c32rtomb (Depends-on): Add hard-locale.
+	* tests/test-c32rtomb.c (main): Check that c32rtomb does the inverse of
+	mbrtoc32 in the C locale.
+
+2026-09-16  Bruno Haible  <bruno@clisp.org>
+
 	strerrorname_np: Ensure it handles EFTYPE.
 	Suggested by Pádraig Brady.
 	* m4/strerrorname_np.m4 (gl_CHECK_STRERRORNAME_NP): Test whether

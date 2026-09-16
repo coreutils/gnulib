@@ -1,5 +1,5 @@
 # c32rtomb.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2020-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,8 @@ AC_DEFUN([gl_FUNC_C32RTOMB],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
+  AC_REQUIRE([gl_MBRTOC32_C_LOCALE])
+  AC_REQUIRE([gl_MBRTOC32_C_LOCALE_LIKE_ISO_8859])
   AC_REQUIRE([gl_C32RTOMB_SANITYCHECK])
 
   AC_REQUIRE([gl_CHECK_FUNC_C32RTOMB])
@@ -23,6 +25,20 @@ AC_DEFUN([gl_FUNC_C32RTOMB],
     if test $HAVE_WORKING_MBRTOC32 = 0; then
       REPLACE_C32RTOMB=1
     fi
+    dnl Likewise when we override it because of its behaviour in the C locale.
+    case "$gl_cv_func_mbrtoc32_C_locale_sans_EILSEQ" in
+      *yes)
+        case "$gl_cv_func_mbrtoc32_C_locale_like_iso_8859" in
+          *yes)
+            case "$host_os" in
+              solaris*) ;;
+              *) REPLACE_C32RTOMB=1 ;;
+            esac
+            ;;
+        esac
+        ;;
+      *) REPLACE_C32RTOMB=1 ;;
+    esac
     AC_CACHE_CHECK([whether c32rtomb return value is correct],
       [gl_cv_func_c32rtomb_retval],
       [
