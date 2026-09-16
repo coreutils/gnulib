@@ -486,7 +486,7 @@ strerrorname_np (int errnum)
     #if defined EFRAGS
     case EFRAGS:          return "EFRAGS";
     #endif
-    /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
+    /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin */
     #if defined EFTYPE
     case EFTYPE:          return "EFTYPE";
     #endif
