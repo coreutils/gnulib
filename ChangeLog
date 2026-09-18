@@ -1,5 +1,12 @@
 2026-09-18  Bruno Haible  <bruno@clisp.org>
 
+	btoc32 tests: Enhance tests.
+	* tests/test-btoc32.c (main): Verify that btoc32 is consistent with
+	mbrtoc32.
+	* modules/btoc32-tests (Depends-on): Add mbszero, mbrtoc32.
+
+2026-09-18  Bruno Haible  <bruno@clisp.org>
+
 	c32rtomb + uchar-h-c23: Make consistent with mbrtoc32 in the C locale.
 	* lib/c32rtomb.c (c32rtomb) [GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION]:
 	Do special handling of non-ASCII characters in the C locale.

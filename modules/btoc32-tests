@@ -11,6 +11,8 @@ m4/codeset.m4
 
 Depends-on:
 setlocale
+mbszero
+mbrtoc32
 streq
 
 configure.ac:
