@@ -35,7 +35,8 @@
 #if (MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 \
      || MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ \
      || (HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB && !_GL_WCHAR_T_IS_UCS4) \
-     || _GL_SMALL_WCHAR_T)
+     || _GL_SMALL_WCHAR_T \
+     || (GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION))
 # include "hard-locale.h"
 # include <locale.h>
 #endif
@@ -166,6 +167,13 @@ c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 
   /* char32_t and wchar_t are equivalent.  */
 # if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if ((wc >= 0xDF80 && wc <= 0xDFFF) && !hard_locale (LC_CTYPE))
+    {
+      /* In the "C" locale, map the code points U+DF80..U+DFFF back to the bytes
+         0x80..0xFF, for consistency with the mbrtoc32 and btoc32 functions.  */
+      s[0] = (unsigned char) (wc - 0xDF00);
+      return 1;
+    }
   if (wc != 0)
     {
       wc = unicode_to_locale_encoding (wc);
