@@ -1,3 +1,15 @@
+2026-09-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Pacify -Waddress on MS-Windows
+	Problem reported by Yue Yi <https://bugs.gnu.org/81837#23>.
+	* lib/boot-time-aux.h (GetTickCount64Func):
+	* lib/getrandom.c (BCryptGenRandomFunc):
+	* lib/gettimeofday.c (GetSystemTimePreciseAsFileTimeFunc):
+	* lib/link.c (CreateHardLinkFunc):
+	* lib/stat-w32.c (GetFileInformationByHandleExFunc):
+	When defining these macros for Vista and later, and when GCC 4.2
+	or later, ignore -Waddress.
+
 2026-09-19  Pádraig Brady  <P@draigBrady.com>
 
 	regex: check for glibc greek locale bug 20381

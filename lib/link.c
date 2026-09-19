@@ -64,6 +64,9 @@ initialize (void)
 #  else
 
 #   define CreateHardLinkFunc CreateHardLink
+#   if _GL_GNUC_PREREQ (4, 2)
+#    pragma GCC diagnostic ignored "-Waddress"
+#   endif
 
 #  endif
 
