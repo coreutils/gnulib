@@ -1,3 +1,11 @@
+2026-09-19  Pádraig Brady  <P@draigBrady.com>
+
+	regex: check for glibc greek locale bug 20381
+	test-regex-el fails on glibc-2.44.9000-2.fc46.x86_64
+	due to regex not being replaced there.
+	* m4/regex.m4 (gl_REGEX): Check for
+	<https://sourceware.org/bugzilla/show_bug.cgi?id=20381>
+
 2026-09-18  Bruno Haible  <bruno@clisp.org>
 
 	btoc32 tests: Enhance tests.
