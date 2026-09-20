@@ -1,5 +1,15 @@
 2026-09-20  Bruno Haible  <bruno@clisp.org>
 
+	c32tob: Make consistent with btoc32.
+	* lib/c32tob.c: Include hard-locale.h, <locale.h>.
+	(c32tob): On Cygwin and native Windows and when uchar-h-c23 is in use,
+	map the code points U+DF80..U+DFFF back to 0x80..0xFF.
+	* modules/c32tob (Depends-on): Add hard-locale.
+	(configure.ac): Require gl_MBRTOC32_C_LOCALE,
+	gl_MBRTOC32_C_LOCALE_LIKE_ISO_8859.
+
+2026-09-20  Bruno Haible  <bruno@clisp.org>
+
 	mbrtoc32, c32rtomb: Make consistent with mbrtowc on glibc (regr. today).
 	* lib/mbrtoc32.c (mbrtoc32): In the C locale, map 0x80..0xFF to
 	U+DF80..U+DFFF instead of U+0080..U+00FF.

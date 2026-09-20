@@ -14,10 +14,13 @@ Depends-on:
 uchar-h
 mbszero
 c32rtomb
+hard-locale
 wctob
 
 configure.ac:
 AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
+AC_REQUIRE([gl_MBRTOC32_C_LOCALE])
+AC_REQUIRE([gl_MBRTOC32_C_LOCALE_LIKE_ISO_8859])
 AC_REQUIRE([gl_C32RTOMB_SANITYCHECK])
 gl_UCHAR_MODULE_INDICATOR([c32tob])
 
