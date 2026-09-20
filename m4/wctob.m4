@@ -1,5 +1,5 @@
 # wctob.m4
-# serial 17
+# serial 18
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,34 +15,39 @@ AC_DEFUN([gl_FUNC_WCTOB],
     HAVE_WCTOB=0
   else
     HAVE_WCTOB=1
-
-    dnl Solaris 9 has the wctob() function but it does not work.
-    dnl Cygwin 1.7.2 has the wctob() function but it clobbers caller-owned
-    dnl registers, see <https://cygwin.com/ml/cygwin/2010-05/msg00015.html>.
-    AC_REQUIRE([AC_PROG_CC])
-    AC_REQUIRE([gt_LOCALE_FR])
-    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-    AC_CACHE_CHECK([whether wctob works],
-      [gl_cv_func_wctob_works],
-      [
-        dnl Initial guess, used when cross-compiling or when no suitable locale
-        dnl is present.
+    dnl When we override wint_t, we also need to override the wctob function,
+    dnl since it takes a wint_t as parameter.
+    AC_REQUIRE([gt_TYPE_WINT_T])
+    if test $GNULIBHEADERS_OVERRIDE_WINT_T = 1; then
+      REPLACE_WCTOB=1
+    else
+      dnl Solaris 9 has the wctob() function but it does not work.
+      dnl Cygwin 1.7.2 has the wctob() function but it clobbers caller-owned
+      dnl registers, see <https://cygwin.com/ml/cygwin/2010-05/msg00015.html>.
+      AC_REQUIRE([AC_PROG_CC])
+      AC_REQUIRE([gt_LOCALE_FR])
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+      AC_CACHE_CHECK([whether wctob works],
+        [gl_cv_func_wctob_works],
+        [
+          dnl Initial guess, used when cross-compiling or when no suitable
+          dnl locale is present.
 changequote(,)dnl
-        case "$host_os" in
-            # Guess no on Solaris <= 9 and Cygwin.
-          solaris2.[1-9] | solaris2.[1-9].* | cygwin*)
-            gl_cv_func_wctob_works="guessing no" ;;
-            # Guess no on native Windows.
-          mingw* | windows*)
-            gl_cv_func_wctob_works="guessing no" ;;
-            # Guess yes otherwise.
-          *) gl_cv_func_wctob_works="guessing yes" ;;
-        esac
+          case "$host_os" in
+              # Guess no on Solaris <= 9 and Cygwin.
+            solaris2.[1-9] | solaris2.[1-9].* | cygwin*)
+              gl_cv_func_wctob_works="guessing no" ;;
+              # Guess no on native Windows.
+            mingw* | windows*)
+              gl_cv_func_wctob_works="guessing no" ;;
+              # Guess yes otherwise.
+            *) gl_cv_func_wctob_works="guessing yes" ;;
+          esac
 changequote([,])dnl
-        case "$host_os" in
-          cygwin*)
-            AC_RUN_IFELSE(
-              [AC_LANG_SOURCE([[
+          case "$host_os" in
+            cygwin*)
+              AC_RUN_IFELSE(
+                [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <wchar.h>
 
@@ -59,14 +64,14 @@ int main ()
     return 2;
   return 0;
 }]])],
-              [:],
-              [gl_cv_func_wctob_works=no],
-              [:])
-            ;;
-        esac
-        if test "$gl_cv_func_wctob_works" != no && test $LOCALE_FR != none; then
-          AC_RUN_IFELSE(
-            [AC_LANG_SOURCE([[
+                [:],
+                [gl_cv_func_wctob_works=no],
+                [:])
+              ;;
+          esac
+          if test "$gl_cv_func_wctob_works" != no && test $LOCALE_FR != none; then
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <stdlib.h>
 #include <wchar.h>
@@ -82,23 +87,23 @@ int main ()
     }
   return 0;
 }]])],
-            [gl_cv_func_wctob_works=yes],
-            [gl_cv_func_wctob_works=no],
-            [:])
-        fi
-      ])
-    case "$gl_cv_func_wctob_works" in
-      *yes) ;;
-      *) REPLACE_WCTOB=1 ;;
-    esac
-    dnl When we adjust mbrtowc in the C locale, we need to adjust wctob as well,
-    dnl for consistency.
-    AC_REQUIRE([gl_MBRTOWC_C_LOCALE])
-    case "$gl_cv_func_mbrtowc_C_locale_sans_EILSEQ" in
-      *yes) ;;
-      *) REPLACE_WCTOB=1
-         ;;
-    esac
+              [gl_cv_func_wctob_works=yes],
+              [gl_cv_func_wctob_works=no],
+              [:])
+          fi
+        ])
+      case "$gl_cv_func_wctob_works" in
+        *yes) ;;
+        *) REPLACE_WCTOB=1 ;;
+      esac
+      dnl When we adjust mbrtowc in the C locale, we need to adjust wctob
+      dnl as well, for consistency.
+      AC_REQUIRE([gl_MBRTOWC_C_LOCALE])
+      case "$gl_cv_func_mbrtowc_C_locale_sans_EILSEQ" in
+        *yes) ;;
+        *) REPLACE_WCTOB=1 ;;
+      esac
+    fi
   fi
 ])
 
