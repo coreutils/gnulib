@@ -1,5 +1,5 @@
 # wctob.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -90,6 +90,14 @@ int main ()
     case "$gl_cv_func_wctob_works" in
       *yes) ;;
       *) REPLACE_WCTOB=1 ;;
+    esac
+    dnl When we adjust mbrtowc in the C locale, we need to adjust wctob as well,
+    dnl for consistency.
+    AC_REQUIRE([gl_MBRTOWC_C_LOCALE])
+    case "$gl_cv_func_mbrtowc_C_locale_sans_EILSEQ" in
+      *yes) ;;
+      *) REPLACE_WCTOB=1
+         ;;
     esac
   fi
 ])
