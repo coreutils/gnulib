@@ -1,5 +1,5 @@
 # wcrtomb.m4
-# serial 24
+# serial 25
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -145,6 +145,15 @@ int main ()
            REPLACE_WCRTOMB=1 ;;
       esac
     fi
+    dnl When we adjust mbrtowc in the C locale, we need to adjust wcrtomb as well, for consistency.
+    AC_REQUIRE([gl_MBRTOWC_C_LOCALE])
+    case "$gl_cv_func_mbrtowc_C_locale_sans_EILSEQ" in
+      *yes) ;;
+      *) AC_DEFINE([MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ], [1],
+           [Define if the mbrtowc function may signal encoding errors in the C locale.])
+         REPLACE_WCRTOMB=1
+         ;;
+    esac
   fi
 ])
 

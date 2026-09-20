@@ -78,7 +78,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 # include "localcharset.h"
 # include "streq-opt.h"
 
-# if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ
+# if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ   /* glibc, Cygwin < 3.5 */
 #  include "hard-locale.h"
 #  include <locale.h>
 # endif
@@ -342,11 +342,12 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return 0;
 # endif
 
-# if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ
+# if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ   /* glibc, Cygwin < 3.5 */
+  /* In the C locale, map 0x80..0xFF to 0xDF80..0xDFFF.  */
   if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
     {
       unsigned char uc = *s;
-      *pwc = uc;
+      *pwc = 0xDF00 + uc;
       return 1;
     }
 # endif

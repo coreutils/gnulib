@@ -15,6 +15,7 @@ m4/codeset.m4
 Depends-on:
 wchar-h
 extensions
+hard-locale     [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1]
 mbsinit         [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1]
 
 configure.ac:

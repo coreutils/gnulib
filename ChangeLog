@@ -1,3 +1,17 @@
+2026-09-20  Bruno Haible  <bruno@clisp.org>
+
+	wcrtomb: Make consistent with mbrtowc (regression 2016-04-09).
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Require gl_MBRTOWC_C_LOCALE and, if
+	needed, set REPLACE_WCRTOMB and define MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ.
+	* lib/mbrtowc.c (rpl_mbrtowc) [MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ]: In the
+	C locale, map 0x80..0xFF to 0xDF80..0xDFFF instead of 0x0080..0x00FF.
+	* lib/wcrtomb.c: Include hard-locale.h, <locale.h>.
+	(wcrtomb) [MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ]: In the C locale, map
+	0xDF80..0xDFFF to 0x80..0xFF.
+	* modules/wcrtomb (Depends-on): Add hard-locale.
+	* tests/test-wcrtomb.c (main): Check that wcrtomb does the inverse of
+	mbrtowc in the C locale.
+
 2026-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Pacify -Waddress on MS-Windows

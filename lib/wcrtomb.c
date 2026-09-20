@@ -23,6 +23,11 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ
+# include "hard-locale.h"
+# include <locale.h>
+#endif
+
 
 size_t
 wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
@@ -38,7 +43,8 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
 
 #if !HAVE_WCRTOMB                       /* HP-UX 11.00, mingw */ \
     || WCRTOMB_RETVAL_BUG               /* Solaris 11.3, MSVC */ \
-    || WCRTOMB_C_LOCALE_BUG             /* Android */
+    || WCRTOMB_C_LOCALE_BUG             /* Android */ \
+    || MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ /* glibc, Cygwin < 3.5 */
   if (s == NULL)
     /* We know the NUL wide character corresponds to the NUL character.  */
     return 1;
@@ -60,6 +66,15 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
           return (size_t)(-1);
         }
 # else
+#  if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ  /* glibc, Cygwin < 3.5 */
+      /* Implement consistently with mbrtowc(): through a 1:1 correspondence,
+         mapping 0xDF80..0xDFFF back to 0x80..0xFF.  */
+      if (wc >= 0xDF80 && wc <= 0xDFFF && ! hard_locale (LC_CTYPE))
+        {
+          *s = (unsigned char) (wc - 0xDF00);
+          return 1;
+        }
+#  endif
       return wcrtomb (s, wc, ps);
 # endif
 #else                                   /* HP-UX 11.00, mingw */
