@@ -304,11 +304,11 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
     abort ();
 #  endif
 
-#  if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
+#  if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ /* glibc */
   if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
     {
       if (pwc != NULL)
-        *pwc = (unsigned char) *s;
+        *pwc = 0xDF00 + (unsigned char) *s;
       return 1;
     }
 #  endif

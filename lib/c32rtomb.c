@@ -54,22 +54,13 @@ c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 # endif
 
 # if MBRTOC32_IN_C_LOCALE_MAYBE_LIKE_ISO_8859 /* OpenBSD */ \
+     || MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ /* glibc */ \
      || !_GL_WCHAR_T_IS_UCS4 /* NetBSD ≥ 11 */
   if ((wc >= 0xDF80 && wc <= 0xDFFF) && !hard_locale (LC_CTYPE))
     {
       /* In the "C" locale, map the code points U+DF80..U+DFFF back to the bytes
          0x80..0xFF, for consistency with the mbrtoc32 and btoc32 functions.  */
       s[0] = (unsigned char) (wc - 0xDF00);
-      return 1;
-    }
-# endif
-
-# if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
-  if ((wc >= 0x0080 && wc <= 0x00FF) && !hard_locale (LC_CTYPE))
-    {
-      /* In the "C" locale, map the code points U+0080..U+00FF back to the bytes
-         0x80..0xFF, for consistency with the mbrtoc32 and btoc32 functions.  */
-      s[0] = (unsigned char) wc;
       return 1;
     }
 # endif
