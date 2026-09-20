@@ -1,5 +1,10 @@
 2026-09-20  Bruno Haible  <bruno@clisp.org>
 
+	c32tob: Add tests.
+	* tests/test-c32tob.c: New file.
+	* tests/test-c32tob.sh: New file.
+	* modules/c32tob-tests: New file.
+
 	c32tob: Make consistent with btoc32.
 	* lib/c32tob.c: Include hard-locale.h, <locale.h>.
 	(c32tob): On Cygwin and native Windows and when uchar-h-c23 is in use,
