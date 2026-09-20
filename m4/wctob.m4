@@ -1,5 +1,5 @@
 # wctob.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,5 +96,6 @@ int main ()
 
 # Prerequisites of lib/wctob.c.
 AC_DEFUN([gl_PREREQ_WCTOB], [
+  AC_CHECK_FUNCS_ONCE([wcrtomb])
   :
 ])

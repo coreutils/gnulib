@@ -32,7 +32,15 @@ wctob (wint_t wc)
     abort ();
   /* Handle the case where WEOF is a value that does not fit in a wchar_t.  */
   if (wc == (wchar_t)wc)
-    if (wctomb (buf, (wchar_t)wc) == 1)
-      return (unsigned char) buf[0];
+    {
+#if HAVE_WCRTOMB
+      mbstate_t state; mbszero (&state);
+      if (wcrtomb (buf, (wchar_t)wc, &state) == 1)
+        return (unsigned char) buf[0];
+#else
+      if (wctomb (buf, (wchar_t)wc) == 1)
+        return (unsigned char) buf[0];
+#endif
+    }
   return EOF;
 }

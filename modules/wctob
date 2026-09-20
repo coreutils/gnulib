@@ -10,6 +10,8 @@ m4/codeset.m4
 
 Depends-on:
 wchar-h
+mbszero         [test $HAVE_WCTOB = 0 || test $REPLACE_WCTOB = 1]
+wcrtomb         [test $HAVE_WCTOB = 0 || test $REPLACE_WCTOB = 1]
 wctomb          [test $HAVE_WCTOB = 0 || test $REPLACE_WCTOB = 1]
 
 configure.ac:
