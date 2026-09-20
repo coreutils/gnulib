@@ -37,6 +37,21 @@ main (int argc, char *argv[])
 
   ASSERT (btowc (EOF) == WEOF);
 
+  /* Verify that btowc is consistent with mbrtowc.  */
+  for (int c = 0; c < 0x100; c++)
+    if (c != 0)
+      {
+        mbstate_t state;
+        mbszero (&state);
+        char s[1];
+        s[0] = (unsigned char) c;
+        wchar_t wc;
+        if (mbrtowc (&wc, s, 1, &state) <= 1)
+          ASSERT (btowc (c) == (wint_t) wc);
+        else
+          ASSERT (btowc (c) == WEOF);
+      }
+
 #ifdef __ANDROID__
   /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
      "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
