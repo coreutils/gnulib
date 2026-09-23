@@ -5,6 +5,7 @@ Files:
 lib/alignalloc.h
 lib/alignalloc.c
 m4/alignalloc.m4
+m4/aligned_alloc.m4
 
 Depends-on:
 alignasof

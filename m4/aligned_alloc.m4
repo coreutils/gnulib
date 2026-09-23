@@ -1,5 +1,5 @@
 # aligned_alloc.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2020-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,26 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+
+  gl_FUNC_ALIGNED_ALLOC_WORKS
+  if test $ac_cv_func_aligned_alloc = yes; then
+    dnl The system has aligned_alloc.
+    case "$gl_cv_func_aligned_alloc_works" in
+      *yes) ;;
+      *) REPLACE_ALIGNED_ALLOC=1 ;;
+    esac
+  else
+    dnl The system does not have aligned_alloc.
+    HAVE_ALIGNED_ALLOC=0
+    case "$gl_cv_onwards_func_aligned_alloc" in
+      future*) REPLACE_ALIGNED_ALLOC=1 ;;
+    esac
+  fi
+])
+
+dnl Test whether aligned_alloc is defined and works.
+AC_DEFUN_ONCE([gl_FUNC_ALIGNED_ALLOC_WORKS],
+[
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Persuade glibc and OpenBSD <stdlib.h> to declare aligned_alloc().
@@ -18,8 +38,9 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
   if test $ac_cv_func_aligned_alloc = yes; then
     dnl On macOS 11.1 and AIX 7.3.1, aligned_alloc returns NULL when the
     dnl alignment argument is smaller than sizeof (void *).
-    dnl On Solaris 11.4, aligned_alloc returns NULL if the size is not a
-    dnl multiple of the alignment.
+    dnl On Solaris 11.4 or with gcc's ASAN or with clang's ASAN or Scudo,
+    dnl aligned_alloc returns NULL if the size is not a multiple of the
+    dnl alignment.
     dnl On macOS 15, AIX 7.3, Solaris 11.4, aligned_alloc with a zero size
     dnl returns NULL.
     AC_CACHE_CHECK([whether aligned_alloc works for small alignments and sizes],
@@ -64,15 +85,7 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
           esac
          ])
       ])
-    case "$gl_cv_func_aligned_alloc_works" in
-      *yes) ;;
-      *) REPLACE_ALIGNED_ALLOC=1 ;;
-    esac
   else
-    dnl The system does not have aligned_alloc.
-    HAVE_ALIGNED_ALLOC=0
-    case "$gl_cv_onwards_func_aligned_alloc" in
-      future*) REPLACE_ALIGNED_ALLOC=1 ;;
-    esac
+    gl_cv_func_aligned_alloc_works=no
   fi
 ])

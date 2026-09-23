@@ -1,5 +1,19 @@
 2026-09-23  Bruno Haible  <bruno@clisp.org>
 
+	alignalloc: Don't use aligned_alloc if it is buggy.
+	Reported by <gnulib@mifar.in> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-09/msg00097.html>.
+	* m4/aligned_alloc.m4 (gl_FUNC_ALIGNED_ALLOC_WORKS): New macro,
+	extracted from gl_FUNC_ALIGNED_ALLOC.
+	(gl_FUNC_ALIGNED_ALLOC): Use it.
+	* m4/alignalloc.m4 (gl_ALIGNALLOC): Invoke gl_FUNC_ALIGNED_ALLOC_WORKS
+	and define HAVE_WORKING_ALIGNED_ALLOC.
+	* lib/alignalloc.h (ALIGNALLOC_VIA_ALIGNED_ALLOC): Test
+	HAVE_WORKING_ALIGNED_ALLOC, instead of testing for an address sanitizer.
+	* modules/alignalloc (Files): Add m4/aligned_alloc.m4.
+
+2026-09-23  Bruno Haible  <bruno@clisp.org>
+
 	aligned_alloc: Document "clang -fsanitize=scudo" bug.
 	Reported by <gnulib@mifar.in> in
 	<https://lists.gnu.org/archive/html/bug-gnulib/2026-09/msg00097.html>.
