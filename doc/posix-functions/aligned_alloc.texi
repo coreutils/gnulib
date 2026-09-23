@@ -30,7 +30,7 @@ macOS 15, AIX 7.3, Solaris 11.4.
 @item
 On some platforms, @code{aligned_alloc} crashes if the requested size is
 not a multiple of the alignment:
-AddressSanitizer (gcc 11.2 or clang 13).
+AddressSanitizer (gcc 11.2 or clang 13), clang with Scudo.
 @end itemize
 
 Portability problems not fixed by Gnulib:
