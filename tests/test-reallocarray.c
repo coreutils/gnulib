@@ -28,6 +28,11 @@ SIGNATURE_CHECK (reallocarray, void *, (void *, size_t, size_t));
 
 #include "macros.h"
 
+/* For determining whether an address sanitizer is in use.  */
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+
 /* Work around clang bug
    <https://github.com/llvm/llvm-project/issues/114772>.  */
 void *(*volatile my_reallocarray) (void *, size_t, size_t) = reallocarray;
@@ -37,7 +42,8 @@ void *(*volatile my_reallocarray) (void *, size_t, size_t) = reallocarray;
 int
 main ()
 {
-#if defined __FILC__
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer) \
+    || defined __FILC__
   /* Avoid a "filc safety error: attempt to allocate object that is too big" */
   fputs ("Skipping test: large allocations are unsupported\n", stderr);
   return 77;

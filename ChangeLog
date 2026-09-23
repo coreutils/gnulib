@@ -1,3 +1,13 @@
+2026-09-23  Bruno Haible  <bruno@clisp.org>
+
+	tests: Avoid test failures with -fsanitize=address.
+	* tests/test-malloc-posix.c (__has_feature): New macro.
+	(main): Skip the test if an address sanitizer is in use.
+	* tests/test-calloc-posix.c (__has_feature): New macro.
+	(main): Skip the test if an address sanitizer is in use.
+	* tests/test-reallocarray.c (__has_feature): New macro.
+	(main): Skip the test if an address sanitizer is in use.
+
 2026-09-20  Bruno Haible  <bruno@clisp.org>
 
 	c32tob: Add tests.
