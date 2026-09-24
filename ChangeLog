@@ -1,5 +1,11 @@
 2026-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	closeout: check for -fsanitize=leak etc
+	Do not close stderr if other sanitizers are in use that
+	output to stderr after main exits.
+	* lib/closeout.c (CLOSE_STDERR_TOO): Rename from SANITIZE_ADDRESS
+	and invert sense.  Change the use.
+
 	malloc-posix: check for -fsanitize=leak etc
 	* m4/malloc.m4 (gl_CHECK_MALLOC_PTRDIFF): Also be suspicious
 	if HWASan, LSan, MSan, Scudo, TSan, since they can also
