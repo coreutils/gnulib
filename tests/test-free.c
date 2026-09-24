@@ -92,10 +92,7 @@ main ()
 
   /* Skip this test when an address sanitizer is in use, because it would report
      a "heap buffer overflow".  */
-  #ifndef __has_feature
-   #define __has_feature(a) 0
-  #endif
-  #if !(defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer))
+  #ifndef __SANITIZE_ADDRESS__
   /* Test a less common code path.
      When malloc() is based on mmap(), free() can sometimes call munmap().
      munmap() usually succeeds, but fails in a particular situation: when

@@ -33,10 +33,7 @@
 #include <limits.h>
 
 /* Skip this test when an address sanitizer is in use.  */
-#ifndef __has_feature
-# define __has_feature(a) 0
-#endif
-#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+#ifdef __SANITIZE_ADDRESS__
 # undef HAVE_STACK_OVERFLOW_RECOVERY
 #endif
 

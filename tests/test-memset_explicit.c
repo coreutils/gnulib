@@ -101,10 +101,7 @@ test_static (void)
    a "heap use after free".
    Skip it also with Fil-C, because that environment does not support the
    conversion of uintptr_t to a pointer or the re-use of a freed pointer.  */
-#ifndef __has_feature
-# define __has_feature(a) 0
-#endif
-#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer) \
+#if defined __SANITIZE_ADDRESS__ \
     || defined __FILC__
 
 static void
@@ -187,10 +184,7 @@ test_heap (void)
 
 /* Skip this part when an address sanitizer is in use, because it would report
    a "stack use after return".  */
-#ifndef __has_feature
-# define __has_feature(a) 0
-#endif
-#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+#ifdef __SANITIZE_ADDRESS__
 
 static void
 test_stack (void)

@@ -1,5 +1,14 @@
 2026-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tests: prefer GCC sanitization macros
+	* tests/test-c-stack.c, tests/test-calloc-posix.c:
+	* tests/test-dprintf-posix2.c, tests/test-explicit_bzero.c:
+	* tests/test-fprintf-posix3.c, tests/test-free.c:
+	* tests/test-malloc-posix.c, tests/test-memset_explicit.c:
+	* tests/test-reallocarray.c, tests/test-sigsegv-catch-stackoverflow1.c:
+	* tests/test-sigsegv-catch-stackoverflow2.c:
+	Simplify now that gnulib-common.m4 supports GCC-like macros.
+
 	getdelim: check for other sanitizers
 	* lib/stdio.in.h (__has_feature): Remove.
 	(getdelim): Also check for other relevant sanitizers.

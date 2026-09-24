@@ -35,10 +35,7 @@ main ()
 #else
 
 /* Skip this test when an address sanitizer is in use, since it would fail.  */
-#ifndef __has_feature
-# define __has_feature(a) 0
-#endif
-#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+#ifdef __SANITIZE_ADDRESS__
 
 int
 main ()
