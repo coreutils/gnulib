@@ -19,10 +19,6 @@
 /* Specification.  */
 #include <string.h>
 
-#ifndef __has_feature
-# define __has_feature(a) 0
-#endif
-
 /* Find the first occurrence of C in S or the final NUL byte.  */
 char *
 strchrnul (const char *s, int c_in)
@@ -37,7 +33,8 @@ strchrnul (const char *s, int c_in)
      so suppress this optimization on platforms where it is known to be
      dangerous, namely, those using address sanitization.  */
 
-#if ! (defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer) \
+#if ! (defined __SANITIZE_ADDRESS__ || defined __SANITIZE_HWADDRESS__ \
+       || defined __SANITIZE_MEMORY__ \
        || defined __CHERI_PURE_CAPABILITY__)
 
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
