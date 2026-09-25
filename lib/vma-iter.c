@@ -86,9 +86,18 @@
 # include <string.h> /* memcpy */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
+# include <sys/stat.h> /* fstat */
 /* Try to use the newer ("structured") /proc filesystem API, if supported.  */
 # define _STRUCTURED_PROC 1
 # include <sys/procfs.h> /* prmap_t, optionally PIOC* */
+
+/*  In 32-bit Solaris do not use the Gnulib replacement for fstat as
+    it typically assumes a struct stat with 64-bit off_t, whereas our
+    struct stat uses only 32-bit off_t.  We don't need the Gnulib
+    fstat workarounds here.  */
+# if defined fstat && !defined _LP64
+#  undef fstat
+# endif
 #endif
 
 #if HAVE_PSTAT_GETPROCVM /* HP-UX */

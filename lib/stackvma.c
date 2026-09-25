@@ -1830,18 +1830,12 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 # define _STRUCTURED_PROC 1
 # include <sys/procfs.h> /* prmap_t, optionally PIOC* */
 
-# if !defined __sun
-
-/* Cache for getpagesize().  */
-static uintptr_t pagesize;
-
-/* Initialize pagesize.  */
-static void
-init_pagesize (void)
-{
-  pagesize = getpagesize ();
-}
-
+/*  In 32-bit Solaris do not use the Gnulib replacement for fstat as
+    it typically assumes a struct stat with 64-bit off_t, whereas our
+    struct stat uses only 32-bit off_t.  We don't need the Gnulib
+    fstat workarounds here.  */
+# if defined fstat && !defined _LP64
+#  undef fstat
 # endif
 
 struct callback_locals
