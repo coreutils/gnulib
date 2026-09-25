@@ -75,7 +75,9 @@
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 
+#if HAVE_ALLOCA
 #include <alloca.h>
+#endif
 
 /* Specification.  */
 #ifndef VASNPRINTF
