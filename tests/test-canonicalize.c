@@ -314,6 +314,21 @@ main (void)
     ASSERT (errno == ELOOP);
   }
 
+  /* Test that this loop is detected.  Previously, it would run
+     until the system ran out of memory.  */
+  ASSERT (symlink ("loop/a", BASE "/loop") == 0);
+  {
+    errno = 0;
+    char *result1 = canonicalize_filename_mode (BASE "/loop",
+                                                CAN_ALL_BUT_LAST);
+    ASSERT (result1 == NULL);
+    ASSERT (errno == ELOOP);
+    errno = 0;
+    char *result2 = canonicalize_filename_mode (BASE "/loop", CAN_MISSING);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == ELOOP);
+  }
+
   /* Check that alternate modes can resolve missing basenames.  */
   {
     char *result1 = canonicalize_filename_mode (BASE "/zzz", CAN_ALL_BUT_LAST);
@@ -441,6 +456,7 @@ main (void)
   ASSERT (remove (BASE "/ket") == 0);
   ASSERT (remove (BASE "/lum") == 0);
   ASSERT (remove (BASE "/tra") == 0);
+  ASSERT (remove (BASE "/loop") == 0);
   ASSERT (remove (BASE) == 0);
   ASSERT (remove ("ise") == 0);
 

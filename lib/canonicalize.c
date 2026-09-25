@@ -32,6 +32,7 @@
 #include "attribute.h"
 #include "file-set.h"
 #include "hashcode-file.h"
+#include "min-eloop-threshold.h"
 #include "xalloc.h"
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
@@ -337,9 +338,11 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           if (0 <= n)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
-
-              if (num_links < 20)
-                num_links++;
+              if (++num_links > MIN_ELOOP_THRESHOLD)
+                {
+                  errno = ELOOP;
+                  goto error;
+                }
               else if (*start)
                 {
                   /* Enough symlinks have been seen that it is time to

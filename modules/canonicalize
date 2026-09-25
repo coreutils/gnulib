@@ -11,6 +11,7 @@ Depends-on:
 attribute
 bool
 double-slash-root
+eloop-threshold
 errno-h
 extensions
 fcntl-h

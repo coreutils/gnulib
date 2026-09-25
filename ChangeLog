@@ -1,3 +1,16 @@
+2026-09-25  Collin Funk  <collin.funk1@gmail.com>
+
+	canonicalize: Fix a missing check for symlink loops.
+	Reported by Brian Foster in:
+	<https://bugs.launchpad.net/ubuntu/+source/coreutils/+bug/2161155>
+	* lib/canonicalize.c: Include min-eloop-threshold.h.
+	(canonicalize_filename_mode_stk): Set errno to ELOOP and exit if we see
+	MIN_ELOOP_THRESHOLD links.
+	* modules/canonicalize (Depends-on): Add eloop-threshold.
+	* tests/test-canonicalize.c (main): Add a test case that would
+	previously loop until the system ran out of memory. Clean up the created
+	sylink.
+
 2026-09-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sigsegv, vma-iter: port to 32-bit Solaris
