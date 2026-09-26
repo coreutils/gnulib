@@ -38,6 +38,9 @@ On some platforms, @code{utimes} failed on read-only files when
 @code{utime} worked fine.
 glibc 2.2.5.
 @item
+This function might not modify the change time:
+NetBSD 11.0 on tmpfs.
+@item
 This function sets a slightly different time stamp than the requested one:
 @c https://dev.haiku-os.org/ticket/19214
 Haiku.
