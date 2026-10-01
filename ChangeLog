@@ -1,5 +1,11 @@
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
+	mktime: Add tests.
+	* tests/test-mktime-w32.c: New file.
+	* modules/mktime-tests: New file.
+
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
 	time_r tests: Add more tests.
 	* tests/test-localtime_r-w32.c: New file.
 	* modules/time_r-tests (Files): Add it.
