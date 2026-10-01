@@ -28,6 +28,7 @@
 	* lib/wcsftime.c: Include tzsanitize.h instead of <stdlib.h>,
 	<string.h>.
 	(rpl_wcsftime): Call tzsanitize.
+	* modules/tzsanitize: New file.
 	* modules/ctime (Depends-on): Add tzsanitize.
 	* modules/localtime (Depends-on): Likewise.
 	* modules/mktime (Depends-on): Likewise.
