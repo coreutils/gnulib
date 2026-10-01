@@ -1,0 +1,14 @@
+Files:
+tests/test-localtime-w32.c
+tests/macros.h
+
+Depends-on:
+test-xfail
+
+configure.ac:
+
+Makefile.am:
+if OS_IS_NATIVE_WINDOWS
+TESTS += test-localtime-w32
+check_PROGRAMS += test-localtime-w32
+endif

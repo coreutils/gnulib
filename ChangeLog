@@ -1,3 +1,9 @@
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
+	localtime: Add tests.
+	* tests/test-localtime-w32.c: New file.
+	* modules/localtime-tests: New file.
+
 2026-09-25  Collin Funk  <collin.funk1@gmail.com>
 
 	canonicalize: Fix a missing check for symlink loops.
