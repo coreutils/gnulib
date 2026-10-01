@@ -1,5 +1,11 @@
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
+	mktime tests: Simplify.
+	* tests/test-mktime-w32.c (main): Do a single mktime() invocation
+	instead of two.
+
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
 	tzsanitize: Fix test failures on MSVC.
 	* lib/tzsanitize.c: Include <windows.h>.
 	(tzsanitize): Except on mingw, sanitize also the environment variable

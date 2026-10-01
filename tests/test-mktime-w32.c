@@ -113,25 +113,15 @@ main (void)
     return 7;
 
   /* Now see whether mktime (a.k.a. timelocal) is consistent with that.  */
-  /* We need to invoke mktime up to twice, because the initial guess of tm_isdst
-     may be incorrect.
-     Documentation:
+  /* Documentation:
      <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/mktime-mktime32-mktime64>  */
   time_t utctime;
   {
     struct tm tm1 = lm;
-    tm1.tm_isdst = 0; /* initial guess */
+    tm1.tm_isdst = -1; /* let mktime find out whether DST or not */
     utctime = mktime (&tm1);
     if (utctime == (time_t) -1)
       return 8;
-    if (tm1.tm_isdst != 0)
-      {
-        struct tm tm2 = lm;
-        tm2.tm_isdst = tm1.tm_isdst;
-        utctime = mktime (&tm2);
-        if (utctime == (time_t) -1)
-          return 9;
-      }
   }
   printf ("mktime:        %lld\n", (long long) utctime);
   /* Just for comparison, print the interpretation as UTC time.  */
