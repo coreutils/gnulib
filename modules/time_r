@@ -8,6 +8,7 @@ m4/time_r.m4
 Depends-on:
 extensions
 time-h
+localtime       [test $HAVE_LOCALTIME_R = 0 || test $REPLACE_LOCALTIME_R = 1]
 
 configure.ac:
 gl_TIME_R
