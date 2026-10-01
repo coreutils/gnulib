@@ -16,6 +16,7 @@ libc-config     [test $REPLACE_MKTIME = 1]
 bool            [test $REPLACE_MKTIME = 1]
 stdckdint-h     [test $REPLACE_MKTIME = 1]
 time_r          [test $REPLACE_MKTIME = 1]
+tzsanitize      [test $REPLACE_MKTIME = 1]
 
 configure.ac:
 gl_FUNC_MKTIME

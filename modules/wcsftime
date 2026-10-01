@@ -7,6 +7,7 @@ m4/wcsftime.m4
 
 Depends-on:
 wchar-h
+tzsanitize      [test $REPLACE_WCSFTIME = 1]
 
 configure.ac:
 gl_FUNC_WCSFTIME
