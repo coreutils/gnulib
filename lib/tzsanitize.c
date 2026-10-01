@@ -25,6 +25,11 @@
 #include <string.h>
 #include <wchar.h>
 
+#if !defined __MINGW32__
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
+#endif
+
 void
 tzsanitize (void)
 {
@@ -51,5 +56,28 @@ tzsanitize (void)
             if (ws[0] == L'T' && ws[1] == L'Z' && ws[2] == L'=')
               ws[0] = L'$';
           }
+#if !defined __MINGW32__
+      SetEnvironmentVariable ("TZ", NULL);
+#endif
     }
+#if !defined __MINGW32__
+  /* On MSVC, we also need to sanitize the environment variables stored in the
+     process's environment block.
+     We don't lose much by assuming that the environment variable's value
+     is not too large.  */
+  else
+    {
+      /* Documentation:
+         <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getenvironmentvariable>  */
+      char tz_buf[256];
+      DWORD tz_len = GetEnvironmentVariable ("TZ", tz_buf, sizeof (tz_buf));
+      if (tz_len > 0 && tz_len < sizeof (tz_buf)
+          && strchr (tz_buf, '/') != NULL)
+        {
+          /* Documentation:
+             <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setenvironmentvariable>  */
+          SetEnvironmentVariable ("TZ", NULL);
+        }
+    }
+#endif
 }
