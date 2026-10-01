@@ -1,5 +1,35 @@
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
+	tzsanitize: New module.
+	* lib/tzsanitize.h: New file, extracted from lib/localtime.c.
+	* lib/tzsanitize.c: New file, extracted from lib/localtime.c.
+	* lib/ctime.c: Include tzsanitize.h instead of <stdlib.h>, <string.h>,
+	<wchar.h>.
+	(rpl_ctime): Call tzsanitize.
+	* lib/localtime.c: Include tzsanitize.h instead of <stdlib.h>,
+	<string.h>, <wchar.h>.
+	(rpl_localtime): Call tzsanitize.
+	* lib/mktime.c: Include tzsanitize.h, <stddef.h> instead of <stdlib.h>,
+	<string.h>.
+	(my_tzset): Call tzsanitize.
+	* lib/strftime-fixes.c: Include tzsanitize.h instead of <stdlib.h>,
+	<string.h>.
+	(rpl_strftime): Call tzsanitize.
+	* lib/tzset.c: Include tzsanitize.h instead of <stdlib.h>, <string.h>,
+	<wchar.h>.
+	(rpl_tzset): Call tzsanitize.
+	* lib/wcsftime.c: Include tzsanitize.h instead of <stdlib.h>,
+	<string.h>.
+	(rpl_wcsftime): Call tzsanitize.
+	* modules/ctime (Depends-on): Add tzsanitize.
+	* modules/localtime (Depends-on): Likewise.
+	* modules/mktime (Depends-on): Likewise.
+	* modules/strftime-fixes (Depends-on): Likewise.
+	* modules/tzset (Depends-on): Likewise.
+	* modules/wcsftime (Depends-on): Likewise.
+
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
 	mktime: Add tests.
 	* tests/test-mktime-w32.c: New file.
 	* modules/mktime-tests: New file.
