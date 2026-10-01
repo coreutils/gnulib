@@ -11,6 +11,7 @@ m4/ctime.m4
 
 Depends-on:
 time-h
+tzsanitize      [test $REPLACE_CTIME = 1]
 
 configure.ac:
 gl_FUNC_CTIME
