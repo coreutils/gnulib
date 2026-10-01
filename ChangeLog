@@ -1,5 +1,12 @@
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
+	tzsanitize: Fix test failures on MSVC.
+	* lib/tzsanitize.c: Include <windows.h>.
+	(tzsanitize): Except on mingw, sanitize also the environment variable
+	in the process environment block.
+
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
 	tzsanitize: New module.
 	* lib/tzsanitize.h: New file, extracted from lib/localtime.c.
 	* lib/tzsanitize.c: New file, extracted from lib/localtime.c.
