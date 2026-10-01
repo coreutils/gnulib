@@ -1,3 +1,13 @@
+2026-10-01  Bruno Haible  <bruno@clisp.org>
+
+	time_r: Work around localtime_r problem on native Windows.
+	* m4/time_r.m4 (gl_TIME_R): On native Windows, set REPLACE_LOCALTIME_R
+	to 1 always.
+	* modules/time_r (Depends-on): Add localtime.
+	* doc/posix-functions/localtime_r.texi: Mention localtime_r problem on
+	native Windows.
+	* doc/posix-functions/gmtime_r.texi: Update.
+
 2026-09-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sigsegv, vma-iter: port to 32-bit Solaris
