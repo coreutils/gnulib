@@ -28,5 +28,8 @@ applications built via the Universal Windows Platform, as it does not
 make environment variables like @env{TZ} available to applications.
 @item
 Older POSIX platforms do not support angle brackets in @env{TZ} values,
-as this feature was added in IEEE Std 1003.1-2001.
+as this feature was not implemented until some years after
+it was added to IEEE Std 1003.1-2001:
+glibc 2.9, Cygwin 1.7.30, FreeBSD 10.3, NetBSD 7.1, OpenBSD 4.4, OS X 10.8,
+AIX 6, Android 7, unpatched Solaris 10.
 @end itemize
