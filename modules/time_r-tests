@@ -4,6 +4,7 @@ tests/test-gmtime_r.c
 tests/test-gmtime_r-mt.c
 tests/test-localtime_r.c
 tests/test-localtime_r-mt.c
+tests/test-localtime_r-w32.c
 tests/macros.h
 
 Depends-on:
@@ -11,6 +12,7 @@ setenv
 thread
 nanosleep
 streq
+test-xfail
 
 configure.ac:
 gl_TM_GMTOFF
@@ -24,3 +26,8 @@ check_PROGRAMS += \
   test-localtime_r test-localtime_r-mt
 test_gmtime_r_mt_LDADD = $(LDADD) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
 test_localtime_r_mt_LDADD = $(LDADD) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
+
+if OS_IS_NATIVE_WINDOWS
+TESTS += test-localtime_r-w32
+check_PROGRAMS += test-localtime_r-w32
+endif

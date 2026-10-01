@@ -1,5 +1,11 @@
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
+	time_r tests: Add more tests.
+	* tests/test-localtime_r-w32.c: New file.
+	* modules/time_r-tests (Files): Add it.
+	(Depends-on): Add test-xfail.
+	(Makefile.am): Arrange to build and run test-localtime_r-w32.
+
 	time_r: Work around localtime_r problem on native Windows.
 	* m4/time_r.m4 (gl_TIME_R): On native Windows, set REPLACE_LOCALTIME_R
 	to 1 always.
