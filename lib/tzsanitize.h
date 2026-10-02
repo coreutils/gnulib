@@ -47,6 +47,31 @@ extern "C" {
    neutralize it or not, since these values occur only when a Cygwin user
    has set TZ explicitly; this case is 1. rare and 2. under the user's
    responsibility.  */
+
+/* Applications need to make sure that tzsanitize() gets invoked (at least
+   once) *before* the first invocation of __tzset() in the Microsoft runtime
+   library.  This is because
+     - __tzset looks at the value of the environment variable "TZ".
+     - The first invocation of __tzset sets some cached variables.
+       Further invocations of __tzset do nothing.
+
+   The gnulib overrides of
+     localtime, mktime, tzset, strftime, wcsftime, ctime
+   do call tzsanitize(); therefore no explicit tzsanitize() invocations are
+   needed in simple programs.  But some other functions do call __tzset()
+   implicitly:
+     - In the Microsoft runtime library:
+       stat = _stat64, fstat = _fstat64.
+       MSVCRT: _stat64, _fstat64 -> __loctotime64_t -> __tzset.
+       UCRT: _fstat64 -> common_fstat -> common_stat_handle_file_opened
+             -> convert_large_integer_time_to_time_t
+             -> loctotime -> common_loctotime_t -> __tzset.
+     - In GNU libintl:
+       [d]gettext -> dcigettext -> _nl_find_domain -> _nl_load_domain -> fstat.
+
+   Therefore programs that are linked to such libraries need to call
+   tzsanitize() early during their initialization.  */
+
 extern void tzsanitize (void);
 
 #endif

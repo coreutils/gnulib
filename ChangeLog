@@ -1,3 +1,9 @@
+2026-10-02  Bruno Haible  <bruno@clisp.org>
+
+	tzsanitize: Add more comments.
+	* lib/tzsanitize.h: Explain why applications need to call tzsanitize()
+	explicitly.
+
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
 	mktime tests: Simplify.
