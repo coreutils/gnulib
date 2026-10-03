@@ -20,6 +20,7 @@
 /* Specification.  */
 #include <wchar.h>
 
+#include <stdint.h>
 #include <limits.h>
 
 #define FUNC wcswidth

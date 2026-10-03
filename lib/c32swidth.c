@@ -33,6 +33,7 @@ c32swidth (const char32_t *s, size_t n)
 
 #else
 
+# include <stdint.h>
 # include <limits.h>
 
 # define FUNC c32swidth
