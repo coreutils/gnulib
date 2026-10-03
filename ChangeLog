@@ -1,5 +1,13 @@
 2026-10-03  Bruno Haible  <bruno@clisp.org>
 
+	mbswidth: Fix overflow handling.
+	* lib/mbswidth.c: Include <stdint.h>.
+	(mbsnwidth): When the width accumulator becomes > INT_MAX before an
+	unprintable character is seen, return -1, not INT_MAX.
+	* modules/mbswidth (Depends-on): Add stdint-h, assert-h.
+
+2026-10-03  Bruno Haible  <bruno@clisp.org>
+
 	wcswidth, c32swidth: Simplify.
 	* lib/wcswidth.c: Include <stdint.h>.
 	* lib/c32swidth.c: Likewise.

@@ -35,6 +35,9 @@
 /* Get char32_t, mbrtoc32(), c32iscntrl(), c32width().  */
 #include <uchar.h>
 
+/* Get PTRDIFF_MAX, SIZE_MAX.  */
+#include <stdint.h>
+
 /* Get INT_MAX.  */
 #include <limits.h>
 
@@ -56,9 +59,13 @@ mbswidth (const char *string, int flags)
 int
 mbsnwidth (const char *string, size_t nbytes, int flags)
 {
+  /* Since STRING consists of at most PTRDIFF_MAX - 1 bytes, the value of WIDTH
+     stays <= (PTRDIFF_MAX - 1) * 2 < SIZE_MAX.  */
+  static_assert ((size_t) (PTRDIFF_MAX - 1) * 2 < SIZE_MAX);
+
   const char *p = string;
   const char *plimit = p + nbytes;
-  int width = 0;
+  size_t width = 0;
   if (MB_CUR_MAX > 1)
     {
       while (p < plimit)
@@ -135,21 +142,13 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                     int w = c32width (wc);
                     if (w >= 0)
                       /* A printable multibyte character.  */
-                      {
-                        if (w > INT_MAX - width)
-                          goto overflow;
-                        width += w;
-                      }
+                      width += w;
                     else
                       /* An unprintable multibyte character.  */
                       if (!(flags & MBSW_REJECT_UNPRINTABLE))
                         {
                           if (!c32iscntrl (wc))
-                            {
-                              if (width == INT_MAX)
-                                goto overflow;
-                              width++;
-                            }
+                            width++;
                         }
                       else
                         return -1;
@@ -163,33 +162,23 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
               }
               break;
           }
-      return width;
     }
-
-  while (p < plimit)
+  else
     {
-      unsigned char c = (unsigned char) *p++;
+      while (p < plimit)
+        {
+          unsigned char c = (unsigned char) *p++;
 
-      if (isprint (c))
-        {
-          if (width == INT_MAX)
-            goto overflow;
-          width++;
-        }
-      else if (!(flags & MBSW_REJECT_UNPRINTABLE))
-        {
-          if (!iscntrl (c))
+          if (isprint (c))
+            width++;
+          else if (!(flags & MBSW_REJECT_UNPRINTABLE))
             {
-              if (width == INT_MAX)
-                goto overflow;
-              width++;
+              if (!iscntrl (c))
+                width++;
             }
+          else
+            return -1;
         }
-      else
-        return -1;
     }
-  return width;
-
- overflow:
-  return INT_MAX;
+  return (width > INT_MAX ? INT_MAX : width);
 }
