@@ -1,3 +1,13 @@
+2026-10-03  Bruno Haible  <bruno@clisp.org>
+
+	wcswidth, c32swidth: Simplify.
+	* lib/wcswidth.c: Include <stdint.h>.
+	* lib/c32swidth.c: Likewise.
+	* lib/wcswidth-impl.h (FUNC): Simplify by using a large-enough 'count'
+	variable.
+	* modules/wcswidth (Depends-on): Add stdint-h, assert-h.
+	* modules/c32swidth (Depends-on): Likewise.
+
 2026-10-02  Bruno Haible  <bruno@clisp.org>
 
 	tzsanitize: Add more comments.
