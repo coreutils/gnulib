@@ -20,7 +20,7 @@ FUNC (const UNIT *s, size_t n)
 {
   /* Since S consists of at most PTRDIFF_MAX - 1 units, the value of COUNT
      stays <= (PTRDIFF_MAX - 1) * 2 < SIZE_MAX.  */
-  static_assert ((size_t) (PTRDIFF_MAX - 1) * 2 < SIZE_MAX);
+  static_assert (PTRDIFF_MAX - 1 < SIZE_MAX / 2);
 
   size_t count = 0;
   for (; n > 0; s++, n--)

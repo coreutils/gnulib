@@ -1,3 +1,9 @@
+2026-10-04  Bruno Haible  <bruno@clisp.org>
+
+	wcswidth, c32swidth, mbswidth: Improve yesterday's patch.
+	* lib/wcswidth-impl.h (FUNC): Make assertion more effective.
+	* lib/mbswidth.c (mbsnwidth): Likewise.
+
 2026-10-03  Bruno Haible  <bruno@clisp.org>
 
 	mbswidth: Fix overflow handling.

@@ -61,7 +61,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
 {
   /* Since STRING consists of at most PTRDIFF_MAX - 1 bytes, the value of WIDTH
      stays <= (PTRDIFF_MAX - 1) * 2 < SIZE_MAX.  */
-  static_assert ((size_t) (PTRDIFF_MAX - 1) * 2 < SIZE_MAX);
+  static_assert (PTRDIFF_MAX - 1 < SIZE_MAX / 2);
 
   const char *p = string;
   const char *plimit = p + nbytes;
