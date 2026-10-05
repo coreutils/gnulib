@@ -19,6 +19,8 @@
 /* Specification.  */
 #include <time.h>
 
+#include "tzsanitize.h"
+
 #undef strftime
 
 size_t
