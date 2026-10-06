@@ -1,5 +1,10 @@
 2026-10-06  Bruno Haible  <bruno@clisp.org>
 
+	getdomainname: Document situation on Solaris 11.4.
+	* doc/glibc-functions/getdomainname.texi: Update regarding Solaris 11.4.
+
+2026-10-06  Bruno Haible  <bruno@clisp.org>
+
 	tzsanitize: Make it work on recent versions of mingw+UCRT.
 	* lib/tzsanitize.c (tzsanitize): Call SetEnvironmentVariable also on
 	mingw+UCRT.

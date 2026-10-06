@@ -26,6 +26,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Solaris 11.3, mingw, MSVC 14, Android 7.1.
 @item
+This function is not declared on some platforms:
+Solaris 11.4.
+@item
 This function is declared in @code{netdb.h}, not in @code{unistd.h}, on
 some platforms:
 AIX 7.1.
