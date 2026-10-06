@@ -25,7 +25,7 @@
 #include <string.h>
 #include <wchar.h>
 
-#if !defined __MINGW32__
+#if !defined __MINGW32__ || defined _UCRT
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 #endif
@@ -56,11 +56,11 @@ tzsanitize (void)
             if (ws[0] == L'T' && ws[1] == L'Z' && ws[2] == L'=')
               ws[0] = L'$';
           }
-#if !defined __MINGW32__
+#if !defined __MINGW32__ || defined _UCRT
       SetEnvironmentVariable ("TZ", NULL);
 #endif
     }
-#if !defined __MINGW32__
+#if !defined __MINGW32__ || defined _UCRT
   /* On MSVC, we also need to sanitize the environment variables stored in the
      process's environment block.
      We don't lose much by assuming that the environment variable's value
