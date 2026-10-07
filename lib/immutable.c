@@ -94,8 +94,8 @@ init_pagesize (void)
   /* Simultaneous execution of this initialization in multiple threads is OK. */
 # if defined _WIN32 && !defined __CYGWIN__
   /* GetSystemInfo
-     <https://msdn.microsoft.com/en-us/library/ms724381.aspx>
-     <https://msdn.microsoft.com/en-us/library/ms724958.aspx>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsysteminfo>
+     <https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-system_info>  */
   SYSTEM_INFO info;
   GetSystemInfo (&info);
   pagesize = info.dwPageSize;
@@ -173,7 +173,7 @@ alloc_pages (size_t size)
 # if defined _WIN32 && !defined __CYGWIN__
   /* Allocate pages from the system paging file.
      CreateFileMapping
-     <https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createfilemappinga>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createfilemappinga>  */
   HANDLE h =
     CreateFileMapping (INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE | SEC_COMMIT,
                        size >> 16 >> 16, size & 0xFFFFFFFFU, NULL);
@@ -185,13 +185,13 @@ alloc_pages (size_t size)
       return 0;
     }
   /* MapViewOfFile
-     <https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-mapviewoffile>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-mapviewoffile>  */
   char *mem_w = (char *) MapViewOfFile (h, FILE_MAP_WRITE, 0, 0, size);
   char *mem_r = (char *) MapViewOfFile (h, FILE_MAP_READ,  0, 0, size);
   if (mem_w == NULL || mem_r == NULL)
     {
       /* UnmapViewOfFile
-         <https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-unmapviewoffile>  */
+         <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-unmapviewoffile>  */
       if (mem_w != NULL)
         UnmapViewOfFile (mem_w);
       if (mem_r != NULL)

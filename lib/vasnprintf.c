@@ -6823,7 +6823,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                        Windows Vista, the use of %n in format strings by default
                        crashes the program. See
                          <https://gcc.gnu.org/ml/gcc/2007-06/msg00122.html> and
-                         <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/set-printf-count-output>
+                         <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/set-printf-count-output>
                    On the first four of these platforms, if !WIDE_CHAR_VERSION,
                    it is not a big deal to avoid %n, because on these platforms,
                    HAVE_SNPRINTF_RETVAL_C99 and HAVE_SNPRINTF_TRUNCATION_C99 are

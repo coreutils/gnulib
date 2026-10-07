@@ -41,7 +41,7 @@ integer_length (unsigned int x)
     return NBITS - __builtin_clz (x);
 #elif defined _MSC_VER
   /* _BitScanReverse
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
   unsigned long bit;
   if (_BitScanReverse (&bit, x))
     return bit + 1;

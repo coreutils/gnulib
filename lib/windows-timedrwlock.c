@@ -430,7 +430,7 @@ glwthread_timedrwlock_timedrdlock (glwthread_timedrwlock_t *lock,
           if (timeout != 0)
             {
               /* WaitForSingleObject
-                 <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
+                 <https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject> */
               DWORD result = WaitForSingleObject (event, timeout);
               if (result == WAIT_FAILED)
                 abort ();
@@ -549,7 +549,7 @@ glwthread_timedrwlock_timedwrlock (glwthread_timedrwlock_t *lock,
           if (timeout != 0)
             {
               /* WaitForSingleObject
-                 <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
+                 <https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject> */
               DWORD result = WaitForSingleObject (event, timeout);
               if (result == WAIT_FAILED)
                 abort ();

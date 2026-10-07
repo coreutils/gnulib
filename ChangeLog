@@ -1,3 +1,9 @@
+2026-10-07  Bruno Haible  <bruno@clisp.org>
+
+	all: Update URLs to msdn.microsoft.com or docs.microsoft.com.
+	* lib/stat-w32.c et al.: Update URLs after docs.microsoft.com was moved
+	to learn.microsoft.com.
+
 2026-10-06  Bruno Haible  <bruno@clisp.org>
 
 	getdomainname: Document situation on Solaris 11.4.

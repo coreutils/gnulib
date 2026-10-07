@@ -325,7 +325,7 @@ static char *shared_library_fullname;
 /* Determine the full pathname of the shared library when it is loaded.
 
    Documentation:
-   <https://docs.microsoft.com/en-us/windows/win32/dlls/dllmain>  */
+   <https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain>  */
 
 BOOL WINAPI
 DllMain (HINSTANCE module_handle, DWORD event, LPVOID reserved)

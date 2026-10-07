@@ -48,7 +48,7 @@ static inline int
 integer_length (unsigned int x)
 {
   /* _BitScanReverse
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
   unsigned long bit;
   if (_BitScanReverse (&bit, x))
     return bit + 1;
@@ -73,7 +73,7 @@ FUNC (TYPE x)
     return NBITS - GCC_BUILTIN (x);
 #elif defined _MSC_VER && defined MSVC_BUILTIN
   /* _BitScanReverse, _BitScanReverse64
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
   unsigned long bit;
   if (MSVC_BUILTIN (&bit, x))
     return bit + 1;

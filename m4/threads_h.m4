@@ -1,5 +1,5 @@
 # threads_h.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2019-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -169,7 +169,7 @@ AC_DEFUN([gl_THREAD_LOCAL_DEFINITION],
 /* IBM C: supported only with compiler option -qtls, see
    <https://www.ibm.com/support/knowledgecenter/SSGH2K_12.1.0/com.ibm.xlc121.aix.doc/compiler_ref/opt_tls.html> */
 /* Oracle Solaris Studio C: <https://docs.oracle.com/cd/E18659_01/html/821-1384/bjabr.html> */
-/* MSVC: <https://docs.microsoft.com/en-us/cpp/parallel/thread-local-storage-tls> */
+/* MSVC: <https://learn.microsoft.com/en-us/cpp/parallel/thread-local-storage-tls> */
 #ifndef _Thread_local
 # if defined __GNUC__ || defined __CC_ARM || defined __xlC__ || defined __SUNPRO_C
 #  define _Thread_local __thread

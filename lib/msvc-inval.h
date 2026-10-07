@@ -100,7 +100,7 @@ extern void gl_msvc_inval_ensure_handler (void);
 
 /* Gnulib can define its own status codes, as described in the page
    "Raising Software Exceptions" on microsoft.com
-   <https://docs.microsoft.com/en-us/cpp/cpp/raising-software-exceptions>.
+   <https://learn.microsoft.com/en-us/cpp/cpp/raising-software-exceptions>.
    Our status codes are composed of
      - 0xE0000000, mandatory for all user-defined status codes,
      - 0x474E550, a API identifier ("GNU"),
@@ -111,7 +111,7 @@ extern void gl_msvc_inval_ensure_handler (void);
 #  if defined _MSC_VER
 /* A compiler that supports __try/__except, as described in the page
    "try-except statement" on microsoft.com
-   <https://docs.microsoft.com/en-us/cpp/cpp/try-except-statement>.
+   <https://learn.microsoft.com/en-us/cpp/cpp/try-except-statement>.
    With __try/__except, we can use the thread-safe exception handling.  */
 
 #   ifdef __cplusplus

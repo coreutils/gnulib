@@ -34,7 +34,7 @@ void
 memory_barrier (void)
 {
   /* MemoryBarrier
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-memorybarrier>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-memorybarrier>  */
   MemoryBarrier ();
 }
 
@@ -44,7 +44,7 @@ atomic_compare_and_swap (unsigned int volatile *vp,
                          unsigned int newval)
 {
   /* InterlockedCompareExchange
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange>  */
   return InterlockedCompareExchange ((LONG volatile *) vp,
                                      (LONG) newval, (LONG) cmp);
 }
@@ -55,7 +55,7 @@ atomic_compare_and_swap_ptr (uintptr_t volatile *vp,
                              uintptr_t newval)
 {
   /* InterlockedCompareExchangePointer
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchangepointer>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchangepointer>  */
   return (uintptr_t)
          InterlockedCompareExchangePointer ((void * volatile *) vp,
                                             (void *) newval, (void *) cmp);

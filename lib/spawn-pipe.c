@@ -165,7 +165,7 @@ create_pipe (const char *progname,
            - For the Windows CreateProcess() function, it is unspecified whether
              a relative file name is interpreted to the parent's current
              directory or to the specified directory.  See
-             <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
+             <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
       if (! IS_ABSOLUTE_FILE_NAME (prog_path))
         {
           const char *resolved_prog =

@@ -336,13 +336,13 @@ after_close_actions (int ret, const struct supersede_final_action *action)
 #if defined _WIN32 && !defined __CYGWIN__
       /* A native Windows platform.  */
       /* ReplaceFile
-         <https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilea>
+         <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilea>
          is atomic regarding the file's contents, says
-         https://stackoverflow.com/questions/167414/is-an-atomic-file-rename-with-overwrite-possible-on-windows>
+         <https://stackoverflow.com/questions/167414/is-an-atomic-file-rename-with-overwrite-possible-on-windows>
          But it fails with GetLastError () == ERROR_FILE_NOT_FOUND if
          action->final_rename_dest does not exist.  So better use
          MoveFileEx
-         <https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexa>.  */
+         <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexa>.  */
       if (!MoveFileEx (action->final_rename_temp, action->final_rename_dest,
                        MOVEFILE_REPLACE_EXISTING))
         {

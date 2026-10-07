@@ -34,7 +34,7 @@ static inline int
 ffs (int i)
 {
   /* _BitScanForward
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
   unsigned long bit;
   if (_BitScanForward (&bit, i))
     return bit + 1;
@@ -55,7 +55,7 @@ FUNC (TYPE i)
   return GCC_BUILTIN (i);
 #elif defined _MSC_VER && defined MSVC_BUILTIN
   /* _BitScanForward, _BitScanForward64
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
   unsigned long bit;
   if (MSVC_BUILTIN (&bit, i))
     return bit + 1;

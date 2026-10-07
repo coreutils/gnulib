@@ -390,11 +390,11 @@ open_handle (const char *name, int flags, mode_t mode)
     }
 
   /* For the meaning of the flags, see
-     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/open-wopen>  */
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/open-wopen>  */
   /* Open a handle to the file.
      CreateFile
-     <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilea>
-     <https://docs.microsoft.com/en-us/windows/desktop/FileIO/creating-and-opening-files>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea>
+     <https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files>  */
   SECURITY_ATTRIBUTES sec_attr;
   sec_attr.nLength = sizeof (SECURITY_ATTRIBUTES);
   sec_attr.lpSecurityDescriptor = NULL;
@@ -638,7 +638,7 @@ __spawni (pid_t *pid, const char *prog_filename,
          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawnattr_getpgroup.html>
          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/setpgid.html>
          We don't support this case; it produces error EINVAL above.  */
-  /* <https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
+  /* <https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
   DWORD process_creation_flags =
     (attrp != NULL && (attrp->_flags & POSIX_SPAWN_SETPGROUP) != 0 ? DETACHED_PROCESS : 0);
 
@@ -760,9 +760,9 @@ __spawni (pid_t *pid, const char *prog_filename,
   shrink_inheritable_handles (&inh_handles);
 
   /* CreateProcess
-     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
   /* STARTUPINFO
-     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
   STARTUPINFO sinfo;
   sinfo.cb = sizeof (STARTUPINFO);
   sinfo.lpReserved = NULL;

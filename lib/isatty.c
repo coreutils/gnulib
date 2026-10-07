@@ -88,7 +88,7 @@ static BOOL IsConsoleHandle (HANDLE h)
 {
   DWORD mode;
   /* GetConsoleMode
-     <https://docs.microsoft.com/en-us/windows/console/getconsolemode> */
+     <https://learn.microsoft.com/en-us/windows/console/getconsolemode> */
   return GetConsoleMode (h, &mode) != 0;
 }
 
@@ -104,7 +104,7 @@ static BOOL IsCygwinConsoleHandle (HANDLE h)
   BOOL result = FALSE;
 
   /* GetNamedPipeClientProcessId
-     <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-getnamedpipeclientprocessid>
+     <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getnamedpipeclientprocessid>
      It requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA or higher.  */
   if (GetNamedPipeClientProcessIdFunc && QueryFullProcessImageNameFunc)
     {
@@ -112,7 +112,7 @@ static BOOL IsCygwinConsoleHandle (HANDLE h)
       if (GetNamedPipeClientProcessIdFunc (h, &processId))
         {
           /* OpenProcess
-             <https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocess> */
+             <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess> */
           HANDLE processHandle =
             OpenProcess (PROCESS_QUERY_LIMITED_INFORMATION, FALSE, processId);
           if (processHandle != NULL)
@@ -121,10 +121,10 @@ static BOOL IsCygwinConsoleHandle (HANDLE h)
               DWORD bufsize = sizeof (buf);
               /* The file name can be determined through
                  GetProcessImageFileName
-                 <https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getprocessimagefilenamea>
+                 <https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getprocessimagefilenamea>
                  or
                  QueryFullProcessImageName
-                 <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamea>
+                 <https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea>
                  The former returns a file name in non-standard notation (it
                  starts with '\Device\') and may require linking with psapi.dll.
                  The latter is better, but requires

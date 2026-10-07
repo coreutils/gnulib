@@ -11,4 +11,4 @@ of files.
 Note: On some types of file systems, the timestamp resolution is limited
 by the file system.  For example, on FAT file systems, @code{st_mtim}
 only has a resolution of 2 seconds.  For more details, see
-@url{https://docs.microsoft.com/en-us/windows/desktop/SysInfo/file-times}.
+@url{https://learn.microsoft.com/en-us/windows/win32/sysinfo/file-times}.

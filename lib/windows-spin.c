@@ -35,7 +35,7 @@ glwthread_spin_lock (glwthread_spinlock_t *lock)
 {
   /* Wait until lock->word becomes 0, then replace it with 1.  */
   /* InterlockedCompareExchange
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
   while (InterlockedCompareExchange (&lock->word, 1, 0))
     ;
   return 0;
@@ -46,7 +46,7 @@ glwthread_spin_trylock (glwthread_spinlock_t *lock)
 {
   /* If lock->word is 0, then replace it with 1.  */
   /* InterlockedCompareExchange
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
   if (InterlockedCompareExchange (&lock->word, 1, 0))
     return EBUSY;
   return 0;
@@ -57,7 +57,7 @@ glwthread_spin_unlock (glwthread_spinlock_t *lock)
 {
   /* If lock->word is 1, then replace it with 0.  */
   /* InterlockedCompareExchange
-     <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchange> */
   if (!InterlockedCompareExchange (&lock->word, 0, 1))
     return EINVAL;
   return 0;

@@ -58,8 +58,8 @@ init_pagesize (void)
 {
 #if defined _WIN32 && !defined __CYGWIN__
   /* GetSystemInfo
-     <https://msdn.microsoft.com/en-us/library/ms724381.aspx>
-     <https://msdn.microsoft.com/en-us/library/ms724958.aspx>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsysteminfo>
+     <https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-system_info>  */
   SYSTEM_INFO info;
   GetSystemInfo (&info);
   pagesize = info.dwPageSize;
@@ -76,8 +76,8 @@ alloc_pages (size_t size)
 {
 #if defined _WIN32 && !defined __CYGWIN__
   /* VirtualAlloc
-     <https://msdn.microsoft.com/en-us/library/aa366887.aspx>
-     <https://msdn.microsoft.com/en-us/library/aa366786.aspx>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc>
+     <https://learn.microsoft.com/en-us/windows/win32/Memory/memory-protection-constants>  */
   void *mem = VirtualAlloc (NULL, size, MEM_COMMIT, PAGE_READWRITE);
   if (mem == NULL)
     return 0;
@@ -99,7 +99,7 @@ free_pages (uintptr_t pages, size_t size)
 {
 #if defined _WIN32 && !defined __CYGWIN__
   /* VirtualFree
-     <https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfree>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfree>  */
   if (!VirtualFree ((void *) pages, 0, MEM_RELEASE))
     abort ();
 #else

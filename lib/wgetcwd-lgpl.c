@@ -29,7 +29,7 @@ wgetcwd (wchar_t *buf, size_t size)
 {
   /* Uses _wgetcwd.
      Documentation:
-     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getcwd-wgetcwd>
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/getcwd-wgetcwd>
      Note that for a directory consisting of LEN wide characters, the SIZE
      argument to _wgetcwd needs to be >= LEN + 3, not only >= LEN + 1, with
      some versions of the Microsoft runtime libraries.  */

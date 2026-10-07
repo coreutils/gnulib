@@ -35,7 +35,7 @@ glwthread_timedmutex_init (glwthread_timedmutex_t *mutex)
 {
   /* Attempt to allocate an auto-reset event object.  */
   /* CreateEvent
-     <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-createeventa> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createeventa> */
   HANDLE event = CreateEvent (NULL, FALSE, FALSE, NULL);
   if (event == INVALID_HANDLE_VALUE)
     return EAGAIN;
@@ -207,7 +207,7 @@ glwthread_timedmutex_timedlock (glwthread_timedmutex_t *mutex,
           return ETIMEDOUT;
 
         /* WaitForSingleObject
-           <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject> */
+           <https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject> */
         DWORD result = WaitForSingleObject (mutex->event, timeout);
         if (result == WAIT_FAILED)
           abort ();
@@ -244,7 +244,7 @@ glwthread_timedmutex_unlock (glwthread_timedmutex_t *mutex)
   LeaveCriticalSection (&mutex->lock);
   /* Notify one of the threads that were waiting with a timeout.  */
   /* SetEvent
-     <https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-setevent> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-setevent> */
   SetEvent (mutex->event);
   return 0;
 }
@@ -256,7 +256,7 @@ glwthread_timedmutex_destroy (glwthread_timedmutex_t *mutex)
     return EINVAL;
   DeleteCriticalSection (&mutex->lock);
   /* CloseHandle
-     <https://docs.microsoft.com/en-us/windows/desktop/api/handleapi/nf-handleapi-closehandle> */
+     <https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle> */
   CloseHandle (mutex->event);
   mutex->guard.done = 0;
   return 0;

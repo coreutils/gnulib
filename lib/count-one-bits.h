@@ -112,7 +112,7 @@ popcount_supported (void)
   if (popcount_support < 0)
     {
       /* Do as described in
-         <https://docs.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64> */
+         <https://learn.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64> */
       int cpu_info[4];
       __cpuid (cpu_info, 1);
       popcount_support = (cpu_info[2] >> 23) & 1;

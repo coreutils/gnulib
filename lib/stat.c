@@ -109,7 +109,7 @@ rpl_stat (char const *name, struct stat *buf)
      <https://lists.gnu.org/r/bug-gnulib/2017-04/msg00134.html>  */
   /* XXX Should we convert to wchar_t* and prepend '\\?\', in order to work
      around length limitations
-     <https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file> ?  */
+     <https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation> ?  */
 
   /* To ease portability.  Like in open.c.  */
   if (streq (name, "/dev/null"))
@@ -196,8 +196,8 @@ rpl_stat (char const *name, struct stat *buf)
 
       /* Open a handle to the file.
          CreateFile
-         <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilea>
-         <https://docs.microsoft.com/en-us/windows/desktop/FileIO/creating-and-opening-files>  */
+         <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea>
+         <https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files>  */
       HANDLE h =
         CreateFile (rname,
                     FILE_READ_ATTRIBUTES,
@@ -238,13 +238,13 @@ rpl_stat (char const *name, struct stat *buf)
 
       /* Get the details about the directory entry.  This can be done through
          FindFirstFile
-         <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findfirstfilea>
-         <https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-_win32_find_dataa>
+         <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findfirstfilea>
+         <https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataa>
          or through
          FindFirstFileEx with argument FindExInfoBasic
-         <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findfirstfileexa>
-         <https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ne-minwinbase-findex_info_levels>
-         <https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-_win32_find_dataa>  */
+         <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findfirstfileexa>
+         <https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ne-minwinbase-findex_info_levels>
+         <https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataa>  */
       WIN32_FIND_DATA info;
       HANDLE h = FindFirstFile (rname, &info);
       if (h == INVALID_HANDLE_VALUE)

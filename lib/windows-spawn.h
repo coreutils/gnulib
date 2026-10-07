@@ -130,7 +130,7 @@ struct IHANDLE
 /* This struct keeps track of which handles to potentially pass to a subprocess,
    and with which flags.  All of the handles here are inheritable.
    Regarding handle inheritance, see
-   <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>.
+   <https://learn.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>.
    Whether a handle is actually scheduled for being preserved in the child
    process is determined by the KEEP_OPEN_IN_CHILD bit in the flags.  */
 struct inheritable_handles

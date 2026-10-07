@@ -32,8 +32,8 @@ rpl_tzset (void)
   tzsanitize ();
 
   /* On native Windows, tzset() is deprecated.  Use _tzset() instead.  See
-     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/posix-tzset>
-     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tzset>  */
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/posix-tzset>
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/tzset>  */
   _tzset ();
 #else
   tzset ();

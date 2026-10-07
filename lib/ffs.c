@@ -34,7 +34,7 @@ ffs (int i)
   return __builtin_ffs (i);
 #elif defined _MSC_VER
   /* _BitScanForward
-     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
+     <https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
   unsigned long bit;
   if (_BitScanForward (&bit, i))
     return bit + 1;

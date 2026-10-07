@@ -316,7 +316,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
   size_t handles_count;
   {
     /* _getmaxstdio
-       <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getmaxstdio>
+       <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/getmaxstdio>
        Default value is 512.  */
     unsigned int fdmax = _getmaxstdio ();
     if (fdmax < 3)
@@ -325,7 +325,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
       {
         unsigned int fd = fdmax - 1;
         /* _get_osfhandle
-           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+           <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
         HANDLE handle = (HANDLE) _get_osfhandle (fd);
         if (handle != INVALID_HANDLE_VALUE)
           {
@@ -337,7 +337,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
               {
                 DWORD hflags;
                 /* GetHandleInformation
-                   <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+                   <https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
                 if (GetHandleInformation (handle, &hflags))
                   {
                     if ((hflags & HANDLE_FLAG_INHERIT) != 0)
@@ -368,13 +368,13 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
       {
         ih[fd].handle = INVALID_HANDLE_VALUE;
         /* _get_osfhandle
-           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+           <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
         HANDLE handle = (HANDLE) _get_osfhandle (fd);
         if (handle != INVALID_HANDLE_VALUE)
           {
             DWORD hflags;
             /* GetHandleInformation
-               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+               <https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
             if (GetHandleInformation (handle, &hflags))
               {
                 if (duplicate)
@@ -430,7 +430,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
                        STARTUPINFO *sinfo)
 {
   /* STARTUPINFO
-     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
   sinfo->dwFlags = STARTF_USESTDHANDLES;
   sinfo->hStdInput  = inh_handles->ih[0].handle;
   sinfo->hStdOutput = inh_handles->ih[1].handle;
@@ -491,7 +491,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
         {
           DWORD hflags;
           /* GetHandleInformation
-             <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+             <https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
           if (GetHandleInformation (handle, &hflags))
             {
               if ((hflags & HANDLE_FLAG_INHERIT) != 0)
@@ -644,11 +644,11 @@ spawnpvech (int mode,
   inh_handles.ih[2].flags = KEEP_OPEN_IN_CHILD;
 
   /* CreateProcess
-     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
-  /* <https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
+  /* <https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
   DWORD process_creation_flags = (mode == P_DETACH ? DETACHED_PROCESS : 0);
   /* STARTUPINFO
-     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
+     <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
   STARTUPINFO sinfo;
   sinfo.cb = sizeof (STARTUPINFO);
   sinfo.lpReserved = NULL;
