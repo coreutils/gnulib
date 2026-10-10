@@ -1,3 +1,10 @@
+2026-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio-windows: fix _UCRT test on MinGW-64
+	Problem reported for Emacs by Yue Yi <https://bugs.gnu.org/81837#53>.
+	* modules/stdio-windows (USES_MSVCRT): Include <stdio.h>
+	before testing whether _UCRT is defined.
+
 2026-10-07  Bruno Haible  <bruno@clisp.org>
 
 	all: Update URLs to msdn.microsoft.com or docs.microsoft.com.

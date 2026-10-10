@@ -15,6 +15,7 @@ USES_MSVCRT=0
 case "$host_os" in
   mingw* | windows*)
     AC_EGREP_CPP([Special], [
+#include <stdio.h>
 #ifndef _UCRT
  Special
 #endif
