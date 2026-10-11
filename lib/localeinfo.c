@@ -105,23 +105,72 @@ init_localeinfo (struct localeinfo *localeinfo)
 }
 
 /* The set of char32_t values C such that there's a useful locale
-   somewhere where C != c32toupper (C) && C != c32tolower (c32toupper (C)).
+   where C is not reached from D by calling c32isupper and c32islower
+   repeatedly, even though C and D should match when ignoring case.
    For example, 0x00B5 (U+00B5 MICRO SIGN) is in this table, because
-   c32toupper (0x00B5) == 0x039C (U+039C GREEK CAPITAL LETTER MU), and
-   c32tolower (0x039C) == 0x03BC (U+03BC GREEK SMALL LETTER MU).  */
+   in a typical Unicode locale c32toupper and c32tolower never return 0x00B5
+   even though when ignoring case 0x00B5 should match both
+   0x039C (U+039C GREEK CAPITAL LETTER MU) and
+   0x03BC (U+03BC GREEK SMALL LETTER MU) because
+   c32toupper (0x00B5) == 0x039C and c32tolower (0x039C) == 0x03BC.  */
 static unsigned short int const lonesome_lower[] =
   {
-    0x00B5, 0x0131, 0x017F, 0x01C5, 0x01C8, 0x01CB, 0x01F2, 0x0345,
-    0x03C2, 0x03D0, 0x03D1, 0x03D5, 0x03D6, 0x03F0, 0x03F1,
-
 #if !defined __STDC_ISO_10646__ || __STDC_ISO_10646__ < 200305L
-    /* U+03F2 GREEK LUNATE SIGMA SYMBOL lacks a specific uppercase
+    /* This lacks a specific uppercase
        counterpart in locales predating Unicode 4.0.0 (April 2003).  */
-    0x03F2,
+    0x03F2, /* GREEK LUNATE SIGMA SYMBOL */
 #endif
 
-    0x03F5, 0x1C80, 0x1C81, 0x1C82, 0x1C83, 0x1C84, 0x1C85, 0x1C86,
-    0x1C87, 0x1C88, 0x1E9B, 0x1FBE,
+    /* Run the following shell command with the latest UnicodeData.txt:
+
+         awk -F';' '
+           {
+             c = $1 ""
+             name[c] = $2 ""
+             upcase[c] = $13 != "" ? $13 "" : c
+             downcase[c] = $14 != "" ? $14 "" : c
+             codes[ncodes++] = c
+           }
+           END {
+             for (i = 0; i < ncodes; i++) {
+               c = codes[i]
+               upper_c = upcase[c]
+               lower_upper_c = downcase[upper_c]
+               if (c != upper_c && c != lower_upper_c)
+                 printf "    0x%s, /""* %s *""/\n", c, name[c]
+             }
+           }
+         ' UnicodeData.txt
+
+       to generate the following list:  */
+
+    0x00B5, /* MICRO SIGN */
+    0x0131, /* LATIN SMALL LETTER DOTLESS I */
+    0x017F, /* LATIN SMALL LETTER LONG S */
+    0x01C5, /* LATIN CAPITAL LETTER D WITH SMALL LETTER Z WITH CARON */
+    0x01C8, /* LATIN CAPITAL LETTER L WITH SMALL LETTER J */
+    0x01CB, /* LATIN CAPITAL LETTER N WITH SMALL LETTER J */
+    0x01F2, /* LATIN CAPITAL LETTER D WITH SMALL LETTER Z */
+    0x0345, /* COMBINING GREEK YPOGEGRAMMENI */
+    0x03C2, /* GREEK SMALL LETTER FINAL SIGMA */
+    0x03D0, /* GREEK BETA SYMBOL */
+    0x03D1, /* GREEK THETA SYMBOL */
+    0x03D5, /* GREEK PHI SYMBOL */
+    0x03D6, /* GREEK PI SYMBOL */
+    0x03F0, /* GREEK KAPPA SYMBOL */
+    0x03F1, /* GREEK RHO SYMBOL */
+    0x03F5, /* GREEK LUNATE EPSILON SYMBOL */
+    0x1C80, /* CYRILLIC SMALL LETTER ROUNDED VE */
+    0x1C81, /* CYRILLIC SMALL LETTER LONG-LEGGED DE */
+    0x1C82, /* CYRILLIC SMALL LETTER NARROW O */
+    0x1C83, /* CYRILLIC SMALL LETTER WIDE ES */
+    0x1C84, /* CYRILLIC SMALL LETTER TALL TE */
+    0x1C85, /* CYRILLIC SMALL LETTER THREE-LEGGED TE */
+    0x1C86, /* CYRILLIC SMALL LETTER TALL HARD SIGN */
+    0x1C87, /* CYRILLIC SMALL LETTER TALL YAT */
+    0x1C88, /* CYRILLIC SMALL LETTER UNBLENDED UK */
+    0x1E9B, /* LATIN SMALL LETTER LONG S WITH DOT ABOVE */
+    0x1FBE, /* GREEK PROSGEGRAMMENI */
   };
 
 /* Verify that the worst multibyte case fits.  This is 1 for c32toupper, 1 for

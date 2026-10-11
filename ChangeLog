@@ -1,5 +1,9 @@
 2026-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	localeinfo: improve comments
+	* lib/localeinfo.c (lonesome_lower): In comments, show how to
+	derive this table, and describe better what the table is for.
+
 	regex: fix REG_ICASE for single-byte chars
 	Problem reported by Arno Onken in:
 	https://lists.gnu.org/r/bug-gnulib/2026-10/msg00029.html
