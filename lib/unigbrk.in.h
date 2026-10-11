@@ -117,8 +117,8 @@ extern const uint32_t *
 /* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
    want compiler warnings for 'const' related mistakes.  */
 # ifdef __cplusplus
-template <typename T>
-  T * u8_grapheme_next_template (T* s, const uint8_t *end);
+template <typename _T_>
+  _T_ * u8_grapheme_next_template (_T_* s, const uint8_t *end);
 template <>
   inline uint8_t * u8_grapheme_next_template (uint8_t *s, const uint8_t *end)
   { return const_cast<uint8_t *>(u8_grapheme_next (s, end)); }
@@ -138,8 +138,8 @@ template <>
 #  endif
 # endif
 # ifdef __cplusplus
-template <typename T>
-  T * u16_grapheme_next_template (T* s, const uint16_t *end);
+template <typename _T_>
+  _T_ * u16_grapheme_next_template (_T_* s, const uint16_t *end);
 template <>
   inline uint16_t * u16_grapheme_next_template (uint16_t *s, const uint16_t *end)
   { return const_cast<uint16_t *>(u16_grapheme_next (s, end)); }
@@ -159,8 +159,8 @@ template <>
 #  endif
 # endif
 # ifdef __cplusplus
-template <typename T>
-  T * u32_grapheme_next_template (T* s, const uint32_t *end);
+template <typename _T_>
+  _T_ * u32_grapheme_next_template (_T_* s, const uint32_t *end);
 template <>
   inline uint32_t * u32_grapheme_next_template (uint32_t *s, const uint32_t *end)
   { return const_cast<uint32_t *>(u32_grapheme_next (s, end)); }
@@ -204,8 +204,8 @@ extern const uint32_t *
 /* Don't silently convert a 'const uintN_t *' to a 'uintN_t *'.  Programmers
    want compiler warnings for 'const' related mistakes.  */
 # ifdef __cplusplus
-template <typename T>
-  T * u8_grapheme_prev_template (T* s, const uint8_t *start);
+template <typename _T_>
+  _T_ * u8_grapheme_prev_template (_T_* s, const uint8_t *start);
 template <>
   inline uint8_t * u8_grapheme_prev_template (uint8_t *s, const uint8_t *start)
   { return const_cast<uint8_t *>(u8_grapheme_prev (s, start)); }
@@ -225,8 +225,8 @@ template <>
 #  endif
 # endif
 # ifdef __cplusplus
-template <typename T>
-  T * u16_grapheme_prev_template (T* s, const uint16_t *start);
+template <typename _T_>
+  _T_ * u16_grapheme_prev_template (_T_* s, const uint16_t *start);
 template <>
   inline uint16_t * u16_grapheme_prev_template (uint16_t *s, const uint16_t *start)
   { return const_cast<uint16_t *>(u16_grapheme_prev (s, start)); }
@@ -246,8 +246,8 @@ template <>
 #  endif
 # endif
 # ifdef __cplusplus
-template <typename T>
-  T * u32_grapheme_prev_template (T* s, const uint32_t *start);
+template <typename _T_>
+  _T_ * u32_grapheme_prev_template (_T_* s, const uint32_t *start);
 template <>
   inline uint32_t * u32_grapheme_prev_template (uint32_t *s, const uint32_t *start)
   { return const_cast<uint32_t *>(u32_grapheme_prev (s, start)); }

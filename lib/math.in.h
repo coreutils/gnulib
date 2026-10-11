@@ -2467,7 +2467,7 @@ _GL_EXTERN_C int _gl_isfinitef (float x);
 _GL_EXTERN_C int _gl_isfinited (double x);
 _GL_EXTERN_C int _gl_isfinitel (long double x);
 #  ifdef __cplusplus
-template <typename T> int isfinite (T);
+template <typename _T_> int isfinite (_T_);
 template <> inline int isfinite<float> (float x) { return _gl_isfinitef (x); }
 template <> inline int isfinite<double> (double x) { return _gl_isfinited (x); }
 template <> inline int isfinite<long double> (long double x) { return _gl_isfinitel (x); }
@@ -2509,7 +2509,7 @@ _GL_EXTERN_C int _gl_isinff (float x);
 _GL_EXTERN_C int _gl_isinfd (double x);
 _GL_EXTERN_C int _gl_isinfl (long double x);
 #  ifdef __cplusplus
-template <typename T> int isinf (T);
+template <typename _T_> int isinf (_T_);
 template <> inline int isinf<float> (float x) { return _gl_isinff (x); }
 template <> inline int isinf<double> (double x) { return _gl_isinfd (x); }
 template <> inline int isinf<long double> (long double x) { return _gl_isinfl (x); }
@@ -2651,7 +2651,7 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #  endif
 #  ifdef __cplusplus
 #   undef isnan
-template <typename T> int isnan (T);
+template <typename _T_> int isnan (_T_);
 template <> inline int isnan<float> (float x) { return _gl_isnanf (x); }
 template <> inline int isnan<double> (double x) { return _gl_isnand (x); }
 template <> inline int isnan<long double> (long double x) { return _gl_isnanl (x); }
@@ -2665,7 +2665,7 @@ template <> inline int isnan<long double> (long double x) { return _gl_isnanl (x
 # elif (__GNUC__ >= 4) || (__clang_major__ >= 4)
 #  ifdef __cplusplus
 #   undef isnan
-template <typename T> int isnan (T);
+template <typename _T_> int isnan (_T_);
 template <> inline int isnan<float> (float x) { return __builtin_isnan (x); }
 template <> inline int isnan<double> (double x) { return __builtin_isnan (x); }
 template <> inline int isnan<long double> (long double x) { return __builtin_isnan (x); }
@@ -2719,7 +2719,7 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 #  undef signbit
    /* GCC >= 4.0 and clang provide three built-ins for signbit.  */
 #  if defined __cplusplus && !defined __clang__
-template <typename T> int signbit (T);
+template <typename _T_> int signbit (_T_);
 template <> inline int signbit<float> (float x) { return __builtin_signbitf (x); }
 template <> inline int signbit<double> (double x) { return __builtin_signbit (x); }
 template <> inline int signbit<long double> (long double x) { return __builtin_signbitl (x); }
@@ -2773,7 +2773,7 @@ _GL_EXTERN_C int _gl_signbitl (long double arg);
 #   endif
 #  endif
 #  if defined __cplusplus && !defined __clang__
-template <typename T> int signbit (T);
+template <typename _T_> int signbit (_T_);
 template <> inline int signbit<float> (float x) { return _gl_signbitf (x); }
 template <> inline int signbit<double> (double x) { return _gl_signbitd (x); }
 template <> inline int signbit<long double> (long double x) { return _gl_signbitl (x); }

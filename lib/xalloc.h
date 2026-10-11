@@ -170,41 +170,41 @@ char *xcharalloc (size_t n)
    without a cast.  Use templates to work around the problem when
    possible.  */
 
-template <typename T> inline T *
-xrealloc (T *p, size_t s)
+template <typename _T_> inline _T_ *
+xrealloc (_T_ *p, size_t s)
 {
-  return (T *) xrealloc ((void *) p, s);
+  return (_T_ *) xrealloc ((void *) p, s);
 }
 
-template <typename T> inline T *
-xreallocarray (T *p, size_t n, size_t s)
+template <typename _T_> inline _T_ *
+xreallocarray (_T_ *p, size_t n, size_t s)
 {
-  return (T *) xreallocarray ((void *) p, n, s);
+  return (_T_ *) xreallocarray ((void *) p, n, s);
 }
 
 /* FIXME: Deprecate this in favor of xreallocarray?  */
-template <typename T> inline T *
-xnrealloc (T *p, size_t n, size_t s)
+template <typename _T_> inline _T_ *
+xnrealloc (_T_ *p, size_t n, size_t s)
 {
   return xreallocarray (p, n, s);
 }
 
-template <typename T> inline T *
-x2realloc (T *p, size_t *pn)
+template <typename _T_> inline _T_ *
+x2realloc (_T_ *p, size_t *pn)
 {
-  return (T *) x2realloc ((void *) p, pn);
+  return (_T_ *) x2realloc ((void *) p, pn);
 }
 
-template <typename T> inline T *
-x2nrealloc (T *p, size_t *pn, size_t s)
+template <typename _T_> inline _T_ *
+x2nrealloc (_T_ *p, size_t *pn, size_t s)
 {
-  return (T *) x2nrealloc ((void *) p, pn, s);
+  return (_T_ *) x2nrealloc ((void *) p, pn, s);
 }
 
-template <typename T> inline T *
-xmemdup (T const *p, size_t s)
+template <typename _T_> inline _T_ *
+xmemdup (_T_ const *p, size_t s)
 {
-  return (T *) xmemdup ((void const *) p, s);
+  return (_T_ *) xmemdup ((void const *) p, s);
 }
 
 #endif /* GNULIB_XALLOC && C++ */

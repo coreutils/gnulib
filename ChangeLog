@@ -1,3 +1,27 @@
+2026-10-11  Bruno Haible  <bruno@clisp.org>
+
+	Make C++ templates more hygienic.
+	* lib/math.in.h (isfinite, isinf, isnan, signbit): Rename template
+	parameter T to _T_.
+	* lib/string.in.h (strnul, mbsstr_template, mbspcasecmp_template,
+	mbscasestr_template): Likewise.
+	* lib/unigbrk.in.h (u8_grapheme_next_template,
+	u16_grapheme_next_template, u32_grapheme_next_template,
+	u8_grapheme_prev_template, u16_grapheme_prev_template,
+	u32_grapheme_prev_template): Likewise.
+	* lib/unistr.in.h (u8_check_template, u16_check_template,
+	u32_check_template, u8_chr_template, u16_chr_template, u32_chr_template,
+	u8_next_template, u16_next_template, u32_next_template,
+	u8_prev_template, u16_prev_template, u32_prev_template,
+	u8_strchr_template, u16_strchr_template, u32_strchr_template,
+	u8_strrchr_template, u16_strrchr_template, u32_strrchr_template,
+	u8_strpbrk_template, u16_strpbrk_template, u32_strpbrk_template,
+	u8_strstr_template, u16_strstr_template, u32_strstr_template): Likewise.
+	* lib/xalloc.h (xrealloc, xreallocarray, xnrealloc, x2realloc,
+	x2nrealloc, xmemdup): Likewise.
+	* lib/stdcountof.in.h (struct _gl_array_type_test): Likewise. Rename
+	template parameter N to _N_.
+
 2026-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdio-windows: fix _UCRT test on MinGW-64
