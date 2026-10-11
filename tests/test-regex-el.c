@@ -74,45 +74,51 @@ main ()
 
   for (int i = 0; i < 3; i++)
     for (int j = 0; j < 3; j++)
-      {
-        static char const str[3][2] = { "\xd3", "\xf2", "\xf3" };
-        re_set_syntax (RE_ICASE);
-        memset (&regex, 0, sizeof regex);
-        s = re_compile_pattern (str[i], 1, &regex);
-        if (s)
-          {
-            report_error ("re_compile_pattern \\x%02x failed: %s",
-                          (unsigned char) str[i][0], s);
-            continue;
-          }
-        int without = re_search (&regex, str[j], 1, 0, 1, NULL);
-        regfree (&regex);
+      for (int k = 0; k < 2; k++)
+        {
+          static char const str[3][2] = { "\xd3", "\xf2", "\xf3" };
+          char pat[4];
+          char const *lbrack = &"["[k];
+          char const *rbrack = &"]"[k];
+          int patlen = sprintf (pat, "%s%s%s", lbrack, str[i], rbrack);
+          re_set_syntax (RE_ICASE);
+          memset (&regex, 0, sizeof regex);
+          s = re_compile_pattern (pat, patlen, &regex);
+          if (s)
+            {
+              report_error ("re_compile_pattern %s\\x%02x%s failed: %s",
+                            lbrack, (unsigned char) str[i][0], rbrack, s);
+              continue;
+            }
+          int without = re_search (&regex, str[j], 1, 0, 1, NULL);
+          regfree (&regex);
 
-        memset (&regex, 0, sizeof regex);
-        regex.fastmap = malloc (UCHAR_MAX + 1);
-        if (!regex.fastmap)
-          {
-            report_error ("malloc failed");
-            continue;
-          }
-        s = re_compile_pattern (str[i], 1, &regex);
-        if (s)
-          {
-            report_error ("re_compile_pattern \\x%02x failed(!): %s",
-                          (unsigned char) str[i][0], s);
-            continue;
-          }
-        int with = re_search (&regex, str[j], 1, 0, 1, NULL);
+          memset (&regex, 0, sizeof regex);
+          regex.fastmap = malloc (UCHAR_MAX + 1);
+          if (!regex.fastmap)
+            {
+              report_error ("malloc failed");
+              continue;
+            }
+          s = re_compile_pattern (pat, patlen, &regex);
+          if (s)
+            {
+              report_error ("re_compile_pattern %s\\x%02x%s failed(!): %s",
+                            lbrack, (unsigned char) str[i][0], rbrack, s);
+              continue;
+            }
+          int with = re_search (&regex, str[j], 1, 0, 1, NULL);
 
-        if (with != without)
-          report_error
-            ("fastmap mismatch: pattern = \\x%02x, string = \\x%02x,"
-             " with = %d, without = %d",
-             (unsigned char) str[i][0], (unsigned char) str[j][0],
-             with, without);
+          if (with != without)
+            report_error
+              ("fastmap mismatch: pattern = %s\\x%02x%s, string = \\x%02x,"
+               " with = %d, without = %d",
+               lbrack, (unsigned char) str[i][0], rbrack,
+               (unsigned char) str[j][0],
+               with, without);
 
-        regfree (&regex);
-      }
+          regfree (&regex);
+        }
 
   return exit_status;
 }

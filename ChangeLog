@@ -1,3 +1,14 @@
+2026-10-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: fix REG_ICASE for single-byte chars
+	Problem reported by Arno Onken in:
+	https://lists.gnu.org/r/bug-gnulib/2026-10/msg00029.html
+	* lib/regcomp.c (re_compile_fastmap_iter): For SIMPLE_BRACKET,
+	also set fastmap for leading bytes of case folded counterparts
+	of each character.
+	* tests/test-regex-el.c (main): Test [C] as well as C,
+	for each problematic character C.
+
 2026-10-11  Bruno Haible  <bruno@clisp.org>
 
 	Make C++ templates more hygienic.
