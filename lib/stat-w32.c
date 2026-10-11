@@ -290,10 +290,10 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
                   if (length >= 4 && fpath[length - 4] == '.')
                     {
                       const char *suffix = fpath + length - 3;
-                      if (_stricmp (suffix, "exe", 3) == 0
-                          || _stricmp (suffix, "bat", 3) == 0
-                          || _stricmp (suffix, "cmd", 3) == 0
-                          || _stricmp (suffix, "com", 3) == 0)
+                      if (_strnicmp (suffix, "exe", 3) == 0
+                          || _strnicmp (suffix, "bat", 3) == 0
+                          || _strnicmp (suffix, "cmd", 3) == 0
+                          || _strnicmp (suffix, "com", 3) == 0)
                         mode |= S_IEXEC_UGO;
                     }
                 }

@@ -1,3 +1,10 @@
+2026-10-11  Bruno Haible  <bruno@clisp.org>
+
+	fstat, stat: Fix compilation error on native Windows (regr. 2026-09-05).
+	Reported by Simon Josefsson in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-10/msg00043.html>.
+	* lib/stat-w32.c (_gl_fstat_by_handle): Use _strnicmp, not _stricmp.
+
 2026-10-01  Bruno Haible  <bruno@clisp.org>
 
 	time_r: Work around localtime_r problem on native Windows.
