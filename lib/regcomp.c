@@ -347,10 +347,13 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
 		if (w & ((bitset_word_t) 1 << j))
 		  {
 		    re_set_fastmap (fastmap, ch);
-		    wchar_t wc;
-		    mbstate_t state = {0};
-		    if (__mbrtowc (&wc, (char *) &ch, 1, &state) == 1)
-		      re_set_fastmap_icase (fastmap, wc, &state);
+		    if (bufp->syntax & RE_ICASE)
+		      {
+			wchar_t wc;
+			mbstate_t state = {0};
+			if (__mbrtowc (&wc, (char *) &ch, 1, &state) == 1)
+			  re_set_fastmap_icase (fastmap, wc, &state);
+		      }
 		  }
 	    }
 	}
