@@ -1,3 +1,10 @@
+2026-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex-tests: pacify -Wformat-overflow
+	Problem and fix reported by Pádraig Brady in:
+	https://lists.gnu.org/r/bug-gnulib/2026-10/msg00072.html
+	* tests/test-regex-el.c (main): Use %c not %s.
+
 2026-10-12  Arno Onken  <asnelt@asnelt.org>
 
 	regex: fold case in bracket fastmap only if RE_ICASE

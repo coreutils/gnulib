@@ -80,7 +80,7 @@ main ()
           char pat[4];
           char const *lbrack = &"["[k];
           char const *rbrack = &"]"[k];
-          int patlen = sprintf (pat, "%s%s%s", lbrack, str[i], rbrack);
+          int patlen = sprintf (pat, "%s%c%s", lbrack, str[i][0], rbrack);
           re_set_syntax (RE_ICASE);
           memset (&regex, 0, sizeof regex);
           s = re_compile_pattern (pat, patlen, &regex);
