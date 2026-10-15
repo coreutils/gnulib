@@ -14,3 +14,6 @@ ChangeLog	merge=merge-changelog
 
 # Don't check some specific files against trailing whitespace.
 doc/Copyright/*	-text
+tests/unigbrk/GraphemeBreakTest.txt -text
+tests/unilbrk/LineBreakTest.txt -text
+tests/uniwbrk/WordBreakTest.txt -text
