@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -25,7 +25,10 @@
     { 0x08CA, 0x08CB },
     { 0x08CD, 0x08CF },
     { 0x08D3, 0x08D3 },
-    { 0x08F3, 0x08F3 }
+    { 0x08F3, 0x08F3 },
+    { 0x10EF4, 0x10EF4 },
+    { 0x10EF6, 0x10EF6 },
+    { 0x10EF9, 0x10EF9 }
 
 #define PREDICATE(c) uc_is_property_modifier_combining_mark (c)
 #include "test-predicate-part2.h"

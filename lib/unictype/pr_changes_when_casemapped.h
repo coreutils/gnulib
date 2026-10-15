@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 18.0.0.  */
 
-/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2026 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[19 << 4];
+    unsigned int level3[20 << 4];
   }
 u_property_changes_when_casemapped =
 {
@@ -284,12 +284,12 @@ u_property_changes_when_casemapped =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   288,
+       -1,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   304,
        -1,
        -1,
        -1,
@@ -307,7 +307,7 @@ u_property_changes_when_casemapped =
     0x00000000U, 0x00200000U, 0xFF7FFFFFU, 0xFF7FFFFFU,
     0xFFFFFFFFU, 0xFEFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFDFFFU, 0xB3FFF3FFU, 0xFFFFFFF0U, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFC0FFFFDU, 0x1ADFFFFFU, 0x20269F7BU,
+    0xFFFFFFFFU, 0xFC0FFFFDU, 0x1ADFFFFFU, 0x30A69F7BU,
     0x60041F8DU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000020U, 0xB8CF0000U,
     0xFFFFD740U, 0xFFFFFFFBU, 0xFFE3FFFFU, 0xEFBFFFFFU,
@@ -346,10 +346,10 @@ u_property_changes_when_casemapped =
     0x00000000U, 0x00000000U, 0xFFFFFFFFU, 0x00003FFFU,
     0x0FFFFFFFU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0xFFFCFFFCU, 0xFFFFFFFFU, 0xFE00FFFFU,
-    0xFFDF38FFU, 0xFFFF7FFFU, 0x1FFFFFFFU, 0x00600000U,
+    0xFFDF38FFU, 0xFFFF7FFFU, 0x3FFFFFFFU, 0x00600004U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00080000U, 0xFFFF0000U,
+    0x00000000U, 0x00000000U, 0x00081800U, 0xFFFF3000U,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -375,6 +375,10 @@ u_property_changes_when_casemapped =
     0x00000000U, 0xF9FFFFFFU, 0x000FFFFFU, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00066F03U, 0xFFFCFF00U,
+    0x00200000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x0000000FU, 0x00000000U,

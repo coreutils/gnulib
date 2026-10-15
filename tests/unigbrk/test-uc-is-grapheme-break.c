@@ -97,17 +97,13 @@ main (int argc, char *argv[])
       const char *p;
       ucs4_t prev;
       int last_char_prop;
-      bool incb_consonant_extended;
-      bool incb_consonant_extended_linker;
-      bool incb_consonant_extended_linker_extended;
+      bool incb_linker_extended;
       bool emoji_modifier_sequence;
       bool emoji_modifier_sequence_before_last_char;
       size_t ri_count;
 
       last_char_prop = -1;
-      incb_consonant_extended = false;
-      incb_consonant_extended_linker = false;
-      incb_consonant_extended_linker_extended = false;
+      incb_linker_extended = false;
       emoji_modifier_sequence = false;
       emoji_modifier_sequence_before_last_char = false;
       ri_count = 0;
@@ -159,7 +155,7 @@ main (int argc, char *argv[])
           int incb = uc_indic_conjunct_break (next);
 
           /* Skip unsupported rules involving 3 or more characters.  */
-          if (incb_consonant_extended_linker_extended
+          if (incb_linker_extended
               && incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT)
             fprintf (stderr, "%s:%d: skipping GB9c: should join U+%04X "
                      "and U+%04X\n",
@@ -203,16 +199,10 @@ main (int argc, char *argv[])
           p += strspn (p, " \t\r\n");
           prev = next;
 
-          incb_consonant_extended_linker =
-            incb_consonant_extended && incb == UC_INDIC_CONJUNCT_BREAK_LINKER;
-          incb_consonant_extended_linker_extended =
-            (incb_consonant_extended_linker
-             || (incb_consonant_extended_linker_extended
-                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
-          incb_consonant_extended =
-            (incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT
-             || (incb_consonant_extended
-                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
+          incb_linker_extended =
+            (incb == UC_INDIC_CONJUNCT_BREAK_LINKER
+             || (incb_linker_extended
+                 && incb == UC_INDIC_CONJUNCT_BREAK_EXTEND));
 
           emoji_modifier_sequence_before_last_char = emoji_modifier_sequence;
           emoji_modifier_sequence =

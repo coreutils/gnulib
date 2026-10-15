@@ -577,7 +577,17 @@ enum
   UC_JOINING_GROUP_THIN_YEH,                 /* Thin_Yeh */
   UC_JOINING_GROUP_VERTICAL_TAIL,            /* Vertical_Tail */
   UC_JOINING_GROUP_KASHMIRI_YEH,             /* Kashmiri_Yeh */
-  UC_JOINING_GROUP_THIN_NOON                 /* Thin_Noon */
+  UC_JOINING_GROUP_THIN_NOON,                /* Thin_Noon */
+  UC_JOINING_GROUP_CROWN_BEH,                /* Crown_Beh */
+  UC_JOINING_GROUP_CROWN_HAH,                /* Crown_Hah */
+  UC_JOINING_GROUP_CROWN_SEEN,               /* Crown_Seen */
+  UC_JOINING_GROUP_CROWN_SAD,                /* Crown_Sad */
+  UC_JOINING_GROUP_CROWN_TAH,                /* Crown_Tah */
+  UC_JOINING_GROUP_CROWN_AIN,                /* Crown_Ain */
+  UC_JOINING_GROUP_CROWN_FEH,                /* Crown_Feh */
+  UC_JOINING_GROUP_CROWN_KAF,                /* Crown_Kaf */
+  UC_JOINING_GROUP_CROWN_MEEM,               /* Crown_Meem */
+  UC_JOINING_GROUP_CROWN_HEH                 /* Crown_Heh */
 };
 
 /* Return the name of a joining group.  */

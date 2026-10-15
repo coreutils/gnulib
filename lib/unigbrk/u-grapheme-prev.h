@@ -30,17 +30,11 @@
 
 /* Returns true if the string [s_start, s) ends with a sequence of
    Indic_Conjunct_Break values like:
-     consonant {extend|linker}* linker {extend|linker}*
+     linker extend*
  */
 static bool
-ends_with_incb_consonant_extended_linker_extended (const UNIT *s,
-                                                   const UNIT *s_start)
+ends_with_incb_linker_extended (const UNIT *s, const UNIT *s_start)
 {
-  /* Look for
-       consonant {extend|linker}*
-     with at least one linker.  */
-  bool seen_linker = false;
-
   while (s > s_start)
     {
       ucs4_t uc;
@@ -50,11 +44,10 @@ ends_with_incb_consonant_extended_linker_extended (const UNIT *s,
         break;
 
       int incb = uc_indic_conjunct_break (uc);
-      if (incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT)
-        return seen_linker;
-      if (!(incb >= UC_INDIC_CONJUNCT_BREAK_LINKER))
+      if (incb == UC_INDIC_CONJUNCT_BREAK_LINKER)
+        return true;
+      if (incb != UC_INDIC_CONJUNCT_BREAK_EXTEND)
         break;
-      seen_linker |= (incb == UC_INDIC_CONJUNCT_BREAK_LINKER);
 
       s = prev_s;
     }
@@ -190,12 +183,12 @@ FUNC (const UNIT *s, const UNIT *s_start)
             /* *p = 0 */;
           /* No break within certain combinations of Indic_Conjunct_Break
              values: Between
-               consonant {extend|linker}* linker {extend|linker}*
+               linker extend*
              and
                consonant
              (GB9c).  */
           else if (next_char_incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT
-                   && ends_with_incb_consonant_extended_linker_extended (s, s_start))
+                   && ends_with_incb_linker_extended (s, s_start))
             /* *p = 0 */;
           /* No break within emoji modifier sequences or emoji zwj sequences
              (GB11).  */

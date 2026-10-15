@@ -74,10 +74,10 @@ FUNC (const UNIT *s, size_t n,
             /* Look first in the special-casing table.  */
             char code[3];
 
-            code[0] = (uc >> 8) & 0xff;
-            code[1] = uc & 0xff;
+            code[0] = (uc >> 12) & 0xff;
+            code[1] = (uc >> 4) & 0xff;
 
-            for (code[2] = 0; ; code[2]++)
+            for (code[2] = ((uc & 0xf) << 4); ; code[2]++)
               {
                 const struct special_casing_rule *rule =
                   gl_unicase_special_lookup (code, 3);
@@ -239,8 +239,8 @@ FUNC (const UNIT *s, size_t n,
                       {
                         /* The rule applies.
                            Look up the mapping (0 to 3 characters).  */
-                        const unsigned short *mapped_in_rule =
-                          (const unsigned short *)((const char *)rule + offset_in_rule);
+                        const unsigned int *mapped_in_rule =
+                          (const unsigned int *)((const char *)rule + offset_in_rule);
 
                         if (mapped_in_rule[0] == 0)
                           mapped_count = 0;

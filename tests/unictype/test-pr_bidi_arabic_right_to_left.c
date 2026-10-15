@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -44,6 +44,8 @@
     { 0xFE6C, 0xFEFE },
     { 0x10D00, 0x10D23 },
     { 0x10EC2, 0x10EC7 },
+    { 0x10EC9, 0x10ECA },
+    { 0x10ED9, 0x10EEE },
     { 0x10F30, 0x10F45 },
     { 0x10F51, 0x10F59 },
     { 0x1EC71, 0x1ECB4 },

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character mapping functions.
-   Copyright (C) 2009-2025 Free Software Foundation, Inc.
+   Copyright (C) 2009-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 18.0.0.  */
 
 #include "test-mapping-part1.h"
 
@@ -1173,7 +1173,11 @@
     { 0xA7D8, 0xA7D9 },
     { 0xA7DA, 0xA7DB },
     { 0xA7DC, 0x019B },
+    { 0xA7DD, 0x0277 },
+    { 0xA7E2, 0x027C },
     { 0xA7F5, 0xA7F6 },
+    { 0xAB6C, 0xAB4B },
+    { 0xAB6D, 0xAB4C },
     { 0xFF21, 0xFF41 },
     { 0xFF22, 0xFF42 },
     { 0xFF23, 0xFF43 },
@@ -1473,6 +1477,22 @@
     { 0x16EB6, 0x16ED1 },
     { 0x16EB7, 0x16ED2 },
     { 0x16EB8, 0x16ED3 },
+    { 0x1DF40, 0x1DF41 },
+    { 0x1DF48, 0x1DF49 },
+    { 0x1DF4A, 0x1DF4B },
+    { 0x1DF4D, 0x1DF4E },
+    { 0x1DF51, 0x1DF52 },
+    { 0x1DF68, 0x1DF69 },
+    { 0x1DF6A, 0x1DF6B },
+    { 0x1DF6C, 0x1DF6D },
+    { 0x1DF6E, 0x1DF6F },
+    { 0x1DF72, 0x1DF73 },
+    { 0x1DF74, 0x1DF75 },
+    { 0x1DF76, 0x1DF77 },
+    { 0x1DF78, 0x1DF79 },
+    { 0x1DF7A, 0x1DF7B },
+    { 0x1DF7C, 0x1DF7D },
+    { 0x1DF7E, 0x1DF7F },
     { 0x1E900, 0x1E922 },
     { 0x1E901, 0x1E923 },
     { 0x1E902, 0x1E924 },

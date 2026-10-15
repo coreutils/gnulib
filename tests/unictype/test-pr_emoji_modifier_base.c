@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -56,7 +56,7 @@
     { 0x1F9CD, 0x1F9CF },
     { 0x1F9D1, 0x1F9DD },
     { 0x1FAC3, 0x1FAC5 },
-    { 0x1FAF0, 0x1FAF8 }
+    { 0x1FAF0, 0x1FAFA }
 
 #define PREDICATE(c) uc_is_property_emoji_modifier_base (c)
 #include "test-predicate-part2.h"

@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Table that encodes several line breaking rules.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 18.0.0.  */
 
-/* Copyright (C) 2001-2025 Free Software Foundation, Inc.
+/* Copyright (C) 2001-2026 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -40,7 +40,7 @@ const unsigned char unilbrk_table[43][43] =
 /*  WJ */ {  P,  I,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /*  GL */ {  P,  I,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /*  B2 */ {  P,  I,  P,  I,  D,  I,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
-/*  BA */ {  P,  D,  D,  I,  D,  I,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
+/*  BA */ {  P,  I,  D,  I,  D,  I,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  BB */ {  P,  I,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /*  HH */ {  P,  D,  D,  I,  D,  I,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  HY */ {  P,  D,  D,  I,  D,  I,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  I,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },

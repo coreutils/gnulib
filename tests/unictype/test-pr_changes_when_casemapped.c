@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -40,7 +40,8 @@
     { 0x026F, 0x026F },
     { 0x0271, 0x0272 },
     { 0x0275, 0x0275 },
-    { 0x027D, 0x027D },
+    { 0x0277, 0x0277 },
+    { 0x027C, 0x027D },
     { 0x0280, 0x0280 },
     { 0x0282, 0x0283 },
     { 0x0287, 0x028C },
@@ -120,9 +121,12 @@
     { 0xA78B, 0xA78D },
     { 0xA790, 0xA794 },
     { 0xA796, 0xA7AE },
-    { 0xA7B0, 0xA7DC },
+    { 0xA7B0, 0xA7DD },
+    { 0xA7E2, 0xA7E2 },
     { 0xA7F5, 0xA7F6 },
+    { 0xAB4B, 0xAB4C },
     { 0xAB53, 0xAB53 },
+    { 0xAB6C, 0xAB6D },
     { 0xAB70, 0xABBF },
     { 0xFB00, 0xFB06 },
     { 0xFB13, 0xFB17 },
@@ -147,6 +151,13 @@
     { 0x16E40, 0x16E7F },
     { 0x16EA0, 0x16EB8 },
     { 0x16EBB, 0x16ED3 },
+    { 0x1DF40, 0x1DF41 },
+    { 0x1DF48, 0x1DF4B },
+    { 0x1DF4D, 0x1DF4E },
+    { 0x1DF51, 0x1DF52 },
+    { 0x1DF68, 0x1DF6F },
+    { 0x1DF72, 0x1DF7F },
+    { 0x1DF95, 0x1DF95 },
     { 0x1E900, 0x1E943 }
 
 #define PREDICATE(c) uc_is_property_changes_when_casemapped (c)

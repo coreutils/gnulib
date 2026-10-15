@@ -10,7 +10,7 @@ unigbrk/uc-gbrk-prop
 bool
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.4], [unigbrk/uc-is-grapheme-break])
+gl_LIBUNISTRING_MODULE([1.5], [unigbrk/uc-is-grapheme-break])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_UC_IS_GRAPHEME_BREAK

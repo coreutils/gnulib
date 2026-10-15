@@ -14,7 +14,7 @@ streq-opt
 stdcountof-h
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.4], [uniwidth/width])
+gl_LIBUNISTRING_MODULE([1.5], [uniwidth/width])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH

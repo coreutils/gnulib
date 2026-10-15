@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -209,7 +209,10 @@
     { 0x16F51, 0x16F87 },
     { 0x16FF0, 0x16FF1 },
     { 0x1D165, 0x1D166 },
-    { 0x1D16D, 0x1D172 }
+    { 0x1D16D, 0x1D172 },
+    { 0x1D250, 0x1D252 },
+    { 0x1D25F, 0x1D25F },
+    { 0x1D280, 0x1D281 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Mc)
 #include "test-predicate-part2.h"

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -26,18 +26,21 @@
     { 0xFA70, 0xFAD9 },
     { 0x16FE4, 0x16FE4 },
     { 0x16FF2, 0x16FF6 },
-    { 0x17000, 0x18CD5 },
-    { 0x18CFF, 0x18D1E },
+    { 0x17000, 0x18CDA },
+    { 0x18CFF, 0x18D20 },
     { 0x18D80, 0x18DF2 },
+    { 0x18E00, 0x19191 },
+    { 0x191A0, 0x191D2 },
     { 0x1B170, 0x1B2FB },
     { 0x20000, 0x2A6DF },
-    { 0x2A700, 0x2B81D },
+    { 0x2A700, 0x2B81E },
     { 0x2B820, 0x2CEAD },
     { 0x2CEB0, 0x2EBE0 },
     { 0x2EBF0, 0x2EE5D },
     { 0x2F800, 0x2FA1D },
     { 0x30000, 0x3134A },
-    { 0x31350, 0x33479 }
+    { 0x31350, 0x33479 },
+    { 0x3D000, 0x3FC3F }
 
 #define PREDICATE(c) uc_is_property_ideographic (c)
 #include "test-predicate-part2.h"

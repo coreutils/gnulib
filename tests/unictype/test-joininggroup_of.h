@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 18.0.0.  */
 
-/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -372,4 +372,26 @@
     { 0x10EC3, UC_JOINING_GROUP_TAH },
     { 0x10EC4, UC_JOINING_GROUP_KAF },
     { 0x10EC6, UC_JOINING_GROUP_THIN_NOON },
-    { 0x10EC7, UC_JOINING_GROUP_YEH }
+    { 0x10EC7, UC_JOINING_GROUP_YEH },
+    { 0x10ED9, UC_JOINING_GROUP_CROWN_BEH },
+    { 0x10EDA, UC_JOINING_GROUP_CROWN_BEH },
+    { 0x10EDB, UC_JOINING_GROUP_CROWN_BEH },
+    { 0x10EDC, UC_JOINING_GROUP_CROWN_BEH },
+    { 0x10EDD, UC_JOINING_GROUP_CROWN_HAH },
+    { 0x10EDE, UC_JOINING_GROUP_CROWN_HAH },
+    { 0x10EDF, UC_JOINING_GROUP_CROWN_HAH },
+    { 0x10EE0, UC_JOINING_GROUP_CROWN_SEEN },
+    { 0x10EE1, UC_JOINING_GROUP_CROWN_SEEN },
+    { 0x10EE2, UC_JOINING_GROUP_CROWN_SAD },
+    { 0x10EE3, UC_JOINING_GROUP_CROWN_SAD },
+    { 0x10EE4, UC_JOINING_GROUP_CROWN_TAH },
+    { 0x10EE5, UC_JOINING_GROUP_CROWN_TAH },
+    { 0x10EE6, UC_JOINING_GROUP_CROWN_AIN },
+    { 0x10EE7, UC_JOINING_GROUP_CROWN_AIN },
+    { 0x10EE8, UC_JOINING_GROUP_CROWN_FEH },
+    { 0x10EE9, UC_JOINING_GROUP_CROWN_FEH },
+    { 0x10EEA, UC_JOINING_GROUP_CROWN_KAF },
+    { 0x10EEB, UC_JOINING_GROUP_CROWN_MEEM },
+    { 0x10EEC, UC_JOINING_GROUP_CROWN_BEH },
+    { 0x10EED, UC_JOINING_GROUP_CROWN_HEH },
+    { 0x10EEE, UC_JOINING_GROUP_CROWN_BEH }

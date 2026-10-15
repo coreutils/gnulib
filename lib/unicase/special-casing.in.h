@@ -49,8 +49,8 @@ enum
 
 struct special_casing_rule
 {
-  /* The first two bytes are the code, in big-endian order.  The third byte
-     only distinguishes different rules pertaining to the same code.  */
+  /* The first 20 bits are the code, in big-endian order.  The remaining 4 bits
+     only distinguish different rules pertaining to the same code.  */
   /*unsigned*/ char code[3] _GL_ATTRIBUTE_NONSTRING;
 
   /* True when this rule is not the last one for the given code.  */
@@ -63,16 +63,16 @@ struct special_casing_rule
   char language[2];
 
   /* Mapping to upper case.  Between 0 and 3 characters.  Filled with 0s.  */
-  unsigned short upper[3];
+  unsigned int upper[3];
 
   /* Mapping to lower case.  Between 0 and 3 characters.  Filled with 0s.  */
-  unsigned short lower[3];
+  unsigned int lower[3];
 
   /* Mapping to title case.  Between 0 and 3 characters.  Filled with 0s.  */
-  unsigned short title[3];
+  unsigned int title[3];
 
   /* Casefolding mapping.  Between 0 and 3 characters.  Filled with 0s.  */
-  unsigned short casefold[3];
+  unsigned int casefold[3];
 };
 
 extern const struct special_casing_rule *

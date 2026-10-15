@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* ISO C <ctype.h> like properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 17.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 18.0.0.  */
 
-/* Copyright (C) 2000-2025 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -27,7 +27,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[18 << 4];
+    unsigned int level3[19 << 4];
   }
 u_is_lower =
 {
@@ -276,12 +276,12 @@ u_is_lower =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   272,
+       -1,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   288,
        -1,
        -1,
        -1,
@@ -299,7 +299,7 @@ u_is_lower =
     0x00000000U, 0x00200000U, 0x80000000U, 0xFF7FFFFFU,
     0xAAAAAAAAU, 0x54AAAAAAU, 0xAAAAA955U, 0xD4AAAAAAU,
     0x4E241129U, 0xA251212AU, 0xB5555B60U, 0xAA2CAAAAU,
-    0xAAAAAAAAU, 0x900AAAA8U, 0x1ADFAA85U, 0x20269F7BU,
+    0xAAAAAAAAU, 0x900AAAA8U, 0x1ADFAA85U, 0x30A69F7BU,
     0x60041F8DU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000020U, 0x388A0000U,
     0x00000000U, 0xFFFEF000U, 0xAAE37FFFU, 0x092FAAAAU,
@@ -341,7 +341,7 @@ u_is_lower =
     0xAA9A10AAU, 0xAAA002AAU, 0x0AAAA50AU, 0x00400000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00080000U, 0xFFFF0000U,
+    0x00000000U, 0x00000000U, 0x00081800U, 0xFFFF0000U,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -362,6 +362,10 @@ u_is_lower =
     0x00000000U, 0x00000000U, 0x00000000U, 0xFFFFFFFFU,
     0x00000000U, 0xF8000000U, 0x000FFFFFU, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00044A02U, 0xAAA8AA00U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

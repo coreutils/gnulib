@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -24,13 +24,15 @@
     { 0x02E0, 0x02E4 },
     { 0x0345, 0x0345 },
     { 0x037A, 0x037A },
+    { 0x0558, 0x0558 },
+    { 0x058B, 0x058C },
     { 0x10FC, 0x10FC },
     { 0x1D2C, 0x1D6A },
     { 0x1D78, 0x1D78 },
     { 0x1D9B, 0x1DBF },
     { 0x2071, 0x2071 },
     { 0x207F, 0x207F },
-    { 0x2090, 0x209C },
+    { 0x2090, 0x209F },
     { 0x2170, 0x217F },
     { 0x24D0, 0x24E9 },
     { 0x2C7C, 0x2C7D },
@@ -43,7 +45,8 @@
     { 0x10780, 0x10780 },
     { 0x10783, 0x10785 },
     { 0x10787, 0x107B0 },
-    { 0x107B2, 0x107BA },
+    { 0x107B2, 0x107BF },
+    { 0x1DFCD, 0x1DFFF },
     { 0x1E030, 0x1E06D }
 
 #define PREDICATE(c) uc_is_property_other_lowercase (c)

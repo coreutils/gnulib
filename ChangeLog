@@ -1,5 +1,52 @@
 2026-10-15  Bruno Haible  <bruno@clisp.org>
 
+	Update to Unicode 18.0.0.
+
+	* lib/gen-uni-tables.c (is_property_alphabetic): Add more CUNEIFORM
+	NUMERIC SIGNs.
+	(UC_JOINING_GROUP_CROWN_*): New enum items.
+	(fill_arabicshaping, joining_group_as_c_identifier): Handle
+	UC_JOINING_GROUP_CROWN_*.
+	(get_lbp): Update such that unilbrk/lbrkprop.txt comes out as expected.
+	(output_lbrk_rules_as_tables): Update rule LBP12a as specified by
+	https://www.unicode.org/reports/tr14/tr14-57.html.
+	(get_wbp): Update such that uniwbrk/wbrkprop.txt comes out as expected.
+	(output_casing_rules): Allow codes up to 0xFFFFF. Allow all 32-bit
+	mapping values.
+
+	* lib/unictype.in.h (UC_JOINING_GROUP_CROWN_*): New enum items.
+	* lib/unictype/joininggroup_byname.gperf: Handle them.
+	* lib/unictype/joininggroup_name.h: Likewise.
+
+	* lib/unicase/special-casing.in.h (struct special_casing_rule): Change
+	element type of upper, lower, title, casefold to 'unsigned int'.
+	* lib/unicase/u-casemap.h (FUNC): Implement lookup for 20-bit code
+	values. Update for changed element type.
+	* lib/unicase/u-ct-totitle.h (FUNC): Likewise.
+
+	* lib/unigbrk/u-grapheme-breaks.h (FUNC): Update for changed rule GB9c.
+	* lib/unigbrk/u-grapheme-next.h (FUNC): Likewise.
+	* lib/unigbrk/u-grapheme-prev.h (ends_with_incb_linker_extended):
+	Renamed from ends_with_incb_consonant_extended_linker_extended. Update
+	for changed rule GB9c.
+	(FUNC): Update.
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main): Update for changed
+	rule GB9c.
+
+	* tests/uniwidth/test-uc_width2.sh: Update expected test result.
+
+	* All generated files under lib/uni* and tests/uni*: Regenerate.
+	* tests/uniname/NameAliases.txt: Update.
+	* tests/uniname/UnicodeData.txt: Update.
+	* tests/uninorm/NormalizationTest.txt: Update.
+	* tests/unigbrk/GraphemeBreakTest.txt: Update.
+	* tests/uniwbrk/WordBreakTest.txt: Update.
+	* tests/unilbrk/LineBreakTest.txt: Update.
+
+	* All the affected modules: Bump required libunistring version.
+
+2026-10-15  Bruno Haible  <bruno@clisp.org>
+
 	gen-uni-tables: Fix compilation error (regression 2025-12-09).
 	* lib/unictype/3levelbit.h (CONCAT(TABLE,_finalize)): Remove left-over
 	variable declarations.

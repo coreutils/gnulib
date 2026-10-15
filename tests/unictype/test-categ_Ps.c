@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -67,6 +67,7 @@
     { 0x2E57, 0x2E57 },
     { 0x2E59, 0x2E59 },
     { 0x2E5B, 0x2E5B },
+    { 0x2E62, 0x2E62 },
     { 0x3008, 0x3008 },
     { 0x300A, 0x300A },
     { 0x300C, 0x300C },

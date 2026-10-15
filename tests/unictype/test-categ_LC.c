@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -98,11 +98,13 @@
     { 0xA722, 0xA76F },
     { 0xA771, 0xA787 },
     { 0xA78B, 0xA78E },
-    { 0xA790, 0xA7DC },
+    { 0xA790, 0xA7DD },
+    { 0xA7E2, 0xA7E2 },
     { 0xA7F5, 0xA7F6 },
     { 0xA7FA, 0xA7FA },
     { 0xAB30, 0xAB5A },
     { 0xAB60, 0xAB68 },
+    { 0xAB6C, 0xAB6D },
     { 0xAB70, 0xABBF },
     { 0xFB00, 0xFB06 },
     { 0xFB13, 0xFB17 },
@@ -145,7 +147,7 @@
     { 0x1D540, 0x1D544 },
     { 0x1D546, 0x1D546 },
     { 0x1D54A, 0x1D550 },
-    { 0x1D552, 0x1D6A5 },
+    { 0x1D552, 0x1D6A6 },
     { 0x1D6A8, 0x1D6C0 },
     { 0x1D6C2, 0x1D6DA },
     { 0x1D6DC, 0x1D6FA },
@@ -158,8 +160,8 @@
     { 0x1D7AA, 0x1D7C2 },
     { 0x1D7C4, 0x1D7CB },
     { 0x1DF00, 0x1DF09 },
-    { 0x1DF0B, 0x1DF1E },
-    { 0x1DF25, 0x1DF2A },
+    { 0x1DF0B, 0x1DF7F },
+    { 0x1DF90, 0x1DF96 },
     { 0x1E900, 0x1E943 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_LC)

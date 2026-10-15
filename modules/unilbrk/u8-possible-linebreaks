@@ -14,7 +14,7 @@ streq-opt
 bool
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.4], [unilbrk/u8-possible-linebreaks])
+gl_LIBUNISTRING_MODULE([1.5], [unilbrk/u8-possible-linebreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNILBRK_U8_POSSIBLE_LINEBREAKS

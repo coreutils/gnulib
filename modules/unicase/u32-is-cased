@@ -16,7 +16,7 @@ unistr/u32-cmp
 bool
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.4], [unicase/u32-is-cased])
+gl_LIBUNISTRING_MODULE([1.5], [unicase/u32-is-cased])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U32_IS_CASED

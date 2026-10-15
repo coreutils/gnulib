@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2025 Free Software Foundation, Inc.
+   Copyright (C) 2007-2026 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -304,6 +304,7 @@
     { 0x11938, 0x11938 },
     { 0x16121, 0x16128 },
     { 0x16D68, 0x16D6A },
+    { 0x1B123, 0x1B126 },
     { 0x1D15E, 0x1D164 },
     { 0x1D1BB, 0x1D1C0 },
     { 0x1F100, 0x1F10A },
