@@ -203,8 +203,6 @@ CONCAT(TABLE,_iterate) (struct TABLE *t, void (*fn) (uint32_t wc))
 static void
 CONCAT(TABLE,_finalize) (struct TABLE *t)
 {
-  uint32_t level1_offset, level2_offset, level3_offset;
-
   /* Uniquify level3 blocks.  */
   {
     uint32_t reorder3[t->level3_size];
