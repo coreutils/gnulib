@@ -1,3 +1,9 @@
+2026-10-15  Bruno Haible  <bruno@clisp.org>
+
+	gen-uni-tables: Fix compilation error (regression 2025-12-09).
+	* lib/unictype/3levelbit.h (CONCAT(TABLE,_finalize)): Remove left-over
+	variable declarations.
+
 2026-10-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex-tests: pacify -Wformat-overflow
