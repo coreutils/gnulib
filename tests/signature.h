@@ -43,6 +43,23 @@
 # define SIGNATURE_CHECK1(fn, ret, args, id) \
   SIGNATURE_CHECK2 (fn, ret, args, id) /* macroexpand line */
 # define SIGNATURE_CHECK2(fn, ret, args, id) \
+  DISABLE_INTRINSIC (fn) \
   _GL_UNUSED static ret (*signature_check ## id) args = fn
+# if defined _MSC_VER
+/* With MSVC, when intrinsics are enabled (e.g. through option '-O2' without
+   option '-Oi-'), use of an intrinsic function as an initializer produces an
+   "error C2099: initializer is not a constant".  To avoid this error, disable
+   this particular intrinsic function.
+   Documentation:
+   <https://learn.microsoft.com/en-us/cpp/intrinsics/compiler-intrinsics>
+   <https://learn.microsoft.com/en-us/cpp/preprocessor/function-c-cpp>
+   <https://learn.microsoft.com/en-us/cpp/preprocessor/warning>
+   <https://learn.microsoft.com/en-us/cpp/preprocessor/pragma-directives-and-the-pragma-keyword>  */
+#  define DISABLE_INTRINSIC(fn)  \
+     __pragma (warning (suppress : 4163)) \
+     __pragma (function (fn))
+# else
+#  define DISABLE_INTRINSIC(fn)
+# endif
 
 #endif /* SIGNATURE_CHECK */

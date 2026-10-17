@@ -1,5 +1,11 @@
 2026-10-17  Bruno Haible  <bruno@clisp.org>
 
+	tests: Fix some compilation errors with optimizing MSVC.
+	* tests/signature.h (DISABLE_INTRINSIC): New macro.
+	(SIGNATURE_CHECK2): Invoke it.
+
+2026-10-17  Bruno Haible  <bruno@clisp.org>
+
 	Fix AC_CHECK_FUNC results with optimizing MSVC.
 	Reported by Jerker Bäck in
 	<https://lists.gnu.org/archive/html/bug-autoconf/2007-08/msg00008.html>.
