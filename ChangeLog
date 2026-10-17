@@ -1,3 +1,20 @@
+2026-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex, ac-permissions, nstrftime: use maybe_unused
+	This is useful for Emacs when compiled with -Wunused-paramet3er.
+	* lib/malloc/dynarray-skeleton.c (DYNARRAY_NAME (free__elements__)):
+	* lib/malloc/dynarray_at_failure.c (__libc_dynarray_at_failure):
+	* lib/regcomp.c (regerror, calc_next, build_range_exp)
+	(build_collating_symbol, parse_bracket_element, build_equiv_class)
+	(free_tree):
+	* lib/regex_internal.h (re_string_elem_size_at):
+	Use __attribute_maybe_unused__ for arguments that are unused,
+	perhaps only when compiled under Gnulib.  Since glibc does not
+	have anything like _GL_UNNAMED, don’t use that here.
+	* lib/set-permissions.c (set_acls):
+	* lib/strftime.c (get_tm_zone): Use _GL_UNSUED for arguments that
+	might not be used, depending on compile-time options.
+
 2026-10-16  Bruno Haible  <bruno@clisp.org>
 
 	tests: Fix build with 32-bit MSVC in 64-bit Cygwin/MSYS2 environment.
