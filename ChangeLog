@@ -1,3 +1,9 @@
+2026-10-17  Bruno Haible  <bruno@clisp.org>
+
+	tests: Fix some compilation errors with optimizing MSVC.
+	* tests/signature.h (DISABLE_INTRINSIC): New macro.
+	(SIGNATURE_CHECK2): Invoke it.
+
 2026-10-15  Bruno Haible  <bruno@clisp.org>
 
 	gen-uni-tables: Fix compilation error (regression 2025-12-09).
