@@ -1,5 +1,5 @@
 # 00gnulib.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2009-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -78,6 +78,68 @@ m4_define([_AC_CHECK_DECL_BODY],
     ac_compile="$ac_compile_for_check_decl"
   fi]
 m4_defn([_AC_CHECK_DECL_BODY])[  ac_compile="$ac_saved_ac_compile"
+])
+
+# The following definitions arrange to use a compiler option -Oi- in
+# AC_CHECK_FUNC, when the compiler is MSVC with optimization enabled.
+# Without it, this compiler implicitly declares "known" library functions,
+# which would cause the AC_CHECK_FUNC test to fail.
+# The list of such library functions is documented at
+# <https://learn.microsoft.com/en-us/cpp/intrinsics/intrinsics-available-on-all-architectures>.
+# It's not possible to AC_REQUIRE the extra tests from AC_CHECK_FUNC,
+# because AC_CHECK_FUNC, like other Autoconf built-ins, is not supposed
+# to AC_REQUIRE anything: some configure.ac files have their first
+# AC_CHECK_FUNC executed conditionally.  Therefore append the extra tests
+# to AC_PROG_CC.
+AC_DEFUN([gl_COMPILER_PREPARE_CHECK_FUNC],
+[
+dnl AC_REQUIRE([AC_PROG_CC])
+  AC_CACHE_CHECK([for compiler option needed when checking for functions],
+    [gl_cv_compiler_check_func_option],
+    [dnl Use _AC_COMPILE_IFELSE instead of AC_COMPILE_IFELSE, to avoid a
+     dnl warning "AC_COMPILE_IFELSE was called before AC_USE_SYSTEM_EXTENSIONS".
+     _AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[
+          #ifdef __cplusplus
+          extern "C"
+          #endif
+          char memcpy (void);
+          ]],[[
+          return memcpy ();
+          ]])],
+       [gl_cv_compiler_check_func_option=none],
+       [dnl Test whether the compiler supports the option '-Oi-'.
+        saved_ac_compile="$ac_compile"
+        ac_compile="$ac_compile -Oi-"
+        _AC_COMPILE_IFELSE(
+          [AC_LANG_PROGRAM([[
+             #ifdef __cplusplus
+             extern "C"
+             #endif
+             char memcpy (void);
+             ]],[[
+             return memcpy ();
+             ]])],
+          [gl_cv_compiler_check_func_option='-Oi-'],
+          [gl_cv_compiler_check_func_option=none])
+        ac_compile="$saved_ac_compile"
+       ])
+    ])
+  if test "x$gl_cv_compiler_check_func_option" != xnone; then
+    ac_link_for_check_func="$ac_link $gl_cv_compiler_check_func_option"
+  else
+    ac_link_for_check_func="$ac_link"
+  fi
+])
+dnl Redefine _AC_CHECK_FUNC_BODY so that it references ac_link_for_check_func
+dnl instead of ac_link.  If, for whatever reason, the override of AC_PROG_CC
+dnl in zzgnulib.m4 is inactive, use the original ac_link.
+m4_define([_AC_CHECK_FUNC_BODY],
+[  ac_saved_ac_link="$ac_link"
+  if test -n "$ac_link_for_check_func"; then
+    ac_link="$ac_link_for_check_func"
+  fi]
+m4_defn([_AC_CHECK_FUNC_BODY])[  ac_link="$ac_saved_ac_link"
 ])
 
 # gl_00GNULIB
