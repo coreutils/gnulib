@@ -56,6 +56,9 @@
      The first three bytes of this field appear to uniquely identify a
      pthread_t, though not necessarily representing a pointer.  */
 # define thrd_current_pointer() (*((void **) thrd_current ().__))
+#elif defined _MSC_VER && HAVE_THREADS_H
+  /* In MSVC 17.8 (2022) or newer, thrd_t is a struct with a _Handle field.  */
+# define thrd_current_pointer() (thrd_current ()._Handle)
 #elif defined __sun
   /* On Solaris, thrd_t is merely an 'unsigned int'.  */
 # define thrd_current_pointer() ((void *) (uintptr_t) thrd_current ())

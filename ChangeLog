@@ -1,5 +1,14 @@
 2026-10-17  Bruno Haible  <bruno@clisp.org>
 
+	tests: Fix some compilation errors with recent MSVC.
+	* tests/test-call_once2.c (thrd_current_pointer): Define differently for
+	MSVC with <threads.h>.
+	* tests/test-mtx.c (thrd_current_pointer): Likewise.
+	* tests/test-thread_local.c (thrd_current_pointer): Likewise.
+	* tests/test-tss.c (thrd_current_pointer): Likewise.
+
+2026-10-17  Bruno Haible  <bruno@clisp.org>
+
 	tests: Fix some compilation errors with optimizing MSVC.
 	* tests/signature.h (DISABLE_INTRINSIC): New macro.
 	(SIGNATURE_CHECK2): Invoke it.
