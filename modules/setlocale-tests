@@ -46,6 +46,13 @@ TESTS += test-setlocale-w32utf8.sh
 noinst_PROGRAMS += test-setlocale-w32utf8
 test_setlocale_w32utf8_LDADD = $(LDADD) test-setlocale-windows-utf8.res $(SETLOCALE_LIB)
 test-setlocale-windows-utf8.res : $(srcdir)/windows-utf8.rc
-	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-setlocale-windows-utf8.res --output-format=coff
+	if test '@OBJEXT@' = obj; then \
+	  rcfile=`cygpath -w '$(srcdir)/windows-utf8.rc'`; \
+	  rc -fotest-setlocale-windows-utf8.tmp.res "$$rcfile" \
+	  && cvtres -out:test-setlocale-windows-utf8.res test-setlocale-windows-utf8.tmp.res \
+	  && rm -f test-setlocale-windows-utf8.tmp.res; \
+	else \
+	  $(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-setlocale-windows-utf8.res --output-format=coff; \
+	fi
 MOSTLYCLEANFILES += test-setlocale-windows-utf8.res
 endif

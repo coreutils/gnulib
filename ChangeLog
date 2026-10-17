@@ -1,3 +1,13 @@
+2026-10-16  Bruno Haible  <bruno@clisp.org>
+
+	tests: Fix build with 32-bit MSVC in 64-bit Cygwin/MSYS2 environment.
+	* modules/localcharset-tests (Makefile.am): For building the .res file
+	with MSVC, use 'rc' and 'cvtres' instead of $(WINDRES).
+	* modules/localename-tests (Makefile.am): Likewise.
+	* modules/mbrtowc-tests (Makefile.am): Likewise.
+	* modules/nstrftime-tests (Makefile.am): Likewise.
+	* modules/setlocale-tests (Makefile.am): Likewise.
+
 2026-10-15  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 18.0.0.

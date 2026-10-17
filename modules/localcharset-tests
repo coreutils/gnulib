@@ -23,6 +23,13 @@ TESTS += test-localcharset-w32utf8.sh
 noinst_PROGRAMS += test-localcharset-w32utf8
 test_localcharset_w32utf8_LDADD = $(LDADD) test-localcharset-windows-utf8.res $(SETLOCALE_LIB)
 test-localcharset-windows-utf8.res : $(srcdir)/windows-utf8.rc
-	$(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-localcharset-windows-utf8.res --output-format=coff
+	if test '@OBJEXT@' = obj; then \
+	  rcfile=`cygpath -w '$(srcdir)/windows-utf8.rc'`; \
+	  rc -fotest-localcharset-windows-utf8.tmp.res "$$rcfile" \
+	  && cvtres -out:test-localcharset-windows-utf8.res test-localcharset-windows-utf8.tmp.res \
+	  && rm -f test-localcharset-windows-utf8.tmp.res; \
+	else \
+	  $(WINDRES) -i $(srcdir)/windows-utf8.rc -o test-localcharset-windows-utf8.res --output-format=coff; \
+	fi
 MOSTLYCLEANFILES += test-localcharset-windows-utf8.res
 endif
