@@ -1,5 +1,14 @@
 2026-10-19  Bruno Haible  <bruno@clisp.org>
 
+	Fix AC_CHECK_FUNC results with optimizing MSVC in a simpler way.
+	* m4/00gnulib.m4 (gl_COMPILER_PREPARE_CHECK_FUNC): Remove macro.
+	(_AC_CHECK_FUNC_BODY): Remove override.
+	(AC_LANG_FUNC_LINK_TRY(C)): New override, from autoconf master.
+	* m4/zzgnulib.m4 (AC_PROG_CC): Don't invoke
+	gl_COMPILER_PREPARE_CHECK_FUNC.
+
+2026-10-19  Bruno Haible  <bruno@clisp.org>
+
 	at-init: Fix for MSVC/arm.
 	* lib/at-init.h (GL_MSVC_SYMBOL_PREFIX): Test _M_IX86, not _WIN64.
 
