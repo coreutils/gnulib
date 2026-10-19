@@ -1,3 +1,8 @@
+2026-10-19  Bruno Haible  <bruno@clisp.org>
+
+	at-init: Fix for MSVC/arm.
+	* lib/at-init.h (GL_MSVC_SYMBOL_PREFIX): Test _M_IX86, not _WIN64.
+
 2026-10-17  Bruno Haible  <bruno@clisp.org>
 
 	tests: Fix some compilation errors with recent MSVC.
