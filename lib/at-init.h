@@ -72,10 +72,10 @@
 /* Avoid an error in the pragma below.  */
 # undef read
 
-# ifdef _WIN64
-#  define GL_MSVC_SYMBOL_PREFIX ""
-# else
+# ifdef _M_IX86 /* x86 */
 #  define GL_MSVC_SYMBOL_PREFIX "_"
+# else /* x86_64, arm, arm64 */
+#  define GL_MSVC_SYMBOL_PREFIX ""
 # endif
 
 # define AT_INIT(function) GL_MSVC_CTOR (function, GL_MSVC_SYMBOL_PREFIX)
