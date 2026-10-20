@@ -54,7 +54,6 @@ verbose=false
 #chicken="echo (would)"
 
 : "${TMPDIR=/tmp}"
-dsttmp=$TMPDIR/srclist.dst
 
 # Source `dirname $0`/srclistvars.sh first, if it exists.
 mydir=`dirname $0`
@@ -165,11 +164,8 @@ cat | while read top src dst options; do
     fixfile $reltmp $reltmp
   fi
 
-  # Fix files in both src and dst, for the sake
-  # of a clean comparison.
   srctmp=$TMPDIR/`basename $src`
   fixfile $src $srctmp
-  test -r $dst && fixfile $dst $dsttmp
 
   # if src was executable, make dst executable, to placate git.
   test -x $src && chmod a+x $dst
@@ -177,14 +173,12 @@ cat | while read top src dst options; do
   if test ! -e $dst; then
     echo "## $srctmp $dst  # new"
     $chicken cp -p $srctmp $dst
-  elif $release && cmp -s $reltmp $dsttmp; then
+  elif $release && cmp -s $reltmp $dst; then
     $verbose && echo "## $reltmp $dst  # unchanged"
-  elif cmp -s $srctmp $dsttmp; then
+  elif cmp -s $srctmp $dst; then
     $verbose && echo "## $srctmp $dst  # unchanged"
   else
     echo "## $srctmp $dst  # changes"
     diff -C 2 $dst $srctmp
   fi
 done
-
-rm -f $dsttmp

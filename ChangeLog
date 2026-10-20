@@ -1,3 +1,10 @@
+2026-10-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	srclist-update respects strip-trailing-space
+	When stray trailing spaces leaked into build-aux/texinfo.texi,
+	config/srclist-update did not remove them.
+	* config/srclist-update (dsttmp): Remove; all uses removed.
+
 2026-10-19  Bruno Haible  <bruno@clisp.org>
 
 	Fix AC_CHECK_FUNC results with optimizing MSVC in a simpler way.
