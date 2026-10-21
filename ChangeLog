@@ -1,3 +1,11 @@
+2026-10-21  Pádraig Brady  <P@draigBrady.com>
+
+	cpu-supports: align more closely with GLIBC_TUNABLES parsing
+	* lib/cpu-supports.c (hwcap_supported): Be more restrictive
+	in matching as per the cases listed at:
+	https://github.com/coreutils/coreutils/issues/385
+	* tests/test-cpu-supports.c: Add test cases.
+
 2026-10-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	srclist-update respects strip-trailing-space

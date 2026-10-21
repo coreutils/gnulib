@@ -45,17 +45,33 @@ hwcap_allowed (char const *glibc_hwcap)
   static char const *hwcaps;
   if (hwcap_allowed_nocache || ! hwcaps)
     { /* Cache glibc.cpu.hwcaps once per process.  */
-      if ((hwcaps = getenv ("GLIBC_TUNABLES")))
-        {
-          char const *tunables_start = hwcaps;
-          char const *last_hwcaps;
-          while ((last_hwcaps = strstr (hwcaps, "glibc.cpu.hwcaps=")))
-            hwcaps = last_hwcaps + sizeof "glibc.cpu.hwcaps=" - 1;
-          if (hwcaps == tunables_start)  /* No match.  */
-            hwcaps = "";
-        }
-      else
-        hwcaps = "";
+      char const *p = getenv ("GLIBC_TUNABLES");
+      hwcaps = "";
+      if (p && *p)
+        while (true)
+          {
+            char const *name = p;
+            p += strcspn (p, "=:");
+            if (! *p)  /* Missing value invalidates all tunables.  */
+              {
+                hwcaps = "";
+                break;
+              }
+            if (*p++ == ':')
+              continue;
+            char const *value = p;
+            p += strcspn (p, "=:");
+            if (*p == '=')  /* Values cannot contain '='.  */
+              {
+                hwcaps = "";
+                break;
+              }
+            if (strncmp (name, "glibc.cpu.hwcaps=",
+                         sizeof "glibc.cpu.hwcaps=" - 1) == 0)
+              hwcaps = value;
+            if (! *p)
+              break;
+          }
     }
 
   if (! hwcaps)  /* Shouldn't happen.  */
@@ -70,10 +86,10 @@ hwcap_allowed (char const *glibc_hwcap)
   char const *cap = hwcaps;
   while ((cap = strstr (cap, glibc_hwcap)) && cap < sentinel)
     { /* Check it's not a partial match.  */
+      bool start = cap == hwcaps || cap[-1] == ',';
       cap += strlen (glibc_hwcap);
-      if (*cap == ',' || *cap == ':' || *cap == '\0')
+      if (start && (*cap == ',' || *cap == ':' || *cap == '\0'))
         return false;  /* Feature disabled.  */
-      /* glibc hwcaps can't have '-' in name so ok to search from here. */
     }
 
   return true;

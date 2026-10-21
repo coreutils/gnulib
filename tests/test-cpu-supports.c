@@ -83,6 +83,36 @@ main ()
     ASSERT (hwcap_allowed ("-AVX2") == 0);
   }
 
+  { /* Only complete tunable names match.  */
+    setenv ("GLIBC_TUNABLES", "glibc.cpu.hwcaps=-AVX:"
+                              "xglibc.cpu.hwcaps=x", 1);
+    ASSERT (! hwcap_allowed ("-AVX"));
+    setenv ("GLIBC_TUNABLES", "xglibc.cpu.hwcaps=-AVX", 1);
+    ASSERT (hwcap_allowed ("-AVX"));
+  }
+
+  { /* Malformed tunables invalidate the entire variable.  */
+    static char const *const invalid[] =
+      {
+        "glibc.cpu.hwcaps=-AVX2:x=y=z",
+        "x=y=z:glibc.cpu.hwcaps=-AVX2",
+        "glibc.cpu.hwcaps=-AVX2:missing",
+        "glibc.cpu.hwcaps=-AVX2:"
+      };
+    for (size_t i = 0; i < sizeof invalid / sizeof *invalid; i++)
+      {
+        setenv ("GLIBC_TUNABLES", invalid[i], 1);
+        ASSERT (hwcap_allowed ("-AVX2"));
+      }
+  }
+
+  { /* Only complete feature names match.  */
+    setenv ("GLIBC_TUNABLES", "glibc.cpu.hwcaps=--AVX2,x-AVX2,-AVX2x", 1);
+    ASSERT (hwcap_allowed ("-AVX2"));
+    setenv ("GLIBC_TUNABLES", "glibc.cpu.hwcaps=--AVX2,x-AVX2,-AVX2", 1);
+    ASSERT (! hwcap_allowed ("-AVX2"));
+  }
+
   { /* Unsupported features not matched by cpu_*().  */
     setenv ("GLIBC_TUNABLES", "glibc.cpu.hwcaps=-FOO", 1);
     ASSERT (cpu_may_support ("foo"));
