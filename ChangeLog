@@ -1,3 +1,11 @@
+2026-10-21  Bruno Haible  <bruno@clisp.org>
+
+	Avoid -Wundef warnings about __clang_major__ with recent GCC in C mode.
+	Reported by Andrew Hamilton <adhamilt@gmail.com> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-10/msg00091.html>.
+	* m4/gnulib-common.m4 (gl_COMMON_BODY, gl_CC_GNULIB_WARNINGS): Test
+	__clang__ before __clang_major__.
+
 2026-10-21  Pádraig Brady  <P@draigBrady.com>
 
 	cpu-supports: align more closely with GLIBC_TUNABLES parsing
