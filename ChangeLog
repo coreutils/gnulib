@@ -1,3 +1,8 @@
+2026-10-25  Eric Cai  <ericcaiwx@gmail.com>  (tiny change)
+
+	qcopy-acl: Fix handling of file descriptor 0.
+	* lib/qcopy-acl.c (qcopy_acl): Fix typo.
+
 2026-10-25  Bruno Haible  <bruno@clisp.org>
 
 	string-desc: Fix comment.
