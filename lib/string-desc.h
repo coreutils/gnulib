@@ -157,7 +157,7 @@ typedef rw_string_desc_t string_desc_t;
 extern string_desc_t sd_readonly (rw_string_desc_t s);
 #endif
 
-/* Return a read-only view of S.
+/* Return a read-write view of S.
    Attention: This function is as dangerous as a cast from 'const char *'
    to 'char *'!  */
 #if 0 /* Defined inline below.  */

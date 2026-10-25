@@ -1,3 +1,8 @@
+2026-10-25  Bruno Haible  <bruno@clisp.org>
+
+	string-desc: Fix comment.
+	* lib/string-desc.h (sd_readwrite): Fix typo in comment.
+
 2026-10-21  Bruno Haible  <bruno@clisp.org>
 
 	Avoid -Wundef warnings about __clang_major__ with recent GCC in C mode.
