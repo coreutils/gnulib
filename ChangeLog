@@ -1,3 +1,12 @@
+2026-10-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl-permissions: use _GL_UNUSED
+	This is useful for Emacs when compiled with -Wunused-parameter.
+	* lib/acl-internal.c (free_permission_context):
+	* lib/get-permissions.c (get_permissions):
+	Use _GL_UNUSED for arguments that might not be used, depending on
+	compile-time options.
+
 2026-10-25  Eric Cai  <ericcaiwx@gmail.com>  (tiny change)
 
 	qcopy-acl: Fix handling of file descriptor 0.
