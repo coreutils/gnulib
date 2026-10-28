@@ -1,7 +1,7 @@
 2026-10-27  Kamila Szewczyk <szewczyk@cs.uni-saarland.de>
 
 	announce-gen: Perl list buglet, cksum sha3 usage.
-	
+
 	* lib/announce-gen (sizes): return empty list, not undef,
 	since the caller uses it in list context.
 	(print_checksums): omit --base64 from info message for sha3 since
