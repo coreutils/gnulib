@@ -68,28 +68,226 @@ expects a @code{char *} argument, or vice versa, or assigns a
 @code{string_desc_t} value to a variable of type @code{char *}, or
 vice versa, the compiler will report an error.
 
+When we write @code{[rw_]string_desc_t},
+it means either @code{string_desc_t} or @code{rw_string_desc_t}.
+
+@heading Conversions (declared in @code{"string-desc.h"})
+
 Unfortunately, @code{string_desc_t} and @code{rw_string_desc_t}
 being different types, there is no implicit conversion from
 @code{rw_string_desc_t} to @code{string_desc_t}.  In places
 where such a conversion is desired, the (inline) function
 @code{sd_readonly} needs to be called.
 
-Functions related to string descriptors are provided:
-@itemize
-@item
-Side-effect-free operations in @code{"string-desc.h"},
-@item
-Memory-allocating operations in @code{"string-desc.h"},
-@item
-Memory-allocating operations with out-of-memory checking in
-@code{"xstring-desc.h"},
-@item
-Operations with side effects in @code{"string-desc.h"}.
-@end itemize
+@deftypefun string_desc_t sd_readonly (rw_string_desc_t@tie{}@var{s})
+Returns a read-only view of @var{s}.
+@end deftypefun
 
-For outputting a string descriptor, the @code{*printf} family of
-functions cannot be used directly.  A format string directive such as
-@code{"%.*s"} would not work:
+@deftypefun rw_string_desc_t sd_readwrite (string_desc_t@tie{}@var{s})
+Returns a read-write view of @var{s}.
+
+@emph{Attention:} This function is as dangerous
+as a cast from @code{const char *} to @code{char *}!
+@end deftypefun
+
+@heading Side-effect-free operations (declared in @code{"string-desc.h"})
+
+@deftypefun idx_t sd_length ([rw_]string_desc_t@tie{}@var{s})
+Returns the length of the string @var{s}.
+@end deftypefun
+
+@deftypefun char sd_char_at ([rw_]string_desc_t@tie{}@var{s}, idx_t@tie{}@var{i})
+Returns the byte at index @var{i} of string @var{s}.
+
+@var{i} must be @code{< sd_length (@var{s})}.
+@end deftypefun
+
+@deftypefun {const char *} sd_data (string_desc_t@tie{}@var{s})
+@deftypefunx {char *} sd_data (rw_string_desc_t@tie{}@var{s})
+Returns a pointer to the bytes of @var{s}.
+
+@emph{Attention:} This function is provided so that you can use
+@code{memcpy} or similar low-level functions.
+Use of this function breaks the @code{[rw_]string_desc_t} abstraction, though,
+and should therefore be limited to a minimum.
+@end deftypefun
+
+@deftypefun bool sd_is_empty ([rw_]string_desc_t@tie{}@var{s})
+Returns true if @var{s} is the empty string.
+@end deftypefun
+
+@deftypefun bool sd_equals ([rw_]string_desc_t@tie{}@var{a}, [rw_]string_desc_t@tie{}@var{b})
+Returns true if @var{a} and @var{b} are equal, i.e. have the same contents.
+@end deftypefun
+
+@deftypefun bool sd_startswith ([rw_]string_desc_t@tie{}@var{s}, [rw_]string_desc_t@tie{}@var{prefix})
+Returns true if @var{s} starts with @var{prefix}.
+@end deftypefun
+
+@deftypefun bool sd_endswith ([rw_]string_desc_t@tie{}@var{s}, [rw_]string_desc_t@tie{}@var{suffix})
+Returns true if @var{s} ends with @var{suffix}.
+@end deftypefun
+
+@deftypefun int sd_cmp ([rw_]string_desc_t@tie{}@var{a}, [rw_]string_desc_t@tie{}@var{b})
+Returns > 0, == 0, or < 0
+if @var{a} > @var{b}, @var{a} == @var{b}, @var{a} < @var{b}, respectively.
+
+This uses a lexicographic ordering,
+where the bytes are compared as @code{unsigned char}.
+@end deftypefun
+
+@deftypefun int sd_c_casecmp ([rw_]string_desc_t@tie{}@var{a}, [rw_]string_desc_t@tie{}@var{b})
+Returns > 0, == 0, or < 0
+if @var{a} > @var{b}, @var{a} == @var{b}, @var{a} < @var{b}, respectively.
+
+Either @var{a} or @var{b} must be entirely ASCII.
+
+This uses a lexicographic ordering,
+where the bytes are compared as @code{unsigned char}, ignoring case,
+in the "C" locale.
+@end deftypefun
+
+@deftypefun ptrdiff_t sd_index ([rw_]string_desc_t@tie{}@var{s}, char@tie{}@var{c})
+Returns the index of the first occurrence of @var{c} in @var{s},
+or -1 if there is none.
+@end deftypefun
+
+@deftypefun ptrdiff_t sd_last_index ([rw_]string_desc_t@tie{}@var{s}, char@tie{}@var{c})
+Returns the index of the last occurrence of @var{c} in @var{s},
+or -1 if there is none.
+@end deftypefun
+
+@deftypefun ptrdiff_t sd_contains ([rw_]string_desc_t@tie{}@var{haystack}, [rw_]string_desc_t@tie{}@var{needle})
+Returns the index of the first occurrence of @var{needle} in @var{haystack},
+or -1 if there is none.
+@end deftypefun
+
+@deftypefun string_desc_t sd_new_empty (void)
+Returns an empty string.
+@end deftypefun
+
+@deftypefun string_desc_t sd_new_addr (idx_t@tie{}@var{n}, const@tie{}char@tie{}*@var{addr})
+@deftypefunx rw_string_desc_t sd_new_addr (idx_t@tie{}@var{n}, char@tie{}*@var{addr})
+Constructs and returns a string of length @var{n}, at the given memory address.
+@end deftypefun
+
+@deftypefun string_desc_t sd_from_c (const@tie{}char@tie{}*@var{s})
+Returns a string that represents the C string @var{s},
+of length @code{strlen (@var{s})}.
+@end deftypefun
+
+@deftypefun string_desc_t sd_substring (string_desc_t@tie{}@var{s}, idx_t@tie{}@var{start}, idx_t@tie{}@var{end})
+@deftypefunx rw_string_desc_t sd_substring (rw_string_desc_t@tie{}@var{s}, idx_t@tie{}@var{start}, idx_t@tie{}@var{end})
+Returns the substring of @var{s},
+starting at offset @var{start} and ending at offset @var{end}.
+
+@var{start} must be <= @var{end}.
+
+The result is of length @code{@var{end} - @var{start}}.
+
+The result must not be freed
+(since its storage is part of the storage of @var{s}).
+@end deftypefun
+
+@heading Memory-allocating operations that may fail (declared in @code{"string-desc.h"})
+
+These functions use @code{malloc}.
+If you use these functions, you need to handle out-of-memory situations yourself.
+
+@deftypefun int sd_new (rw_string_desc_t@tie{}*@var{resultp}, idx_t@tie{}@var{n})
+Constructs a string of length @var{n}, with uninitialized contents.
+
+Returns 0 if successful.
+Upon error, it returns -1 with @code{errno} set.
+@end deftypefun
+
+@deftypefun int sd_new_filled (rw_string_desc_t@tie{}*@var{resultp}, idx_t@tie{}@var{n}, char@tie{}@var{c})
+Constructs a string of length @var{n}, filled with @var{c}.
+
+Returns 0 if successful.
+Upon error, it returns -1 with @code{errno} set.
+@end deftypefun
+
+@deftypefun int sd_copy (rw_string_desc_t@tie{}*@var{resultp}, [rw_]string_desc_t@tie{}@var{s})
+Constructs a copy of string @var{s}.
+
+Returns 0 if successful.
+Upon error, it returns -1 with @code{errno} set.
+@end deftypefun
+
+@deftypefun int sd_concat (rw_string_desc_t@tie{}*@var{resultp}, idx_t@tie{}@var{n}, /*@tie{}[rw_]string_desc_t@tie{}@var{string1},@tie{}*/ ...)
+Constructs the concatenation of @var{n} strings.
+
+@var{n} must be > 0.
+
+Returns 0 if successful.
+Upon error, it returns -1 with @code{errno} set.
+@end deftypefun
+
+@deftypefun {char *} sd_c ([rw_]string_desc_t@tie{}@var{s})
+Constructs a copy of string @var{s}, as a NUL-terminated C string.
+
+Returns it if successful.
+Upon error, it returns @code{NULL} with @code{errno} set.
+@end deftypefun
+
+@heading Memory-allocating operations with out-of-memory checking (declared in @code{"xstring-desc.h"})
+
+These functions use @code{xmalloc} and thereby handle out-of-memory situations.
+
+@deftypefun rw_string_desc_t xsd_new (idx_t@tie{}@var{n})
+Returns a string of length @var{n}, with uninitialized contents.
+@end deftypefun
+
+@deftypefun rw_string_desc_t xsd_new_filled (idx_t@tie{}@var{n}, char@tie{}@var{c})
+Returns a string of length @var{n}, filled with @var{c}.
+@end deftypefun
+
+@deftypefun rw_string_desc_t xsd_copy (string_desc_t@tie{}@var{s})
+Returns a copy of string @var{s}.
+@end deftypefun
+
+@deftypefun rw_string_desc_t xsd_concat (idx_t@tie{}@var{n}, /*@tie{}[rw_]string_desc_t@tie{}@var{string1},@tie{}*/ ...)
+Returns the concatenation of @var{n} strings.
+
+@var{n} must be > 0.
+@end deftypefun
+
+@deftypefun {char *} xsd_c ([rw_]string_desc_t@tie{}@var{s})
+Constructs and returns a copy of string @var{s}, as a NUL-terminated C string.
+@end deftypefun
+
+@heading Operations with side effects (declared in @code{"string-desc.h"})
+
+@deftypefun void sd_set_char_at (rw_string_desc_t@tie{}@var{s}, idx_t@tie{}@var{i}, char@tie{}@var{c})
+Overwrites the byte at index @var{i} of string @var{s} with @var{c}.
+
+@var{i} must be @code{< sd_length(@var{s})}.
+@end deftypefun
+
+@deftypefun void sd_fill (rw_string_desc_t@tie{}@var{s}, idx_t@tie{}@var{start}, idx_t@tie{}@var{end}, char@tie{}@var{c})
+Fills part of @var{s},
+starting at offset @var{start} and ending at offset @var{end},
+with copies of @var{c}.
+
+@var{start} must be <= @var{end}.
+@end deftypefun
+
+@deftypefun void sd_overwrite (rw_string_desc_t@tie{}@var{s}, idx_t@tie{}@var{start}, [rw_]string_desc_t@tie{}@var{t})
+Overwrites part of @var{s} with @var{t}, starting at offset @var{start}.
+
+@code{@var{start} + sd_length(@var{t})} must be @code{<= sd_length(@var{s})}.
+@end deftypefun
+
+@deftypefun void sd_free (rw_string_desc_t@tie{}@var{s})
+Frees @var{s}.
+@end deftypefun
+
+@heading Outputting a string descriptor (declared in @code{"string-desc.h"})
+
+For outputting a string descriptor,
+the @code{*printf} family of functions cannot be used directly.
+A format string directive such as @code{"%.*s"} would not work:
 @itemize
 @item
 it would stop the output at the first encountered NUL character,
@@ -104,18 +302,121 @@ would not work for strings longer than @code{INT_MAX} bytes.
 Therefore Gnulib offers
 @itemize
 @item
-a function @code{sd_fwrite} that outputs a string descriptor to
-a @code{FILE} stream,
+a function @code{sd_fwrite}
+that outputs a string descriptor to a @code{FILE} stream,
 @item
-a function @code{sd_write} that outputs a string descriptor to
-a file descriptor,
-@item
-and for those applications where the NUL characters should become
-visible as @samp{\0}, a family of @code{quotearg} based functions, that
-allow to specify the escaping rules in detail.
+a function @code{sd_write}
+that outputs a string descriptor to a file descriptor.
 @end itemize
 
-The functionality is thus split across three modules as follows:
+@deftypefun int sd_fwrite (FILE@tie{}*@var{fp}, [rw_]string_desc_t@tie{}@var{s})
+Outputs @var{s} to the @code{FILE} stream @var{fp}.
+
+Returns 0 if successful.
+Upon error, it returns -1.
+@end deftypefun
+
+@deftypefun int sd_write (int@tie{}@var{fd}, [rw_]string_desc_t@tie{}@var{s})
+Outputs @var{s} to the file descriptor @var{fd}.
+
+Returns 0 if successful.
+Upon error, it return -1 with @code{errno} set.
+@end deftypefun
+
+@heading Outputting a string descriptor in human-readable form (declared in @code{"string-desc-quotearg.h"})
+
+For those applications
+where the NUL characters should become visible as @samp{\0},
+Gnulib provides a family of @code{quotearg} based functions,
+that allow to specify the escaping rules in detail.
+
+@deftypefun size_t sd_quotearg_buffer (char@tie{}*@var{buffer}, size_t@tie{}@var{buffersize}, string_desc_t@tie{}@var{arg}, struct@tie{}quoting_options@tie{}const@tie{}*@var{options})
+Places into buffer @var{buffer} (of size @var{buffersize})
+a quoted version of argument @var{arg},
+using @var{options} to control quoting.
+
+If @var{options} is null, it uses the default options.
+
+Terminates the output with a NUL character,
+and returns the written size of the output, not counting the terminating NUL.
+
+If @var{buffersize} is too small to store the output string,
+it returns the value that would have been returned had @var{buffersize} been large enough.
+
+On output, @var{buffer} might contain embedded NUL bytes
+if the style of @var{options} does not use backslash escapes
+and the flags of @var{options} do not request elision of NUL bytes.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_alloc (string_desc_t@tie{}@var{arg}, size_t@tie{}*@var{size}, struct@tie{}quoting_options@tie{}const@tie{}*@var{options})
+This function is like @code{sd_quotearg_buffer}, except that
+it returns the result in a newly allocated buffer
+and stores its length, excluding the terminating NUL byte, in @code{*@var{size}}.
+
+It is the caller's responsibility to free the result.
+
+The result might contain embedded NUL bytes
+if the style of @var{options} does not use backslash escapes
+and the flags of @var{options} do not request elision of NUL bytes.
+@end deftypefun
+
+The following functions use ``storage slots''.
+See module @samp{quotearg} for details.
+
+@deftypefun {char *} sd_quotearg_n (int@tie{}@var{n}, string_desc_t@tie{}@var{arg})
+Uses storage slot @var{n} to return a quoted version of the string @var{arg}.
+
+Uses the default quoting options.
+
+The returned value points to static storage that can be reused
+by the next call to this function with the same value of @var{n}.
+
+@var{n} must be nonnegative.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg (string_desc_t@tie{}@var{arg})
+This is equivalent to @code{sd_quotearg_n (0, @var{arg})}.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_n_style (int@tie{}@var{n}, enum@tie{}quoting_style@tie{}@var{s}, string_desc_t@tie{}@var{arg})
+Uses style @var{s} and storage slot @var{n} to
+return a quoted version of the string @var{arg}.
+
+This is like @code{sd_quotearg_n (@var{n}, @var{arg})},
+except that it uses @var{s} with no other options to specify the quoting method.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_style (enum@tie{}quoting_style@tie{}@var{s}, string_desc_t@tie{}@var{arg})
+This is equivalent to @code{sd_quotearg_n_style (0, @var{s}, @var{arg})}.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_char (string_desc_t@tie{}@var{arg}, char@tie{}@var{ch})
+This is like @code{sd_quotearg (@var{arg})},
+except that it also quotes any instances of @var{ch}.
+
+See @code{set_char_quoting} for a description of acceptable @var{ch} values.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_colon (string_desc_t@tie{}@var{arg})
+This is equivalent to @code{sd_quotearg_char (@var{arg}, ':')}.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_n_custom (int@tie{}@var{n}, char@tie{}const@tie{}*@var{left_quote}, char@tie{}const@tie{}*@var{right_quote}, string_desc_t@tie{}@var{arg})
+This like @code{sd_quotearg_n_style (@var{n}, @var{s}, @var{arg})} but
+with @var{s} as @code{custom_quoting_style}
+with @var{left_quote} as left quote and @var{right_quote} as right quote.
+See @code{set_custom_quoting} for
+a description of acceptable @var{left_quote} and @var{right_quote} values.
+@end deftypefun
+
+@deftypefun {char *} sd_quotearg_custom (char@tie{}const@tie{}*@var{left_quote}, char@tie{}const@tie{}*@var{right_quote}, string_desc_t@tie{}@var{arg})
+This is equivalent to
+@code{sd_quotearg_n_custom (0, @var{left_quote}, @var{right_quote}, @var{arg})}.
+@end deftypefun
+
+@heading Modules
+
+The functionality is split across three modules as follows:
 @itemize
 @item
 The module @code{string-desc}, under LGPL, defines the type and
@@ -127,3 +428,109 @@ functions with out-of-memory checking.
 The module @code{string-desc-quotearg}, under GPL, defines the
 @code{quotearg} based functions.
 @end itemize
+
+@heading Migrating from @code{<string.h>}
+
+The following table shows the correspondence
+from @code{<string.h>} types to @code{"string-desc.h"} types.
+
+@multitable @columnfractions .5 .5
+@headitem @code{<string.h>} @tab @code{"string-desc.h"}
+@item @code{const char *}
+ @tab @code{string_desc_t}
+@item @code{char *}
+ @tab @code{rw_string_desc_t}
+@item @code{size_t}
+ @tab @code{idx_t}
+@end multitable
+
+The following table shows the correspondence
+from @code{<string.h>} functions to @code{"string-desc.h"} functions.
+
+@multitable @columnfractions .5 .5
+@headitem @code{<string.h>} @tab @code{"string-desc.h"}
+@item @code{(char *)}
+ @tab @code{sd_readwrite}
+@item @code{strlen}
+ @tab @code{sd_length}
+@item @code{[ ]}
+ @tab @code{sd_char_at}
+@item @code{--}
+ @tab @code{sd_data}
+@item @code{streq}
+ @tab @code{sd_equals}
+@item @code{str_startswith}
+ @tab @code{sd_startswith}
+@item @code{str_endswith}
+ @tab @code{sd_endswith}
+@item @code{strcmp}
+ @tab @code{sd_cmp}
+@item @code{c_strcasecmp}
+ @tab @code{sd_c_casecmp}
+@item @code{strchr}
+ @tab @code{sd_index}
+@item @code{strrchr}
+ @tab @code{sd_last_index}
+@item @code{strstr}
+ @tab @code{sd_contains}
+@item @code{""}
+ @tab @code{sd_new_empty}
+@item @code{--}
+ @tab @code{sd_new_addr}
+@item @code{--}
+ @tab @code{sd_from_c}
+@item @code{--}
+ @tab @code{sd_substring}
+@item @code{malloc}
+ @tab @code{sd_new}
+@item @code{calloc}
+ @tab @code{sd_new_filled}
+@item @code{strdup}
+ @tab @code{sd_copy}
+@item @code{--}
+ @tab @code{sd_concat}
+@item @code{--}
+ @tab @code{sd_c}
+@item @code{xmalloc}
+ @tab @code{xsd_new}
+@item @code{xcalloc}
+ @tab @code{xsd_new_filled}
+@item @code{xstrdup}
+ @tab @code{xsd_copy}
+@item @code{--}
+ @tab @code{xsd_concat}
+@item @code{--}
+ @tab @code{xsd_c}
+@item @code{[ ] =}
+ @tab @code{sd_set_char_at}
+@item @code{memset}
+ @tab @code{sd_fill}
+@item @code{memcpy}
+ @tab @code{sd_overwrite}
+@item @code{free}
+ @tab @code{sd_free}
+@item @code{fprintf}
+ @tab @code{sd_fwrite}
+@item @code{dprintf}
+ @tab @code{sd_write}
+@item @code{quotearg_buffer}
+ @tab @code{sd_quotearg_buffer}
+@item @code{quotearg_alloc}
+ @tab @code{sd_quotearg_alloc}
+@item @code{quotearg_n}
+ @tab @code{sd_quotearg_n}
+@item @code{quotearg}
+ @tab @code{sd_quotearg}
+@item @code{quotearg_n_style}
+ @tab @code{sd_quotearg_n_style}
+@item @code{quotearg_style}
+ @tab @code{sd_quotearg_style}
+@item @code{quotearg_char}
+ @tab @code{sd_quotearg_char}
+@item @code{quotearg_colon}
+ @tab @code{sd_quotearg_colon}
+@item @code{quotearg_n_custom}
+ @tab @code{sd_quotearg_n_custom}
+@item @code{quotearg_custom}
+ @tab @code{sd_quotearg_custom}
+@end multitable

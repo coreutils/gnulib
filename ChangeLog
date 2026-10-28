@@ -1,5 +1,11 @@
 2026-10-28  Bruno Haible  <bruno@clisp.org>
 
+	doc: Expand documentation about string descriptors.
+	* doc/string-desc.texi (Handling strings with NUL characters): Document
+	each function. Add types/functions correspondence tables.
+
+2026-10-28  Bruno Haible  <bruno@clisp.org>
+
 	string-desc-quotearg: Improve comments.
 	* lib/string-desc-quotearg.h (sd_quotearg_buffer, sd_quotearg_alloc):
 	Rename parameter 'o' to 'options'.
