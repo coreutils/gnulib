@@ -116,7 +116,7 @@ EOF
 =item C<%size = sizes (@file)>
 
 Compute the sizes of the C<@file> and return them as a hash.  Return
-C<undef> if one of the computation failed.
+an empty list if any computation failed.
 
 =cut
 
@@ -131,13 +131,13 @@ sub sizes (@)
       my $cmd = "du -h -L $f";
       my $t = `$cmd`;
       # FIXME-someday: give a better diagnostic, a la $PROCESS_STATUS
-      $@
+      $?
         and (warn "command failed: '$cmd'\n"), $fail = 1;
       chomp $t;
       $t =~ s/^\s*([\d.]+[MkK]).*/${1}B/;
       $res{$f} = $t;
     }
-  return $fail ? undef : %res;
+  return $fail ? () : %res;
 }
 
 =item C<print_locations ($title, \@url, \%size, @file)>
@@ -218,7 +218,7 @@ sub print_checksums ($@)
         }
       print "Verify the SHA256 checksum with either sha256sum, sha256, or\n";
       print "'shasum -a 256'.\n";
-      print "\nVerify the SHA3-256 checksum with 'cksum -a sha3 -l 256 --base64'\n";
+      print "\nVerify the SHA3-256 checksum with 'cksum -a sha3 -l 256'\n";
       print "from coreutils-9.8.\n\n";
     }
 }
