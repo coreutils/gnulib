@@ -178,7 +178,7 @@ extern idx_t sd_length ([rw_]string_desc_t s);
 extern char sd_char_at ([rw_]string_desc_t s, idx_t i);
 #endif
 
-/* Return a read-only view of the bytes of S.  */
+/* Return a pointer to the bytes of S.  */
 #if 0 /* Defined inline below.  */
 extern const char * sd_data (string_desc_t s);
 extern       char * sd_data (rw_string_desc_t s);
@@ -305,7 +305,7 @@ _GL_ATTRIBUTE_NODISCARD
 extern int sd_concat (rw_string_desc_t *resultp, idx_t n, /* [rw_]string_desc_t string1, */ ...);
 
 /* Construct a copy of string S, as a NUL-terminated C string.
-   Return it is successful.
+   Return it if successful.
    Upon error, return NULL with errno set.  */
 #if 0 /* Defined inline below.  */
 extern char * sd_c ([rw_]string_desc_t s) _GL_ATTRIBUTE_DEALLOC_FREE;

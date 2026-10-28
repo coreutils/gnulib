@@ -1,3 +1,8 @@
+2026-10-28  Bruno Haible  <bruno@clisp.org>
+
+	string-desc: Fix comment.
+	* lib/string-desc.h (sd_data): Fix description.
+
 2026-10-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	libgmp-mpz: Pacify more gcc warnings
