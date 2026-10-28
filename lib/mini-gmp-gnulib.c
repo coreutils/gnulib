@@ -39,6 +39,10 @@
 # pragma GCC diagnostic ignored "-Wsuggest-attribute=malloc"
 #endif
 
+#if _GL_GNUC_PREREQ (11, 0)
+# pragma GCC diagnostic ignored "-Wanalyzer-write-to-const"
+#endif
+
 #if _GL_GNUC_PREREQ (14, 0)
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif

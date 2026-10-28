@@ -1,3 +1,10 @@
+2026-10-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	libgmp-mpz: Pacify more gcc warnings
+	* lib/mini-gmp-gnulib.c: Ignore -Wanalyzer-write-to-const in
+	versions of GCC that support that option, as mini-gmp.c itself
+	doesn’t worry about pacifying that warning.
+
 2026-10-27  Kamila Szewczyk <szewczyk@cs.uni-saarland.de>
 
 	announce-gen: Perl list buglet, cksum sha3 usage.
@@ -2774,7 +2781,7 @@
 
 	libgmp-mpz: pacify -Wuseless-cast
 	* lib/mini-gmp-gnulib.c: Ignore -Wuseless-cast, as we
-	don’t want top change lib/mini-gmp.c.
+	don’t want to change lib/mini-gmp.c.
 
 2026-05-26  Bruno Haible  <bruno@clisp.org>
 
