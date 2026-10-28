@@ -1,5 +1,10 @@
 2026-10-28  Bruno Haible  <bruno@clisp.org>
 
+	string-desc-quotearg: Improve comments.
+	* lib/string-desc-quotearg.h (sd_quotearg_buffer, sd_quotearg_alloc):
+	Rename parameter 'o' to 'options'.
+	(sd_quotearg_n_custom): Improve description.
+
 	string-desc: Fix comment.
 	* lib/string-desc.h (sd_data): Fix description.
 

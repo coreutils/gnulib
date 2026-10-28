@@ -40,32 +40,32 @@ extern "C" {
 
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
-   argument ARG, using O to control quoting.
-   If O is null, use the default.
-   Terminate the output with a null character, and return the written
-   size of the output, not counting the terminating null.
+   argument ARG, using OPTIONS to control quoting.
+   If OPTIONS is null, use the default options.
+   Terminate the output with a NUL character, and return the written
+   size of the output, not counting the terminating NUL.
    If BUFFERSIZE is too small to store the output string, return the
    value that would have been returned had BUFFERSIZE been large enough.
-   On output, BUFFER might contain embedded null bytes if the style of O
-   does not use backslash escapes and the flags of O do not request
-   elision of null bytes.  */
+   On output, BUFFER might contain embedded NUL bytes if the style of
+   OPTIONS does not use backslash escapes and the flags of OPTIONS do
+   not request elision of NUL bytes.  */
 #if 0
 extern size_t sd_quotearg_buffer (char *restrict buffer,
                                   size_t buffersize,
                                   string_desc_t arg,
-                                  struct quoting_options const *o);
+                                  struct quoting_options const *options);
 #endif
 
 /* Like sd_quotearg_buffer, except return the result in a newly
-   allocated buffer and store its length, excluding the terminating null
+   allocated buffer and store its length, excluding the terminating NUL
    byte, in *SIZE.  It is the caller's responsibility to free the result.
-   The result might contain embedded null bytes if the style of O does
-   not use backslash escapes and the flags of O do not request elision
-   of null bytes.  */
+   The result might contain embedded NUL bytes if the style of OPTIONS
+   does not use backslash escapes and the flags of OPTIONS do not
+   request elision of NUL bytes.  */
 #if 0
 extern char *sd_quotearg_alloc (string_desc_t arg,
                                 size_t *size,
-                                struct quoting_options const *o)
+                                struct quoting_options const *options)
   _GL_ATTRIBUTE_NONNULL ((2))
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_RETURNS_NONNULL;
@@ -111,8 +111,8 @@ extern char *sd_quotearg_colon (string_desc_t arg);
 #endif
 
 /* Like sd_quotearg_n_style (N, S, ARG) but with S as
-   custom_quoting_style with left quote as LEFT_QUOTE and right quote
-   as RIGHT_QUOTE.  See set_custom_quoting for a description of acceptable
+   custom_quoting_style with LEFT_QUOTE as left quote and RIGHT_QUOTE as
+   right quote.  See set_custom_quoting for a description of acceptable
    LEFT_QUOTE and RIGHT_QUOTE values.  */
 #if 0
 extern char *sd_quotearg_n_custom (int n,
@@ -135,11 +135,11 @@ extern char *sd_quotearg_custom (char const *left_quote,
 GL_STRING_DESC_QUOTEARG_INLINE size_t
 sd_quotearg_buffer (char *restrict buffer, size_t buffersize,
                     string_desc_t arg,
-                    struct quoting_options const *o)
+                    struct quoting_options const *options)
 {
   return quotearg_buffer (buffer, buffersize,
                           sd_data (arg), sd_length (arg),
-                          o);
+                          options);
 }
 
 GL_STRING_DESC_QUOTEARG_INLINE
@@ -149,11 +149,11 @@ _GL_ATTRIBUTE_RETURNS_NONNULL
 char *
 sd_quotearg_alloc (string_desc_t arg,
                    size_t *size,
-                   struct quoting_options const *o)
+                   struct quoting_options const *options)
 {
   return quotearg_alloc_mem (sd_data (arg), sd_length (arg),
                              size,
-                             o);
+                             options);
 }
 
 GL_STRING_DESC_QUOTEARG_INLINE char *
