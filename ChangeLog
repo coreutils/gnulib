@@ -4,6 +4,8 @@
 	* lib/mini-gmp-gnulib.c: Ignore -Wanalyzer-write-to-const in
 	versions of GCC that support that option, as mini-gmp.c itself
 	doesn’t worry about pacifying that warning.
+	Similarly, ignore -Wunused-parameter, in case people compile
+	Gnulib code with that option.
 
 2026-10-27  Kamila Szewczyk <szewczyk@cs.uni-saarland.de>
 

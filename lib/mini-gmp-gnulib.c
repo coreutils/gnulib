@@ -30,6 +30,10 @@
 
 #include "mini-gmp.h"
 
+#if _GL_GNUC_PREREQ (2, 8)
+# pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
+
 /* Pacify GCC -Wsuggest-attribute=const, pure, malloc.  */
 #if _GL_GNUC_PREREQ (4, 6)
 # pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
