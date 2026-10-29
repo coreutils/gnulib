@@ -1,3 +1,12 @@
+2026-10-30  Pádraig Brady  <P@draigBrady.com>
+
+	strftime: fix unsigned underflow triggering huge memset
+	This issue was introduced in commit 2bf00710 (Oct 2025).
+	* lib/strftime.c (do_number_sign_and_padding): Use a signed type
+	so that the <= 0 comparison is valid).
+	* tests/test-nstrftime.h: Add test cases.
+	Reported by Lingfeng Chen at https://bugs.gnu.org/82130
+
 2026-10-30  Bruno Haible  <bruno@clisp.org>
 
 	carray-list: Fix a counted_by constraint violation (regr. 2026-05-03).

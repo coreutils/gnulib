@@ -1928,7 +1928,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             if (digits_base >= 0x100)
               number_digits = number_bytes / 2;
 #endif
-            byte_count_t shortage = width - !!sign_char - number_digits;
+            sbyte_count_t shortage = width - !!sign_char - number_digits;
             byte_count_t padding = (pad == NO_PAD || shortage <= 0
                                     ? 0 : shortage);
 
