@@ -1,5 +1,12 @@
 2026-10-30  Pádraig Brady  <P@draigBrady.com>
 
+	strftime: fix stale errno upon field width overflow
+	This issue was introduced in commit 42ea6679 (Nov 2025).
+	* lib/strftime.c (__strftime_internal): Set errno=ERANGE
+	upon width overflow.
+
+2026-10-30  Pádraig Brady  <P@draigBrady.com>
+
 	strftime: fix incomplete output for recursive formats
 	Recursive formats such as %F would double count the written bytes,
 	thus not/partially writing unless the buffer was 2x the required size.

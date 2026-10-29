@@ -1441,7 +1441,10 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             {
               if (ckd_mul (&width, width, 10)
                   || ckd_add (&width, width, *f - L_('0')))
-                return FAILURE;
+                {
+                  errno = ERANGE;
+                  return FAILURE;
+                }
               ++f;
             }
           while (ISDIGIT (*f));
