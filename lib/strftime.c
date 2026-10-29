@@ -1936,13 +1936,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               {
                 if (pad == SPACE_PAD)
                   {
-                    if (p)
-                      memset_space (p, padding);
-                    if (ckd_add (&i, i, padding) && FPRINTFTIME)
+                    if (incr_overflow (padding))
                       {
                         errno = ERANGE;
                         return FAILURE;
                       }
+                    if (p)
+                      memset_space (p, padding);
                     width -= padding;
                   }
                 width_add1 (0, sign_char);

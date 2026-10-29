@@ -1,5 +1,13 @@
 2026-10-30  Pádraig Brady  <P@draigBrady.com>
 
+	strftime: fix buffer overflow when padding
+	* lib/strftime.c (do_number_sign_and_padding): Check buffer limits
+	before writing padding, which was inadvertently removed in
+	commit 1c740444 (Dec 2019).
+	* tests/test-nstrftime.h: Add a test case.
+
+2026-10-30  Pádraig Brady  <P@draigBrady.com>
+
 	strftime: fix unsigned underflow triggering huge memset
 	This issue was introduced in commit 2bf00710 (Oct 2025).
 	* lib/strftime.c (do_number_sign_and_padding): Use a signed type

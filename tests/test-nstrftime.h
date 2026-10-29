@@ -92,6 +92,15 @@ posixtm_test (void)
                   T[i].fmt, buf, T[i].exp);
           fflush (stdout);
         }
+
+      /* A one-byte buffer must fail without writing beyond its limit.
+         In particular, it is too small for the padding in %_10z.  */
+      memset (buf, '~', sizeof buf - 1);
+      buf[sizeof buf - 1] = '\0';
+      errno = 0;
+      ASSERT (FUNC (buf, 1, T[i].fmt, tm, NULL, T[i].in_ns) == -1);
+      ASSERT (errno == ERANGE);
+      ASSERT (strspn (buf + 1, "~") == sizeof buf - 2);
     }
 
   return fail;
