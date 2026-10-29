@@ -52,6 +52,9 @@ static struct posixtm_test const T[] =
     { 1300000000, 0,            "%F", "2011-03-13" },
     { 1086393600, 0,            "%_D", "06/05/04" },
     { 1086393600, 0,            "%-D", "06/05/04" },
+    { 0,          0,            "%T", "00:00:00" },
+    { 0,          0,            "%R", "00:00" },
+    { 0,          0,            "x%_12T!", "x    00:00:00!" },
     { 0,          10,           "%T.%N", "00:00:00.000000010" },
     { 56,         123456789,    "%T.%12N", "00:00:56.123456789000" },
     { 0,          123000000,    "%T.%_6N", "00:00:00.123   " },
@@ -92,6 +95,15 @@ posixtm_test (void)
                   T[i].fmt, buf, T[i].exp);
           fflush (stdout);
         }
+
+      /* An exact-fit buffer must produce the complete result, including
+         for recursive formats such as %F, %D, and %T.  */
+      size_t size = strlen (T[i].exp) + 1;
+      memset (buf, '~', sizeof buf);
+      ASSERT (FUNC (buf, size, T[i].fmt, tm, NULL, T[i].in_ns)
+              == size - 1);
+      ASSERT (memcmp (buf, T[i].exp, size) == 0);
+      ASSERT (buf[size] == '~');
 
       /* A one-byte buffer must fail without writing beyond its limit.
          In particular, it is too small for the padding in %_10z.  */

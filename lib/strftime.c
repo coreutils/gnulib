@@ -1658,13 +1658,18 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                                    extra_args LOCALE_ARG);
             if (FAILURE < 0 && len < 0)
               return FAILURE; /* errno is set here */
-            add (len, __strftime_internal (p,
-                                           STRFTIME_ARG (maxsize - i)
-                                           subfmt, tp,
-                                           CAL_ARGS (cal, caldate)
-                                           to_uppcase, subpad, subwidth,
-                                           tzset_called
-                                           extra_args LOCALE_ARG));
+            /* ADD accounts for LEN and any padding before evaluating its
+               second argument, so MAXSIZE - I no longer includes LEN.  */
+            retval_t sublen = len;
+            add (len, sublen = __strftime_internal (p,
+                                                   STRFTIME_ARG (len + 1)
+                                                   subfmt, tp,
+                                                   CAL_ARGS (cal, caldate)
+                                                   to_uppcase, subpad, subwidth,
+                                                   tzset_called
+                                                   extra_args LOCALE_ARG));
+            if (sublen != len)
+              return FAILURE;
           }
           break;
 

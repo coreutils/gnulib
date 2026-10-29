@@ -1,5 +1,20 @@
 2026-10-30  Pádraig Brady  <P@draigBrady.com>
 
+	strftime: fix incomplete output for recursive formats
+	Recursive formats such as %F would double count the written bytes,
+	thus not/partially writing unless the buffer was 2x the required size.
+	This was exacerbated by the existing non-propagation of such failures.
+	The accounting issue was introduced in commit 42ea6679 (Nov 2025).
+	* lib/strftime.c (subformat_width): Pass the computed length plus one
+	as the recursive call's buffer size, since add has already accounted
+	for the output length and padding.  Also return FAILURE upon failure
+	to write the expected length, even though this generally won't happen
+	now that correct accounting is in place, though fprintftime() might
+	still fail with e.g. EIO.
+	* tests/test-nstrftime.h: Add test cases.
+
+2026-10-30  Pádraig Brady  <P@draigBrady.com>
+
 	strftime: fix buffer overflow when padding
 	* lib/strftime.c (do_number_sign_and_padding): Check buffer limits
 	before writing padding, which was inadvertently removed in
