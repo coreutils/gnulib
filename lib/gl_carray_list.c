@@ -99,10 +99,12 @@ gl_carray_nx_create (gl_list_implementation_t implementation,
     {
       if (size_overflow_p (xtimes (count, sizeof (const void *))))
         goto fail;
-      list->elements = (const void **) malloc (count * sizeof (const void *));
-      if (list->elements == NULL)
+      const void **contents_copy =
+        (const void **) malloc (count * sizeof (const void *));
+      if (contents_copy == NULL)
         goto fail;
-      memcpy (list->elements, contents, count * sizeof (const void *));
+      memcpy (contents_copy, contents, count * sizeof (const void *));
+      list->elements = contents_copy;
     }
   else
     list->elements = NULL;

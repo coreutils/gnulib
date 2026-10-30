@@ -1,5 +1,12 @@
 2026-10-30  Bruno Haible  <bruno@clisp.org>
 
+	carray-list: Fix a counted_by constraint violation (regr. 2026-05-03).
+	Reproducible with gcc-16.2.0 -O2 -D_FORTIFY_SOURCE=3.
+	* lib/gl_carray_list.c (gl_carray_nx_create): Assign to list->elements
+	only after filling the array.
+
+2026-10-30  Bruno Haible  <bruno@clisp.org>
+
 	array-list: Fix a counted_by constraint violation (regr. 2026-05-03).
 	Reproducible with gcc-16.2.0 -O2 -D_FORTIFY_SOURCE=3.
 	Reported by Alexander Sosedkin <monk@unboiled.info> in
