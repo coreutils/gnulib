@@ -1,3 +1,12 @@
+2026-10-30  Bruno Haible  <bruno@clisp.org>
+
+	array-list: Fix a counted_by constraint violation (regr. 2026-05-03).
+	Reproducible with gcc-16.2.0 -O2 -D_FORTIFY_SOURCE=3.
+	Reported by Alexander Sosedkin <monk@unboiled.info> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-10/msg00140.html>.
+	* lib/gl_array_list.c (gl_array_nx_create): Assign to list->elements
+	only after filling the array.
+
 2026-10-28  Bruno Haible  <bruno@clisp.org>
 
 	doc: Expand documentation about string descriptors.
