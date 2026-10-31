@@ -1,3 +1,8 @@
+2026-10-31  Bruno Haible  <bruno@clisp.org>
+
+	string-desc: Avoid a gcc -Wshadow=compatible-local warning.
+	* lib/string-desc.h (sd_substring): Rename local variable _s_ to _ss_.
+
 2026-10-30  Pádraig Brady  <P@draigBrady.com>
 
 	strftime: fix stale errno upon field width overflow

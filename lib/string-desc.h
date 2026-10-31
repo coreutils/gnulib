@@ -586,15 +586,15 @@ extern rw_string_desc_t _rwsd_new_addr (idx_t n, /*!*/const/*!*/ char *addr)
 
 #if HAVE_RW_STRING_DESC
 # define sd_substring(s, start, end) \
-   ({typeof (s) _s_ = (s); \
+   ({typeof (s) _ss_ = (s); \
      idx_t _start_ = (start); \
      idx_t _end_ = (end); \
-     if (!(_start_ >= 0 && _start_ <= _end_ && _end_ <= _s_._nbytes)) \
+     if (!(_start_ >= 0 && _start_ <= _end_ && _end_ <= _ss_._nbytes)) \
        /* Invalid arguments.  */ \
        abort (); \
      typeof (s) _result_; \
      _result_._nbytes = _end_ - _start_; \
-     _result_._data = _s_._data + _start_; \
+     _result_._data = _ss_._data + _start_; \
      _result_; \
    })
 #else
