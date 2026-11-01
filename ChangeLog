@@ -1,3 +1,11 @@
+2026-11-01  Collin Funk  <collin.funk1@gmail.com>
+
+	basename-lgpl: Declare functions with nonnull attributes.
+	* lib/basename-lgpl.h: Document the new attributes used by the file.
+	(last_component): Declare function with _GL_ATTRIBUTE_NONNULL and
+	_GL_ATTRIBUTE_RETURNS_NONNULL.
+	(base_len): Declare function with _GL_ATTRIBUTE_NONNULL.
+
 2026-10-31  Bruno Haible  <bruno@clisp.org>
 
 	string-desc: Avoid a gcc -Wshadow=compatible-local warning.

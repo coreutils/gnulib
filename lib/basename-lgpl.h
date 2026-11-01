@@ -19,7 +19,8 @@
 #ifndef _BASENAME_LGPL_H
 #define _BASENAME_LGPL_H
 
-/* This file uses _GL_ATTRIBUTE_PURE.  */
+/* This file uses _GL_ATTRIBUTE_PURE, _GL_ATTRIBUTE_NONNULL,
+   and _GL_ATTRIBUTE_RETURNS_NONNULL.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -68,12 +69,14 @@ extern "C" {
               "/"           "/"
               "//"          "/"
  */
-extern char *last_component (char const *filename) _GL_ATTRIBUTE_PURE;
+extern char *last_component (char const *filename) _GL_ATTRIBUTE_PURE
+  _GL_ATTRIBUTE_NONNULL ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 /* Return the length of the basename FILENAME.
    Typically FILENAME is the value returned by base_name or last_component.
    Act like strlen (FILENAME), except omit all trailing slashes.  */
-extern size_t base_len (char const *filename) _GL_ATTRIBUTE_PURE;
+extern size_t base_len (char const *filename) _GL_ATTRIBUTE_PURE
+  _GL_ATTRIBUTE_NONNULL ((1));
 
 
 #ifdef __cplusplus
