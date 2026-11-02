@@ -1,5 +1,9 @@
 2026-11-01  Bruno Haible  <bruno@clisp.org>
 
+	optional: Add tests.
+	* tests/test-optional.c: New file.
+	* modules/optional-tests: New file.
+
 	optional: New module.
 	* lib/optional.h: New file.
 	* modules/optional: New file.

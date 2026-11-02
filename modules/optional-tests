@@ -1,0 +1,11 @@
+Files:
+tests/test-optional.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-optional
+check_PROGRAMS += test-optional
