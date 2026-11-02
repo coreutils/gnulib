@@ -1,3 +1,9 @@
+2026-11-01  Bruno Haible  <bruno@clisp.org>
+
+	optional: New module.
+	* lib/optional.h: New file.
+	* modules/optional: New file.
+
 2026-11-01  Collin Funk  <collin.funk1@gmail.com>
 
 	basename-lgpl: Declare functions with nonnull attributes.

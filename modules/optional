@@ -1,0 +1,21 @@
+Description:
+Optional type wrapper.
+
+Files:
+lib/optional.h
+
+Depends-on:
+bool
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"optional.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
