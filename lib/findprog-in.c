@@ -70,6 +70,23 @@ static const char * const suffixes[] =
     #endif
   };
 
+/* A buffer of size 256 should be sufficient, because the default PATH has
+   length < 100 on all systems seen so far:
+   - Linux, Hurd, macOS, Cygwin:
+     "/bin:/usr/bin"
+   - FreeBSD:
+     "/usr/bin:/bin:/usr/sbin:/sbin"
+   - NetBSD:
+     "/usr/bin:/bin:/usr/sbin:/sbin:/usr/pkg/bin:/usr/pkg/sbin:/usr/local/bin:/usr/local/sbin"
+   - OpenBSD:
+     "/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11R6/bin:/usr/local/bin"
+   - Solaris 11.4:
+     "/usr/xpg6/bin:/usr/xpg4/bin:/usr/bin:/opt/developerstudio12.5/bin:/opt/solarisstudio12.4/bin"
+   - Haiku:
+     "/boot/system/non-packaged/bin:/bin:/boot/system/apps:/boot/system/preferences"
+ */
+#define MAX_DEFAULT_PATH_SIZE 256
+
 const char *
 find_in_given_path (const char *progname, const char *path,
                     const char *directory, bool optimize_for_exec)
@@ -199,10 +216,18 @@ find_in_given_path (const char *progname, const char *path,
       }
   }
 
+  char default_path[MAX_DEFAULT_PATH_SIZE];
   if (path == NULL)
-    /* If PATH is not set, the default search path is implementation dependent.
-       In practice, it is treated like an empty PATH.  */
-    path = "";
+    {
+      /* If PATH is not set, the default search path is implementation
+         dependent.  On POSIX systems, it is confstr (_CS_PATH).  */
+      #if HAVE_CONFSTR
+      int ret = confstr (_CS_PATH, default_path, sizeof (default_path));
+      if (ret == 0 || ret > sizeof (default_path))
+      #endif
+        default_path[0] = '\0';
+      path = default_path;
+    }
 
   {
     /* Make a copy, to prepare for destructive modifications.  */

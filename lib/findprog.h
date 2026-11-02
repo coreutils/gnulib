@@ -37,8 +37,9 @@ extern const char *find_in_path (const char *progname);
 
    The PATH argument consists of a list of directories, separated by ':' or
    (on native Windows) by ';'.  An empty PATH element designates the current
-   directory.  A null PATH is equivalent to an empty PATH, that is, to the
-   singleton list that contains only the current directory.
+   directory.  A null PATH is equivalent to confstr (_CS_PATH) on POSIX systems,
+   or otherwise to an empty PATH, that is, to the singleton list that contains
+   only the current directory.
 
    If DIRECTORY is not NULL, all relative filenames (i.e. PROGNAME when it
    contains a slash, and the PATH elements) are considered relative to
