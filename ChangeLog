@@ -1,5 +1,13 @@
 2026-11-03  Bruno Haible  <bruno@clisp.org>
 
+	file-has-acl: Remove restriction.
+	Based on a patch by Lukáš Zaoral <lzaoral@redhat.com> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-11/msg00024.html>.
+	* lib/file-has-acl.c (file_has_acl): Revert comment change. Use flag
+	ACL_SYMLINK_FOLLOW if needed or if it does not matter.
+
+2026-11-03  Bruno Haible  <bruno@clisp.org>
+
 	file-has-acl: Document restriction.
 	Reported by Lukáš Zaoral <lzaoral@redhat.com> in
 	<https://lists.gnu.org/archive/html/bug-gnulib/2026-11/msg00026.html>.
