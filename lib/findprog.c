@@ -27,6 +27,9 @@
 #if !(defined _WIN32 || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__)
 # include <sys/stat.h>
 #endif
+#ifdef __ANDROID__
+# include <paths.h>
+#endif
 
 /* Avoid collision between findprog.c and findprog-lgpl.c.  */
 #if IN_FINDPROG_LGPL || ! GNULIB_FINDPROG_LGPL
@@ -69,7 +72,7 @@ find_in_path (const char *progname)
        the current directory.  PATH is not used.  */
     return progname;
 
-  char *path = getenv ("PATH");
+  const char *path = getenv ("PATH");
   char default_path[MAX_DEFAULT_PATH_SIZE];
   if (path == NULL)
     {
@@ -77,24 +80,33 @@ find_in_path (const char *progname)
          dependent.  On POSIX systems, it is confstr (_CS_PATH).  */
       #if HAVE_CONFSTR
       int ret = confstr (_CS_PATH, default_path, sizeof (default_path));
-      if (ret == 0 || ret > sizeof (default_path))
-      #endif
-        default_path[0] = '\0';
+      if (ret == 0)
+        /* The platform has confstr(), but it does not support _CS_PATH.  */
+        abort ();
+      if (ret > sizeof (default_path))
+        /* MAX_DEFAULT_PATH_SIZE is too small.  Increase it.  */
+        abort ();
       path = default_path;
+      #elif defined __ANDROID__
+      path = _PATH_DEFPATH;
+      #else /* native Windows, Minix */
+      path = "";
+      #endif
     }
   if (*path == '\0')
     return progname;
 
   /* Make a copy, to prepare for destructive modifications.  */
+  char *path_copy;
 # if !IN_FINDPROG_LGPL
-  path = xstrdup (path);
+  path_copy = xstrdup (path);
 # else
-  path = strdup (path);
-  if (path == NULL)
+  path_copy = strdup (path);
+  if (path_copy == NULL)
     /* Out of memory.  */
     return progname;
 # endif
-  for (char *path_rest = path; ; )
+  for (char *path_rest = path_copy; ; )
     {
       /* Extract next directory in PATH.  */
       const char *dir = path_rest;
@@ -117,7 +129,7 @@ find_in_path (const char *progname)
       if (progpathname == NULL)
         {
           /* Out of memory.  */
-          free (path);
+          free (path_copy);
           return progname;
         }
 # endif
@@ -149,7 +161,7 @@ find_in_path (const char *progname)
                   if (progpathname == NULL)
                     {
                       /* Out of memory.  */
-                      free (path);
+                      free (path_copy);
                       return progname;
                     }
 # endif
@@ -158,7 +170,7 @@ find_in_path (const char *progname)
                   memcpy (progpathname + 2, progname, strlen (progname) + 1);
                 }
 
-              free (path);
+              free (path_copy);
               return progpathname;
             }
         }
@@ -172,7 +184,7 @@ find_in_path (const char *progname)
     }
 
   /* Not found in PATH.  An error will be signalled at the first call.  */
-  free (path);
+  free (path_copy);
   return progname;
 #endif
 }

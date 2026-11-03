@@ -26,6 +26,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#ifdef __ANDROID__
+# include <paths.h>
+#endif
 
 #include "filename.h"
 #include "concat-filename.h"
@@ -223,10 +226,18 @@ find_in_given_path (const char *progname, const char *path,
          dependent.  On POSIX systems, it is confstr (_CS_PATH).  */
       #if HAVE_CONFSTR
       int ret = confstr (_CS_PATH, default_path, sizeof (default_path));
-      if (ret == 0 || ret > sizeof (default_path))
-      #endif
-        default_path[0] = '\0';
+      if (ret == 0)
+        /* The platform has confstr(), but it does not support _CS_PATH.  */
+        abort ();
+      if (ret > sizeof (default_path))
+        /* MAX_DEFAULT_PATH_SIZE is too small.  Increase it.  */
+        abort ();
       path = default_path;
+      #elif defined __ANDROID__
+      path = _PATH_DEFPATH;
+      #else /* native Windows, Minix */
+      path = "";
+      #endif
     }
 
   {
