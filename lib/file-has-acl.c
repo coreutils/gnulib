@@ -972,7 +972,11 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
    and -1 (setting errno) on error.  Note callers can determine
    if ACLs are not supported as errno is set in that case also.
    SB must be set to the stat buffer of NAME,
-   obtained through stat() or lstat().  */
+   obtained through stat(), fstat(), or lstat().
+   In the case that SB was obtained through lstat(), the caller must guarantee
+   that !S_ISLNK (SB->st_mode).  (In order to support S_ISLNK (SB->st_mode),
+   this function would need a flags parameter, where the caller would need
+   to pass either 0 or ACL_SYMLINK_FOLLOW.)  */
 int
 file_has_acl (char const *name, struct stat const *sb)
 {
