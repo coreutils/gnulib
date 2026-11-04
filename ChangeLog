@@ -1,3 +1,8 @@
+2026-11-04  Karl Berry  <karl@freefriends.org>
+
+	srclist-update: cp -v source files when changed (with no commit).
+	* config/srclist-update: copy in changed files.
+
 2026-11-03  Bruno Haible  <bruno@clisp.org>
 
 	findprog*: Don't use the empty PATH as fallback on most platforms.

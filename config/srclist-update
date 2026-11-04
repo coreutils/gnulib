@@ -51,6 +51,7 @@ if test -n "$1"; then
 fi
 
 verbose=false
+cp_verbose=-v # passed to cp
 #chicken="echo (would)"
 
 : "${TMPDIR=/tmp}"
@@ -172,13 +173,14 @@ cat | while read top src dst options; do
 
   if test ! -e $dst; then
     echo "## $srctmp $dst  # new"
-    $chicken cp -p $srctmp $dst
+    $chicken cp -p $cp_verbose $srctmp $dst
   elif $release && cmp -s $reltmp $dst; then
     $verbose && echo "## $reltmp $dst  # unchanged"
   elif cmp -s $srctmp $dst; then
     $verbose && echo "## $srctmp $dst  # unchanged"
   else
     echo "## $srctmp $dst  # changes"
-    diff -C 2 $dst $srctmp
+    diff -C 1 $dst $srctmp
+    $chicken cp -p $cp_verbose $srctmp $dst
   fi
 done
