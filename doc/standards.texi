@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 27, 2026
+@set lastupdate November 4, 2026
 @c %**end of header
 
 @dircategory GNU organization
@@ -365,6 +365,20 @@ feature as well.  (There is a free @code{vi} clone, so we offer it.)
 
 Additional useful features are welcome regardless of whether
 there is any precedent for them.
+
+This is our general philosophy for occasions when standards committees
+make incompatible changes in a widely used traditional language.
+
+@display
+We must never bend the knee
+To a standards committee,
+Nor must rashly we discard
+Fruits of standards labor, hard.
+Rather think 'bout what they say,
+Then treat with it our best way.
+
+    -- Richard Stallman, 2026
+@end display
 
 @node Using Extensions
 @section Using Non-standard Features
@@ -2481,9 +2495,9 @@ column one, unless the whole contents fits on one line:
 struct foo
 @{
   int a, b;
-@}
+@};
 @exdent @r{or}
-struct foo @{ int a, b; @}
+struct foo @{ int a, b; @};
 @end example
 
 The rest of this section gives our recommendations for other aspects of
@@ -2919,7 +2933,7 @@ may as well do it.  But you don't have to consider it an obligation,
 if it does turn out to be hard.
 
 For the most part it is good to port the program to more platforms,
-but you should not let take up so much of your time that it hinders
+but you should not let that take up so much of your time that it hinders
 you from improving the program in more central ways.  If it starts to
 do that, please tell users that you don't want to spend any more
 time on this---someone else must write that code, debug it, document
@@ -4527,7 +4541,7 @@ avoid promoting the nonfree Java libraries.
 
 Java no longer has this problem, but the general principle will remain
 the same: don't recommend, promote or legitimize programs or services
-whose use depends on running some nonfree software or dis-service.
+whose use depends on running some nonfree software or using a dis-service.
 
 Some free programs strongly encourage the use of nonfree software.  A
 typical example is @command{mplayer}.  It is free software in itself,
@@ -4565,10 +4579,10 @@ What about chains of links?  Following links from nearly any web site
 can lead eventually to promotion of nonfree software; this is
 inherent in the nature of the web.  Here's how we treat that.
 
-You should not refer to AT&T's web site if that use recommends AT&T's
-nonfree software packages; you should not refer to a page @var{p}
-that links to AT&T's site presenting it as a place to get some
-nonfree program, because that part of the page @var{p} itself
+You should not refer to AT&T's web site if the part referred to
+recommends AT&T's nonfree software packages; you should not refer to a
+page @var{p} that links to AT&T's site presenting it as a place to get
+some nonfree program, because that part of the page @var{p} itself
 recommends and legitimizes the nonfree program.
 
 However, if @var{p} contains a link to AT&T's web site for some other
