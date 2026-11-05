@@ -1,5 +1,14 @@
 2026-11-05  Bruno Haible  <bruno@clisp.org>
 
+	strtof, strtod, strtold: Fix sign of NaN results.
+	Reported by Stefan <stefan-guix@vodafonemail.de> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-11/msg00037.html>.
+	* lib/strtod.c (STRTOD) [HAS_MINUS_NAN_BUG]: Also apply a sign
+	correction if the input does not have a '-' sign and the underlying
+	STRTOD function returned a negative NaN.
+
+2026-11-05  Bruno Haible  <bruno@clisp.org>
+
 	localtime, time_r, mktime tests: Fix test failure on native Windows.
 	* tests/test-localtime-w32.c (main): Swap conversion codes. Ignore the
 	result of the older conversion code.

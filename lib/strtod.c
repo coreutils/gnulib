@@ -157,7 +157,7 @@ STRTOD (const char *nptr, char **endptr)
     {
       while (locale_isspace (*nptr))
         nptr++;
-      if (*nptr == '-' && !signbit (value))
+      if ((*nptr == '-') != !!signbit (value))
         value = - value;
     }
   return value;
