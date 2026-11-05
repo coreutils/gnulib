@@ -66,18 +66,20 @@ main (void)
   lsystime.wSecond = lm.tm_sec;
   lsystime.wMilliseconds = 0;
 
-  /* Convert like GNU clisp does.  */
+  /* Convert like
+     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>
+     suggests.  */
   time_t utctime1;
   {
-    FILETIME lfiletime;
+    SYSTEMTIME systime;
     FILETIME filetime;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetofiletime>  */
-    if (!SystemTimeToFileTime (&lsystime, &lfiletime))
+       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-tzspecificlocaltimetosystemtime>  */
+    if (!TzSpecificLocalTimeToSystemTime (NULL, &lsystime, &systime))
       return 3;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-localfiletimetofiletime>  */
-    if (!LocalFileTimeToFileTime (&lfiletime, &filetime))
+       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetofiletime>  */
+    if (!SystemTimeToFileTime (&systime, &filetime))
       return 4;
     long long hundrednanos_since_1601_01_01 =
       ((unsigned long long) filetime.dwHighDateTime << 32)
@@ -86,20 +88,18 @@ main (void)
   }
   printf ("Windows API 1: %lld\n", (long long) utctime1);
 
-  /* Convert like
-     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>
-     suggests.  */
+  /* Convert like GNU clisp does.  This is actually wrong.  */
   time_t utctime2;
   {
-    SYSTEMTIME systime;
+    FILETIME lfiletime;
     FILETIME filetime;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-tzspecificlocaltimetosystemtime>  */
-    if (!TzSpecificLocalTimeToSystemTime (NULL, &lsystime, &systime))
+       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetofiletime>  */
+    if (!SystemTimeToFileTime (&lsystime, &lfiletime))
       return 5;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetofiletime>  */
-    if (!SystemTimeToFileTime (&systime, &filetime))
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-localfiletimetofiletime>  */
+    if (!LocalFileTimeToFileTime (&lfiletime, &filetime))
       return 6;
     long long hundrednanos_since_1601_01_01 =
       ((unsigned long long) filetime.dwHighDateTime << 32)
@@ -107,10 +107,6 @@ main (void)
     utctime2 = (hundrednanos_since_1601_01_01 / 10000000LL) - 134774LL * 24LL * 3600LL;
   }
   printf ("Windows API 2: %lld\n", (long long) utctime2);
-
-  /* Both methods should be equivalent.  */
-  if (utctime1 != utctime2)
-    return 7;
 
   /* Now see whether mktime (a.k.a. timelocal) is consistent with that.  */
   /* Documentation:

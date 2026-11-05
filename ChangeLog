@@ -1,3 +1,11 @@
+2026-11-05  Bruno Haible  <bruno@clisp.org>
+
+	localtime, time_r, mktime tests: Fix test failure on native Windows.
+	* tests/test-localtime-w32.c (main): Swap conversion codes. Ignore the
+	result of the older conversion code.
+	* tests/test-localtime_r-w32.c (main): Likewise.
+	* tests/test-mktime-w32.c (main): Likewise.
+
 2026-11-04  Karl Berry  <karl@freefriends.org>
 
 	srclist-update: cp -v source files when changed (with no commit).

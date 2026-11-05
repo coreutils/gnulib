@@ -58,45 +58,41 @@ main (void)
       (DWORD) (hundrednanos_since_1601_01_01 >> 32)
     };
 
-  /* Convert like GNU clisp does.  */
+  /* Convert like
+     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>
+     suggests.  */
   SYSTEMTIME lsystime1;
   {
-    FILETIME lfiletime;
-    /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>  */
-    if (!FileTimeToLocalFileTime (&filetime, &lfiletime))
-      return 3;
+    SYSTEMTIME systime;
     /* Documentation:
        <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime>  */
-    if (!FileTimeToSystemTime (&lfiletime, &lsystime1))
+    if (!FileTimeToSystemTime (&filetime, &systime))
+      return 3;
+    /* Documentation:
+       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetotzspecificlocaltime>  */
+    if (!SystemTimeToTzSpecificLocalTime (NULL, &systime, &lsystime1))
       return 4;
   }
   printf ("Windows API 1: %04d-%02d-%02d %02d:%02d:%02d\n",
           lsystime1.wYear, lsystime1.wMonth, lsystime1.wDay,
           lsystime1.wHour, lsystime1.wMinute, lsystime1.wSecond);
 
-  /* Convert like
-     <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>
-     suggests.  */
+  /* Convert like GNU clisp does.  This is actually wrong.  */
   SYSTEMTIME lsystime2;
   {
-    SYSTEMTIME systime;
+    FILETIME lfiletime;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime>  */
-    if (!FileTimeToSystemTime (&filetime, &systime))
+       <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-filetimetolocalfiletime>  */
+    if (!FileTimeToLocalFileTime (&filetime, &lfiletime))
       return 5;
     /* Documentation:
-       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetotzspecificlocaltime>  */
-    if (!SystemTimeToTzSpecificLocalTime (NULL, &systime, &lsystime2))
+       <https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime>  */
+    if (!FileTimeToSystemTime (&lfiletime, &lsystime2))
       return 6;
   }
   printf ("Windows API 2: %04d-%02d-%02d %02d:%02d:%02d\n",
           lsystime2.wYear, lsystime2.wMonth, lsystime2.wDay,
           lsystime2.wHour, lsystime2.wMinute, lsystime2.wSecond);
-
-  /* Both methods should be equivalent.  */
-  if (lsystime1.wHour != lsystime2.wHour)
-    return 7;
 
   /* Now see whether localtime is consistent with that.  */
   /* Documentation:
