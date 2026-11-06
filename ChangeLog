@@ -1,3 +1,12 @@
+2026-11-07  Collin Funk  <collin.funk1@gmail.com>
+
+	attribute: Provide access to gcc's access attribute.
+	* m4/gnulib-common.m4 (gl_COMMON_BODY): Define
+	_GL_ATTRIBUTE_ACCESS_NONE, _GL_ATTRIBUTE_ACCESS_READ_ONLY,
+	_GL_ATTRIBUTE_ACCESS_READ_WRITE, and _GL_ATTRIBUTE_ACCESS_WRITE_ONLY.
+	* lib/attribute.h (ATTRIBUTE_ACCESS_NONE, ATTRIBUTE_ACCESS_READ_ONLY)
+	(ATTRIBUTE_ACCESS_READ_WRITE, ATTRIBUTE_ACCESS_WRITE_ONLY): New macros.
+
 2026-11-05  Bruno Haible  <bruno@clisp.org>
 
 	strtof, strtod, strtold: Fix sign of NaN results.
