@@ -22,12 +22,23 @@ shorter than they were meant to be.  In most application areas, this is
 not a problem, and the @code{char *} type is well usable.
 
 A second problem of this string representation is that
-taking a substring is not cheap:
-it either requires a memory allocation
-or a destructive modification of the string.
-The former has a runtime cost;
-the latter complicates the logic of the program.
+taking a substring is not cheap.
 This matters for application areas that analyze text, such as parsers.
+Namely, taking a substring requires
+a destructive modification of the string
+or a memory allocation.
+The former complicates the logic of the program.
+The latter has a runtime cost.
+Some developers are tempted to alleviate this runtime cost:
+they reduce the number of places
+where a string gets @code{strdup()}ed or @code{xstrdup()}ed,
+and do so by using a function calling convention
+where the ownership of a @code{char *} string gets passed to the callee.
+This in turn makes development harder,
+because it deviates from the usual convention
+that passes @code{const char *} strings as arguments.
+So, either way,
+this substring issue ends up causing a maintainability cost.
 
 In areas where strings with embedded NUL characters need to be handled
 or where taking substrings is a recurrent operation,

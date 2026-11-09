@@ -1,3 +1,9 @@
+2026-11-09  Bruno Haible  <bruno@clisp.org>
+
+	doc: More motivation to use the string-desc module.
+	* doc/string-desc.texi (Handling strings with NUL characters): Add
+	details about the substring issue.
+
 2026-11-07  Collin Funk  <collin.funk1@gmail.com>
 
 	attribute: Provide access to gcc's access attribute.
