@@ -1144,13 +1144,13 @@ check_matching (re_match_context_t *mctx, bool fl_longest_match,
 	  at_init_state = false;
 	  err = check_subexp_matching_top (mctx, &cur_state->nodes, 0);
 	  if (__glibc_unlikely (err != REG_NOERROR))
-	    return err;
+	    return -2;
 
 	  if (cur_state->has_backref)
 	    {
 	      err = transit_state_bkref (mctx, &cur_state->nodes);
 	      if (__glibc_unlikely (err != REG_NOERROR))
-		return err;
+		return -2;
 	    }
 	}
     }

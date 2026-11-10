@@ -1,3 +1,10 @@
+2026-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: fix return value on allocation failure
+	Fix reported by Yuvraj Opawat in:
+	https://sourceware.org/pipermail/libc-alpha/2026-November/181984.html
+	* lib/regexec.c (check_matching): Return -2, not err, on error.
+
 2026-11-09  Bruno Haible  <bruno@clisp.org>
 
 	doc: More motivation to use the string-desc module.
