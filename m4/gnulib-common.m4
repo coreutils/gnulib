@@ -1,5 +1,5 @@
 # gnulib-common.m4
-# serial 126
+# serial 127
 dnl Copyright (C) 2007-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -380,24 +380,32 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* Applies to: functions.  */
 /* Clang does not support these attributes.  */
 #ifndef _GL_ATTRIBUTE_ACCESS_READ_ONLY
+# define _GL_ATTRIBUTE_ACCESS_READ_ONLY(args) \
+    _GL_ATTRIBUTE_ACCESS_READ_ONLY_AUX args
+# define _GL_ATTRIBUTE_ACCESS_WRITE_ONLY(args) \
+    _GL_ATTRIBUTE_ACCESS_WRITE_ONLY_AUX args
+# define _GL_ATTRIBUTE_ACCESS_READ_WRITE(args) \
+    _GL_ATTRIBUTE_ACCESS_READ_WRITE_AUX args
+# define _GL_ATTRIBUTE_ACCESS_NONE(args) \
+    _GL_ATTRIBUTE_ACCESS_NONE_AUX args
 # if _GL_HAS_ATTRIBUTE (access) && ! defined __clang__
-#  define _GL_ATTRIBUTE_ACCESS_READ_ONLY(args) \
-     __attribute__ ((__access__ (__read_only__, args)))
-#  define _GL_ATTRIBUTE_ACCESS_WRITE_ONLY(args) \
-     __attribute__ ((__access__ (__write_only__, args)))
-#  define _GL_ATTRIBUTE_ACCESS_READ_WRITE(args) \
-     __attribute__ ((__access__ (__read_write__, args)))
+#  define _GL_ATTRIBUTE_ACCESS_READ_ONLY_AUX(...) \
+     __attribute__ ((__access__ (__read_only__, __VA_ARGS__)))
+#  define _GL_ATTRIBUTE_ACCESS_WRITE_ONLY_AUX(...) \
+     __attribute__ ((__access__ (__write_only__, __VA_ARGS__)))
+#  define _GL_ATTRIBUTE_ACCESS_READ_WRITE_AUX(...) \
+     __attribute__ ((__access__ (__read_write__, __VA_ARGS__)))
 #  if _GL_GNUC_PREREQ (11, 1)
-#   define _GL_ATTRIBUTE_ACCESS_NONE(args) \
-      __attribute__ ((__access__ (__none__, args)))
+#   define _GL_ATTRIBUTE_ACCESS_NONE_AUX(...) \
+      __attribute__ ((__access__ (__none__, __VA_ARGS__)))
 #  else
-#   define _GL_ATTRIBUTE_ACCESS_NONE(args)
+#   define _GL_ATTRIBUTE_ACCESS_NONE_AUX(...)
 #  endif
 # else
-#  define _GL_ATTRIBUTE_ACCESS_READ_ONLY(args)
-#  define _GL_ATTRIBUTE_ACCESS_WRITE_ONLY(args)
-#  define _GL_ATTRIBUTE_ACCESS_READ_WRITE(args)
-#  define _GL_ATTRIBUTE_ACCESS_NONE(args)
+#  define _GL_ATTRIBUTE_ACCESS_READ_ONLY_AUX(...)
+#  define _GL_ATTRIBUTE_ACCESS_WRITE_ONLY_AUX(...)
+#  define _GL_ATTRIBUTE_ACCESS_READ_WRITE_AUX(...)
+#  define _GL_ATTRIBUTE_ACCESS_NONE_AUX(...)
 # endif
 #endif
 

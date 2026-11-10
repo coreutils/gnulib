@@ -1,3 +1,15 @@
+2026-11-10  Collin Funk  <collin.funk1@gmail.com>
+
+	attribute: Fix optional size argument with access attributes.
+	Reported by Basil L. Contovounesios <basil@contovou.net> in:
+	<https://lists.gnu.org/r/bug-gnulib/2026-11/msg00046.html>
+	* m4/gnulib-common.m4 (gl_COMMON_BODY): Define
+	_GL_ATTRIBUTE_ACCESS_READ_ONLY_AUX, _GL_ATTRIBUTE_ACCESS_WRITE_ONLY_AUX,
+	_GL_ATTRIBUTE_ACCESS_READ_WRITE_AUX, and _GL_ATTRIBUTE_ACCESS_NONE_AUX,
+	using __VA_ARGS__. Define _GL_ATTRIBUTE_ACCESS_READ_ONLY,
+	_GL_ATTRIBUTE_ACCESS_WRITE_ONLY, _GL_ATTRIBUTE_ACCESS_READ_WRITE, and
+	_GL_ATTRIBUTE_ACCESS_NONE using them.
+
 2026-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: fix return value on allocation failure
