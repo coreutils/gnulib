@@ -1,3 +1,11 @@
+2026-11-11  Collin Funk  <collin.funk1@gmail.com>
+
+	selinux-at: Define functions that don't perform context translation.
+	* lib/selinux-at.h (getfileconat_raw, lgetfileconat_raw)
+	(setfileconat_raw, lsetfileconat_raw): Declare functions.
+	* lib/selinux-at.c (getfileconat_raw, lgetfileconat_raw)
+	(setfileconat_raw, lsetfileconat_raw): Define them using at-func.c.
+
 2026-11-10  Collin Funk  <collin.funk1@gmail.com>
 
 	attribute: Fix optional size argument with access attributes.

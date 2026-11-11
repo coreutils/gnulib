@@ -28,7 +28,14 @@ extern "C" {
    by first attempting getfilecon ("/proc/self/fd/DIR_FD/FILE", &c).
    Failing that, simulate it via save_cwd/fchdir/getfilecon/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),
-   then give a diagnostic and exit nonzero.  */
+   then give a diagnostic and exit nonzero.
+
+   Functions with the suffix "_raw" do not perform context translation.
+   More information about context translation can be found on these pages:
+   <https://www.kernel.org/doc/man-pages/online/pages/man8/mcstransd.8.html>
+   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_selinux/using-multi-level-security-mls>
+   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_selinux/using-multi-category-security-mcs-for-data-confidentiality>
+ */
 
 /* dir-fd-relative getfilecon.  Set *CON to the SELinux security context
    of the file specified by DIR_FD and FILE and return the length of *CON.
@@ -38,16 +45,28 @@ extern "C" {
    [*] with flags=0 here, with flags=AT_SYMLINK_NOFOLLOW for lgetfileconat  */
 int  getfileconat (int dir_fd, char const *file, char **con);
 
+/* The getfileconat_raw function is the same as getfileconat, except that
+   it does not perform context translation.  */
+int  getfileconat_raw (int dir_fd, char const *file, char **con);
+
 /* dir-fd-relative lgetfilecon.  This function is just like getfileconat,
    except when DIR_FD and FILE specify a symlink:  lgetfileconat operates on
    the symlink, while getfileconat operates on the referent of the symlink.  */
 int lgetfileconat (int dir_fd, char const *file, char **con);
+
+/* The lgetfileconat_raw function is the same as lgetfileconat, except that
+   it does not perform context translation.  */
+int lgetfileconat_raw (int dir_fd, char const *file, char **con);
 
 /* dir-fd-relative setfilecon.  Set the SELinux security context of
    the file specified by DIR_FD and FILE to CON.  DIR_FD and FILE are
    interpreted as for fstatat[*].  Upon success, return 0.
    Otherwise, return -1 and set errno.  */
 int  setfileconat (int dir_fd, char const *file, char const *con);
+
+/* The setfileconat_raw function is the same as setfileconat, except that
+   it does not perform context translation.  */
+int  setfileconat_raw (int dir_fd, char const *file, char const *con);
 
 /* dir-fd-relative lsetfilecon.  This function is just like setfileconat,
    except that rather than dereferencing a symlink, this function affects it. */
@@ -56,6 +75,9 @@ int  setfileconat (int dir_fd, char const *file, char const *con);
    the symlink, while setfileconat operates on the referent of the symlink.  */
 int lsetfileconat (int dir_fd, char const *file, char const *con);
 
+/* The lsetfileconat_raw function is the same as lsetfileconat, except that
+   it does not perform context translation.  */
+int lsetfileconat_raw (int dir_fd, char const *file, char const *con);
 
 #ifdef __cplusplus
 }

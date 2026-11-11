@@ -40,8 +40,28 @@
 #undef AT_FUNC_POST_FILE_PARAM_DECLS
 #undef AT_FUNC_POST_FILE_ARGS
 
+#define AT_FUNC_NAME getfileconat_raw
+#define AT_FUNC_F1 getfilecon_raw
+#define AT_FUNC_POST_FILE_PARAM_DECLS , char **con
+#define AT_FUNC_POST_FILE_ARGS        , con
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
+
 #define AT_FUNC_NAME lgetfileconat
 #define AT_FUNC_F1 lgetfilecon
+#define AT_FUNC_POST_FILE_PARAM_DECLS , char **con
+#define AT_FUNC_POST_FILE_ARGS        , con
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
+
+#define AT_FUNC_NAME lgetfileconat_raw
+#define AT_FUNC_F1 lgetfilecon_raw
 #define AT_FUNC_POST_FILE_PARAM_DECLS , char **con
 #define AT_FUNC_POST_FILE_ARGS        , con
 #include "at-func.c"
@@ -60,8 +80,28 @@
 #undef AT_FUNC_POST_FILE_PARAM_DECLS
 #undef AT_FUNC_POST_FILE_ARGS
 
+#define AT_FUNC_NAME setfileconat_raw
+#define AT_FUNC_F1 setfilecon_raw
+#define AT_FUNC_POST_FILE_PARAM_DECLS , char const *con
+#define AT_FUNC_POST_FILE_ARGS        , con
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
+
 #define AT_FUNC_NAME lsetfileconat
 #define AT_FUNC_F1 lsetfilecon
+#define AT_FUNC_POST_FILE_PARAM_DECLS , char const *con
+#define AT_FUNC_POST_FILE_ARGS        , con
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
+
+#define AT_FUNC_NAME lsetfileconat_raw
+#define AT_FUNC_F1 lsetfilecon_raw
 #define AT_FUNC_POST_FILE_PARAM_DECLS , char const *con
 #define AT_FUNC_POST_FILE_ARGS        , con
 #include "at-func.c"
