@@ -33,8 +33,8 @@ extern "C" {
    Functions with the suffix "_raw" do not perform context translation.
    More information about context translation can be found on these pages:
    <https://www.kernel.org/doc/man-pages/online/pages/man8/mcstransd.8.html>
-   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_selinux/using-multi-level-security-mls>
-   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_selinux/using-multi-category-security-mcs-for-data-confidentiality>
+   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/secure-using_multi_level_security_mls>
+   <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/secure-using_multi_category_security_mcs_for_data_confidentiality>
  */
 
 /* dir-fd-relative getfilecon.  Set *CON to the SELinux security context
