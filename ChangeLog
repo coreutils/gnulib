@@ -1,3 +1,12 @@
+2026-11-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: fix double-frees
+	Problem and fix reported by Adhemerval Zanella in:
+	https://sourceware.org/pipermail/libc-alpha/2026-November/182054.html
+	* lib/regcomp.c (build_range_exp):
+	* lib/regexec.c (match_ctx_add_entry):
+	Don’t free storage twice if an allocation fails.
+
 2026-11-11  Collin Funk  <collin.funk1@gmail.com>
 
 	selinux-at: Define functions that don't perform context translation.

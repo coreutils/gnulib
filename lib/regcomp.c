@@ -2960,15 +2960,17 @@ build_range_exp (bitset_t sbcset, re_charset_t *mbcset, Idx *range_alloc,
 	  new_nranges = 2 * mbcset->nranges + 1;
 	  new_array_start = re_realloc (mbcset->range_starts, uint32_t,
 					new_nranges);
+	  if (new_array_start != NULL)
+	    mbcset->range_starts = new_array_start;
 	  new_array_end = re_realloc (mbcset->range_ends, uint32_t,
 				      new_nranges);
+	  if (new_array_end != NULL)
+	    mbcset->range_ends = new_array_end;
 
           if (__glibc_unlikely (new_array_start == NULL
                                 || new_array_end == NULL))
 	    return REG_ESPACE;
 
-	  mbcset->range_starts = new_array_start;
-	  mbcset->range_ends = new_array_end;
 	  *range_alloc = new_nranges;
 	}
 
