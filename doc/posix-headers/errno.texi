@@ -67,6 +67,45 @@ AIX 7.3.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+The macros @code{EADV}, @code{EBADE}, @code{EBADFD}, @code{EBADR},
+@code{EBADRQC}, @code{EBADSLT}, @code{EBFONT}, @code{ECHRNG},
+@code{ECOMM}, @code{EDOTDOT}, @code{EHWPOISON}, @code{EISNAM},
+@code{EKEYEXPIRED}, @code{EKEYREJECTED}, @code{EKEYREVOKED},
+@code{EL2HLT}, @code{EL2NSYNC}, @code{EL3HLT}, @code{EL3RST},
+@code{ELIBACC}, @code{ELIBBAD}, @code{ELIBEXEC}, @code{ELIBMAX},
+@code{ELIBSCN}, @code{ELNRNG}, @code{EMEDIUMTYPE}, @code{ENAVAIL},
+@code{ENOANO}, @code{ENOCSI}, @code{ENOKEY}, @code{ENOMEDIUM},
+@code{ENONET}, @code{ENOPKG}, @code{ENOTNAM}, @code{ENOTUNIQ},
+@code{EREMCHG}, @code{EREMOTEIO}, @code{ERESTART}, @code{ERFKILL},
+@code{ESRMNT}, @code{ESTRPIPE}, @code{EUCLEAN}, @code{EUNATCH},
+@code{EXFULL}
+are GNU and System V extensions and are not defined on many platforms:
+FreeBSD, NetBSD, OpenBSD, macOS, mingw, MSVC.
+@item
+The macros @code{EAUTH}, @code{EBACKGROUND}, @code{ED}, @code{EDIED},
+@code{EGREGIOUS}, @code{EGRATUITOUS}, @code{EIEIO}, @code{ENEEDAUTH},
+@code{EPROCLIM}, @code{EPROCUNAVAIL}, @code{EPROGMISMATCH},
+@code{EPROGUNAVAIL}, @code{ERPCMISMATCH}
+are GNU/Hurd extensions and are not defined elsewhere.
+@item
+The macro @code{EBADRPC}, though available on GNU/Hurd and on
+BSD-derived platforms, is not defined on many other platforms:
+GNU/Linux, Solaris, mingw, MSVC 19.
+@item
+The macro @code{EDEADLOCK} is a System V legacy.
+On GNU/Linux on Alpha, it is defined but not equal to @code{EDEADLK}.
+On many platforms, it is not defined:
+musl libc, FreeBSD, NetBSD, OpenBSD, macOS, Solaris.
+@item
+The macro @code{EFTYPE} is not defined on some platforms:
+glibc 2.44 + Linux 7.1, musl libc + Linux 7.1, Solaris.
+mingw, MSVC 19.
+@item
+The macros @code{EHOSTDOWN}, @code{EPFNOSUPPORT}, @code{EREMOTE},
+@code{ETOOMANYREFS}, @code{EUSERS}
+are GNU and BSD extensions and are not defined on some platforms:
+mingw, MSVC 19.
+@item
 Error numbers are in the range @code{INT_MIN} through @code{INT_MIN + 0xffff},
 instead of being positive as POSIX requires:
 Haiku.
