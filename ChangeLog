@@ -1,5 +1,12 @@
 2026-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	libgmp-mpz: modernize GCC pacification
+	* lib/mini-gmp-gnulib.c: Don’t bother pacifying
+	-Wsuggest-attribute=const, -Wsuggest-attribute=pure as the old
+	compilers with that problem are pretty much dead now.
+	Don’t pacify -Wsuggest-attribute=malloc for GCC 14 and later,
+	as it’s not needed there.
+
 	regex: fix double-frees
 	Problem and fix reported by Adhemerval Zanella in:
 	https://sourceware.org/pipermail/libc-alpha/2026-November/182054.html
