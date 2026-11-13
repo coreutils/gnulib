@@ -1,3 +1,37 @@
+2026-11-12  Collin Funk  <collin.funk1@gmail.com>
+
+	fts: Sync from glibc.
+	* lib/fts.c (FSTAT, FSTATAT, FSTATFS) [!_LIBC]: Define to function names
+	without the double underscore prefix.
+	(internal_function) [!_LIBC]: Define macro that expands to nothing.
+	(FTSENT_WRAPPER, FTS_COMPAR_CAST) [!_LIBC]: Define macros which just
+	expand to their arguments.
+	(fts_read): Adjust types. Set FTS_FOLLOWED if we entered the directory
+	through a symbolic link. Make sure fts_cwd_fd doesn't get closed when
+	using FTS_SYMFOLLOW.
+	(set_stat_type, fts_compare_ino, fts_children, fts_set, fts_close)
+	(fts_load, dirent_inode_sort_may_be_useful, filesystem_type)
+	(restore_initial_cwd, cwd_advance_fd, fts_set_stat_required, getdevino)
+	(find_matching_ancestor, fts_cross_check, fd_ring_print, same_fd)
+	(fts_stat, fts_compar, fts_sort, fts_alloc, fts_lfree, fts_padjust): Use
+	type macros defined by glibc.
+	(leaf_optimization): Likewise. Add FALLTHROUGH attributes to the switch
+	statement.
+	(fts_open): Use type macros defined by glibc. Return EINVAL when given a
+	NULL pointer.
+	(diropen): Use type macros defined by glibc. Add an argument to
+	determine whether O_NOFOLLOW should be used.
+	(fts_opendir): Also account for FTS_FOLLOWED when choosing whether to
+	use O_NOFOLLOW.
+	(fts_build): Use type macros defined by glibc. Check for overflow in the
+	path length, which may occur on glibc which uses a smaller type.
+	(fts_palloc): Use type macros defined by glibc. Check for overflow.
+	(fts_safe_changedir): Use type macros defined by glibc. Check if the
+	entry was reached through a symbolic link and set O_NOFOLLOW
+	accordingly.
+	* lib/fts.in.h (FTS_FOLLOWED): New macro.
+	* modules/fts (Depends-on): Add attribute.
+
 2026-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	libgmp-mpz: modernize GCC pacification
