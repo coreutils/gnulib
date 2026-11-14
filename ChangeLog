@@ -1,3 +1,10 @@
+2026-11-14  Pádraig Brady  <P@draigBrady.com>
+
+	fchmodat: require AT_SYMLINK_NOFOLLOW emulation on glibc 2.32-2.38
+	* m4/fchmodat.m4: Use our fallback which tries AT_SYMLINK_NOFOLLOW
+	on non-symlinks when /proc is not mounted, as the glibc /proc
+	emulation in these versions has no fallback.
+
 2026-11-12  Collin Funk  <collin.funk1@gmail.com>
 
 	fts: Sync from glibc.
