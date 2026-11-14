@@ -24,6 +24,12 @@ When given the @code{AT_SYMLINK_NOFOLLOW} flag,
 this function fails with @code{errno} set to @code{ENOTSUP},
 even when the file is not a symbolic link:
 GNU/Linux with glibc 2.31, Cygwin 2.9.
+@item
+When given the @code{AT_SYMLINK_NOFOLLOW} flag,
+if the @file{/proc} file system is not mounted,
+this function fails with @code{errno} set to @code{ENOTSUP} for directories,
+and to @code{ENOENT} for other file types.
+musl libc with Linux 6.5 or earlier.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -47,6 +53,14 @@ this function can fail with @code{errno} set to @code{EMFILE} or @code{ENFILE},
 and it fails with @code{errno} set to @code{EOPNOTSUPP} if the
 @file{/proc} file system is not mounted:
 GNU/Linux with glibc 2.34.
+
+@item
+If the @code{AT_SYMLINK_NOFOLLOW} flag is specified,
+this function can mistakenly succeed, and can fail with the wrong @code{errno},
+if some other process simultaneously changes the file's parent directory
+or the mount table:
+musl libc with Linux 6.5 or earlier,
+musl libc 1.2.4 with any Linux version.
 
 @item
 This function sometimes fails with @code{EACCES} when the failure is
