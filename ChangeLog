@@ -1,3 +1,14 @@
+2026-11-15  Bruno Haible  <bruno@clisp.org>
+
+	thread-optim: Improvement for statically linked programs on musl libc.
+	Reported by Mike Love <mike@grepular.com> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2026-11/msg00070.html>.
+	* lib/thread-optim.c (inspect_one_GOT): In statically linked programs on
+	musl libc, return -1.
+	* modules/thread-optim (Files): Add m4/musl.m4.
+	(Depends-on): Add streq.
+	(configure.ac): Invoke gl_MUSL_LIBC.
+
 2026-11-15  Pádraig Brady  <P@draigBrady.com>
 
 	backupfile: fix infinite loop with unreadable directories

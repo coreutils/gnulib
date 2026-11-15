@@ -151,16 +151,25 @@ inspect_one_GOT (struct dl_phdr_info *info, size_t size, void *data)
   /* IMPORTANT: Before changing this code, make the corresponding changes
      to thread-optim-proto.c and test them.  */
 
-  /* Skip the processing of libc.so.
-     * On specific platforms, this is necessary:
-         - FreeBSD 12/arm64 has lio_listio in the GOT of libc.so.
-         - NetBSD 10 has timer_create in the GOT of libc.so.
-         - Android has pthread_create in the GOT of libc.so.
-       This does not make the process multithreaded.
-     * On the other platforms, it is just an optimization, to not scan
-       the (possibly many) symbols of libc.so.  */
   {
     const char *filename = info->dlpi_name;
+#if MUSL_LIBC
+    if (streq (filename, "/proc/self/exe"))
+      {
+        /* The executable is statically linked.
+           (See musl/src/ldso/dl_iterate_phdr.c.)  */
+        dbg_printf ("gl_multithreaded() = true, because the executable is statically linked.\n");
+        return -1;
+      }
+#endif
+    /* Skip the processing of libc.so.
+       * On specific platforms, this is necessary:
+           - FreeBSD 12/arm64 has lio_listio in the GOT of libc.so.
+           - NetBSD 10 has timer_create in the GOT of libc.so.
+           - Android has pthread_create in the GOT of libc.so.
+         This does not make the process multithreaded.
+       * On the other platforms, it is just an optimization, to not scan
+         the (possibly many) symbols of libc.so.  */
     const char *last_slash = strrchr (filename, '/');
     if (last_slash != NULL
         && strncmp (last_slash + 1, "libc.so", 7) == 0

@@ -6,11 +6,13 @@ lib/thread-optim.h
 lib/thread-optim.c
 lib/thread-creators.gperf
 lib/thread-optim-proto.c
+m4/musl.m4
 
 Depends-on:
 gperf
 bool
 stdint-h
+streq
 
 configure.ac:
 AC_CHECK_HEADERS([sys/single_threaded.h])
@@ -19,6 +21,7 @@ dnl Solaris 10 has dl_iterate_phdr in a separate library libdl.
 dnl Haiku has dl_iterate_phdr in a separate library libbsd.
 dnl We don't want a link dependency here.
 AC_CHECK_FUNCS([dl_iterate_phdr])
+gl_MUSL_LIBC
 
 Makefile.am:
 lib_SOURCES += thread-optim.c
