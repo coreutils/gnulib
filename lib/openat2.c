@@ -525,11 +525,19 @@ openat2 (int dfd, char const *filename,
     if (! (r < 0 && errno == ENOSYS))
       return r;
   }
+  /* Keep going, because:
 
-  /* Keep going, to support the dubious practice of compiling for an
-     older kernel.  The openat2 syscall was introduced in Linux 5.6.
-     Linux 5.4 LTS is EOLed at the end of 2025, so perhaps after that
-     we can simply return the syscall result instead of continuing.  */
+     - openat2 fails with ENOSYS when running with the dubious systemd
+       configuration setting RestrictSUIDSGID=yes, a setting that,
+       whatever its other virtues, unfortunately introduces races into
+       openat2-using programs and therefore makes them less secure.
+
+     - Some builds incorrectly target Linux 5.5 and earlier by
+       compiling with kernel headers from Linux 5.6 or later.
+       The openat2 syscall was introduced in Linux 5.6 (2020);
+       for what it's worth Linux 5.4 LTS, the last upstream Linux
+       without openat2, was EOLed in 2025, so this justification
+       for continuing will eventually go away.  */
 #endif
 
   int r;

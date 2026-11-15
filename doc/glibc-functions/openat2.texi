@@ -12,6 +12,11 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on most platforms:
 glibc 2.42 on Linux, glibc on non-Linux, all non-glibc platforms.
+@item
+This function fails with @code{ENOSYS} on some platforms when it
+exists and its execution would be benign:
+Linux 7.3 and @command{systemd} 262.2 configured with
+@code{RestrictSUIDSGID=yes}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

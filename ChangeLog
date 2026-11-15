@@ -1,3 +1,16 @@
+2026-11-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat2: port to systemd RestrictSUIDSGID=yes
+	Problem reported by Hakob Chobanyan in:
+	https://lists.gnu.org/r/bug-gnulib/2026-11/msg00072.html
+	* lib/fcntl.in.h (openat2): Support REPLACE_OPENAT2.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Initialize REPLACE_OPENAT2.
+	* m4/openat2.m4 (gl_FUNC_OPENAT2):
+	Define REPLACE_OPENAT2=1 on Linux platforms that have openat2.
+	* modules/fcntl-h (fcntl.h): Replace REPLACE_OPENAT2.
+	* modules/openat2 (Depends-on, configure.ac):
+	Also test REPLACE_OPENAT2.
+
 2026-11-15  Bruno Haible  <bruno@clisp.org>
 
 	thread-optim: Improvement for statically linked programs on musl libc.
