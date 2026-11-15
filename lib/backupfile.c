@@ -377,7 +377,7 @@ backupfile_internal (int dir_fd, char const *file,
       if (renameatu (dir_fd, file + offset, dir_fd, s + offset, flags) == 0)
         break;
       int saved_errno = errno;
-      if (! (saved_errno == EEXIST && extended))
+      if (! (saved_errno == EEXIST && extended && dirp))
         {
           if (dirp)
             closedir (dirp);
