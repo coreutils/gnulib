@@ -293,7 +293,10 @@ _GL_CXXALIAS_RPL (setlocale, const char *,
 # else
 _GL_CXXALIAS_SYS_CAST (setlocale, const char *,
                        (int category, const char *locale));
-#  if !defined setlocale && !defined __cplusplus
+#  if !defined setlocale && !defined __cplusplus \
+      /* Avoid a conflict with GNU gettext's <libintl.h>.  */ \
+      && !((defined __APPLE__ && defined __MACH__) \
+           || defined _WIN32 || defined __CYGWIN__)
 #   define setlocale(...) ((const char *) setlocale (__VA_ARGS__))
 #  endif
 # endif

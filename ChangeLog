@@ -1,3 +1,9 @@
+2026-11-16  Bruno Haible  <bruno@clisp.org>
+
+	setlocale: Fix conflict with gettext's <libintl.h> on macOS, Windows.
+	* lib/locale.in.h (setlocale): Disable macro definition on macOS,
+	Cygwin, native Windows.
+
 2026-11-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	openat2: port to systemd RestrictSUIDSGID=yes
