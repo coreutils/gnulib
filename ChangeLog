@@ -1,3 +1,19 @@
+2026-11-17  Bruno Haible  <bruno@clisp.org>
+
+	uniwidth/width: Return -1 for characters U+2028, U+2029.
+	Suggested by Pádraig Brady in
+	<https://lists.gnu.org/archive/html/coreutils/2026-11/msg00152.html>.
+	* lib/gen-uni-tables.c (is_nonspacing): Return true also for the
+	LINE SEPARATOR and PARAGRAPH SEPARATOR characters.
+	(symbolic_width): Update accordingly.
+	* lib/uniwidth/width0.h: Regenerated.
+	* lib/uniwidth/width.c (uc_width): Return -1 for the LINE SEPARATOR and
+	PARAGRAPH SEPARATOR characters.
+	* tests/uniwidth/test-uc_width2.sh: Update expected result.
+	* modules/uniwidth/*:  Bump required libunistring version.
+	* modules/unilbrk/*-width-linebreaks: Likewise.
+	* modules/unistdio/ulc-*printf: Likewise.
+
 2026-11-16  Bruno Haible  <bruno@clisp.org>
 
 	unicase/ignorable: Fix for character U+0027.

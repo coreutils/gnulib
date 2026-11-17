@@ -6703,6 +6703,11 @@ fill_width (const char *width_filename)
      Rationale for the Prepended_Concatenation_Mark exception:
      The Unicode standard says "Unlike most other format characters,
      however, they should be rendered with a visible glyph".
+   * Line and paragraph separators; generated from
+     "grep '^[^;]*;[^;]*;Z[lp];' UnicodeData.txt"
+     Rationale: These characters move the "cursor" to column 0.
+     The line separator U+2028 is like U+000A.
+     The paragraph separator U+2029 is like U+000B.
    * Zero width characters; generated from
      "grep '^[^;]*;ZERO WIDTH ' UnicodeData.txt"
    * Hangul Jamo characters that have conjoining behaviour:
@@ -6730,6 +6735,7 @@ is_nonspacing (unsigned int ch)
               || is_category_Cc (ch)
               || (is_category_Cf (ch)
                   && !is_property_prepended_concatenation_mark (ch))
+              || is_category_Zl (ch) || is_category_Zp (ch)
               || str_startswith (unicode_attributes[ch].name, "ZERO WIDTH ")
               || (ch >= 0x1160 && ch <= 0x11A7) || (ch >= 0xD7B0 && ch <= 0xD7C6) /* jungseong */
               || (ch >= 0x11A8 && ch <= 0x11FF) || (ch >= 0xD7CB && ch <= 0xD7FB) /* jongseong */
@@ -6975,7 +6981,8 @@ symbolic_width (unsigned int ch)
   else
     {
       /* Test for non-spacing or control character.  */
-      if (is_category_Cc (ch) && ch < 0x00A0)
+      if ((is_category_Cc (ch) && ch < 0x00A0)
+          || is_category_Zl (ch) || is_category_Zp (ch))
         return 0;
       if (is_nonspacing (ch))
         return '0';

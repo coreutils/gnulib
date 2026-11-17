@@ -29,6 +29,8 @@
      "grep '^[^;]*;[^;]*;[^;]*;[^;]*;NSM;' UnicodeData.txt"
    * Format control characters; generated from
      "grep '^[^;]*;[^;]*;Cf;' UnicodeData.txt"
+   * Line and paragraph separators; generated from
+     "grep '^[^;]*;[^;]*;Z[lp];' UnicodeData.txt"
    * Zero width characters; generated from
      "grep '^[^;]*;ZERO WIDTH ' UnicodeData.txt"
    * Hangul Jamo characters that have conjoining behaviour:
@@ -64,7 +66,7 @@ uc_width (ucs4_t uc, const char *encoding)
       if (ind >= 0)
         if ((nonspacing_table_data[64*ind + ((uc >> 3) & 63)] >> (uc & 7)) & 1)
           {
-            if (uc > 0 && uc < 0xa0)
+            if ((uc > 0 && uc < 0xa0) || (uc & ~1) == 0x2028)
               return -1;
             else
               return 0;
