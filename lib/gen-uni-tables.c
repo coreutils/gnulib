@@ -2739,6 +2739,12 @@ is_WBP_MIDLETTER (unsigned int ch)
           || ch == 0x055F);
 }
 
+static bool
+is_WBP_SQ (unsigned int ch)
+{
+  return (ch == 0x0027);
+}
+
 /* ========================================================================= */
 
 /* Properties.  */
@@ -3266,7 +3272,7 @@ static bool
 is_property_case_ignorable (unsigned int ch)
 {
   bool result1 = (is_WBP_MIDLETTER (ch) || is_WBP_MIDNUMLET (ch)
-                  || ch == 0x0027
+                  || is_WBP_SQ (ch)
                   || is_category_Mn (ch)
                   || is_category_Me (ch)
                   || is_category_Cf (ch)
@@ -11793,12 +11799,16 @@ is_cased (unsigned int ch)
 
 /* Quoting the Unicode standard:
      Definition: A character is defined to be "case-ignorable" if it has the
-     value MidLetter {or the value MidNumLet} for the Word_Break property or
+     value MidLetter or MidNumLet or Single_Quote for the Word_Break property or
      its General_Category is one of Nonspacing_Mark (Mn), Enclosing_Mark (Me),
      Format (Cf), Modifier_Letter (Lm), or Modifier_Symbol (Sk).
-   The text marked in braces was added in Unicode 5.1.0, see
+   The value MidNumLet was added in Unicode 5.1.0, see
    <https://www.unicode.org/versions/Unicode5.1.0/> section "Update of
-   Definition of case-ignorable".   */
+   Definition of case-ignorable".
+   The value Single_Quote was added in Unicode 6.3.0, see
+   <https://www.unicode.org/versions/Unicode7.0.0/#Conformance_Changes> and
+   <https://www.unicode.org/versions/Unicode6.3.0/#Conformance_Changes>.
+   */
 /* Since this predicate is only used for the "Before C" and "After C"
    conditions of FINAL_SIGMA, we exclude the "cased" characters here.
    This simplifies the evaluation of the regular expressions
@@ -11811,6 +11821,7 @@ is_case_ignorable (unsigned int ch)
 {
   return (unicode_org_wbp[ch] == WBP_MIDLETTER
           || unicode_org_wbp[ch] == WBP_MIDNUMLET
+          || unicode_org_wbp[ch] == WBP_SQ
           || is_category_Mn (ch)
           || is_category_Me (ch)
           || is_category_Cf (ch)

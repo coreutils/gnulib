@@ -1,5 +1,19 @@
 2026-11-16  Bruno Haible  <bruno@clisp.org>
 
+	unicase/ignorable: Fix for character U+0027.
+	Reported by <hi@joel.id> in
+	<https://lists.gnu.org/archive/html/bug-libunistring/2026-11/msg00000.html>.
+	* lib/gen-uni-tables.c (is_WBP_SQ): New function.
+	(is_property_case_ignorable): Use it.
+	(is_case_ignorable): Return true for U+0027.
+	* lib/unicase/caseprop.h: Update comments.
+	* lib/unicase/ignorable.c: Likewise.
+	* lib/unicase/ignorable.h: Regenerated.
+	* tests/unicase/test-ignorable.c: Likewise.
+	* modules/unicase/*: Bump required libunistring version.
+
+2026-11-16  Bruno Haible  <bruno@clisp.org>
+
 	setlocale: Fix conflict with gettext's <libintl.h> on macOS, Windows.
 	* lib/locale.in.h (setlocale): Disable macro definition on macOS,
 	Cygwin, native Windows.

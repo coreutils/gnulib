@@ -31,16 +31,16 @@ extern "C" {
 
 
 /* Determine whether a character is "cased" according to the Unicode Standard,
-   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
-   definition D120.  */
+   <https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-3/>,
+   section 3.13, definition D135.  */
 extern bool
        uc_is_cased (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 
 /* Determine whether a character is "case-ignorable"
    according to the Unicode Standard,
-   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
-   definition D121.  */
+   <https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-3/>,
+   section 3.13, definition D136.  */
 extern bool
        uc_is_case_ignorable (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;

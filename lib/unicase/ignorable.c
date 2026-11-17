@@ -30,12 +30,16 @@
 
 /* Quoting the Unicode standard:
      Definition: A character is defined to be "case-ignorable" if it has the
-     value MidLetter {or the value MidNumLet} for the Word_Break property or
+     value MidLetter or MidNumLet or Single_Quote for the Word_Break property or
      its General_Category is one of Nonspacing_Mark (Mn), Enclosing_Mark (Me),
      Format (Cf), Modifier_Letter (Lm), or Modifier_Symbol (Sk).
-   The text marked in braces was added in Unicode 5.1.0, see
+   The value MidNumLet was added in Unicode 5.1.0, see
    <https://www.unicode.org/versions/Unicode5.1.0/> section "Update of
-   Definition of case-ignorable".   */
+   Definition of case-ignorable".
+   The value Single_Quote was added in Unicode 6.3.0, see
+   <https://www.unicode.org/versions/Unicode7.0.0/#Conformance_Changes> and
+   <https://www.unicode.org/versions/Unicode6.3.0/#Conformance_Changes>.
+   */
 /* Since this predicate is only used for the "Before C" and "After C"
    conditions of FINAL_SIGMA, we exclude the "cased" characters here.
    This simplifies the evaluation of the regular expressions
@@ -54,7 +58,7 @@ uc_is_case_ignorable (ucs4_t uc)
 {
   int wbp = uc_wordbreak_property (uc);
 
-  return (wbp == WBP_MIDLETTER || wbp == WBP_MIDNUMLET
+  return (wbp == WBP_MIDLETTER || wbp == WBP_MIDNUMLET || wbp == WBP_SQ
           || uc_is_general_category_withtable (uc, UC_CATEGORY_MASK_Mn
                                                    | UC_CATEGORY_MASK_Me
                                                    | UC_CATEGORY_MASK_Cf
