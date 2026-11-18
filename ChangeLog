@@ -1,3 +1,8 @@
+2026-11-18  Bruno Haible  <bruno@clisp.org>
+
+	host-cpu-c-abi: Add support for MSVC on Windows/arm64.
+	* m4/host-cpu-c-abi.m4 (gl_HOST_CPU_C_ABI): Test _M_ARM64.
+
 2026-11-17  Bruno Haible  <bruno@clisp.org>
 
 	uniwidth/width: Return -1 for characters U+2028, U+2029.

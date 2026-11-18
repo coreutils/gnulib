@@ -1,5 +1,5 @@
 # host-cpu-c-abi.m4
-# serial 20
+# serial 21
 dnl Copyright (C) 2002-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -107,7 +107,7 @@ changequote([,])dnl
          # - 32-bit instruction set, 32-bit pointers, 32-bit 'long': arm or armhf.
          AC_COMPILE_IFELSE(
            [AC_LANG_SOURCE(
-              [[#ifdef __aarch64__
+              [[#if defined __aarch64__ || defined _M_ARM64
                  int ok;
                 #else
                  error fail
