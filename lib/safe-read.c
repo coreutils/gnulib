@@ -55,6 +55,15 @@ typedef void *bufptr;
 ptrdiff_t
 safe_rw (int fd, bufptr buf, idx_t count)
 {
+#ifdef __CYGWIN__
+  /* Cygwin up to at least 3.6.12 silently discards all but the bottom
+     32 bits of COUNT.  This can falsely signal EOF on read and can
+     also make trouble for callers on write.  There are likely other
+     problems with some COUNT values greater than SYS_BUFSIZE_MAX.  */
+  if (SYS_BUFSIZE_MAX < count)
+    count = SYS_BUFSIZE_MAX;
+#endif
+
   for (;;)
     {
       ssize_t result = rw (fd, buf, count <= (size_t) -1 ? count : (size_t) -1);

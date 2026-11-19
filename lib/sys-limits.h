@@ -30,6 +30,9 @@
    Using this also works around a serious Linux bug before 2.6.16; see
    <https://bugzilla.redhat.com/show_bug.cgi?id=612839>.
 
+   It also works around a similar bug in Cygwin to at least 3.6.12; see
+   <https://cygwin.com/pipermail/cygwin/2026-November/260246.html>.
+
    Using this is likely to work around similar bugs in other operating
    systems.  */
 

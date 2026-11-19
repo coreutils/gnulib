@@ -1,3 +1,11 @@
+2026-11-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	safe-read: work around Cygwin big-read bug
+	* lib/safe-read.c (safe_rw) [__CYGWIN__]:
+	Work around bug in Cygwin up to at least 3.6.12, where
+	‘read’ and ‘write’ sizes lose high-order bits.  See:
+	https://cygwin.com/pipermail/cygwin/2026-November/260246.html
+
 2026-11-18  Bruno Haible  <bruno@clisp.org>
 
 	host-cpu-c-abi: Add support for MSVC on Windows/arm64.
