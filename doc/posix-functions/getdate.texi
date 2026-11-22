@@ -14,7 +14,20 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 14.0, NetBSD 5.0, OpenBSD 7.9, Minix 3.1.8, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+FreeBSD 15.1, NetBSD 5.0, OpenBSD 7.9, Minix 3.1.8, Cygwin 3.6.x, mingw, MSVC 14, Android 9.0.
+@item
+This function fails with error 7 or 8, despite valid input, on some platforms:
+NetBSD 11.1, Solaris 11 OmniOS, AIX 7.3.
+@item
+This function returns invalid dates on some platforms:
+@c https://www.openwall.com/lists/musl/2026/11/20/6
+musl libc 1.2.6.
+@item
+This function returns wrong @code{struct tm} fields on some platforms:
+musl libc 1.2.6, macOS 26.
+@item
+This function has problems with time zones on some platforms:
+Solaris 11 OmniOS.
 @end itemize
 
 @mindex parse-datetime

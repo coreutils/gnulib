@@ -1,3 +1,9 @@
+2026-11-22  Bruno Haible  <bruno@clisp.org>
+
+	getdate: Document portability problems.
+	* doc/posix-functions/getdate.texi: Document various bugs.
+	* doc/posix-functions/getdate_err.texi: Update platforms list.
+
 2026-11-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	safe-read: work around Cygwin big-read bug
