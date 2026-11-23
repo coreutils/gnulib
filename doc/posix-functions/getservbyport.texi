@@ -20,4 +20,8 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows, in 32-bit mode, this function is defined with a calling
 convention that is different from @code{cdecl}.
+@item
+The returned @code{struct servent} has a nonsensical @code{s_aliases} value
+on some platforms:
+musl libc.
 @end itemize

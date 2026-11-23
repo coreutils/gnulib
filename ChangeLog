@@ -1,5 +1,14 @@
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
+	Document a few musl libc problems.
+	* doc/posix-functions/gethostent.texi: Document the musl libc problem.
+	* doc/posix-functions/getnetent.texi: Likewise.
+	* doc/posix-functions/getservent.texi: Likewise.
+	* doc/posix-functions/getservbyname.texi: Likewise.
+	* doc/posix-functions/getservbyport.texi: Likewise.
+
+2026-11-23  Bruno Haible  <bruno@clisp.org>
+
 	getdate: Add tests.
 	* tests/test-getdate.c: New file.
 	* modules/getdate-tests: New file.

@@ -15,4 +15,8 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, MSVC 14.
+@item
+This function always returns @code{NULL} (as if @file{/etc/services} were empty)
+on some platforms:
+musl libc.
 @end itemize

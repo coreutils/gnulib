@@ -15,4 +15,8 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Cygwin 2.9, mingw, MSVC 14, Android 8.1.
+@item
+This function always returns @code{NULL} (as if @file{/etc/networks} were empty)
+on some platforms:
+musl libc.
 @end itemize
