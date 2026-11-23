@@ -1,0 +1,11 @@
+Files:
+tests/test-strptime-gnu.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strptime-gnu
+check_PROGRAMS += test-strptime-gnu

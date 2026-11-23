@@ -1,5 +1,9 @@
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
+	strptime-gnu: Add tests.
+	* tests/test-strptime-gnu.c: New file.
+	* modules/strptime-gnu-tests: New file.
+
 	strptime-gnu: New module.
 	* m4/time_h.m4 (gl_TIME_H_DEFAULTS): Initialize REPLACE_STRPTIME.
 	* m4/strptime.m4 (gl_FUNC_STRPTIME_POSIX): Define through AC_DEFUN_ONCE.
