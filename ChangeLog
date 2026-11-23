@@ -1,3 +1,14 @@
+2026-11-23  Pádraig Brady  <P@draigBrady.com>
+
+	fcntl-h: Provide a HAVE_WORKING_FSTAT_O_PATH config define
+	* lib/openat2.c: Change from internal FSTAT_O_PATH_BUG to ...
+	* m4/fcntl-o.m4 (gl_WORKING_FSTAT_O_PATH): ... provided
+	HAVE_WORKING_FSTAT_O_PATH define.
+	* doc/posix-functions/fstat.texi: Provide more detail on
+	the affected kernel range, fstatat workaround, and the provided define.
+	* m4/openat2.m4: Call gl_WORKING_FSTAT_O_PATH.
+	* tests/test-openat2.c: Ensure defined.
+
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
 	strptime-gnu: Add tests.

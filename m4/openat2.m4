@@ -1,5 +1,5 @@
 # openat2.m4
-# serial 3
+# serial 4
 
 dnl Copyright 2025-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -36,6 +36,7 @@ AC_DEFUN([gl_FUNC_OPENAT2],
 # Prerequisites of lib/openat2.c.
 AC_DEFUN([gl_PREREQ_OPENAT2],
 [
+  gl_WORKING_FSTAT_O_PATH
   AC_CHECK_FUNCS_ONCE([fstatfs])
   AC_CHECK_HEADERS_ONCE([sys/vfs.h])
   AS_CASE([$ac_cv_func_fstatfs,$ac_cv_header_sys_vfs_h],

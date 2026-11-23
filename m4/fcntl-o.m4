@@ -1,5 +1,5 @@
 # fcntl-o.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2006, 2009-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -169,4 +169,50 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
     [*O_NOFOLLOW* | *no], [gl_val=0], [gl_val=1])
   AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOFOLLOW], [$gl_val],
     [Define to 1 if O_NOFOLLOW works, 0 otherwise.])
+])
+
+# Define HAVE_WORKING_FSTAT_O_PATH to 1 if fstat works on O_PATH descriptors.
+AC_DEFUN([gl_WORKING_FSTAT_O_PATH],
+[
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+  dnl On Linux 2.6.39 through 3.5, fstat fails on O_PATH descriptors.
+  dnl On these platforms fstatat with AT_EMPTY_PATH and "" similarly
+  dnl fails.  Although it can be dicey to use static checks due to
+  dnl the dubious practice of building on newer kernels for older ones,
+  dnl do it here anyway as the buggy kernels are rare (all EOLed by 2016)
+  dnl and builders for them are unlikely to use the dubious practice.
+  dnl Circa 2030 we should remove the old-kernel workarounds entirely.
+  AC_CACHE_CHECK([whether fstat works on O_PATH file descriptors],
+    [gl_cv_working_fstat_o_path],
+    [AC_RUN_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <fcntl.h>
+            #include <sys/stat.h>
+            #include <unistd.h>
+            #include <errno.h>]],
+          [[int fd = open ("confdefs.h", O_PATH);
+            struct stat st;
+            char c;
+            /* A kernel that ignores O_PATH opens this file for reading.  */
+            return (fd < 0 || fstat (fd, &st) < 0
+                    || read (fd, &c, 1) != -1 || errno != EBADF);]])],
+       [gl_cv_working_fstat_o_path=yes],
+       [gl_cv_working_fstat_o_path=no],
+       [AC_EGREP_CPP([working_fstat_o_path], [
+          #include <fcntl.h>
+          #if defined __linux__ || defined __ANDROID__
+          # include <linux/version.h>
+          # define FSTAT_OK (KERNEL_VERSION (3, 6, 0) <= LINUX_VERSION_CODE)
+          #else
+          # define FSTAT_OK 1
+          #endif
+          #if defined O_PATH && FSTAT_OK
+          working_fstat_o_path
+          #endif
+          ], [gl_cv_working_fstat_o_path="guessing yes"],
+             [gl_cv_working_fstat_o_path="guessing no"])])])
+  AS_CASE([$gl_cv_working_fstat_o_path], [*yes], [gl_val=1], [gl_val=0])
+  AC_DEFINE_UNQUOTED([HAVE_WORKING_FSTAT_O_PATH], [$gl_val],
+    [Define to 1 if fstat works on O_PATH file descriptors, 0 otherwise.])
 ])

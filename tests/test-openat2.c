@@ -20,6 +20,13 @@
 
 #include <fcntl.h>
 
+#if !HAVE_OPENAT2
+# if !defined HAVE_WORKING_FSTAT_O_PATH \
+     || (HAVE_WORKING_FSTAT_O_PATH != 0 && HAVE_WORKING_FSTAT_O_PATH != 1)
+#  error "HAVE_WORKING_FSTAT_O_PATH must be defined to 0 or 1"
+# endif
+#endif
+
 #include "signature.h"
 SIGNATURE_CHECK (openat2, int, (int, char const *,
                                 struct open_how const *, size_t));

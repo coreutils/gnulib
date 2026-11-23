@@ -35,26 +35,11 @@
 
 #if defined __linux__ || defined __ANDROID__
 # include <sys/syscall.h>
-# include <linux/version.h>
 # if HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 #  include <sys/vfs.h>
 /* Linux-specific constant from coreutils src/fs.h.  */
 #  define S_MAGIC_PROC 0x9FA0
 # endif
-#endif
-
-/* FSTAT_O_PATH_BUG is true if fstat fails on O_PATH file descriptors.
-   On these platforms fstatat with AT_EMPTY_PATH and "" similarly fails.
-   Although it can be dicey to use static checks for Linux kernel versions,
-   due to the dubious practice of building on newer kernels for older ones,
-   do it here anyway as the buggy kernels are rare (all EOLed by 2016)
-   and builders for them are unlikely to use the dubious practice.
-   Circa 2030 we should remove the old-kernel workarounds entirely.  */
-#ifdef LINUX_VERSION_CODE
-# define FSTAT_O_PATH_BUG (KERNEL_VERSION (2, 6, 39) <= LINUX_VERSION_CODE \
-                           && LINUX_VERSION_CODE < KERNEL_VERSION (3, 6, 0))
-#else
-# define FSTAT_O_PATH_BUG false
 #endif
 
 #ifndef GNULIB_FSTATAT
@@ -155,7 +140,7 @@ maybe_grow (char **buf, idx_t bufsize, char *stackbuf,
 static int
 dirstat (int dirfd, struct stat *st)
 {
-#if FSTAT_O_PATH_BUG
+#if O_PATH && !HAVE_WORKING_FSTAT_O_PATH
   /* Use fstatat with "." to work around a bug in fstat (and in
      fstatat with "" and AT_EMPTY_PATH) in Linux kernels 2.6.39 (2011)
      through 3.5.7 (2012).  This workaround does not depend on
@@ -172,8 +157,8 @@ dirstat (int dirfd, struct stat *st)
   /* Prefer fstatat with AT_EMPTY_PATH if available, as this avoids
      admittedly-unlikely problems when the working directory is not
      searchable.  This workaround does not depend on Gnulib's fstatat
-     module, as all systems with AT_EMPTY_PATH and without
-     FSTAT_O_PATH_BUG should work well enough here.  */
+     module, as all systems with AT_EMPTY_PATH reaching this point
+     should work well enough here.  */
   return fstatat (dirfd, GNULIB_FSTATAT ? NULL : "", st, AT_EMPTY_PATH);
 # else
   return stat (".", st);

@@ -40,7 +40,11 @@ Portability problems not fixed by Gnulib:
 @xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @item
 This function fails if the file descriptor was opened with @code{O_PATH}:
-Linux kernel 3.5.
+Linux kernels 2.6.39 through 3.5.
+To support these kernels, you can use @code{fstatat (fd, "", sb, AT_EMPTY_PATH)}
+in place of @code{fstat (fd, sb)}.  Alternatively, with the @code{fcntl-h}
+module, you can call @code{gl_WORKING_FSTAT_O_PATH} to define
+@code{HAVE_WORKING_FSTAT_O_PATH}.
 @item
 On Cygwin, @code{fstat} applied to the file descriptors 0 and 1, returns
 different @code{st_ino} values, even if standard input and standard output
