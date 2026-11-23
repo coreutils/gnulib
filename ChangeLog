@@ -1,5 +1,9 @@
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
+	getdate: Add tests.
+	* tests/test-getdate.c: New file.
+	* modules/getdate-tests: New file.
+
 	getdate: New module.
 	* lib/time.in.h (getdate, _gl_getdate_location): New declarations.
 	(getdate_err): New macro.

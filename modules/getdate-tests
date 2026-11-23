@@ -1,0 +1,12 @@
+Files:
+tests/test-getdate.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getdate
+check_PROGRAMS += test-getdate
