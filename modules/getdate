@@ -1,0 +1,42 @@
+Description:
+Convert a string representation of time to a tm structure,
+using a file of patterns.
+
+Files:
+lib/getdate.c
+m4/getdate.m4
+m4/tm_gmtoff.m4
+
+Depends-on:
+time-h
+extensions
+stat            [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+fopen-gnu       [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+strptime-gnu    [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+strndup         [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+getline         [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+time_r          [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+mktime          [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1]
+
+configure.ac:
+gl_FUNC_GETDATE
+gl_CONDITIONAL([GL_COND_OBJ_GETDATE],
+               [test $HAVE_GETDATE = 0 || test $REPLACE_GETDATE = 1])
+AM_COND_IF([GL_COND_OBJ_GETDATE], [
+  gl_PREREQ_GETDATE
+])
+gl_TIME_MODULE_INDICATOR([getdate])
+
+Makefile.am:
+if GL_COND_OBJ_GETDATE
+lib_SOURCES += getdate.c
+endif
+
+Include:
+<time.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

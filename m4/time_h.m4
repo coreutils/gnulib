@@ -1,5 +1,5 @@
 # time_h.m4
-# serial 29
+# serial 30
 dnl Copyright (C) 2000-2001, 2003-2007, 2009-2026 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -136,6 +136,7 @@ AC_DEFUN([gl_TIME_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_TIME_H_MODULE_INDICATOR_DEFAULTS], [
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETDATE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MKTIME])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALTIME])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NANOSLEEP])
@@ -160,6 +161,7 @@ AC_DEFUN([gl_TIME_H_DEFAULTS],
 [
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_LOCALTIME_R=1;               AC_SUBST([HAVE_DECL_LOCALTIME_R])
+  HAVE_GETDATE=1;                        AC_SUBST([HAVE_GETDATE])
   HAVE_NANOSLEEP=1;                      AC_SUBST([HAVE_NANOSLEEP])
   HAVE_STRPTIME=1;                       AC_SUBST([HAVE_STRPTIME])
   HAVE_TIMEGM=1;                         AC_SUBST([HAVE_TIMEGM])
@@ -169,6 +171,7 @@ AC_DEFUN([gl_TIME_H_DEFAULTS],
   HAVE_TIMEZONE_T=0;                     AC_SUBST([HAVE_TIMEZONE_T])
   HAVE_TZALLOC=0;                        AC_SUBST([HAVE_TZALLOC])
   REPLACE_CTIME=0;                       AC_SUBST([REPLACE_CTIME])
+  REPLACE_GETDATE=0;                     AC_SUBST([REPLACE_GETDATE])
   REPLACE_GMTIME=0;                      AC_SUBST([REPLACE_GMTIME])
   REPLACE_LOCALTIME=0;                   AC_SUBST([REPLACE_LOCALTIME])
   REPLACE_LOCALTIME_R=0;                 AC_SUBST([REPLACE_LOCALTIME_R])

@@ -1,3 +1,18 @@
+2026-11-23  Bruno Haible  <bruno@clisp.org>
+
+	getdate: New module.
+	* lib/time.in.h (getdate, _gl_getdate_location): New declarations.
+	(getdate_err): New macro.
+	* lib/getdate.c: New file, based on glibc/time/getdate.c.
+	* m4/getdate.m4: New file.
+	* m4/time_h.m4 (gl_TIME_H_REQUIRE_DEFAULTS): Initialize GNULIB_GETDATE.
+	(gl_TIME_H_DEFAULTS): Initialize HAVE_GETDATE, REPLACE_GETDATE.
+	* modules/time-h (Makefile.am): Substitute GNULIB_GETDATE, HAVE_GETDATE,
+	REPLACE_GETDATE.
+	* modules/getdate: New file.
+	* config/srclist.txt: Mention getdate.c.
+	* doc/posix-functions/getdate.texi: Mention the new module.
+
 2026-11-23  Pádraig Brady  <P@draigBrady.com>
 
 	fcntl-h: Provide a HAVE_WORKING_FSTAT_O_PATH config define

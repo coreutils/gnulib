@@ -444,6 +444,44 @@ _GL_WARN_ON_USE (strptime, "strptime is unportable - "
 #  endif
 # endif
 
+/* Parse STRING as a timestamp, assuming its layout matches one of the patterns
+   contained in the file named by getenv ("DATEMSK"), and store the resulting
+   broken-down time into TM.  See
+   <https://pubs.opengroup.org/onlinepubs/9799919799/functions/getdate.html>.  */
+# if @GNULIB_GETDATE@
+#  if @REPLACE_GETDATE@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define getdate rpl_getdate
+#   endif
+_GL_FUNCDECL_RPL (getdate, struct tm *, (const char *__string),
+                                        _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (getdate, struct tm *, (const char *__string));
+#  else
+#   if ! @HAVE_GETDATE@
+_GL_FUNCDECL_SYS (getdate, struct tm *, (const char *__string),
+                                        _GL_ARG_NONNULL ((1)));
+#   endif
+_GL_CXXALIAS_SYS (getdate, struct tm *, (const char *__string));
+#  endif
+#  if __GLIBC__ >= 2
+_GL_CXXALIASWARN (getdate);
+#  endif
+/* Define getdate_err through a function macro, to avoid problems with
+   shared libraries on Windows.  */
+#  if ! @HAVE_GETDATE@
+#   if !GNULIB_defined_getdate_err
+_GL_EXTERN_C int *_gl_getdate_location (void);
+#    define getdate_err (* _gl_getdate_location ())
+#    define GNULIB_defined_getdate_err 1
+#   endif
+#  endif
+# elif defined GNULIB_POSIXCHECK
+#  if HAVE_RAW_DECL_GETDATE
+_GL_WARN_ON_USE (getdate, "getdate is unportable - "
+                 "use gnulib module getdate for portability");
+#  endif
+# endif
+
 /* Convert *TP to a date and time string.  See
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime.html>.  */
 # if @GNULIB_CTIME@

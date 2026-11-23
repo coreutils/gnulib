@@ -4,13 +4,10 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getdate.html}
 
-Gnulib module: ---
+Gnulib module: getdate
+@mindex getdate
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
@@ -28,6 +25,10 @@ musl libc 1.2.6, macOS 26.
 @item
 This function has problems with time zones on some platforms:
 Solaris 11 OmniOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
 
 @mindex parse-datetime

@@ -93,6 +93,7 @@ $LIBCSRC sysdeps/generic/min-eloop-threshold.h	lib
 #$LIBCSRC time/timegm.c			lib
 #$LIBCSRC time/mktime.c			lib
 #$LIBCSRC time/mktime-internal.h	lib
+#$LIBCSRC time/getdate.c		lib
 
 # 
 # All below here commented out in forlorn hope of future syncs.
