@@ -1,5 +1,11 @@
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
+	strptime-posix: Add tests.
+	* tests/test-strptime-posix.c: New file.
+	* modules/strptime-posix-tests: New file.
+
+2026-11-23  Bruno Haible  <bruno@clisp.org>
+
 	strptime-posix: Rename from strptime.
 	* modules/strptime-posix: Renamed from modules/strptime.
 	* modules/strptime: Now just a deprecated indirection to module

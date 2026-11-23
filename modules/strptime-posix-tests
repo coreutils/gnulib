@@ -1,0 +1,12 @@
+Files:
+tests/test-strptime-posix.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strptime-posix
+check_PROGRAMS += test-strptime-posix
