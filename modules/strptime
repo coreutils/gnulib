@@ -1,32 +1,20 @@
 Description:
 Convert a string representation of time to a tm structure.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'strptime-posix' instead.
+
 Files:
-lib/strptime.c
-m4/strptime.m4
-m4/tm_gmtoff.m4
 
 Depends-on:
-time-h
-extensions
-sys_time-h      [test $HAVE_STRPTIME = 0]
-string-h        [test $HAVE_STRPTIME = 0]
-strncasecmp     [test $HAVE_STRPTIME = 0]
-bool            [test $HAVE_STRPTIME = 0]
-time_r          [test $HAVE_STRPTIME = 0]
+strptime-posix
 
 configure.ac:
-gl_FUNC_STRPTIME
-gl_CONDITIONAL([GL_COND_OBJ_STRPTIME], [test $HAVE_STRPTIME = 0])
-AM_COND_IF([GL_COND_OBJ_STRPTIME], [
-  gl_PREREQ_STRPTIME
-])
-gl_TIME_MODULE_INDICATOR([strptime])
 
 Makefile.am:
-if GL_COND_OBJ_STRPTIME
-lib_SOURCES += strptime.c
-endif
 
 Include:
 <time.h>
@@ -35,4 +23,3 @@ License:
 LGPLv2+
 
 Maintainer:
-glibc

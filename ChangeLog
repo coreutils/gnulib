@@ -1,3 +1,18 @@
+2026-11-23  Bruno Haible  <bruno@clisp.org>
+
+	strptime-posix: Rename from strptime.
+	* modules/strptime-posix: Renamed from modules/strptime.
+	* modules/strptime: Now just a deprecated indirection to module
+	'strptime-posix'.
+	* m4/strptime.m4 (gl_FUNC_STRPTIME_POSIX): Renamed from
+	gl_FUNC_STRPTIME.
+	* lib/time.in.h (strptime): Update.
+	* m4/time_h.m4 (gl_TIME_H_REQUIRE_DEFAULTS): Update.
+	* modules/time-h (Makefile.am): Update.
+	* doc/posix-functions/strptime.texi: Mention module 'strptime-posix'
+	instead of 'strptime'.
+	* MODULES.html.sh (func_all_modules): Update.
+
 2026-11-22  Bruno Haible  <bruno@clisp.org>
 
 	getdate: Document portability problems.

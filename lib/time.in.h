@@ -411,7 +411,7 @@ _GL_CXXALIASWARN (gmtime);
 /* Parse BUF as a timestamp, assuming FORMAT specifies its layout, and store
    the resulting broken-down time into TM.  See
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/strptime.html>.  */
-# if @GNULIB_STRPTIME@
+# if @GNULIB_STRPTIME_POSIX@
 #  if ! @HAVE_STRPTIME@
 _GL_FUNCDECL_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,

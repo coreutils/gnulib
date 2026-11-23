@@ -2675,7 +2675,7 @@ func_all_modules ()
   func_module sigprocmask
   func_module socklen
   func_module ssize_t
-  func_module strptime
+  func_module strptime-posix
   func_module strtok_r
   func_module sys_select-h
   func_module sys_socket-h

@@ -37,7 +37,7 @@ time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_MKTIME''@/$(GNULIB_MKTIME)/g' \
 	      -e 's/@''GNULIB_NANOSLEEP''@/$(GNULIB_NANOSLEEP)/g' \
 	      -e 's/@''GNULIB_STRFTIME''@/$(GNULIB_STRFTIME)/g' \
-	      -e 's/@''GNULIB_STRPTIME''@/$(GNULIB_STRPTIME)/g' \
+	      -e 's/@''GNULIB_STRPTIME_POSIX''@/$(GNULIB_STRPTIME_POSIX)/g' \
 	      -e 's/@''GNULIB_TIME''@/$(GNULIB_TIME)/g' \
 	      -e 's/@''GNULIB_TIMEGM''@/$(GNULIB_TIMEGM)/g' \
 	      -e 's/@''GNULIB_TIMESPEC_GET''@/$(GNULIB_TIMESPEC_GET)/g' \
