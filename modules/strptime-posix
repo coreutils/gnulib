@@ -10,15 +10,16 @@ m4/tm_gmtoff.m4
 Depends-on:
 time-h
 extensions
-sys_time-h      [test $HAVE_STRPTIME = 0]
-string-h        [test $HAVE_STRPTIME = 0]
-strncasecmp     [test $HAVE_STRPTIME = 0]
-bool            [test $HAVE_STRPTIME = 0]
-time_r          [test $HAVE_STRPTIME = 0]
+sys_time-h      [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1]
+string-h        [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1]
+strncasecmp     [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1]
+bool            [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1]
+time_r          [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1]
 
 configure.ac:
 gl_FUNC_STRPTIME_POSIX
-gl_CONDITIONAL([GL_COND_OBJ_STRPTIME], [test $HAVE_STRPTIME = 0])
+gl_CONDITIONAL([GL_COND_OBJ_STRPTIME],
+               [test $HAVE_STRPTIME = 0 || test $REPLACE_STRPTIME = 1])
 AM_COND_IF([GL_COND_OBJ_STRPTIME], [
   gl_PREREQ_STRPTIME
 ])

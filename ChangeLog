@@ -1,5 +1,18 @@
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
+	strptime-gnu: New module.
+	* m4/time_h.m4 (gl_TIME_H_DEFAULTS): Initialize REPLACE_STRPTIME.
+	* m4/strptime.m4 (gl_FUNC_STRPTIME_POSIX): Define through AC_DEFUN_ONCE.
+	(gl_FUNC_STRPTIME_GNU): New macro.
+	* modules/time-h (Makefile.am): Substitute REPLACE_STRPTIME.
+	* lib/time.in.h (strptime): Consider REPLACE_STRPTIME.
+	* modules/strptime-posix (Depends-on, configure.ac): Test also
+	REPLACE_STRPTIME.
+	* modules/strptime-gnu: New file.
+	* doc/posix-functions/strptime.texi: Mention the new module.
+
+2026-11-23  Bruno Haible  <bruno@clisp.org>
+
 	strptime-posix: Add tests.
 	* tests/test-strptime-posix.c: New file.
 	* modules/strptime-posix-tests: New file.

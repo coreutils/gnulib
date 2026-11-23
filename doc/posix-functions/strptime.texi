@@ -6,14 +6,24 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-strptime-3.html}
 
-Gnulib module: strptime-posix
+Gnulib module: strptime-posix or strptime-gnu
 @mindex strptime-posix
+@mindex strptime-gnu
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{strptime-posix} or @code{strptime-gnu}:
 @itemize
 @item
 This function is missing on some platforms:
 mingw, MSVC 14.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{strptime-gnu}:
+@itemize
+@item
+This function does not support format strings
+that specify fewer than the 6 essential @code{tm} fields,
+as it initializes unspecified fields to zero, on some platforms:
+Solaris 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -412,16 +412,31 @@ _GL_CXXALIASWARN (gmtime);
    the resulting broken-down time into TM.  See
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/strptime.html>.  */
 # if @GNULIB_STRPTIME_POSIX@
-#  if ! @HAVE_STRPTIME@
+#  if @REPLACE_STRPTIME@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define strptime rpl_strptime
+#   endif
+_GL_FUNCDECL_RPL (strptime, char *, (char const *restrict __buf,
+                                     char const *restrict __format,
+                                     struct tm *restrict __tm),
+                                    _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (strptime, char *, (char const *restrict __buf,
+                                     char const *restrict __format,
+                                     struct tm *restrict __tm));
+#  else
+#   if ! @HAVE_STRPTIME@
 _GL_FUNCDECL_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm),
                                     _GL_ARG_NONNULL ((1, 2, 3)));
-#  endif
+#   endif
 _GL_CXXALIAS_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm));
+#  endif
+#  if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strptime);
+#  endif
 # elif defined GNULIB_POSIXCHECK
 #  if HAVE_RAW_DECL_STRPTIME
 _GL_WARN_ON_USE (strptime, "strptime is unportable - "

@@ -1,5 +1,5 @@
 # time_h.m4
-# serial 28
+# serial 29
 dnl Copyright (C) 2000-2001, 2003-2007, 2009-2026 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -177,6 +177,7 @@ AC_DEFUN([gl_TIME_H_DEFAULTS],
   REPLACE_MKTIME_Z=0;                    AC_SUBST([REPLACE_MKTIME_Z])
   REPLACE_NANOSLEEP=0;                   AC_SUBST([REPLACE_NANOSLEEP])
   REPLACE_STRFTIME=0;                    AC_SUBST([REPLACE_STRFTIME])
+  REPLACE_STRPTIME=0;                    AC_SUBST([REPLACE_STRPTIME])
   REPLACE_TIME=0;                        AC_SUBST([REPLACE_TIME])
   REPLACE_TIMEGM=0;                      AC_SUBST([REPLACE_TIMEGM])
   REPLACE_TIMESPEC_GET=0;                AC_SUBST([REPLACE_TIMESPEC_GET])

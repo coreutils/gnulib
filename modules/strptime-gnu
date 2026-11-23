@@ -1,0 +1,22 @@
+Description:
+Convert a string representation of time to a tm structure,
+using a format string that specifles some tm fields.
+
+Files:
+
+Depends-on:
+strptime-posix
+
+configure.ac:
+gl_FUNC_STRPTIME_GNU
+
+Makefile.am:
+
+Include:
+<time.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
