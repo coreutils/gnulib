@@ -7,15 +7,26 @@ getprotobyname() function, getprotobynumber() function.
 
 Files:
 m4/servent.m4
+lib/servent.c
 
 Depends-on:
 sys_socket-h
 netdb-h
+sockets         [test $REPLACE_GETSERVBYNAME = 1 || test $REPLACE_GETSERVBYPORT = 1]
+bool            [test $REPLACE_GETSERVBYNAME = 1 || test $REPLACE_GETSERVBYPORT = 1]
+fopen-gnu       [test $REPLACE_GETSERVBYNAME = 1 || test $REPLACE_GETSERVBYPORT = 1]
+streq           [test $REPLACE_GETSERVBYNAME = 1 || test $REPLACE_GETSERVBYPORT = 1]
 
 configure.ac:
 gl_SERVENT
+gl_CONDITIONAL([GL_COND_OBJ_SERVENT],
+               [test $REPLACE_GETSERVBYNAME = 1 || test $REPLACE_GETSERVBYPORT = 1])
+gl_NETDB_MODULE_INDICATOR([servent])
 
 Makefile.am:
+if GL_COND_OBJ_SERVENT
+lib_SOURCES += servent.c
+endif
 
 Include:
 <netdb.h>

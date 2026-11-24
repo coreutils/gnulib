@@ -1,5 +1,5 @@
 # servent.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2008, 2010-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,4 +50,67 @@ AC_DEFUN([gl_SERVENT],
     ])
   fi
   AC_SUBST([SERVENT_LIB])
+  AC_CACHE_CHECK([whether getservbyname and getservbyport work reasonably],
+    [gl_cv_func_getservbyport_works],
+    [case "$host_os" in
+       mingw* | windows*)
+         # On native Windows, the functions return NULL if WSAStartup has not
+         # been called yet.
+         gl_cv_func_getservbyport_works=no
+         ;;
+       *)
+         saved_LIBS="$LIBS"
+         LIBS="$LIBS $SERVENT_LIB"
+         AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[
+#ifdef HAVE_WINSOCK2_H
+#include <winsock2.h>
+#else
+#include <netdb.h>
+#include <arpa/inet.h>
+#endif
+#include <string.h>
+                static int
+                is_aliases_member (const struct servent *se, const char *name)
+                {
+                  int i;
+                  for (i = 0; se->s_aliases[i] != NULL; i++)
+                    if (strcmp (se->s_aliases[i], name) == 0)
+                      return 1;
+                  return 0;
+                }
+              ]],
+              [[int result = 0;
+                /* This test fails on musl libc.  */
+                {
+                  struct servent *se = getservbyport (htons (80), "tcp");
+                  if (!(se != NULL
+                        && se->s_port == htons (80)
+                        && strcmp (se->s_proto, "tcp") == 0
+                        && ((strcmp (se->s_name, "http") == 0
+                             && is_aliases_member (se, "www"))
+                            || (strcmp (se->s_name, "www") == 0
+                                && is_aliases_member (se, "http")))))
+                    result |= 1;
+                }
+                return result;
+              ]])],
+           [gl_cv_func_getservbyport_works=yes],
+           [gl_cv_func_getservbyport_works=no],
+           [case "$host_os" in
+                                 # Guess no on musl.
+              linux* | midipix*) gl_cv_func_getservbyport_works="guessing no" ;;
+                                 # If we don't know, obey --enable-cross-guesses.
+              *)                 gl_cv_func_getservbyport_works="$gl_cross_guess_normal" ;;
+            esac
+           ])
+         LIBS="$saved_LIBS"
+         ;;
+     esac
+    ])
+  case "$gl_cv_func_getservbyport_works" in
+    *yes) ;;
+    *) REPLACE_GETSERVBYNAME=1; REPLACE_GETSERVBYPORT=1 ;;
+  esac
 ])

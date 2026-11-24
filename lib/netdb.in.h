@@ -299,5 +299,45 @@ _GL_WARN_ON_USE (getnameinfo, "getnameinfo is unportable - "
 
 #endif
 
+#if @GNULIB_SERVENT@
+
+# if @REPLACE_GETSERVBYNAME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getservbyname
+#   define getservbyname rpl_getservbyname
+#  endif
+_GL_FUNCDECL_RPL (getservbyname, struct servent *,
+                  (const char *name, const char *protocol),
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (getservbyname, struct servent *,
+                  (const char *name, const char *protocol));
+# else
+_GL_CXXALIAS_SYS (getservbyname, struct servent *,
+                  (const char *name, const char *protocol));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (getservbyname);
+# endif
+
+# if @REPLACE_GETSERVBYPORT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getservbyport
+#   define getservbyport rpl_getservbyport
+#  endif
+_GL_FUNCDECL_RPL (getservbyport, struct servent *,
+                  (int n_port, const char *protocol),
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (getservbyport, struct servent *,
+                  (int n_port, const char *protocol));
+# else
+_GL_CXXALIAS_SYS (getservbyport, struct servent *,
+                  (int n_port, const char *protocol));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (getservbyport);
+# endif
+
+#endif
+
 #endif /* _@GUARD_PREFIX@_NETDB_H */
 #endif /* _@GUARD_PREFIX@_NETDB_H */

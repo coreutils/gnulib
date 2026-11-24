@@ -35,6 +35,13 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getnameinfo, int,
                   char *, socklen_t, int));
 #endif
 
+#if GNULIB_TEST_SERVENT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getservbyname, struct servent *,
+                 (const char *, const char *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getservbyport, struct servent *,
+                 (int, const char *));
+#endif
+
 
 int
 main ()

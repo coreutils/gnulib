@@ -13,15 +13,18 @@ Portability problems fixed by Gnulib:
 This function is declared in @code{<winsock2.h>} instead of @code{<netdb.h>}
 on some platforms:
 mingw, MSVC 14.
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
 @item
-On Windows, in 32-bit mode, this function is defined with a calling
-convention that is different from @code{cdecl}.
+On Windows, this function returns @code{NULL}
+if @code{WSAStartup} has not been called yet.
 @item
 The returned @code{struct servent} has a nonsensical @code{s_aliases} value
 on some platforms:
 musl libc.
+@item
+On Windows, in 32-bit mode, this function is defined with a calling
+convention that is different from @code{cdecl}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

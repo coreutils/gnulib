@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* Written by Collin Funk <collin.funk1@gmail.com>, 2024.  */
+/* Written by Collin Funk and Bruno Haible.  */
 
 #include <config.h>
 
@@ -22,31 +22,61 @@
 #include <netdb.h>
 
 #include "signature.h"
-
-#if !(defined _WIN32 && !defined _WIN64 && !defined __CYGWIN__)
-/* On 32-bit native Windows, these two functions may have the __stdcall calling
-   convention.  But the SIGNATURE_CHECK works only for functions with __cdecl
-   calling convention.  */
-SIGNATURE_CHECK (getservbyname, struct servent *,
-                 (char const *, char const *));
-SIGNATURE_CHECK (getservbyport, struct servent *, (int, char const *));
-#endif
+SIGNATURE_CHECK (getservbyname, struct servent *, (const char *, const char *));
+SIGNATURE_CHECK (getservbyport, struct servent *, (int, const char *));
 
 #include <stdio.h>
+#include <string.h>
 #include <arpa/inet.h>
+
+#include "macros.h"
+
+static bool
+is_aliases_member (const struct servent *se, const char *name)
+{
+  for (int i = 0; se->s_aliases[i] != NULL; i++)
+    if (streq (se->s_aliases[i], name))
+      return true;
+  return false;
+}
 
 int
 main (void)
 {
-  struct servent *result;
+  {
+    struct servent *se = getservbyname ("domain", "tcp");
+    if (se == NULL)
+      fputs ("getservbyname failed\n", stderr);
+  }
+  {
+    struct servent *se = getservbyport (htons (53), "tcp");
+    if (se == NULL)
+      fputs ("getservbyport failed\n", stderr);
+  }
+  {
+    struct servent *se = getservbyport (htons (80), "tcp");
+    ASSERT (se != NULL);
+    ASSERT (se->s_port == htons (80));
+    ASSERT (streq (se->s_proto, "tcp"));
+    ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
+            || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+  }
+  {
+    struct servent *se = getservbyname ("http", "tcp");
+    ASSERT (se != NULL);
+    ASSERT (se->s_port == htons (80));
+    ASSERT (streq (se->s_proto, "tcp"));
+    ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
+            || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+  }
+  {
+    struct servent *se = getservbyname ("www", "tcp");
+    ASSERT (se != NULL);
+    ASSERT (se->s_port == htons (80));
+    ASSERT (streq (se->s_proto, "tcp"));
+    ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
+            || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+  }
 
-  result = getservbyname ("domain", "tcp");
-  if (result == NULL)
-    fputs ("getservbyname failed\n", stderr);
-
-  result = getservbyport (htons (53), "tcp");
-  if (result == NULL)
-    fputs ("getservbyport failed\n", stderr);
-
-  return 0;
+  return test_exit_status;
 }

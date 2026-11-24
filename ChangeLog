@@ -1,5 +1,36 @@
 2026-11-24  Bruno Haible  <bruno@clisp.org>
 
+	servent: Fix portability problems on musl libc and native Windows.
+	* lib/netdb.in.h (getservbyname, getservbyport): New declarations.
+	* lib/servent.c: New file.
+	* m4/netdb_h.m4 (gl_NETDB_H_REQUIRE_DEFAULTS): Initialize
+	GNULIB_SERVENT.
+	(gl_NETDB_H_DEFAULTS): Initialize REPLACE_GETSERVBYNAME,
+	REPLACE_GETSERVBYPORT.
+	* m4/servent.m4 (gl_SERVENT): Test whether getservbyport works
+	reasonably. Set REPLACE_GETSERVBYNAME, REPLACE_GETSERVBYPORT.
+	* modules/netdb-h (Makefile.am): Substitute GNULIB_SERVENT,
+	REPLACE_GETSERVBYNAME, REPLACE_GETSERVBYPORT.
+	* modules/servent (Files): Add lib/servent.c.
+	(Depends-on): Add sockets, bool, fopen-gnu, streq.
+	(configure.ac): Define conditional and module indicator.
+	(Makefile.am): Compile servent.c.
+	* tests/test-netdb-h-c++.cc: Check the signature of getservbyname(),
+	getservbyport().
+	* modules/netdb-h-c++-tests (Makefile.am): Link test-netdb-h-c++ with
+	$(SERVENT_LIB).
+	* tests/test-servent.c: Enable the signature checks unconditionally.
+	Include macros.h.
+	(is_aliases_member): New function.
+	(main): Add more tests.
+	* modules/servent-tests (Files): Add macros.h.
+	(Depends-on): Add bool, streq.
+	* doc/posix-functions/getservbyname.texi: Mention the now-fixed
+	problems.
+	* doc/posix-functions/getservbyport.texi: Likewise.
+
+2026-11-24  Bruno Haible  <bruno@clisp.org>
+
 	netdb-h: Fix test compilation error on native Windows.
 	* m4/netdb_h.m4 (gl_NETDB_H): Test for 'struct addrinfo' here.
 	(gl_NETDB_H_DEFAULTS): Don't set HAVE_STRUCT_ADDRINFO here.
