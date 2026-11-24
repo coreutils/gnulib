@@ -524,7 +524,13 @@ fdfile_has_aclinfo (MAYBE_UNUSED int fd,
     /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, Cygwin >= 2.5 */
     int ret;
 
-#   if HAVE_ACL_EXTENDED_FILE /* Linux */
+#   if HAVE_ACL_EXTENDED_FILE_AT /* Linux (libacl >= 2.4.0) */
+      ret = (fd < 0
+             ? acl_extended_file_at (AT_FDCWD, name,
+                                     (flags & ACL_SYMLINK_FOLLOW)
+                                     ? 0 : AT_SYMLINK_NOFOLLOW)
+             : acl_extended_file_at (fd, "", AT_EMPTY_PATH));
+#   elif HAVE_ACL_EXTENDED_FILE /* Linux (libacl < 2.4.0) */
       /* On Linux, acl_extended_file is an optimized function: It only
          makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
          ACL_TYPE_DEFAULT.  */

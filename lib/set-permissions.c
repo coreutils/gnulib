@@ -523,10 +523,22 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
                 {
                   if (! from_mode && ctx->default_acl &&
                       acl_default_nontrivial (ctx->default_acl))
-                    ret = acl_set_file (name, ACL_TYPE_DEFAULT,
-                                        ctx->default_acl);
+                    {
+                      if (HAVE_ACL_SET_FILE_AT && desc != -1)
+                        ret = acl_set_file_at (desc, "", AT_EMPTY_PATH,
+                                               ACL_TYPE_DEFAULT,
+                                               ctx->default_acl);
+                      else
+                        ret = acl_set_file (name, ACL_TYPE_DEFAULT,
+                                            ctx->default_acl);
+                    }
                   else
-                    ret = acl_delete_def_file (name);
+                    {
+                      if (HAVE_ACL_DELETE_DEF_FILE_AT && desc != -1)
+                        ret = acl_delete_def_file_at (desc, "", AT_EMPTY_PATH);
+                      else
+                        ret = acl_delete_def_file (name);
+                    }
                 }
             }
         }

@@ -55,7 +55,11 @@ get_permissions (_GL_UNUSED const char *name, _GL_UNUSED int desc, mode_t mode,
 
   if (S_ISDIR (mode))
     {
-      ctx->default_acl = acl_get_file (name, ACL_TYPE_DEFAULT);
+      if (HAVE_ACL_GET_FILE_AT && desc != -1)
+        ctx->default_acl = acl_get_file_at (desc, "", AT_EMPTY_PATH,
+                                            ACL_TYPE_DEFAULT);
+      else
+        ctx->default_acl = acl_get_file (name, ACL_TYPE_DEFAULT);
       if (ctx->default_acl == NULL)
         return -1;
     }

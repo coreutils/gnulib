@@ -44,10 +44,12 @@ AC_DEFUN_ONCE([gl_FUNC_ACL],
              LIB_ACL=$ac_cv_search_acl_get_file
            fi
            AC_CHECK_FUNCS(
-             [acl_get_file acl_get_fd acl_set_file acl_set_fd \
+             [acl_get_file acl_get_file_at acl_get_fd \
+              acl_set_file acl_set_file_at acl_set_fd \
+              acl_delete_def_file acl_delete_def_file_at \
+              acl_extended_file acl_extended_file_at \
               acl_get_link_np \
               acl_free acl_from_mode acl_from_text \
-              acl_delete_def_file acl_extended_file \
               acl_delete_fd_np acl_delete_file_np \
               acl_copy_ext_native acl_create_entry_np \
               acl_to_short_text acl_free_text])

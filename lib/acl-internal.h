@@ -25,6 +25,7 @@
 #include "acl.h"
 
 #include <stdlib.h>
+#include <fcntl.h>
 
 /* All systems define the ACL related API in <sys/acl.h>.  */
 #if HAVE_SYS_ACL_H
@@ -81,6 +82,33 @@ _GL_INLINE_HEADER_BEGIN
 #   define HAVE_ACL_GET_FD false
 #   undef acl_get_fd
 #   define acl_get_fd(fd) (NULL)
+#  endif
+
+/* Linux (libacl >= 2.4.0) */
+#  ifdef HAVE_ACL_GET_FILE_AT
+/* acl_get_file_at takes four arguments.  */
+#  else
+#   define HAVE_ACL_GET_FILE_AT false
+#   undef acl_get_file_at
+#   define acl_get_file_at(dirfd, path_p, at_flags, type) (NULL)
+#  endif
+
+/* Linux (libacl >= 2.4.0) */
+#  ifdef HAVE_ACL_SET_FILE_AT
+/* acl_set_file_at takes five arguments.  */
+#  else
+#   define HAVE_ACL_SET_FILE_AT false
+#   undef acl_set_file_at
+#   define acl_set_file_at(dirfd, path_p, at_flags, type, acl) (-1)
+#  endif
+
+/* Linux (libacl >= 2.4.0) */
+#  ifdef HAVE_ACL_DELETE_DEF_FILE_AT
+/* acl_delete_def_file_at takes three arguments.  */
+#  else
+#   define HAVE_ACL_DELETE_DEF_FILE_AT false
+#   undef acl_delete_def_file_at
+#   define acl_delete_def_file_at(dirfd, path_p, at_flags) (-1)
 #  endif
 
 /* POSIX 1003.1e (draft 17) */
