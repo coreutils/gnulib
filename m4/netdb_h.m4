@@ -1,5 +1,5 @@
 # netdb_h.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2008-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,26 @@ AC_DEFUN_ONCE([gl_NETDB_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <netdb.h>]],
     [getaddrinfo freeaddrinfo gai_strerror getnameinfo])
+
+  AC_REQUIRE([gl_SYS_SOCKET_H])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
+  AC_CHECK_TYPES([struct addrinfo],,,[
+#include <sys/types.h>
+#ifdef HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+#ifdef HAVE_NETDB_H
+#include <netdb.h>
+#endif
+#ifdef HAVE_WS2TCPIP_H
+#include <ws2tcpip.h>
+#endif
+])
+  if test $ac_cv_type_struct_addrinfo = yes; then
+    HAVE_STRUCT_ADDRINFO=1
+  else
+    HAVE_STRUCT_ADDRINFO=0
+  fi
+  AC_SUBST([HAVE_STRUCT_ADDRINFO])
 ])
 
 # gl_NETDB_MODULE_INDICATOR([modulename])
@@ -51,7 +71,6 @@ AC_DEFUN([gl_NETDB_H_REQUIRE_DEFAULTS],
 AC_DEFUN([gl_NETDB_H_DEFAULTS],
 [
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_STRUCT_ADDRINFO=1;   AC_SUBST([HAVE_STRUCT_ADDRINFO])
   HAVE_DECL_FREEADDRINFO=1; AC_SUBST([HAVE_DECL_FREEADDRINFO])
   HAVE_DECL_GAI_STRERROR=1; AC_SUBST([HAVE_DECL_GAI_STRERROR])
   HAVE_DECL_GETADDRINFO=1;  AC_SUBST([HAVE_DECL_GETADDRINFO])

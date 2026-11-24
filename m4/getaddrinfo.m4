@@ -1,5 +1,5 @@
 # getaddrinfo.m4
-# serial 39
+# serial 40
 dnl Copyright (C) 2004-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -257,22 +257,6 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   fi
   if test $ac_cv_have_decl_getnameinfo = no; then
     HAVE_DECL_GETNAMEINFO=0
-  fi
-
-  AC_CHECK_TYPES([struct addrinfo],,,[
-#include <sys/types.h>
-#ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
-#endif
-#ifdef HAVE_NETDB_H
-#include <netdb.h>
-#endif
-#ifdef HAVE_WS2TCPIP_H
-#include <ws2tcpip.h>
-#endif
-])
-  if test $ac_cv_type_struct_addrinfo = no; then
-    HAVE_STRUCT_ADDRINFO=0
   fi
 
   dnl Append $HOSTENT_LIB to GETADDRINFO_LIB, avoiding gratuitous duplicates.

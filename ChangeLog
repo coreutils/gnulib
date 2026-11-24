@@ -1,5 +1,15 @@
 2026-11-24  Bruno Haible  <bruno@clisp.org>
 
+	netdb-h: Fix test compilation error on native Windows.
+	* m4/netdb_h.m4 (gl_NETDB_H): Test for 'struct addrinfo' here.
+	(gl_NETDB_H_DEFAULTS): Don't set HAVE_STRUCT_ADDRINFO here.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Don't test for
+	'struct addrinfo' here.
+	* lib/netdb.in.h (struct addrinfo, AI_*, EAI_*): Enable definitions also
+	when module 'getaddrinfo' is not in use.
+
+2026-11-24  Bruno Haible  <bruno@clisp.org>
+
 	time-h tests: Check getdate() declaration in C++ mode.
 	* tests/test-time-h-c++.cc: Check the signature of getdate().
 
