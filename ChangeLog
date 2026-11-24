@@ -1,3 +1,8 @@
+2026-11-24  Bruno Haible  <bruno@clisp.org>
+
+	time-h tests: Check getdate() declaration in C++ mode.
+	* tests/test-time-h-c++.cc: Check the signature of getdate().
+
 2026-11-23  Bruno Haible  <bruno@clisp.org>
 
 	Document a few musl libc problems.

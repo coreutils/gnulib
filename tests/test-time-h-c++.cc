@@ -66,6 +66,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::strptime, char *,
                  (char const *, char const *, struct tm *));
 #endif
 
+#if GNULIB_TEST_GETDATE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getdate, struct tm *, (const char *));
+#endif
+
 #if GNULIB_TEST_CTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ctime, char *, (time_t const *));
 #endif
