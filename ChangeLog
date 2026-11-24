@@ -1,5 +1,11 @@
 2026-11-24  Bruno Haible  <bruno@clisp.org>
 
+	servent: Allow a null protocol.
+	* lib/netdb.in.h (getservbyname, getservbyport): Allow a NULL protocol
+	argument.
+	* lib/servent.c (getservbyname, getservbyport): Treat a NULL protocol
+	argument like a wildcard.
+
 	servent: Fix portability problems on musl libc and native Windows.
 	* lib/netdb.in.h (getservbyname, getservbyport): New declarations.
 	* lib/servent.c: New file.

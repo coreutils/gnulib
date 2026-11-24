@@ -308,7 +308,7 @@ _GL_WARN_ON_USE (getnameinfo, "getnameinfo is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (getservbyname, struct servent *,
                   (const char *name, const char *protocol),
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (getservbyname, struct servent *,
                   (const char *name, const char *protocol));
 # else
@@ -325,8 +325,7 @@ _GL_CXXALIASWARN (getservbyname);
 #   define getservbyport rpl_getservbyport
 #  endif
 _GL_FUNCDECL_RPL (getservbyport, struct servent *,
-                  (int n_port, const char *protocol),
-                  _GL_ARG_NONNULL ((2)));
+                  (int n_port, const char *protocol), );
 _GL_CXXALIAS_RPL (getservbyport, struct servent *,
                   (int n_port, const char *protocol));
 # else

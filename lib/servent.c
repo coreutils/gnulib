@@ -192,7 +192,7 @@ getservbyname (const char *name, const char *protocol)
     {
       struct servent *se = &db[i];
       if ((streq (se->s_name, name) || is_aliases_member (se, name))
-          && streq (se->s_proto, protocol))
+          && (protocol == NULL || streq (se->s_proto, protocol)))
         return se;
     }
   return NULL;
@@ -208,7 +208,8 @@ getservbyport (int n_port, const char *protocol)
   for (size_t i = 0; i < n; i++)
     {
       struct servent *se = &db[i];
-      if (se->s_port == n_port && streq (se->s_proto, protocol))
+      if (se->s_port == n_port
+          && (protocol == NULL || streq (se->s_proto, protocol)))
         return se;
     }
   return NULL;
