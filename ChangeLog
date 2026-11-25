@@ -1,3 +1,9 @@
+2026-11-25  Bruno Haible  <bruno@clisp.org>
+
+	servent: Fix test failure on AIX.
+	* m4/servent.m4 (gl_SERVENT): Relax configure test on AIX.
+	* tests/test-servent.c (main): Relax expectations on AIX.
+
 2026-11-24  Bruno Haible  <bruno@clisp.org>
 
 	servent: Allow a null protocol.

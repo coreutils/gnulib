@@ -58,24 +58,38 @@ main (void)
     ASSERT (se != NULL);
     ASSERT (se->s_port == htons (80));
     ASSERT (streq (se->s_proto, "tcp"));
+#if defined _AIX
+    /* AIX /etc/services really defines the services www and http on different
+       lines, thus they are not considered aliases.  */
+    ASSERT (streq (se->s_name, "http") || streq (se->s_name, "www"));
+#else
     ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
             || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+#endif
   }
   {
     struct servent *se = getservbyname ("http", "tcp");
     ASSERT (se != NULL);
     ASSERT (se->s_port == htons (80));
     ASSERT (streq (se->s_proto, "tcp"));
+#if defined _AIX
+    ASSERT (streq (se->s_name, "http"));
+#else
     ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
             || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+#endif
   }
   {
     struct servent *se = getservbyname ("www", "tcp");
     ASSERT (se != NULL);
     ASSERT (se->s_port == htons (80));
     ASSERT (streq (se->s_proto, "tcp"));
+#if defined _AIX
+    ASSERT (streq (se->s_name, "www"));
+#else
     ASSERT ((streq (se->s_name, "http") && is_aliases_member (se, "www"))
             || (streq (se->s_name, "www") && is_aliases_member (se, "http")));
+#endif
   }
 
   return test_exit_status;

@@ -1,5 +1,5 @@
 # servent.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2008, 2010-2026 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -88,10 +88,19 @@ AC_DEFUN([gl_SERVENT],
                   if (!(se != NULL
                         && se->s_port == htons (80)
                         && strcmp (se->s_proto, "tcp") == 0
+#if defined _AIX
+                        /* AIX /etc/services really defines the services www
+                           and http on different lines, thus they are not
+                           considered aliases.  */
+                        && (strcmp (se->s_name, "http") == 0
+                            || strcmp (se->s_name, "www") == 0)
+#else
                         && ((strcmp (se->s_name, "http") == 0
                              && is_aliases_member (se, "www"))
                             || (strcmp (se->s_name, "www") == 0
-                                && is_aliases_member (se, "http")))))
+                                && is_aliases_member (se, "http")))
+#endif
+                     ) )
                     result |= 1;
                 }
                 return result;
