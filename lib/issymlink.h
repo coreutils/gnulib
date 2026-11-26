@@ -17,7 +17,7 @@
 #ifndef _ISSYMLINK_H
 #define _ISSYMLINK_H
 
-/* This file uses _GL_ARG_NONNULL, _GL_INLINE.  */
+/* This file uses _GL_ATTRIBUTE_NONNULL, _GL_INLINE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -44,7 +44,7 @@ _GL_INLINE_HEADER_BEGIN
 extern "C" {
 #endif
 _GL_ISSYMLINK_INLINE int issymlink (const char *filename)
-     _GL_ARG_NONNULL ((1));
+     _GL_ATTRIBUTE_NONNULL ((1));
 _GL_ISSYMLINK_INLINE int
 issymlink (const char *filename)
 {

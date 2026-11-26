@@ -1,3 +1,10 @@
+2026-11-25  Bruno Haible  <bruno@clisp.org>
+
+	issymlink, issymlinkat: Avoid possible compilation error.
+	* lib/issymlink.h (issymlink): Use _GL_ATTRIBUTE_NONNULL instead of
+	_GL_ARG_NONNULL.
+	* lib/issymlinkat.h (issymlinkat): Likewise.
+
 2026-11-25  Andreas Gruenbacher  <andreas.gruenbacher@gmail.com>
 
 	acl-permissions, file-has-acl: Reduce TOCTOU races on Linux.
