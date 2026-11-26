@@ -9,6 +9,7 @@ Depends-on:
 unistd-h
 fcntl
 binary-io
+dirinfo-abstract
 getdtablesize
 extensions
 

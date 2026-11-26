@@ -28,6 +28,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 #ifdef __KLIBC__
 # include <emx/io.h>
 # include <InnoTekLIBC/backend.h>

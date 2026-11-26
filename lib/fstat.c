@@ -44,8 +44,11 @@ orig_fstat (int fd, struct stat *buf)
 
 #include "stat-time.h"
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 #include <errno.h>
-#include <unistd.h>
 #ifdef WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>

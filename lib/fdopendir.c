@@ -23,6 +23,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 #if !HAVE_FDOPENDIR
 
 # if GNULIB_defined_DIR

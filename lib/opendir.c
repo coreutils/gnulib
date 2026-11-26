@@ -41,7 +41,7 @@
 #endif
 
 #if REPLACE_FCHDIR
-# include <unistd.h>
+# include "dirinfo-impl.h"
 #endif
 
 #if defined _WIN32 && ! defined __CYGWIN__

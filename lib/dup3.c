@@ -25,6 +25,10 @@
 
 #include "binary-io.h"
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 int
 dup3 (int oldfd, int newfd, int flags)
 {

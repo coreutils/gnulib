@@ -7,15 +7,16 @@ m4/fclose.m4
 
 Depends-on:
 stdio-h
-close           [test $REPLACE_FCLOSE = 1]
-fflush          [test $REPLACE_FCLOSE = 1]
-freading        [test $REPLACE_FCLOSE = 1]
-lseek           [test $REPLACE_FCLOSE = 1]
-msvc-inval      [test $REPLACE_FCLOSE = 1]
+close            [test $REPLACE_FCLOSE = 1]
+dirinfo-abstract [test $REPLACE_FCLOSE = 1]
+fflush           [test $REPLACE_FCLOSE = 1]
+freading         [test $REPLACE_FCLOSE = 1]
+lseek            [test $REPLACE_FCLOSE = 1]
+msvc-inval       [test $REPLACE_FCLOSE = 1]
 # The code of fclose does not need to call fopen. But when gcc's '-fanalyzer'
 # option is in use and stdio.h does '#define fclose rpl_fclose', stdio.h also
 # needs to do '#define fopen rpl_fopen', otherwise a warning may result.
-fopen           [test $REPLACE_FCLOSE = 1]
+fopen            [test $REPLACE_FCLOSE = 1]
 
 configure.ac:
 gl_FUNC_FCLOSE

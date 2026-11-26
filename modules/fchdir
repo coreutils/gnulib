@@ -6,27 +6,9 @@ lib/fchdir.c
 m4/fchdir.m4
 
 Depends-on:
-dirent-h
 unistd-h
-assure           [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
+dirinfo-abstract [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 chdir            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-close            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-dirfd            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-dup2             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-fcntl            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-fcntl-h          [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-filename         [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-filenamecat-lgpl [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-free-posix       [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-fstat            [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-getcwd-lgpl      [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-malloc-posix     [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-open             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-realloc-posix    [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-stat             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-bool             [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-strdup-posix     [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
-sys_stat-h       [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1]
 
 configure.ac:
 gl_FUNC_FCHDIR

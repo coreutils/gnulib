@@ -22,6 +22,10 @@
 
 #include <errno.h>
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 # include "msvc-inval.h"
 #endif

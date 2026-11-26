@@ -47,7 +47,10 @@ orig_open (const char *filename, int flags, mode_t mode)
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
+
+#if REPLACE_FCHDIR
+# include "dirinfo-impl.h"
+#endif
 
 #ifndef HAVE_WORKING_O_DIRECTORY
 # define HAVE_WORKING_O_DIRECTORY false

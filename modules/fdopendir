@@ -9,15 +9,16 @@ m4/fdopendir.m4
 Depends-on:
 dirent-h
 extensions
-at-internal     [test $HAVE_FDOPENDIR = 0]
-dirfd           [test $HAVE_FDOPENDIR = 0]
-dup             [test $HAVE_FDOPENDIR = 0]
-errno-h         [test $HAVE_FDOPENDIR = 0]
-fchdir          [test $HAVE_FDOPENDIR = 0]
-fstat           [test $HAVE_FDOPENDIR = 0]
-openat-die      [test $HAVE_FDOPENDIR = 0]
-opendir         [test $HAVE_FDOPENDIR = 0]
-save-cwd        [test $HAVE_FDOPENDIR = 0]
+at-internal      [test $HAVE_FDOPENDIR = 0]
+dirfd            [test $HAVE_FDOPENDIR = 0]
+dirinfo-abstract [test $HAVE_FDOPENDIR = 0]
+dup              [test $HAVE_FDOPENDIR = 0]
+errno-h          [test $HAVE_FDOPENDIR = 0]
+fchdir           [test $HAVE_FDOPENDIR = 0]
+fstat            [test $HAVE_FDOPENDIR = 0]
+openat-die       [test $HAVE_FDOPENDIR = 0]
+opendir          [test $HAVE_FDOPENDIR = 0]
+save-cwd         [test $HAVE_FDOPENDIR = 0]
 
 configure.ac:
 gl_FUNC_FDOPENDIR

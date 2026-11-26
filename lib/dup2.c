@@ -25,6 +25,10 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
+
 #undef dup2
 
 #if defined _WIN32 && ! defined __CYGWIN__

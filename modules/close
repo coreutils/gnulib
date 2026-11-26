@@ -7,8 +7,9 @@ m4/close.m4
 
 Depends-on:
 unistd-h
-fd-hook         [test $REPLACE_CLOSE = 1]
-msvc-inval      [test $REPLACE_CLOSE = 1]
+dirinfo-abstract [test $REPLACE_CLOSE = 1]
+fd-hook          [test $REPLACE_CLOSE = 1]
+msvc-inval       [test $REPLACE_CLOSE = 1]
 
 configure.ac:
 gl_FUNC_CLOSE

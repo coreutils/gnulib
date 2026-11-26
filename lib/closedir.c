@@ -19,11 +19,11 @@
 /* Specification.  */
 #include <dirent.h>
 
-#if REPLACE_FCHDIR
-# include <unistd.h>
-#endif
-
 #include <stdlib.h>
+
+#if REPLACE_FCHDIR
+# include "dirinfo-abstract.h"
+#endif
 
 #if HAVE_CLOSEDIR
 

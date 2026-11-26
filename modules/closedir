@@ -8,7 +8,8 @@ m4/closedir.m4
 
 Depends-on:
 dirent-h
-dirfd           [test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1]
+dirfd            [test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1]
+dirinfo-abstract [test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1]
 
 configure.ac:
 gl_FUNC_CLOSEDIR

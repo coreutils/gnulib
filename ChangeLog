@@ -1,5 +1,45 @@
 2026-11-25  Bruno Haible  <bruno@clisp.org>
 
+	fchdir: Fix link error on native Windows in some situations.
+	Reported by Hannes Domani in
+	<https://lists.gnu.org/archive/html/poke-devel/2024-02/msg00060.html>.
+	* lib/dirinfo-abstract.h: New file, based on lib/fchdir.c.
+	* lib/dirinfo-abstract.c: New file, based on lib/fchdir.c.
+	* lib/dirinfo-impl.h: New file, based on lib/fchdir.c.
+	* lib/dirinfo-impl.c: New file, based on lib/fchdir.c.
+	* lib/fchdir.c: Remove definitions that have been moved to
+	dirinfo-impl.c. Include dirinfo-abstract.h.
+	* lib/unistd.in.h (_gl_register_fd, _gl_unregister_fd, _gl_register_dup,
+	_gl_directory_name): Remove declarations.
+	* lib/close.c: Include dirinfo-abstract.h.
+	* lib/dup.c: Likewise.
+	* lib/dup2.c: Likewise.
+	* lib/dup3.c: Likewise.
+	* lib/fclose.c: Likewise.
+	* lib/fcntl.c: Likewise.
+	* lib/fdopendir.c: Likewise.
+	* lib/closedir.c: Include dirinfo-abstract.h instead of <unistd.h>.
+	* lib/fstat.c: Likewise.
+	* lib/open.c: Include dirinfo-impl.h instead of <unistd.h>.
+	* lib/opendir.c: Likewise.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Define through AC_DEFUN_ONCE.
+	* modules/dirinfo-abstract: New file.
+	* modules/dirinfo-impl: New file.
+	* modules/fchdir (Depends-on): Just depend on dirinfo-abstract.
+	* modules/close (Depends-on): Add dirinfo-abstract.
+	* modules/closedir (Depends-on): Likewise.
+	* modules/dup (Depends-on): Likewise.
+	* modules/dup2 (Depends-on): Likewise.
+	* modules/dup3 (Depends-on): Likewise.
+	* modules/fclose (Depends-on): Likewise.
+	* modules/fcntl (Depends-on): Likewise.
+	* modules/fdopendir (Depends-on): Likewise.
+	* modules/fstat (Depends-on): Likewise.
+	* modules/open (Depends-on): Add dirinfo-impl.
+	* modules/opendir (Depends-on): Add dirinfo-impl instead of unistd-h.
+
+2026-11-25  Bruno Haible  <bruno@clisp.org>
+
 	linkat, renameat, renameatu: Fix dependencies.
 	* modules/linkat (Depends-on): Add fchdir.
 	* modules/renameat (Depends-on): Likewise.
