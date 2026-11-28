@@ -1,0 +1,34 @@
+Description:
+Abstract interface of directory information per file descriptor,
+necessary for fchdir() on native Windows.
+
+Files:
+lib/dirinfo-abstract.h
+lib/dirinfo-abstract.c
+
+Depends-on:
+dup2
+unistd-h
+
+configure.ac:
+m4_ifdef([gl_FUNC_FCHDIR], [
+  AC_REQUIRE([gl_FUNC_FCHDIR])
+  gl_CONDITIONAL([GL_COND_OBJ_DIRINFO_ABSTRACT],
+                 [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1])
+], [
+  gl_CONDITIONAL([GL_COND_OBJ_DIRINFO_ABSTRACT], [false])
+])
+
+Makefile.am:
+if GL_COND_OBJ_DIRINFO_ABSTRACT
+lib_SOURCES += dirinfo-abstract.c
+endif
+
+Include:
+"dirinfo-abstract.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

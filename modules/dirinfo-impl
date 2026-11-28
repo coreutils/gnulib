@@ -1,0 +1,49 @@
+Description:
+Implementation of directory information per file descriptor,
+necessary for fchdir() on native Windows.
+
+Files:
+lib/dirinfo-impl.h
+lib/dirinfo-impl.c
+
+Depends-on:
+dirinfo-abstract
+assure
+close
+dup2
+filename
+filenamecat-lgpl
+free-posix
+fstat
+getcwd-lgpl
+malloc-posix
+open
+realloc-posix
+stat
+bool
+strdup-posix
+sys_stat-h
+unistd-h
+
+configure.ac:
+m4_ifdef([gl_FUNC_FCHDIR], [
+  AC_REQUIRE([gl_FUNC_FCHDIR])
+  gl_CONDITIONAL([GL_COND_OBJ_DIRINFO_IMPL],
+                 [test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1])
+], [
+  gl_CONDITIONAL([GL_COND_OBJ_DIRINFO_IMPL], [false])
+])
+
+Makefile.am:
+if GL_COND_OBJ_DIRINFO_IMPL
+lib_SOURCES += dirinfo-impl.c
+endif
+
+Include:
+"dirinfo-impl.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
