@@ -1,3 +1,8 @@
+2026-11-28  Bruno Haible  <bruno@clisp.org>
+
+	getdate: Fix test failures that occur near the end of a month.
+	* lib/getdate.c (__getdate_r): Normalize *TP, like glibc does.
+
 2026-11-25  Bruno Haible  <bruno@clisp.org>
 
 	fchdir: Fix link error on native Windows in some situations.
